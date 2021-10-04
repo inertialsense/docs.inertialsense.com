@@ -1,0 +1,1808 @@
+
+
+## Data Sets (DIDs)
+
+Data Sets in the form of C structures are available through binary protocol and provide access to system configuration and output data. The data sets are defined in SDK/src/data_sets.h of the InertialSense SDK.
+
+### INS / AHRS Output
+
+#### DID_INS_1
+
+INS output: euler rotation w/ respect to NED, NED position from reference LLA. 
+
+`ins_1_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeek | double | GPS time of week (since Sunday morning) in seconds |
+| insStatus | uint32_t | INS status flags (eInsStatusFlags). Copy of DID_SYS_PARAMS.insStatus |
+| hdwStatus | uint32_t | Hardware status flags (eHdwStatusFlags). Copy of DID_SYS_PARAMS.hdwStatus |
+| theta | float[3] | Euler angles: roll, pitch, yaw in radians with respect to NED |
+| uvw | float[3] | Velocity U, V, W in meters per second.  Convert to NED velocity using "vectorBodyToReference( uvw, theta, vel_ned )". |
+| lla | double[3] | WGS84 latitude, longitude, height above ellipsoid (degrees,degrees,meters) |
+| ned | float[3] | North, east and down offset from reference latitude, longitude, and altitude to current latitude, longitude, and altitude |
+
+
+#### DID_INS_2
+
+INS output: quaternion rotation w/ respect to NED, ellipsoid altitude 
+
+`ins_2_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeek | double | GPS time of week (since Sunday morning) in seconds |
+| insStatus | uint32_t | INS status flags (eInsStatusFlags). Copy of DID_SYS_PARAMS.insStatus |
+| hdwStatus | uint32_t | Hardware status flags (eHdwStatusFlags). Copy of DID_SYS_PARAMS.hdwStatus |
+| qn2b | float[4] | Quaternion body rotation with respect to NED: W, X, Y, Z |
+| uvw | float[3] | Velocity U, V, W in meters per second.  Convert to NED velocity using "quatRot(vel_ned, qn2b, uvw)". |
+| lla | double[3] | WGS84 latitude, longitude, height above ellipsoid in meters (not MSL) |
+
+
+#### DID_INS_3
+
+Inertial navigation data with quaternion NED to body rotation and ECEF position. 
+
+`ins_3_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeek | double | GPS time of week (since Sunday morning) in seconds |
+| insStatus | uint32_t | INS status flags (eInsStatusFlags). Copy of DID_SYS_PARAMS.insStatus |
+| hdwStatus | uint32_t | Hardware status flags (eHdwStatusFlags). Copy of DID_SYS_PARAMS.hdwStatus |
+| qn2b | float[4] | Quaternion body rotation with respect to NED: W, X, Y, Z |
+| uvw | float[3] | Velocity U, V, W in meters per second.  Convert to NED velocity using "quatRot(vel_ned, qn2b, uvw)". |
+| lla | double[3] | WGS84 latitude, longitude, height above ellipsoid in meters (not MSL) |
+| msl | float | height above mean sea level (MSL) in meters |
+
+
+#### DID_INS_4
+
+INS output: quaternion rotation w/ respect to ECEF, ECEF position. 
+
+`ins_4_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeek | double | GPS time of week (since Sunday morning) in seconds |
+| insStatus | uint32_t | INS status flags (eInsStatusFlags). Copy of DID_SYS_PARAMS.insStatus |
+| hdwStatus | uint32_t | Hardware status flags (eHdwStatusFlags). Copy of DID_SYS_PARAMS.hdwStatus |
+| qe2b | float[4] | Quaternion body rotation with respect to ECEF: W, X, Y, Z |
+| ve | float[3] | Velocity in ECEF (earth-centered earth-fixed) frame in meters per second |
+| ecef | double[3] | Position in ECEF (earth-centered earth-fixed) frame in meters |
+
+
+### Inertial Measurement Unit (IMU)
+
+#### DID_DUAL_IMU
+
+Dual inertial measurement unit data down-sampled from 1KHz to navigation update rate (DID_FLASH_CONFIG.startupNavDtMs) as an anti-aliasing filter to reduce noise and preserve accuracy.  Minimum data period is DID_FLASH_CONFIG.startupNavDtMs (1KHz max).  
+
+`dual_imu_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| I | imus_t[2] | Inertial Measurement Units (IMUs) |
+| status | uint32_t | IMU Status (eImuStatus) |
+
+
+#### DID_DUAL_IMU_RAW
+
+Dual inertial measurement unit data directly from IMU.  We recommend use of DID_DUAL_IMU or DID_PREINTEGRATED_IMU.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+
+`dual_imu_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| I | imus_t[2] | Inertial Measurement Units (IMUs) |
+| status | uint32_t | IMU Status (eImuStatus) |
+
+
+#### DID_PREINTEGRATED_IMU
+
+Coning and sculling integral in body/IMU frame.  Updated at IMU rate. Also know as Delta Theta Delta Velocity, or Integrated IMU. For clarification, we use the name "Preintegrated IMU" through the User Manual. This data is integrated from the IMU data at the IMU update rate (startupImuDtMs, default 1ms).  The integration period (dt) and output data rate are the same as the NAV rate (startupNavDtMs, default 4ms) and cannot be output at any other rate. If a different output data rate is desired, DID_DUAL_IMU which is derived from DID_PREINTEGRATED_IMU can be used instead. Preintegrated IMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay and addresses antialiasing. It is most effective for systems that have higher dynamics and lower communications data rates.  The minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+
+`preintegrated_imu_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| theta1 | float[3] | IMU 1 delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
+| theta2 | float[3] | IMU 2 delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
+| vel1 | float[3] | IMU 1 delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
+| vel2 | float[3] | IMU 2 delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
+| dt | float | Integral period in seconds for delta theta and delta velocity.  This is configured using DID_FLASH_CONFIG.startupNavDtMs. |
+| status | uint32_t | IMU Status (eImuStatus) |
+
+
+### Sensor Output
+
+#### DID_BAROMETER
+
+Barometric pressure sensor data 
+
+`barometer_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| bar | float | Barometric pressure in kilopascals |
+| mslBar | float | MSL altitude from barometric pressure sensor in meters |
+| barTemp | float | Temperature of barometric pressure sensor in Celsius |
+| humidity | float | Relative humidity as a percent (%rH). Range is 0% - 100% |
+
+
+#### DID_MAGNETOMETER
+
+Magnetometer sensor 1 output 
+
+`magnetometer_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| mag | float[3] | Magnetometers in Gauss |
+
+
+#### DID_MAG_CAL
+
+Magnetometer calibration 
+
+`mag_cal_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| recalCmd | uint32_t | Set mode and start recalibration. 1 = multi-axis, 2 = single-axis, 101 = abort. (see eMagRecalMode) |
+| progress | float | Mag recalibration progress indicator: 0-100 % |
+| declination | float | Magnetic declination estimate |
+
+
+#### DID_SYS_SENSORS
+
+System sensor information 
+
+`sys_sensors_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| temp | float | Temperature in Celsius |
+| pqr | float[3] | Gyros in radians / second |
+| acc | float[3] | Accelerometers in meters / second squared |
+| mag | float[3] | Magnetometers in Gauss |
+| bar | float | Barometric pressure in kilopascals |
+| barTemp | float | Temperature of barometric pressure sensor in Celsius |
+| mslBar | float | MSL altitude from barometric pressure sensor in meters |
+| humidity | float | Relative humidity as a percent (%rH). Range is 0% - 100% |
+| vin | float | EVB system input voltage in volts. uINS pin 5 (G2/AN2).  Use 10K/1K resistor divider between Vin and GND.  |
+| ana1 | float | ADC analog input in volts. uINS pin 4, (G1/AN1). |
+| ana3 | float | ADC analog input in volts. uINS pin 19 (G3/AN3). |
+| ana4 | float | ADC analog input in volts. uINS pin 20 (G4/AN4). |
+
+
+### GPS / GNSS
+
+#### DID_GPS1_POS
+
+GPS 1 position data.  This comes from DID_GPS1_UBX_POS or DID_GPS1_RTK_POS, depending on whichever is more accurate. 
+
+`gps_pos_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| ecef | double[3] | Position in ECEF {x,y,z} (m) |
+| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
+| hMSL | float | Height above mean sea level (MSL) in meters |
+| hAcc | float | Horizontal accuracy in meters |
+| vAcc | float | Vertical accuracy in meters |
+| pDop | float | Position dilution of precision (unitless) |
+| cnoMean | float | Average of all satellite carrier to noise ratios (signal strengths) that non-zero in dBHz |
+| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
+| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
+| reserved | uint8_t[3] | Reserved for future use |
+
+
+#### DID_GPS1_RTK_POS
+
+GPS RTK position data 
+
+`gps_pos_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| ecef | double[3] | Position in ECEF {x,y,z} (m) |
+| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
+| hMSL | float | Height above mean sea level (MSL) in meters |
+| hAcc | float | Horizontal accuracy in meters |
+| vAcc | float | Vertical accuracy in meters |
+| pDop | float | Position dilution of precision (unitless) |
+| cnoMean | float | Average of all satellite carrier to noise ratios (signal strengths) that non-zero in dBHz |
+| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
+| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
+| reserved | uint8_t[3] | Reserved for future use |
+
+
+#### DID_GPS1_RTK_POS_MISC
+
+RTK precision position related data. 
+
+`gps_rtk_misc_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| accuracyPos | float[3] | Accuracy - estimated standard deviations of the solution assuming a priori error model and error parameters by the positioning options. []: standard deviations {ECEF - x,y,z} or {north, east, down} (meters) |
+| accuracyCov | float[3] | Accuracy - estimated standard deviations of the solution assuming a priori error model and error parameters by the positioning options. []: Absolute value of means square root of estimated covariance NE, EU, UN |
+| arThreshold | float | Ambiguity resolution threshold for validation |
+| gDop | float | Geometric dilution of precision (meters) |
+| hDop | float | Horizontal dilution of precision (meters) |
+| vDop | float | Vertical dilution of precision (meters) |
+| baseLla | double[3] | Base Position - latitude, longitude, height (degrees, meters) |
+| cycleSlipCount | uint32_t | Cycle slip counter |
+| roverGpsObservationCount | uint32_t | Rover gps observation element counter |
+| baseGpsObservationCount | uint32_t | Base station gps observation element counter |
+| roverGlonassObservationCount | uint32_t | Rover glonass observation element counter |
+| baseGlonassObservationCount | uint32_t | Base station glonass observation element counter |
+| roverGalileoObservationCount | uint32_t | Rover galileo observation element counter |
+| baseGalileoObservationCount | uint32_t | Base station galileo observation element counter |
+| roverBeidouObservationCount | uint32_t | Rover beidou observation element counter |
+| baseBeidouObservationCount | uint32_t | Base station beidou observation element counter |
+| roverQzsObservationCount | uint32_t | Rover qzs observation element counter |
+| baseQzsObservationCount | uint32_t | Base station qzs observation element counter |
+| roverGpsEphemerisCount | uint32_t | Rover gps ephemeris element counter |
+| baseGpsEphemerisCount | uint32_t | Base station gps ephemeris element counter |
+| roverGlonassEphemerisCount | uint32_t | Rover glonass ephemeris element counter |
+| baseGlonassEphemerisCount | uint32_t | Base station glonass ephemeris element counter |
+| roverGalileoEphemerisCount | uint32_t | Rover galileo ephemeris element counter |
+| baseGalileoEphemerisCount | uint32_t | Base station galileo ephemeris element counter |
+| roverBeidouEphemerisCount | uint32_t | Rover beidou ephemeris element counter |
+| baseBeidouEphemerisCount | uint32_t | Base station beidou ephemeris element counter |
+| roverQzsEphemerisCount | uint32_t | Rover qzs ephemeris element counter |
+| baseQzsEphemerisCount | uint32_t | Base station qzs ephemeris element counter |
+| roverSbasCount | uint32_t | Rover sbas element counter |
+| baseSbasCount | uint32_t | Base station sbas element counter |
+| baseAntennaCount | uint32_t | Base station antenna position element counter |
+| ionUtcAlmCount | uint32_t | Ionosphere model, utc and almanac count |
+| correctionChecksumFailures | uint32_t | Number of checksum failures from received corrections |
+| timeToFirstFixMs | uint32_t | Time to first RTK fix. |
+
+
+#### DID_GPS1_RTK_POS_REL
+
+RTK precision position base to rover relative info. 
+
+`gps_rtk_rel_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| differentialAge | float | Age of differential (seconds) |
+| arRatio | float | Ambiguity resolution ratio factor for validation |
+| baseToRoverVector | float[3] | Vector from base to rover (m) in ECEF - If Compassing enabled, this is the 3-vector from antenna 2 to antenna 1 |
+| baseToRoverDistance | float | Distance from base to rover (m) |
+| baseToRoverHeading | float | Angle from north to baseToRoverVector in local tangent plane. (rad) |
+| baseToRoverHeadingAcc | float | Accuracy of baseToRoverHeading. (rad) |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+
+
+#### DID_GPS1_SAT
+
+GPS 1 GNSS and sat identifiers, carrier to noise ratio (signal strength), elevation and azimuth angles, pseudo range residual. 
+
+`gps_sat_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| numSats | uint32_t | Number of satellites in the sky |
+| sat | gps_sat_sv_t[50] | Satellite information list |
+
+
+#### DID_GPS1_UBX_POS
+
+GPS 1 position data from ublox receiver. 
+
+`gps_pos_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| ecef | double[3] | Position in ECEF {x,y,z} (m) |
+| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
+| hMSL | float | Height above mean sea level (MSL) in meters |
+| hAcc | float | Horizontal accuracy in meters |
+| vAcc | float | Vertical accuracy in meters |
+| pDop | float | Position dilution of precision (unitless) |
+| cnoMean | float | Average of all satellite carrier to noise ratios (signal strengths) that non-zero in dBHz |
+| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
+| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
+| reserved | uint8_t[3] | Reserved for future use |
+
+
+#### DID_GPS1_VEL
+
+GPS 1 velocity data 
+
+`gps_vel_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| vel | float[3] | Speed accuracy in meters / second |
+| sAcc | float | NMEA input if status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA |
+
+
+#### DID_GPS1_VERSION
+
+GPS 1 version info 
+
+`gps_version_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| swVersion | uint8_t[30] | Software version |
+| hwVersion | uint8_t[10] | Hardware version |
+| extension | uint8_t[30] | Extension |
+| reserved | uint8_t[2] | ensure 32 bit aligned in memory |
+
+
+#### DID_GPS2_POS
+
+GPS 2 position data 
+
+`gps_pos_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| ecef | double[3] | Position in ECEF {x,y,z} (m) |
+| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
+| hMSL | float | Height above mean sea level (MSL) in meters |
+| hAcc | float | Horizontal accuracy in meters |
+| vAcc | float | Vertical accuracy in meters |
+| pDop | float | Position dilution of precision (unitless) |
+| cnoMean | float | Average of all satellite carrier to noise ratios (signal strengths) that non-zero in dBHz |
+| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
+| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
+| reserved | uint8_t[3] | Reserved for future use |
+
+
+#### DID_GPS2_RTK_CMP_MISC
+
+RTK Dual GNSS RTK compassing related data. 
+
+`gps_rtk_misc_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| accuracyPos | float[3] | Accuracy - estimated standard deviations of the solution assuming a priori error model and error parameters by the positioning options. []: standard deviations {ECEF - x,y,z} or {north, east, down} (meters) |
+| accuracyCov | float[3] | Accuracy - estimated standard deviations of the solution assuming a priori error model and error parameters by the positioning options. []: Absolute value of means square root of estimated covariance NE, EU, UN |
+| arThreshold | float | Ambiguity resolution threshold for validation |
+| gDop | float | Geometric dilution of precision (meters) |
+| hDop | float | Horizontal dilution of precision (meters) |
+| vDop | float | Vertical dilution of precision (meters) |
+| baseLla | double[3] | Base Position - latitude, longitude, height (degrees, meters) |
+| cycleSlipCount | uint32_t | Cycle slip counter |
+| roverGpsObservationCount | uint32_t | Rover gps observation element counter |
+| baseGpsObservationCount | uint32_t | Base station gps observation element counter |
+| roverGlonassObservationCount | uint32_t | Rover glonass observation element counter |
+| baseGlonassObservationCount | uint32_t | Base station glonass observation element counter |
+| roverGalileoObservationCount | uint32_t | Rover galileo observation element counter |
+| baseGalileoObservationCount | uint32_t | Base station galileo observation element counter |
+| roverBeidouObservationCount | uint32_t | Rover beidou observation element counter |
+| baseBeidouObservationCount | uint32_t | Base station beidou observation element counter |
+| roverQzsObservationCount | uint32_t | Rover qzs observation element counter |
+| baseQzsObservationCount | uint32_t | Base station qzs observation element counter |
+| roverGpsEphemerisCount | uint32_t | Rover gps ephemeris element counter |
+| baseGpsEphemerisCount | uint32_t | Base station gps ephemeris element counter |
+| roverGlonassEphemerisCount | uint32_t | Rover glonass ephemeris element counter |
+| baseGlonassEphemerisCount | uint32_t | Base station glonass ephemeris element counter |
+| roverGalileoEphemerisCount | uint32_t | Rover galileo ephemeris element counter |
+| baseGalileoEphemerisCount | uint32_t | Base station galileo ephemeris element counter |
+| roverBeidouEphemerisCount | uint32_t | Rover beidou ephemeris element counter |
+| baseBeidouEphemerisCount | uint32_t | Base station beidou ephemeris element counter |
+| roverQzsEphemerisCount | uint32_t | Rover qzs ephemeris element counter |
+| baseQzsEphemerisCount | uint32_t | Base station qzs ephemeris element counter |
+| roverSbasCount | uint32_t | Rover sbas element counter |
+| baseSbasCount | uint32_t | Base station sbas element counter |
+| baseAntennaCount | uint32_t | Base station antenna position element counter |
+| ionUtcAlmCount | uint32_t | Ionosphere model, utc and almanac count |
+| correctionChecksumFailures | uint32_t | Number of checksum failures from received corrections |
+| timeToFirstFixMs | uint32_t | Time to first RTK fix. |
+
+
+#### DID_GPS2_RTK_CMP_REL
+
+Dual GNSS RTK compassing / moving base to rover (GPS 1 to GPS 2) relative info. 
+
+`gps_rtk_rel_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| differentialAge | float | Age of differential (seconds) |
+| arRatio | float | Ambiguity resolution ratio factor for validation |
+| baseToRoverVector | float[3] | Vector from base to rover (m) in ECEF - If Compassing enabled, this is the 3-vector from antenna 2 to antenna 1 |
+| baseToRoverDistance | float | Distance from base to rover (m) |
+| baseToRoverHeading | float | Angle from north to baseToRoverVector in local tangent plane. (rad) |
+| baseToRoverHeadingAcc | float | Accuracy of baseToRoverHeading. (rad) |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+
+
+#### DID_GPS2_SAT
+
+GPS 2 GNSS and sat identifiers, carrier to noise ratio (signal strength), elevation and azimuth angles, pseudo range residual. 
+
+`gps_sat_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| numSats | uint32_t | Number of satellites in the sky |
+| sat | gps_sat_sv_t[50] | Satellite information list |
+
+
+#### DID_GPS2_VEL
+
+GPS 2 velocity data 
+
+`gps_vel_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| vel | float[3] | Speed accuracy in meters / second |
+| sAcc | float | NMEA input if status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA |
+
+
+#### DID_GPS2_VERSION
+
+GPS 2 version info 
+
+`gps_version_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| swVersion | uint8_t[30] | Software version |
+| hwVersion | uint8_t[10] | Hardware version |
+| extension | uint8_t[30] | Extension |
+| reserved | uint8_t[2] | ensure 32 bit aligned in memory |
+
+
+#### DID_GPS_RTK_OPT
+
+RTK options - requires little endian CPU. 
+
+`gps_rtk_opt_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| mode | int32_t | positioning mode (PMODE_???) |
+| soltype | int32_t | solution type (0:forward,1:backward,2:combined) |
+| nf | int32_t | number of frequencies (1:L1,2:L1+L2,3:L1+L2+L5) |
+| navsys | int32_t | navigation systems |
+| elmin | double | elevation mask angle (rad) |
+| snrmin | int32_t | Min snr to consider satellite for rtk |
+| modear | int32_t | AR mode (0:off,1:continuous,2:instantaneous,3:fix and hold,4:ppp-ar) |
+| glomodear | int32_t | GLONASS AR mode (0:off,1:on,2:auto cal,3:ext cal) |
+| gpsmodear | int32_t | GPS AR mode (0:off,1:on) |
+| sbsmodear | int32_t | SBAS AR mode (0:off,1:on) |
+| bdsmodear | int32_t | BeiDou AR mode (0:off,1:on) |
+| arfilter | int32_t | AR filtering to reject bad sats (0:off,1:on) |
+| maxout | int32_t | obs outage count to reset bias |
+| maxrej | int32_t | reject count to reset bias |
+| minlock | int32_t | min lock count to fix ambiguity |
+| minfixsats | int32_t | min sats to fix integer ambiguities |
+| minholdsats | int32_t | min sats to hold integer ambiguities |
+| mindropsats | int32_t | min sats to drop sats in AR |
+| rcvstds | int32_t | use stdev estimates from receiver to adjust measurement variances |
+| minfix | int32_t | min fix count to hold ambiguity |
+| armaxiter | int32_t | max iteration to resolve ambiguity |
+| dynamics | int32_t | dynamics model (0:none,1:velociy,2:accel) |
+| niter | int32_t | number of filter iteration |
+| intpref | int32_t | interpolate reference obs (for post mission) |
+| rovpos | int32_t | rover position for fixed mode |
+| refpos | int32_t | base position for relative mode |
+| eratio | double[1] | code/phase error ratio |
+| err | double[5] | measurement error factor |
+| std | double[3] | initial-state std [0]bias,[1]iono [2]trop |
+| prn | double[6] | process-noise std [0]bias,[1]iono [2]trop [3]acch [4]accv [5] pos |
+| sclkstab | double | satellite clock stability (sec/sec) |
+| thresar | double[8] | AR validation threshold |
+| elmaskar | double | elevation mask of AR for rising satellite (rad) |
+| elmaskhold | double | elevation mask to hold ambiguity (rad) |
+| thresslip | double | slip threshold of geometry-free phase (m) |
+| varholdamb | double | variance for fix-and-hold pseudo measurements (cycle^2) |
+| gainholdamb | double | gain used for GLO and SBAS sats to adjust ambiguity |
+| maxtdiff | double | max difference of time (sec) |
+| fix_reset_base_msgs | int | reset sat biases after this long trying to get fix if not acquired |
+| maxinnocode | double | reject threshold of NIS |
+| maxinnophase | double | reject threshold of gdop |
+| maxnis | double | baseline length constraint {const,sigma before fix, sigma after fix} (m) |
+| maxgdop | double | maximum error wrt ubx position (triggers reset if more than this far) (m) |
+| baseline | double[3] | rover position for fixed mode {x,y,z} (ecef) (m) |
+| max_baseline_error | double | base position for relative mode {x,y,z} (ecef) (m) |
+| reset_baseline_error | double | max averaging epochs |
+| max_ubx_error | float | output single by dgps/float/fix/ppp outage |
+
+
+### Raw GPS Data
+
+Raw GPS data is contained in the `DID_GPS1_RAW`, `DID_GPS2_RAW`, and `DID_GPS_BASE_RAW` messages of type `gps_raw_t`.  The actual raw data is contained in the union member `gps_raw_t.data` and should be interpreted based on the value of `gps_raw_t.dataType` (i.e. as observation, ephemeris, SBAS, or base station position).
+
+#### DID_GPS1_RAW
+
+GPS raw data for rover (observation, ephemeris, etc.) - requires little endian CPU. The contents of data can vary for this message and are determined by dataType field. RTK positioning or RTK compassing must be enabled to stream this message. 
+
+`gps_raw_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| receiverIndex | uint8_t | Receiver index (1=RECEIVER_INDEX_GPS1, 2=RECEIVER_INDEX_EXTERNAL_BASE, or 3=RECEIVER_INDEX_GPS2 ) |
+| dataType | uint8_t | Type of data (eRawDataType: 1=observations, 2=ephemeris, 3=glonassEphemeris, 4=SBAS, 5=baseAntenna, 6=IonosphereModel) |
+| obsCount | uint8_t | Number of observations in data (obsd_t) when dataType==1 (raw_data_type_observation). |
+| reserved | uint8_t | Reserved |
+| data | uGpsRawData | Interpret based on dataType (see eRawDataType) |
+
+
+#### DID_GPS2_RAW
+
+GPS raw data for rover (observation, ephemeris, etc.) - requires little endian CPU. The contents of data can vary for this message and are determined by dataType field. RTK positioning or RTK compassing must be enabled to stream this message. 
+
+`gps_raw_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| receiverIndex | uint8_t | Receiver index (1=RECEIVER_INDEX_GPS1, 2=RECEIVER_INDEX_EXTERNAL_BASE, or 3=RECEIVER_INDEX_GPS2 ) |
+| dataType | uint8_t | Type of data (eRawDataType: 1=observations, 2=ephemeris, 3=glonassEphemeris, 4=SBAS, 5=baseAntenna, 6=IonosphereModel) |
+| obsCount | uint8_t | Number of observations in data (obsd_t) when dataType==1 (raw_data_type_observation). |
+| reserved | uint8_t | Reserved |
+| data | uGpsRawData | Interpret based on dataType (see eRawDataType) |
+
+
+#### DID_GPS_BASE_RAW
+
+GPS raw data for base station (observation, ephemeris, etc.) - requires little endian CPU. The contents of data can vary for this message and are determined by dataType field. RTK positioning or RTK compassing must be enabled to stream this message. 
+
+`gps_raw_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| receiverIndex | uint8_t | Receiver index (1=RECEIVER_INDEX_GPS1, 2=RECEIVER_INDEX_EXTERNAL_BASE, or 3=RECEIVER_INDEX_GPS2 ) |
+| dataType | uint8_t | Type of data (eRawDataType: 1=observations, 2=ephemeris, 3=glonassEphemeris, 4=SBAS, 5=baseAntenna, 6=IonosphereModel) |
+| obsCount | uint8_t | Number of observations in data (obsd_t) when dataType==1 (raw_data_type_observation). |
+| reserved | uint8_t | Reserved |
+| data | uGpsRawData | Interpret based on dataType (see eRawDataType) |
+
+
+#### Raw GPS Data Buffer Union
+
+`uGpsRawData`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| obs | obsd_t[] | Satellite observation data |
+| eph | eph_t | Satellite non-GLONASS ephemeris data (GPS, Galileo, Beidou, QZSS) |
+| gloEph | geph_t | Satellite GLONASS ephemeris data |
+| sbas | sbsmsg_t | Satellite-Based Augmentation Systems (SBAS) data |
+| sta | sta_t | Base station information (base position, antenna position, antenna height, etc.) |
+| ion | ion_model_utc_alm_t | Ionosphere model and UTC parameters |
+| buf | uint8_t[1000] | Byte buffer |
+
+
+#### GPS Galileo QZSS Ephemeris
+
+`eph_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| sat | int32_t | Satellite number in RTKlib notation.  GPS: 1-32, GLONASS: 33-59, Galilleo: 60-89, SBAS: 90-95 |
+| iode | int32_t | IODE Issue of Data, Ephemeris (ephemeris version) |
+| iodc | int32_t | IODC Issue of Data, Clock (clock version) |
+| sva | int32_t | SV accuracy (URA index) IRN-IS-200H p.97 |
+| svh | int32_t | SV health GPS/QZS (0:ok) |
+| week | int32_t | GPS/QZS: gps week, GAL: galileo week |
+| code | int32_t | GPS/QZS: code on L2. (00 = Invalid, 01 = P Code ON, 11 = C/A code ON, 11 = Invalid).  GAL/CMP: data sources |
+| flag | int32_t | GPS/QZS: L2 P data flag (indicates that the NAV data stream was commanded OFF on the P-code of the in-phase component of the L2 channel). CMP: nav type |
+| toe | gtime_t | Time Of Ephemeris, ephemeris reference epoch in seconds within the week (s) |
+| toc | gtime_t | clock data reference time (s) (20.3.4.5) |
+| ttr | gtime_t | T_trans (s) |
+| A | double | Orbit semi-major axis (m) |
+| e | double | Orbit eccentricity (non-dimensional)  |
+| i0 | double | Orbit inclination angle at reference time (rad) |
+| OMG0 | double | Longitude of ascending node of orbit plane at weekly epoch (rad) |
+| omg | double | Argument of perigee (rad) |
+| M0 | double | Mean anomaly at reference time (rad) |
+| deln | double | Mean Motion Difference From Computed Value (rad) |
+| OMGd | double | Rate of Right Ascension (rad/s) |
+| idot | double | Rate of Inclination Angle (rad/s) |
+| crc | double | Amplitude of the Cosine Harmonic Correction Term to the Orbit Radius (m) |
+| crs | double | Amplitude of the Sine Harmonic Correction Term to the Orbit Radius (m) |
+| cuc | double | Amplitude of the Cosine Harmonic Correction Term to the Argument of Latitude (rad)  |
+| cus | double | Amplitude of the Sine Harmonic Correction Term to the Argument of Latitude (rad) |
+| cic | double | Amplitude of the Cosine Harmonic Correction Term to the Angle of Inclination (rad) |
+| cis | double | Amplitude of the Sine Harmonic Correction Term to the Angle of Inclination (rad) |
+| toes | double | Time Of Ephemeris, ephemeris reference epoch in seconds within the week (s), same as <toe> above but represented as double type. Note that toe is computed as eph->toe = gst2time(week, eph->toes) |
+| fit | double | Fit interval (h) (0: 4 hours, 1: greater than 4 hours) |
+| f0 | double | SV clock offset, af0 (s) |
+| f1 | double | SV clock drift, af1 (s/s, non-dimensional) |
+| f2 | double | SV clock drift rate, af2 (1/s) |
+| tgd | double[4] | Group delay parameters GPS/QZS: tgd[0] = TGD (IRN-IS-200H p.103). Galilleo: tgd[0] = BGD E5a/E1, tgd[1] = BGD E5b/E1. Beidou: tgd[0] = BGD1, tgd[1] = BGD2 |
+| Adot | double | Adot for CNAV, not used |
+| ndot | double | First derivative of mean motion n (second derivative of mean anomaly M), ndot for CNAV (rad/s/s). Not used. |
+
+
+#### GLONASS Ephemeris
+
+`geph_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| sat | int32_t | Satellite number in RTKlib notation.  GPS: 1-32, GLONASS: 33-59, Galilleo: 60-89, SBAS: 90-95 |
+| iode | int32_t | IODE (0-6 bit of tb field) |
+| frq | int32_t | satellite frequency number |
+| svh | int32_t | satellite health |
+| sva | int32_t | satellite accuracy |
+| age | int32_t | satellite age of operation |
+| toe | gtime_t | Ephemeris reference epoch in seconds within the week in GPS time gpst (s) |
+| tof | gtime_t | message frame time in gpst (s) |
+| pos | double[3] | satellite position (ecef) (m) |
+| vel | double[3] | satellite velocity (ecef) (m/s) |
+| acc | double[3] | satellite acceleration (ecef) (m/s^2) |
+| taun | double | SV clock bias (s) |
+| gamn | double | relative frequency bias |
+| dtaun | double | delay between L1 and L2 (s) |
+
+
+#### SBAS
+
+`sbsmsg_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | int32_t | receiption time - week |
+| tow | int32_t | reception time - tow |
+| prn | int32_t | SBAS satellite PRN number |
+| msg | uint8_t[29] | SBAS message (226bit) padded by 0 |
+| reserved | uint8_t[3] | reserved for alighment |
+
+
+#### Station Parameters
+
+`sta_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| deltype | int32_t | antenna delta type (0:enu,1:xyz) |
+| pos | double[3] | station position (ecef) (m) |
+| del | double[3] | antenna position delta (e/n/u or x/y/z) (m) |
+| hgt | double | antenna height (m) |
+| stationId | int32_t | station id |
+
+
+#### Observation Data
+
+`obsd_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | gtime_t | Receiver local time approximately aligned to the GPS time system (GPST) |
+| sat | uint8_t | Satellite number in RTKlib notation.  GPS: 1-32, GLONASS: 33-59, Galilleo: 60-89, SBAS: 90-95 |
+| rcv | uint8_t | receiver number |
+| SNR | uint8_t[1] | Cno, carrier-to-noise density ratio (signal strength) (0.25 dB-Hz) |
+| LLI | uint8_t[1] | Loss of Lock Indicator. Set to non-zero values only when carrier-phase is valid (L > 0).  bit1 = loss-of-lock, bit2 = half-cycle-invalid |
+| code | uint8_t[1] | Code indicator: CODE_L1C (1) = L1C/A,G1C/A,E1C (GPS,GLO,GAL,QZS,SBS), CODE_L1X (12) = E1B+C,L1C(D+P) (GAL,QZS), CODE_L1I (47) = B1I (BeiDou) |
+| qualL | uint8_t[1] | Estimated carrier phase measurement standard deviation (0.004 cycles), zero means invalid |
+| qualP | uint8_t[1] | Estimated pseudorange measurement standard deviation (0.01 m), zero means invalid |
+| reserved | uint8_t | reserved, for alignment |
+| L | double[1] | Observation data carrier-phase (cycle). The carrier phase initial ambiguity is initialized using an approximate value to make the magnitude of the phase close to the pseudorange measurement. Clock resets are applied to both phase and code measurements in accordance with the RINEX specification. |
+| P | double[1] | Observation data pseudorange (m). GLONASS inter frequency channel delays are compensated with an internal calibration table |
+| D | float[1] | Observation data Doppler measurement (positive sign for approaching satellites) (Hz) |
+
+
+#### Satellite Observation
+
+`obs_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| n | uint32_t | number of observation slots used |
+| nmax | uint32_t | number of observation slots allocated |
+| data | obsd_t | observation data buffer |
+
+
+#### Satellite information
+
+`gps_sat_sv_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| gnssId | uint8_t | GNSS identifier: 0 GPS, 1 SBAS, 2 Galileo, 3 BeiDou, 5 QZSS, 6 GLONASS |
+| svId | uint8_t | Satellite identifier |
+| cno | uint8_t | (dBHz) Carrier to noise ratio (signal strength) |
+| elev | int8_t | (deg) Elevation (range: +/-90) |
+| azim | int16_t | (deg) Azimuth (range: +/-180) |
+| prRes | int16_t | (m) Pseudo range residual |
+| flags | uint32_t | (see eSatSvFlags) |
+
+
+#### Inertial Measurement Unit (IMU)
+
+`imus_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| pqr | float[3] | Gyroscope P, Q, R in radians / second |
+| acc | float[3] | Acceleration X, Y, Z in meters / second squared |
+
+
+### Configuration
+
+#### DID_ASCII_BCAST_PERIOD
+
+Broadcast period for ASCII messages 
+
+`ascii_msgs_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| options | uint32_t | Options: Port selection[0x0=current, 0xFF=all, 0x1=ser0, 0x2=ser1, 0x4=USB] (see RMC_OPTIONS_...) |
+| pimu | uint16_t | Broadcast period (ms) - ASCII dual IMU data. 0 to disable. |
+| ppimu | uint16_t | Broadcast period (ms) - ASCII preintegrated dual IMU: delta theta (rad) and delta velocity (m/s). 0 to disable. |
+| pins1 | uint16_t | Broadcast period (ms) - ASCII INS output: euler rotation w/ respect to NED, NED position from reference LLA. 0 to disable. |
+| pins2 | uint16_t | Broadcast period (ms) - ASCII INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. 0 to disable. |
+| pgpsp | uint16_t | Broadcast period (ms) - ASCII GPS position data. 0 to disable. |
+| reserved | uint16_t | Broadcast period (ms) - Reserved.  Leave zero. |
+| gpgga | uint16_t | Broadcast period (ms) - ASCII NMEA GPGGA GPS 3D location, fix, and accuracy. 0 to disable. |
+| gpgll | uint16_t | Broadcast period (ms) - ASCII NMEA GPGLL GPS 2D location and time. 0 to disable. |
+| gpgsa | uint16_t | Broadcast period (ms) - ASCII NMEA GSA GPS DOP and active satellites. 0 to disable. |
+| gprmc | uint16_t | Broadcast period (ms) - ASCII NMEA recommended minimum specific GPS/Transit data. 0 to disable. |
+| gpzda | uint16_t | Broadcast period (ms) - ASCII NMEA Data and Time. 0 to disable. |
+| pashr | uint16_t | Broadcast period (ms) - ASCII NMEA Inertial Attitude Data. 0 to disable. |
+
+
+#### DID_FLASH_CONFIG
+
+Flash memory configuration 
+
+`nvm_flash_cfg_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| size | uint32_t | Size of group or union, which is nvm_group_x_t + padding |
+| checksum | uint32_t | Checksum, excluding size and checksum |
+| key | uint32_t | Manufacturer method for restoring flash defaults |
+| startupImuDtMs | uint32_t | IMU sample (system input data) period in milliseconds set on startup. Cannot be larger than startupNavDtMs. Zero disables sensor/IMU sampling. |
+| startupNavDtMs | uint32_t | Nav filter (system output data) update period in milliseconds set on startup. 1ms minimum (1KHz max). Zero disables nav filter updates. |
+| ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
+| ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
+| insRotation | float[3] | Roll, pitch, yaw euler angle rotation in radians from INS Sensor Frame to Intermediate Output Frame.  Order applied: heading, pitch, roll. |
+| insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
+| gps1AntOffset | float[3] | X,Y,Z offset in meters from Sensor Frame origin to GPS 1 antenna. |
+| insDynModel | uint8_t | INS dynamic platform model.  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=AUTOMOTIVE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
+| reserved | uint8_t | Reserved |
+| gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
+| sysCfgBits | uint32_t | System configuration bits (see eSysConfigBits). |
+| refLla | double[3] | Reference latitude, longitude and height above ellipsoid for north east down (NED) calculations (deg, deg, m) |
+| lastLla | double[3] | Last latitude, longitude, HAE (height above ellipsoid) used to aid GPS startup (deg, deg, m).  Updated when the distance between current LLA and lastLla exceeds lastLlaUpdateDistance. |
+| lastLlaTimeOfWeekMs | uint32_t | Last LLA GPS time since week start (Sunday morning) in milliseconds |
+| lastLlaWeek | uint32_t | Last LLA GPS number of weeks since January 6th, 1980 |
+| lastLlaUpdateDistance | float | Distance between current and last LLA that triggers an update of lastLla  |
+| ioConfig | uint32_t | Hardware interface configuration bits (see eIoConfig). |
+| cBrdConfig | uint32_t | Carrier board (i.e. eval board) configuration bits |
+| gps2AntOffset | float[3] | X,Y,Z offset in meters from DOD_ Frame origin to GPS 2 antenna. |
+| zeroVelRotation | float[3] | Euler (roll, pitch, yaw) rotation in radians from INS Sensor Frame to Intermediate ZeroVelocity Frame.  Order applied: heading, pitch, roll. |
+| zeroVelOffset | float[3] | X,Y,Z offset in meters from Intermediate ZeroVelocity Frame to Zero Velocity Frame. |
+| magInclination | float | Earth magnetic field (magnetic north) inclination (negative pitch offset) in radians |
+| magDeclination | float | Earth magnetic field (magnetic north) declination (heading offset from true north) in radians |
+| gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
+| startupGPSDtMs | uint32_t | GPS measurement (system input data) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
+| RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
+| sensorConfig | uint32_t | Sensor config to specify the full-scale sensing ranges and output rotation for the IMU and magnetometer (see eSensorConfig in data_sets.h) |
+| wheelConfig | wheel_config_t | Wheel encoder: euler angles describing the rotation from imu to left wheel |
+| gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
+| ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
+
+
+#### DID_RMC
+
+Realtime Message Controller (RMC). The data sets available through RMC are driven by the availability of the data. The RMC provides updates from various data sources (i.e. sensors) as soon as possible with minimal latency. Several of the data sources (sensors) output data at different data rates that do not all correspond. The RMC is provided so that broadcast of sensor data is done as soon as it becomes available. All RMC messages can be enabled using the standard Get Data packet format. 
+
+`rmc_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| bits | uint64_t | Data stream enable bits for the specified ports.  (see RMC_BITS_...) |
+| options | uint32_t | Options to select alternate ports to output data, etc.  (see RMC_OPTIONS_...) |
+
+
+### Command
+
+#### DID_SYS_CMD
+
+System commands. Both the command and invCommand fields must be set at the same time for a command to take effect. 
+
+`system_command_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| command | uint32_t | System commands (see eSystemCommand) 1=save current persistent messages, 5=zero motion, 97=save flash, 99=software reset.  "invCommand" (following variable) must be set to bitwise inverse of this value for this command to be processed.  |
+| invCommand | uint32_t | Error checking field that must be set to bitwise inverse of command field for the command to take effect.  |
+
+
+### EVB-2
+
+#### DID_EVB_FLASH_CFG
+
+EVB configuration. 
+
+`evb_flash_cfg_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| size | uint32_t | Size of this struct |
+| checksum | uint32_t | Checksum, excluding size and checksum |
+| key | uint32_t | Manufacturer method for restoring flash defaults |
+| cbPreset | uint8_t | Communications bridge preset. (see eEvb2ComBridgePreset) |
+| reserved1 | uint8_t[3] | Communications bridge forwarding |
+| cbf | uint32_t[EVB2_PORT_COUNT] | Communications bridge options (see eEvb2ComBridgeOptions) |
+| cbOptions | uint32_t | Config bits (see eEvbFlashCfgBits) |
+| bits | uint32_t | Radio preamble ID (PID) - 0x0 to 0x9. Only radios with matching PIDs can communicate together. Different PIDs minimize interference between multiple sets of networks. Checked before the network ID. |
+| radioPID | uint32_t | Radio network ID (NID) - 0x0 to 0x7FFF. Only radios with matching NID can communicate together. Checked after the preamble ID. |
+| radioNID | uint32_t | Radio power level - Transmitter output power level. (XBee PRO SX 0=20dBm, 1=27dBm, 2=30dBm)  |
+| radioPowerLevel | uint32_t | WiFi SSID and PSK |
+| wifi | evb_wifi_t[3] | Server IP and port |
+| server | evb_server_t[3] | Encoder tick to wheel rotation conversion factor (in radians).  Encoder tick count per revolution on 1 channel x gear ratio x 2pi. |
+| encoderTickToWheelRad | float | CAN baudrate |
+| CANbaud_kbps | uint32_t | CAN receive address |
+| can_receive_address | uint32_t | EVB port for uINS communications and SD card logging. 0=uINS-Ser0 (default), 1=uINS-Ser1, SP330=5, 6=GPIO_H8 (use eEvb2CommPorts) |
+| uinsComPort | uint8_t | EVB port for uINS aux com and RTK corrections. 0=uINS-Ser0, 1=uINS-Ser1 (default), 5=SP330, 6=GPIO_H8 (use eEvb2CommPorts) |
+| uinsAuxPort | uint8_t | Enable radio RTK filtering, etc. (see eEvb2PortOptions) |
+| reserved2 | uint8_t[2] | Baud rate for EVB serial port H3 (SP330 RS233 and RS485/422). |
+| portOptions | uint32_t | Baud rate for EVB serial port H4 (TLL to external radio). |
+| h3sp330BaudRate | uint32_t | Baud rate for EVB serial port H8 (TLL). |
+| h4xRadioBaudRate | uint32_t | Wheel encoder configuration (see eWheelCfgBits) |
+| h8gpioBaudRate | uint32_t | Wheel update period.  Sets the wheel encoder and control update period. (ms) |
+
+
+#### DID_EVB_STATUS
+
+EVB monitor and log control interface. 
+
+`evb_status_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| firmwareVer | uint8_t[4] | Firmware (software) version |
+| evbStatus | uint32_t | Status (eEvbStatus) |
+| loggerMode | uint32_t | Data logger control state. (see eEvb2LoggerMode) |
+| loggerElapsedTimeMs | uint32_t | logger |
+| wifiIpAddr | uint32_t | WiFi IP address |
+| sysCommand | uint32_t | System command |
+
+
+### General
+
+#### DID_BIT
+
+System built-in self-test 
+
+`bit_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| state | uint32_t | Built-in self-test state (see eBitState) |
+| hdwBitStatus | uint32_t | Hardware BIT status (see eHdwBitStatusFlags) |
+| calBitStatus | uint32_t | Calibration BIT status (see eCalBitStatusFlags) |
+| tcPqrBias | float | Temperature calibration bias |
+| tcAccBias | float | Temperature calibration slope |
+| tcPqrSlope | float | Temperature calibration linearity |
+| tcAccSlope | float | PQR motion (angular rate) |
+| tcPqrLinearity | float | ACC motion w/ gravity removed (linear acceleration) |
+| tcAccLinearity | float | Angular rate standard deviation |
+| pqr | float | Acceleration standard deviation |
+
+
+#### DID_CAN_CONFIG
+
+Addresses for CAN messages
+
+`can_config_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| can_period_mult | uint32_t[] | Broadcast period (ms) - CAN time message. 0 to disable. |
+| can_transmit_address | uint32_t[] | Transmit address. |
+| can_baudrate_kbps | uint32_t | Baud rate (kbps)  (See can_baudrate_t for valid baud rates)  |
+| can_receive_address | uint32_t | Receive address. |
+
+
+#### DID_DEV_INFO
+
+Device information 
+
+`dev_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| reserved | uint32_t | Reserved bits |
+| serialNumber | uint32_t | Serial number |
+| hardwareVer | uint8_t[4] | Hardware version |
+| firmwareVer | uint8_t[4] | Firmware (software) version |
+| buildNumber | uint32_t | Build number |
+| protocolVer | uint8_t[4] | Communications protocol version |
+| repoRevision | uint32_t | Repository revision number |
+| manufacturer | char[24] | Manufacturer name |
+| buildDate | uint8_t[4] | Build date, little endian order: [0] = status ('r'=release, 'd'=debug), [1] = year-2000, [2] = month, [3] = day.  Reversed byte order for big endian systems |
+| buildTime | uint8_t[4] | Build date, little endian order: [0] = hour, [1] = minute, [2] = second, [3] = millisecond.  Reversed byte order for big endian systems |
+| addInfo | char[24] | Additional info |
+
+
+#### DID_DIAGNOSTIC_MESSAGE
+
+Diagnostic message 
+
+`diag_msg_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| messageLength | uint32_t | Message length, including null terminator |
+| message | char[256] | Message data, max size of message is 256 |
+
+
+#### DID_DUAL_IMU_MAG
+
+DID_DUAL_IMU + DID_MAGNETOMETER + MAGNETOMETER_2 Only one of DID_DUAL_IMU_RAW_MAG, DID_DUAL_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
+
+`imu_mag_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| imu | dual_imu_t | dual imu - raw or pre-integrated depending on data id |
+| mag1 | magnetometer_t | mag 1 |
+
+
+#### DID_DUAL_IMU_RAW_MAG
+
+DID_DUAL_IMU_RAW + DID_MAGNETOMETER + MAGNETOMETER_2 Only one of DID_DUAL_IMU_RAW_MAG, DID_DUAL_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
+
+`imu_mag_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| imu | dual_imu_t | dual imu - raw or pre-integrated depending on data id |
+| mag1 | magnetometer_t | mag 1 |
+
+
+#### DID_EVB_DEBUG_ARRAY
+
+
+
+`debug_array_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+
+
+#### DID_EVB_DEV_INFO
+
+EVB device information 
+
+`dev_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| reserved | uint32_t | Reserved bits |
+| serialNumber | uint32_t | Serial number |
+| hardwareVer | uint8_t[4] | Hardware version |
+| firmwareVer | uint8_t[4] | Firmware (software) version |
+| buildNumber | uint32_t | Build number |
+| protocolVer | uint8_t[4] | Communications protocol version |
+| repoRevision | uint32_t | Repository revision number |
+| manufacturer | char[24] | Manufacturer name |
+| buildDate | uint8_t[4] | Build date, little endian order: [0] = status ('r'=release, 'd'=debug), [1] = year-2000, [2] = month, [3] = day.  Reversed byte order for big endian systems |
+| buildTime | uint8_t[4] | Build date, little endian order: [0] = hour, [1] = minute, [2] = second, [3] = millisecond.  Reversed byte order for big endian systems |
+| addInfo | char[24] | Additional info |
+
+
+#### DID_EVB_RTOS_INFO
+
+EVB-2 RTOS information. 
+
+`evb_rtos_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| freeHeapSize | uint32_t | Heap high water mark bytes |
+| mallocSize | uint32_t | Total memory allocated using RTOS pvPortMalloc() |
+| freeSize | uint32_t | Total memory freed using RTOS vPortFree() |
+| task | rtos_task_t[] | Tasks |
+
+
+#### DID_INL2_MAG_OBS_INFO
+
+INL2 magnetometer calibration information. 
+
+`inl2_mag_obs_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+
+
+#### DID_INL2_NED_SIGMA
+
+INL2 standard deviation in the NED frame 
+
+`inl2_ned_sigma_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | unsigned | Timestamp in milliseconds |
+| PxyzNED | float[3] | NED position error sigma |
+| PvelNED | float[3] | NED velocity error sigma |
+| PattNED | float[3] | NED attitude error sigma |
+| PABias | float[3] | Acceleration bias error sigma |
+| PWBias | float[3] | Angular rate bias error sigma |
+| PBaroBias | float | Barometric altitude bias error sigma |
+| PDeclination | float | Mag declination error sigma |
+
+
+#### DID_INL2_STATES
+
+
+
+`inl2_states_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeek | double | GPS time of week (since Sunday morning) in seconds |
+| qe2b | float[4] | Quaternion body rotation with respect to ECEF |
+| ve | float[3] | (m/s) Velocity in ECEF frame |
+| ecef | double[3] | (m)     Position in ECEF frame |
+| biasPqr | float[3] | (rad/s) Gyro bias |
+| biasAcc | float[3] | (m/s^2) Accelerometer bias |
+| biasBaro | float | (m)     Barometer bias |
+| magDec | float | (rad)   Magnetic declination |
+| magInc | float | (rad)   Magnetic inclination |
+
+
+#### DID_INL2_STATUS
+
+
+
+`inl2_status_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+
+
+#### DID_INTERNAL_DIAGNOSTIC
+
+Internal diagnostic info 
+
+`internal_diagnostic_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| gapCountSerialDriver | uint32_t[6] | Count of gap of more than 0.5 seconds receiving serial data, driver level, one entry for each com port |
+| gapCountSerialParser | uint32_t[6] | Count of gap of more than 0.5 seconds receiving serial data, class / parser level, one entry for each com port |
+| rxOverflowCount | uint32_t[6] | Count of rx overflow, one entry for each com port |
+| txOverflowCount | uint32_t[6] | Count of tx overflow, one entry for each com port |
+| checksumFailCount | uint32_t[6] | Count of checksum failures, one entry for each com port |
+
+
+#### DID_IO
+
+I/O 
+
+`io_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| gpioStatus | uint32_t | General purpose I/O status |
+
+
+#### DID_MANUFACTURING_INFO
+
+Manufacturing info 
+
+`manufacturing_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| serialNumber | uint32_t | Serial number |
+| lotNumber | uint32_t | Lot number |
+| date | char[16] | Manufacturing date (YYYYMMDDHHMMSS) |
+| key | uint32_t | Key |
+
+
+#### DID_PORT_MONITOR
+
+Data rate and status monitoring for each communications port. 
+
+`port_monitor_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| port | port_monitor_set_t[6] | Port monitor set |
+
+
+#### DID_POSITION_MEASUREMENT
+
+External position estimate
+
+`pos_measurement_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeek | double | GPS time of week (since Sunday morning) in seconds |
+| ecef | double[3] | Position in ECEF (earth-centered earth-fixed) frame in meters |
+| psi | float | Heading with respect to NED frame (rad |
+
+
+#### DID_PREINTEGRATED_IMU_MAG
+
+DID_PREINTEGRATED_IMU + DID_MAGNETOMETER + MAGNETOMETER_2 Only one of DID_DUAL_IMU_RAW_MAG, DID_DUAL_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
+
+`pimu_mag_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| pimu | preintegrated_imu_t | dual preintegrated imu |
+| mag1 | magnetometer_t | mag 1 |
+
+
+#### DID_RTOS_INFO
+
+RTOS information. 
+
+`rtos_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| freeHeapSize | uint32_t | Heap high water mark bytes |
+| mallocSize | uint32_t | Total memory allocated using RTOS pvPortMalloc() |
+| freeSize | uint32_t | Total memory freed using RTOS vPortFree() |
+| task | rtos_task_t[] | Tasks |
+
+
+#### DID_SENSORS_ADC
+
+
+
+`sys_sensors_adc_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+
+
+#### DID_SENSORS_ADC_SIGMA
+
+
+
+`sys_sensors_adc_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+
+
+#### DID_SENSORS_CAL1
+
+
+
+`sensors_mpu_w_temp_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+
+
+#### DID_SENSORS_CAL2
+
+
+
+`sensors_mpu_w_temp_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+
+
+#### DID_SENSORS_TC_BIAS
+
+
+
+`sensors_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| temp | float | Temperature in Celsius |
+| pqr | float[3] | Gyros in radians / second |
+| acc | float[3] | Accelerometers in meters / second squared |
+| mag | float[3] | Magnetometers in Gauss |
+| bar | float | Barometric pressure in kilopascals |
+| barTemp | float | Temperature of barometric pressure sensor in Celsius |
+| mslBar | float | MSL altitude from barometric pressure sensor in meters |
+| humidity | float | Relative humidity as a percent (%rH). Range is 0% - 100% |
+| vin | float | EVB system input voltage in volts. uINS pin 5 (G2/AN2).  Use 10K/1K resistor divider between Vin and GND.  |
+| ana1 | float | ADC analog input in volts. uINS pin 4, (G1/AN1). |
+| ana3 | float | ADC analog input in volts. uINS pin 19 (G3/AN3). |
+| ana4 | float | ADC analog input in volts. uINS pin 20 (G4/AN4). |
+
+
+#### DID_STROBE_IN_TIME
+
+Timestamp for input strobe. 
+
+`strobe_in_time_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| pin | uint32_t | Strobe input pin |
+| count | uint32_t | Strobe serial index number |
+
+
+#### DID_SURVEY_IN
+
+Survey in, used to determine position for RTK base station. Base correction output cannot run during a survey and will be automatically disabled if a survey is started. 
+
+`survey_in_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| state | uint32_t | State of current survey, eSurveyInStatus |
+| maxDurationSec | uint32_t | Maximum time (milliseconds) survey will run if minAccuracy is not first achieved. (ignored if 0). |
+| minAccuracy | float | Required horizontal accuracy (m) for survey to complete before maxDuration. (ignored if 0) |
+| elapsedTimeSec | uint32_t | Elapsed time (seconds) of the survey. |
+| hAccuracy | float | Approximate horizontal accuracy of the survey (m). |
+| lla | double[3] | The current surveyed latitude, longitude, altitude (deg, deg, m) |
+
+
+#### DID_SYS_FAULT
+
+System fault information 
+
+`system_fault_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| status | uint32_t | System fault status |
+| g1Task | uint32_t | Fault Type at HardFault |
+| g2FileNum | uint32_t | Multipurpose register - Line number of fault |
+| g3LineNum | uint32_t | Multipurpose register - File number at fault |
+| g4 | uint32_t | Multipurpose register - at time of fault.  |
+| g5Lr | uint32_t | Multipurpose register - link register value at time of fault.  |
+| pc | uint32_t | Program Counter value at time of fault |
+| psr | uint32_t | Program Status Register value at time of fault |
+
+
+#### DID_SYS_PARAMS
+
+System parameters / info 
+
+`sys_params_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| insStatus | uint32_t | System status 1 flags (eInsStatusFlags) |
+| hdwStatus | uint32_t | System status 2 flags (eHdwStatusFlags) |
+| imuTemp | float | IMU temperature |
+| baroTemp | float | Baro temperature |
+| mcuTemp | float | MCU temperature (not available yet) |
+| reserved1 | float | Reserved |
+| imuPeriodMs | uint32_t | IMU sample period in milliseconds. Zero disables sampling. |
+| navPeriodMs | uint32_t | Nav filter update period in milliseconds. Zero disables nav filter. |
+| sensorTruePeriod | double | Actual sample period relative to GPS PPS |
+| reserved2 | float[2] | Reserved |
+| genFaultCode | uint32_t | General fault code descriptor (eGenFaultCodes).  Set to zero to reset fault code. |
+
+
+#### DID_SYS_SENSORS_SIGMA
+
+
+
+`sys_sensors_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| temp | float | Temperature in Celsius |
+| pqr | float[3] | Gyros in radians / second |
+| acc | float[3] | Accelerometers in meters / second squared |
+| mag | float[3] | Magnetometers in Gauss |
+| bar | float | Barometric pressure in kilopascals |
+| barTemp | float | Temperature of barometric pressure sensor in Celsius |
+| mslBar | float | MSL altitude from barometric pressure sensor in meters |
+| humidity | float | Relative humidity as a percent (%rH). Range is 0% - 100% |
+| vin | float | EVB system input voltage in volts. uINS pin 5 (G2/AN2).  Use 10K/1K resistor divider between Vin and GND.  |
+| ana1 | float | ADC analog input in volts. uINS pin 4, (G1/AN1). |
+| ana3 | float | ADC analog input in volts. uINS pin 19 (G3/AN3). |
+| ana4 | float | ADC analog input in volts. uINS pin 20 (G4/AN4). |
+
+
+#### DID_WHEEL_CONFIG
+
+[NOT SUPPORTED, INTERNAL USE ONLY] Static configuration for wheel encoder measurements. 
+
+`wheel_config_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| bits | uint32_t | Config bits (see eWheelCfgBits) |
+| e_i2l | float[3] | Euler angles describing the rotation from imu to left wheel |
+| t_i2l | float[3] | Translation from the imu to the left wheel, expressed in the imu frame |
+| distance | float | Distance between the left wheel and the right wheel |
+| diameter | float | Estimate of wheel diameter |
+
+
+#### DID_WHEEL_ENCODER
+
+[NOT SUPPORTED, INTERNAL USE ONLY] Wheel encoder data to be fused with GPS-INS measurements, set DID_WHEEL_CONFIG for configuration before sending this message 
+
+`wheel_encoder_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeek | double | Time of measurement wrt current week |
+| status | uint32_t | Status Word |
+| theta_l | float | Left wheel angle (rad) |
+| theta_r | float | Right wheel angle (rad) |
+| omega_l | float | Left wheel angular rate (rad/s) |
+| omega_r | float | Right wheel angular rate (rad/s) |
+| wrap_count_l | uint32_t | Left wheel revolution count |
+| wrap_count_r | uint32_t | Right wheel revolution count |
+
+
+## Enumerations and Defines
+
+System status and configuration is made available through various enumeration and #defines.
+
+### General
+
+#### DID_EVB_FLASH_CFG.cbPreset
+
+(eEvb2ComBridgePreset)  
+
+| Field | Value |
+|-------|------|
+| EVB2_CB_PRESET_NA | 0 |
+| EVB2_CB_PRESET_ALL_OFF | 1 |
+| EVB2_CB_PRESET_RS232 | 2 |
+| EVB2_CB_PRESET_RS232_XBEE | 3 |
+| EVB2_CB_PRESET_RS422_WIFI | 4 |
+| EVB2_CB_PRESET_SPI_RS232 | 5 |
+| EVB2_CB_PRESET_USB_HUB_RS232 | 6 |
+| EVB2_CB_PRESET_USB_HUB_RS422 | 7 |
+| EVB2_CB_PRESET_COUNT | 8 |
+
+
+#### DID_EVB_FLASH_CFG.portOptions
+
+(eEvb2PortOptions)  
+
+| Field | Value |
+|-------|------|
+| EVB2_PORT_OPTIONS_RADIO_RTK_FILTER | 0x00000001 |
+| EVB2_PORT_OPTIONS_DEFAULT |  EVB2_PORT_OPTIONS_RADIO_RTK_FILTER |
+
+
+#### DID_EVB_STATUS.loggerMode
+
+(eEvb2LoggerMode)  
+
+| Field | Value |
+|-------|------|
+| EVB2_LOG_NA | 0 |
+| EVB2_LOG_CMD_START | 2 |
+| EVB2_LOG_CMD_STOP | 4 |
+| EVB2_LOG_CMD_PURGE | 1002 |
+
+
+#### DID_FLASH_CONFIG.gnssSatSigConst
+
+(eGnssSatSigConst)  
+
+| Field | Value |
+|-------|------|
+| GNSS_SAT_SIG_CONST_GPS | 0x0003 |
+| GNSS_SAT_SIG_CONST_QZSS | 0x000C |
+| GNSS_SAT_SIG_CONST_GAL | 0x0030 |
+| GNSS_SAT_SIG_CONST_BDS | 0x00C0 |
+| GNSS_SAT_SIG_CONST_GLO | 0x0300 |
+| GNSS_SAT_SIG_CONST_SBAS | 0x1000 |
+
+
+#### DID_FLASH_CONFIG.sensorConfig
+
+(eSensorConfig)  
+
+| Field | Value |
+|-------|------|
+| SENSOR_CFG_GYR_FS_250 | 0x00000000 |
+| SENSOR_CFG_GYR_FS_500 | 0x00000001 |
+| SENSOR_CFG_GYR_FS_1000 | 0x00000002 |
+| SENSOR_CFG_GYR_FS_2000 | 0x00000003 |
+| SENSOR_CFG_GYR_FS_MASK | 0x00000003 |
+| SENSOR_CFG_GYR_FS_OFFSET |  (int)0 |
+| SENSOR_CFG_ACC_FS_2G | 0x00000000 |
+| SENSOR_CFG_ACC_FS_4G | 0x00000001 |
+| SENSOR_CFG_ACC_FS_8G | 0x00000002 |
+| SENSOR_CFG_ACC_FS_16G | 0x00000003 |
+| SENSOR_CFG_ACC_FS_MASK | 0x00000003 |
+| SENSOR_CFG_ACC_FS_OFFSET |  (int)2 |
+| SENSOR_CFG_GYR_DLPF_250HZ | 0x00000000 |
+| SENSOR_CFG_GYR_DLPF_184HZ | 0x00000001 |
+| SENSOR_CFG_GYR_DLPF_92HZ | 0x00000002 |
+| SENSOR_CFG_GYR_DLPF_41HZ | 0x00000003 |
+| SENSOR_CFG_GYR_DLPF_20HZ | 0x00000004 |
+| SENSOR_CFG_GYR_DLPF_10HZ | 0x00000005 |
+| SENSOR_CFG_GYR_DLPF_5HZ | 0x00000006 |
+| SENSOR_CFG_GYR_DLPF_MASK | 0x0000000F |
+| SENSOR_CFG_GYR_DLPF_OFFSET |  (int)8 |
+| SENSOR_CFG_ACC_DLPF_218HZ | 0x00000000 |
+| SENSOR_CFG_ACC_DLPF_218HZb | 0x00000001 |
+| SENSOR_CFG_ACC_DLPF_99HZ | 0x00000002 |
+| SENSOR_CFG_ACC_DLPF_45HZ | 0x00000003 |
+| SENSOR_CFG_ACC_DLPF_21HZ | 0x00000004 |
+| SENSOR_CFG_ACC_DLPF_10HZ | 0x00000005 |
+| SENSOR_CFG_ACC_DLPF_5HZ | 0x00000006 |
+| SENSOR_CFG_ACC_DLPF_MASK | 0x0000000F |
+| SENSOR_CFG_ACC_DLPF_OFFSET |  (int)12 |
+| SENSOR_CFG_SENSOR_ROTATION_MASK | 0x000000FF |
+| SENSOR_CFG_SENSOR_ROTATION_OFFSET |  (int)16 |
+| SENSOR_CFG_SENSOR_ROTATION_0_0_0 |  (int)0 |
+| SENSOR_CFG_SENSOR_ROTATION_0_0_90 |  (int)1 |
+| SENSOR_CFG_SENSOR_ROTATION_0_0_180 |  (int)2 |
+| SENSOR_CFG_SENSOR_ROTATION_0_0_N90 |  (int)3 |
+| SENSOR_CFG_SENSOR_ROTATION_90_0_0 |  (int)4 |
+| SENSOR_CFG_SENSOR_ROTATION_90_0_90 |  (int)5 |
+| SENSOR_CFG_SENSOR_ROTATION_90_0_180 |  (int)6 |
+| SENSOR_CFG_SENSOR_ROTATION_90_0_N90 |  (int)7 |
+| SENSOR_CFG_SENSOR_ROTATION_180_0_0 |  (int)8 |
+| SENSOR_CFG_SENSOR_ROTATION_180_0_90 |  (int)9 |
+| SENSOR_CFG_SENSOR_ROTATION_180_0_180 |  (int)10 |
+| SENSOR_CFG_SENSOR_ROTATION_180_0_N90 |  (int)11 |
+| SENSOR_CFG_SENSOR_ROTATION_N90_0_0 |  (int)12 |
+| SENSOR_CFG_SENSOR_ROTATION_N90_0_90 |  (int)13 |
+| SENSOR_CFG_SENSOR_ROTATION_N90_0_180 |  (int)14 |
+| SENSOR_CFG_SENSOR_ROTATION_N90_0_N90 |  (int)15 |
+| SENSOR_CFG_SENSOR_ROTATION_0_90_0 |  (int)16 |
+| SENSOR_CFG_SENSOR_ROTATION_0_90_90 |  (int)17 |
+| SENSOR_CFG_SENSOR_ROTATION_0_90_180 |  (int)18 |
+| SENSOR_CFG_SENSOR_ROTATION_0_90_N90 |  (int)19 |
+| SENSOR_CFG_SENSOR_ROTATION_0_N90_0 |  (int)20 |
+| SENSOR_CFG_SENSOR_ROTATION_0_N90_90 |  (int)21 |
+| SENSOR_CFG_SENSOR_ROTATION_0_N90_180 |  (int)22 |
+| SENSOR_CFG_SENSOR_ROTATION_0_N90_N90 |  (int)23 |
+
+
+#### DID_SYS_CMD.command
+
+(eSystemCommand)  
+
+| Field | Value |
+|-------|------|
+| SYS_CMD_SAVE_PERSISTENT_MESSAGES | 1 |
+| SYS_CMD_ENABLE_BOOTLOADER_AND_RESET | 2 |
+| SYS_CMD_ENABLE_SENSOR_STATS | 3 |
+| SYS_CMD_ENABLE_RTOS_STATS | 4 |
+| SYS_CMD_ZERO_MOTION | 5 |
+| SYS_CMD_ENABLE_GPS_LOW_LEVEL_CONFIG | 10 |
+| SYS_CMD_SAVE_FLASH | 97 |
+| SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
+| SYS_CMD_SOFTWARE_RESET | 99 |
+| SYS_CMD_MANF_UNLOCK | 1122334455 |
+| SYS_CMD_MANF_FACTORY_RESET | 1357924680 |
+| SYS_CMD_MANF_CHIP_ERASE | 1357924681 |
+
+
+#### DID_SYS_PARAMS.genFaultCode
+
+(eGenFaultCodes)  
+
+| Field | Value |
+|-------|------|
+| GFC_INS_STATE_ORUN_UVW | 0x00000001 |
+| GFC_INS_STATE_ORUN_LAT | 0x00000002 |
+| GFC_INS_STATE_ORUN_ALT | 0x00000004 |
+| GFC_UNHANDLED_INTERRUPT | 0x00000010 |
+| GFC_INIT_SENSORS | 0x00000100 |
+| GFC_INIT_SPI | 0x00000200 |
+| GFC_CONFIG_SPI | 0x00000400 |
+| GFC_INIT_GPS1 | 0x00000800 |
+| GFC_INIT_GPS2 | 0x00001000 |
+| GFC_FLASH_INVALID_VALUES | 0x00002000 |
+| GFC_FLASH_CHECKSUM_FAILURE | 0x00004000 |
+| GFC_FLASH_WRITE_FAILURE | 0x00008000 |
+| GFC_SYS_FAULT_GENERAL | 0x00010000 |
+| GFC_SYS_FAULT_CRITICAL | 0x00020000 |
+| GFC_SENSOR_SATURATION | 0x00040000 |
+
+
+#### GNSS Satellite Flags
+
+(eSatSvFlags)  
+
+| Field | Value |
+|-------|------|
+| SAT_SV_FLAGS_QUALITYIND_MASK | 0x00000007 |
+| SAT_SV_FLAGS_SV_USED | 0x00000008 |
+| SAT_SV_FLAGS_HEALTH_MASK | 0x00000030 |
+| NAV_SAT_FLAGS_HEALTH_OFFSET | 4 |
+| SAT_SV_FLAGS_DIFFCORR | 0x00000040 |
+| SAT_SV_FLAGS_SMOOTHED | 0x00000080 |
+| SAT_SV_FLAGS_ORBITSOURCE_MASK | 0x00000700 |
+| SAT_SV_FLAGS_ORBITSOURCE_OFFSET | 8 |
+| SAT_SV_FLAGS_EPHAVAIL | 0x00000800 |
+| SAT_SV_FLAGS_ALMAVAIL | 0x00001000 |
+| SAT_SV_FLAGS_ANOAVAIL | 0x00002000 |
+| SAT_SV_FLAGS_AOPAVAIL | 0x00004000 |
+| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_MASK | 0x03000000 |
+| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_OFFSET | 24 |
+| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_FLOAT | 1 |
+| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_FIX | 2 |
+| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_HOLD | 3 |
+
+
+#### GPS Navigation Fix Type
+
+(eGpsNavFixStatus)  
+
+| Field | Value |
+|-------|------|
+| GPS_NAV_FIX_NONE | 0x00000000 |
+| GPS_NAV_FIX_POSITIONING_3D | 0x00000001 |
+| GPS_NAV_FIX_POSITIONING_RTK_FLOAT | 0x00000002 |
+| GPS_NAV_FIX_POSITIONING_RTK_FIX | 0x00000003 |
+
+
+#### GPS Status
+
+(eGpsStatus)  
+
+| Field | Value |
+|-------|------|
+| GPS_STATUS_NUM_SATS_USED_MASK | 0x000000FF |
+| GPS_STATUS_FIX_NONE | 0x00000000 |
+| GPS_STATUS_FIX_DEAD_RECKONING_ONLY | 0x00000100 |
+| GPS_STATUS_FIX_2D | 0x00000200 |
+| GPS_STATUS_FIX_3D | 0x00000300 |
+| GPS_STATUS_FIX_GPS_PLUS_DEAD_RECK | 0x00000400 |
+| GPS_STATUS_FIX_TIME_ONLY | 0x00000500 |
+| GPS_STATUS_FIX_UNUSED1 | 0x00000600 |
+| GPS_STATUS_FIX_UNUSED2 | 0x00000700 |
+| GPS_STATUS_FIX_DGPS | 0x00000800 |
+| GPS_STATUS_FIX_SBAS | 0x00000900 |
+| GPS_STATUS_FIX_RTK_SINGLE | 0x00000A00 |
+| GPS_STATUS_FIX_RTK_FLOAT | 0x00000B00 |
+| GPS_STATUS_FIX_RTK_FIX | 0x00000C00 |
+| GPS_STATUS_FIX_MASK | 0x00001F00 |
+| GPS_STATUS_FIX_BIT_OFFSET |  (int)8 |
+| GPS_STATUS_FLAGS_FIX_OK | 0x00010000 |
+| GPS_STATUS_FLAGS_DGPS_USED | 0x00020000 |
+| GPS_STATUS_FLAGS_RTK_FIX_AND_HOLD | 0x00040000 |
+| GPS_STATUS_FLAGS_WEEK_VALID | 0x00040000 |
+| GPS_STATUS_FLAGS_TOW_VALID | 0x00080000 |
+| GPS_STATUS_FLAGS_RTK_POSITION_ENABLED | 0x00100000 |
+| GPS_STATUS_FLAGS_STATIC_MODE | 0x00200000 |
+| GPS_STATUS_FLAGS_RTK_COMPASSING_ENABLED | 0x00400000 |
+| GPS_STATUS_FLAGS_RTK_RAW_GPS_DATA_ERROR | 0x00800000 |
+| GPS_STATUS_FLAGS_RTK_BASE_DATA_MISSING | 0x01000000 |
+| GPS_STATUS_FLAGS_RTK_BASE_POSITION_MOVING | 0x02000000 |
+| GPS_STATUS_FLAGS_RTK_BASE_POSITION_INVALID | 0x03000000 |
+| GPS_STATUS_FLAGS_RTK_BASE_POSITION_MASK | 0x03000000 |
+| GPS_STATUS_FLAGS_RTK_POSITION_VALID | 0x04000000 |
+| GPS_STATUS_FLAGS_RTK_COMPASSING_VALID | 0x08000000 |
+| GPS_STATUS_FLAGS_RTK_COMPASSING_BASELINE_BAD | 0x00002000 |
+| GPS_STATUS_FLAGS_RTK_COMPASSING_BASELINE_UNSET | 0x00004000 |
+| GPS_STATUS_FLAGS_GPS_NMEA_DATA | 0x00008000 |
+| GPS_STATUS_FLAGS_MASK | 0x0FFFE000 |
+| GPS_STATUS_FLAGS_BIT_OFFSET |  (int)16 |
+
+
+#### Hardware Status Flags
+
+(eHdwStatusFlags)  
+
+| Field | Value |
+|-------|------|
+| HDW_STATUS_MOTION_GYR_SIG | 0x00000001 |
+| HDW_STATUS_MOTION_ACC_SIG | 0x00000002 |
+| HDW_STATUS_MOTION_SIG_MASK | 0x00000003 |
+| HDW_STATUS_MOTION_GYR_DEV | 0x00000004 |
+| HDW_STATUS_MOTION_ACC_DEV | 0x00000008 |
+| HDW_STATUS_MOTION_MASK | 0x0000000F |
+| HDW_STATUS_GPS_SATELLITE_RX | 0x00000010 |
+| HDW_STATUS_STROBE_IN_EVENT | 0x00000020 |
+| HDW_STATUS_GPS_TIME_OF_WEEK_VALID | 0x00000040 |
+| HDW_STATUS_UNUSED_1 | 0x00000080 |
+| HDW_STATUS_SATURATION_GYR | 0x00000100 |
+| HDW_STATUS_SATURATION_ACC | 0x00000200 |
+| HDW_STATUS_SATURATION_MAG | 0x00000400 |
+| HDW_STATUS_SATURATION_BARO | 0x00000800 |
+| HDW_STATUS_SATURATION_MASK | 0x00000F00 |
+| HDW_STATUS_SATURATION_OFFSET | 8 |
+| HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00001000 |
+| HDW_STATUS_UNUSED_3 | 0x00002000 |
+| HDW_STATUS_UNUSED_4 | 0x00004000 |
+| HDW_STATUS_UNUSED_5 | 0x00008000 |
+| HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
+| HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
+| HDW_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x00F00000 |
+| HDW_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 20 |
+| HDW_STATUS_BIT_FAULT | 0x01000000 |
+| HDW_STATUS_ERR_TEMPERATURE | 0x02000000 |
+| HDW_STATUS_ERR_VIBRATION | 0x04000000 |
+| HDW_STATUS_UNUSED_6 | 0x08000000 |
+| HDW_STATUS_FAULT_RESET_MASK | 0x70000000 |
+| HDW_STATUS_FAULT_RESET_BACKUP_MODE | 0x10000000 |
+| HDW_STATUS_FAULT_RESET_WATCHDOG | 0x20000000 |
+| HDW_STATUS_FAULT_RESET_SOFT | 0x30000000 |
+| HDW_STATUS_FAULT_RESET_HDW | 0x40000000 |
+| HDW_STATUS_FAULT_SYS_CRITICAL | 0x80000000 |
+| HDW_STATUS_OUTPUT_RESET_MASK |  (HDW_STATUS_SATURATION_MASK) |
+
+
+#### IMU Status
+
+(eImuStatus)  
+
+| Field | Value |
+|-------|------|
+| IMU_STATUS_SATURATION_IMU1_GYR | 0x00000001 |
+| IMU_STATUS_SATURATION_IMU2_GYR | 0x00000002 |
+| IMU_STATUS_SATURATION_IMU1_ACC | 0x00000004 |
+| IMU_STATUS_SATURATION_IMU2_ACC | 0x00000008 |
+| IMU_STATUS_RESERVED1 | 0x00000020 |
+| IMU_STATUS_RESERVED2 | 0x00000040 |
+| IMU_STATUS_SATURATION_HISTORY | 0x00000100 |
+| IMU_STATUS_SAMPLE_RATE_FAULT_HISTORY | 0x00000200 |
+
+
+#### INS status Flags
+
+(eInsStatusFlags)  
+
+| Field | Value |
+|-------|------|
+| INS_STATUS_ATT_ALIGN_COARSE | 0x00000001 |
+| INS_STATUS_VEL_ALIGN_COARSE | 0x00000002 |
+| INS_STATUS_POS_ALIGN_COARSE | 0x00000004 |
+| INS_STATUS_ALIGN_COARSE_MASK | 0x00000007 |
+| INS_STATUS_UNUSED_1 | 0x00000008 |
+| INS_STATUS_ATT_ALIGN_FINE | 0x00000010 |
+| INS_STATUS_VEL_ALIGN_FINE | 0x00000020 |
+| INS_STATUS_POS_ALIGN_FINE | 0x00000040 |
+| INS_STATUS_ALIGN_FINE_MASK | 0x00000070 |
+| INS_STATUS_GPS_AIDING_HEADING | 0x00000080 |
+| INS_STATUS_GPS_AIDING_POS | 0x00000100 |
+| INS_STATUS_GPS_UPDATE_IN_SOLUTION | 0x00000200 |
+| INS_STATUS_RESERVED_1 | 0x00000400 |
+| INS_STATUS_MAG_AIDING_HEADING | 0x00000800 |
+| INS_STATUS_NAV_MODE | 0x00001000 |
+| INS_STATUS_DO_NOT_MOVE | 0x00002000 |
+| INS_STATUS_UNUSED_3 | 0x00004000 |
+| INS_STATUS_UNUSED_4 | 0x00008000 |
+| INS_STATUS_SOLUTION_MASK | 0x000F0000 |
+| INS_STATUS_SOLUTION_OFFSET | 16 |
+| INS_STATUS_SOLUTION_OFF | 0 |
+| INS_STATUS_SOLUTION_ALIGNING | 1 |
+| INS_STATUS_SOLUTION_ALIGNMENT_COMPLETE | 2 |
+| INS_STATUS_SOLUTION_NAV | 3 |
+| INS_STATUS_SOLUTION_NAV_HIGH_VARIANCE | 4 |
+| INS_STATUS_SOLUTION_AHRS | 5 |
+| INS_STATUS_SOLUTION_AHRS_HIGH_VARIANCE | 6 |
+| INS_STATUS_RTK_COMPASSING_BASELINE_UNSET | 0x00100000 |
+| INS_STATUS_RTK_COMPASSING_BASELINE_BAD | 0x00200000 |
+| INS_STATUS_RTK_COMPASSING_MASK | (INS_STATUS_RTK_COMPASSING_BASELINE_UNSET\|INS_STATUS_RTK_COMPASSING_BASELINE_BAD\) |
+| INS_STATUS_MAG_RECALIBRATING | 0x00400000 |
+| INS_STATUS_MAG_INTERFERENCE_OR_BAD_CAL | 0x00800000 |
+| INS_STATUS_GPS_NAV_FIX_MASK | 0x03000000 |
+| INS_STATUS_GPS_NAV_FIX_OFFSET | 24 |
+| INS_STATUS_RTK_COMPASSING_VALID | 0x04000000 |
+| INS_STATUS_RTK_RAW_GPS_DATA_ERROR | 0x08000000 |
+| INS_STATUS_RTK_ERR_BASE_DATA_MISSING | 0x10000000 |
+| INS_STATUS_RTK_ERR_BASE_POSITION_MOVING | 0x20000000 |
+| INS_STATUS_RTK_ERR_BASE_POSITION_INVALID | 0x30000000 |
+| INS_STATUS_RTK_ERR_BASE_MASK | 0x30000000 |
+| INS_STATUS_RTK_ERROR_MASK | (INS_STATUS_RTK_RAW_GPS_DATA_ERROR\|INS_STATUS_RTK_ERR_BASE_MASK\) |
+| INS_STATUS_RTOS_TASK_PERIOD_OVERRUN | 0x40000000 |
+| INS_STATUS_GENERAL_FAULT | 0x80000000 |
+| INS_STATUS_OUTPUT_RESET_MASK |  (0) |
+
+
+#### Magnetometer Recalibration Mode
+
+(eMagRecalMode)  
+
+| Field | Value |
+|-------|------|
+| MAG_RECAL_CMD_DO_NOTHING |  (int)0 |
+| MAG_RECAL_CMD_MULTI_AXIS |  (int)1 |
+| MAG_RECAL_CMD_SINGLE_AXIS |  (int)2 |
+| MAG_RECAL_CMD_ABORT |  (int)101 |
+
+
+#### RTK Configuration
+
+(eRTKConfigBits)  
+
+| Field | Value |
+|-------|------|
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING | 0x00000001 |
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_EXTERNAL | 0x00000002 |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_F9P | 0x00000004 |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING | 0x00000008 |
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_EXTERNAL\) |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_F9P\) |
+| RTK_CFG_BITS_ROVER_MODE_MASK | 0x0000000F |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER0 | 0x00000010 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER1 | 0x00000020 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER2 | 0x00000040 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_USB | 0x00000080 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER0 | 0x00000100 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER1 | 0x00000200 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER2 | 0x00000400 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_USB | 0x00000800 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER0 | 0x00001000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER1 | 0x00002000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER2 | 0x00004000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_USB | 0x00008000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER0 | 0x00010000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER1 | 0x00020000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER2 | 0x00040000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_USB | 0x00080000 |
+| RTK_CFG_BITS_BASE_POS_MOVING | 0x00100000 |
+| RTK_CFG_BITS_RESERVED1 | 0x00200000 |
+| RTK_CFG_BITS_RTK_BASE_IS_IDENTICAL_TO_ROVER | 0x00400000 |
+| RTK_CFG_BITS_GPS_PORT_PASS_THROUGH | 0x00800000 |
+| RTK_CFG_BITS_ROVER_MODE_ONBOARD_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\) |
+| RTK_CFG_BITS_ALL_MODES_MASK | (RTK_CFG_BITS_ROVER_MODE_MASK\|RTK_CFG_BITS_BASE_MODE\) |
+
+
+#### System Configuration
+
+(eSysConfigBits)  
+
+| Field | Value |
+|-------|------|
+| UNUSED1 | 0x00000001 |
+| UNUSED2 | 0x00000002 |
+| SYS_CFG_BITS_AUTO_MAG_RECAL | 0x00000004 |
+| SYS_CFG_BITS_DISABLE_MAG_DECL_ESTIMATION | 0x00000008 |
+| SYS_CFG_BITS_DISABLE_LEDS | 0x00000010 |
+| Magnetometer |  multi-axis |
+| SYS_CFG_BITS_MAG_RECAL_MODE_MASK | 0x00000700 |
+| SYS_CFG_BITS_MAG_RECAL_MODE_OFFSET | 8 |
+| SYS_CFG_BITS_DISABLE_MAGNETOMETER_FUSION | 0x00001000 |
+| SYS_CFG_BITS_DISABLE_BAROMETER_FUSION | 0x00002000 |
+| SYS_CFG_BITS_DISABLE_GPS1_FUSION | 0x00004000 |
+| SYS_CFG_BITS_DISABLE_GPS2_FUSION | 0x00008000 |
+| SYS_CFG_BITS_DISABLE_AUTO_ZERO_VELOCITY_UPDATES | 0x00010000 |
+| SYS_CFG_BITS_DISABLE_AUTO_ZERO_ANGULAR_RATE_UPDATES | 0x00020000 |
+| SYS_CFG_BITS_DISABLE_INS_EKF | 0x00040000 |
+| SYS_CFG_BITS_DISABLE_AUTO_BIT_ON_STARTUP | 0x00080000 |
+| SYS_CFG_BITS_DISABLE_PACKET_ENCODING | 0x00400000 |

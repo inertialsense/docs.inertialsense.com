@@ -1,0 +1,144 @@
+# Project information
+site_name: InertialSense
+site_url: https://docs.inertialsense.com
+
+# Repository
+# repo_url: https://github.com/inertialsense/docs
+# edit_uri: blob/master/docs/   # Commented out to hide edit icon from top right corner of each page.
+
+# Google Analytics
+google_analytics: ['UA-110693473-1', 'docs.inertialsense.com']
+
+# Configuration
+theme:
+  name: 'material'
+  custom_dir: 'custom_theme/'
+  palette:
+    primary: 'red'
+    accent: 'red'
+  favicon: 'img/favicon.png'
+  logo: 'img/Logo_Circle_white.svg'
+  feature:
+    tabs: false
+# theme_dir: docs/custom_theme
+# copycode: true
+
+plugins:
+    - search
+    # - pdf-export:
+    #     combined: true
+    #     combined_output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
+    #     enabled_if_env: PDF_EXPORT
+    #     verbose: true
+
+# Customization
+extra_css: [custom_theme/extra.css]
+extra_javascript:
+  - https://js.hs-scripts.com/3481185.js  # Hubspot embedded chat
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+extra:
+  search:
+    tokenizer: '[\s\-\.]+'
+
+# Extensions
+markdown_extensions:
+  - mdx_math
+  - admonition
+  - footnotes
+  - toc:
+      permalink: True
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - codehilite:
+  - mdx_truly_sane_lists:
+      # linenums: True
+nav:
+  - Overview: index.md
+  - Data Sheet: datasheet/datasheet.md
+  - Dimensions and Pinouts: dimensions/dimensions.md
+  - Getting Started: getting-started/getting-started.md
+  - <b>IS Hardware</b>:
+    #- Overview: user-manual/hardware/overview.md
+    - EVB-1: user-manual/hardware/EVB1.md
+    - EVB-2: user-manual/hardware/EVB2.md
+    - Rugged-1: user-manual/hardware/rugged1.md
+    - Rugged-2: user-manual/hardware/rugged2.md
+    - PCB Module: user-manual/hardware/module.md
+  - <b>IS Software</b>:
+    - CLTool: user-manual/software/cltool.md
+    - EvalTool: user-manual/software/evaltool.md
+    - SDK: user-manual/software/SDK.md
+    - Log Inspector: user-manual/software/logInspector.md
+  - <b>Communication Protocols</b>:
+    - Overview: user-manual/com-protocol/overview.md
+    - Data Sets (DIDs): user-manual/com-protocol/DID-descriptions.md
+    - ASCII: user-manual/com-protocol/ascii.md
+    - Binary: user-manual/com-protocol/binary.md
+    - SPI: user-manual/com-protocol/SPI.md
+    - CAN: user-manual/com-protocol/CAN.md
+  - <b>GNSS - RTK</b>:
+    - Multi-band GNSS: user-manual/gnss/multi_band_gnss.md
+    - External NMEA GNSS: user-manual/gnss/external_gnss.md
+    - GNSS Antennas: user-manual/gnss/gnss_antennas.md
+    - GNSS Constellations: user-manual/gnss/gnss_constellations.md
+    - <b>RTK Positioning</b>:
+      - Overview: user-manual/gnss/rtk_positioning_overview.md
+      - Rover Setup: user-manual/gnss/rtk_rover.md
+      - Base Setup: user-manual/gnss/rtk_base.md
+      - NTRIP: user-manual/gnss/rtk_ntrip.md
+    - RTK Compassing: user-manual/gnss/rtk_compassing.md
+  - <b>Dead Reckoning</b>:
+    - Overview & Installation: user-manual/dead-reckoning/dead_reckoning.md
+    - Examples: user-manual/dead-reckoning/dead_reckoning_examples.md
+  - <b>General Configuration</b>:
+    # - Pixhawk Integration: user-manual/application-config/pixhawk.md
+    - INS & GNSS Config: user-manual/application-config/ins_configuration.md
+    - System Config: user-manual/application-config/system_configuration.md
+    - Time Sync/Strobe: user-manual/application-config/time_sync.md
+    - Zero Motion Command: user-manual/application-config/zero_motion_command.md
+    - UART: user-manual/application-config/UART.md
+    #- Assisted-GPS: user-manual/application-config/assisted-gnss.md
+  - <b>SDK</b>:
+    - Overview: user-manual/SDK/README.md
+    - <b>Example Projects</b>:
+      - Comm-Binary (C): user-manual/SDK/CommunicationsBinary.md
+      - Comm-ASCII (C): user-manual/SDK/CommunicationsAscii.md
+      - Comm-Arduino (C): user-manual/SDK/CommunicationsArduino.md
+      - Firmware Update (C): user-manual/SDK/FirmwareUpdate.md
+      - InertialSense Class CLTool (C++): user-manual/SDK/InertialSenseClassCLTool.md
+      - Data Logging (C++): user-manual/SDK/DataLogger.md
+  - <b>Data Logging/Plotting</b>:
+    - Overview: user-manual/logging-plotting/overview.md 
+    - Logging: user-manual/logging-plotting/data_logging.md
+    - Plotting: user-manual/logging-plotting/data_plotting.md
+  - <b>Reference</b>:
+    - Bootloader: user-manual/reference/bootloader.md
+    - Coordinate Frames: user-manual/reference/coordinate_frames.md
+    - Definitions: user-manual/reference/definitions.md
+    - Interference: user-manual/reference/interference.md
+    - Magnetometer: user-manual/reference/magnetometer.md
+    - System Status: user-manual/reference/system_status.md
+    # - User Manual PDF: user-manual/reference/user_manual_pdf.md
+  - <b>FAQ</b>: user-manual/faq.md
+  - <b>Troubleshooting</b>: 
+    - Firmware: user-manual/troubleshooting/firmware.md
+    - GNSS: user-manual/troubleshooting/gnss.md
+    
+    
+    
+    
