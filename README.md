@@ -95,34 +95,6 @@ Build the website
 mkdocs build
 ```
 
-This will create a new `site` folder
-
-Download [WinSCP](https://winscp.net/eng/download.php?TB_iframe).
-
-Connect to FTP on inertialsense
-
-![WinSCP FTP](docs/user-guide/images/WinSCP.png)
-
-```
-File protocol: FTP
-Encryption: no encryption
-Host name: ftp.inertialsense.com
-Port number: 21
-User name: docs_generator@inertialsense.com
-Password: < secret >
-```
-
-Then, just copy the contents of the `site` folder to the root on the server, replacing all the contents on the right side.
-
-### Linux / Mac
-Install ncftps
-
- Run the `upload_to_server.sh` script in the root of the repo (ask James for the password)
-
-``` bash
-./upload_to_server.sh
-```
-
 ## Adding pages
 To add a new page to the documentation, just check out the mkdocs.yaml file in the root of the repo, you should be able to figure it out from there.
 
