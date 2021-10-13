@@ -29,7 +29,7 @@ plugins:
         enabled_if_env: ENABLE_PDF_EXPORT
         author: Inertial Sense, Inc.
         output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
-        copyright: �2021
+        copyright: ©2021
         cover: true
         cover_title: User Manual
         cover_subtitle: Autonomous Navigation Solutions
@@ -84,40 +84,40 @@ nav:
   - Data Sheet: datasheet/datasheet.md
   - Dimensions and Pinouts: dimensions/dimensions.md
   - Getting Started: getting-started/getting-started.md
-  - <b>IS Hardware</b>:
+  - IS Hardware:
     #- Overview: user-manual/hardware/overview.md
     - EVB-1: user-manual/hardware/EVB1.md
     - EVB-2: user-manual/hardware/EVB2.md
     - Rugged-1: user-manual/hardware/rugged1.md
     - Rugged-2: user-manual/hardware/rugged2.md
     - PCB Module: user-manual/hardware/module.md
-  - <b>IS Software</b>:
+  - IS Software:
     - CLTool: user-manual/software/cltool.md
     - EvalTool: user-manual/software/evaltool.md
     - SDK: user-manual/software/SDK.md
     - Log Inspector: user-manual/software/logInspector.md
-  - <b>Communication Protocols</b>:
+  - Communication Protocols:
     - Overview: user-manual/com-protocol/overview.md
     - Data Sets (DIDs): user-manual/com-protocol/DID-descriptions.md
     - ASCII: user-manual/com-protocol/ascii.md
     - Binary: user-manual/com-protocol/binary.md
     - SPI: user-manual/com-protocol/SPI.md
     - CAN: user-manual/com-protocol/CAN.md
-  - <b>GNSS - RTK</b>:
+  - GNSS - RTK:
     - Multi-band GNSS: user-manual/gnss/multi_band_gnss.md
     - External NMEA GNSS: user-manual/gnss/external_gnss.md
     - GNSS Antennas: user-manual/gnss/gnss_antennas.md
     - GNSS Constellations: user-manual/gnss/gnss_constellations.md
-    - <b>RTK Positioning</b>:
+    - RTK Positioning:
       - Overview: user-manual/gnss/rtk_positioning_overview.md
       - Rover Setup: user-manual/gnss/rtk_rover.md
       - Base Setup: user-manual/gnss/rtk_base.md
       - NTRIP: user-manual/gnss/rtk_ntrip.md
     - RTK Compassing: user-manual/gnss/rtk_compassing.md
-  - <b>Dead Reckoning</b>:
+  - Dead Reckoning:
     - Overview & Installation: user-manual/dead-reckoning/dead_reckoning.md
     - Examples: user-manual/dead-reckoning/dead_reckoning_examples.md
-  - <b>General Configuration</b>:
+  - General Configuration:
     # - Pixhawk Integration: user-manual/application-config/pixhawk.md
     - INS & GNSS Config: user-manual/application-config/ins_configuration.md
     - System Config: user-manual/application-config/system_configuration.md
@@ -125,20 +125,20 @@ nav:
     - Zero Motion Command: user-manual/application-config/zero_motion_command.md
     - UART: user-manual/application-config/UART.md
     #- Assisted-GPS: user-manual/application-config/assisted-gnss.md
-  - <b>SDK</b>:
+  - SDK:
     - Overview: user-manual/SDK/README.md
-    - <b>Example Projects</b>:
+    - Example Projects:
       - Comm-Binary (C): user-manual/SDK/CommunicationsBinary.md
       - Comm-ASCII (C): user-manual/SDK/CommunicationsAscii.md
       - Comm-Arduino (C): user-manual/SDK/CommunicationsArduino.md
       - Firmware Update (C): user-manual/SDK/FirmwareUpdate.md
       - InertialSense Class CLTool (C++): user-manual/SDK/InertialSenseClassCLTool.md
       - Data Logging (C++): user-manual/SDK/DataLogger.md
-  - <b>Data Logging/Plotting</b>:
+  - Data Logging/Plotting:
     - Overview: user-manual/logging-plotting/overview.md 
     - Logging: user-manual/logging-plotting/data_logging.md
     - Plotting: user-manual/logging-plotting/data_plotting.md
-  - <b>Reference</b>:
+  - Reference:
     - Bootloader: user-manual/reference/bootloader.md
     - Coordinate Frames: user-manual/reference/coordinate_frames.md
     - Definitions: user-manual/reference/definitions.md
@@ -146,8 +146,8 @@ nav:
     - Magnetometer: user-manual/reference/magnetometer.md
     - System Status: user-manual/reference/system_status.md
     - User Manual PDF: user-manual/reference/user_manual_pdf.md
-  - <b>FAQ</b>: user-manual/faq.md
-  - <b>Troubleshooting</b>: 
+  - FAQ: user-manual/faq.md
+  - Troubleshooting: 
     - Firmware: user-manual/troubleshooting/firmware.md
     - GNSS: user-manual/troubleshooting/gnss.md
     
