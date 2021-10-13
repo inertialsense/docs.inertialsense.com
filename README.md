@@ -19,14 +19,14 @@ Be sure to select the "add python.exe to path" option in the installers
 
 To install mkdocs and latex, open a command prompt and use pip
 ``` powershell
-pip install mkdocs pygments pymarkdown pymdown-extensions mkdocs-material mdx_truly_sane_lists
-pip install https://github.com/mitya57/python-markdown-math/archive/master.zip
+pip3 install mkdocs pygments pymarkdown pymdown-extensions mkdocs-material mdx_truly_sane_lists
+pip3 install https://github.com/mitya57/python-markdown-math/archive/master.zip
 ```
 
 ## Install mkdocs-pdf-export-plugin
 ``` powershell
-python -m pip install --upgrade pip setuptools
-python -m pip install WeasyPrint
+python3 -m pip install --upgrade pip setuptools
+python3 -m pip install mkdocs-with-pdf
 ```
 
 Install GTK+ v3 (For 64bit Python): [GTK+](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases)
@@ -42,7 +42,7 @@ pip install pymdown-extensions python-markdown-math mkdocs-material mkdocs-pdf-e
 To export PDF set temporary environment variable:
 
 ```powersheel
-set PDF_EXPORT=1
+set ENABLE_PDF_EXPORT=1
 ```
 
 ## Run the mkdocs server

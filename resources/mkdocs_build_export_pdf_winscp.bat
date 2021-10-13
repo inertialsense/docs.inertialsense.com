@@ -2,7 +2,7 @@
 
 cd ..
 
-set PDF_EXPORT=1
+set ENABLE_PDF_EXPORT=1
 
 mkdocs build
 "C:\Program Files (x86)\WinSCP\winscp.exe"
