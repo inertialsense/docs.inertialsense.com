@@ -34,7 +34,7 @@ Frequencies: GPS (L1), GLONASS (G1), Beidou (B1), and Galileo (E1).
 
 **Recommended for RTK** indicates the GNSS antenna will have better performance for applications using RTK and dual GNSS antenna (GNSS compassing).
 
-For multi-frequency GNSS antennas, see [Purchasing the ZED-F9](../multi_frequency_gnss/#purchasing-the-zed-f9). 
+For multi-frequency GNSS antennas, see [Purchasing the ZED-F9](../multi_band_gnss/#purchasing-the-zed-f9). 
 
 ### Enclosed GNSS Antennas
 

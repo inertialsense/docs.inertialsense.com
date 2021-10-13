@@ -111,7 +111,7 @@ To enable uINS CAN interface on H2, the U5 transceiver IC (TCAN334) must be load
 | Pin                                                          | Name          | Type | Description                                     |
 | ------------------------------------------------------------ | ------------- | ---- | ----------------------------------------------- |
 | ![](../images/square-black.png) 1 | GND           | -    | -                                               |
-| ![](../images/square-brown.png) 2 | 232Tx-/485Tx- | O    | Serial output (RS232 transmit-, RS485 receive-) |
+| ![](../images/square-brown.png) 2 | 232Tx-/485Tx- | O    | Serial output (RS232 transmit-, RS485 transmit-) |
 | ![](../images/square-orange.png) 3 | 485Tx+        | O    | Serial output (RS485 transmit+)                 |
 | ![](../images/square-yellow.png) 4 | 485Rx-        | I    | Serial input (RS485 receive-)                   |
 | ![](../images/square-green.png) 5 | 232Rx/485Rx+  | I    | Serial input (RS232 receive, RS485 receive+)    |
