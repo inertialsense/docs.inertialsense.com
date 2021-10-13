@@ -25,11 +25,10 @@ theme:
 
 plugins:
     - search
-    # - pdf-export:
-    #     combined: true
-    #     combined_output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
-    #     enabled_if_env: PDF_EXPORT
-    #     verbose: true
+    - pdf-export:
+        combined: true
+        combined_output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
+        verbose: true
 
 # Customization
 extra_css: [custom_theme/extra.css]
@@ -133,7 +132,7 @@ nav:
     - Interference: user-manual/reference/interference.md
     - Magnetometer: user-manual/reference/magnetometer.md
     - System Status: user-manual/reference/system_status.md
-    # - User Manual PDF: user-manual/reference/user_manual_pdf.md
+    - User Manual PDF: user-manual/reference/user_manual_pdf.md
   - <b>FAQ</b>: user-manual/faq.md
   - <b>Troubleshooting</b>: 
     - Firmware: user-manual/troubleshooting/firmware.md
