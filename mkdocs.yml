@@ -145,7 +145,7 @@ nav:
     - Interference: user-manual/reference/interference.md
     - Magnetometer: user-manual/reference/magnetometer.md
     - System Status: user-manual/reference/system_status.md
-  - PDF User Manual: user-manual/reference/user_manual_pdf.md
+  - User Manual PDF: user-manual/reference/user_manual_pdf.md
   - FAQ: user-manual/faq.md
   - Troubleshooting: 
     - Firmware: user-manual/troubleshooting/firmware.md
