@@ -54,7 +54,7 @@ The Rugged-2 dip switches are used for setting the following I/O configurations.
 | 7<br/>9              | Tx0 (TTL)<br/>Rx0 (TTL)                                      | 6,8 - OFF              |
 | 8<br/>10             | Tx2 (RS232)<br/>Rx2 (RS232)                                  | 5,6 - ON<br/>7 - OFF   |
 | 8<br/>10             | Tx2 (TTL)<br/>Rx2 (TTL)                                      | 6,7 - OFF              |
-| 7<br/>8<br/>9<br/>10 | Tx2- (RS485)<br/>Tx2+ (RS485)<br/>Rx2- (RS485)<br/>Rx2+ (RS485) | 6 - ON<br/>5,7,8 - OFF |
+| 7<br/>8<br/>9<br/>10 | Tx2- (RS485)<br/>Tx2+ (RS485)<br/>Rx2- (RS485)<br/>Rx2+ (RS485) | 6 - ON<br/>5,7 - OFF |
 | 11<br/>12            | CAN-H<br/>CAN-L                                              | \* 1,2,3,7 - ON        |
 | 11<br/>12            | G1-Rx2, CAN-Rx\*\*<br/>G2-Tx2, CAN-Tx\*\*, STROBE            | 7 - ON<br/>1,2,3 - OFF |
 

@@ -25,10 +25,22 @@ theme:
 
 plugins:
     - search
-    # - pdf-export:
+    - with-pdf:       # https://pypi.org/project/mkdocs-with-pdf/
+        enabled_if_env: ENABLE_PDF_EXPORT
+        author: Inertial Sense, Inc.
+        output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
+        copyright: ©2021
+        cover: true
+        cover_title: User Manual 
+        cover_subtitle: Autonomous Navigation Solutions
+        toc_title: Table of Contents
+        # debug_html: true
+        # show_anchors: true
+        # verbose: true
+    # - pdf-export:     # https://pypi.org/project/mkdocs-pdf-export-plugin/
     #     combined: true
     #     combined_output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
-    #     enabled_if_env: PDF_EXPORT
+    #     # enabled_if_env: ENABLE_PDF_EXPORT
     #     verbose: true
 
 # Customization
@@ -133,7 +145,7 @@ nav:
     - Interference: user-manual/reference/interference.md
     - Magnetometer: user-manual/reference/magnetometer.md
     - System Status: user-manual/reference/system_status.md
-    # - User Manual PDF: user-manual/reference/user_manual_pdf.md
+    - User Manual PDF: user-manual/reference/user_manual_pdf.md
   - <b>FAQ</b>: user-manual/faq.md
   - <b>Troubleshooting</b>: 
     - Firmware: user-manual/troubleshooting/firmware.md
