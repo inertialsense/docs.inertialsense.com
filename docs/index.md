@@ -23,7 +23,7 @@ The **μAHRS™** is an Attitude Heading Reference System (AHRS) that includes a
 
 The **μINS™** is a GPS (GNSS) aided inertial navigation system (GPS-INS) module that includes all functionality of the **μIMU™** and provides orientation, velocity, and position. Sensor data from MEMs gyros, accelerometers, magnetometers, barometric pressure, and GPS/GNSS is fused to provide optimal measurement estimation.
 
-The patent-pending package is smaller than 3 stacked dimes and fits into most industrial and commercial
+The patented package is smaller than 3 stacked dimes and fits into most industrial and commercial
 application designs.
 
 ## Features
