@@ -45,6 +45,6 @@ The following steps outline how to record post process data in the EvalTool
   Streaming and logging a PPD log using the CLTool is done using the `-presetPPD -lon` options:
 
 ```bash
-cltool -c /dev/ttyS2 -msgPresetPPD -lon
+cltool -c /dev/ttyS2 -presetPPD -lon
 ```
 See the [CLTool section](../software/cltool.md) for more information on using the CLTool.
