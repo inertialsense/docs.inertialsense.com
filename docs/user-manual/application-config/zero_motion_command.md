@@ -1,6 +1,11 @@
 # Zero Motion Command
 
-The *Zero Motion Command* is user initiated and informs the EKF that the system is stationary on the ground.  It is used to aid in IMU bias estimation which can reduce drift in the INS attitude.  It works as a virtual velocity and angular rate sensor to provide velocity and angular rate observations when the INS is stationary (zero velocity and zero angular rate).  The Zero Motion Command is beneficial if there is no GPS or there are GPS issues or if faster IMU bias convergance is desired. 
+The *Zero Motion Command* is user initiated and informs the EKF that the system is stationary on the ground.  It is used to aid in IMU bias estimation which can reduce drift in the INS attitude.  It works as a virtual velocity and angular rate sensor to provide velocity and angular rate observations when the INS is stationary (zero velocity and zero angular rate).  This is done for a period of two seconds after the *Zero Motion Command* is received.  The Zero Motion Command is beneficial for the following reasons:
+
+- Overriding incorrect GPS motion caused by weak GPS signal.  
+- Speeding up gyro biases convergence time when there is no GPS signal.   
+
+In normal AHRS mode (stationary with or without GPS), only the IMU gyro biases are estimated by the EKF.  Setting `DID_FLASH_CONFIG.insDynModel = DYN_STATIONARY (2)` is equivalent to continually issuing the zero motion command.
 
 To use the *Zero Motion Command*: 
 
