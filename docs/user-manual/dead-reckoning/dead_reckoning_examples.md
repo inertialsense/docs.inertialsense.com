@@ -12,9 +12,9 @@ The following are examples dead reckoning of a car test vehicle.  No wheel senso
 
 In this example GNSS outage was simulated by disabling GNSS fusion into the INS Kalman filter (EKF).  This was done by setting the `Disable Fusion - GPS1` option found in the General settings of the EvalTool app.   By disabling GPS fusion and keeping fix, we can use the GNSS position as truth and compare it to the dead reckoning solution.
 
-Dead reckoning duration:  **30 seconds**
+Dead reckoning duration:  **30 seconds**, **605 meters**
 
-Max position error:  **2.5 meters**
+Max position error:  **2.5 meters**, **0.4% drift**
 
 ![](images/dead_reckoning_sim_outage.svg)
 
@@ -30,9 +30,9 @@ When GNSS fusion is re-enabled, error in the INS solution is removed and the INS
 
 In this example our test vehicle drove in and out of a parking garage.  The drive consisted of starting outside with GNSS fix, entering the garage (losing GNSS fix), driving up one level, parking, and then following the path back down and out of the garage where GNSS fix was regained.   
 
-Dead reckoning duration:  **105 seconds**
+Dead reckoning duration:  **105 seconds**, **349 meters**
 
-Exit position error:  **~2 meters**
+Exit position error:  **~2 meters**, **0.6% drift**
 
 ![](images/dead_reckoning_garage_iso.svg)
 
