@@ -1,12 +1,26 @@
 # INS & GNSS Configuration
 
-## Sensor Frame Rotation (IMU Rotation)
+## Translation
 
-The sensor frame rotation allows the user to configure a rotation in multiples of 90 degrees to the IMU and magnetometer output.  This is done by setting the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits in the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.  The rotation is from the sensor frame to the IMU and magnetometer output frame applied in order of 1.) heading, 2.) pitch, 3.) roll.  The IMU rotation may be used to rotate the IMU and magnetometer output to match the vehicle frame.   
+Although the uINS can be mounted and operated in any arbitrary orientation, it is often desirable and conventional to translate the uINS output so that it is rotated into the vehicle frame and located at certain location for control and navigation of the vehicle. This is done using the ***IMU Rotation***, ***INS Rotation***, and ***INS Offset*** parameters.  
 
-## INS Rotation
+In most common applications, output is translated to the vehicle frame (X to the front, Y to the right, and Z down): 
 
-The INS rotation is used convert the INS output from the INS [sensor frame](../../reference/coordinate_frames/#sensor-frame) (hardware frame) to the vehicle frame.  This is useful if the sensor frame and vehicle frame are not aligned.  The actual INS rotation parameters are `DID_FLASH_CONFIG.insRotation[3]` (Roll,Pitch,Yaw) in radians.  The actual INS rotation values describes the rotation from the vehicle frame to the INS sensor frame in order of 1.) heading, 2.) pitch, 3.) roll.  
+- *IMU Rotation* provides gross rotation of the IMU output.
+- *INS Rotation* provides small angle alignment of the INS output.   
+- *INS Offset* moves the location from the INS output.
+
+### IMU Rotation (Sensor Frame)
+
+The *IMU rotation* is used rotation the IMU and magnetometer output (sensor frame) in **multiples of 90 degrees** using the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits of the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.  These X,Y,Z rotations occur about the corresponding axes and applied in the order of Z,Y,X.  This rotation is recommended for gross rotations.   
+
+### INS Rotation
+
+The *INS rotation* is used to convert the INS output from the INS [sensor frame](../../reference/coordinate_frames/#sensor-frame) to the vehicle frame.  This is useful if the sensor frame and vehicle frame are not aligned.  The actual INS rotation parameters are `DID_FLASH_CONFIG.insRotation[3]` (X, Y, Z) in radians.  The *INS rotation* values describes the rotation from the INS sensor frame to the intermediate frame in order of Z, Y, X.  This rotation is   
+
+### INS Offset
+
+The *INS offset* is used to shift the location of the INS output and is applied following the INS Rotation.  This offset can be used to move the uINS location from the origin of the sensor frame to any arbitrary location, often a control navigation point on the vehicle.   
 
 ### Identifying INS Rotation
 
