@@ -1,0 +1,8 @@
+mdx_truly_sane_lists==1.2
+mkdocs==1.2.3
+mkdocs-material==8.0.2
+mkdocs-pdf-export-plugin==0.5.10
+mkdocs-with-pdf==0.9.3
+pygments==2.10.0
+pymarkdown==0.1.4
+pymdown-extensions==9.1
