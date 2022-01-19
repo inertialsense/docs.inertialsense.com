@@ -48,7 +48,7 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 ## Jumpers
 
-The "MAIN" connector pinout on the Rugged product line can be configured for USB, TTL, RS232, CAN, and RS485 by setting the onboard PCB surface mount jumpers.  Jumpers R19 (RXEN) and R23 (485) are 0 &Omega; resistors and all other jumper are 470 &Omega; resistors.   All jumpers are 0402 SMD 1/16W (5% or better tolerance) resistors. 
+The "MAIN" connector pinout on the Rugged product line can be configured for USB, TTL, RS232, CAN, and RS485 by setting the dip switches for Rugged v1.1 and by setting the onboard PCB surface mount jumpers for Rugged-1.0.  Jumper resistors are 470 &Omega; resistors.   All jumpers are 0402 SMD 1/16W (5% or better tolerance) resistors. 
 
 ### Serial Port 0
 
