@@ -10,7 +10,7 @@ In most common applications, output is translated to the vehicle frame (X to the
 - *INS Rotation* provides small angle alignment of the INS output.   
 - *INS Offset* moves the location from the INS output.
 
-### IMU Rotation (Sensor Frame)
+### Senor Rotation (From Hardware Native Frame to IMU Body Frame)
 
 The *IMU rotation* is used rotation the IMU and magnetometer output (sensor frame) in **multiples of 90 degrees** using the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits of the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.  These X,Y,Z rotations occur about the corresponding axes and applied in the order of Z,Y,X.  This rotation is recommended for gross rotations.   
 
@@ -21,6 +21,30 @@ The *INS rotation* is used to convert the INS output from the INS [sensor frame]
 ### INS Offset
 
 The *INS offset* is used to shift the location of the INS output and is applied following the INS Rotation.  This offset can be used to move the uINS location from the origin of the sensor frame to any arbitrary location, often a control navigation point on the vehicle.   
+
+
+
+### Aligning INS with Vehicle Frame
+
+To identify the angle error between the INS output frame and the vehicle frame, the vehicle must 
+
+If surface is level, measure the axis rotation error by identify the corresponding axis with roll or pitch.
+
+If save is NOT level, two measurements with a 180 degree rotation about the gravity vector should be made. 
+
+The difference between IMU frame and the vehicle frame can be identified through the attitude euler angles when a given axis is perpendicular to gravity. 
+
+When gravity is orthogonal to the IMU X and Y plane: 
+
+X - Roll
+
+Y - Pitch
+
+When gravity is orthogonal to the IMU X and Z plane (roll is +-90 degrees): 
+
+Z - Pitch  
+
+
 
 ### Identifying INS Rotation
 
