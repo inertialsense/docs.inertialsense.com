@@ -75,23 +75,23 @@ See the [Multi-Band GNSS page](../../gnss/multi_band_gnss/) for configuration in
 
 1. Completely remove power from the unit.
 
-2. Remove the 3 5/16'' screws from the bottom of the Rugged-2.
+2. Remove the 3 5/16" screws from the bottom of the Rugged-2.
 
 3. Gently separate the top and bottom halves from each other pealing them apart opening from the side with the green connector. 
 
    - The two halves maybe somewhat adhered due to the thermal pad used in the device. Consistent gentle pressure will separate them.
    - As the device starts to open, do not open the unit past 90 degrees. *If flexed to often and beyond 90 degrees the ribbon will break causing the unit to be damaged beyond repair.* 
 
-4. Remove Kapton tape from the DIP Switch. (Save the Tape!)
+4. Remove Kapton tape from the DIP Switch. (Save the tape!)
 
 5. Make your adjustment for the desired configuration. (see table above for switch configurations)
 
-   - Use of a small screwdriver or tweezers work well
+   - Use of a small screwdriver or tweezers work well.
    - It should not take much of force to move the desired switch. 
 
 6. Replace the Kapton tape.
 
-7. Closed the two halves and install the 3 5/16'' screws back in the bottom.
+7. Closed the two halves and install the 3 5/16" screws back in the bottom.
 
    
 
