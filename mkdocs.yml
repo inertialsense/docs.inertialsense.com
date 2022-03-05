@@ -6,11 +6,14 @@ site_url: https://docs.inertialsense.com
 # repo_url: https://github.com/inertialsense/docs
 # edit_uri: blob/master/docs/   # Commented out to hide edit icon from top right corner of each page.
 
-# Google Analytics
+# Google Analytics - This is going to be phased out and moved to 'theme.analytics.gtag' using 'G-' ID rather than the "UA-" ID.
+# (see https://www.mkdocs.org/about/release-notes/)
 google_analytics: ['UA-110693473-1', 'docs.inertialsense.com']
 
 # Configuration
 theme:
+  analytics:
+    gtag: UA-110693473-1
   name: 'material'
   custom_dir: 'custom_theme/'
   palette:

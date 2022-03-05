@@ -231,7 +231,7 @@ Two ZED-F9 units can be used to provide either or both multi-band RTK compassing
 
 *R17 and R18 on the EVB-2 must be loaded with a zero ohm jumpers to connect Ser2 to H7 and U5 must be removed from the EVB-2. 
 
-![R27 on EVB-2](images\evb_2_r27.png)
+![R27 on EVB-2](images/evb_2_r27.png)
 
 #### Dual GNSS Settings
 

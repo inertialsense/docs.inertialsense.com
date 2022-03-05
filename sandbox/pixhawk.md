@@ -51,4 +51,4 @@ Apply 5V power to the 2-pin H1 port on the PixHawk as shown below.
 !!! warning
     The VCC pin on H4 is _not_ 5V Tolerant. Applying 5V to this pin will fry the chip.
 
-![pixhawk_inertialsense_wiring](images\Pixhawk_IS_wiring.PNG)
+![pixhawk_inertialsense_wiring](images/Pixhawk_IS_wiring.PNG)

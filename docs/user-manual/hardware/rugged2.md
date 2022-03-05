@@ -41,7 +41,9 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 ## I/O Configuration
 
-The "MAIN" connector pinout on the Rugged product line can be configured for USB, TTL, RS232, CAN, and RS485 by setting the onboard PCB surface mount jumpers.  Jumpers R19 (RXEN) and R23 (485) are 0 &Omega; resistors and all other jumper are 470 &Omega; resistors.   All jumpers are 0402 SMD 1/16W (5% or better tolerance) resistors. 
+The "MAIN" connector pinout on the Rugged product line can be configured for USB, TTL, RS232, CAN, and RS485 by setting the dipswitches.
+
+![rugged-dip-switch](../images/Rugged-Dip-Switch.jpg)
 
 ## Dipswitch Config
 
@@ -66,6 +68,34 @@ The Rugged-2 dip switches are used for setting the following I/O configurations.
 \*\* CAN transceiver bypassed. 
 
 See the [Multi-Band GNSS page](../../gnss/multi_band_gnss/) for configuration information.
+
+## **To open the Rugged-2:**
+
+*Caution! Use of a grounding strap or other ESD protection device is advised.*
+
+1. Completely remove power from the unit.
+
+2. Remove the 3 5/16" screws from the bottom of the Rugged-2.
+
+3. Gently separate the top and bottom halves from each other pealing them apart opening from the side with the green connector. 
+
+   - The two halves maybe somewhat adhered due to the thermal pad used in the device. Consistent gentle pressure will separate them.
+   - As the device starts to open, do not open the unit past 90 degrees. *If flexed to often and beyond 90 degrees the ribbon will break causing the unit to be damaged beyond repair.* 
+
+4. Remove Kapton tape from the DIP Switch. (Save the tape!)
+
+5. Make your adjustment for the desired configuration. (see table above for switch configurations)
+
+   - Use of a small screwdriver or tweezers work well.
+   - It should not take much of force to move the desired switch. 
+
+6. Replace the Kapton tape.
+
+7. Closed the two halves and install the 3 5/16" screws back in the bottom.
+
+   
+
+   **Done!**
 
 ## Related Parts
 
