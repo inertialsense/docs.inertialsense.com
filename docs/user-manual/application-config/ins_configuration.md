@@ -24,7 +24,10 @@ The *INS offset* is used to shift the location of the INS output and is applied 
 
 ### Manually Aligning the INS After Mounting  
 
-**NOTE:** The [Infield Calibration](#infield-calibration) process can be used instead of this process to automatically measure and align the INS with the vehicle frame for INS rotations less than 15°.
+**NOTE for use:** 
+
+- The [Infield Calibration](#infield-calibration) process can be used instead of this process to automatically measure and align the INS with the vehicle frame for INS rotations less than 15°.
+- If using software release 1.8.4 or newer, we recommend using the `DID_FLASH_CONFIG.sensorConfig` to rotate the sensor frame by 90° to near level before following the steps below.
 
 The following process uses the uINS to measure and correct for the uINS mounting angle. 
 
@@ -35,8 +38,6 @@ The following process uses the uINS to measure and correct for the uINS mounting
 3. Find the difference between the known orientations and the measured INS orientations and average these differences together.
 
 4. Negate this average difference and enter that into the `DID_FLASH_CONFIG.insRotation`. This value is in Euler, however it is OK for this step as this rotation should have just been converted from quaternion to Euler and will be converted back to quaternion on-board for the runtime rotation.
-
-If using software release 1.8.4 or newer, we recommend using the `DID_FLASH_CONFIG.sensorConfig` to rotate the sensor frame by 90° to near level before following the steps above. 
 
 ## Infield Calibration
 
@@ -70,26 +71,22 @@ If Infield Calibration is not adequate, the INS may be [leveled or aligned manua
 
 ### Infield Calibration Process 
 
-The following process can be used to improve the IMU calibration accuracy and / or align (level) the INS with the vehicle frame. 
+The following process can be used to used to improve the IMU calibration accuracy and also align or level the INS to the vehicle frame. 
 
 1. **Prepare Leveling Surface** - Ensure the system is stable and stationary on a near-level surface with one of three axes in the vertical direction.  
-
 2. **Sample an Orientation** - Initiate the orientation sampling by setting `DID_INFIELD_CAL.state` to `INFIELD_CAL_STATE_CMD_START_SAMPLE_CAL`.  Sampling will take 5 seconds, and completion is indicated when `DID_INFIELD_CAL.state` switches to `INFIELD_CAL_STATE_SAMPLING_DONE_WAITING_FOR_USER`.   
+   - **Sample Same Orientation w/ +180° Yaw** - If the working surface is not level, two samples per orientation can be taken to cancel out the tilt of the working surface.  Rotate the system approximately 180° in yaw (heading) and initiate the sampling a second time for a given orientation. 
+   - **Sample Up to Six Orientations** - The sampling process can be done for up to six orientations (X,Y,Z pointed up and down).  Each sample will be automatically associated with the corresponding vertical axis and direction.  The collective of orientations will be averaged together for both the zero IMU bias and zero INS attitude.
+3. **Store IMU Bias and/or Align INS** - Following orientation sampling, issue one of the following commands to process and save the IMU bias and INS rotation to flash memory.  This is done by setting `DID_INFIELD_CAL.state` to any of the following.  
 
-3. **Sample Same Orientation w/ +180° Yaw** - If the working surface is not level, two samples per orientation can be taken to cancel out the tilt of the working surface.  Rotate the system approximately 180° in yaw (heading) and initiate the sampling a second time for a given orientation.   
-
-4. **Sample Up to Six Orientations** - The sampling process can be done for up to six orientations (X,Y,Z pointed up and down).  Each sample will be automatically associated with the corresponding vertical axis and direction.  The collective of orientations will be averaged together for both the zero IMU bias and zero INS attitude.
-
-5. **Store IMU Bias and/or Align INS** - Following orientation sampling, issue one of the following commands to process and save the IMU bias and INS rotation to flash memory.  This is done by setting `DID_INFIELD_CAL.state` to any of the following.  
-
-   ```
-   INFIELD_CAL_STATE_CMD_STORE_IMU                     = 5,    // Compute gyro and accel bias.  
-   INFIELD_CAL_STATE_CMD_STORE_GYRO                    = 6,    // Compute gyro bias. 
-   INFIELD_CAL_STATE_CMD_STORE_ACCEL                   = 7,    // Compute accel bias.  
-   INFIELD_CAL_STATE_CMD_STORE_ALIGN_INS               = 8,    // Estimate INS rotation to align INS with vehicle frame.  Don't compute IMU bias.
-   INFIELD_CAL_STATE_CMD_STORE_ACCEL_ALIGN_INS         = 9,    // Compute accel bias.  Estimate INS rotation to align INS with vehicle frame.
-   INFIELD_CAL_STATE_CMD_STORE_IMU_ALIGN_INS           = 10,   // Compute gyro and accel bias.  Estimate INS rotation to align INS with vehicle frame. 
-   ```
+```
+INFIELD_CAL_STATE_CMD_STORE_IMU                     = 5,    // Compute gyro and accel bias.  
+INFIELD_CAL_STATE_CMD_STORE_GYRO                    = 6,    // Compute gyro bias. 
+INFIELD_CAL_STATE_CMD_STORE_ACCEL                   = 7,    // Compute accel bias.  
+INFIELD_CAL_STATE_CMD_STORE_ALIGN_INS               = 8,    // Estimate INS rotation to align INS with vehicle frame.  Don't compute IMU bias.
+INFIELD_CAL_STATE_CMD_STORE_ACCEL_ALIGN_INS         = 9,    // Compute accel bias.  Estimate INS rotation to align INS with vehicle frame.
+INFIELD_CAL_STATE_CMD_STORE_IMU_ALIGN_INS           = 10,   // Compute gyro and accel bias.  Estimate INS rotation to align INS with vehicle frame. 
+```
 
 ## GNSS Antenna Offset
 
