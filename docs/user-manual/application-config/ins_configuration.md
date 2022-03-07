@@ -22,17 +22,17 @@ The *INS rotation* is used to convert the INS output from the [sensor frame](../
 
 The *INS offset* is used to shift the location of the INS output and is applied following the INS Rotation.  This offset can be used to move the uINS location from the origin of the sensor frame to any arbitrary location, often a control navigation point on the vehicle. 
 
-### Aligning the INS After Mounting  
+### Manually Aligning the INS After Mounting  
 
-**NOTE:** The Infield Calibration process can be used instead of this process to automatically measure and align the INS with the vehicle frame for INS rotations less than 15°.
+**NOTE:** The [Infield Calibration](#infield-calibration) process can be used instead of this process to automatically measure and align the INS with the vehicle frame for INS rotations less than 15°.
 
 The following process uses the uINS to measure and correct for the uINS mounting angle. 
 
 1. Set `DID_FLASH_CONFIG.insRotation` to zero. 
 
-2. Set the sensor on the ground at various known orientations and record the INS quaternion output (DID_INS_2).  Using the Euler output (DID_INS_1) can be used if the pitch is less than 15°.
+2. Set the sensor on the ground at various known orientations and record the INS quaternion output (DID_INS_2).  Using the Euler output (DID_INS_1) can be used if the pitch is less than 15°.  It is recommended to use the EKF [Zero Motion Command](../zero_motion_command/#zero-motion-command) to ensure the EKF bias estimation and attitude have stabilized quickly before measuring the INS attitude.
 
-3. Find the difference between the known orientations and the measured INS orientations and average these differences together. 
+3. Find the difference between the known orientations and the measured INS orientations and average these differences together.
 
 4. Negate this average difference and enter that into the `DID_FLASH_CONFIG.insRotation`. This value is in Euler, however it is OK for this step as this rotation should have just been converted from quaternion to Euler and will be converted back to quaternion on-board for the runtime rotation.
 
@@ -56,7 +56,9 @@ All three axes of the gyros are sampled simultaneously, and the bias is stored i
 
 ### Zeroing INS Attitude
 
-The Infield Calibration process can be used to align or level the INS output frame with the vehicle frame.  This is done by observing the X,Y,Z axes rotations necessary to level the orientation(s) sampled.  Rotations cannot be computed for axes that are pointed vertically.  For example, a single orientation sample with X and Y in the horizontal plane and Z pointed down will only be able to produce an X,Y rotation, and the Z rotation will remain zero.  To compute all three rotations for the X,Y,Z axes, the system must be sampled at least twice, once while level and once while on its side. 
+The Infield Calibration process can be used to align or level the INS output frame with the vehicle frame.  This is done by observing the X,Y,Z axes rotations necessary to level the orientation(s) sampled.  Zeroing the INS attitude as part of the Infield Calibration routine provides a optimal and highly accurate method for measuring the attitude while stationary by averaging raw bias corrected accelerations.  
+
+Rotations cannot be computed for axes that are pointed vertically.  For example, a single orientation sample with X and Y in the horizontal plane and Z pointed down will only be able to produce an X,Y rotation, and the Z rotation will remain zero.  To compute all three rotations for the X,Y,Z axes, the system must be sampled at least twice, once while level and once while on its side. 
 
 The infield calibration process is generally useful for only small angle INS rotations and is not intended for those larger than 15° per axis.  The user must set the INS rotation manually for larger rotations.  The INS rotation is stored and accessed in `DID_FLASH_CONFIG.insRotation` in flash memory. 
 
@@ -64,9 +66,11 @@ Because the sampled orientations are averaged together, it is recommended to onl
 
 The zero INS attitude feature assumes there are flat rigid surface(s) attached to the uINS about which the system can be leveled.  If the working surface is not level or additional precision is desired, each orientation sampled can have an additional sample taken with ~180° yaw offset to cancel out tilt of the working surface.   
 
+If Infield Calibration is not adequate, the INS may be [leveled or aligned manually](#manually-aligning-the-ins-after-mounting).     
+
 ### Infield Calibration Process 
 
-The following process can be used to used to improve the IMU calibration accuracy and also align or level the INS to the vehicle frame. 
+The following process can be used to improve the IMU calibration accuracy and / or align (level) the INS with the vehicle frame. 
 
 1. **Prepare Leveling Surface** - Ensure the system is stable and stationary on a near-level surface with one of three axes in the vertical direction.  
 
