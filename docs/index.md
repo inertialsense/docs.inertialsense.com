@@ -1,4 +1,4 @@
-**Software Release 1.8.5 - 16 June 2021**
+**Software Release 1.8.6 - 11 March 2022**
 
 <center>
 
