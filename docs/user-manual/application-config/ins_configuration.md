@@ -74,9 +74,17 @@ If Infield Calibration is not adequate, the INS may be [leveled or aligned manua
 The following process can be used to used to improve the IMU calibration accuracy and also align or level the INS to the vehicle frame. 
 
 1. **Prepare Leveling Surface** - Ensure the system is stable and stationary on a near-level surface with one of three axes in the vertical direction.  
-2. **Sample Orientation(s)** - Initiate sampling of one or more orientations by setting `DID_INFIELD_CAL.state` to `INFIELD_CAL_STATE_CMD_START_SAMPLE_CAL`.  Sampling per orientation will take 5 seconds and completion is indicated when `DID_INFIELD_CAL.state` switches to `INFIELD_CAL_STATE_SAMPLING_DONE_WAITING_FOR_USER`.   
+
+2. **Sample Orientation(s)** - Initiate sampling of one or more orientations by setting `DID_INFIELD_CAL.state` to `INFIELD_CAL_STATE_CMD_START_SAMPLE_CAL`.  Sampling per orientation will take 5 seconds and completion is indicated when `DID_INFIELD_CAL.state` switches to `INFIELD_CAL_STATE_SAMPLING_DONE_WAITING_FOR_USER`.  
+
+   ```
+   INFIELD_CAL_STATE_CMD_START_SAMPLE_CAL              = 1,	// Save sample into cal data.
+   INFIELD_CAL_STATE_SAMPLING_DONE_WAITING_FOR_USER    = 21,   // Sampling finished
+   ```
+
    - **Sample Same Orientation w/ +180° Yaw** - If the working surface is not level, two samples per orientation can be taken to cancel out the tilt of the working surface.  Rotate the system approximately 180° in yaw (heading) and initiate the sampling a second time for a given orientation. 
    - **Sample Up to Six Orientations** - The sampling process can be done for up to six orientations (X,Y,Z pointed up and down).  Each sample will be automatically associated with the corresponding vertical axis and direction.  All orientations will be averaged together for both the zero IMU bias and zero INS attitude.
+
 3. **Store IMU Bias and/or Align INS** - Following sampling of the orientations, issue one of the following commands to process and save the IMU bias and INS rotation to flash memory.  This is done by setting `DID_INFIELD_CAL.state` to any of the following.  Following this command, the built-in test (BIT) will run once to verify the newly adjusted calibration and `DID_INFIELD_CAL.state` will be set to `INFIELD_CAL_STATE_FINISHED`.   
 
 ```
@@ -86,6 +94,8 @@ INFIELD_CAL_STATE_CMD_STORE_ACCEL                   = 7,    // Compute accel bia
 INFIELD_CAL_STATE_CMD_STORE_ALIGN_INS               = 8,    // Estimate INS rotation to align INS with vehicle frame.  Don't compute IMU bias.
 INFIELD_CAL_STATE_CMD_STORE_ACCEL_ALIGN_INS         = 9,    // Compute accel bias.  Estimate INS rotation to align INS with vehicle frame.
 INFIELD_CAL_STATE_CMD_STORE_IMU_ALIGN_INS           = 10,   // Compute gyro and accel bias.  Estimate INS rotation to align INS with vehicle frame. 
+
+INFIELD_CAL_STATE_FINISHED                          = 23,   // Calculations are complete 
 ```
 
 ## GNSS Antenna Offset
