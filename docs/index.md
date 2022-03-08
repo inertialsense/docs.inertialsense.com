@@ -84,7 +84,7 @@ Phone 801-610-6771<br>
 Email support@inertialsense.com<br>
 Website: InertialSense.com<br>
 
-© 2014-2021 Inertial Sense
+© 2014-2022 Inertial Sense
 
 Inertial Sense®, Inertial Sense logo and combinations thereof are registered trademarks or trademarks of Inertial Sense, Inc. Other terms and product names may be trademarks of others.
 

@@ -32,7 +32,7 @@ plugins:
         enabled_if_env: ENABLE_PDF_EXPORT
         author: Inertial Sense, Inc.
         output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
-        copyright: ©2021
+        copyright: ©2022
         cover: true
         cover_title: User Manual
         cover_subtitle: Autonomous Navigation Solutions
