@@ -75,28 +75,36 @@ The following process can be used to used to improve the IMU calibration accurac
 
 1. **Prepare Leveling Surface** - Ensure the system is stable and stationary on a near-level surface with one of three axes in the vertical direction.  
 
-2. **Sample Orientation(s)** - Initiate sampling of one or more orientations by setting `DID_INFIELD_CAL.state` to `INFIELD_CAL_STATE_CMD_START_SAMPLE_CAL`.  Sampling per orientation will take 5 seconds and completion is indicated when `DID_INFIELD_CAL.state` switches to `INFIELD_CAL_STATE_SAMPLING_WAITING_FOR_USER_INPUT`.  
+2. **Initialize the Mode** - Clear any prior samples and set the calibration mode by setting `DID_INFIELD_CAL.state` to one of the following:   
 
+   ```c++
+   INFIELD_CAL_STATE_CMD_INIT_IMU                = 1, // Zero accel and gyro biases.
+   INFIELD_CAL_STATE_CMD_INIT_GYRO               = 2, // Zero only gyro  biases.
+   INFIELD_CAL_STATE_CMD_INIT_ACCEL              = 3, // Zero only accel biases.
+   INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS          = 4, // Estimate INS rotation to align INS with vehicle frame.
+   INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS_IMU      = 5, // Zero gyro and accel biases.  Estimate INS rotation to align INS with vehicle frame. 
+   INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS_GYRO     = 6, // Zero only gyro  biases.  Estimate INS rotation to align INS with vehicle frame. 
+   INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS_ACCEL    = 7, // Zero only accel biases.  Estimate INS rotation to align INS with vehicle frame.
+   
+   INFIELD_CAL_STATE_CMD_INIT_OPTION_DISABLE_MOTION_DETECT = 0x00010000,	// Bitwise AND this with the above init commands to disable motion detection during sampling (allow for more tolerant sampling).
    ```
-   INFIELD_CAL_STATE_CMD_START_SAMPLE_CAL              = 1,	// Save sample into cal data.
-   INFIELD_CAL_STATE_SAMPLING_WAITING_FOR_USER_INPUT    = 21,   // Sampling finished
+
+   Zeroing accelerometer biases requires that any of the X,Y,Z axes be vertically aligned with gravity during sampling.  This is indicated by bit `INFIELD_CAL_STATUS_AXIS_NOT_VERTICAL = 0x01000000` in `DID_INFIELD_CAL.status`.   
+
+   By default, the system must also be stationary without any movement during sampling.  This is indicated by bit `INFIELD_CAL_STATUS_MOTION_DETECTED = 0x02000000` is set in `DID_INFIELD_CAL.status`.  Motion detection can be disabled to make the system more tolerant during sampling.  To do this, bitwise and `INFIELD_CAL_STATE_CMD_INIT_OPTION_DISABLE_MOTION_DETECT = 0x00010000` with the initialization command .  As an example, the command to initialize *INS alignment with zero IMU bias* with motion detection disabled is as follows:
+
+   ```c++
+   (INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS_IMU | INFIELD_CAL_STATE_CMD_INIT_OPTION_DISABLE_MOTION_DETECT);
+   
+   0x00010101 = (0x00000101 | 0x00010000); 
    ```
+
+3. **Sample Orientation(s)** - Initiate sampling of one or more orientations by setting `DID_INFIELD_CAL.state` to `INFIELD_CAL_STATE_CMD_START_SAMPLE = 8`.  Sampling per orientation will take 5 seconds and completion is indicated when `DID_INFIELD_CAL.state` switches to `INFIELD_CAL_STATE_SAMPLING_WAITING_FOR_USER_INPUT = 50`.  
 
    - **Sample Same Orientation w/ +180° Yaw** - If the working surface is not level, two samples per orientation can be taken to cancel out the tilt of the working surface.  Rotate the system approximately 180° in yaw (heading) and initiate the sampling a second time for a given orientation. 
    - **Sample Up to Six Orientations** - The sampling process can be done for up to six orientations (X,Y,Z pointed up and down).  Each sample will be automatically associated with the corresponding vertical axis and direction.  All orientations will be averaged together for both the zero IMU bias and zero INS attitude.
 
-3. **Store IMU Bias and/or Align INS** - Following sampling of the orientations, issue one of the following commands to process and save the IMU bias and INS rotation to flash memory.  This is done by setting `DID_INFIELD_CAL.state` to any of the following.  Following this command, the built-in test (BIT) will run once to verify the newly adjusted calibration and `DID_INFIELD_CAL.state` will be set to `INFIELD_CAL_STATE_FINISHED`.   
-
-```
-INFIELD_CAL_STATE_CMD_STORE_IMU                     = 5,    // Compute gyro and accel bias.  
-INFIELD_CAL_STATE_CMD_STORE_GYRO                    = 6,    // Compute gyro bias. 
-INFIELD_CAL_STATE_CMD_STORE_ACCEL                   = 7,    // Compute accel bias.  
-INFIELD_CAL_STATE_CMD_STORE_ALIGN_INS               = 8,    // Estimate INS rotation to align INS with vehicle frame.  Don't compute IMU bias.
-INFIELD_CAL_STATE_CMD_STORE_ACCEL_ALIGN_INS         = 9,    // Compute accel bias.  Estimate INS rotation to align INS with vehicle frame.
-INFIELD_CAL_STATE_CMD_STORE_IMU_ALIGN_INS           = 10,   // Compute gyro and accel bias.  Estimate INS rotation to align INS with vehicle frame. 
-
-INFIELD_CAL_STATE_FINISHED                          = 23,   // Calculations are complete 
-```
+4. **Store IMU Bias and/or Align INS** - Following sampling of the orientations, set `DID_INFIELD_CAL.state` to `INFIELD_CAL_STATE_CMD_FINISH_AND_SAVE = 9` to process and save the infield calibration to flash memory.  The built-in test (BIT) will run once following this to verify the newly adjusted calibration and `DID_INFIELD_CAL.state` will be set to `INFIELD_CAL_STATE_FINISHED`.  
 
 ## GNSS Antenna Offset
 
