@@ -149,12 +149,20 @@ The hardware status flags, **hdwStatus**, are found in the `DID_INS1`, `DID_INS2
 | HDW\_STATUS\_FAULT\_BOD\_RESET | Low Power Reset |
 | HDW\_STATUS\_FAULT\_POR\_RESET | Software or Triggered Reset |
 
-### Built-in Test (BIT) Flags
-Built-in test (BIT) is enabled by setting `DID_BIT.state = BIT_STATE_CMD_FULL_STATIONARY (2)`. BIT takes about 1 second to run, and is completed when `DID_BIT.state == BIT_STATE_DONE (1)`. All BIT tests except those related to GPS require the system to be stationary to be accurate.
+## Built-in Test (BIT)
+Built-in test (BIT) is enabled by setting `DID_BIT.state` to any of the following values. 
 
-#### hdwBitStatus – Hardware BIT Flags
-Hardware BIT flags are contained in **hdwBitStatus**, found in the DID_BIT message. Bitmasks for the **hdwBitStatus**
-flags are defined in _eHdwBitStatusFlags_ in data_sets.h.
+```c++
+BIT_STATE_CMD_FULL_STATIONARY               = (int)2, // (FULL) Comprehensive test.  Requires system be completely stationary without vibrations. 
+BIT_STATE_CMD_BASIC_MOVING                  = (int)3, // (BASIC) Ignores sensor output.  Can be run while moving.  This mode is automatically run after bootup.
+BIT_STATE_CMD_FULL_STATIONARY_HIGH_ACCURACY = (int)4, // Same as BIT_STATE_CMD_FULL_STATIONARY but with higher requirements for accuracy.
+```
+
+BIT takes about 5 seconds to run, and is completed when `DID_BIT.state == BIT_STATE_DONE (1)`.  All BIT tests except those related to GPS require the system to be stationary to be accurate.
+
+### hdwBitStatus – Hardware BIT Flags
+Hardware BIT flags are contained in **hdwBitStatus**, found in the `DID_BIT` message. Bitmasks for the **hdwBitStatus**
+flags are defined in `eHdwBitStatusFlags` in data_sets.h.
 
 | **Field** | **Description** |
 |----- | ----- |
@@ -165,9 +173,9 @@ flags are defined in _eHdwBitStatusFlags_ in data_sets.h.
 | HDW\_BIT\_FAULT\_GPS\_POOR\_CNO | Poor GPS signal. Check Antenna |
 | HDW\_BIT\_FAULT\_GPS\_ACCURACY | Poor GPS Accuracy or Low number of satellites |
 
-#### calBitStatus – Calibration BIT Flags
-Calibration BIT flags are contained in **calBitStatus**, found in the DID_BIT message. Bitmasks for the **calBitStatus**
-flags are defined in eCalBitStatusFlags in data_sets.h.
+### calBitStatus – Calibration BIT Flags
+Calibration BIT flags are contained in **calBitStatus**, found in the `DID_BIT` message. Bitmasks for the **calBitStatus**
+flags are defined in `eCalBitStatusFlags` in data_sets.h.
 
 | **Field** | **Description** |
 | ----- | ----- |
@@ -183,7 +191,7 @@ This section illustrates tests used for system health monitoring in common appli
 
 2. **Sensor Test (Must be Stationary)**
 
-   These tests are ideal for manufacturing and periodic in-field testing. Initiate by setting DID_BIT.state = 2.
+   These tests are ideal for manufacturing and periodic in-field testing. Initiate by setting `DID_BIT.state = 2`.
 
 | **Test** | **Description** |
 | ----- | ----- |
@@ -192,7 +200,7 @@ This section illustrates tests used for system health monitoring in common appli
 
 3. **GPS Hardware Test**
 
-  Initiate by setting **DID_BIT.state = 2.**
+  Initiate by setting `DID_BIT.state = 2`.
 
 | **Test** | **Description** |
 | ----- | ----- |
