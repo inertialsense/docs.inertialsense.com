@@ -106,6 +106,12 @@ The following process can be used to used to improve the IMU calibration accurac
 
 4. **Store IMU Bias and/or Align INS** - Following sampling of the orientations, set `DID_INFIELD_CAL.state` to `INFIELD_CAL_STATE_CMD_SAVE_AND_FINISH = 9` to process and save the infield calibration to flash memory.  The built-in test (BIT) will run once following this to verify the newly adjusted calibration and `DID_INFIELD_CAL.state` will be set to `INFIELD_CAL_STATE_FINISHED`.  
 
+#### EvalTool Infield Cal
+
+The Infield Calibration message (DID_INFIELD_CAL) is exposed via the EvalTool IMU Settings tab. 
+
+![](images/evaltool_infield_cal.png)
+
 ## GNSS Antenna Offset
 
 If the setup includes a significant distance (40cm or more) between the GPS antenna and the uINS central unit, enter a non-zero value for the GPS lever arm, `DID_FLASH_CONFIG.gps1AntOffset` (or  `DID_FLASH_CONFIG.gpsAnt2Offset`) X,Y,Z offset in meters from Sensor Frame origin to GPS antenna.  The sensor frame is labeled on the uINS EVB case.
