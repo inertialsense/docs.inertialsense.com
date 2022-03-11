@@ -78,13 +78,13 @@ The following process can be used to used to improve the IMU calibration accurac
 2. **Initialize the Mode** - Clear any prior samples and set the calibration mode by setting `DID_INFIELD_CAL.state` to one of the following:   
 
    ```c++
-   INFIELD_CAL_STATE_CMD_INIT_IMU                = 1, // Zero accel and gyro biases.
-   INFIELD_CAL_STATE_CMD_INIT_GYRO               = 2, // Zero only gyro  biases.
-   INFIELD_CAL_STATE_CMD_INIT_ACCEL              = 3, // Zero only accel biases.
-   INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS          = 4, // Estimate INS rotation to align INS with vehicle frame.
-   INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS_IMU      = 5, // Zero gyro and accel biases.  Estimate INS rotation to align INS with vehicle frame. 
-   INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS_GYRO     = 6, // Zero only gyro  biases.  Estimate INS rotation to align INS with vehicle frame. 
-   INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS_ACCEL    = 7, // Zero only accel biases.  Estimate INS rotation to align INS with vehicle frame.
+   INFIELD_CAL_STATE_CMD_INIT_ZERO_IMU            = 1, // Zero accel and gyro biases.
+   INFIELD_CAL_STATE_CMD_INIT_ZERO_GYRO           = 2, // Zero only gyro  biases.
+   INFIELD_CAL_STATE_CMD_INIT_ZERO_ACCEL          = 3, // Zero only accel biases.
+   INFIELD_CAL_STATE_CMD_INIT_ZERO_ATTITUDE       = 4, // Zero (level) INS attitude by adjusting INS rotation.
+   INFIELD_CAL_STATE_CMD_INIT_ZERO_ATTITUDE_IMU   = 5, // Zero gyro and accel biases.  Zero (level) INS attitude by adjusting INS rotation. 
+   INFIELD_CAL_STATE_CMD_INIT_ZERO_ATTITUDE_GYRO  = 6, // Zero only gyro  biases.  Zero (level) INS attitude by adjusting INS rotation. 
+   INFIELD_CAL_STATE_CMD_INIT_ZERO_ATTITUDE_ACCEL = 7, // Zero only accel biases.  Zero (level) INS attitude by adjusting INS rotation.
    
    INFIELD_CAL_STATE_CMD_INIT_OPTION_DISABLE_MOTION_DETECT = 0x00010000,	// Bitwise AND this with the above init commands to disable motion detection during sampling (allow for more tolerant sampling).
    ```
@@ -94,7 +94,7 @@ The following process can be used to used to improve the IMU calibration accurac
    By default, the system must also be stationary without any movement during sampling.  This is indicated by bit `INFIELD_CAL_STATUS_MOTION_DETECTED = 0x02000000` is set in `DID_INFIELD_CAL.status`.  Motion detection can be disabled to make the system more tolerant during sampling.  To do this, bitwise and `INFIELD_CAL_STATE_CMD_INIT_OPTION_DISABLE_MOTION_DETECT = 0x00010000` with the initialization command .  As an example, the command to initialize *INS alignment with zero IMU bias* with motion detection disabled is as follows:
 
    ```c++
-   (INFIELD_CAL_STATE_CMD_INIT_ALIGN_INS_IMU | INFIELD_CAL_STATE_CMD_INIT_OPTION_DISABLE_MOTION_DETECT);
+   (INFIELD_CAL_STATE_CMD_INIT_ZERO_ATTITUDE_IMU | INFIELD_CAL_STATE_CMD_INIT_OPTION_DISABLE_MOTION_DETECT);
    
    0x00010101 = (0x00000101 | 0x00010000); 
    ```
@@ -106,11 +106,52 @@ The following process can be used to used to improve the IMU calibration accurac
 
 4. **Store IMU Bias and/or Align INS** - Following sampling of the orientations, set `DID_INFIELD_CAL.state` to `INFIELD_CAL_STATE_CMD_SAVE_AND_FINISH = 9` to process and save the infield calibration to flash memory.  The built-in test (BIT) will run once following this to verify the newly adjusted calibration and `DID_INFIELD_CAL.state` will be set to `INFIELD_CAL_STATE_FINISHED`.  
 
-#### EvalTool Infield Cal
+#### EvalTool or CLTool for Infield Cal
 
-The Infield Calibration message (DID_INFIELD_CAL) is exposed via the EvalTool IMU Settings tab. 
+The EvalTool IMU Settings tab provides a user interface to read and write the DID_INFIELD_CAL message.  
 
 ![](images/evaltool_infield_cal.png)
+
+#### CLTool Infield Cal
+
+The following options can be used with the CLTool to edit the infield calibration (DID_INFIELD_CAL).  
+
+```bash
+cltool -c /dev/ttyS2 -edit DID_INFIELD_CAL
+```
+
+Below we see the CLTool edit view of the DID_INFIELD_CAL message.
+
+```bash
+$ Inertial Sense.  Connected.  Press CTRL-C to terminate.  Rx 13657
+
+(94) DID_INFIELD_CAL:      W up, S down
+                     0   calData[2].down.dev[1].acc[1]
+                     0   calData[2].down.dev[1].acc[2]
+                     0   calData[2].down.yaw
+                     0   calData[2].up.dev[0].acc[0]
+                     0   calData[2].up.dev[0].acc[1]
+                     0   calData[2].up.dev[0].acc[2]
+                     0   calData[2].up.dev[1].acc[0]
+                     0   calData[2].up.dev[1].acc[1]
+                     0   calData[2].up.dev[1].acc[2]
+                     0   calData[2].up.yaw
+          0.0398919582   imu[0].acc[0]
+        0.000717461109   imu[0].acc[1]
+            9.67872334   imu[0].acc[2]
+         0.00583727891   imu[0].pqr[0]
+          0.0135380113   imu[0].pqr[1]
+        -0.00342554389   imu[0].pqr[2]
+          0.0874974579   imu[1].acc[0]
+          -0.167159081   imu[1].acc[1]
+            9.67817783   imu[1].acc[2]
+        -0.00111889921   imu[1].pqr[0]
+        -0.00523020467   imu[1].pqr[1]
+         0.00455262465   imu[1].pqr[2]
+                     0   sampleTimeMs
+                    50   state
+            0x00B01000 * status
+```
 
 ## GNSS Antenna Offset
 
