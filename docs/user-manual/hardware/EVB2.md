@@ -18,10 +18,12 @@ The EVB-2 can be configured to preform a multitude of operations. Below are diag
 |    2     | ![](../images/circle-green.png)  | **Default**  | RS232                           | WiFi/BLE Module, XBee                             |
 |    3     | ![](../images/circle-blue.png)   | **XBee**     | RS232, XBee                     | WiFi/BLE Module                                   |
 |    4     | ![](../images/circle-purple.png) | **WiFi/BLE** | Wi-Fi/BLE Module,<br/>RS422/485 | XBee                                              |
-|    5     | ![](../images/circle-cyan.png)   | **SPI**      | SPI                             | Wi-Fi/BLE Module, XBee                            |
+|    5     | ![](../images/circle-cyan.png)   | **SPI<sup>\*</sup>** | SPI<sup>\*</sup>                | Wi-Fi/BLE Module, XBee                            |
 |    6     | ![](../images/circle-yellow.png) | **USB/232**  | RS232, XBee                     | EVB2 to uINS Connection                           |
 |    7     | ![](../images/circle-white.png)  | **USB/422/485**  | RS422/485                   | EVB2 to uINS Connection                           |
 |    1     | ![](../images/circle-black.png)  | **Off**      |                                 | EVB2 to uINS Connection<br/>WiFi/BLE Module, XBee |
+
+<sup>\*</sup>A reset is required following selection of this CBPreset to enable SPI on the uINS, in order to assert the uINS pin 10 (G9/nSPI_EN) during bootup.
 
 === "![](../images/circle-green.png) Default"
 
@@ -224,5 +226,4 @@ The EVB-2 shipped standard with the XBee radio default frequency is 915MHz.  An 
 | ------------------------ | --------- | --------------- |
 | XBP9X-DMUS-001 (default) | 915 MHz   | 902MHz ~ 928MHz |
 | XB8X-DMUS-001 (Europe)   | 868 MHz   | 863MHz ~ 870MHz |
-
 

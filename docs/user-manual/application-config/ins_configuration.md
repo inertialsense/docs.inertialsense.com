@@ -120,7 +120,7 @@ The following options can be used with the CLTool to edit the infield calibratio
 cltool -c /dev/ttyS2 -edit DID_INFIELD_CAL
 ```
 
-Below we see the CLTool edit view of the DID_INFIELD_CAL message.
+Below is an example of the CLTool edit view of the DID_INFIELD_CAL message.
 
 ```bash
 $ Inertial Sense.  Connected.  Press CTRL-C to terminate.  Rx 13657
