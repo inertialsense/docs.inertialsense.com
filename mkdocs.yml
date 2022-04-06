@@ -122,6 +122,7 @@ nav:
     - Examples: user-manual/dead-reckoning/dead_reckoning_examples.md
   - General Configuration:
     # - Pixhawk Integration: user-manual/application-config/pixhawk.md
+    - Infield Calibration: user-manual/application-config/infield_calibration.md
     - INS & GNSS Config: user-manual/application-config/ins_configuration.md
     - System Config: user-manual/application-config/system_configuration.md
     - Time Sync/Strobe: user-manual/application-config/time_sync.md
