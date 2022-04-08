@@ -64,7 +64,15 @@ The latest EvalTool, CLTool, SDK, and firmware can be used once the firmware has
 
 ![Chip Erase Module Pin](../images/module_chip_erase.png)
 
-<center>**_Chip Erase Pin 17_**</center>
+<center>**Short pin 17 to pin 22 to chip erase uINS.**</center>
+
+
+
+![Chip Erase Module Pin](../images/evb2_chip_erase.png)
+
+<center>**Short R25 pads to chip erase uINS.
+    <br>Short R53 pads to chip erase EVB-2.**</center>
+
 #### Restore Firmware
 
 1. **Power on system**
