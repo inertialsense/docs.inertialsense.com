@@ -62,11 +62,13 @@ The latest EvalTool, CLTool, SDK, and firmware can be used once the firmware has
 !!! important 
     Please notify support@inertialsense.com if this step is necessary so that we can keep track of cause of failures and provide you any necessary support.
 
+#### uINS Chip Erase Pads
+
 ![Chip Erase Module Pin](../images/module_chip_erase.png)
 
 <center>**Short pin 17 to pin 22 to chip erase uINS.**</center>
 
-
+#### EVB-2 Chip Erase Pads
 
 ![Chip Erase Module Pin](../images/evb2_chip_erase.png)
 
