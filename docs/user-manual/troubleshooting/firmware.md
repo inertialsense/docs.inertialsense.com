@@ -64,16 +64,21 @@ The latest EvalTool, CLTool, SDK, and firmware can be used once the firmware has
 
 #### uINS Chip Erase Pad
 
-![Chip Erase Module Pin](../images/module_chip_erase.png)
+![Module Chip Erase Pin](../images/module_chip_erase.png)
 
 <center>**Short pin 17 to pin 22 to chip erase uINS.**</center>
 
 #### EVB-2 Chip Erase Pads
 
-![Chip Erase Module Pin](../images/evb2_chip_erase.png)
+![EVB-2 Chip Erase Pads](../images/evb2_chip_erase.png)
 
 <center>**Short R25 pads to chip erase uINS.
     <br>Short R53 pads to chip erase EVB-2.**</center>
+#### Rugged-2 Chip Erase Pads
+
+![Rugged-2 Chip Erase Pads](../images/rug2_chip_erase.png)
+
+<center>**Short pads to chip erase uINS.**</center>
 
 #### Restore Firmware
 
