@@ -48,7 +48,6 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 	if (!serialPortOpen(&serialPort, argv[1], IS_BAUDRATE_921600, 1))
 	{
 		printf("Failed to open serial port on com port %s\r\n", argv[1]);
-		return -2;
 	}
 ```
 
@@ -59,20 +58,12 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 if (!serialPortWriteAscii(&serialPort, "STPB", 4))
 {
 	printf("Failed to encode stop broadcasts message\r\n");
-	return -3;
 }
 ```
 ### Step 4: Enable message broadcasting
 
 ```C++
-    // Query device version information
-	if (!serialPortWriteAscii(&serialPort, "INFO", 4))
-	{
-		printf("Failed to encode stop broadcasts message\r\n");
-		return -3;
-	}
-
-	// ASCII protocol is based on NMEA protocol https://en.wikipedia.org/wiki/NMEA_0183
+   	// ASCII protocol is based on NMEA protocol https://en.wikipedia.org/wiki/NMEA_0183
 	// turn on the INS message at a period of 100 milliseconds (10 hz)
 	// serialPortWriteAscii takes care of the leading $ character, checksum and ending \r\n newline
 	// ASCB message enables ASCII broadcasts
@@ -81,29 +72,29 @@ if (!serialPortWriteAscii(&serialPort, "STPB", 4))
 	// Instead of a 0 for a message, it can be left blank (,,) to not modify the period for that message
 	// please see the user manual for additional updates and notes
 
-    // Get PINS1 @ 10Hz on the connected serial port, leave all other broadcasts the same
-    const char* asciiMessage = "ASCB,,,,100,,,,,,,";
+    // Get PINS1 @ 10Hz on the connected serial port, leave all other broadcasts the same, and save persistent messages.
+	const char* asciiMessage = "ASCB,512,,,1000,,,,,,,,,";
+
+    // Get PINS1 @ 50Hz and PGPSP @ 5Hz on the connected serial port, leave all other broadcasts the same
+	// const char* asciiMessage = "ASCB,,,,20,,200,,,,,,,";
 
 	// Get PIMU @ 50Hz, GPGGA @ 5Hz, both serial ports, set all other periods to 0
-    // const char* asciiMessage = "ASCB,3,20,0,0,0,0,0,100,0,0,0";
+    //  const char* asciiMessage = "ASCB,3,20,0,0,0,0,0,100,0,0,0,0,0";
 
     if (!serialPortWriteAscii(&serialPort, asciiMessage, (int)strnlen(asciiMessage, 128)))
 	{
 		printf("Failed to encode ASCII get INS message\r\n");
-		return -4;
 	}
-
 ```
 
-### Step 5: Save persistent messages (optional)
+### Step 5: Save persistent messages
 
-This remembers the current communications and automatically streams data following reboot.
+(OPTIONAL) This remembers the current communications and automatically streams data following reboot.
 
 ```c++
 if (!serialPortWriteAscii(&serialPort, "PERS", 4))
 {
     printf("Failed to encode ASCII save persistent message\r\n");
-    return -4;
 }
 ```
 ### Step 6: Handle received data
