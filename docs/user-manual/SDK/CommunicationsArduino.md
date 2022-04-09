@@ -60,7 +60,7 @@ Next, define a buffer to hold data.  As the uINS sends data, this buffer is used
 
 ``` C++
 // This buffer is going to be used to hold messages as they come in.
-// You can make this 512 size if memory is really tight.
+// You can make this 512 size if memory is tight.
 static uint8_t s_buffer[1024];
 // create an instance to hold communications state
 static is_comm_instance_t comm;
