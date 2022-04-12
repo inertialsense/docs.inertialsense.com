@@ -342,8 +342,9 @@ GPS 1 velocity data
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| vel | float[3] | Speed accuracy in meters / second |
-| sAcc | float | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| vel | float[3] | If status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA = 0, Speed in ECEF {vx,vy,vz} (m/s).  If status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA = 1, Speed in NED {vN, vE, 0} (m/s) |
+| sAcc | float | Speed accuracy in meters / second |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
 
 #### DID_GPS1_VERSION
@@ -468,8 +469,9 @@ GPS 2 velocity data
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| vel | float[3] | Speed accuracy in meters / second |
-| sAcc | float | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| vel | float[3] | If status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA = 0, Speed in ECEF {vx,vy,vz} (m/s).  If status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA = 1, Speed in NED {vN, vE, 0} (m/s) |
+| sAcc | float | Speed accuracy in meters / second |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
 
 #### DID_GPS2_VERSION
@@ -1799,7 +1801,7 @@ System status and configuration is made available through various enumeration an
 | INS_STATUS_SOLUTION_AHRS_HIGH_VARIANCE | 6 |
 | INS_STATUS_RTK_COMPASSING_BASELINE_UNSET | 0x00100000 |
 | INS_STATUS_RTK_COMPASSING_BASELINE_BAD | 0x00200000 |
-| INS_STATUS_RTK_COMPASSING_MASK | (INS\_STATUS\_RTK\_COMPASSING\_BASELINE\_UNSET\|INS\_STATUS\_RTK\_COMPASSING\_BASELINE\_BAD) |
+| INS_STATUS_RTK_COMPASSING_MASK | (INS_STATUS_RTK_COMPASSING_BASELINE_UNSET\|INS_STATUS_RTK_COMPASSING_BASELINE_BAD\) |
 | INS_STATUS_MAG_RECALIBRATING | 0x00400000 |
 | INS_STATUS_MAG_INTERFERENCE_OR_BAD_CAL | 0x00800000 |
 | INS_STATUS_GPS_NAV_FIX_MASK | 0x03000000 |
@@ -1810,7 +1812,7 @@ System status and configuration is made available through various enumeration an
 | INS_STATUS_RTK_ERR_BASE_POSITION_MOVING | 0x20000000 |
 | INS_STATUS_RTK_ERR_BASE_POSITION_INVALID | 0x30000000 |
 | INS_STATUS_RTK_ERR_BASE_MASK | 0x30000000 |
-| INS_STATUS_RTK_ERROR_MASK | (INS\_STATUS\_RTK\_RAW\_GPS\_DATA\_ERROR\|INS\_STATUS\_RTK\_ERR\_BASE\_MASK) |
+| INS_STATUS_RTK_ERROR_MASK | (INS_STATUS_RTK_RAW_GPS_DATA_ERROR\|INS_STATUS_RTK_ERR_BASE_MASK\) |
 | INS_STATUS_RTOS_TASK_PERIOD_OVERRUN | 0x40000000 |
 | INS_STATUS_GENERAL_FAULT | 0x80000000 |
 
@@ -1837,8 +1839,8 @@ System status and configuration is made available through various enumeration an
 | RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_EXTERNAL | 0x00000002 |
 | RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_F9P | 0x00000004 |
 | RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING | 0x00000008 |
-| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK\_CFG\_BITS\_ROVER\_MODE\_RTK\_POSITIONING\|RTK\_CFG\_BITS\_ROVER\_MODE\_RTK\_POSITIONING\_EXTERNAL) |
-| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK\_CFG\_BITS\_ROVER\_MODE\_RTK\_COMPASSING\|RTK\_CFG\_BITS\_ROVER\_MODE\_RTK\_COMPASSING\_F9P) |
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_EXTERNAL\) |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_F9P\) |
 | RTK_CFG_BITS_ROVER_MODE_MASK | 0x0000000F |
 | RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER0 | 0x00000010 |
 | RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER1 | 0x00000020 |
@@ -1860,8 +1862,8 @@ System status and configuration is made available through various enumeration an
 | RTK_CFG_BITS_RESERVED1 | 0x00200000 |
 | RTK_CFG_BITS_RTK_BASE_IS_IDENTICAL_TO_ROVER | 0x00400000 |
 | RTK_CFG_BITS_GPS_PORT_PASS_THROUGH | 0x00800000 |
-| RTK_CFG_BITS_ROVER_MODE_ONBOARD_MASK | (RTK\_CFG\_BITS\_ROVER\_MODE\_RTK\_POSITIONING\|RTK\_CFG\_BITS\_ROVER\_MODE\_RTK\_COMPASSING) |
-| RTK_CFG_BITS_ALL_MODES_MASK | (RTK\_CFG\_BITS\_ROVER\_MODE\_MASK\|RTK\_CFG\_BITS\_BASE\_MODE) |
+| RTK_CFG_BITS_ROVER_MODE_ONBOARD_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\) |
+| RTK_CFG_BITS_ALL_MODES_MASK | (RTK_CFG_BITS_ROVER_MODE_MASK\|RTK_CFG_BITS_BASE_MODE\) |
 
 
 #### System Configuration
