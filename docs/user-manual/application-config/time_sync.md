@@ -67,16 +67,12 @@ The following pins can be used for STROBE input.
 |   G8   | 8          | H6-6                   |             | H7-12|
 |   G9   | 10         | Button "B"             |             | H7-13|
 
-To use a pin as a Strobe Input pin, it must be enabled and triggering edge must be set using the following bits in `DID_FLASH_CONFIG.ioConfig`.
+To use a pin as a Strobe Input pin, the I/O must be configured as a strobe input. Additionally, the triggering edge must be set using the following bits in `DID_FLASH_CONFIG.ioConfig`.
 
 | Bit Name                             | Bit Value  | Description                    |
 | ------------------------------------ | ---------- | ------------------------------ |
-| IO_CONFIG_TRIGGER_FALLING_EDGE       | 0x00000000 | Trigger strobe on falling edge |
-| IO_CONFIG_TRIGGER_RISING_EDGE        | 0x00000001 | Trigger strobe on rising edge  |
-| IO_CONFIG_STROBE_PIN_2_ENABLE        | 0x00000002 | Enable strobe input on pin 2   |
-| IO_CFG_STROBE_PIN_5_INTERRUPT_ENABLE | 0x00000004 | Enable strobe input on pin 5   |
-| IO_CFG_STROBE_PIN_8_INTERRUPT_ENABLE | 0x00000008 | Enable strobe input on pin 8   |
-| IO_CFG_STROBE_PIN_9_INTERRUPT_ENABLE | 0x00000010 | Enable strobe input on pin 9   |
+| IO_CONFIG_STROBE_TRIGGER_LOW         | 0x00000000 | Trigger strobe on falling edge |
+| IO_CONFIG_STROBE_TRIGGER_HIGH        | 0x00000001 | Trigger strobe on rising edge  |
 
 Pushbutton “B” on the EVB asserts a logic low to G9 (pin 10) of the uINS and can be used to test the STROBE input functionality.
 
