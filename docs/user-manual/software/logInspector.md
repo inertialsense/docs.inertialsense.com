@@ -1,4 +1,4 @@
-# Log Inspector - Alpha Release
+# Log Inspector
 
 ## Overview
 Log Inspector is an open source python utility for viewing and scrubbing InertialSense data log (.dat) files.
