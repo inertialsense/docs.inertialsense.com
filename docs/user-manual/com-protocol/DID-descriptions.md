@@ -208,7 +208,9 @@ GPS 1 position data.  This comes from DID_GPS1_UBX_POS or DID_GPS1_RTK_POS, depe
 | cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
 | towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
 | leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
-| reserved | uint8_t[3] | Reserved for future use |
+| satsUsed | uint8_t | Number of satellites used |
+| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
+| reserved | uint8_t | Reserved for future use |
 
 
 #### DID_GPS1_RTK_POS
@@ -231,7 +233,9 @@ GPS RTK position data
 | cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
 | towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
 | leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
-| reserved | uint8_t[3] | Reserved for future use |
+| satsUsed | uint8_t | Number of satellites used |
+| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
+| reserved | uint8_t | Reserved for future use |
 
 
 #### DID_GPS1_RTK_POS_MISC
@@ -330,7 +334,9 @@ GPS 1 position data from ublox receiver.
 | cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
 | towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
 | leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
-| reserved | uint8_t[3] | Reserved for future use |
+| satsUsed | uint8_t | Number of satellites used |
+| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
+| reserved | uint8_t | Reserved for future use |
 
 
 #### DID_GPS1_VEL
@@ -381,7 +387,9 @@ GPS 2 position data
 | cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
 | towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
 | leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
-| reserved | uint8_t[3] | Reserved for future use |
+| satsUsed | uint8_t | Number of satellites used |
+| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
+| reserved | uint8_t | Reserved for future use |
 
 
 #### DID_GPS2_RTK_CMP_MISC
@@ -922,6 +930,7 @@ System built-in self-test
 | tcPqrLinearity | float | Accelerometer error (m/s^2) |
 | tcAccLinearity | float | Angular rate standard deviation |
 | pqr | float | Acceleration standard deviation |
+| acc | float | Self-test mode (see eBitTestMode) |
 
 
 #### DID_CAN_CONFIG
@@ -1154,18 +1163,6 @@ I/O
 | gpioStatus | uint32_t | General purpose I/O status |
 
 
-#### DID_MAGNETOMETER_2
-
-2nd magnetometer sensor data 
-
-`magnetometer_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| mag | float[3] | Magnetometers in Gauss |
-
-
 #### DID_MANUFACTURING_INFO
 
 Manufacturing info 
@@ -1228,6 +1225,18 @@ Reference or truth IMU used for manufacturing calibration and testing
 | I | imus_t | Inertial Measurement Unit (IMU) |
 
 
+#### DID_REFERENCE_MAGNETOMETER
+
+Reference or truth magnetometer used for manufacturing calibration and testing 
+
+`magnetometer_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| mag | float[3] | Magnetometers in Gauss |
+
+
 #### DID_ROS_COVARIANCE_POSE_TWIST
 
 INL2 EKF covariances matrix lower diagonals 
@@ -1287,42 +1296,52 @@ RTOS information.
 
 #### DID_SENSORS_CAL1
 
-
+Calibrated IMU1 output.  Temperature compensated and motion calibrated. 
 
 `sensors_mpu_w_temp_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
+| pqr | f_t[3] | (rad/s) Angular rate.  Units only apply for calibrated data. |
+| acc | f_t[3] | (m/s^2) Linear acceleration.  Units only apply for calibrated data. |
+| mag | f_t[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
+| temp | f_t | (°C) Temperature of MPU.  Units only apply for calibrated data. |
 
 
 #### DID_SENSORS_CAL2
 
-
+Calibrated IMU2 output.  Temperature compensated and motion calibrated. 
 
 `sensors_mpu_w_temp_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
+| pqr | f_t[3] | (rad/s) Angular rate.  Units only apply for calibrated data. |
+| acc | f_t[3] | (m/s^2) Linear acceleration.  Units only apply for calibrated data. |
+| mag | f_t[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
+| temp | f_t | (°C) Temperature of MPU.  Units only apply for calibrated data. |
 
 
 #### DID_SENSORS_IS1
 
-Cross-axis aligned w/ scale factor 
+Uncalibrated IMU output.  Common scale factor applied to ADC output. 
 
 `sensors_w_temp_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
+| mpu | sensors_mpu_w_temp_t[2] | Units only apply for calibrated data |
 
 
 #### DID_SENSORS_IS2
 
-Temperature compensated 
+Temperature compensated IMU output. 
 
 `sensors_w_temp_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
+| mpu | sensors_mpu_w_temp_t[2] | Units only apply for calibrated data |
 
 
 #### DID_SENSORS_TC_BIAS
