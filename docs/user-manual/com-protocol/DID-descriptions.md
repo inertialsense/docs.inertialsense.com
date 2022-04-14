@@ -348,7 +348,7 @@ GPS 1 velocity data
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| vel | float[3] | If status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA = 0, Speed in ECEF {vx,vy,vz} (m/s).  If status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA = 1, Speed in NED {vN, vE, 0} (m/s) |
+| vel | float[3] | GPS Velocity.  Velocity is in ECEF {vx,vy,vz} (m/s) if status bit GPS_STATUS_FLAGS_GPS_NMEA_DATA (0x00008000) is NOT set.  Velocity is in local tangent plane with no vertical velocity {vNorth, vEast, 0} (m/s) if status bit GPS_STATUS_FLAGS_GPS_NMEA_DATA (0x00008000) is set. |
 | sAcc | float | Speed accuracy in meters / second |
 | status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
@@ -477,7 +477,7 @@ GPS 2 velocity data
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| vel | float[3] | If status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA = 0, Speed in ECEF {vx,vy,vz} (m/s).  If status flag GPS_STATUS_FLAGS_GPS_NMEA_DATA = 1, Speed in NED {vN, vE, 0} (m/s) |
+| vel | float[3] | GPS Velocity.  Velocity is in ECEF {vx,vy,vz} (m/s) if status bit GPS_STATUS_FLAGS_GPS_NMEA_DATA (0x00008000) is NOT set.  Velocity is in local tangent plane with no vertical velocity {vNorth, vEast, 0} (m/s) if status bit GPS_STATUS_FLAGS_GPS_NMEA_DATA (0x00008000) is set. |
 | sAcc | float | Speed accuracy in meters / second |
 | status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
