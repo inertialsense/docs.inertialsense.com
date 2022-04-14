@@ -1087,6 +1087,22 @@ INL2 magnetometer calibration information.
 
 | Field | Type | Description |
 |-------|------|-------------|
+| timeOfWeekMs | uint32_t | Timestamp in milliseconds |
+| Ncal_samples | uint32_t | Number of calibration samples |
+| ready | uint32_t | Data ready to be processed |
+| calibrated | uint32_t | Calibration data present.  Set to -1 to force mag recalibration. |
+| auto_recal | uint32_t | Allow mag to auto-recalibrate |
+| outlier | uint32_t | Bad sample data |
+| magHdg | float | Heading from magnetometer |
+| insHdg | float | Heading from INS |
+| magInsHdgDelta | float | Difference between mag heading and (INS heading plus mag declination) |
+| nis | float | Normalized innovation squared (likelihood metric) |
+| nis_threshold | float | Threshold for maximum NIS |
+| Wcal | float[9] | Magnetometer calibration matrix. Must be initialized with a unit matrix, not zeros! |
+| activeCalSet | uint32_t | Active calibration set (0 or 1) |
+| magHdgOffset | float | Offset between magnetometer heading and estimate heading |
+| Tcal | float | Scaled computed variance between calibrated magnetometer samples.  |
+| bias_cal | float[3] | Calibrated magnetometer output can be produced using: Bcal = Wcal * (Braw - bias_cal) |
 
 
 #### DID_INL2_NED_SIGMA
