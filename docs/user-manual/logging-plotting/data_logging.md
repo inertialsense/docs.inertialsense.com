@@ -17,7 +17,7 @@ The SDK logging interface is defined in [SDK/src/ISLogger.h](https://github.com/
 1. Press **“Disable”** to stop logging data.
 1. The **“Open Folder”** button opens the File Explorer location to the data logs, i.e.
 `C:\Users\[username]\Documents\Inertial_Sense\logs`.
-1. To change the root log folder in the Eval Tool, edit `Documents/Inertial Sense/settings.json`, and add or change this key: "LOG_FOLDER": "FOLDER_FOR_LOGS".
+1. To change the root log folder in the Eval Tool, edit `Documents/Inertial Sense/settings.json`, and add or change the logger key: "Directory": "FOLDER_FOR_LOGS".
 
 ### [CLTool](../software/cltool.md)
 The CLTool, provided in the SDK, is a command line application that can record post process data.  The CLTool help menu is displayed using the option `-h`.  See the [CLTool section](../software/cltool.md) for more information on using the CLTool.
