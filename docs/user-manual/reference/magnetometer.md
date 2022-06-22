@@ -23,9 +23,9 @@ During the calibration process, the system should be clear of steel, iron, magne
 **Force magnetometer recalibration procedure:**
 
 1. Set `DID_MAG_CAL.recalCmd` to either:
-	* `MAG_RECAL_CMD_MULTI_AXIS` (0) for Multi-Axis which is more accurate and requires 360⁰
+	* `MAG_CAL_STATE_MULTI_AXIS` (0) for Multi-Axis which is more accurate and requires 360⁰
 rotation about two different axes.
-	* `MAG_RECAL_CMD_SINGLE_AXIS` (1) for Single-Axis which is less accurate and requires 360⁰
+	* `MAG_CAL_STATE_SINGLE_AXIS` (1) for Single-Axis which is less accurate and requires 360⁰
 rotation about one axis.
 2. Rotate the system accordingly.
 
