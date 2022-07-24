@@ -84,7 +84,7 @@ markdown_extensions:
       # linenums: True
 nav:
   - Overview: index.md
-  - Data Sheet: datasheet/datasheet.md
+  - Data Sheets: datasheets/datasheets.md
   - Dimensions and Pinouts: dimensions/dimensions.md
   - Getting Started: getting-started/getting-started.md
   - IS Hardware:
