@@ -27,9 +27,9 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 | 1    | GND                                        | PWR  | -                                                            |
 | 2    | G5/STROBE                                  | I/O  | Strobe time sync input.  (Includes 390 ohm series resistor)  |
 | 3    | VIN                                        | PWR  | 4V-20V supply voltage input                                  |
-| 4    | USB.D+                                     | I/O  | USB Data Positive Line (Serial 0)                            |
+| 4    | USB.D+                                     | I/O  | USB Data Positive Line                                       |
 | 5    | GPS_PPS                                    | O    | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
-| 6    | USB.D-                                     | I/O  | USB Data Negative Line (Serial 0)                            |
+| 6    | USB.D-                                     | I/O  | USB Data Negative Line                                       |
 | 7    | G3/Tx0/485Tx2-                             | I/O  | Serial 0 output (TTL or RS232)<br/>Serial 2 output- (RS485/RS422) |
 | 8    | G2/Tx2/485Tx2+                             | I/O  | Serial 2 output (TTL or RS232)<br/>Serial 2 output+ (RS485/RS422) |
 | 9    | G4/Rx0/485Rx2-                             | I/O  | Serial 0 input (TTL or RS232)<br/>Serial 2 input- (RS485/RS422) |
