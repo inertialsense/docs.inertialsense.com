@@ -31,12 +31,13 @@
 <object data="https://docs.inertialsense.com/dimensions/IS-RUG-2.0_Rugged_Assembly_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-2.0_Rugged_Assembly_and_Pinout.pdf" type="application/pdf" />
 </object>
-## µIG5-0 PCB Module
 
-[Download PDF](https://docs.inertialsense.com/dimensions/IS-uIG5-0_Mechanical_Drawing.pdf)
+## µIG-1 PCB Module
 
-<object data="https://docs.inertialsense.com/dimensions/IS-uIG5-0_Mechanical_Drawing.pdf" type="application/pdf" width="700px" height="1150px" >
-    <embed src="https://docs.inertialsense.com/dimensions/IS-uIG5-0_Mechanical_Drawing.pdf" type="application/pdf" />
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-uIG-1.0_Mechanical_Drawing.pdf)
+
+<object data="https://docs.inertialsense.com/dimensions/IS-uIG-1.0_Mechanical_Drawing.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-uIG-1.0_Mechanical_Drawing.pdf" type="application/pdf" />
 </object>
 
 ## Hardware Design Files
