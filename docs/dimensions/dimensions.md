@@ -1,14 +1,15 @@
 # Dimensions and Pinouts
 
-## µINS-5, µAHRS-5, or µIMU-5 PCB Module
+## µINS-5 and µIMU-5 PCB Module
 
-[Download PDF](https://docs.inertialsense.com/dimensions/IS_uINS-5.0_Mechanical_Drawing.pdf)
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-uINS-5.0.4_Dimensions_and_Pinout.pdf)
 
-<object data="https://docs.inertialsense.com/dimensions/IS_uINS-5.0_Mechanical_Drawing.pdf" type="application/pdf" width="700px" height="1150px" >
-    <embed src="https://docs.inertialsense.com/dimensions/IS_uINS-5.0_Mechanical_Drawing.pdf" type="application/pdf" />
+<object data="https://docs.inertialsense.com/dimensions/IS-uINS-5.0.4_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-uINS-5.0.4_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
-## µINS-3, µAHRS-3, or µIMU-3 PCB Module
+
+## µINS-3, µAHRS-3, and µIMU-3 PCB Module
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-uINS3-20_uINS3.2_Mechanical_Drawing.pdf)
 
