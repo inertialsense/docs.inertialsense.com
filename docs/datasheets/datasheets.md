@@ -1,6 +1,6 @@
 # Data Sheets
 
-## Tactical Grade uIMU-5 AHRS GNSS-INS
+## uIMU-5 (IMU, AHRS, GNSS-INS)
 
 [Download Datasheet](http://docs.inertialsense.com/datasheets/uIMU-5_AHRS_GNSS-INS_Datasheet.pdf)
 
