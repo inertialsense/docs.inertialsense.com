@@ -1,17 +1,18 @@
 # Data Sheets
 
-## uINS-5 Data Sheet
+## Tactical Grade uIMU-5 AHRS GNSS-INS
 
-[Download PDF](http://docs.inertialsense.com/datasheets/uIMU-5_uAHRS-5_uINS-5_Datasheet.pdf)
+[Download Datasheet](http://docs.inertialsense.com/datasheets/uIMU-5_AHRS_GNSS-INS_Datasheet.pdf)
 
-<object data="https://docs.inertialsense.com/datasheets/uIMU-5_uAHRS-5_uINS-5_Datasheet.pdf" type="application/pdf" width="700px" height="905px" >
-    <embed src="https://docs.inertialsense.com/datasheets/uIMU-5_uAHRS-5_uINS-5_Datasheet.pdf" type="application/pdf" />
+<object data="https://docs.inertialsense.com/datasheets/uIMU-5_AHRS_GNSS-INS_Datasheet.pdf" type="application/pdf" width="700px" height="905px" >
+    <embed src="https://docs.inertialsense.com/datasheets/uIMU-5_AHRS_GNSS-INS_Datasheet.pdf" type="application/pdf" />
 </object>
 
 
-## uINS-3 Data Sheet
 
-[Download PDF](http://docs.inertialsense.com/datasheets/uIMU_uAHRS_uINS-3_Datasheet.pdf)
+## uINS-3
+
+[Download Datasheet](http://docs.inertialsense.com/datasheets/uIMU_uAHRS_uINS-3_Datasheet.pdf)
 
 <object data="https://docs.inertialsense.com/datasheets/uIMU_uAHRS_uINS-3_Datasheet.pdf" type="application/pdf" width="700px" height="905px" >
     <embed src="https://docs.inertialsense.com/datasheets/uIMU_uAHRS_uINS-3_Datasheet.pdf" type="application/pdf" />
