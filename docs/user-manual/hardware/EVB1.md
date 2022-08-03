@@ -42,7 +42,7 @@ Use Molex PicoBlade™ series connectors for the EVB-1 headers.
 | Pin                                | Name          | I/O  | Description                                                  |
 | ---------------------------------- | ------------- | ---- | ------------------------------------------------------------ |
 | ![](../images/square-black.png) 1  | GND           | -    | -                                                            |
-| ![](../images/square-red.png) 2    | 3.3V          | -    | 3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input to supply uINS. Do NOT power VIN and 3.3V simultaneously! |
+| ![](../images/square-red.png) 2    | 3.3V          | -    | 3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input to supply IMX. Do NOT power VIN and 3.3V simultaneously! |
 | ![](../images/square-orange.png) 3 | G1/SDA/I2C_EN | I/O  | GPIO1/*I2C data (Hold HIGH during boot to enable *I2C)       |
 | ![](../images/square-yellow.png) 4 | G2/SCL/STROBE | I/O  | GPIO2/*I2C clock/Strobe time sync input.                     |
 
@@ -51,7 +51,7 @@ Use Molex PicoBlade™ series connectors for the EVB-1 headers.
 | Pin                                | Name   | I/O  | Description                                                  |
 | ---------------------------------- | ------ | ---- | ------------------------------------------------------------ |
 | ![](../images/square-black.png) 1  | GND    | -    | -                                                            |
-| ![](../images/square-red.png) 2    | 3.3V   | -    | 3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input to supply uINS. Do NOT power VIN and 3.3V simultaneously! |
+| ![](../images/square-red.png) 2    | 3.3V   | -    | 3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input to supply IMX. Do NOT power VIN and 3.3V simultaneously! |
 | ![](../images/square-orange.png) 3 | G4/Rx0 | I    | ‡GPIO4/Serial0 Input (TTL)                                   |
 | ![](../images/square-yellow.png) 4 | G3/Tx0 | O    | ‡GPIO3/Serial0 Output (TTL)                                  |
 
@@ -60,7 +60,7 @@ Use Molex PicoBlade™ series connectors for the EVB-1 headers.
 | Pin                                                          | Name           | I/O  | Description                                                  |
 | ------------------------------------------------------------ | -------------- | ---- | ------------------------------------------------------------ |
 | ![](../images/square-black.png) 1 | GND            | -    | -                                                            |
-| ![](../images/square-red.png) 2 | 3.3V           | -    | 3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input to supply uINS. Do NOT power VIN and 3.3V simultaneously! |
+| ![](../images/square-red.png) 2 | 3.3V           | -    | 3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input to supply IMX. Do NOT power VIN and 3.3V simultaneously! |
 | ![](../images/square-orange.png) 3 | 232Rx1/485Rx1+ | I    | Serial 1 input (RS232)/Serial 1 input+ (RS485)               |
 | ![](../images/square-yellow.png) 4 | 232Rx0/485Rx1- | I    | Serial 0 input (RS232)/Serial 1 input- (RS485)               |
 | ![](../images/square-green.png) 5 | 232Tx1/485Tx1+ | O    | Serial 1 output (RS232)/Serial 1 output+ (RS485)             |
@@ -71,7 +71,7 @@ Use Molex PicoBlade™ series connectors for the EVB-1 headers.
 | Pin                                | Name           | I/O  | Description                                                  |
 | ---------------------------------- | -------------- | ---- | ------------------------------------------------------------ |
 | ![](../images/square-black.png) 1  | GND            | -    | -                                                            |
-| ![](../images/square-red.png) 2    | 3.3V           | -    | 3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input to supply uINS. Do NOT power VIN and 3.3V simultaneously! |
+| ![](../images/square-red.png) 2    | 3.3V           | -    | 3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input to supply IMX. Do NOT power VIN and 3.3V simultaneously! |
 | ![](../images/square-orange.png) 3 | G5/SCLK/STROBE | I/O  | GPIO5/SPI SCLK/Strobe time sync input.                       |
 | ![](../images/square-yellow.png) 4 | G6/Rx1/MOSI    | I    | GPIO6/Serial1 Input (TTL)/SPI MOSI                           |
 | ![](../images/square-green.png) 5  | G7/Tx1/MISO    | O    | GPIO7/Serial1 Output (TTL)/SPI MISO                          |

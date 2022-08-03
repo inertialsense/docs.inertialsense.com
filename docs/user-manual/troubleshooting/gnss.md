@@ -1,4 +1,4 @@
-# uINS Firmware Troubleshooting
+# IMX Firmware Troubleshooting
 
 ## Antenna Baseline
 Separation between GNSS antennas (or baseline distance) impacts the accuracy and fix time of the solution. Typical Dual GNSS heading fix time is 60-90 seconds using a 1 meter baseline. Baseline distances shorter than 1 meter will impact both heading accuracy and time to fix. However, having a short baseline of 0.35m should not cause an extremely long fix time.
@@ -10,7 +10,7 @@ What is the satellite CNO (signal strength) level? The mean CNO would ideally be
 
 ![Dual GPS EvalTool](../images/DualGNSS_EvalTool.png)
 
-**ITEM TO TEST:** Try powering off portions of the system while running the uINS. You may even try running the uINS independently to a separate computer to monitor the system so you can completely power off your system with the uINS still running. Pay close attention to the GPS CNO during each change.
+**ITEM TO TEST:** Try powering off portions of the system while running the IMX. You may even try running the IMX independently to a separate computer to monitor the system so you can completely power off your system with the IMX still running. Pay close attention to the GPS CNO during each change.
 
 ## USB Interface
 USB-3 has been known to interfere with wireless and GNSS systems. It is the most common source of interference that has been experienced. Properly shielded cables or signal filters can address this.

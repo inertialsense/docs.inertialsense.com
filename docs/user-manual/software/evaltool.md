@@ -2,7 +2,7 @@
 
 ## Overview
 
-The EvalTool (Evaluation Tool) is a desktop GUI application that allows you to explore and test functionality of the Inertial Sense products in real-time. It has scrolling plots, 3D model representation, table views of all data, data logger, and firmware updating interface for the uINS, uAHRS, or uIMU. The EvalTool can simultaneously interface with multiple Inertial Sense devices.
+The EvalTool (Evaluation Tool) is a desktop GUI application that allows you to explore and test functionality of the Inertial Sense products in real-time. It has scrolling plots, 3D model representation, table views of all data, data logger, and firmware updating interface for the IMX, uAHRS, or uIMU. The EvalTool can simultaneously interface with multiple Inertial Sense devices.
 
 ## Download and Install
 
@@ -158,7 +158,7 @@ The Settings tab has 3 sub tabs and they are as follows:
 
 ![](images/EvalToolGPSTab.jpg)
 
-1. uINS Parameters - Shows flash config settings commonly used when setting up RTK units 
+1. IMX Parameters - Shows flash config settings commonly used when setting up RTK units 
 1. Status - Shows information important to using RTK.
 1. Rover/Base Mode - Used in setup of RTK Rovers and RTK base Stations.
 1. Message Window - Shows confirmation messages and Flash Config writes.

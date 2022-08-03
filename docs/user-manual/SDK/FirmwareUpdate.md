@@ -1,6 +1,6 @@
 # Firmware Update (Bootloader) Example Project
 
-This [ISBootloaderExample](https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects/Bootloader) project demonstrates firmware update with the <a href="https://inertialsense.com">InertialSense</a> products (uINS, uAHRS, and uIMU) using the Inertial Sense SDK.
+This [ISBootloaderExample](https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects/Bootloader) project demonstrates firmware update with the <a href="https://inertialsense.com">InertialSense</a> products (IMX, uAHRS, and uIMU) using the Inertial Sense SDK.
 
 ## Files
 

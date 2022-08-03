@@ -65,7 +65,7 @@ OPTIONS (Logging to file, disabled by default)
     -rs=SPEED       Replay data log at x SPEED. SPEED=0 runs as fast as possible.
 
 OPTIONS (Read or write flash configuration from command line)
-    -flashCfg       List all uINS "keys" and "values"
+    -flashCfg       List all IMX "keys" and "values"
    "-flashCfg=[key]=[value]|[key]=[value]"
     -evbFlashCfg    List all EVB "keys" and "values"
    "-evbFlashCfg=[key]=[value]|[key]=[value]"

@@ -31,7 +31,7 @@ The recommended minimum baseline (distance between dual GNSS antennas) is ***0.3
 
 ![Rugged](../images/uINS_rugged_thumb.jpg)
 
-On the Rugged uINS, the MMCX port ***A*** is for ***GPS1*** and MMXC port ***B*** is ***GPS2***.  These port labels are changed to ***1*** and ***2*** on newer Rugged units.
+On the Rugged IMX, the MMCX port ***A*** is for ***GPS1*** and MMXC port ***B*** is ***GPS2***.  These port labels are changed to ***1*** and ***2*** on newer Rugged units.
 
 ## Dual Antenna Locations
 
@@ -42,7 +42,7 @@ DID_FLASH_CONFIG.gps1AntOffset[X,Y,Z]
 DID_FLASH_CONFIG.gps2AntOffset[X,Y,Z]
 ```
 
-These values describe the distance of each GPS antenna from the uINS [Sensor Frame](../../reference/coordinate_frames/#sensor-frame) origin in the direction of the Sensor Frame axes.  The [Sensor Frame](../../reference/coordinate_frames/#sensor-frame) is identified by the X, Y, Z axes labeled on the hardware.  The Z-axis is positive in the downward direction.
+These values describe the distance of each GPS antenna from the IMX [Sensor Frame](../../reference/coordinate_frames/#sensor-frame) origin in the direction of the Sensor Frame axes.  The [Sensor Frame](../../reference/coordinate_frames/#sensor-frame) is identified by the X, Y, Z axes labeled on the hardware.  The Z-axis is positive in the downward direction.
 
 ![coordinate_frames](../images/coordinate_frames.png)
 
@@ -79,18 +79,18 @@ DID_FLASH_CONFIG.gps2AntOffsetZ =  0.0
 ```
 DID_FLASH_CONFIG.gps1AntOffsetX = -0.5	(negative direction of X axis)
 DID_FLASH_CONFIG.gps1AntOffsetY =  0.5
-DID_FLASH_CONFIG.gps1AntOffsetZ = -0.5	(negative direction of Z axis, above uINS)
+DID_FLASH_CONFIG.gps1AntOffsetZ = -0.5	(negative direction of Z axis, above IMX)
 
 DID_FLASH_CONFIG.gps2AntOffsetX = -1.5	(negative direction of X axis)
 DID_FLASH_CONFIG.gps2AntOffsetY =  0.5
-DID_FLASH_CONFIG.gps2AntOffsetZ = -0.5  (negative direction of Z axis, above uINS)
+DID_FLASH_CONFIG.gps2AntOffsetZ = -0.5  (negative direction of Z axis, above IMX)
 ```
 
 ### GPS Antenna Ports
 
-The following table explains how ports A and B on the Rugged uINS map to GPS antennas 1 and 2.
+The following table explains how ports A and B on the Rugged IMX map to GPS antennas 1 and 2.
 
-| Ports              | Rugged uINS | uINS Module and EVB-2 |
+| Ports              | Rugged IMX | IMX Module and EVB-2 |
 | ------------------ | ----------- | --------------------- |
 | GPS 1 antenna port | A           | 1                     |
 | GPS 2 antenna port | B           | 2                     |

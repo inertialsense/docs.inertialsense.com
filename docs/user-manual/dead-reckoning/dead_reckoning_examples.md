@@ -1,8 +1,8 @@
-# uINS Dead Reckoning Examples
+# IMX Dead Reckoning Examples
 
 Dead Reckoning is the process of calculating the current position of a moving object by using a previously determined position, or fix, and then incorporating estimations of speed, heading direction, and course over elapsed time. Knowledge about the vehicle's kinematic constraints (i.e. wheels on the ground) is applied to reduce drift and improve position estimation. 
 
-Inertial Sense has added dead reckoning capability to uINS to estimate position for extended periods of time during GNSS outages. In this report RTK-GNSS is used.
+Inertial Sense has added dead reckoning capability to IMX to estimate position for extended periods of time during GNSS outages. In this report RTK-GNSS is used.
 
 The following are examples dead reckoning of a car test vehicle.  No wheel sensors were used in these examples.  The dead reckoning position is shown in the yellow "INS" line and GNSS position in the red "GNSS" line. 
 
@@ -50,7 +50,7 @@ GNSS fix was not regained until about 20 meters after exiting the garage, just p
 
 ## Conclusion
 
-The uINS with dead reckoning and without wheel sensor can estimate position to within ~3m over 100 seconds of typical automotive parking lot driving.  
+The IMX with dead reckoning and without wheel sensor can estimate position to within ~3m over 100 seconds of typical automotive parking lot driving.  
 
 <a href="https://inertialsense.com/"><center>
 
