@@ -1,6 +1,6 @@
 # Dimensions and Pinouts
 
-## µINS-5 and µIMU-5 PCB Module
+## µIMU-5
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-uINS-5.0.4_Dimensions_and_Pinout.pdf)
 
@@ -9,7 +9,7 @@
 </object>
 
 
-## µINS-3, µAHRS-3, and µIMU-3 PCB Module
+## µINS-3, µAHRS-3, and µIMU-3
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-uINS3-20_uINS3.2_Mechanical_Drawing.pdf)
 
@@ -17,7 +17,7 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-uINS3-20_uINS3.2_Mechanical_Drawing.pdf" type="application/pdf" />
 </object>
 
-## Rugged-1
+## RUG-IMU
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-1.1_Rugged_Assembly_and_Pinout.pdf)
 
@@ -25,7 +25,7 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-1.1_Rugged_Assembly_and_Pinout.pdf" type="application/pdf" />
 </object>
 
-## Rugged-2
+## RUG-INS
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-2.0_Rugged_Assembly_and_Pinout.pdf)
 
@@ -33,12 +33,12 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-2.0_Rugged_Assembly_and_Pinout.pdf" type="application/pdf" />
 </object>
 
-## µIG-1 PCB Module
+## µIG PCB Module
 
-[Download PDF](https://docs.inertialsense.com/dimensions/IS-uIG-1.0_Mechanical_Drawing.pdf)
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-uIG-1.0_Dimensions_and_Pinout.pdf)
 
-<object data="https://docs.inertialsense.com/dimensions/IS-uIG-1.0_Mechanical_Drawing.pdf" type="application/pdf" width="700px" height="1150px" >
-    <embed src="https://docs.inertialsense.com/dimensions/IS-uIG-1.0_Mechanical_Drawing.pdf" type="application/pdf" />
+<object data="https://docs.inertialsense.com/dimensions/IS-uIG-1.0_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-uIG-1.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
 ## Hardware Design Files
