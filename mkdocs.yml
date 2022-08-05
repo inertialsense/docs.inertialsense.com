@@ -93,7 +93,8 @@ nav:
     - EVB-2: user-manual/hardware/EVB2.md
     - Rugged-1: user-manual/hardware/rugged1.md
     - Rugged-2: user-manual/hardware/rugged2.md
-    - PCB Module: user-manual/hardware/module.md
+    - PCB Module uINS-3: user-manual/hardware/module3.md
+    - PCB Module IMX-5: user-manual/hardware/module_imx5.md
     - Design Files: user-manual/hardware/hardware_design.md
   - IS Software:
     - CLTool: user-manual/software/cltool.md
