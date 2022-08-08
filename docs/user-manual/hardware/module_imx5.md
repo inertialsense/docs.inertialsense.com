@@ -49,7 +49,7 @@
 
 ### Serial Interface
 
-The following schematic demonstrates a typical setup for the μINS module. A rechargeable lithium backup battery enables the GPS to perform a warm or hot start. If no backup battery is connected, GPS.VBAT should be connected to VCC and the module will perform a cold start on power up. If the system processor is not capable of updating the μINS firmware, it is recommended to add a header to an alternate μINS serial port for firmware updates via an external computer. The reset line is not necessary for typical use.
+The following schematic demonstrates a typical setup for the IMX-5 module. A rechargeable lithium backup battery enables the GPS to perform a warm or hot start. If no backup battery is connected, GPS.VBAT should be connected to VCC and the module will perform a cold start on power up. If the system processor is not capable of updating the IMX firmware, it is recommended to add a header to an alternate IMX serial port for firmware updates via an external computer. The reset line is not necessary for typical use.
 
 ![](../images/interface_serial.svg)
 
@@ -70,10 +70,7 @@ The SPI interface is enabled by holding the pin 10 low during boot up.
 
 ## Soldering
 
-!!! warning
-    These parts must be hand soldered ONLY!  Solder reflow may result in damage!
-
-The uINS, uAHRS, and uIMU are designed as surface mount components that can be hand soldered onto another circuit board.  These parts are not designed to withstand the high temperatures associated with standard solder reflow processes.  Solder assembly must be done using a soldering iron.  
+The IMX5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual
 
 ## Hardware Design
 

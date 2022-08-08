@@ -1,9 +1,6 @@
 # Reflow Soldering
-</br>
-</br>
-</br>
 
-## Use of "No Clean" soldering paste is recommended as it does not require cleaning after the soldering process. The following examples of paste meet these criteria.
+Use of "No Clean" soldering paste is recommended as it does not require cleaning after the soldering process. The following examples of paste meet these criteria.
 </br>
 </br>
 <center>
@@ -12,22 +9,16 @@
 | ----------------------| ---------------------------------------------                         |
 |Soldering Paste        | OM338 SAC405 / Nr.143714 (Cookson Electronics)                        |
 |Allow Specification    | Sn 95.5/ Ag 4/ Cu 0.5 (95.5% Tin/ 4% Silver/ 0.5% Copper)             |
-|Melting temperatures   | 217 °C
+|Melting temperatures   | 217 °C                                                                |
+
+
 </center>
-</br>
-</br>
-</br>
 
 ## The following reflow profile is recommended for soldering:
 
 <center>
 
 ![Reflow_plot](../images/Reflow.png)
-</center>
-
-</br>
-</br>
-<center>
 
 
 
@@ -48,9 +39,7 @@
 
 
 </center>
-</br>
-</br>
-</br>
+
 
 ### Note:
 - A convection soldering oven is highly recommended over an infrared type radiation oven as it allows precision control of the temperature and all parts will be heated evenly.
