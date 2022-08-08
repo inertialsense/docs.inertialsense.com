@@ -96,6 +96,7 @@ nav:
     - PCB Module uINS-3: user-manual/hardware/module3.md
     - PCB Module IMX-5: user-manual/hardware/module_imx5.md
     - Design Files: user-manual/hardware/hardware_design.md
+    - Reflow Information: user-manual/hardware/reflow.md
   - IS Software:
     - CLTool: user-manual/software/cltool.md
     - EvalTool: user-manual/software/evaltool.md
