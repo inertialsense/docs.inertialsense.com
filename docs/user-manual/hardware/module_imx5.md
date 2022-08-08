@@ -6,8 +6,6 @@
 
 </center>
 
-!!! warning
-    Our module must be hand soldered ONLY! Solder reflow may result in damage! See [Soldering](#soldering) for details.
 
 ## Pinout
 
