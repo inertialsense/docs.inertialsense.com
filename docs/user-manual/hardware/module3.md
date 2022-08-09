@@ -90,11 +90,10 @@ A single ceramic 100nF decoupling capacitor should be placed in close proximity 
 
 ### Design Files
 
- * [IMX PCB Design Libraries](https://docs.inertialsense.com/downloads/PCB-Design-Libraries.zip) - Schematic and layout files for printed circuit board designs.
- * [IMX, uAHRS, uIMU CAD Model](https://docs.inertialsense.com/downloads/CAD-Models-STEP.zip) - 3D step model of IMX and EVB used for CAD and circuit board designs.
+ * [uINS PCB Design Libraries](https://github.com/inertialsense/IS-hdw/tree/main/Products) - Schematic and layout files for printed circuit board designs. Also includes 3D step models of uINS and EVB used for CAD and circuit board designs.
 
 ### EVB-2 Reference Design
 
 <img src="https://www.oshwa.org/wp-content/uploads/2014/03/oshw-logo.svg" width="100" align="right" />
 
-A reference design for implementation of IMX module can be found in the [EVB-2 PCB assembly design files](https://github.com/inertialsense/IS-hdw-EVB2) available as open source hardware on GitHub.  
+A reference design for implementation of uINS module can be found in the [EVB-2 PCB assembly design files](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1) available as open source hardware on GitHub.  
