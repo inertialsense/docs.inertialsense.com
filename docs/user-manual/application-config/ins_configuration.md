@@ -2,7 +2,7 @@
 
 ## Translation
 
-The uINS can be mounted and operated in any arbitrary orientation.  It is often desirable and conventional to translate the uINS output so that it is rotated into the vehicle frame and located at certain location for control and navigation of the vehicle.  This is done using the ***IMU Rotation***, ***INS Rotation***, and ***INS Offset*** parameters.  
+The IMX can be mounted and operated in any arbitrary orientation.  It is often desirable and conventional to translate the IMX output so that it is rotated into the vehicle frame and located at certain location for control and navigation of the vehicle.  This is done using the ***IMU Rotation***, ***INS Rotation***, and ***INS Offset*** parameters.  
 
 In most common applications, output is translated to the vehicle frame (X to the front, Y to the right, and Z down): 
 
@@ -20,7 +20,7 @@ The *INS rotation* is used to convert the INS output from the [sensor frame](../
 
 ### INS Offset
 
-The *INS offset* is used to shift the location of the INS output and is applied following the INS Rotation.  This offset can be used to move the uINS location from the origin of the sensor frame to any arbitrary location, often a control navigation point on the vehicle. 
+The *INS offset* is used to shift the location of the INS output and is applied following the INS Rotation.  This offset can be used to move the IMX location from the origin of the sensor frame to any arbitrary location, often a control navigation point on the vehicle. 
 
 ### Manually Aligning the INS After Mounting  
 
@@ -29,7 +29,7 @@ The *INS offset* is used to shift the location of the INS output and is applied 
 - The [Infield Calibration](../infield_calibration) process can be used instead of this process to automatically measure and align the INS with the vehicle frame for INS rotations less than 15°.
 - If using software release 1.8.4 or newer, we recommend using the `DID_FLASH_CONFIG.sensorConfig` to rotate the sensor frame by 90° to near level before following the steps below.
 
-The following process uses the uINS to measure and correct for the uINS mounting angle. 
+The following process uses the IMX to measure and correct for the IMX mounting angle. 
 
 1. Set `DID_FLASH_CONFIG.insRotation` to zero. 
 
@@ -45,7 +45,7 @@ The [*Infield Calibration*](../infield_calibration) provides a method to 1.) zer
 
 ## GNSS Antenna Offset
 
-If the setup includes a significant distance (40cm or more) between the GPS antenna and the uINS central unit, enter a non-zero value for the GPS lever arm, `DID_FLASH_CONFIG.gps1AntOffset` (or  `DID_FLASH_CONFIG.gpsAnt2Offset`) X,Y,Z offset in meters from Sensor Frame origin to GPS antenna.  The sensor frame is labeled on the uINS EVB case.
+If the setup includes a significant distance (40cm or more) between the GPS antenna and the IMX central unit, enter a non-zero value for the GPS lever arm, `DID_FLASH_CONFIG.gps1AntOffset` (or  `DID_FLASH_CONFIG.gpsAnt2Offset`) X,Y,Z offset in meters from Sensor Frame origin to GPS antenna.  The sensor frame is labeled on the IMX EVB case.
 
 ## IMU Sample and Navigation Periods
 

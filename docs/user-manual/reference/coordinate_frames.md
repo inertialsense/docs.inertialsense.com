@@ -1,7 +1,7 @@
 # Coordinate Frames
 In this manual, coordinate frame systems are simply referred to as frames. This page is to assist the developer in
 choosing and implementing the appropriate coordinate frames for their respective application. It should be noted
-that the following frames are in relation to the uINS itself.
+that the following frames are in relation to the IMX itself.
 
 ## Sensor Frame
 IMU, magnetometer, and INS velocity data are in the Sensor Coordinate Frame, or Sensor Frame, and are

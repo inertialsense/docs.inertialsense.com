@@ -14,7 +14,7 @@ Check the following:
 
 ## Bootloader Update fails first time
 
-If updating the bootloader firmware and using the USB direct connection on the uINS module (pins 1 and 2) or the EVB-2 (EVB USB connector), the serial port number will change when the device switches from application mode to Bootloader Update mode.  This is expected and requires reselecting the new serial port and running the Bootloader Update process a second time. 
+If updating the bootloader firmware and using the USB direct connection on the IMX module (pins 1 and 2) or the EVB-2 (EVB USB connector), the serial port number will change when the device switches from application mode to Bootloader Update mode.  This is expected and requires reselecting the new serial port and running the Bootloader Update process a second time. 
 
 ## System in AHRS mode despite GPS messages being received
 
@@ -32,7 +32,7 @@ There are different reasons a system may appear unresponsive and not communicate
 
 ### Stuck in Bootloader Mode
 
-In some cases, the bootloader may fail to completely update firmware.  This is indicated by the fading cyan status LED on the uINS module.  This can happen if older bootloader firmware is on the uINS and firmware version 1.7.1 is uploaded.  If this happens, the system will appear to be unresponsive in the EvalTool.  The following process can be used to recover the system to a working state:
+In some cases, the bootloader may fail to completely update firmware.  This is indicated by the fading cyan status LED on the IMX module.  This can happen if older bootloader firmware is on the uINS and firmware version 1.7.1 is uploaded.  If this happens, the system will appear to be unresponsive in the EvalTool.  The following process can be used to recover the system to a working state:
 
 If the **bootloader is running**, identified with the fading cyan color LED on the uINS module, following these steps:
 

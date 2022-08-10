@@ -47,7 +47,7 @@ if (!inertialSenseInterface.Open(g_commandLineOptions.comPort.c_str(),
 
 ### Step 3: Enable data broadcasting
 
-The following enables data broadcasting from the uINS at a specified data rate or period in milliseconds.
+The following enables data broadcasting from the IMX at a specified data rate or period in milliseconds.
 
 ``` C++
 cltool_setupCommunications(inertialSenseInterface)

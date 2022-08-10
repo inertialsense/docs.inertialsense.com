@@ -50,9 +50,9 @@ To ensure correct behavior of the receiver in SPI Slave mode, the master device 
    tick:0,}
 } -->
 
-When reading the uINS and there is no data ready it will send zeros for the data.
+When reading the IMX and there is no data ready it will send zeros for the data.
 
-Keeping CS low should not cause any issues. However, if the clocking between the master and slave processors gets out of sync there is nothing to get them back into sync. Ground bounce or noise during a transition could cause the uINS sees two clock edges when there should have only been one (due to an ESD or a fast transient event). Raising and lowering the CS line resets the shift register will resynchronize the clocks.
+Keeping CS low should not cause any issues. However, if the clocking between the master and slave processors gets out of sync there is nothing to get them back into sync. Ground bounce or noise during a transition could cause the IMX sees two clock edges when there should have only been one (due to an ESD or a fast transient event). Raising and lowering the CS line resets the shift register will resynchronize the clocks.
 
 ### Data Ready Pin Option
 
@@ -60,7 +60,7 @@ There is a data ready pin option. This signal will be raised when data becomes r
 
 If the chip select line is lowered during a data packet, the byte being transmitted (or that would be transmitted) can be lost. It is recommended to only lower the chip select when outside of a data packet and the data ready pin is inactive.
 
-The internal SPI buffer is 4096 bytes. If there is a buffer overflow, the buffer gets dropped. This is indicated by a data ready pin that is high without data being there. When an overflow happens, it clears the buffer, so the system could be in the middle of a packet and the uINS would just send zeros. If a request is sent to the uINS or the uINS sends a packet periodically it will resolve the situation.
+The internal SPI buffer is 4096 bytes. If there is a buffer overflow, the buffer gets dropped. This is indicated by a data ready pin that is high without data being there. When an overflow happens, it clears the buffer, so the system could be in the middle of a packet and the IMX would just send zeros. If a request is sent to the IMX or the IMX sends a packet periodically it will resolve the situation.
 
 The SPI interface supports up to 3 Mbs data rate. (5 Mbs works if the data ready pin is used to receive the data - see B below.)
 
@@ -110,13 +110,13 @@ B. Read while the data ready pin is active **or** we are inside a data packet. O
 
 ## EVB-2 SPI Dev Kit
 
-The EVB-2 demonstrates SPI interface with the uINS.  The EVB-2 ATSAM-E70 (E70) processor provides the example SPI interface with the uINS.  The EVB-2 must be put into CBPreset mode 6 (CONFIG led color cyan) followed by a system reset to enable SPI mode.  The EVB-2 (E70) project source code is available in the SDK for reference. 
+The EVB-2 demonstrates SPI interface with the IMX.  The EVB-2 ATSAM-E70 (E70) processor provides the example SPI interface with the IMX.  The EVB-2 must be put into CBPreset mode 6 (CONFIG led color cyan) followed by a system reset to enable SPI mode.  The EVB-2 (E70) project source code is available in the SDK for reference. 
 
 ## Troubleshooting
 If every other character from a packet is lost it might be that the CS line is being toggled after every byte.
 
 
-The uINS 3.1 uses a USART SPI peripherial which requires a minimum delay of one t<sub>bit</sub> (t<sub>bit</sub> being the nominal time required to transmit a bit) spacing between characters sent. Reading bytes one by one may cause signifacnt time delays when streaming data. Depending on the ammount of data streaming, the uINS mable to keep up and the buffer could be overflow. Single message requests should work properly, but streaming probably will not work well. If the master hardware can't handle the delay, the uINS 3.2 hardware should be used.
+The uINS-3.1 uses a USART SPI peripherial which requires a minimum delay of one t<sub>bit</sub> (t<sub>bit</sub> being the nominal time required to transmit a bit) spacing between characters sent. Reading bytes one by one may cause signifacnt time delays when streaming data. Depending on the ammount of data streaming, the uINS mable to keep up and the buffer could be overflow. Single message requests should work properly, but streaming probably will not work well. If the master hardware can't handle the delay, the uINS 3.2 hardware should be used.
 
 
 

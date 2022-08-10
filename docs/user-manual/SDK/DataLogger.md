@@ -1,6 +1,6 @@
 # Data Logging Example Project
 
-This [ISLoggerExample](https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects/Logger) project demonstrates data logging with the <a href="https://inertialsense.com">InertialSense</a> products (uINS, uAHRS, and uIMU) using the Inertial Sense SDK.
+This [ISLoggerExample](https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects/Logger) project demonstrates data logging with the <a href="https://inertialsense.com">InertialSense</a> products (IMX, uAHRS, and uIMU) using the Inertial Sense SDK.
 
 ## Files
 

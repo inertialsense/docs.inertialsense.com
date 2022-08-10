@@ -24,7 +24,7 @@ The infield calibration process is generally useful for only small angle INS rot
 
 Because the sampled orientations are averaged together, it is recommended to only sample orientations that are at true 90° multiples of the vehicle frame.  
 
-The zero INS attitude feature assumes there are flat rigid surface(s) attached to the uINS about which the system can be leveled.  If the working surface is not level or additional precision is desired, each orientation sampled can have an additional sample taken with ~180° yaw offset to cancel out tilt of the working surface.   
+The zero INS attitude feature assumes there are flat rigid surface(s) attached to the IMX about which the system can be leveled.  If the working surface is not level or additional precision is desired, each orientation sampled can have an additional sample taken with ~180° yaw offset to cancel out tilt of the working surface.   
 
 If Infield Calibration is not adequate, the INS may be [leveled or aligned manually](../ins_configuration/#manually-aligning-the-ins-after-mounting).     
 

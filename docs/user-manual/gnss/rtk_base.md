@@ -65,7 +65,7 @@ The base position is stored in `DID_FLASH_CONFIG.reflla` and transmitted to the 
 
 ### **Radio**
 
-The Base uINS must be configured to stream base corrections to the radio so it can be broadcast to the rover.	
+The Base IMX must be configured to stream base corrections to the radio so it can be broadcast to the rover.	
 
 #### [EvalTool](../software/evaltool.md) 
 

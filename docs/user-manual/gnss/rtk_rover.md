@@ -12,7 +12,7 @@ Use the `-flashConfig=rtkCfgBits=0x01` argument to configure the unit as rover w
 
 ## Communications Setup
 
-The uINS automatically parses data that arrives at any of the ports and recognizes base corrections data. Any communications method that sends the base corrections to one of the ports is suitable. Several common methods are described below.
+The IMX automatically parses data that arrives at any of the ports and recognizes base corrections data. Any communications method that sends the base corrections to one of the ports is suitable. Several common methods are described below.
 
 ### **EVB2 Radio**
 
@@ -20,7 +20,7 @@ The uINS automatically parses data that arrives at any of the ports and recogniz
 
 The EVB-2 radio can be configured by pressing the "CONFIG" tactile switch until the light next to it is blue. This enables the radio and configures the radio settings.  See the [Configurations](../../hardware/EVB2/#configurations) and [EVB-2 Connections](../../hardware/EVB2/#evb-2-connections) sections of the [EVB-2](../../hardware/EVB2) documentation.
 
-1. Under "uINS Parameters" section verify the following:
+1. Under "IMX Parameters" section verify the following:
    - Check the Baud Rate for the serial port of the radio (`ser0BaudRate` or `ser1BaudRate`). This should match the Baud Rate of the radio. The Digi Xbee Pro SX module on the EVB2 runs at **115200** baud.
 1. Navigate to Data Sets > `DID_EVB_FLASH_CFG`
    - Change `cbPreset` - This should be set to `0x3` to enable the Digi Xbee Pro SX module. 
@@ -157,7 +157,7 @@ Example: `cltool.exe -c COM10 -flashConfig=rtkCfgBits=0x01 -baud=57600 -rover=RT
 
 Using the EVB2 WiFi module to connect to the TCP/IP Base. EVB2 can save up to 3 Networks information. (Wifi[0], Wifi[1], Wifi[2]) Follow these steps using the EvalTool:
 
-1. Under "uINS Parameters" section verify the following:
+1. Under "IMX Parameters" section verify the following:
    - Verify the `RTKCfgBits` was automatically set to 0x00000001
 1. Navigate to Data Sets > `DID_EVB_FLASH_CFG`
    - Change `cbPreset` - This should be set to `0x4` to enable the WiFi module. 

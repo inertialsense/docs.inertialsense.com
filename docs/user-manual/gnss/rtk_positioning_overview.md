@@ -65,7 +65,7 @@ The following configurations can be used for the RTK rover:
 
 ### **LED Indicators**
 
-The LEDs on the uINS will indicate RTK fix status. 
+The LEDs on the IMX will indicate RTK fix status. 
 
 | LED Behavior                       | Status            | Description                          |
 | ---------------------------------- | ----------------- | ------------------------------------ |
@@ -110,5 +110,5 @@ The DID_GPS1_RTK_POS_REL status can be monitored in the EvalTool GPS tab.
 
 ## RTK Base Messages
 
-The uINS RTK solution accepts both RTCM3 and uBlox raw GNSS base correction messages.  See the [RTK Base](../rtk_base) or [NTRIP](../rtk_ntrip) pages for details on using base stations.
+The IMX RTK solution accepts both RTCM3 and uBlox raw GNSS base correction messages.  See the [RTK Base](../rtk_base) or [NTRIP](../rtk_ntrip) pages for details on using base stations.
 
