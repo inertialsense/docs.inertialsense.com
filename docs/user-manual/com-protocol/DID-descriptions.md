@@ -158,7 +158,7 @@ Magnetometer calibration
 
 | Field | Type | Description |
 |-------|------|-------------|
-| recalCmd | uint32_t | Set mode and start recalibration. 1 = multi-axis, 2 = single-axis, 101 = abort. (see eMagRecalMode) |
+| state | uint32_t | Mag recalibration state.  COMMANDS: 1=multi-axis, 2=single-axis, 101=abort, STATUS: 200=running, 201=done (see eMagCalState) |
 | progress | float | Mag recalibration progress indicator: 0-100 % |
 | declination | float | Magnetic declination estimate |
 
@@ -807,7 +807,7 @@ Flash memory configuration
 | insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
 | gps1AntOffset | float[3] | X,Y,Z offset in meters from Sensor Frame origin to GPS 1 antenna. |
 | insDynModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
-| reserved | uint8_t | Reserved |
+| debug | uint8_t | Debug |
 | gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
 | sysCfgBits | uint32_t | System configuration bits (see eSysConfigBits). |
 | refLla | double[3] | Reference latitude, longitude and height above ellipsoid for north east down (NED) calculations (deg, deg, m) |
@@ -908,6 +908,7 @@ EVB monitor and log control interface.
 | loggerElapsedTimeMs | uint32_t | logger |
 | wifiIpAddr | uint32_t | WiFi IP address |
 | sysCommand | uint32_t | System command (see eSystemCommand).  99 = software reset |
+| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
 
 
 ### General
@@ -1187,9 +1188,9 @@ Manufacturing info
 
 | Field | Type | Description |
 |-------|------|-------------|
-| serialNumber | uint32_t | Serial number |
-| lotNumber | uint32_t | Lot number |
-| date | char[16] | Manufacturing date (YYYYMMDDHHMMSS) |
+| serialNumber | uint32_t | Inertial Sense serial number |
+| lotNumber | uint32_t | Inertial Sense lot number |
+| date | char[16] | Inertial Sense manufacturing date (YYYYMMDDHHMMSS) |
 | key | uint32_t | Key |
 
 
@@ -1231,13 +1232,14 @@ DID_PREINTEGRATED_IMU + DID_MAGNETOMETER + MAGNETOMETER_2 Only one of DID_DUAL_I
 
 #### DID_REFERENCE_IMU
 
-Reference or truth IMU used for manufacturing calibration and testing 
+Raw reference or truth IMU used for manufacturing calibration and testing. Input from testbed. 
 
 `imu_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| status | uint32_t | IMU Status (eImuStatus) |
 | I | imus_t | Inertial Measurement Unit (IMU) |
 
 
@@ -1251,6 +1253,23 @@ Reference or truth magnetometer used for manufacturing calibration and testing
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
 | mag | float[3] | Magnetometers in Gauss |
+
+
+#### DID_REFERENCE_PIMU
+
+Reference or truth IMU used for manufacturing calibration and testing 
+
+`preintegrated_imu_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| theta1 | float[3] | IMU 1 delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
+| theta2 | float[3] | IMU 2 delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
+| vel1 | float[3] | IMU 1 delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
+| vel2 | float[3] | IMU 2 delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
+| dt | float | Integral period in seconds for delta theta and delta velocity.  This is configured using DID_FLASH_CONFIG.startupNavDtMs. |
+| status | uint32_t | IMU Status (eImuStatus) |
 
 
 #### DID_ROS_COVARIANCE_POSE_TWIST
@@ -1449,7 +1468,8 @@ System parameters / info
 | imuPeriodMs | uint32_t | IMU sample period in milliseconds. Zero disables sampling. |
 | navPeriodMs | uint32_t | Nav filter update period in milliseconds. Zero disables nav filter. |
 | sensorTruePeriod | double | Actual sample period relative to GPS PPS |
-| reserved2 | float[2] | Reserved |
+| reserved2 | float | Reserved |
+| reserved3 | float | Reserved |
 | genFaultCode | uint32_t | General fault code descriptor (eGenFaultCodes).  Set to zero to reset fault code. |
 
 
@@ -1733,7 +1753,7 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_GPS_SATELLITE_RX | 0x00000010 |
 | HDW_STATUS_STROBE_IN_EVENT | 0x00000020 |
 | HDW_STATUS_GPS_TIME_OF_WEEK_VALID | 0x00000040 |
-| HDW_STATUS_UNUSED_1 | 0x00000080 |
+| HDW_STATUS_REFERENCE_IMU_RX | 0x00000080 |
 | HDW_STATUS_SATURATION_GYR | 0x00000100 |
 | HDW_STATUS_SATURATION_ACC | 0x00000200 |
 | HDW_STATUS_SATURATION_MAG | 0x00000400 |
@@ -1741,9 +1761,9 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_SATURATION_MASK | 0x00000F00 |
 | HDW_STATUS_SATURATION_OFFSET | 8 |
 | HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00001000 |
-| HDW_STATUS_UNUSED_3 | 0x00002000 |
-| HDW_STATUS_UNUSED_4 | 0x00004000 |
-| HDW_STATUS_UNUSED_5 | 0x00008000 |
+| HDW_STATUS_EKF_USING_REFERENCE_IMU | 0x00002000 |
+| HDW_STATUS_MAG_RECAL_COMPLETE | 0x00004000 |
+| HDW_STATUS_FLASH_WRITE_IN_PROGRESS | 0x00008000 |
 | HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
 | HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
 | HDW_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x00F00000 |
@@ -1831,14 +1851,16 @@ System status and configuration is made available through various enumeration an
 
 #### Magnetometer Recalibration Mode
 
-(eMagRecalMode)  
+(eMagCalState)  
 
 | Field | Value |
 |-------|------|
-| MAG_RECAL_CMD_DO_NOTHING |  (int)0 |
-| MAG_RECAL_CMD_MULTI_AXIS |  (int)1 |
-| MAG_RECAL_CMD_SINGLE_AXIS |  (int)2 |
-| MAG_RECAL_CMD_ABORT |  (int)101 |
+| MAG_CAL_STATE_DO_NOTHING |  (int)0 |
+| MAG_CAL_STATE_MULTI_AXIS |  (int)1 |
+| MAG_CAL_STATE_SINGLE_AXIS |  (int)2 |
+| MAG_CAL_STATE_ABORT |  (int)101 |
+| MAG_CAL_STATE_RECAL_RUNNING |  (int)200 |
+| MAG_CAL_STATE_RECAL_COMPLETE |  (int)201 |
 
 
 #### RTK Configuration
@@ -1902,3 +1924,4 @@ System status and configuration is made available through various enumeration an
 | SYS_CFG_BITS_DISABLE_AUTO_BIT_ON_STARTUP | 0x00080000 |
 | SYS_CFG_BITS_DISABLE_WHEEL_ENCODER_FUSION | 0x00100000 |
 | SYS_CFG_BITS_DISABLE_PACKET_ENCODING | 0x00400000 |
+| SYS_CFG_USE_REFERENCE_IMU_IN_EKF | 0x01000000 |

@@ -28,9 +28,9 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 | 1    | GND                                        | -    | -                                                            |
 | 2    | VIN                                        | -    | 4V-20V supply voltage input<sup>1</sup>                      |
 | 3    | USB.VCC                                    | -    | 5V system supply input<sup>1</sup> from USB bus.  Using this pin will enable the FTDI USB.  Use the VIN pin instead to disable the FTDI USB. |
-| 4    | USB.D+                                     | I/O  | USB Data Positive Line (Serial 0)                            |
+| 4    | USB.D+                                     | I/O  | USB Data Positive Line                                       |
 | 5    | GPS_PPS                                    | O    | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
-| 6    | USB.D-                                     | I/O  | USB Data Negative Line (Serial 0)                            |
+| 6    | USB.D-                                     | I/O  | USB Data Negative Line                                       |
 | 7    | G3/Tx0/485Tx1-                             | I/O  | Serial 0 output (TTL or RS232)<sup>2</sup><br/>Serial 1 output- (RS485/RS422)<sup>3</sup> |
 | 8    | G7/Tx1/485Tx1+                             | I/O  | Serial 1 output (TTL or RS232)<sup>2</sup><br/>Serial 1 output+ (RS485/RS422)<sup>3</sup> |
 | 9    | G4/Rx0/485Rx1-                             | I/O  | Serial 0 input (TTL or RS232)<sup>2</sup><br/>Serial 1 input- (RS485/RS422)<sup>3</sup> |
