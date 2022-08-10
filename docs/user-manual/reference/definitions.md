@@ -8,7 +8,7 @@ The time it takes for the GPS receiver to get “fix” or produce a navigation 
 - Warm start - In warm start mode, the receiver has approximate information for time, position, and coarse satellite position data (Almanac). In this mode, after power-up, the receiver normally needs to download ephemeris before it can calculate position and velocity data. As the ephemeris data usually is outdated after 4 hours, the receiver will typically start with a Warm start if it has been powered down for more than 4 hours.
 - Hot start - In hot start mode, the receiver was powered down only for a short time (4 hours or less), so that its ephemeris is still valid. Since the receiver doesn't need to download ephemeris again, this is the fastest startup method.
 
-Battery backed-up power supplied to the uINS preserves the GPS time, position, and coarse satellite position (almanac) while off.  GPS almanac data is typically valid for several weeks while the GPS is off.
+Battery backed-up power supplied to the IMX preserves the GPS time, position, and coarse satellite position (almanac) while off.  GPS almanac data is typically valid for several weeks while the GPS is off.
 
 ## Preintegrated IMU
 

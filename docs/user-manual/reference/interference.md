@@ -3,7 +3,7 @@
 Electrical interference or noise can be coupled into the Inertial Sense module in the form of electromagnetic interference (EMI) through the air or electrically conducted through wiring.  Sources for interference include:
 
 - EMI at the GPS antenna.
-- EMI at the uINS module.
+- EMI at the IMX module.
 - EMI conducted through the power supply or I/O lines.
 
 Common sources for noise and interference are digital lines, USB 3.x, noisy power supplies, etc.  
@@ -26,13 +26,13 @@ The best solution is to stop the EMI (emitted) or conducted noise at its source.
 
 - **Shielding around the Inertial Sense module** - This can further prevent EMI from being absorbed by potentially GPS sensitive circuitry on the module.
 - **Digital signals** - Making sure best practices for electrical current return paths for both common mode and differential mode signals can be key for this.  Customers have seen GPS interference caused by USB 3.x and have have resolved the issues using shielding and [inline USB filters](https://www.amazon.com/AudioQuest-Jitterbug-USB-Filter/dp/B00YTA78FW/ref=sr_1_5?ie=UTF8&qid=1525737258&sr=8-5&keywords=usb+filter).
-- **Power supply filtering** - This may be necessary on systems with significant digital noise.  LC filters or similar filters can be added inline between the power supply and the uINS supply input (Vcc).  Common switching mode/buck voltage regulators should be fine for use with the uINS module and not require additional filtering.  
+- **Power supply filtering** - This may be necessary on systems with significant digital noise.  LC filters or similar filters can be added inline between the power supply and the IMX supply input (Vcc).  Common switching mode/buck voltage regulators should be fine for use with the IMX module and not require additional filtering.  
 
 Please contact us at [support@inertialsense.com](mailto:support@inertialsense.com) if further support is needed.
 
 ## Magnetic Interference
 
-Magnetic interference may impact uINS magnetometer performance if surrounded by steel or ferrous material or near motors, motor drivers, or other electronics that cause EMI.  This interference can be observed in the magnetometer output, magnetometer status, and INS heading.  Make sure all components are fixed in location during this test.  While powering and actuating the various interference sources, observe the following:
+Magnetic interference may impact IMX magnetometer performance if surrounded by steel or ferrous material or near motors, motor drivers, or other electronics that cause EMI.  This interference can be observed in the magnetometer output, magnetometer status, and INS heading.  Make sure all components are fixed in location during this test.  While powering and actuating the various interference sources, observe the following:
 
 - **Magnetometer Output** should remain constant and not deviate.  (EvalTool Sensors tab)
 - **Magnetometer Status** should remain good and not indicate interference.  (EvalTool INS tab, "Mag used" green = good, yellow = interference)

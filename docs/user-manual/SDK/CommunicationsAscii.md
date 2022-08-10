@@ -1,7 +1,7 @@
 # ASCII Communications Example Project
 
 This [IS Communications Example](https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects/Ascii) project demonstrates binary communications with the<br>
-<a href="https://inertialsense.com/products">Inertial Sense Products</a> (uINS, uAHRS, and uIMU) using the Inertial Sense SDK. See the<br>
+<a href="https://inertialsense.com/products">Inertial Sense Products</a> (IMX, uAHRS, and uIMU) using the Inertial Sense SDK. See the<br>
 [ASCII protocol](../com-protocol/ascii.md) section for details on the ASCII packet structures.
 
 ## Files
@@ -43,7 +43,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 	serialPortPlatformInit(&serialPort);
 
 	// Open serial, last parameter is a 1 which means a blocking read, you can set as 0 for non-blocking
-	// you can change the baudrate to a supported baud rate (IS_BAUDRATE_*), make sure to reboot the uINS
+	// you can change the baudrate to a supported baud rate (IS_BAUDRATE_*), make sure to reboot the IMX
 	//  if you are changing baud rates, you only need to do this when you are changing baud rates.
 	if (!serialPortOpen(&serialPort, argv[1], IS_BAUDRATE_921600, 1))
 	{

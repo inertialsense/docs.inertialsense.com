@@ -1,6 +1,6 @@
-GNSS receivers that output NMEA ascii protocol can be used to aid the uINS EKF.
+GNSS receivers that output NMEA ascii protocol can be used to aid the IMX EKF.
 
-## Configure uINS for NMEA GNSS Input
+## Configure IMX for NMEA GNSS Input
 
 1. Set serial port baudrate, matching DID_FLASH_CONFIG.serXBaudRate.
 
@@ -31,11 +31,11 @@ GNSS receivers that output NMEA ascii protocol can be used to aid the uINS EKF.
 
 ## Electrical Interface
 
-The external NMEA GNSS receiver can be connected to Serial 0, Serial 1, and Serial 2 ports (3.3V TTL UART) on the uINS.  See the [PCB Module](../../hardware/module/) hardware page for a description of the uINS pinout.  Serial 0 and 2 can be accessed on the main connector of [Rugged-1](../../hardware/rugged1/) and [Rugged-2](../../hardware/rugged2/) and all serial ports can be accessed on header H7 of the [EVB-2](../../hardware/EVB2/). 
+The external NMEA GNSS receiver can be connected to Serial 0, Serial 1, and Serial 2 ports (3.3V TTL UART) on the IMX.  See the [PCB Module](../../hardware/module/) hardware page for a description of the IMX pinout.  Serial 0 and 2 can be accessed on the main connector of [Rugged-1](../../hardware/rugged1/) and [Rugged-2](../../hardware/rugged2/) and all serial ports can be accessed on header H7 of the [EVB-2](../../hardware/EVB2/). 
 
 ## Enabling NMEA on ZED-F9P
 
-The recommended procotol with the uINS and ZED-F9P receiver is the uBlox binary protocol.  However, the ZED-F9 can operate using NMEA protocol if necessary.  The following steps can be used to enable NMEA protocol output on the ublox ZED-F9P receiver. 
+The recommended procotol with the IMX and ZED-F9P receiver is the uBlox binary protocol.  However, the ZED-F9 can operate using NMEA protocol if necessary.  The following steps can be used to enable NMEA protocol output on the ublox ZED-F9P receiver. 
 
 1. Enable NMEA output using the [u-blox u-center]( https://www.u-blox.com/en/product/u-center ) application.  
    - **Set the configuration**: (ublox u-center menu -> View -> Configuration View) change the following.  You must press the "Send" button to apply each change.

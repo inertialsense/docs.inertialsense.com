@@ -14,7 +14,7 @@ The advent of multi-band GNSS (multiple frequency global navigation satellite sy
 
 ## Overview
 
-The uINS (GPS-INS) can be interfaced with external multi-band (multi-frequency) GNSS receiver(s) connected via serial port(s) to improve precision the EKF solution.  The supported message protocols are uBlox binary and NMEA ASCII.  The following are the GPS settings (accessible in the EvalTool GPS Settings tab and uINS `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits`):
+The IMX (GPS-INS) can be interfaced with external multi-band (multi-frequency) GNSS receiver(s) connected via serial port(s) to improve precision the EKF solution.  The supported message protocols are uBlox binary and NMEA ASCII.  The following are the GPS settings (accessible in the EvalTool GPS Settings tab and IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits`):
 
 | Setting        | Value                                                        |
 | -------------- | ------------------------------------------------------------ |
@@ -27,13 +27,13 @@ Refer to the Hardware section of this manual for serial port pinout information.
 
 ## uBlox ZED-F9P GNSS
 
-The uINS (GPS-INS) can be configured for use with uBlox ZED-F9P multi-band GNSS receivers.  This can be done using either the EvalTool GPS Setting tab or the uINS `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.    
+The IMX (GPS-INS) can be configured for use with uBlox ZED-F9P multi-band GNSS receivers.  This can be done using either the EvalTool GPS Setting tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.    
 
 | GPS Ports      | Value                                          |
 | -------------- | ---------------------------------------------- |
 | GPS Source     | serial 0, serial 1, or serial 2                |
 | GPS Type       | ublox F9P                                      |
-| GPS1 Timepulse | *Disable* or uINS pin connected to ZED-F9P PPS |
+| GPS1 Timepulse | *Disable* or IMX pin connected to ZED-F9P PPS |
 
 | RTK Rover    | Value                       |
 | ------------ | --------------------------- |
@@ -44,7 +44,7 @@ The uINS (GPS-INS) can be configured for use with uBlox ZED-F9P multi-band GNSS 
 | Serial Port 0 (Single GNSS only) | GPS1 - RTCM3 |
 | USB Port                         | GPS1 - RTCM3 |
 
-The following sections detail how to interface and configure the uINS for operation using the ZED-F9P.  See [RTK precision positioning](../rtk_positioning_overview/) and [RTK compassing](../rtk_compassing/) for RTK operation principles.  
+The following sections detail how to interface and configure the IMX for operation using the ZED-F9P.  See [RTK precision positioning](../rtk_positioning_overview/) and [RTK compassing](../rtk_compassing/) for RTK operation principles.  
 
 #### Dual ZED-F9 Heading Accuracy
 
@@ -54,11 +54,11 @@ When using two multi-band ZED-F9 GNSS receivers in moving baseline mode (RTK com
 
 ### Typical Interface
 
-The uINS will automatically configure the ZED-F9P for communications.    
+The IMX will automatically configure the ZED-F9P for communications.    
 
 #### Single GNSS RTK Positioning w/ LiDAR
 
-RTK base messages (RTMC3) supplied to any of the uINS serial ports are forwarded to GPS1 for RTK positioning.  The RTK precision position from GPS 1 is used in the uINS EKF solution.  The uINS can be configured to output NMEA messages such as GPGGA or GPRMC on any serial port.
+RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to GPS1 for RTK positioning.  The RTK precision position from GPS 1 is used in the IMX EKF solution.  The IMX can be configured to output NMEA messages such as GPGGA or GPRMC on any serial port.
 
 <center>
 
@@ -68,7 +68,7 @@ RTK base messages (RTMC3) supplied to any of the uINS serial ports are forwarded
 
 #### Dual GNSS RTK Positioning and RTK Compassing
 
-RTK base messages (RTMC3) supplied to any of the uINS serial ports are forwarded to GPS1 for RTK positioning.  RTK moving base messages from GPS1 are forwarded to GPS2 for RTK compassing.  The RTK precision position from GPS 1 and the RTK compassing heading from GPS2 are used in the uINS EKF solution.  Note that typically the Rugged-2 uses Serial 0 and the EVB-2 uses Serial 2 to communicate with the GPS2 F9P receiver.
+RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to GPS1 for RTK positioning.  RTK moving base messages from GPS1 are forwarded to GPS2 for RTK compassing.  The RTK precision position from GPS 1 and the RTK compassing heading from GPS2 are used in the IMX EKF solution.  Note that typically the Rugged-2 uses Serial 0 and the EVB-2 uses Serial 2 to communicate with the GPS2 F9P receiver.
 
 <center>
 
@@ -80,11 +80,11 @@ RTK base messages (RTMC3) supplied to any of the uINS serial ports are forwarded
 
 ![](../images/rugged2.png)
 
-The Rugged-2 INS contains the either single or dual ZED-F9P onboard supporting RTK positioning and compassing.  GPS 1 and GPS 2 are connected to serial ports 1 and 0 respectively on the uINS.
+The Rugged-2 INS contains the either single or dual ZED-F9P onboard supporting RTK positioning and compassing.  GPS 1 and GPS 2 are connected to serial ports 1 and 0 respectively on the IMX.
 
 #### Single GNSS Settings
 
-Use the following uINS settings with the Rugged-2-G1 (single GNSS receiver).  These settings can be applied either using the EvalTool GPS Settings tab or the uINS `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
+Use the following IMX settings with the Rugged-2-G1 (single GNSS receiver).  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
 
 ##### GPS Ports
 
@@ -108,7 +108,7 @@ Enable RTK rover mode by selecting **F9P Precision Position**.
 
 ##### RTK Base
 
-To configuring a system as an RTK base, disable the RTK Rover by setting the GPS1 and GPS2 RTK Mode to **OFF**, and select the appropriate correction output port on the uINS. 
+To configuring a system as an RTK base, disable the RTK Rover by setting the GPS1 and GPS2 RTK Mode to **OFF**, and select the appropriate correction output port on the IMX. 
 
 ![](images/evaltool_gps_dual_f9p_base.png)
 
@@ -118,7 +118,7 @@ To configuring a system as an RTK base, disable the RTK Rover by setting the GPS
 
 #### Dual GNSS Settings
 
-Use the following uINS settings with the Rugged-2-G2 (dual GNSS receivers).  These settings can be applied either using the EvalTool GPS Settings tab or the uINS `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
+Use the following IMX settings with the Rugged-2-G2 (dual GNSS receivers).  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
 
 ##### GPS Ports
 
@@ -142,7 +142,7 @@ Enable RTK rover mode by selecting **Precision Position External**.  **GPS1** is
 
 ##### RTK Base
 
-To configuring a system as an RTK base, skip the RTK rover settings, and select the appropriate correction output port on the uINS.  Notice that uINS serial port 0 and 1 may be unavailable and occupied by the dual ZED-F9P receivers.
+To configuring a system as an RTK base, skip the RTK rover settings, and select the appropriate correction output port on the IMX.  Notice that IMX serial port 0 and 1 may be unavailable and occupied by the dual ZED-F9P receivers.
 
 ![](images/evaltool_gps_dual_f9p_base.png)
 
@@ -158,7 +158,7 @@ The ZED-F9P can be powered using the EVB-2 +3.3V output.  Either serial 0 or ser
 
 #### Single GNSS Pinout
 
-| EVB-2                                  | uINS         | ZED-F9P |
+| EVB-2                                  | IMX         | ZED-F9P |
 | -------------------------------------- | ------------ | ------- |
 | ![](../images/square-black.png) H7-1   | GND          | GND     |
 | ![](../images/square-red.png) H7-3     | +3.3V        | 3V3     |
@@ -168,7 +168,7 @@ The ZED-F9P can be powered using the EVB-2 +3.3V output.  Either serial 0 or ser
 
 #### Single GNSS Settings
 
-Use the following settings when only one GPS receiver is connected to the uINS.  These settings can be applied either using the EvalTool GPS Settings tab or the uINS `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
+Use the following settings when only one GPS receiver is connected to the IMX.  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
 
 ##### GPS Ports
 
@@ -192,7 +192,7 @@ Enable RTK rover mode by selecting **Precision Position External**.
 
 ##### RTK Base
 
-To configuring a system as an RTK base, disable the RTK Rover by setting the RTK Mode for GPS1 and GPS2 to off, and select the appropriate correction output port on the uINS. 
+To configuring a system as an RTK base, disable the RTK Rover by setting the RTK Mode for GPS1 and GPS2 to off, and select the appropriate correction output port on the IMX. 
 
 ![](images/evaltool_gps_dual_f9p_base.png)
 
@@ -202,7 +202,7 @@ To configuring a system as an RTK base, disable the RTK Rover by setting the RTK
 
 ### Rugged-1 to ZED-F9P![ZED-F9P to Rugged](images/zed_f9p_interface_rugged.png)
 
-A +3.3V or +5V supply is needed to power the ZED-F9P when using the Rugged-1 uINS.  A USB +5V supply can be used if available.  The Rugged-1 must be configured for Serial Port 1 TTL voltage.  See hardware configuration for [Rugged v1.0](../../hardware/rugged1/#ser1-ttl) or [Rugged v1.1](../../hardware/rugged1/#rugged-v11-dipswitch-config) for details.
+A +3.3V or +5V supply is needed to power the ZED-F9P when using the Rugged-1 IMX.  A USB +5V supply can be used if available.  The Rugged-1 must be configured for Serial Port 1 TTL voltage.  See hardware configuration for [Rugged v1.0](../../hardware/rugged1/#ser1-ttl) or [Rugged v1.1](../../hardware/rugged1/#rugged-v11-dipswitch-config) for details.
 
 #### Settings
 
@@ -214,7 +214,7 @@ Two ZED-F9 units can be used to provide either or both multi-band RTK compassing
 
 #### Dual GNSS Pinout
 
-| EVB-2                                  | uINS         | GPS1 ZED-F9P |
+| EVB-2                                  | IMX         | GPS1 ZED-F9P |
 | -------------------------------------- | ------------ | ----------------- |
 | ![](../images/square-black.png) H7-1   | GND          | GND          |
 | ![](../images/square-red.png) H7-3     | +3.3V        | 3V3          |
@@ -222,7 +222,7 @@ Two ZED-F9 units can be used to provide either or both multi-band RTK compassing
 | ![](../images/square-purple.png) H7-10 | Ser1 Rx      | TxD          |
 | ![](../images/square-grey.png) H7-12   | G8 TIMEPULSE | PPS          |
 
-| EVB-2                             | uINS                    | GPS2 ZED-F9P |
+| EVB-2                             | IMX                    | GPS2 ZED-F9P |
 | -------------------------------------- | ------------ | ----------------- |
 | ![](../images/square-black.png) H7-2 | GND | GND          |
 | ![](../images/square-red.png) H7-3 | +3.3V | 3V3          |
@@ -235,7 +235,7 @@ Two ZED-F9 units can be used to provide either or both multi-band RTK compassing
 
 #### Dual GNSS Settings
 
-The following settings are used when two GPS receivers are connected to the uINS.  These settings can be applied either using the EvalTool GPS Settings tab or the uINS `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
+The following settings are used when two GPS receivers are connected to the IMX.  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
 
 ##### GPS Ports
 
@@ -259,7 +259,7 @@ Enable RTK rover mode by selecting **Precision Position External**.  **GPS1** is
 
 ##### RTK Base
 
-To configuring a system as an RTK base, skip the RTK rover settings, and select the appropriate correction output port on the uINS.  Notice that uINS serial port 0 and 1 may be unavailable and occupied by the dual ZED-F9P receivers.
+To configuring a system as an RTK base, skip the RTK rover settings, and select the appropriate correction output port on the IMX.  Notice that IMX serial port 0 and 1 may be unavailable and occupied by the dual ZED-F9P receivers.
 
 ![](images/evaltool_gps_dual_f9p_base.png)
 
@@ -323,7 +323,7 @@ The ZED-F9P operating in RTK base mode will generate the following RTCM 3.3 outp
 
 ### NTRIP Messages
 
-The NTRIP server must provide the necessary subset of [RTCM3 messages](#zed-f9-rover-messages) supported by the uINS-RTK.  See the [NTRIP](../rtk_ntrip) page for an overview of NTRIP.
+The NTRIP server must provide the necessary subset of [RTCM3 messages](#zed-f9-rover-messages) supported by the IMX-RTK.  See the [NTRIP](../rtk_ntrip) page for an overview of NTRIP.
 
 ## Multi-Band GNSS Components
 

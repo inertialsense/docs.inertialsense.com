@@ -35,13 +35,13 @@ To enable persistent ASCII messages using the EvalTool:
 
 - Enable the desired ASCII messages in the EvalTool "Data Sets" tab.  Select DID_ASCII_BCAST_PERIOD in the DID menu and set the desired ASCII messages period to a non-zero value.
 - Press the "Save Persistent" button in the EvalTool "Data Logs" tab to store the current message configuration to flash memory.
-- Reset the uINS and verify the messages are automatically streaming.  You can use a generic serial port program like putty or the EvalTool->Data Logs->Data Log->Messages dialog to view the ASCII messages.
+- Reset the IMX and verify the messages are automatically streaming.  You can use a generic serial port program like putty or the EvalTool->Data Logs->Data Log->Messages dialog to view the ASCII messages.
 
 **To disable all persistent messages using the EvalTool**, click the "Stop Streaming" button and then "Save Persistent" button.   
 
 ## ASCII Input Messages
 
-The following ASCII messages can be received by the uINS.
+The following ASCII messages can be received by the IMX.
 
 | Message                     | Description                                                  |
 | --------------------------- | ------------------------------------------------------------ |
@@ -115,7 +115,7 @@ The hexadecimal equivalent is:
 
 ## ASCII Output Messages
 
-The following ASCII messages can be sent by the uINS.
+The following ASCII messages can be sent by the IMX.
 
 | Message         | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
@@ -559,7 +559,7 @@ The example ASCII command strings can be sent using standard serial port termina
     - Local echo:	Yes		This shows what was sent.
 
 3. Setup > Serial port...
-    - Speed:		921600	This is the default setting and must match the uINS serial port baudrate. 
+    - Speed:		921600	This is the default setting and must match the IMX serial port baudrate. 
     - Data:		8 bit
     - Parity:		none
     - Stop bits: 	1 bit

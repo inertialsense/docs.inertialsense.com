@@ -1,13 +1,13 @@
 ﻿# Basic Arduino Communications Example Project
 
-## Interfacing with the uINS over serial
+## Interfacing with the IMX over serial
 
-This example shows how to communicate with the uINS using the Inertial Sense [Binary Communications Protocol](../com-protocol/binary.md). The example code can be found in the [Inertial Sense SDK](<https://github.com/inertialsense/InertialSenseSDK>)/ExampleProjects/Arduino.
+This example shows how to communicate with the IMX using the Inertial Sense [Binary Communications Protocol](../com-protocol/binary.md). The example code can be found in the [Inertial Sense SDK](<https://github.com/inertialsense/InertialSenseSDK>)/ExampleProjects/Arduino.
 
 !!! important
-    [Update](../../software/evaltool/#update-firmware) the uINS to the <a href="https://github.com/inertialsense/InertialSenseSDK/releases">latest firmware</a>
+    [Update](../../software/evaltool/#update-firmware) the IMX to the <a href="https://github.com/inertialsense/InertialSenseSDK/releases">latest firmware</a>
 
-This example demonstrates how to use the Inertial Sense EVB with an Arduino Due. The Due was selected because it has two serial ports.  This way the Arduino can communicate with the uINS using one of the ports, and write the output over the Serial Monitor to the computer using the other.
+This example demonstrates how to use the Inertial Sense EVB with an Arduino Due. The Due was selected because it has two serial ports.  This way the Arduino can communicate with the IMX using one of the ports, and write the output over the Serial Monitor to the computer using the other.
 
 !!! warning
     The InertialSense SDK requires 64-bit double support.  32-bit processors (Arduino Due, Zero, and M0) are supported.  8-bit processors (i.e. Arduino Mega and Uno) are NOT supported.  The [ASCII protocol](../com-protocol/ascii.md) (not covered in this example) may be used on an 8-bit Arduino.
@@ -56,7 +56,7 @@ The `"ISComm.h"` header file includes all the other required code. `stddef.h` fi
 
 ### Step 2: Create buffers
 
-Next, define a buffer to hold data.  As the uINS sends data, this buffer is used to hold the data until a full message arrives.  This buffer only needs to be as big as the largest message expected, multiplied by two + 32 (worst case scenario if there is a bad transmission).  For this example a 1KB buffer is used.
+Next, define a buffer to hold data.  As the IMX sends data, this buffer is used to hold the data until a full message arrives.  This buffer only needs to be as big as the largest message expected, multiplied by two + 32 (worst case scenario if there is a bad transmission).  For this example a 1KB buffer is used.
 
 ``` C++
 // This buffer is going to be used to hold messages as they come in.
@@ -104,10 +104,10 @@ Initialize the communication using the following steps as shown above:
  1. Initialize the serial ports
  2. Tell the communication interface where to find the buffer to use to hold messages, and how big that buffer is.
  3. Reset communications on the device
- 4. Perform configuration of the uINS
- 5. Tell the uINS what data to stream, and how often
+ 4. Perform configuration of the IMX
+ 5. Tell the IMX what data to stream, and how often
 
-Whenever sending a command to the uINS, the command is put into the buffer, and the length of the message is returned by one of the configuration functions.  That buffer needs to be written out to the uINS for the command to be received.
+Whenever sending a command to the IMX, the command is put into the buffer, and the length of the message is returned by one of the configuration functions.  That buffer needs to be written out to the IMX for the command to be received.
 
 !!! tip
 ​    It is recommended to use the enumerations in `data_sets.h` such as `SYS_CFG_BITS_RTK_ROVER` to configure the device.  This aids code readability and reduces the chance for errors.
@@ -145,7 +145,7 @@ void loop()
     }
 }
 ```
-In this code, every byte that we receive from the uINS is passed to the `is_comm_parse` function.  For each byte received, this function waits for a complete message in the buffer and decodes it. Once a full message is received, it identifies what kind of message is in the buffer so it can be handled correctly.  The easiest way to deal with this is to us a case structure as shown above, with separate "callback" functions for each message type.  
+In this code, every byte that we receive from the IMX is passed to the `is_comm_parse` function.  For each byte received, this function waits for a complete message in the buffer and decodes it. Once a full message is received, it identifies what kind of message is in the buffer so it can be handled correctly.  The easiest way to deal with this is to us a case structure as shown above, with separate "callback" functions for each message type.  
 
 The INS message handler is just printing the position in lla, velocity and euler angle attitude to the screen. Other parameterizations of position and attitude are available in other `DID_INS_x` messages.
 

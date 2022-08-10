@@ -2,20 +2,20 @@
 
 ## Overview
 
-The uINS inertial navigation integrates IMU data to dead reckon (estimate position and velocity) when GPS position fix is not available.  The amount of position error during dead reckoning can vary based on several factors including system runtime, motion experienced, and sensor bias stability.  
+The IMX inertial navigation integrates IMU data to dead reckon (estimate position and velocity) when GPS position fix is not available.  The amount of position error during dead reckoning can vary based on several factors including system runtime, motion experienced, and sensor bias stability.  
 
 Knowledge about the vehicle's kinematic constraints is applied to reduce drift and improve position estimation. 
 
 ## Installation
 
 !!! important
-    It is critical to ensure the uINS remains fixed relative to the vehicle.  Any shift or change in the uINS location relative to the vehicle will result in degraded or inaccurate dead reckoning solution. 
+    It is critical to ensure the IMX remains fixed relative to the vehicle.  Any shift or change in the IMX location relative to the vehicle will result in degraded or inaccurate dead reckoning solution. 
 
 !!! important
-    Heavy vibrations can degrade the uINS measurements and dead reckoning solution.   
+    Heavy vibrations can degrade the IMX measurements and dead reckoning solution.   
 
-1. Mount the uINS and GNSS antenna at fixed locations on the vehicle.  
-2. Set the GPS antenna offsets relative to the uINS origin in meters.  EvalTool > Data Sets > DID_FLASH_CONFIG > gps1AntOffsetX/Y/Z.
+1. Mount the IMX and GNSS antenna at fixed locations on the vehicle.  
+2. Set the GPS antenna offsets relative to the IMX origin in meters.  EvalTool > Data Sets > DID_FLASH_CONFIG > gps1AntOffsetX/Y/Z.
 
 ### Enabling
 
@@ -23,7 +23,7 @@ Dead reckoning is enabled by setting the `DID_FLASH_CONFIG.insDynModel` to 4 for
 
 ### Learning Mode
 
-Learning mode is be used following installation or any change in the uINS position relative to the vehicle.  Learning is used to estimate the vehicle kinematic calibration which is used during normal operation. 
+Learning mode is be used following installation or any change in the IMX position relative to the vehicle.  Learning is used to estimate the vehicle kinematic calibration which is used during normal operation. 
 
 #### Learning Mode Instructions 
 

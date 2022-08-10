@@ -19,11 +19,11 @@ The EVB-2 can be configured to preform a multitude of operations. Below are diag
 |    3     | ![](../images/circle-blue.png)   | **XBee**     | RS232, XBee                     | WiFi/BLE Module                                   |
 |    4     | ![](../images/circle-purple.png) | **WiFi/BLE** | Wi-Fi/BLE Module,<br/>RS422/485 | XBee                                              |
 |    5     | ![](../images/circle-cyan.png)   | **SPI<sup>\*</sup>** | SPI<sup>\*</sup>                | Wi-Fi/BLE Module, XBee                            |
-|    6     | ![](../images/circle-yellow.png) | **USB/232**  | RS232, XBee                     | EVB2 to uINS Connection                           |
-|    7     | ![](../images/circle-white.png)  | **USB/422/485**  | RS422/485                   | EVB2 to uINS Connection                           |
-|    1     | ![](../images/circle-black.png)  | **Off**      |                                 | EVB2 to uINS Connection<br/>WiFi/BLE Module, XBee |
+|    6     | ![](../images/circle-yellow.png) | **USB/232**  | RS232, XBee                     | EVB2 to IMX Connection                           |
+|    7     | ![](../images/circle-white.png)  | **USB/422/485**  | RS422/485                   | EVB2 to IMX Connection                           |
+|    1     | ![](../images/circle-black.png)  | **Off**      |                                 | EVB2 to IMX Connection<br/>WiFi/BLE Module, XBee |
 
-<sup>\*</sup>A reset is required following selection of this CBPreset to enable SPI on the uINS, in order to assert the uINS pin 10 (G9/nSPI_EN) during bootup.
+<sup>\*</sup>A reset is required following selection of this CBPreset to enable SPI on the IMX, in order to assert the IMX pin 10 (G9/nSPI_EN) during bootup.
 
 === "![](../images/circle-green.png) Default"
 
@@ -68,7 +68,7 @@ Bit ```EVB2_PORT_OPTIONS_RADIO_RTK_FILTER``` of ```DID_EVB_FLASH_CFG.portOptions
 
 The most commonly used user interface available on the EVB-2 is the `EVB USB` port. Connecting to the `EVB USB` port will provide power to the device as well communications with the onboard SAME70 processor.  After connecting to a PC the EVB2 will appear as a virtual COM port and can be configured to communicate with every other communication bus on the board. This USB port should be used when updating the EVB-2 firmware or bootloader.
 
-The EVB-2 also has a second USB port, `uINS USB`.  This USB port also supplies power, but it connects directly to the µINS, µAHRS, or µIMU onboard the EVB-2. This USB port should be used when updating the µINS, µAHRS, or µIMU firmware or bootloader.
+The EVB-2 also has a second USB port, `IMX USB`.  This USB port also supplies power, but it connects directly to the µINS, µAHRS, or µIMU onboard the EVB-2. This USB port should be used when updating the µINS, µAHRS, or µIMU firmware or bootloader.
 
 ### GPS Antenna(s)
 
@@ -99,7 +99,7 @@ Use JST-GH series connectors for all other EVB 2.x headers. Maximum current is 1
 
 #### **H2 (CAN)** 
 
-To enable uINS CAN interface on H2, the U5 transceiver IC (TCAN334) must be loaded and the R27 jumper removed.  To enable EVB CAN interface on H2, the U13 transceiver IC (TCAN334) must be loaded and the R51 jumper removed. 
+To enable IMX CAN interface on H2, the U5 transceiver IC (TCAN334) must be loaded and the R27 jumper removed.  To enable EVB CAN interface on H2, the U13 transceiver IC (TCAN334) must be loaded and the R51 jumper removed. 
 
 | Pin                                | Name | Type | Description              |
 | ---------------------------------- | ---- | ---- | ------------------------ |
@@ -134,26 +134,26 @@ To enable uINS CAN interface on H2, the U5 transceiver IC (TCAN334) must be load
 
 #### **H7 (μINS Connections)**   
 
-Pins on H7 (uINS) are shared with the EVB-2 processor.  To prevent conflict when using H7, set EVB-2 CBPreset to 6 or 7 (USB hub mode) to prevent the EVB-2 processor from asserting any I/O on the H7.
+Pins on H7 (IMX) are shared with the EVB-2 processor.  To prevent conflict when using H7, set EVB-2 CBPreset to 6 or 7 (USB hub mode) to prevent the EVB-2 processor from asserting any I/O on the H7.
 
 | Pin                                 | Name                                          | Type | Default Type | Description                                                  |
 | ----------------------------------- | --------------------------------------------- | ---- | ------------ | ------------------------------------------------------------ |
 | ![](../images/square-black.png) 1   | GND                                           | -    |              | -                                                            |
 | ![](../images/square-black.png) 2   | GND                                           | -    |              | -                                                            |
 | ![](../images/square-red.png) 3     | 3.3V                                          | -    |              | 3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input. |
-| ![](../images/square-red.png) 4     | DATA-RDY                                      | I/O  | I            | Indicates data is read to be read from uINS.                 |
+| ![](../images/square-red.png) 4     | DATA-RDY                                      | I/O  | I            | Indicates data is read to be read from IMX.                 |
 | ![](../images/square-brown.png) 5   | G1/Rx2<sup>\*</sup>/RxCAN<sup>\*</sup>        | I/O  | I            | GPIO1. Serial 2 input (TTL). Serial input pin from CAN transceiver. |
 | ![](../images/square-orange.png) 6  | G2/Tx2<sup>\*</sup>/TxCAN<sup>\*</sup>/STROBE | I/O  | O            | GPIO2. Serial 2 output (TTL). Serial output pin to CAN transceiver. Strobe time sync input. |
-| ![](../images/square-yellow.png) 7  | G3/Tx0                                        | I/O  | O            | GPIO3. Serial 0 output (TTL)<br/>(tied to uINS-Ser0 Rx)      |
-| ![](../images/square-green.png) 8   | G4/Rx0                                        | I/O  | I            | GPIO4. Serial 0 input (TTL)<br/>(tied to uINS-Ser0 Tx)       |
+| ![](../images/square-yellow.png) 7  | G3/Tx0                                        | I/O  | O            | GPIO3. Serial 0 output (TTL)<br/>(tied to IMX-Ser0 Rx)      |
+| ![](../images/square-green.png) 8   | G4/Rx0                                        | I/O  | I            | GPIO4. Serial 0 input (TTL)<br/>(tied to IMX-Ser0 Tx)       |
 | ![](../images/square-blue.png) 9    | G5/SCLK/STROBE                                | I/O  | I            | GPIO5. SPI SCLK. Strobe time sync input.                     |
-| ![](../images/square-purple.png) 10 | G6/Rx1/MOSI                                   | I/O  | I            | GPIO6. Serial 1 input (TTL). SPI MOSI<br/>(tied to uINS-Ser1 Tx) |
-| ![](../images/square-white.png) 11  | G7/Tx1/MISO                                   | I/O  | O            | GPIO7. Serial 1 output (TTL). SPI MISO<br/>(tied to uINS-Ser1 Rx) |
+| ![](../images/square-purple.png) 10 | G6/Rx1/MOSI                                   | I/O  | I            | GPIO6. Serial 1 input (TTL). SPI MOSI<br/>(tied to IMX-Ser1 Tx) |
+| ![](../images/square-white.png) 11  | G7/Tx1/MISO                                   | I/O  | O            | GPIO7. Serial 1 output (TTL). SPI MISO<br/>(tied to IMX-Ser1 Rx) |
 | ![](../images/square-grey.png) 12   | G8/CS/STROBE                                  | I/O  | O            | GPIO8. SPI CS. Strobe time sync input.                       |
 | ![](../images/square-brown.png) 13  | G9/nSPI_EN/STROBE<br/>/STROBE_OUT             | I/O  | I            | GPIO9. Hold LOW during boot to enable SPI on G5-G8. Strobe time sync input or output. |
 | ![](../images/square-orange.png) 14 | GPS_PPS                                       | O    | O            | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 
-<sup>\*</sup>Available on uINS-3.2 and later.
+<sup>\*</sup>Available on IMX-3.2 and later.
 
 #### **H8 (SAME70 Connections)**   
 
@@ -176,23 +176,23 @@ Pins on H7 (uINS) are shared with the EVB-2 processor.  To prevent conflict when
 
 PWM and timer interrupt functions have been excluded from this table. Please see the MCU pin definition spreadsheet for more info.
 
-## uINS Connections
+## IMX Connections
 
-The EVB-2 ATSAME70 (E70) processor interfaces with the uINS over UART (serial 0 and 1) and SPI (serial 1).
+The EVB-2 ATSAME70 (E70) processor interfaces with the IMX over UART (serial 0 and 1) and SPI (serial 1).
 
 ### CAN Bus
 
-To use uINS CAN bus interface on the EVB-2, U5 (TCAN334 transceiver) should be loaded and R27 should not be loaded.
+To use IMX CAN bus interface on the EVB-2, U5 (TCAN334 transceiver) should be loaded and R27 should not be loaded.
 
-![uINS CAN on EVB-2](images/evb2_uins_can.png)
+![IMX CAN on EVB-2](images/evb2_uins_can.png)
 
 ### SPI
 
-The EVB-2 must be put into CBPreset mode 6 (CONFIG led color cyan) followed by a system reset to enable SPI mode interface with the uINS.  The EVB-2 (E70) project source code is available in the SDK for reference. 
+The EVB-2 must be put into CBPreset mode 6 (CONFIG led color cyan) followed by a system reset to enable SPI mode interface with the IMX.  The EVB-2 (E70) project source code is available in the SDK for reference. 
 
 ### Serial 2
 
-To use serial 2, the uINS CAN transciever (U5) and R27 must be depopulated to avoid contention on the data lines.
+To use serial 2, the IMX CAN transciever (U5) and R27 must be depopulated to avoid contention on the data lines.
 
 ## Mechanical Dimensions
 
@@ -208,7 +208,7 @@ Please return to the [getting started](../../getting-started/getting-started.md)
 
 ## Updating Firmware
 
-The EVB-2 and uINS firmware can be updated using the EVB-USB connector and only the uINS firmware when using the uINS-USB connector.
+The EVB-2 and IMX firmware can be updated using the EVB-USB connector and only the IMX firmware when using the IMX-USB connector.
 
 ## EVB-2 Design Files
 

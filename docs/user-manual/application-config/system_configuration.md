@@ -8,15 +8,15 @@ Choose the baud rate for serial communications through either available port. (3
 
 ### Manual Baud Configuration
 
-The uINS baud rate can be manually set by changing the following flash configuration parameters:
+The IMX baud rate can be manually set by changing the following flash configuration parameters:
 
 | Configuration                   | Description                      |
 | ------------------------------- | -------------------------------- |
-| `DID_FLASH_CONFIG.ser0BaudRate` | baud rate for uINS serial port 0 |
-| `DID_FLASH_CONFIG.ser1BaudRate` | baud rate for uINS serial port 1 |
-| `DID_FLASH_CONFIG.ser2BaudRate` | baud rate for uINS serial port 2 |
+| `DID_FLASH_CONFIG.ser0BaudRate` | baud rate for IMX serial port 0 |
+| `DID_FLASH_CONFIG.ser1BaudRate` | baud rate for IMX serial port 1 |
+| `DID_FLASH_CONFIG.ser2BaudRate` | baud rate for IMX serial port 2 |
 
-These parameters can be changed using the EvalTool or the CLTool.  The following examples show how the EvalTool and CLtool can be used to set the uINS serial port 1 baud rate to 460,800 bps. 
+These parameters can be changed using the EvalTool or the CLTool.  The following examples show how the EvalTool and CLtool can be used to set the IMX serial port 1 baud rate to 460,800 bps. 
 
 `EvalTool -> Data Sets -> DATA_FLASH_CONFIG.ser1BaudRate = 460800`
 

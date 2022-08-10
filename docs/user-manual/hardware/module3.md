@@ -2,7 +2,7 @@
 
 <center>
 
-![uINS-3](../images/uins-3-400w.jpg)
+![IMX-3](../images/uins-3-400w.jpg)
 
 </center>
 
@@ -35,14 +35,14 @@
 | 14   | Reserved                                      | -    |                                                              |
 | 15   | Reserved                                      | -    |                                                              |
 | 16   | Reserved                                      | -    |                                                              |
-| 17   | Reserved (CE)                                 | -    | Leave unconnected. CHIP ERASE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will erase all uINS flash memory, including calibration data. |
+| 17   | Reserved (CE)                                 | -    | Leave unconnected. CHIP ERASE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will erase all IMX flash memory, including calibration data. |
 | 18   | G4/Rx0                                        | I/O  | GPIO4. Serial 0 input (TTL)                                  |
 | 19   | G3/Tx0                                        | I/O  | GPIO3. Serial 0 output (TTL)                                 |
 | 20   | GPS_PPS                                       | O    | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 21   | GND                                           | -    | -                                                            |
 | 22   | VCC                                           | -    | 3.3V regulated supply                                        |
 
-<sup>\*</sup>Available on uINS-3.2 and later.
+<sup>\*</sup>Available on IMX-3.2 and later.
 
 <sup>\*\*</sup>External transceiver required for CAN interface.
 
@@ -74,7 +74,7 @@ The SPI interface is enabled by holding the pin 10 low during boot up.
 !!! warning
     These parts must be hand soldered ONLY!  Solder reflow may result in damage!
 
-The uINS, uAHRS, and uIMU are designed as surface mount components that can be hand soldered onto another circuit board.  These parts are not designed to withstand the high temperatures associated with standard solder reflow processes.  Solder assembly must be done using a soldering iron.  
+The IMX, uAHRS, and uIMU are designed as surface mount components that can be hand soldered onto another circuit board.  These parts are not designed to withstand the high temperatures associated with standard solder reflow processes.  Solder assembly must be done using a soldering iron.  
 
 ## Hardware Design
 
