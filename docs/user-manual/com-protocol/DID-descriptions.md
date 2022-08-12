@@ -1473,29 +1473,6 @@ System parameters / info
 | genFaultCode | uint32_t | General fault code descriptor (eGenFaultCodes).  Set to zero to reset fault code. |
 
 
-#### DID_SYS_SENSORS_SIGMA
-
-
-
-`sys_sensors_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| temp | float | Temperature in Celsius |
-| pqr | float[3] | Gyros in radians / second |
-| acc | float[3] | Accelerometers in meters / second squared |
-| mag | float[3] | Magnetometers in Gauss |
-| bar | float | Barometric pressure in kilopascals |
-| barTemp | float | Temperature of barometric pressure sensor in Celsius |
-| mslBar | float | MSL altitude from barometric pressure sensor in meters |
-| humidity | float | Relative humidity as a percent (%rH). Range is 0% - 100% |
-| vin | float | EVB system input voltage in volts. uINS pin 5 (G2/AN2).  Use 10K/1K resistor divider between Vin and GND.  |
-| ana1 | float | ADC analog input in volts. uINS pin 4, (G1/AN1). |
-| ana3 | float | ADC analog input in volts. uINS pin 19 (G3/AN3). |
-| ana4 | float | ADC analog input in volts. uINS pin 20 (G4/AN4). |
-
-
 #### DID_WHEEL_ENCODER
 
 Wheel encoder data to be fused with GPS-INS measurements, set DID_GROUND_VEHICLE for configuration before sending this message 
