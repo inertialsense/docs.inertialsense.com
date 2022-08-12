@@ -2,7 +2,7 @@
 
 ## IMX-5 Series
 
-### [IMX-5 Module]
+### IMX-5 Module
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf)
 
@@ -10,7 +10,7 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
-### [RUG-2.1-G2]
+### RUG-2.1-G2
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-2.1-G2_Dimensions_and_Pinout.pdf)
 
@@ -34,6 +34,8 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-IG-1.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
+
+------
 
 ## µINS-3 Series
 
@@ -60,6 +62,8 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-1.1_Rugged_Assembly_and_Pinout.pdf" type="application/pdf" />
 </object>
 
+
+------
 
 ## Hardware Design Files
 
