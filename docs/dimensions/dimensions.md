@@ -1,13 +1,13 @@
-# IMX-5 Dimensions and Pinouts
+# Dimensions and Pinouts
 
-## IMX-5 Module
+## IMX-5 Series
 
-[Download PDF](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf)
+### [IMX-5 Module](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf)
 
 <object data="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
     <embed src="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
-## RUG-2.1-G2
+### RUG-2.1-G2
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-2.1-G2_Dimensions_and_Pinout.pdf)
 
@@ -15,7 +15,7 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-2.1-G2_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
-## RUG-2.1-G0
+### RUG-2.1-G0
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-2.1-G0_Dimensions_and_Pinout.pdf)
 
@@ -23,7 +23,7 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-2.1-G0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
-## IG-1 Module
+### IG-1 Module
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-IG-1.0_Dimensions_and_Pinout.pdf)
 
@@ -31,18 +31,16 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-IG-1.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
+## µINS-3 Series
 
-
-# µINS-3 Dimensions and Pinouts
-
-## µINS-3 Module
+### µINS-3 Module
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-uINS-3.2_Dimensions_and_Pinout.pdf)
 
 <object data="https://docs.inertialsense.com/dimensions/IS-uINS-3.2_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
     <embed src="https://docs.inertialsense.com/dimensions/IS-uINS-3.2_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
-## RUG-2.0
+### RUG-2.0
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-2.0_Rugged_Assembly_and_Pinout.pdf)
 
@@ -50,7 +48,7 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-2.0_Rugged_Assembly_and_Pinout.pdf" type="application/pdf" />
 </object>
 
-## RUG-1.1
+### RUG-1.1
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-1.1_Rugged_Assembly_and_Pinout.pdf)
 
@@ -58,9 +56,7 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-1.1_Rugged_Assembly_and_Pinout.pdf" type="application/pdf" />
 </object>
 
-
-
-# Hardware Design Files
+## Hardware Design Files
 
 The Inertial Sense hardware design files are available on our [IS-hdw repository](https://github.com/inertialsense/IS-hdw) to facilitate product hardware development and integration.
 
