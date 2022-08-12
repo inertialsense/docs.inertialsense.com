@@ -1,4 +1,4 @@
-# Hardware Integration: Module
+# Hardware Integration: IMX-5 Module
 
 <center>
 
@@ -6,10 +6,12 @@
 
 </center>
 
-
 ## Pinout
 
+The IMX-5 module is pin compatible with the uINS-3.
+
 <center>
+
 
 ![](../images/IMX5_pinout.png)
 
@@ -17,7 +19,7 @@
 
 | Pin  | Name                                          | I/O  | Description                                                  |
 | ---- | --------------------------------------------- | ---- | ------------------------------------------------------------ |
-| 0    | GND                                           |  -   | GND
+| 0    | Not Connected                               |  -   | Not connected internally.  May be left floating or connected to ground (GND). |
 | 1    | USB_P                                         | I/O  | USB Data Positive Line                                       |
 | 2    | USB_N                                         | I/O  | USB Data Negative Line                                       |
 | 3    | GPS_VBAT                                      | -    | GPS backup supply voltage. (1.4V to 3.6V) enables GPS hardware backup mode for hot or warm startup (faster GPS lock acquisition). MUST connect GPS_VBAT to VCC if no backup battery is used. |
@@ -28,7 +30,7 @@
 | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT             | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. |
-| 11   | GND                                           | -    | GND                                                            |
+| 11,P | GND                                           | -    | GND                                                            |
 | 12   | nRESET                                        |  I   | System reset on logic low. May be left unconnected if not used. |
 | 13   | G14/SWCLK                                      | I/O    | GPIO14<br />SPI SWCLK                                       |
 | 14   | G13/DRDY/XSDA                                 |   I/O   | GPIO13<br /> SPI Data Ready<br /> SPI XSDA                                                   |
@@ -38,8 +40,8 @@
 | 18   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 19   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
 | 20   | GPS_PPS                                       | O    | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
-| 21   | GND                                           | -    | -                                                            |
-| 22   | VCC                                           | -    | 3.3V regulated supply                                        |
+| 21   | GND                                           | -    | Supply ground                                              |
+| 22   | VCC                                           | I   | 3.3V regulated supply input                                |
 
 <sup>\*</sup>External transceiver required for CAN interface.
 
@@ -68,7 +70,7 @@ The SPI interface is enabled by holding the pin 10 low during boot up.
 
 ## Soldering
 
-The IMX5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual
+The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual
 
 ## Hardware Design
 
@@ -76,21 +78,22 @@ The IMX5 can be reflow soldered. Reflow information can be found in the [Reflow 
 
 A single ceramic 100nF decoupling capacitor should be placed in close proximity between the Vcc and GND pins. It is recommended that this capacitor be on the same side of the PCB as the μINS and that there not be any vias between the capacitor and the Vcc and GND pins. The default forward direction is indicated in the PCB footprint figure and on the μINS silkscreen as the X axis. The forward direction is reconfigurable in software as necessary.
 
-[Download PDF](https://docs.inertialsense.com/dimensions/IS-uINS-5.0.4_Dimensions_and_Pinout.pdf)
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf)
 
-<object data="https://docs.inertialsense.com/dimensions/IS-uINS-5.0.4_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
-    <embed src="https://docs.inertialsense.com/dimensions/IS-uINS-5.0.4_Dimensions_and_Pinout.pdf" type="application/pdf" />
+<object data="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
 ## Design Files
 
- * [uINS PCB Design Libraries](https://github.com/inertialsense/IS-hdw/tree/main/Products) - Schematic and layout files for printed circuit board designs. Also includes 3D step models of uINS and EVB used for CAD and circuit board designs.
-
-## EVB-2 Reference Design
-
 <img src="https://www.oshwa.org/wp-content/uploads/2014/03/oshw-logo.svg" width="100" align="right" />
 
-A reference design for implementation of uINS module can be found in the [EVB-2 PCB assembly design files](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1) available as open source hardware on GitHub.
+Open source hardware design files, libraries, and example projects for the IMX module are found at the [Inertial Sense Hardware Design repository](https://github.com/inertialsense/IS-hdw) hosted on GitHub.  These include schematic and layout files for printed circuit board designs, and 3D step models of the InertialSense products usable for CAD and circuit board designs.
 
-## uIG-1 Reference Design
-A reference design for the implemenation of the IMX5 with a GNSS receiver on a single carrier board. This design can be also be found in the [uIG-1 Design Files](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-0) available as open source hardware on GitHub.
+### Reference Design Projects
+
+The EVB-2 and IG-1 circuit board projects serve as reference designs that illustrate implementation of the IMX PCB module.
+
+[EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1)
+
+[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-0)

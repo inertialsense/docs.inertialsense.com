@@ -32,9 +32,10 @@ Select the evaluation product from the list below to view instructions on basic 
 
 - [EVB-1](../user-manual/hardware/EVB1.md)
 - [EVB-2](../user-manual/hardware/EVB2.md)
-- [Rugged Units](../user-manual/hardware/rugged1.md)
-- [uINS3 PCB Module](../user-manual/hardware/module3.md)
-- [IMX5 PCB Module](../user-manual/hardware/module_imx5.md)
+- [Rugged-1 Units](../user-manual/hardware/rugged1.md)
+- [Rugged-2 Units](../user-manual/hardware/rugged2.md)
+- [IMX-5 PCB Module](../user-manual/hardware/module_imx5.md)
+- [uINS-3 PCB Module](../user-manual/hardware/module3.md)
 
 ## 3. Configuring Settings
 The configuration settings found in DID_FLASH_CONFIG need to be set to appropriate values using either the [EvalTool](../user-manual/software/evaltool.md), the [CLTool](../user-manual/software/cltool.md), or the [SDK](../user-manual/software/SDK.md). A full explanation can be found on the [System Configuration](../user-manual/application-config/system_configuration.md) page. Most users initially configure the unit using the [EvalTool](../user-manual/software/evaltool.md). This is done by going to the Data Sets Tab and selecting DID_FLASH_CONFIG. The values of each field can then be edited. Pay special attention to the following fields:

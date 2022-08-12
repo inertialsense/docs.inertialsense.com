@@ -1,4 +1,4 @@
-# Hardware Integration: Module
+# Hardware Integration: uINS-3 Module
 
 <center>
 
@@ -87,13 +87,16 @@ A single ceramic 100nF decoupling capacitor should be placed in close proximity 
 <object data="https://docs.inertialsense.com/dimensions/IS-uINS3-20_uINS3.2_Mechanical_Drawing.pdf" type="application/pdf" width="700px" height="1150px" >
     <embed src="https://docs.inertialsense.com/dimensions/IS-uINS3-20_uINS3.2_Mechanical_Drawing.pdf" type="application/pdf" />
 </object>
-
-### Design Files
-
- * [uINS PCB Design Libraries](https://github.com/inertialsense/IS-hdw/tree/main/Products) - Schematic and layout files for printed circuit board designs. Also includes 3D step models of uINS and EVB used for CAD and circuit board designs.
-
-### EVB-2 Reference Design
+## Design Files
 
 <img src="https://www.oshwa.org/wp-content/uploads/2014/03/oshw-logo.svg" width="100" align="right" />
 
-A reference design for implementation of uINS module can be found in the [EVB-2 PCB assembly design files](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1) available as open source hardware on GitHub.  
+Open source hardware design files, libraries, and example projects for the IMX module are found at the [Inertial Sense Hardware Design repository](https://github.com/inertialsense/IS-hdw) hosted on GitHub.  These include schematic and layout files for printed circuit board designs, and 3D step models of the InertialSense products usable for CAD and circuit board designs.
+
+### Reference Design Projects
+
+The EVB-2 and IG-1 circuit board projects serve as reference designs that illustrate implementation of the IMX PCB module.
+
+[EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1)
+
+[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-0)
