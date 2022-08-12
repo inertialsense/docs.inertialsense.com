@@ -37,10 +37,10 @@
 
 ## µINS-3 Module
 
-[Download PDF](https://docs.inertialsense.com/dimensions/IS-uINS3-20_uINS3.2_Mechanical_Drawing.pdf)
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-uINS-3.2_Dimensions_and_Pinout.pdf)
 
-<object data="https://docs.inertialsense.com/dimensions/IS-uINS3-20_uINS3.2_Mechanical_Drawing.pdf" type="application/pdf" width="700px" height="1150px" >
-    <embed src="https://docs.inertialsense.com/dimensions/IS-uINS3-20_uINS3.2_Mechanical_Drawing.pdf" type="application/pdf" />
+<object data="https://docs.inertialsense.com/dimensions/IS-uINS-3.2_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-uINS-3.2_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 ## RUG-2.0
 
