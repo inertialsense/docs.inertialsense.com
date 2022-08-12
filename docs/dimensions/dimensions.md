@@ -34,6 +34,7 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-IG-1.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
+
 ## µINS-3 Series
 
 ### µINS-3 Module
@@ -58,6 +59,7 @@
 <object data="https://docs.inertialsense.com/dimensions/IS-RUG-1.1_Rugged_Assembly_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-1.1_Rugged_Assembly_and_Pinout.pdf" type="application/pdf" />
 </object>
+
 
 ## Hardware Design Files
 
