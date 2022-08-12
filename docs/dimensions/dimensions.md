@@ -2,12 +2,15 @@
 
 ## IMX-5 Series
 
-### [IMX-5 Module](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf)
+### [IMX-5 Module]
+
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf)
 
 <object data="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
     <embed src="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
-### RUG-2.1-G2
+
+### [RUG-2.1-G2]
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-2.1-G2_Dimensions_and_Pinout.pdf)
 
