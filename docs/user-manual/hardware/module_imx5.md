@@ -30,7 +30,7 @@ The IMX-5 module is pin compatible with the uINS-3.
 | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT             | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. |
-| 11,P | GND                                           | -    | GND                                                            |
+| 11,21,P | GND                                           | -    | Supply ground                                          |
 | 12   | nRESET                                        |  I   | System reset on logic low. May be left unconnected if not used. |
 | 13   | G14/SWCLK                                      | I/O    | GPIO14<br />SPI SWCLK                                       |
 | 14   | G13/DRDY/XSDA                                 |   I/O   | GPIO13<br /> SPI Data Ready<br /> SPI XSDA                                                   |
@@ -40,8 +40,7 @@ The IMX-5 module is pin compatible with the uINS-3.
 | 18   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 19   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
 | 20   | GPS_PPS                                       | O    | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
-| 21   | GND                                           | -    | Supply ground                                              |
-| 22   | VCC                                           | I   | 3.3V regulated supply input                                |
+| 22   | VCC                                           | I   | 3.3V supply input                                |
 
 <sup>\*</sup>External transceiver required for CAN interface.
 
