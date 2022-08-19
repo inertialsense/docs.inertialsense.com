@@ -1,4 +1,4 @@
-**Software Release 1.8.7 - 14 July 2022**
+**Software Release 1.9.0 - 1 Sept 2022**
 
 <center>
 
@@ -10,49 +10,55 @@
 
 The µINS GPS aided Inertial Navigation System, µAHRS Attitude Heading Reference System, and the µIMU Inertial Measurement Unit monitor many different types of measurements including rotation, acceleration, GPS position, magnetic flux density, pressure and velocity. The Inertial Sense SDK provides a software interface to allow communication with the device including setting configuration options, retrieving specific data, and listening for data broadcasts.
 
-## μIMU, μAHRS, and μINS
+## IMX-5 (IMU, AHRS, and GPS-INS)
 <center>
 
-![](user-manual/images/uins-3-400w.jpg)
+![](user-manual/images/IMX_5.0_400w.jpg)
 
 </center>
 
-The **μIMU™** is a miniature calibrated sensor module consisting of an Inertial Measurement Unit (IMU), magnetometer, barometer, and L1 GPS (GNSS) receiver. Data out includes angular rate, linear acceleration, magnetic field, barometric altitude, and GPS WGS84 geo-position. All systems include a comprehensive sensor calibration for bias, scale-factor, and cross-axis alignment, minimizing manufacturing variation and maximizing system performance.
+The **IMX-5**™ is a 10-DOF sensor module consisting of a triple redundant Inertial Measurement Unit (IMU), magnetometer, and barometer.  Data output includes angular rate and linear acceleration.  IMU calibration consists of bias, scale factor, cross-axis alignment, gsensitivity,
+and temperature compensation.
 
-The **μAHRS™** is an Attitude Heading Reference System (AHRS) that includes all functionality of the μIMU™ and fuses IMU and magnetometer data to estimate roll, pitch, and heading.
+The IMX-5 includes Attitude Heading Reference System (**AHRS**) sensor fusion to estimate roll, pitch, and heading.  Adding GNSS input to the IMX-5 enables the onboard Inertial Navigation System (**INS**) sensor fusion to estimate roll, pitch, heading, velocity, and position.
 
-The **μINS™** is a GPS (GNSS) aided inertial navigation system (GPS-INS) module that includes all functionality of the **μIMU™** and provides orientation, velocity, and position. Sensor data from MEMs gyros, accelerometers, magnetometers, barometric pressure, and GPS/GNSS is fused to provide optimal measurement estimation.
+The **RUG-INS-5-RTK**™ combines a multi-frequency GNSS receiver with the IMX-5 enabling the Inertial Navigation System (INS) sensor fusion to estimate roll, pitch, heading,
+velocity, and position.  
 
-The patented package is smaller than 3 stacked dimes and fits into most industrial and commercial
-application designs.
+The **RUG-INS-5-Dual**™ combines two multi-frequency GNSS receivers and the IMX-5 onboard sensor fusion.  Dual GNSS heading can be determined in environments
+that are challenging for a magnetometer.
 
 ## Features
-* Up to 1KHz IMU Update Rate
-* Attitude (Roll, Pitch, Yaw, Quaternions, DCM), Velocity, and Position (LLA, ECEF, NED)UTC Time Synchronized
-* Dual Redundant IMUs Calibrated for Bias, Scale Factor, and Cross-Axis Alignment
-* Coning & Sculling Integrals (Δ theta, Δ velocity)
+* **Tactical Grade IMU**
+  - **Gyro: 2.0 °/hr Bias Instability, 0.2 °/√hr ARW**
+  - **Accel: 20 µg Bias Instability, 0.04 m/s/√hr VRW**
+* **High Accuracy INS (w/ IMX-5): 0.03° Roll/Pitch, 0.1° Dynamic Heading**
+* **Surface Mount Reflowable (PCB Module)**
+* Up to 1KHz IMU and INS Output Data Rate
+* Small Form Factor: 15.6 x 12.5 x 2.9 mm
+* Light Weight: 0.8 g
+* Low power consumption: <110mW
+* External GNSS Support (Multi-Band)
+* Attitude (Roll, Pitch, Yaw, Quaternions), Velocity, and Position UTC Time Synchronized
+* Triple Redundant IMUs Calibrated for Bias, Scale Factor, Cross-axis Alignment, and G-sensitivity
+* -40°C to 85°C Sensor Temperature Calibration
+* Binary and NMEA ASCII Protocol
 * Barometric Pressure and Humidity
-* u-Blox L1 GPS (GNSS) Receiver
-* -40°C to 85°C Temperature Compensation
-* Configurable Binary and NMEA ASCII Protocol
 * Strobe In/Out Data Sync (Camera Shutter Event)
-* Fast Integration using SDK and Example Software
-* Data Logging (SDK and Application Software)
-* Miniature Surface Mount Package:
-  * 16.5 x 12.6 x 4.6 mm, 1.3 grams
+* Fast Integration with SDK and Example Software
 
 ## Interfaces
 
-|                                     | Module        | EVB 1.x | EVB 2.x       | Rugged 1.0    |
-| ----------------------------------- | ------------- | ------- | ------------- | ------------- |
-| USB                                 | Yes           | Yes     | Yes           | Yes           |
-| TTL/UART                            | Yes           | Yes     | Yes           | Yes           |
-| RS232/RS422/RS485                   | No            | Yes     | Yes           | Yes           |
-| CAN                                 | Yes           | Yes     | Yes           | Yes           |
-| SPI                                 | Yes           | Yes     | Yes           | No            |
-| Integrated XBee Radio (RTK)         | No            | No      | Yes (Option)  | No            |
-| WiFi/BTLE                           | No            | No      | Yes           | No            |
-| GPS Antenna Ports (Dual=Compassing) | Dual (Option) | Single  | Dual (Option) | Dual (Option) |
+|                                     | IMX Module    | EVB-2         | Rugged        |
+| ----------------------------------- | ------------- | ------------- | ------------- |
+| USB                                 | Yes           | Yes           | Yes           |
+| TTL/UART                            | Yes           | Yes           | Yes           |
+| RS232/RS422/RS485                   | No            | Yes           | Yes           |
+| CAN                                 | Yes           | Yes           | Yes           |
+| SPI                                 | Yes           | Yes           | Yes           |
+| Integrated XBee Radio (RTK)         | No            | Yes (Option)  | No            |
+| WiFi/BTLE                           | No            | Yes           | No            |
+| GPS Antenna Ports (Dual=Compassing) | Dual (Option) | Dual (Option) | Dual (Option) |
 
 ## Applications
 

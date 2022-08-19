@@ -21,7 +21,7 @@ INS output: euler rotation w/ respect to NED, NED position from reference LLA.
 | theta | float[3] | Euler angles: roll, pitch, yaw in radians with respect to NED |
 | uvw | float[3] | Velocity U, V, W in meters per second.  Convert to NED velocity using "vectorBodyToReference( uvw, theta, vel_ned )". |
 | lla | double[3] | WGS84 latitude, longitude, height above ellipsoid (degrees,degrees,meters) |
-| ned | float[3] | North, east and down offset from reference latitude, longitude, and altitude to current latitude, longitude, and altitude |
+| ned | float[3] | North, east and down (meters) offset from reference latitude, longitude, and altitude to current latitude, longitude, and altitude |
 
 
 #### DID_INS_2
@@ -78,47 +78,45 @@ INS output: quaternion rotation w/ respect to ECEF, ECEF position.
 
 ### Inertial Measurement Unit (IMU)
 
-#### DID_DUAL_IMU
+#### DID_IMU
 
-Dual inertial measurement unit data down-sampled from 1KHz to navigation update rate (DID_FLASH_CONFIG.startupNavDtMs) as an anti-aliasing filter to reduce noise and preserve accuracy.  Minimum data period is DID_FLASH_CONFIG.startupNavDtMs (1KHz max).  
+Inertial measurement unit data down-sampled from IMU rate (DID_FLASH_CONFIG.startupImuDtMs (1KHz)) to navigation update rate (DID_FLASH_CONFIG.startupNavDtMs) as an anti-aliasing filter to reduce noise and preserve accuracy.  Minimum data period is DID_FLASH_CONFIG.startupNavDtMs (1KHz max).  
 
-`dual_imu_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| I | imus_t[2] | Inertial Measurement Units (IMUs) |
-| status | uint32_t | IMU Status (eImuStatus) |
-
-
-#### DID_DUAL_IMU_RAW
-
-Dual inertial measurement unit data directly from IMU.  We recommend use of DID_DUAL_IMU or DID_PREINTEGRATED_IMU.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
-
-`dual_imu_t`
+`imu_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| I | imus_t[2] | Inertial Measurement Units (IMUs) |
 | status | uint32_t | IMU Status (eImuStatus) |
+| I | imus_t | Inertial Measurement Unit (IMU) |
+
+
+#### DID_IMU3_RAW
+
+Inertial measurement unit data directly from IMU.  We recommend use of DID_IMU or DID_PREINTEGRATED_IMU as they are oversampled and contain less noise.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+
+`imu3_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| status | uint32_t | IMU Status (eImuStatus) |
+| I | imus_t[3] | Inertial Measurement Units (IMUs) |
 
 
 #### DID_PREINTEGRATED_IMU
 
-Coning and sculling integral in body/IMU frame.  Updated at IMU rate. Also know as Delta Theta Delta Velocity, or Integrated IMU. For clarification, we use the name "Preintegrated IMU" through the User Manual. This data is integrated from the IMU data at the IMU update rate (startupImuDtMs, default 1ms).  The integration period (dt) and output data rate are the same as the NAV rate (startupNavDtMs, default 4ms) and cannot be output at any other rate. If a different output data rate is desired, DID_DUAL_IMU which is derived from DID_PREINTEGRATED_IMU can be used instead. Preintegrated IMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay and addresses antialiasing. It is most effective for systems that have higher dynamics and lower communications data rates.  The minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+Coning and sculling integral in body/IMU frame.  Updated at IMU rate. Also know as delta theta delta velocity, or preintegrated IMU (PIMU). For clarification, the name "Preintegrated IMU" throughout our User Manual. This data is integrated from the IMU data at the IMU update rate (startupImuDtMs, default 1ms).  The integration period (dt) and output data rate are the same as the NAV rate (startupNavDtMs) and cannot be output at any other rate. If a faster output data rate is desired, DID_IMU_RAW can be used instead. PIMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay and addresses antialiasing. It is most effective for systems that have higher dynamics and lower communications data rates.  The minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
 
 `preintegrated_imu_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| theta1 | float[3] | IMU 1 delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
-| theta2 | float[3] | IMU 2 delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
-| vel1 | float[3] | IMU 1 delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
-| vel2 | float[3] | IMU 2 delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
 | dt | float | Integral period in seconds for delta theta and delta velocity.  This is configured using DID_FLASH_CONFIG.startupNavDtMs. |
 | status | uint32_t | IMU Status (eImuStatus) |
+| theta | float[3] | IMU delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
+| vel | float[3] | IMU delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
 
 
 ### Sensor Output
@@ -140,7 +138,7 @@ Barometric pressure sensor data
 
 #### DID_MAGNETOMETER
 
-Magnetometer sensor 1 output 
+Magnetometer sensor output 
 
 `magnetometer_t`
 
@@ -800,7 +798,7 @@ Flash memory configuration
 | checksum | uint32_t | Checksum, excluding size and checksum |
 | key | uint32_t | Manufacturer method for restoring flash defaults |
 | startupImuDtMs | uint32_t | IMU sample (system input data) period in milliseconds set on startup. Cannot be larger than startupNavDtMs. Zero disables sensor/IMU sampling. |
-| startupNavDtMs | uint32_t | Nav filter (system output data) update period in milliseconds set on startup. 1ms minimum (1KHz max). Zero disables nav filter updates. |
+| startupNavDtMs | uint32_t | Nav filter (system output data) update period in milliseconds set on startup. 1ms minimum (1KHz max). |
 | ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
 | ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
 | insRotation | float[3] | Rotation in radians about the X, Y, Z axes from INS Sensor Frame to Intermediate Output Frame.  Order applied: Z, Y, X. |
@@ -982,30 +980,6 @@ Diagnostic message
 | message | char[256] | Message data, max size of message is 256 |
 
 
-#### DID_DUAL_IMU_MAG
-
-DID_DUAL_IMU + DID_MAGNETOMETER + MAGNETOMETER_2 Only one of DID_DUAL_IMU_RAW_MAG, DID_DUAL_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
-
-`imu_mag_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| imu | dual_imu_t | dual imu - raw or pre-integrated depending on data id |
-| mag1 | magnetometer_t | mag 1 |
-
-
-#### DID_DUAL_IMU_RAW_MAG
-
-DID_DUAL_IMU_RAW + DID_MAGNETOMETER + MAGNETOMETER_2 Only one of DID_DUAL_IMU_RAW_MAG, DID_DUAL_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
-
-`imu_mag_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| imu | dual_imu_t | dual imu - raw or pre-integrated depending on data id |
-| mag1 | magnetometer_t | mag 1 |
-
-
 #### DID_EVB_DEBUG_ARRAY
 
 
@@ -1065,6 +1039,30 @@ Static configuration for wheel transform measurements.
 | wheelConfig | wheel_config_t | Wheel transform, track width, and wheel radius. |
 
 
+#### DID_IMU3_RAW_MAG
+
+DID_IMU3_RAW + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. We recommend use of DID_IMU_MAG or DID_PREINTEGRATED_IMU_MAG as they are oversampled and contain less noise. 
+
+`imu3_mag_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| imu | imu3_t | Trimple imu |
+| mag | magnetometer_t | mag |
+
+
+#### DID_IMU_MAG
+
+DID_IMU + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
+
+`imu_mag_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| imu | imu_t | imu - raw or pre-integrated depending on data id |
+| mag | magnetometer_t | mag |
+
+
 #### DID_INFIELD_CAL
 
 Measure and correct IMU calibration error.  Estimate INS rotation to align INS with vehicle. 
@@ -1076,7 +1074,7 @@ Measure and correct IMU calibration error.  Estimate INS rotation to align INS w
 | state | uint32_t | Used to set and monitor the state of the infield calibration system. (see eInfieldCalState) |
 | status | uint32_t | Infield calibration status. (see eInfieldCalStatus) |
 | sampleTimeMs | uint32_t | Number of samples used in IMU average. sampleTimeMs = 0 means "imu" member contains the IMU bias from flash.  |
-| imu | imus_t[2] | Dual purpose variable.  1.) This is the averaged IMU sample when sampleTimeMs != 0.  2.) This is a mirror of the motion calibration IMU bias from flash when sampleTimeMs = 0. |
+| imu | imus_t[3] | Dual purpose variable.  1.) This is the averaged IMU sample when sampleTimeMs != 0.  2.) This is a mirror of the motion calibration IMU bias from flash when sampleTimeMs = 0. |
 | calData | infield_cal_vaxis_t[3] | Collected data used to solve for the bias error and INS rotation.  Vertical axis: 0 = X, 1 = Y, 2 = Z  |
 
 
@@ -1192,6 +1190,7 @@ Manufacturing info
 | lotNumber | uint32_t | Inertial Sense lot number |
 | date | char[16] | Inertial Sense manufacturing date (YYYYMMDDHHMMSS) |
 | key | uint32_t | Key |
+| uid | uint32_t[4] | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
 
 
 #### DID_PORT_MONITOR
@@ -1220,14 +1219,14 @@ External position estimate
 
 #### DID_PREINTEGRATED_IMU_MAG
 
-DID_PREINTEGRATED_IMU + DID_MAGNETOMETER + MAGNETOMETER_2 Only one of DID_DUAL_IMU_RAW_MAG, DID_DUAL_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
+DID_PREINTEGRATED_IMU + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
 
 `pimu_mag_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| pimu | preintegrated_imu_t | dual preintegrated imu |
-| mag1 | magnetometer_t | mag 1 |
+| pimu | preintegrated_imu_t | Preintegrated IMU |
+| mag | magnetometer_t | Magnetometer |
 
 
 #### DID_REFERENCE_IMU
@@ -1264,12 +1263,10 @@ Reference or truth IMU used for manufacturing calibration and testing
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| theta1 | float[3] | IMU 1 delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
-| theta2 | float[3] | IMU 2 delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
-| vel1 | float[3] | IMU 1 delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
-| vel2 | float[3] | IMU 2 delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
 | dt | float | Integral period in seconds for delta theta and delta velocity.  This is configured using DID_FLASH_CONFIG.startupNavDtMs. |
 | status | uint32_t | IMU Status (eImuStatus) |
+| theta | float[3] | IMU delta theta (gyroscope {p,q,r} integral) in radians in sensor frame |
+| vel | float[3] | IMU delta velocity (accelerometer {x,y,z} integral) in m/s in sensor frame |
 
 
 #### DID_ROS_COVARIANCE_POSE_TWIST
@@ -1331,7 +1328,7 @@ RTOS information.
 
 #### DID_SENSORS_CAL1
 
-Calibrated IMU1 output.  Temperature compensated and motion calibrated. 
+(not used) 
 
 `sensors_mpu_w_temp_t`
 
@@ -1345,7 +1342,7 @@ Calibrated IMU1 output.  Temperature compensated and motion calibrated.
 
 #### DID_SENSORS_CAL2
 
-Calibrated IMU2 output.  Temperature compensated and motion calibrated. 
+(not used) 
 
 `sensors_mpu_w_temp_t`
 
@@ -1357,18 +1354,19 @@ Calibrated IMU2 output.  Temperature compensated and motion calibrated.
 | temp | f_t | (°C) Temperature of MPU.  Units only apply for calibrated data. |
 
 
-#### DID_SENSORS_IS1
+#### DID_SENSORS_RAW
 
-Uncalibrated IMU output.  Common scale factor applied to ADC output. 
+Uncalibrated IMU output. 
 
 `sensors_w_temp_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| mpu | sensors_mpu_w_temp_t[2] | Units only apply for calibrated data |
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| mpu | sensors_mpu_w_temp_t[3] | Units only apply for calibrated data |
 
 
-#### DID_SENSORS_IS2
+#### DID_SENSORS_TCAL
 
 Temperature compensated IMU output. 
 
@@ -1376,7 +1374,8 @@ Temperature compensated IMU output.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| mpu | sensors_mpu_w_temp_t[2] | Units only apply for calibrated data |
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| mpu | sensors_mpu_w_temp_t[3] | Units only apply for calibrated data |
 
 
 #### DID_SENSORS_TC_BIAS
@@ -1466,7 +1465,7 @@ System parameters / info
 | mcuTemp | float | MCU temperature (not available yet) |
 | reserved1 | float | Reserved |
 | imuPeriodMs | uint32_t | IMU sample period in milliseconds. Zero disables sampling. |
-| navPeriodMs | uint32_t | Nav filter update period in milliseconds. Zero disables nav filter. |
+| navPeriodMs | uint32_t | Preintegrated IMU (PIMU) integration period and navigation filter update period (ms). |
 | sensorTruePeriod | double | Actual sample period relative to GPS PPS |
 | reserved2 | float | Reserved |
 | reserved3 | float | Reserved |
@@ -1566,7 +1565,7 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_ACC_FS_4G | 0x00000001 |
 | SENSOR_CFG_ACC_FS_8G | 0x00000002 |
 | SENSOR_CFG_ACC_FS_16G | 0x00000003 |
-| SENSOR_CFG_ACC_FS_MASK | 0x00000003 |
+| SENSOR_CFG_ACC_FS_MASK | 0x0000000C |
 | SENSOR_CFG_ACC_FS_OFFSET |  (int)2 |
 | SENSOR_CFG_GYR_DLPF_250HZ | 0x00000000 |
 | SENSOR_CFG_GYR_DLPF_184HZ | 0x00000001 |
@@ -1575,7 +1574,7 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_GYR_DLPF_20HZ | 0x00000004 |
 | SENSOR_CFG_GYR_DLPF_10HZ | 0x00000005 |
 | SENSOR_CFG_GYR_DLPF_5HZ | 0x00000006 |
-| SENSOR_CFG_GYR_DLPF_MASK | 0x0000000F |
+| SENSOR_CFG_GYR_DLPF_MASK | 0x00000F00 |
 | SENSOR_CFG_GYR_DLPF_OFFSET |  (int)8 |
 | SENSOR_CFG_ACC_DLPF_218HZ | 0x00000000 |
 | SENSOR_CFG_ACC_DLPF_218HZb | 0x00000001 |
@@ -1584,9 +1583,9 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_ACC_DLPF_21HZ | 0x00000004 |
 | SENSOR_CFG_ACC_DLPF_10HZ | 0x00000005 |
 | SENSOR_CFG_ACC_DLPF_5HZ | 0x00000006 |
-| SENSOR_CFG_ACC_DLPF_MASK | 0x0000000F |
+| SENSOR_CFG_ACC_DLPF_MASK | 0x0000F000 |
 | SENSOR_CFG_ACC_DLPF_OFFSET |  (int)12 |
-| SENSOR_CFG_SENSOR_ROTATION_MASK | 0x000000FF |
+| SENSOR_CFG_SENSOR_ROTATION_MASK | 0x00FF0000 |
 | SENSOR_CFG_SENSOR_ROTATION_OFFSET |  (int)16 |
 | SENSOR_CFG_SENSOR_ROTATION_0_0_0 |  (int)0 |
 | SENSOR_CFG_SENSOR_ROTATION_0_0_90 |  (int)1 |
@@ -1612,6 +1611,13 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_90 |  (int)21 |
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_180 |  (int)22 |
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_N90 |  (int)23 |
+| SENSOR_CFG_IMU_FAULT_DETECT_MASK | 0x0F000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_OFFSET |  (int)24 |
+| SENSOR_CFG_IMU_FAULT_DETECT_NONE |  (int)0 |
+| SENSOR_CFG_IMU_FAULT_DETECT_OFFLINE |  (int)1 |
+| SENSOR_CFG_IMU_FAULT_DETECT_LARGE_BIAS |  (int)2 |
+| SENSOR_CFG_IMU_FAULT_DETECT_BIAS_JUMPS |  (int)3 |
+| SENSOR_CFG_IMU_FAULT_DETECT_SENSOR_NOISE |  (int)4 |
 
 
 #### DID_SYS_CMD.command
@@ -1632,6 +1638,7 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_MANF_UNLOCK | 1122334455 |
 | SYS_CMD_MANF_FACTORY_RESET | 1357924680 |
 | SYS_CMD_MANF_CHIP_ERASE | 1357924681 |
+| SYS_CMD_MANF_DOWNGRADE_CALIBRATION | 1357924682 |
 
 
 #### DID_SYS_PARAMS.genFaultCode
@@ -1655,6 +1662,10 @@ System status and configuration is made available through various enumeration an
 | GFC_SYS_FAULT_GENERAL | 0x00010000 |
 | GFC_SYS_FAULT_CRITICAL | 0x00020000 |
 | GFC_SENSOR_SATURATION | 0x00040000 |
+| GFC_INIT_IMU | 0x00100000 |
+| GFC_INIT_MAGNETOMETER | 0x00400000 |
+| GFC_INIT_BAROMETER | 0x00200000 |
+| GFC_INIT_I2C | 0x00800000 |
 
 
 #### GNSS Satellite Flags
@@ -1790,12 +1801,25 @@ System status and configuration is made available through various enumeration an
 |-------|------|
 | IMU_STATUS_SATURATION_IMU1_GYR | 0x00000001 |
 | IMU_STATUS_SATURATION_IMU2_GYR | 0x00000002 |
-| IMU_STATUS_SATURATION_IMU1_ACC | 0x00000004 |
-| IMU_STATUS_SATURATION_IMU2_ACC | 0x00000008 |
-| IMU_STATUS_RESERVED1 | 0x00000020 |
-| IMU_STATUS_RESERVED2 | 0x00000040 |
+| IMU_STATUS_SATURATION_IMU3_GYR | 0x00000004 |
+| IMU_STATUS_SATURATION_IMU1_ACC | 0x00000008 |
+| IMU_STATUS_SATURATION_IMU2_ACC | 0x00000010 |
+| IMU_STATUS_SATURATION_IMU3_ACC | 0x00000020 |
+| IMU_STATUS_SATURATION_MASK | 0x0000003F |
+| IMU_STATUS_MAG_UPDATE | 0x00000100 |
+| IMU_STATUS_RESERVED2 | 0x00000400 |
 | IMU_STATUS_SATURATION_HISTORY | 0x00000100 |
 | IMU_STATUS_SAMPLE_RATE_FAULT_HISTORY | 0x00000200 |
+| IMU_STATUS_GYR1_OK | 0x00010000 |
+| IMU_STATUS_GYR2_OK | 0x00020000 |
+| IMU_STATUS_GYR3_OK | 0x00040000 |
+| IMU_STATUS_ACC1_OK | 0x00080000 |
+| IMU_STATUS_ACC2_OK | 0x00100000 |
+| IMU_STATUS_ACC3_OK | 0x00200000 |
+| IMU_STATUS_IMU1_OK | (int)(IMU_STATUS_GYR1_OK\|IMU_STATUS_ACC1_OK\) |
+| IMU_STATUS_IMU2_OK | (int)(IMU_STATUS_GYR2_OK\|IMU_STATUS_ACC2_OK\) |
+| IMU_STATUS_IMU3_OK | (int)(IMU_STATUS_GYR3_OK\|IMU_STATUS_ACC3_OK\) |
+| IMU_STATUS_IMU_OK_MASK | 0x003F0000 |
 
 
 #### INS status Flags
