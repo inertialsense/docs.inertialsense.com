@@ -23,8 +23,8 @@ The IMX-5 module is pin compatible with the uINS-3.
 | 1    | USB_P                                         | I/O  | USB Data Positive Line                                       |
 | 2    | USB_N                                         | I/O  | USB Data Negative Line                                       |
 | 3    | GPS_VBAT                                      | -    | GPS backup supply voltage. (1.4V to 3.6V) enables GPS hardware backup mode for hot or warm startup (faster GPS lock acquisition). MUST connect GPS_VBAT to VCC if no backup battery is used. |
-| 4    | G1/Rx2/RxCAN/SDA    | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />SPI SDA line|
-| 5    | G2/Tx/TxCAN/STROBE | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> Strobe time sync input<br /> SPI SCL line|
+| 4    | G1/Rx2/RxCAN/SDA    | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SDA line |
+| 5    | G2/Tx/TxCAN/SCL/STROBE | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SCL line<br />Strobe time sync input |
 | 6    | G6/Rx1/MOSI                                   | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI                        |
 | 7    | G7/Tx1/MISO                                   | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO                       |
 | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
@@ -32,10 +32,10 @@ The IMX-5 module is pin compatible with the uINS-3.
 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT             | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. |
 | 11,21,P | GND                                           | -    | Supply ground                                          |
 | 12   | nRESET                                        |  I   | System reset on logic low. May be left unconnected if not used. |
-| 13   | G14/SWCLK                                      | I/O    | GPIO14<br />SPI SWCLK                                       |
-| 14   | G13/DRDY/XSDA                                 |   I/O   | GPIO13<br /> SPI Data Ready<br /> SPI XSDA                                                   |
-| 15   | G12/SWO/XSCL                                  | I/O    | GPIO12<br /> SPI SWO<br />SPI XSCL                                                          |
-| 16   | G11/SWDIO                                      | I/O    | GPIO11<br />SWDIO                                                             |
+| 13   | G14/SWCLK                                | I/O    | GPIO14                                       |
+| 14   | G13/DRDY/XSDA                                 |   I/O   | GPIO13<br /> SPI Data Ready<br /> Alt I2C SDA                                           |
+| 15   | G12/SWO/XSCL                                  | I/O    | GPIO12<br /> Alt I2C SCL                                                  |
+| 16   | G11/SWDIO                                      | I/O    | GPIO11                                                             |
 | 17   | G10/CHIP_ERASE                                 | I/O    | Leave unconnected. CHIP ERASE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will erase all IMX flash memory, including calibration data. |
 | 18   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 19   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
