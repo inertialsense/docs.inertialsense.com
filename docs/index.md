@@ -49,16 +49,16 @@ that are challenging for a magnetometer.
 
 ## Interfaces
 
-|                                     | IMX Module    | EVB-2         | Rugged        |
-| ----------------------------------- | ------------- | ------------- | ------------- |
-| USB                                 | Yes           | Yes           | Yes           |
-| TTL/UART                            | Yes           | Yes           | Yes           |
-| RS232/RS422/RS485                   | No            | Yes           | Yes           |
-| CAN                                 | Yes           | Yes           | Yes           |
-| SPI                                 | Yes           | Yes           | Yes           |
-| Integrated XBee Radio (RTK)         | No            | Yes (Option)  | No            |
-| WiFi/BTLE                           | No            | Yes           | No            |
-| GPS Antenna Ports (Dual=Compassing) | Dual (Option) | Dual (Option) | Dual (Option) |
+|                                     | IMX Module | EVB-2         | Rugged        |
+| ----------------------------------- | ---------- | ------------- | ------------- |
+| USB                                 | Yes        | Yes           | Yes           |
+| TTL/UART                            | Yes        | Yes           | Yes           |
+| RS232/RS422/RS485                   | No         | Yes           | Yes           |
+| CAN                                 | Yes        | Yes           | Yes           |
+| SPI                                 | Yes        | Yes           | Yes           |
+| Integrated XBee Radio (RTK)         | No         | Yes (Option)  | No            |
+| WiFi/BTLE                           | No         | Yes           | No            |
+| GPS Antenna Ports (Dual=Compassing) | No         | Dual (Option) | Dual (Option) |
 
 ## Applications
 
