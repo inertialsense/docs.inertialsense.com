@@ -133,7 +133,7 @@ These circuits are beneficial because of their simplicity.  An active, powered l
 
 ### Strobe Output (Preintegrated IMU Period)
 
-The STROBE output feature is used to indicate start and end of the preintegrated IMU period (and navigation filter IMU updates) by toggling .   STROBE output is enabled on pin 9 by setting bit SYS_CFG_BITS_ENABLE_NAV_STROBE_OUT_GPIO_9 (0x00100000) of DID_FLASH_CONFIG.sysCfgBits.
+The STROBE output feature is used to indicate start and end of the preintegrated IMU period (and navigation filter IMU updates) by toggling G9. STROBE output is enabled on by setting bit IO_CONFIG_G9_STROBE_OUTPUT_NAV (0x00000020) of DID_FLASH_CONFIG.ioConfig.
 
 ### Configuring Message Output
 
