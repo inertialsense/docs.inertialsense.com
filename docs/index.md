@@ -8,8 +8,6 @@
 
 # Overview
 
-The µINS GPS aided Inertial Navigation System, µAHRS Attitude Heading Reference System, and the µIMU Inertial Measurement Unit monitor many different types of measurements including rotation, acceleration, GPS position, magnetic flux density, pressure and velocity. The Inertial Sense SDK provides a software interface to allow communication with the device including setting configuration options, retrieving specific data, and listening for data broadcasts.
-
 ## IMX-5 (IMU, AHRS, and GPS-INS)
 <center>
 
@@ -17,13 +15,15 @@ The µINS GPS aided Inertial Navigation System, µAHRS Attitude Heading Referenc
 
 </center>
 
-The **IMX-5**™ is a 10-DOF sensor module consisting of a triple redundant Inertial Measurement Unit (IMU), magnetometer, and barometer.  Data output includes angular rate and linear acceleration.  IMU calibration consists of bias, scale factor, cross-axis alignment, g-sensitivity, and temperature compensation.  
+The **IMX-5**™ is a 10-DOF sensor module consisting of a tactical grade Inertial Measurement Unit (IMU), magnetometer, and barometer. Output includes angular rate, linear acceleration, magnetic vector, and barometric pressure and altitude. IMU calibration consists of bias, scale factor, cross-axis alignment, and temperature compensation.  The IMX-5 includes Attitude Heading Reference System (**AHRS**) sensor fusion to estimate roll, pitch, and heading. Adding GNSS input to the IMX-5 enables onboard Inertial Navigation System (**INS**) sensor fusion for roll, pitch, heading, velocity, and position.
 
-The IMX-5 includes Attitude Heading Reference System (**AHRS**) sensor fusion to estimate roll, pitch, and heading.  Adding GNSS input to the IMX-5 enables the onboard Inertial Navigation System (**INS**) sensor fusion to estimate roll, pitch, heading, velocity, and position.
+The **RUG-IMX-5**™ series adds a rugged aluminum enclosure and RS232, RS485, and CAN bus to the IMX-5.  
 
-The **RUG-IMX-5-RTK**™ combines a multi-frequency GNSS receiver with the IMX-5 enabling the INS sensor fusion to estimate roll, pitch, heading, velocity, and position.  
+The **RUG-IMX-5-RTK**™ includes a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. 
 
-The **RUG-IMX-5-Dual**™ combines two multi-frequency GNSS receivers and the IMX-5 onboard INS sensor fusion.  Dual GNSS heading can be determined in environments that are challenging for a magnetometer.
+The **RUG-IMX-5-Dual**™ includes two multi-frequency GNSS receivers with RTK precision position and dual GNSS heading/compass.
+
+The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk) is an open-source software development kit for quick integration to configure and communicate with Inertial Sense products. The SDK includes data logger, math libraries, and interface for Linux, Windows, and embedded platforms.
 
 ## Features
 * **Tactical Grade IMU**
