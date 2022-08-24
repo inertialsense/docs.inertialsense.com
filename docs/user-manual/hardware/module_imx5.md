@@ -2,7 +2,7 @@
 
 <center>
 
-![IMX-5](../images/IMX_5.0_400w.jpg)
+![IMX-5](../images/IMX_5.0_800w.jpg)
 
 </center>
 

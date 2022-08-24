@@ -11,7 +11,7 @@
 ## IMX-5 (IMU, AHRS, and GPS-INS)
 <center>
 
-![](user-manual/images/IMX_5.0_400w.jpg)
+![](user-manual/images/IMX_5.0_800w.jpg)
 
 </center>
 
