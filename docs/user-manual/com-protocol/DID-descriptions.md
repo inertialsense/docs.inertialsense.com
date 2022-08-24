@@ -93,7 +93,7 @@ Inertial measurement unit data down-sampled from IMU rate (DID_FLASH_CONFIG.star
 
 #### DID_IMU3_RAW
 
-Inertial measurement unit data directly from IMU.  We recommend use of DID_IMU or DID_PREINTEGRATED_IMU as they are oversampled and contain less noise.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+Inertial measurement unit data directly from IMU.  We recommend use of DID_IMU or DID_PIMU as they are oversampled and contain less noise.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
 
 `imu3_t`
 
@@ -104,11 +104,11 @@ Inertial measurement unit data directly from IMU.  We recommend use of DID_IMU o
 | I | imus_t[3] | Inertial Measurement Units (IMUs) |
 
 
-#### DID_PREINTEGRATED_IMU
+#### DID_PIMU
 
-Coning and sculling integral in body/IMU frame.  Updated at IMU rate. Also know as delta theta delta velocity, or preintegrated IMU (PIMU). For clarification, the name "Preintegrated IMU" throughout our User Manual. This data is integrated from the IMU data at the IMU update rate (startupImuDtMs, default 1ms).  The integration period (dt) and output data rate are the same as the NAV rate (startupNavDtMs) and cannot be output at any other rate. If a faster output data rate is desired, DID_IMU_RAW can be used instead. PIMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay and addresses antialiasing. It is most effective for systems that have higher dynamics and lower communications data rates.  The minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+Preintegrated IMU (a.k.a. Coning and Sculling integral) in body/IMU frame.  Updated at IMU rate. Also know as delta theta delta velocity, or preintegrated IMU (PIMU). For clarification, the name "Preintegrated IMU" throughout our User Manual. This data is integrated from the IMU data at the IMU update rate (startupImuDtMs, default 1ms).  The integration period (dt) and output data rate are the same as the NAV rate (startupNavDtMs) and cannot be output at any other rate. If a faster output data rate is desired, DID_IMU_RAW can be used instead. PIMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay and addresses antialiasing. It is most effective for systems that have higher dynamics and lower communications data rates.  The minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
 
-`preintegrated_imu_t`
+`pimu_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -940,9 +940,9 @@ Addresses for CAN messages
 
 | Field | Type | Description |
 |-------|------|-------------|
-| can_period_mult | uint32_t[] | Broadcast period (ms) - CAN time message. 0 to disable. |
+| can_period_mult | uint16_t[] | Broadcast period (ms) - CAN time message. 0 to disable. |
 | can_transmit_address | uint32_t[] | Transmit address. |
-| can_baudrate_kbps | uint32_t | Baud rate (kbps)  (See can_baudrate_t for valid baud rates)  |
+| can_baudrate_kbps | uint16_t | Baud rate (kbps)  (See can_baudrate_t for valid baud rates)  |
 | can_receive_address | uint32_t | Receive address. |
 
 
@@ -1039,9 +1039,22 @@ Static configuration for wheel transform measurements.
 | wheelConfig | wheel_config_t | Wheel transform, track width, and wheel radius. |
 
 
+#### DID_IMU3
+
+Inertial measurement unit data directly from IMU.  We recommend use of DID_IMU or DID_PIMU as they are oversampled and contain less noise.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+
+`imu3_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| status | uint32_t | IMU Status (eImuStatus) |
+| I | imus_t[3] | Inertial Measurement Units (IMUs) |
+
+
 #### DID_IMU3_RAW_MAG
 
-DID_IMU3_RAW + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. We recommend use of DID_IMU_MAG or DID_PREINTEGRATED_IMU_MAG as they are oversampled and contain less noise. 
+DID_IMU3_RAW + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PIMU_MAG should be streamed simultaneously. We recommend use of DID_IMU_MAG or DID_PIMU_MAG as they are oversampled and contain less noise. 
 
 `imu3_mag_t`
 
@@ -1053,7 +1066,7 @@ DID_IMU3_RAW + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or D
 
 #### DID_IMU_MAG
 
-DID_IMU + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
+DID_IMU + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PIMU_MAG should be streamed simultaneously. 
 
 `imu_mag_t`
 
@@ -1193,6 +1206,18 @@ Manufacturing info
 | uid | uint32_t[4] | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
 
 
+#### DID_PIMU_MAG
+
+DID_PIMU + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PIMU_MAG should be streamed simultaneously. 
+
+`pimu_mag_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| pimu | pimu_t | Preintegrated IMU |
+| mag | magnetometer_t | Magnetometer |
+
+
 #### DID_PORT_MONITOR
 
 Data rate and status monitoring for each communications port. 
@@ -1206,7 +1231,7 @@ Data rate and status monitoring for each communications port.
 
 #### DID_POSITION_MEASUREMENT
 
-External position estimate
+External position estimate 
 
 `pos_measurement_t`
 
@@ -1215,18 +1240,6 @@ External position estimate
 | timeOfWeek | double | GPS time of week (since Sunday morning) in seconds |
 | ecef | double[3] | Position in ECEF (earth-centered earth-fixed) frame in meters |
 | psi | float | Heading with respect to NED frame (rad |
-
-
-#### DID_PREINTEGRATED_IMU_MAG
-
-DID_PREINTEGRATED_IMU + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PREINTEGRATED_IMU_MAG should be streamed simultaneously. 
-
-`pimu_mag_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| pimu | preintegrated_imu_t | Preintegrated IMU |
-| mag | magnetometer_t | Magnetometer |
 
 
 #### DID_REFERENCE_IMU
@@ -1258,7 +1271,7 @@ Reference or truth magnetometer used for manufacturing calibration and testing
 
 Reference or truth IMU used for manufacturing calibration and testing 
 
-`preintegrated_imu_t`
+`pimu_t`
 
 | Field | Type | Description |
 |-------|------|-------------|

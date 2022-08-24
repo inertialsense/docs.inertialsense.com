@@ -13,9 +13,9 @@ DESCRIPTION
     Command line utility for communicating, logging, and updating firmware with Inertial Sense product line.
 
 EXAMPLES
-    cltool -c /dev/ttyS2 -did DID_INS_1 DID_GPS1_POS DID_PREINTEGRATED_IMU      # stream DID messages
+    cltool -c /dev/ttyS2 -did DID_INS_1 DID_GPS1_POS DID_PIMU      # stream DID messages
     cltool -c /dev/ttyS2 -did 4 13 3                # stream same as line above
-    cltool -c /dev/ttyS2 -did 3=5                   # stream DID_PREINTEGRATED_IMU at startupNavDtMs x 5
+    cltool -c /dev/ttyS2 -did 3=5                   # stream DID_PIMU at startupNavDtMs x 5
     cltool -c /dev/ttyS2 -presetPPD                 # stream post processing data (PPD) with INS2
     cltool -c /dev/ttyS2 -presetPPD -lon -lts=1     # stream PPD + INS2 data, logging, dir timestamp
     cltool -c /dev/ttyS2 -edit DID_FLASH_CFG        # edit DID_FLASH_CONFIG message
@@ -46,7 +46,7 @@ OPTIONS (Message Streaming)
     -edit [DID#<=PERIODMULT>]                       Stream and edit 1 dataset.
           Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency.
           Message period = source period x PERIODMULT. PERIODMULT is 1 if not specified.
-          Common DIDs: DID_INS_1, DID_INS_2, DID_INS_4, DID_PREINTEGRATED_IMU, DID_IMU, DID_GPS1_POS,
+          Common DIDs: DID_INS_1, DID_INS_2, DID_INS_4, DID_PIMU, DID_IMU, DID_GPS1_POS,
           DID_GPS2_RTK_CMP_REL, DID_BAROMETER, DID_MAGNETOMETER, DID_FLASH_CONFIG (see data_sets.h for complete list)
     -dids           Print list of all DID datasets
     -persistent     Save current streams as persistent messages enabled on startup
