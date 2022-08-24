@@ -17,16 +17,13 @@ The µINS GPS aided Inertial Navigation System, µAHRS Attitude Heading Referenc
 
 </center>
 
-The **IMX-5**™ is a 10-DOF sensor module consisting of a triple redundant Inertial Measurement Unit (IMU), magnetometer, and barometer.  Data output includes angular rate and linear acceleration.  IMU calibration consists of bias, scale factor, cross-axis alignment, gsensitivity,
-and temperature compensation.
+The **IMX-5**™ is a 10-DOF sensor module consisting of a triple redundant Inertial Measurement Unit (IMU), magnetometer, and barometer.  Data output includes angular rate and linear acceleration.  IMU calibration consists of bias, scale factor, cross-axis alignment, g-sensitivity, and temperature compensation.  
 
 The IMX-5 includes Attitude Heading Reference System (**AHRS**) sensor fusion to estimate roll, pitch, and heading.  Adding GNSS input to the IMX-5 enables the onboard Inertial Navigation System (**INS**) sensor fusion to estimate roll, pitch, heading, velocity, and position.
 
-The **RUG-INS-5-RTK**™ combines a multi-frequency GNSS receiver with the IMX-5 enabling the Inertial Navigation System (INS) sensor fusion to estimate roll, pitch, heading,
-velocity, and position.  
+The **RUG-IMX-5-RTK**™ combines a multi-frequency GNSS receiver with the IMX-5 enabling the INS sensor fusion to estimate roll, pitch, heading, velocity, and position.  
 
-The **RUG-INS-5-Dual**™ combines two multi-frequency GNSS receivers and the IMX-5 onboard sensor fusion.  Dual GNSS heading can be determined in environments
-that are challenging for a magnetometer.
+The **RUG-IMX-5-Dual**™ combines two multi-frequency GNSS receivers and the IMX-5 onboard INS sensor fusion.  Dual GNSS heading can be determined in environments that are challenging for a magnetometer.
 
 ## Features
 * **Tactical Grade IMU**
