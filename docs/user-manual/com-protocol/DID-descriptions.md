@@ -91,17 +91,17 @@ Inertial measurement unit data down-sampled from IMU rate (DID_FLASH_CONFIG.star
 | I | imus_t | Inertial Measurement Unit (IMU) |
 
 
-#### DID_IMU3_RAW
+#### DID_IMU_RAW
 
-Inertial measurement unit data directly from IMU.  We recommend use of DID_IMU or DID_PIMU as they are oversampled and contain less noise.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+IMU data averaged from DID_IMU3_RAW.  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of DID_IMU or DID_PIMU as they are oversampled and contain less noise. 
 
-`imu3_t`
+`imu_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
 | status | uint32_t | IMU Status (eImuStatus) |
-| I | imus_t[3] | Inertial Measurement Units (IMUs) |
+| I | imus_t | Inertial Measurement Unit (IMU) |
 
 
 #### DID_PIMU
@@ -1039,9 +1039,9 @@ Static configuration for wheel transform measurements.
 | wheelConfig | wheel_config_t | Wheel transform, track width, and wheel radius. |
 
 
-#### DID_IMU3
+#### DID_IMU3_RAW
 
-Inertial measurement unit data directly from IMU.  We recommend use of DID_IMU or DID_PIMU as they are oversampled and contain less noise.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+Triple IMU data calibrated from DID_IMU3_UNCAL.  We recommend use of DID_IMU or DID_PIMU as they are oversampled and contain less noise. 
 
 `imu3_t`
 
@@ -1052,21 +1052,22 @@ Inertial measurement unit data directly from IMU.  We recommend use of DID_IMU o
 | I | imus_t[3] | Inertial Measurement Units (IMUs) |
 
 
-#### DID_IMU3_RAW_MAG
+#### DID_IMU3_UNCAL
 
-DID_IMU3_RAW + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PIMU_MAG should be streamed simultaneously. We recommend use of DID_IMU_MAG or DID_PIMU_MAG as they are oversampled and contain less noise. 
+Uncalibrated triple IMU data.  We recommend use of DID_IMU or DID_PIMU as they are calibrated and oversampled and contain less noise.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
 
-`imu3_mag_t`
+`imu3_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| imu | imu3_t | Trimple imu |
-| mag | magnetometer_t | mag |
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| status | uint32_t | IMU Status (eImuStatus) |
+| I | imus_t[3] | Inertial Measurement Units (IMUs) |
 
 
 #### DID_IMU_MAG
 
-DID_IMU + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PIMU_MAG should be streamed simultaneously. 
+DID_IMU + DID_MAGNETOMETER. Only one of DID_IMU_MAG or DID_PIMU_MAG should be streamed simultaneously. 
 
 `imu_mag_t`
 
@@ -1208,7 +1209,7 @@ Manufacturing info
 
 #### DID_PIMU_MAG
 
-DID_PIMU + DID_MAGNETOMETER. Only one of DID_IMU3_RAW_MAG, DID_IMU_MAG, or DID_PIMU_MAG should be streamed simultaneously. 
+DID_PIMU + DID_MAGNETOMETER. Only one of DID_IMU_MAG or DID_PIMU_MAG should be streamed simultaneously. 
 
 `pimu_mag_t`
 
@@ -1367,18 +1368,6 @@ RTOS information.
 | temp | f_t | (°C) Temperature of MPU.  Units only apply for calibrated data. |
 
 
-#### DID_SENSORS_RAW
-
-Uncalibrated IMU output. 
-
-`sensors_w_temp_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| mpu | sensors_mpu_w_temp_t[3] | Units only apply for calibrated data |
-
-
 #### DID_SENSORS_TCAL
 
 Temperature compensated IMU output. 
@@ -1387,8 +1376,8 @@ Temperature compensated IMU output.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| mpu | sensors_mpu_w_temp_t[3] | Units only apply for calibrated data |
+| imu3 | imu3_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
+| temp | f_t[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
 
 
 #### DID_SENSORS_TC_BIAS
@@ -1412,6 +1401,18 @@ Temperature compensated IMU output.
 | ana1 | float | ADC analog input in volts. uINS pin 4, (G1/AN1). |
 | ana3 | float | ADC analog input in volts. uINS pin 19 (G3/AN3). |
 | ana4 | float | ADC analog input in volts. uINS pin 20 (G4/AN4). |
+
+
+#### DID_SENSORS_UCAL
+
+Uncalibrated IMU output. 
+
+`sensors_w_temp_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| imu3 | imu3_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
+| temp | f_t[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
 
 
 #### DID_STROBE_IN_TIME
