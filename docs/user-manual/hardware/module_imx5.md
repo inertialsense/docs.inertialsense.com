@@ -77,10 +77,10 @@ The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow
 
 A single ceramic 100nF decoupling capacitor should be placed in close proximity between the Vcc and GND pins. It is recommended that this capacitor be on the same side of the PCB as the μINS and that there not be any vias between the capacitor and the Vcc and GND pins. The default forward direction is indicated in the PCB footprint figure and on the μINS silkscreen as the X axis. The forward direction is reconfigurable in software as necessary.
 
-[Download PDF](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf)
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout_IMX-5.pdf)
 
-<object data="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
-    <embed src="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
+<object data="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout_IMX-5.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout_IMX-5.pdf" type="application/pdf" />
 </object>
 
 ## Design Files
