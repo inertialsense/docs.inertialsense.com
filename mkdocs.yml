@@ -89,12 +89,12 @@ nav:
   - Getting Started: getting-started/getting-started.md
   - IS Hardware:
     #- Overview: user-manual/hardware/overview.md
-    - EVB-1: user-manual/hardware/EVB1.md
-    - EVB-2: user-manual/hardware/EVB2.md
-    - Rugged-1: user-manual/hardware/rugged1.md
-    - Rugged-2: user-manual/hardware/rugged2.md
     - IMX-5: user-manual/hardware/module_imx5.md
     - uINS-3: user-manual/hardware/module_uins3.md
+    - Rugged-2: user-manual/hardware/rugged2.md
+    - Rugged-1: user-manual/hardware/rugged1.md
+    - EVB-2: user-manual/hardware/EVB2.md
+    - EVB-1: user-manual/hardware/EVB1.md
     - Design Files: user-manual/hardware/hardware_design.md
     - Reflow Information: user-manual/hardware/reflow.md
   - IS Software:
