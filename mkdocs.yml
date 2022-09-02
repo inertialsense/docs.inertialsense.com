@@ -93,6 +93,7 @@ nav:
     - uINS-3: user-manual/hardware/module_uins3.md
     - Rugged-2: user-manual/hardware/rugged2.md
     - Rugged-1: user-manual/hardware/rugged1.md
+    - IG-1: user-manual/hardware/IG1.md
     - EVB-2: user-manual/hardware/EVB2.md
     - EVB-1: user-manual/hardware/EVB1.md
     - Design Files: user-manual/hardware/hardware_design.md

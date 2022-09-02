@@ -28,10 +28,10 @@
 
 ### IG-IMX-5-Dual (Module)
 
-[Download PDF](https://docs.inertialsense.com/dimensions/IS-IG-1.0-G2-Dual_Dimensions_and_Pinout_IG-IMX-5-Dual.pdf)
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-IMX-5-Dual.pdf)
 
-<object data="https://docs.inertialsense.com/dimensions/IS-IG-1.0-G2-Dual_Dimensions_and_Pinout_IG-IMX-5-Dual.pdf" type="application/pdf" width="700px" height="1150px" >
-    <embed src="https://docs.inertialsense.com/dimensions/IS-IG-1.0-G2-Dual_Dimensions_and_Pinout_IG-IMX-5-Dual.pdf" type="application/pdf" />
+<object data="https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-IMX-5-Dual.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-IMX-5-Dual.pdf" type="application/pdf" />
 </object>
 
 
