@@ -1,4 +1,4 @@
-# Hardware Integration: Rugged-2
+# Hardware Integration: Rugged-2.0
 
 <center>
 
@@ -6,7 +6,7 @@
 
 </center>
 
-The Inertial Sense Rugged-2 is a ruggedized carrier board and case for the Inertial Sense µINS, µAHRS, or µIMU module. The Rugged-2 has similar functions compared to the EVB-1, but in a more compact form factor with the following added features:
+The Inertial Sense Rugged-2.0 is a ruggedized carrier board and case for the Inertial Sense µINS, µAHRS, or µIMU module. The Rugged-2.0 has similar functions compared to the EVB-1, but in a more compact form factor with the following added features:
 
 - Onboard multi-band GNSS receiver(s) 
 - Dual antenna ports for GPS compassing
@@ -47,7 +47,7 @@ The "MAIN" connector pinout on the Rugged product line can be configured for USB
 
 ## Dipswitch Config
 
-The Rugged-2 dip switches are used for setting the following I/O configurations. 
+The Rugged-2.0 dip switches are used for setting the following I/O configurations. 
 
 | Pins                 | Mode                                                         | Switches               |
 | -------------------- | :----------------------------------------------------------- | ---------------------- |
@@ -69,13 +69,13 @@ The Rugged-2 dip switches are used for setting the following I/O configurations.
 
 See the [Multi-Band GNSS page](../../gnss/multi_band_gnss/) for configuration information.
 
-## **To open the Rugged-2:**
+## **To open the Rugged-2.0:**
 
 *Caution! Use of a grounding strap or other ESD protection device is advised.*
 
 1. Completely remove power from the unit.
 
-2. Remove the 3 5/16" screws from the bottom of the Rugged-2.
+2. Remove the 3 5/16" screws from the bottom of the Rugged-2.0.
 
 3. Gently separate the top and bottom halves from each other pealing them apart opening from the side with the green connector. 
 
