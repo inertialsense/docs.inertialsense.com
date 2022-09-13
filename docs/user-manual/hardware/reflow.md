@@ -43,5 +43,5 @@ Use of "No Clean" soldering paste is recommended as it does not require cleaning
 
 ### Note:
 - A convection soldering oven is highly recommended over an infrared type radiation oven as it allows precision control of the temperature and all parts will be heated evenly.
-- To avoid falling off, the uINS should be placed on the topside of a PCB during soldering.
+- To avoid falling off, the IMX should be placed on the topside of a PCB during soldering.
 - The part must not be soldered with a damp heat process.

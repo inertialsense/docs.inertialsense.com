@@ -63,10 +63,8 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 | 8    | G2/Tx2/485Tx2+/Tx1/MISO                    | I/O  | Serial 2 output (TTL or RS232)<br/>Serial 2 output+ (RS485/RS422)<br/>Serial 1 output (TTL or RS232)<br/>SPI MISO |
 | 9    | G4/Rx0/485Rx2-/CS                          | I/O  | Serial 0 input (TTL or RS232)<br/>Serial 2 input- (RS485/RS422)<br/>SPI chip select |
 | 10   | G1/Rx2/485Rx2+/Rx1/MOSI                    | I/O  | Serial 2 input (TTL/RS232)<br/>Serial 2 input+ (RS485 or RS422)<br/>Serial 1 input (TTL or RS232)<br/>SPI MOSI |
-| 11   | G1/CANL<sup>1</sup>/Rx2<sup>1</sup>        | I/O  | High level (CAN bus). Serial 2 input (TTL).                  |
-| 12   | G2/CANH<sup>1</sup>/Tx2<sup>1</sup>/STROBE | I/O  | Low level (CAN bus). Serial 2 output (TTL). Strobe time sync input. |
-
-<sup>1</sup>Only available with uINS-3.2 and later.
+| 11   | G1/CANL/Rx2        | I/O  | High level (CAN bus). Serial 2 input (TTL).                  |
+| 12   | G2/CANH/Tx2/STROBE | I/O  | Low level (CAN bus). Serial 2 output (TTL). Strobe time sync input. |
 
 ## I/O Configuration
 
