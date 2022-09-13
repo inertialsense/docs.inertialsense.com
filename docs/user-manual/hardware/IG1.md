@@ -1,4 +1,4 @@
-# Hardware Integration: IG-1
+# Hardware Integration: IG-1-IMX-5
 
 <center>
 

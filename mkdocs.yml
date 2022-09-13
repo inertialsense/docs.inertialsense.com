@@ -91,9 +91,9 @@ nav:
     #- Overview: user-manual/hardware/overview.md
     - IMX-5: user-manual/hardware/module_imx5.md
     - uINS-3: user-manual/hardware/module_uins3.md
-    - RUG-3: user-manual/hardware/rugged3.md
-    - RUG-2: user-manual/hardware/rugged2.md
-    - RUG-1: user-manual/hardware/rugged1.md
+    - Rugged-3: user-manual/hardware/rugged3.md
+    - Rugged-2: user-manual/hardware/rugged2.md
+    - Rugged-1: user-manual/hardware/rugged1.md
     - IG-1: user-manual/hardware/IG1.md
     - EVB-2: user-manual/hardware/EVB2.md
     - EVB-1: user-manual/hardware/EVB1.md
