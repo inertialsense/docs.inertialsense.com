@@ -17,11 +17,11 @@
 
 The **IMX-5**™ is a 10-DOF sensor module consisting of a tactical grade Inertial Measurement Unit (IMU), magnetometer, and barometer. Output includes angular rate, linear acceleration, magnetic vector, and barometric pressure and altitude. IMU calibration consists of bias, scale factor, cross-axis alignment, and temperature compensation.  The IMX-5 includes Attitude Heading Reference System (**AHRS**) sensor fusion to estimate roll, pitch, and heading. Adding GNSS input to the IMX-5 enables onboard Inertial Navigation System (**INS**) sensor fusion for roll, pitch, heading, velocity, and position.
 
-The **RUG-IMX-5**™ series adds a rugged aluminum enclosure and RS232, RS485, and CAN bus to the IMX-5.  
+The **RUG-3-IMX-5**™ series adds a rugged aluminum enclosure and RS232, RS485, and CAN bus to the IMX-5.  
 
-The **RUG-IMX-5-RTK**™ includes a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. 
+The **RUG-3-IMX-5-RTK**™ includes a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. 
 
-The **RUG-IMX-5-Dual**™ includes two multi-frequency GNSS receivers with RTK precision position and dual GNSS heading/compass.
+The **RUG-3-IMX-5-Dual**™ includes two multi-frequency GNSS receivers with RTK precision position and dual GNSS heading/compass.
 
 The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk) is an open-source software development kit for quick integration to configure and communicate with Inertial Sense products. The SDK includes data logger, math libraries, and interface for Linux, Windows, and embedded platforms.
 

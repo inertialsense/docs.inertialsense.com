@@ -1,4 +1,4 @@
-# Hardware Integration: Rugged-2.0
+# Hardware Integration: Rugged-2
 
 <center>
 

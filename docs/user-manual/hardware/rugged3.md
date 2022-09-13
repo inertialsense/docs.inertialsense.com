@@ -1,4 +1,4 @@
-# Hardware Integration: Rugged-2.1
+# Hardware Integration: RUG-3-IMX-5 (Rugged-3)
 
 <center>
 
@@ -6,7 +6,7 @@
 
 </center>
 
-The **RUG-IMX-5-Dual** adds a rugged aluminum enclosure and RS232, RS485, and CAN bus to the IMX-5. The **RUG-IMX-5-RTK** includes a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. The **RUG-IMX-5-Dual** includes two multi-frequency GNSS receivers with RTK precision position and dual GNSS heading/compass.
+The **RUG-3-IMX-5-Dual** adds a rugged aluminum enclosure and RS232, RS485, and CAN bus to the IMX-5. The **RUG-3-IMX-5-RTK** includes a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. The **RUG-3-IMX-5-Dual** includes two multi-frequency GNSS receivers with RTK precision position and dual GNSS heading/compass.
 
 - Dual onboard multi-band GNSS receiver(s). 
 - Dual antenna ports for GPS compassing.
