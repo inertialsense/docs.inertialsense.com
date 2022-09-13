@@ -2,7 +2,7 @@
 
 <center>
 
-![uINS_rugged_thumb](../images/RUG-2.1-G2.png)
+![uINS_rugged_thumb](../images/RUG-3.0-G2.png)
 
 </center>
 
