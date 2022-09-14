@@ -31,8 +31,8 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 | 2                   | VIN                               | PWR  | 4V-20V supply voltage input                                  |
 | 3                   | +3.3V                             | PWR  | Regulated 3.3V supply input/output.                          |
 | 4                   | Reserved                          |      | Not Connected                                                |
-| 5                   | G1/Rx2/RxCAN/SDA                  | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SDA line6 |
-| 6                   | G2/Tx/TxCAN/SCL/STROBE            | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SCL line<br />Strobe time sync input |
+| 5                   | G1/Rx2/RxCAN/SCL                  | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line6 |
+| 6                   | G2/Tx/TxCAN/SDA/STROBE            | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | 7                   | G3/Tx0                            | I/O  | GPIO3<br /> Serial 0 output (TTL)                            |
 | 8                   | G4/Rx0                            | I/O  | GPIO4<br /> Serial 0 input (TTL)                             |
 | 9                   | G5/SCLK/STROBE                    | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input            |
