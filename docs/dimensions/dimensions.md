@@ -10,20 +10,20 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout_IMX-5.pdf" type="application/pdf" />
 </object>
 
-### RUG-3-IMX-5-Dual
-
-[Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G2_Dimensions_and_Pinout_RUG-3-IMX-5-Dual.pdf)
-
-<object data="https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G2_Dimensions_and_Pinout_RUG-3-IMX-5-Dual.pdf" type="application/pdf" width="700px" height="1150px" >
-    <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G2_Dimensions_and_Pinout_RUG-3-IMX-5-Dual.pdf" type="application/pdf" />
-</object>
-
 ### RUG-3-IMX-5
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G0_Dimensions_and_Pinout_RUG-3-IMX-5.pdf)
 
 <object data="https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G0_Dimensions_and_Pinout_RUG-3-IMX-5.pdf" type="application/pdf" width="700px" height="1150px" >
     <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G0_Dimensions_and_Pinout_RUG-3-IMX-5.pdf" type="application/pdf" />
+</object>
+
+### RUG-3-IMX-5-Dual
+
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G2_Dimensions_and_Pinout_RUG-3-IMX-5-Dual.pdf)
+
+<object data="https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G2_Dimensions_and_Pinout_RUG-3-IMX-5-Dual.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G2_Dimensions_and_Pinout_RUG-3-IMX-5-Dual.pdf" type="application/pdf" />
 </object>
 
 ### IG-1-IMX-5-Dual (Module)
