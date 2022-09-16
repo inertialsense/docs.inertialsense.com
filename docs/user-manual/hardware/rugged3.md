@@ -74,24 +74,26 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 The Rugged 2.1 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the DID_FLASH_CONFIG.cBrdConfig.
 
-|              |              | RUG Pins     | H1-P8P10  | H1-P7P9           | H1-P11P12 |          |          |
-| ------------ | ------------ | ------------ | --------- | ----------------- | --------- | -------- | -------- |
-| **Config #** | **RUG Type** | **IMX GPIO** | **G1:G2** | **G3:G4 (G5,G8)** | **G1:G2** | **GPS1** | **GPS2** |
-| 0            | G0 + G2      |              | S1-TTL    | G5G8-STROBE       | CAN (S2)  | -        | S0       |
-| 1            | G0 + G2      |              | S1-RS232  | S0-RS232          | CAN (S2)  | -        | -        |
-| 2            | G0 + G2      |              | S1-TTL    | S0-TTL            | CAN (S2)  | -        | -        |
-| 3            | G0 + G2      |              | S2-RS485  | S2-RS485          | -         | S1       | S0       |
-| 4            | G0 + G2      |              | SPI (S1)  | SPI (S1)          | -         | S2       | S0       |
-| 5            | G2           |              | S2-RS232  | -                 | -         | S1       | S0       |
-| 6            | G2           |              | S2-TTL    | G5G8-STROBE       | -         | S1       | S0       |
-| 7            | G2           |              | S2-RS232  | S0-RS232          | -         | S1       | -        |
-| 8            | G2           |              | S2-TTL    | S0-TTL            | -         | S1       | -        |
-| 9            | G2           |              | -         | G5G8-STROBE       | CAN (S2)  | S1       | S0       |
-| 10           | G2           |              | -         | S0-RS232          | CAN (S2)  | S1       | -        |
-| 11           | G2           |              | -         | S0-TTL            | CAN (S2)  | S1       | -        |
-| 12           | G2           |              | S1-RS232  | -                 | CAN (S2)  | -        | S0       |
+|              |              | MAIN-P8P10 | MAIN-P7P9         | MAIN-P11P12 | 1        | 2        |
+| ------------ | ------------ | ---------- | ----------------- | ----------- | -------- | -------- |
+| **Config #** | **RUG Type** | **G1:G2**  | **G3:G4 (G5,G8)** | **G1:G2**   | **GPS1** | **GPS2** |
+| 0 *          | G0 + G2      | S1-RS232   | S0-RS232          | CAN (S2)    | -        | -        |
+| 1            | G0 + G2      | S1-TTL     | G5G8-STROBE       | CAN (S2)    | -        | S0       |
+| 2            | G0 + G2      | S2-RS485   | S2-RS485          | -           | S1       | S0       |
+| 3            | G0 + G2      | S1-TTL     | S0-TTL            | CAN (S2)    | -        | -        |
+| 4            | G0 + G2      | SPI (S1)   | SPI (S1)          | -           | S2       | S0       |
+| 5 **         | G2           | S2-RS232   | -                 | -           | S1       | S0       |
+| 6            | G2           | S2-TTL     | G5G8-STROBE       | -           | S1       | S0       |
+| 7            | G2           | S2-RS232   | S0-RS232          | -           | S1       | -        |
+| 8            | G2           | S2-TTL     | S0-TTL            | -           | S1       | -        |
+| 9            | G2           | -          | G5G8-STROBE       | CAN (S2)    | S1       | S0       |
+| 10           | G2           | -          | S0-RS232          | CAN (S2)    | S1       | -        |
+| 11           | G2           | -          | S0-TTL            | CAN (S2)    | S1       | -        |
+| 12           | G2           | S1-RS232   | -                 | CAN (S2)    | -        | S0       |
 
+<sup>\* RUG-3.0-G0 default</sup>
 
+<sup>\** RUG-3.0-G2 default</sup>
 
 ## Related Parts
 
