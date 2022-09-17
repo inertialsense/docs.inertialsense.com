@@ -106,7 +106,7 @@ IMU data averaged from DID_IMU3_RAW.  Use this IMU data for output data rates fa
 
 #### DID_PIMU
 
-Preintegrated IMU (a.k.a. Coning and Sculling integral) in body/IMU frame.  Updated at IMU rate. Also know as delta theta delta velocity, or preintegrated IMU (PIMU). For clarification, the name "Preintegrated IMU" throughout our User Manual. This data is integrated from the IMU data at the IMU update rate (startupImuDtMs, default 1ms).  The integration period (dt) and output data rate are the same as the NAV rate (startupNavDtMs) and cannot be output at any other rate. If a faster output data rate is desired, DID_IMU_RAW can be used instead. PIMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay and addresses antialiasing. It is most effective for systems that have higher dynamics and lower communications data rates.  The minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
+Preintegrated IMU (a.k.a. Coning and Sculling integral) in body/IMU frame.  Updated at IMU rate. Also know as delta theta delta velocity, or preintegrated IMU (PIMU). For clarification, the name "Preintegrated IMU" or "PIMU" throughout our User Manual. This data is integrated from the IMU data at the IMU update rate (startupImuDtMs, default 1ms).  The integration period (dt) and output data rate are the same as the NAV rate (startupNavDtMs) and cannot be output at any other rate. If a faster output data rate is desired, DID_IMU_RAW can be used instead. PIMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay and addresses antialiasing. It is most effective for systems that have higher dynamics and lower communications data rates.  The minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). The PIMU value can be converted to IMU by dividing PIMU by dt (i.e. IMU = PIMU / dt)  
 
 `pimu_t`
 
@@ -814,7 +814,7 @@ Flash memory configuration
 | lastLlaWeek | uint32_t | Last LLA GPS number of weeks since January 6th, 1980 |
 | lastLlaUpdateDistance | float | Distance between current and last LLA that triggers an update of lastLla  |
 | ioConfig | uint32_t | Hardware interface configuration bits (see eIoConfig). |
-| cBrdConfig | uint32_t | Carrier board (i.e. eval board) configuration bits |
+| platformConfig | uint32_t | Hardware platform (IMX carrier board, i.e. RUG-3, EVB-3, IG-1) configuration bits (see ePlatformConfig) |
 | gps2AntOffset | float[3] | X,Y,Z offset in meters from DOD_ Frame origin to GPS 2 antenna. |
 | zeroVelRotation | float[3] | Euler (roll, pitch, yaw) rotation in radians from INS Sensor Frame to Intermediate ZeroVelocity Frame.  Order applied: heading, pitch, roll. |
 | zeroVelOffset | float[3] | X,Y,Z offset in meters from Intermediate ZeroVelocity Frame to Zero Velocity Frame. |
@@ -1120,20 +1120,20 @@ INL2 magnetometer calibration information.
 
 #### DID_INL2_NED_SIGMA
 
-INL2 standard deviation in the NED frame 
+Standard deviation of INL2 EKF estimates in the NED frame. 
 
 `inl2_ned_sigma_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | unsigned | Timestamp in milliseconds |
-| PxyzNED | float[3] | NED position error sigma |
-| PvelNED | float[3] | NED velocity error sigma |
-| PattNED | float[3] | NED attitude error sigma |
-| PABias | float[3] | Acceleration bias error sigma |
-| PWBias | float[3] | Angular rate bias error sigma |
-| PBaroBias | float | Barometric altitude bias error sigma |
-| PDeclination | float | Mag declination error sigma |
+| StdPosNed | float[3] | NED position error sigma |
+| StdVelNed | float[3] | NED velocity error sigma |
+| StdAttNed | float[3] | NED attitude error sigma |
+| StdAccBias | float[3] | Acceleration bias error sigma |
+| StdGyrBias | float[3] | Angular rate bias error sigma |
+| StdBarBias | float | Barometric altitude bias error sigma |
+| StdMagDeclination | float | Mag declination error sigma |
 
 
 #### DID_INL2_STATES
@@ -1340,32 +1340,16 @@ RTOS information.
 |-------|------|-------------|
 
 
-#### DID_SENSORS_CAL1
+#### DID_SENSORS_MCAL
 
-(not used) 
+Temperature compensated and motion calibrated IMU output. 
 
-`sensors_mpu_w_temp_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| pqr | f_t[3] | (rad/s) Angular rate.  Units only apply for calibrated data. |
-| acc | f_t[3] | (m/s^2) Linear acceleration.  Units only apply for calibrated data. |
-| mag | f_t[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
-| temp | f_t | (°C) Temperature of MPU.  Units only apply for calibrated data. |
-
-
-#### DID_SENSORS_CAL2
-
-(not used) 
-
-`sensors_mpu_w_temp_t`
+`sensors_w_temp_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| pqr | f_t[3] | (rad/s) Angular rate.  Units only apply for calibrated data. |
-| acc | f_t[3] | (m/s^2) Linear acceleration.  Units only apply for calibrated data. |
-| mag | f_t[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
-| temp | f_t | (°C) Temperature of MPU.  Units only apply for calibrated data. |
+| imu3 | imu3_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
+| temp | f_t[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
 
 
 #### DID_SENSORS_TCAL
@@ -1472,12 +1456,12 @@ System parameters / info
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| insStatus | uint32_t | System status 1 flags (eInsStatusFlags) |
-| hdwStatus | uint32_t | System status 2 flags (eHdwStatusFlags) |
+| insStatus | uint32_t | INS status flags (eInsStatusFlags) |
+| hdwStatus | uint32_t | Hardware status flags (eHdwStatusFlags) |
 | imuTemp | float | IMU temperature |
 | baroTemp | float | Baro temperature |
 | mcuTemp | float | MCU temperature (not available yet) |
-| reserved1 | float | Reserved |
+| sysStatus | uint32_t | System status flags (eSysStatusFlags) |
 | imuPeriodMs | uint32_t | IMU sample period in milliseconds. Zero disables sampling. |
 | navPeriodMs | uint32_t | Preintegrated IMU (PIMU) integration period and navigation filter update period (ms). |
 | sensorTruePeriod | double | Actual sample period relative to GPS PPS |
@@ -1759,7 +1743,8 @@ System status and configuration is made available through various enumeration an
 | GPS_STATUS_FLAGS_RTK_COMPASSING_BASELINE_BAD | 0x00002000 |
 | GPS_STATUS_FLAGS_RTK_COMPASSING_BASELINE_UNSET | 0x00004000 |
 | GPS_STATUS_FLAGS_GPS_NMEA_DATA | 0x00008000 |
-| GPS_STATUS_FLAGS_MASK | 0x0FFFE000 |
+| GPS_STATUS_FLAGS_GPS_PPS_TIMESYNC | 0x10000000 |
+| GPS_STATUS_FLAGS_MASK | 0xFFFFE000 |
 | GPS_STATUS_FLAGS_BIT_OFFSET |  (int)16 |
 
 
@@ -1791,6 +1776,8 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_FLASH_WRITE_IN_PROGRESS | 0x00008000 |
 | HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
 | HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
+| HDW_STATUS_ERR_GPS_PPS_ERROR | 0x00040000 |
+| HDW_STATUS_GPS_PPS_TIMESYNC | 0x00080000 |
 | HDW_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x00F00000 |
 | HDW_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 20 |
 | HDW_STATUS_BIT_RUNNING | 0x01000000 |
@@ -1798,7 +1785,7 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_BIT_FAULT | 0x03000000 |
 | HDW_STATUS_BIT_MASK | 0x03000000 |
 | HDW_STATUS_ERR_TEMPERATURE | 0x04000000 |
-| HDW_STATUS_UNSUED_6 | 0x08000000 |
+| HDW_STATUS_SPI_INTERFACE_ENABLED | 0x08000000 |
 | HDW_STATUS_FAULT_RESET_MASK | 0x70000000 |
 | HDW_STATUS_FAULT_RESET_BACKUP_MODE | 0x10000000 |
 | HDW_STATUS_FAULT_RESET_WATCHDOG | 0x20000000 |

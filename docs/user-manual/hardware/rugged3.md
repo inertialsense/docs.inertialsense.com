@@ -72,7 +72,7 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 ## I/O Configuration
 
-The Rugged 2.1 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the DID_FLASH_CONFIG.cBrdConfig.
+The Rugged 2.1 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the DID_FLASH_CONFIG.platformConfig.
 
 |              |              | MAIN-P8P10 | MAIN-P7P9         | MAIN-P11P12 | 1        | 2        |
 | ------------ | ------------ | ---------- | ----------------- | ----------- | -------- | -------- |
