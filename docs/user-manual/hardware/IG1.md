@@ -39,7 +39,7 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 | 10                  | G6/Rx1/MOSI                       | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI              |
 | 11                  | G7/Tx1/MISO                       | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO             |
 | 12                  | G8/CS/STROBE                      | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input              |
-| 13                  | G9/nSPI_EN/STROBE<br/>/STROBE_OUT | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. |
+| 13                  | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/SPI_DRDY | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location. |
 | 14                  | GPS.TIMEPULSE                     | O    | GPS PPS UTC time synchronization signal.                     |
 | 15                  | GND                               | I/O  | -                                                            |
 | 16                  | VBAT                              | I/O  | GPS backup supply voltage. (1.4V to 3.6V) enables GPS hardware backup mode for hot or warm startup (faster GPS lock acquisition). MUST connect GPS_VBAT to VCC if no backup battery is used. |
