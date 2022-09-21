@@ -29,7 +29,7 @@ The IMX-5 module is pin compatible with the uINS-3.
 | 7    | G7/Tx1/MISO                                   | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO                       |
 | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
-| 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT             | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. |
+| 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY             | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
 | 11,21,P | GND                                           | -    | Supply ground                                          |
 | 12   | nRESET                                        |  I   | System reset on logic low. May be left unconnected if not used. |
 | 13   | G14/SWCLK                                | I/O    | GPIO14                                       |
