@@ -72,24 +72,20 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 ## I/O Configuration
 
-The Rugged 2.1 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the DID_FLASH_CONFIG.platformConfig.
+The Rugged 3.0 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the DID_FLASH_CONFIG.platformConfig.
 
-|              |              | MAIN-P8P10 | MAIN-P7P9         | MAIN-P11P12 | 1        | 2        |
-| ------------ | ------------ | ---------- | ----------------- | ----------- | -------- | -------- |
-| **Config #** | **RUG Type** | **G1:G2**  | **G3:G4 (G5,G8)** | **G1:G2**   | **GPS1** | **GPS2** |
-| 0 *          | G0 + G2      | S1-RS232   | S0-RS232          | CAN (S2)    | -        | -        |
-| 1            | G0 + G2      | S1-TTL     | G5G8-STROBE       | CAN (S2)    | -        | S0       |
-| 2            | G0 + G2      | S2-RS485   | S2-RS485          | -           | S1       | S0       |
-| 3            | G0 + G2      | S1-TTL     | S0-TTL            | CAN (S2)    | -        | -        |
-| 4            | G0 + G2      | SPI (S1)   | SPI (S1)          | -           | S2       | S0       |
-| 5 **         | G2           | S2-RS232   | -                 | -           | S1       | S0       |
-| 6            | G2           | S2-TTL     | G5G8-STROBE       | -           | S1       | S0       |
-| 7            | G2           | S2-RS232   | S0-RS232          | -           | S1       | -        |
-| 8            | G2           | S2-TTL     | S0-TTL            | -           | S1       | -        |
-| 9            | G2           | -          | G5G8-STROBE       | CAN (S2)    | S1       | S0       |
-| 10           | G2           | -          | S0-RS232          | CAN (S2)    | S1       | -        |
-| 11           | G2           | -          | S0-TTL            | CAN (S2)    | S1       | -        |
-| 12           | G2           | S1-RS232   | -                 | CAN (S2)    | -        | S0       |
+| RUG-3 Pin<br/>IMX Pin | 7,9<br/>G3,G4<br/>(G5,G8) | 8,10<br/>G1,G2 | 11,12<br/>G1,G2 | GPS1 | GPS2 |
+| --------------------- | ------------------------- | -------------- | --------------- | ---- | ---- |
+| **I/O Preset**        |                           |                |                 |      |      |
+| 0 *                   | S0 RS232                  |                | CAN             | S1   |      |
+| 1                     | S0 TTL                    |                | CAN             | S1   |      |
+| 2                     | S0 TTL                    | S2 TTL         |                 | S1   |      |
+| 3                     | S0 RS232                  | S1 RS232       |                 | S2   |      |
+| 4                     | S2 RS485                  | S2 RS485       |                 | S2   | S0   |
+| 5                     | SPI                       | SPI            |                 | S2   | S0   |
+| 6 **                  |                           | S1 RS232       |                 | S2   | S0   |
+| 7                     |                           |                | CAN             | S1   | S0   |
+| 8                     |                           | S2 TTL         |                 | S1   | S0   |
 
 <sup>\* RUG-3.0-G0 default</sup>
 
