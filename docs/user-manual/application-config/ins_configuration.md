@@ -2,17 +2,25 @@
 
 ## Translation
 
-The IMX can be mounted and operated in any arbitrary orientation.  It is often desirable and conventional to translate the IMX output so that it is rotated into the vehicle frame and located at certain location for control and navigation of the vehicle.  This is done using the ***IMU Rotation***, ***INS Rotation***, and ***INS Offset*** parameters.  
+The IMX can be mounted and operated in any arbitrary orientation.  It is often desirable and conventional to translate the IMX output so that it is rotated into the vehicle frame and located at certain location for control and navigation of the vehicle.  This is done using the ***Sensor Rotation***, ***INS Rotation***, and ***INS Offset*** parameters.  
 
 In most common applications, output is translated to the vehicle frame (X to the front, Y to the right, and Z down): 
 
-- *IMU Rotation* provides gross rotation of the IMU output in multiples of 90°.
+- *Sensor Rotation* provides gross rotation of the IMU output in multiples of 90°.
 - *INS Rotation* provides small angle alignment of the INS output.   
 - *INS Offset* shifts the location from the INS output.
 
-### IMU Rotation (Hardware Native Frame to Sensor Frame)
+### Coordinate Frame Relationship
 
-The *IMU rotation* is used to rotate the IMU and magnetometer output from the hardware native frame to the [sensor frame](../../reference/coordinate_frames/#sensor-frame) by **multiples of 90°**.  This is done using the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits of the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.  The IMU rotation is defined in X,Y,Z rotations about the corresponding axes and applied in the order of Z,Y,X.  This rotation is recommended for gross rotations.   
+The relationship between the Hardware Frame, Sensor Frame, and INS Output Frame are as follows.  
+
+![](C:\_IS\imx\docs\docs\user-manual\images\coordinate_frame_relationship.svg)
+
+The ***Hardware Frame*** and ***Sensor Frame*** are equivalent when the sensor rotation in `DID_FLASH_CONFIG.sensorConfig` is zero.  The ***Sensor Frame*** and ***INS output Frame*** are equivalent when the `DID_FLASH_CONFIG.insRotation` and `DID_FLASH_CONFIG.insOffset` are zero.  
+
+### Sensor Rotation (Hardware Frame to Sensor Frame)
+
+The *Sensor Rotation* is used to rotate the IMU and magnetometer output from the hardware frame to the [sensor frame](../../reference/coordinate_frames/#sensor-frame) by **multiples of 90°**.  This is done using the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits of the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.  The Sensor Rotation is defined in X,Y,Z rotations about the corresponding axes and applied in the order of Z,Y,X.  This rotation is recommended for gross rotations.   
 
 ### INS Rotation
 

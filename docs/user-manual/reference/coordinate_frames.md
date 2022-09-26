@@ -1,16 +1,33 @@
 # Coordinate Frames
-In this manual, coordinate frame systems are simply referred to as frames. This page is to assist the developer in
-choosing and implementing the appropriate coordinate frames for their respective application. It should be noted
-that the following frames are in relation to the IMX itself.
+In this manual, coordinate frame systems are simply referred to as frames. This page is to assist the developer in choosing and implementing the appropriate coordinate frames for their respective application. It should be noted that the following frames are in relation to the IMX itself.
 
-## Sensor Frame
-IMU, magnetometer, and INS velocity data are in the Sensor Coordinate Frame, or Sensor Frame, and are
-identified by the X, Y, and Z axes labeled on the hardware. The z-axis is positive down into the image.
+## Coordinate Frame Relationship
+
+The relationship between the Hardware Frame, Sensor Frame, and INS Output Frame are as follows.  
+
+![](../images/coordinate_frame_relationship.svg)
+
+NOTE: The ***Hardware Frame*** and ***Sensor Frame*** are equivalent when the sensor rotation in `DID_FLASH_CONFIG.sensorConfig` is zero.  The ***Sensor Frame*** and ***INS output Frame*** are equivalent when the `DID_FLASH_CONFIG.insRotation` and `DID_FLASH_CONFIG.insOffset` are zero.  
+
+## Hardware Frame
+
+The Hardware Frame is labeled "X" and "Y" on the hardware indicating the direction of the sensing elements in the IMX.  
+
+![IMX hardware frame](../images/IMX_5.0_800w_hw_frame.jpg)
+
+![IMX hardware frame](../images/RUG-3.0-G2_hw_frame.png)
+
+
 
 ![coordinate_frames](../images/coordinate_frames.png)
 
+## Sensor Frame
+
+The IMU and magnetometer data (i.e. messages DID_IMU and DID_MAGNETOMETER) are in the Sensor Frame.  The ***Hardware Frame*** is rotated into the ***Sensor Frame*** in multiples of 90° using the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits of the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.   
+
 ## INS Output Frame
-The INS output data (DID_INS_1, DID_INS_2, DID_INS_3) is in the INS Output Frame which is the same as the Sensor Frame after default <u>rotations</u> and <u>offsets</u> are entered to the Flash Configuration. Translation from Sensor
+
+The INS output data (DID_INS_1, DID_INS_2, DID_INS_3) is in the INS Output Frame. Translation from Sensor
 Frame to INS Output Frame is defined as:
 
  1. Sensor Frame → Intermediate Output Frame by rotation of DID_FLASH_CONFIG.insRotation euler angles (in order of heading, pitch, roll angle) In radians.
