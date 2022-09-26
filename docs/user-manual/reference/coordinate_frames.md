@@ -17,7 +17,7 @@ The Hardware Frame is labeled "X" and "Y" on the hardware indicating the directi
 
 ![IMX hardware frame](../images/RUG-3.0-G2_hw_frame.png)
 
-
+The IMX follows the right right rule for XYZ axis relative direction and angular rotation.
 
 ![coordinate_frames](../images/coordinate_frames.png)
 
@@ -30,11 +30,10 @@ The IMU and magnetometer data (i.e. messages DID_IMU and DID_MAGNETOMETER) are i
 The INS output data (DID_INS_1, DID_INS_2, DID_INS_3) is in the INS Output Frame. Translation from Sensor
 Frame to INS Output Frame is defined as:
 
- 1. Sensor Frame → Intermediate Output Frame by rotation of DID_FLASH_CONFIG.insRotation euler angles (in order of heading, pitch, roll angle) In radians.
- 2. Intermediate Output Frame → INS Output Frame: Offset by DID_FLASH_CONFIG.insOffset in meters.
+ 1. Sensor Frame → Intermediate Output Frame by rotation of `DID_FLASH_CONFIG.insRotation` euler angles (in order of heading, pitch, roll angle) In radians.
+ 2. Intermediate Output Frame → INS Output Frame: Offset by `DID_FLASH_CONFIG.insOffset` in meters.
 
-If DID_FLASH_CONFIG.insRotation and DID_FLASH_CONFIG.insOffset are zero, the Sensor Frame and the INS
-Output Frame are the same.
+If `DID_FLASH_CONFIG.insRotation` and `DID_FLASH_CONFIG.insOffset` are zero, the Sensor Frame and the INS Output Frame are the same.
 
 ## North-East-Down (NED) Frame
 Position estimates can be output in the North-East-Down (NED) coordinate frame defined as follows:
