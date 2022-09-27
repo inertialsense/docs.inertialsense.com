@@ -14,7 +14,7 @@ In most common applications, output is translated to the vehicle frame (X to the
 
 The relationship between the Hardware Frame, Sensor Frame, and INS Output Frame are as follows.  
 
-![](C:\_IS\imx\docs\docs\user-manual\images\coordinate_frame_relationship.svg)
+![](../images/coordinate_frame_relationship.svg)
 
 The ***Hardware Frame*** and ***Sensor Frame*** are equivalent when the sensor rotation in `DID_FLASH_CONFIG.sensorConfig` is zero.  The ***Sensor Frame*** and ***INS output Frame*** are equivalent when the `DID_FLASH_CONFIG.insRotation` and `DID_FLASH_CONFIG.insOffset` are zero.  
 
