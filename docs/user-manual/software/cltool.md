@@ -22,7 +22,7 @@ EXAMPLES
     cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGPSDtMs
     cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password # Connect to RTK NTRIP base
     cltool -rp logs/20170117_222549                 # replay log files from a folder
-    cltool -c /dev/ttyS2 -uf fw/IS_uINS-3.hex -ub fw/SAMx70-Bootloader.bin -uv
+    cltool -c /dev/ttyS2 -uf fw/IS_uINS-3.hex -ub fw/bootloader-SAMx70.bin -uv
                                                     # update application firmware and bootloader
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
 
@@ -139,7 +139,7 @@ In order to update the firmware of your unit on the CLTool, follow these steps:
 1. Navigate to the directory with the CLTool executable
 1. Set the unit's COM port as an option, e.g. `-c COM15`
 1. Specify the FILEPATH to the .hex file, e.g. `-uf foo/bar/IS_uINS-3.hex`
-1. Optionally specify the bootloader BLFILEPATH to the .bin file, e.g. `-ub foo/bar/SAMx70-Bootloader.bin`
+1. Optionally specify the bootloader BLFILEPATH to the .bin file, e.g. `-ub foo/bar/bootloader-SAMx70.bin`
 1. Run the executable
 
 *Note: The firmware can only be updated at the following baud rates: 300000, 921600, 460800, 230400, 115200

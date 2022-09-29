@@ -110,7 +110,7 @@ $ sudo usermod -a -G plugdev $USER
 ```
 5. Run executable
 ``` bash
-$ ./ISBootloaderExample /dev/ttyUSB0 IS_uINS-3.hex SAMx70-Bootloader.bin
+$ ./ISBootloaderExample /dev/ttyUSB0 IS_uINS-3.hex bootloader-SAMx70.bin
 ```
 ## Compile & Run (Windows MS Visual Studio)
 
@@ -119,7 +119,7 @@ $ ./ISBootloaderExample /dev/ttyUSB0 IS_uINS-3.hex SAMx70-Bootloader.bin
 3. Build (F7)
 4. Run executable
 ``` bash
-C:\InertialSenseSDK\ExampleProjects\Bootloader\VS_project\Release\ISBootloaderExample.exe COM3 IS_uINS-3.hex SAMx70-Bootloader.bin
+C:\InertialSenseSDK\ExampleProjects\Bootloader\VS_project\Release\ISBootloaderExample.exe COM3 IS_uINS-3.hex bootloader-SAMx70.bin
 ```
 
 ## Summary
