@@ -21,7 +21,7 @@ Our flagship product was named the **uINS** which means miniature Inertial Navig
 - Dual-GNSS (GPS compassing) aided INS
 - Ground vehicle Dead Reckoning system
 
-The name **IMX** is a derivative of the acronym **IMU** implying additional capability. 
+The name **IMX** is a derivative of the acronym **IMU** and implies additional capability. 
 
 ## What is Inertial Navigation?
 
@@ -36,6 +36,32 @@ Inertial navigation is a technique of estimating position, velocity, and orienta
 **Signal Conditioning** - An INS filters out noise in the GPS data and provides a smoother, more continuous data stream.  
 
 **Orientation Data** - An INS is capable of observing the orientation (roll, pitch, and heading) of the system regardless of the motion or direction of travel.  This is because of how an INS fuses inertial data with GPS data.  A GPS with one antenna can measure direction of travel (ground track heading) but cannot estimate vehicle roll, pitch, or heading.
+
+## Our Sensors - IMU vs AHRS vs INS
+
+**Inertial Measurement Unit (IMU)** - Uses gyros and accelerometers to measure angular rate and linear acceleration.
+
+**Attitude Heading Reference System (AHRS)** - Adds sensor fusion to IMU and magnetometer output to estimate orientation or roll, pitch, and heading. 
+
+**Inertial Navigation System (INS)** - Adds sensor fusion to IMU, GPS, magnetometer, and barometer data to estimate orientation, velocity, and position. 
+
+### I have my own GPS system and just need raw motion data, which sensor is for me?
+
+If you have your own filters in place and need raw data for measuring motion, then the **IMU** is the best option. The IMU provides raw, calibrated data for temperature, 3D acceleration (accelerometer), 3D magnetic field (magnetometer), and 3D rate of turn.
+
+### Which sensor will also provide attitude (roll/pitch/yaw) and heading data?
+
+The **AHRS** sensor has all the capabilities of the IMU plus data on roll, pitch, and yaw. This sensor uses algorithms to fuse raw data from the IMU with the Earth’s gravity to provide orientation and is perfect for a robotic arm or indoor floor cleaner.
+
+**I need geographic positional data. Which sensor contains a GPS?**
+
+If the AHRS doesn’t get you what you need, packaging this with one or more GPS sensors will give you the geographic positional data you need. Like the AHRS, your sensor or should provide some sort of “sensor fusion” by combining all the data from each of these sensors to give a more accurate and holistic view of your rover’s state.
+
+**What do I need to get started?**
+
+We recommend beginning with some sort of Development Kit. Ours comes with all of the necessary components to simplify testing and integration: the sensor you selected, the needed cable and antennas for connectivity, the firmware & software, and 3-5 hrs of complementary engineering support from a team of Inertial Sense engineers. 
+
+Additionally, Inertial Sense provides customers with a custom datalogger, called the EvalTool. An easy to use data logging software to test and troubleshoot your new sensor is **essential** to your sensor integration experience.
 
 ## How long can the IMX dead reckoning estimate position without GPS?
 
