@@ -6,7 +6,7 @@ An Inertial Measurement Unit (IMU) is industry qualified as "Tactical Grade" whe
 
 IEEE-STD-952-1997 defines IRBS as the minima on the Allan Variance curve. The following plots identify the Allan Variance representation of four IMX-5 tactical grade IMUs (serial numbers 60071, 60079, 60112, and 60114).
 
-![RUG-3-IMX-5 Gyro Allan Variance](images/rug-3-imx-5-allan-variance.png)
+![RUG-3-IMX-5 Gyro Allan Variance](images/rug-3-imx-5-allan-variance-gyro.png)
 
 ## Why the name change from *uINS* to *IMX*?
 
