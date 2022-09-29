@@ -1,5 +1,28 @@
 # Frequently Asked Questions
 
+## What is a Tactical Grade IMU?
+
+An Inertial Measurement Unit (IMU) is industry qualified as "Tactical Grade" when the In Run Bias Stability (IRBS) of the gyroscopes is between 0.5 deg/hour and 5 deg/hour.  The IRBS represents the IMU stability during benign conditions (i.e. ideal integration time, stable temperature, and no inertial motion).
+
+IEEE-STD-952-1997 defines IRBS as the minima on the Allan Variance curve. The following plots identify the Allan Variance representation of four IMX-5 tactical grade IMUs (serial numbers 60071, 60079, 60112, and 60114).
+
+![RUG-3-IMX-5 Gyro Allan Variance](images/rug-3-imx-5-allan-variance.png)
+
+## Why the name change from *uINS* to *IMX*?
+
+Our flagship product was named the **uINS** which means miniature Inertial Navigation System (INS).  This name has helped others to recognize the inertial navigation functionality.  However, we felt that a more generic name would better cover all of the various functionality and capabilities contained in the **IMX**, namely: 
+
+- Tactical grade Inertial Measurement Unit (IMU)
+- Barometer and magnetometer sensors
+- Vertical Reference Unit (VRU)
+- Attitude Heading Reference System (AHRS)
+- GNSS aided Inertial Navigation System (GNSS-INS or GPS-INS)
+- RTK-GNSS aided INS
+- Dual-GNSS (GPS compassing) aided INS
+- Ground vehicle Dead Reckoning system
+
+The name **IMX** is a derivative of the acronym **IMU** implying additional capability. 
+
 ## What is Inertial Navigation?
 
 Inertial navigation is a technique of estimating position, velocity, and orientation (roll, pitch, heading) by integrating IMU inertial motion data from gyros and accelerometers to continuously calculate the dead reckoning position.  The inertial sensors are supplemented with other sensors such as GPS, altimeter, and magnetometer.  Inertial navigation is commonly used on moving vehicles such as mobile robots, ships, aircraft, submarines, guided missiles, and spacecraft.   
@@ -16,11 +39,11 @@ Inertial navigation is a technique of estimating position, velocity, and orienta
 
 ## How long can the IMX dead reckoning estimate position without GPS?
 
-The IMX inertial navigation integrates the IMU data to dead reckoning position and velocity estimation between GPS updates and for a short period of time during GPS outages.  This dead reckoning is designed to filter out GPS noise and provide cleaner faster updates than are available via GPS alone. The IMX dead-reckons, or estimates position and velocity, between GPS updates and through brief GPS outages.  However, it is not designed for extended position navigation without GPS aiding.  Dead reckoning is disabled after 5 seconds of GPS outage in order to constrain position and velocity drift.  The amount of position drift during dead reckoning can vary based on several factors, including system runtime, motion experienced, and bias stability.  
+The IMX inertial navigation integrates the IMU data to dead reckoning position and velocity estimation between GPS updates and for a short period of time during GPS outages.  This dead reckoning is designed to filter out GPS noise and provide cleaner faster updates than are available via GPS alone. The IMX dead-reckons, or estimates position and velocity, between GPS updates and through brief GPS outages.  However, it is not designed for extended position navigation without GPS aiding.  Dead reckoning is disabled after 7 seconds of GPS outage in order to constrain position and velocity drift.  The amount of position drift during dead reckoning can vary based on several factors, including system runtime, motion experienced, and bias stability.  
 
 ## Can the IMX estimate position without GPS?
 
-No.  GPS is required to provide initial position estimation and to aid in IMU bias estimation.  The IMX can dead reckon (estimate position without GPS) for brief periods of time.  However, the quality of dead reckoning is a function of IMU bias estimation, which improves while the GPS is aiding the INS.      
+IMX can estimate the position for extended periods of time without GPS for ground vehicle dead reckoning applications only (see [Ground Vehicle Dead Reckoning](dead-reckoning/dead_reckoning)).  When in standard mode (not ground vehicle dead reckoning) GPS is required to provide initial position estimation and to aid in IMU bias estimation.  The IMX can dead reckon (estimate position without GPS) for brief periods of time.  However, the quality of dead reckoning is a function of IMU bias estimation, which improves while the GPS is aiding the INS.      
 
 ## How does vibration affect navigation accuracy? 
 

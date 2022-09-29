@@ -801,9 +801,9 @@ Flash memory configuration
 | startupNavDtMs | uint32_t | Nav filter (system output data) update period in milliseconds set on startup. 1ms minimum (1KHz max). |
 | ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
 | ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
-| insRotation | float[3] | Rotation in radians about the X, Y, Z axes from INS Sensor Frame to Intermediate Output Frame.  Order applied: Z, Y, X. |
+| insRotation | float[3] | Rotation in radians about the X, Y, Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z, Y, X. |
 | insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
-| gps1AntOffset | float[3] | X,Y,Z offset in meters from Sensor Frame origin to GPS 1 antenna. |
+| gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
 | insDynModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
 | debug | uint8_t | Debug |
 | gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
@@ -814,7 +814,7 @@ Flash memory configuration
 | lastLlaWeek | uint32_t | Last LLA GPS number of weeks since January 6th, 1980 |
 | lastLlaUpdateDistance | float | Distance between current and last LLA that triggers an update of lastLla  |
 | ioConfig | uint32_t | Hardware interface configuration bits (see eIoConfig). |
-| platformConfig | uint32_t | Hardware platform (IMX carrier board, i.e. RUG-3, EVB-3, IG-1) configuration bits (see ePlatformConfig) |
+| platformConfig | uint32_t | Hardware platform (IMX carrier board, i.e. RUG, EVB, IG) configuration bits (see ePlatformConfig) |
 | gps2AntOffset | float[3] | X,Y,Z offset in meters from DOD_ Frame origin to GPS 2 antenna. |
 | zeroVelRotation | float[3] | Euler (roll, pitch, yaw) rotation in radians from INS Sensor Frame to Intermediate ZeroVelocity Frame.  Order applied: heading, pitch, roll. |
 | zeroVelOffset | float[3] | X,Y,Z offset in meters from Intermediate ZeroVelocity Frame to Zero Velocity Frame. |
@@ -1023,6 +1023,16 @@ EVB-2 RTOS information.
 | mallocSize | uint32_t | Total memory allocated using RTOS pvPortMalloc() |
 | freeSize | uint32_t | Total memory freed using RTOS vPortFree() |
 | task | rtos_task_t[] | Tasks |
+
+
+#### DID_GPS1_TIMEPULSE
+
+
+
+`gps_timepulse_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
 
 
 #### DID_GROUND_VEHICLE
@@ -1776,7 +1786,7 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_FLASH_WRITE_IN_PROGRESS | 0x00008000 |
 | HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
 | HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
-| HDW_STATUS_ERR_GPS_PPS_ERROR | 0x00040000 |
+| HDW_STATUS_ERR_NO_GPS_PPS | 0x00040000 |
 | HDW_STATUS_GPS_PPS_TIMESYNC | 0x00080000 |
 | HDW_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x00F00000 |
 | HDW_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 20 |
