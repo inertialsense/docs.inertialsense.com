@@ -10,7 +10,7 @@ IEEE-STD-952-1997 defines IRBS as the minima on the Allan Variance curve. The fo
 
 ## Why the name change from *uINS* to *IMX*?
 
-Our flagship product was named the **uINS** which means miniature Inertial Navigation System (INS).  This name has helped others to recognize the inertial navigation functionality.  However, we felt that a more generic name would better cover all of the various functionality and capabilities contained in the **IMX**, namely: 
+The name **IMX** means inertial measurement device with extensible capabilities.  IMX is a derivative of the acronym **IMU**.  Our flagship product was named the **uINS** which means miniature Inertial Navigation System (INS).  This name has helped others to recognize the inertial navigation functionality.  However, we felt that a more generic name would better cover all of the various functionality and capabilities contained in the **IMX**, namely: 
 
 - Tactical grade Inertial Measurement Unit (IMU)
 - Barometer and magnetometer sensors
@@ -20,8 +20,6 @@ Our flagship product was named the **uINS** which means miniature Inertial Navig
 - RTK-GNSS aided INS
 - Dual-GNSS (GPS compassing) aided INS
 - Ground vehicle Dead Reckoning system
-
-The name **IMX** is a derivative of the acronym **IMU** and implies additional capability. 
 
 ## What is Inertial Navigation?
 
