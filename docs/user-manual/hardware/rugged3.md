@@ -81,15 +81,15 @@ The Rugged 3.0 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS
 | RUG-3 Pin<br/>IMX Pin | 7,9<br/>G3,G4<br/>(G5,G8) | 8,10<br/>G1,G2 | 11,12<br/>G1,G2 | GPS1 | GPS2 |
 | --------------------- | ------------------------- | -------------- | --------------- | ---- | ---- |
 | **I/O Preset**        |                           |                |                 |      |      |
-| 0 *                   | S0 RS232                  |                | CAN             | S1   |      |
-| 1                     | S0 TTL                    |                | CAN             | S1   |      |
-| 2                     | S0 TTL                    | S2 TTL         |                 | S1   |      |
-| 3                     | S0 RS232                  | S1 RS232       |                 | S2   |      |
-| 4                     | S2 RS485                  | S2 RS485       |                 | S2   | S0   |
-| 5                     | SPI                       | SPI            |                 | S2   | S0   |
-| 6 **                  |                           | S1 RS232       |                 | S2   | S0   |
-| 7                     |                           |                | CAN             | S1   | S0   |
-| 8                     |                           | S2 TTL         |                 | S1   | S0   |
+| 1 *                   | S0 RS232                  |                | CAN             | S1   |      |
+| 2                     | S0 TTL                    |                | CAN             | S1   |      |
+| 3                     | S0 TTL                    | S2 TTL         |                 | S1   |      |
+| 4                     | S0 RS232                  | S1 RS232       |                 | S2   |      |
+| 5                     | S2 RS485                  | S2 RS485       |                 | S2   | S0   |
+| 6                     | SPI                       | SPI            |                 | S2   | S0   |
+| 7 **                  |                           | S1 RS232       |                 | S2   | S0   |
+| 8                     |                           |                | CAN             | S1   | S0   |
+| 9                     |                           | S2 TTL         |                 | S1   | S0   |
 
 <sup>\* RUG-3.0-G0 default<br/>\** RUG-3.0-G2 default</sup>
 
