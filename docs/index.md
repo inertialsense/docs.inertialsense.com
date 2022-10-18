@@ -31,7 +31,7 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
   - **Accel: 19 µg Bias Instability, 0.02 m/s/√hr VRW**
 * **High Accuracy INS (w/ IMX-5): 0.03° Roll/Pitch, 0.1° Dynamic Heading**
 * **Surface Mount Reflowable (PCB Module)**
-* Up to 1KHz IMU and INS Output Data Rate
+* Up to 1KHz IMU Output Data Rate
 * Small Form Factor: 15.6 x 12.5 x 2.9 mm
 * Light Weight: 0.8 g
 * Low power consumption: <110mW
