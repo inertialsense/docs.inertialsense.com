@@ -62,11 +62,13 @@ The latest EvalTool, CLTool, SDK, and firmware can be used once the firmware has
 !!! important 
     Please notify support@inertialsense.com if this step is necessary so that we can keep track of cause of failures and provide you any necessary support.
 
-#### uINS Chip Erase Pad
+#### IMX Chip Erase Pad
+
+3.3V (available on pin 22) should be applied to the chip erase pin (17) while the power is cycled in order to chip erase the IMX.   
 
 ![Module Chip Erase Pin](../images/module_chip_erase.png)
 
-<center>**Short pin 17 to pin 22 to chip erase uINS.**</center>
+<center>**Connect +3.3V to pin 17 (CE) while power cycling the IMX to chip erase IMX.**</center>
 
 #### EVB-2 Chip Erase Pads
 
@@ -74,11 +76,15 @@ The latest EvalTool, CLTool, SDK, and firmware can be used once the firmware has
 
 <center>**Short R25 pads to chip erase uINS.
     <br>Short R53 pads to chip erase EVB-2.**</center>
-#### Rugged-2 Chip Erase Pads
+#### Rugged Chip Erase Pads
 
-![Rugged-2 Chip Erase Pads](../images/rug2_chip_erase.png)
+The chip erase pads on the Rugged-3 are a set of 0402 SMT pads with the label "ERASE".  Shorting these pads will apply +3.3V to the IMX chip erase pin 17.  The power must be cycled while shorting these pads in order to apply chip erase to the IMX-5.
 
-<center>**Short pads to chip erase uINS.**</center>
+![Rugged-3 Chip Erase Pads](../images/rug3_chip_erase_cad.jpg)
+
+![](../images/rug_chip_erase.jpg)
+
+<center>**Short "ERASE" pads to chip erase.**</center>
 
 #### Restore Firmware
 
