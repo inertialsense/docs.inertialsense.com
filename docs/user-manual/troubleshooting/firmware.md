@@ -74,17 +74,17 @@ The latest EvalTool, CLTool, SDK, and firmware can be used once the firmware has
 
 ![EVB-2 Chip Erase Pads](../images/evb2_chip_erase.png)
 
-<center>**Short R25 pads to chip erase uINS.
-    <br>Short R53 pads to chip erase EVB-2.**</center>
+<center>**Short R25 pads together to chip erase uINS.
+    <br>Short R53 pads together to chip erase EVB-2.**</center>
 #### Rugged Chip Erase Pads
 
-The chip erase pads on the Rugged-3 are a set of 0402 SMT pads with the label "ERASE".  Shorting these pads will apply +3.3V to the IMX chip erase pin 17.  The power must be cycled while shorting these pads in order to apply chip erase to the IMX-5.
+The chip erase pads on the Rugged-3 are a set of 0402 SMT pads with the label "ERASE".  Shorting these pads together will apply +3.3V to the IMX chip erase pin 17.  The power must be cycled while shorting these pads in order to apply chip erase to the IMX-5.
 
 ![Rugged-3 Chip Erase Pads](../images/rug3_chip_erase_cad.jpg)
 
 ![](../images/rug_chip_erase.jpg)
 
-<center>**Short "ERASE" pads to chip erase.**</center>
+<center>**Short "ERASE" pads together to chip erase.**</center>
 
 #### Restore Firmware
 
