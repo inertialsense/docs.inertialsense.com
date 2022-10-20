@@ -65,11 +65,12 @@ The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow
 
 The default forward direction is indicated in the PCB footprint figure and on the silkscreen as the X axis. The forward direction is reconfigurable in software as necessary.
 
-[Download PDF](https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-IMX-5-Dual.pdf)
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-1-IMX-5-Dual.pdf)
 
-<object data="https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-IMX-5-Dual.pdf" type="application/pdf" width="700px" height="1150px" >
-    <embed src="https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-IMX-5-Dual.pdf" type="application/pdf" />
+<object data="https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-1-IMX-5-Dual.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-1-IMX-5-Dual.pdf" type="application/pdf" />
 </object>
+
 
 
 ## Design Files
