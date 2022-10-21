@@ -76,7 +76,7 @@ Vector accMinusGravity;
 // Rotate gravity into body frame
 quatConjRot( gravityBody, DID_INS_2.qn2b, gravityNED );
 // Subtract gravity from IMU acceleration output
-sub_Vec3_Vec3( accMinusGravity, DID_DUAL_IMU.I[0].acc, gravityBody );
+sub_Vec3_Vec3( accMinusGravity, DID_IMU.I[0].acc, gravityBody );
 ```
 
 ### ECEF frame to NED frame

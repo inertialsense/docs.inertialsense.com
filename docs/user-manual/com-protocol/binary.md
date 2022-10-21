@@ -42,13 +42,13 @@ if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 | DID                                                    | Update Rate (Period)                                         |
 | ------------------------------------------------------ | ------------------------------------------------------------ |
 | DID_INS_[1-4]                                          | (4ms default) Configured with DID_FLASH_CONFIG.startupNavDtMs |
-| DID_DUAL_IMU, <br/>DID_PIMU<sup>*</sup>   | (4ms default) Configured with DID_FLASH_CONFIG.startupImuDtMs |
+| DID_IMU, <br/>DID_PIMU<sup>*</sup>   | (4ms default) Configured with DID_FLASH_CONFIG.startupImuDtMs |
 | DID_BAROMETER                                          | ~8ms                                                         |
 | DID_MAGNETOMETER_[1-2]                                 | ~10ms                                                        |
 | DID_GPS[1-2]_[X] <br/>(Any DID beginning with DID_GPS) | (200ms default) Configured with DID_FLASH_CONFIG. startupGPSDtMs |
 | All other DIDs                                         | 1ms                                                          |
 
-<sup>*DID_PIMU integration period (dt) and output data rate are the same as DID_FLASH_CONFIG.startupNavDtMs and cannot be output at any other rate.  If a different output data rate is desired, DID_DUAL_IMU which is derived from DID_PIMU can be used instead.</sup>
+<sup>*DID_PIMU integration period (dt) and output data rate are the same as DID_FLASH_CONFIG.startupNavDtMs and cannot be output at any other rate.  If a different output data rate is desired, DID_IMU which is derived from DID_PIMU can be used instead.</sup>
 
 #### Realtime Message Controller (RMC)
 

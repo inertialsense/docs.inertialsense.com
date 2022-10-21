@@ -95,11 +95,9 @@ static void cltool_dataCallback(InertialSense* i, p_data_t* data, int pHandle)
 		d.ins1.theta; // euler attitude
 		d.ins1.lla; // latitude, longitude, altitude
 	break;
-	case DID_DUAL_IMU: d.dualImu; break;
-	case DID_DELTA_THETA_VEL: d.dThetaVel; break;
-	case DID_IMU_1: d.imu; break;
-	case DID_IMU_2: d.imu; break;
-	case DID_GPS: d.gps; break;
+	case DID_IMU: d.dualImu; break;
+	case DID_PIMU: d.dThetaVel; break;
+	case DID_GPS1_POS: d.gpsPos; break;
 	case DID_MAGNETOMETER: d.mag; break;
 	case DID_BAROMETER: d.baro; break;
 	case DID_SYS_SENSORS: d.sysSensors; break;
