@@ -1,4 +1,4 @@
-# INS & GNSS Configuration
+# IMU INS GNSS Configuration
 
 ## Translation
 
