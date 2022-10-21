@@ -162,7 +162,7 @@ $PIMU,lf,f,f,f,f,f,f,f,f,f,f,f,f*xx\r\n
 | 13    | IMU2 acc[2]   | m/s2    | IMU2 linear acceleration – Z   |
 
 ### PPIMU
-Preintegrated dual inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame.  Also known as conning and sculling integrals.
+Preintegrated dual inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame.  Also known as coning and sculling integrals.
 
 ```
 $PPIMU,lf,f,f,f,f,f,f,f,f,f,f,f,f,f*xx\r\n
