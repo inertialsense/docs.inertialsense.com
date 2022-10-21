@@ -216,7 +216,7 @@ The EVB-2 and IMX firmware can be updated using the EVB-USB connector and only t
 
 The [EVB-2 PCB assembly design files](https://github.com/inertialsense/IS-hdw-EVB2) are available as open source hardware on GitHub.
 
-In particular, full schematics for the board can be found [here](https://github.com/inertialsense/IS-hdw-EVB2/blob/master/Schematic/EVB-2-1-2_Schematic%20Prints.PDF)
+In particular, full schematics for the board can be found [here](https://github.com/inertialsense/IS-hdw-EVB2/blob/master/Schematic/EVB-2-1-2_Schematic%20Prints.PDF).
 
 ## XBee Radio Frequencies
 
