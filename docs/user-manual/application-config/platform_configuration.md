@@ -12,4 +12,4 @@ The platform config type can be set through the EvalTool General Settings and GP
 
 The pin assignments on the RUG-3 are software configurable using the `PLATFORM_CFG_PRESET_MASK` bits of the `DID_FLASH_CONFIG.platformConfig`.   The `PLATFORM_CFG_TYPE` must be set to one of the RUG-3 types to enable the I/O Presets configuration on the RUG-3. 
 
-![RUG-3 I/O Presets](images/platform_rug3_presets.png)
+![RUG-3 IO Presets](images/platform_rug3_presets.png)
