@@ -34,9 +34,8 @@ PPD logs are created by enabling PPD data streaming by setting the RMC bits to `
 
 The following steps outline how to record post process data in the EvalTool
 
-1. Go to the "Data Logs" tab in the EvalTool.
-2. Press "**Data Streams: RMC Preset: PPD**" button to start PPD data streaming. 
-3. Toggle the "**Data Log: Enable**" button to start logging.
+1. Go to the "**Data Logs**" tab in the EvalTool.
+2. Press the "**Data Log: PPD Log**" button to start logging.
 4. Toggle the "**Data Log: Disable**" button to stop logging.
 5. The "**Open Folder**" button will open the directory where the data logs are stored.
 
