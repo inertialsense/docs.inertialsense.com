@@ -744,10 +744,9 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 |-------|------|-------------|
 | gnssId | uint8_t | GNSS identifier: 0 GPS, 1 SBAS, 2 Galileo, 3 BeiDou, 5 QZSS, 6 GLONASS |
 | svId | uint8_t | Satellite identifier |
-| cno | uint8_t | (dBHz) Carrier to noise ratio (signal strength) |
+| cno | uint8_t[MAX_NUM_RTK_FREQ] | (dBHz) Carrier to noise ratio (signal strength) per frequency |
 | elev | int8_t | (deg) Elevation (range: +/-90) |
 | azim | int16_t | (deg) Azimuth (range: +/-180) |
-| prRes | int16_t | (m) Pseudo range residual |
 | flags | uint32_t | (see eSatSvFlags) |
 
 
@@ -1240,19 +1239,6 @@ Data rate and status monitoring for each communications port.
 | port | port_monitor_set_t[6] | Port monitor set |
 
 
-#### DID_POSITION_MEASUREMENT
-
-External position estimate 
-
-`pos_measurement_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| timeOfWeek | double | GPS time of week (since Sunday morning) in seconds |
-| ecef | double[3] | Position in ECEF (earth-centered earth-fixed) frame in meters |
-| psi | float | Heading with respect to NED frame (rad |
-
-
 #### DID_REFERENCE_IMU
 
 Raw reference or truth IMU used for manufacturing calibration and testing. Input from testbed. 
@@ -1662,8 +1648,8 @@ System status and configuration is made available through various enumeration an
 | GFC_INIT_SENSORS | 0x00000100 |
 | GFC_INIT_SPI | 0x00000200 |
 | GFC_CONFIG_SPI | 0x00000400 |
-| GFC_INIT_GPS1 | 0x00000800 |
-| GFC_INIT_GPS2 | 0x00001000 |
+| GFC_INIT_GNSS1 | 0x00000800 |
+| GFC_INIT_GNSS2 | 0x00001000 |
 | GFC_FLASH_INVALID_VALUES | 0x00002000 |
 | GFC_FLASH_CHECKSUM_FAILURE | 0x00004000 |
 | GFC_FLASH_WRITE_FAILURE | 0x00008000 |
@@ -1818,9 +1804,6 @@ System status and configuration is made available through various enumeration an
 | IMU_STATUS_SATURATION_IMU3_ACC | 0x00000020 |
 | IMU_STATUS_SATURATION_MASK | 0x0000003F |
 | IMU_STATUS_MAG_UPDATE | 0x00000100 |
-| IMU_STATUS_RESERVED2 | 0x00000400 |
-| IMU_STATUS_SATURATION_HISTORY | 0x00000100 |
-| IMU_STATUS_SAMPLE_RATE_FAULT_HISTORY | 0x00000200 |
 | IMU_STATUS_GYR1_OK | 0x00010000 |
 | IMU_STATUS_GYR2_OK | 0x00020000 |
 | IMU_STATUS_GYR3_OK | 0x00040000 |
