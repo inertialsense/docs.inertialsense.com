@@ -132,7 +132,7 @@ To enable IMX CAN interface on H2, the U5 transceiver IC (TCAN334) must be loade
 | ![](../images/square-orange.png) 8 | TxD                                                | O    | Serial output to radio receive pin (TTL) PD26.               |
 | ![](../images/square-yellow.png) 9 | <span style="text-decoration: overline">RST</span> | O    | Reset pin                                                    |
 
-#### **H7 (μINS Connections)**   
+#### **H7 (IMX Connections)**   
 
 Pins on H7 (IMX) are shared with the EVB-2 processor.  To prevent conflict when using H7, set EVB-2 CBPreset to 6 or 7 (USB hub mode) to prevent the EVB-2 processor from asserting any I/O on the H7.
 
