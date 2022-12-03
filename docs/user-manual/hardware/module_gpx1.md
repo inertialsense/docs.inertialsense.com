@@ -8,7 +8,7 @@
 
 ## Pinout
 
-The GPX-1 module footprint and pinout is roughtly equivalent to the IMX-5, but the module's long end has been extended to accomodate additional internal components and GNSS RF inputs.
+The GPX-1 module footprint and pinout is roughly equivalent to the IMX-5, but the module has been extended to accommodate additional internal components and GNSS RF inputs.
 
 <center>
 
@@ -22,7 +22,7 @@ The GPX-1 module footprint and pinout is roughtly equivalent to the IMX-5, but t
 | 0    | Not Connected                                 |  -   | Not connected internally.  May be left floating or connected to ground (GND). |
 | 1    | USB_P                                         | I/O  | USB full-speed Positive Line. USB will be supported in future firmware updates.           |
 | 2    | USB_N                                         | I/O  | USB full-speed Negative Line. USB will be supported in future firmware updates.           |
-| 3    | VBAT                                          | -    | Backup supply voltage (1.65V to 3.6V). Future firmware updates will use voltage applied on this pin to backup GNSS ephemeris, almanac, and other operating parameters for a faster startup when VCC is applied again. If not used connect to VCC or leave floating. |
+| 3    | VBKUP                                       | -    | Backup supply voltage (1.65V to 3.6V). Future firmware updates will use voltage applied on this pin to backup GNSS ephemeris, almanac, and other operating parameters for a faster startup when VCC is applied again. If not used connect to VCC or leave floating. |
 | 4    | G1/Rx2/RxCAN/SCL                              | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line |
 | 5    | G2/Tx2/TxCAN/SDA/STROBE                        | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | 6    | G6/Rx1/MOSI                                   | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI                        |
@@ -31,8 +31,9 @@ The GPX-1 module footprint and pinout is roughtly equivalent to the IMX-5, but t
 | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY        | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
 | 11,12,14,16,31,P | GND                               | -    | Supply ground                                          |
-| 13   | GNSS1_RF                                      | I    | GNSS1 RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software). |
-| 15   | GNSS2_RF                                      | I    | GNSS2 RF input. Same requirements as GNSS1_RF |
+| 13   | GNSS1_RF_IN                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software). |
+| 15   | GNSS2_RF_IN                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
+| 21 | GNSS2_PPS_OUT | O | GNSS2 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 22   | nRESET                                        | I    | System reset on logic low. May be left unconnected if not used. |
 | 23   | G14/SWCLK                                     | I/O  | GPIO14                                       |
 | 24   | G13/DRDY/XSDA                                 | I/O  | GPIO13<br /> SPI Data Ready<br /> Alt I2C SDA                                           |
@@ -41,7 +42,7 @@ The GPX-1 module footprint and pinout is roughtly equivalent to the IMX-5, but t
 | 27   | G10/CHIP_ERASE                                | I/O  | Leave unconnected. CHIP ERASE used in manufacturing. !!! WARNING !!! Asserting a logic high will erase all flash memory, including calibration data. |
 | 28   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 29   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
-| 30   | GNSS_PPS                                      | O    | GNSS PPS time synchronization output pulse (1Hz, 10% duty cycle)  |
+| 30   | GNSS1_PPS_OUT                                 | O    | GNSS1 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 32   | VCC                                           | I    | 3.3V supply input                                                 |
 
 <sup>\*</sup>External transceiver required for CAN interface.
