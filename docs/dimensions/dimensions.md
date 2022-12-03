@@ -10,6 +10,14 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout_IMX-5.pdf" type="application/pdf" />
 </object>
 
+### GPX-1 (Module)
+
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-GPX-1.0_Dimensions_and_Pinout_GPX-1.pdf)
+
+<object data="https://docs.inertialsense.com/dimensions/IS-GPX-1.0_Dimensions_and_Pinout_GPX-1.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-GPX-1.0_Dimensions_and_Pinout_GPX-1.pdf" type="application/pdf" />
+</object>
+
 ### RUG-3-IMX-5
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G0_Dimensions_and_Pinout_RUG-3-IMX-5.pdf)

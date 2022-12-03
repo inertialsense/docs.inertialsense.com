@@ -2,17 +2,15 @@
 
 <center>
 
-![GPX-1](../images/IMX_5.0_800w.jpg)
+![GPX-1](../images/GPX_1.0_800w.jpg)
 
 </center>
 
 ## Pinout
 
-The GPX-1 module footprint and pinout is roughly equivalent to the IMX-5, but the module has been extended to accommodate additional internal components and GNSS RF inputs.
+The GPX-1 module footprint and pinout similar that of the IMX-5 such that the common power and interface pins are at the same location.  The GPX-1 is extended to accommodate additional GNSS inputs and output.  The GPX-1 is designed to work in conjunction with the IMX-5.
 
 <center>
-
-
 ![](../images/GPX1_pinout.png)
 
 </center>
