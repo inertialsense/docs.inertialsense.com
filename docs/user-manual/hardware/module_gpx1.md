@@ -11,7 +11,8 @@
 The GPX-1 module footprint and pinout similar that of the IMX-5 such that the common power and interface pins are at the same location.  The GPX-1 is extended to accommodate additional GNSS inputs and output.  The GPX-1 is designed to work in conjunction with the IMX-5.
 
 <center>
-![](../images/GPX1_pinout.png)
+
+![](../images/gpx1_pinout.png)
 
 </center>
 
@@ -47,9 +48,22 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 
 ## Application
 
+### GNSS-INS Block Diagram
+
+![GPX-1 Block Diagram](images/gpx1_imx1_host_diagram.svg)
+
+!!! important
+    Active antenna(s) are required for the GPX-1.
+
+### Typical Application: GPX-1 IMX-5
+
+![GPX-1 Typical Application](images/gpx1_imx5_typical_app.svg)
+
+![GPX-1 IMX-5 Layout](images/gpx1_imx5_layout_3d.png)
+
 ## Soldering
 
-The GPX-1 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual
+The GPX-1 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual.
 
 ## Hardware Design
 
