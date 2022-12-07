@@ -18,7 +18,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 
 | Pin  | Name                                          | I/O  | Description                                                  |
 | ---- | --------------------------------------------- | ---- | ------------------------------------------------------------ |
-| 0    | GND                              |  -   | Supply ground on center pads |
+| 0    | GND                              |  -   | Supply ground on center pads. |
 | 1    | USB_P                                         | I/O  | USB full-speed Positive Line. USB will be supported in future firmware updates.           |
 | 2    | USB_N                                         | I/O  | USB full-speed Negative Line. USB will be supported in future firmware updates.           |
 | 3    | VBKUP                                       | -    | Backup supply voltage (1.65V to 3.6V). Future firmware updates will use voltage applied on this pin to backup GNSS ephemeris, almanac, and other operating parameters for a faster startup when VCC is applied again. If not used connect to VCC or leave floating. |
