@@ -12,7 +12,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 
 <center>
 
-![](../images/gpx1_pinout.png)
+![](../images/gpx1_pinout.jpg)
 
 </center>
 
@@ -29,9 +29,10 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY        | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
-| 11,12,14,16,31,P | GND                               | -    | Supply ground                                          |
-| 13   | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software). |
-| 15   | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
+| 11,13,15,31,0 | GND                               | -    | Supply ground                                          |
+| 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-12V TVS diode for ESD and surge projection. |
+| 14 | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
+| 16 | VCC_RF | O | GNSS active antenna supply.  Connect through 33nH inductor to GNSS1_RF and GNSS2_RF to inject DC supply for active antenna(s). |
 | 21 | GNSS2_PPS | O | GNSS2 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 22   | nRESET                                        | I    | System reset on logic low. May be left unconnected if not used. |
 | 23   | G14/SWCLK                                     | I/O  | GPIO14                                       |
