@@ -53,14 +53,39 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 
 ![GPX-1 Block Diagram](images/gpx1_imx1_host_diagram.svg)
 
-!!! important
-    Active antenna(s) are required for the GPX-1.
-
 ### Typical Application: GPX-1 IMX-5
 
 ![GPX-1 Typical Application](images/gpx1_imx5_typical_app.svg)
 
 ![GPX-1 IMX-5 Layout](images/gpx1_imx5_layout_3d.png)
+
+## Layout Guidance
+
+### GNSS_RF Trace
+
+The GNSS_RF trace should be designed to work in the combined GNSS L1 + L5 signal band.
+
+For FR-4 PCB material with a dielectric permittivity of for example 4.2, the trace width for the 50 Ω line impedance can be calculated.
+
+A grounded co-planar RF trace is recommended as it provides the maximum shielding from noise with adequate vias to the ground layer.
+
+The RF trace must be shielded by vias to ground along the entire length of the trace and the ZEDF9P RF_IN pad should be surrounded by vias as shown in the figure below.
+
+[INSERT LAYOUT FIGURE HERE]
+
+## Design Guidance
+
+### Backup Battery
+
+For achieving a minimal Time To First Fix (TTFF) after a power down (warm starts, hot starts), make sure to connect a backup battery to V_BCKP.
+
+- Verify your battery backup supply can provide the battery backup current specified in the ZEDF9P datasheet.
+- Allow all I/O including UART and other interfaces to float/high impedance in battery backup mode (battery back-up connected with VCC removed).
+
+### RF Front-end Circuit Options
+
+!!! important
+    Active antenna(s) are required for the GPX-1.
 
 ## Soldering
 
