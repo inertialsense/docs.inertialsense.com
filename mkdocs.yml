@@ -160,7 +160,7 @@ nav:
   - FAQ: user-manual/faq.md
   - Troubleshooting: 
     - Firmware: user-manual/troubleshooting/firmware.md
-    - Firmware: user-manual/troubleshooting/chip_erase.md
+    - Chip Erase: user-manual/troubleshooting/chip_erase.md
     - GNSS: user-manual/troubleshooting/gnss.md
     
     
