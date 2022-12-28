@@ -18,9 +18,9 @@ The [Inertial Sense software development kit (SDK)](https://github.com/inertials
 
 ### Downloads
 
- * [SDK Example Projects]( https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects) - Compliable source code projects that demonstrations of how to use the SDK.
+ * [SDK Example Projects]( https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects) - Source code projects that demonstrations of how to use the SDK.
  * [Software Releases](https://github.com/inertialsense/InertialSenseSDK/releases) - IMX, uAHRS, uIMU, and EVB-2 firmware and application installers.
- * [SDK & CLTool Source Code](https://github.com/inertialsense/InertialSenseSDK) - open source SDK repository with command line tool and example C/C++ source code.
+ * [SDK & CLTool Source Code](https://github.com/inertialsense/InertialSenseSDK) - Open source SDK repository with command line tool and example C/C++ source code.
 
 ### Hardware Design Files
 
