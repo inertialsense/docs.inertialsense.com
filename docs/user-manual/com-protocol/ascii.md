@@ -138,53 +138,41 @@ The field codes used in the message descriptions are: lf = double, f = float, d 
 
 ### PIMU
 
-Dual IMU sensor data (two sets of 3-axis gyros and accelerometers) in the body frame.
+IMU sensor data (3-axis gyros and accelerometers) in the body frame.
 
 ```
-$PIMU,lf,f,f,f,f,f,f,f,f,f,f,f,f*xx\r\n
-       1 2 3 4 5 6 7 8 9 0 1 2 3
+$PIMU,lf,f,f,f,f,f,f*xx\r\n
+       1 2 3 4 5 6 7
 ```
 
-| Index | Field         | Units   | Description                    |
-| ----- | ------------- | ------- | ------------------------------ |
-| 1     | time          | sec     | Time since system power up     |
-| 2     | IMU1 pqr[0]   | rad/sec | IMU1 angular rate gyro – pitch |
-| 3     | IMU1 pqr[1]   | rad/sec | IMU1 angular rate gyro – roll  |
-| 4     | IMU1 pqr[2]   | rad/sec | IMU1 angular rate gyro – yaw   |
-| 5     | IMU1 acc[0]   | m/s2    | IMU1 linear acceleration – X   |
-| 6     | IMU1 acc[1]   | m/s2    | IMU1 linear acceleration – Y   |
-| 7     | IMU1 acc[2]   | m/s2    | IMU1 linear acceleration – Z   |
-| 8     | IMU2 pqr[0]   | rad/sec | IMU2 angular rate gyro – pitch |
-| 9     | IMU2 pqr[1]   | rad/sec | IMU2 angular rate gyro – roll  |
-| 10    | IMU2 pqr[2]   | rad/sec | IMU2 angular rate gyro – yaw   |
-| 11    | IMU2 acc[0]   | m/s2    | IMU2 linear acceleration – X   |
-| 12    | IMU2 acc[1]   | m/s2    | IMU2 linear acceleration – Y   |
-| 13    | IMU2 acc[2]   | m/s2    | IMU2 linear acceleration – Z   |
+| Index | Field      | Units   | Description                   |
+| ----- | ---------- | ------- | ----------------------------- |
+| 1     | time       | sec     | Time since system power up    |
+| 2     | IMU pqr[0] | rad/sec | IMU angular rate gyro – pitch |
+| 3     | IMU pqr[1] | rad/sec | IMU angular rate gyro – roll  |
+| 4     | IMU pqr[2] | rad/sec | IMU angular rate gyro – yaw   |
+| 5     | IMU acc[0] | m/s2    | IMU linear acceleration – X   |
+| 6     | IMU acc[1] | m/s2    | IMU linear acceleration – Y   |
+| 7     | IMU acc[2] | m/s2    | IMU linear acceleration – Z   |
 
 ### PPIMU
-Preintegrated dual inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame.  Also known as coning and sculling integrals.
+Preintegrated inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame.  Also known as coning and sculling integrals.
 
 ```
-$PPIMU,lf,f,f,f,f,f,f,f,f,f,f,f,f,f*xx\r\n
-        1 2 3 4 5 6 7 8 9 0 1 2 3 4
+$PPIMU,lf,f,f,f,f,f,f,f*xx\r\n
+        1 2 3 4 5 6 7 8
 ```
 
-| Index | Field         | Units | Description                         |
-| ----- | ------------- | ----- | ----------------------------------- |
-| 1     | time          | sec   | Time since system power up          |
-| 2     | theta1[0]     | rad   | IMU 1 delta theta integral – roll   |
-| 3     | theta1[1]     | rad   | IMU 1 delta theta integral – pitch  |
-| 4     | theta1[2]     | rad   | IMU 1 delta theta integral – yaw    |
-| 5     | theta2[0]     | rad   | IMU 2 delta theta integral – roll   |
-| 6     | theta2[1]     | rad   | IMU 2 delta theta integral – pitch  |
-| 7     | theta2[2]     | rad   | IMU 2 delta theta integral – yaw    |
-| 8     | vel1[0]       | m/s   | IMU 1 delta velocity integral – X   |
-| 9     | vel1[1]       | m/s   | IMU 1 delta velocity integral – Y   |
-| 10    | vel1[2]       | m/s   | IMU 1 delta velocity integral – Z   |
-| 11    | vel2[0]       | m/s   | IMU 2 delta velocity integral – X   |
-| 12    | vel2[1]       | m/s   | IMU 2 delta velocity integral – Y   |
-| 13    | vel2[2]       | m/s   | IMU 2 delta velocity integral – Z   |
-| 14    | dt            | s     | Integral period for delta theta vel |
+| Index | Field    | Units | Description                            |
+| ----- | -------- | ----- | -------------------------------------- |
+| 1     | time     | sec   | Time since system power up             |
+| 2     | theta[0] | rad   | IMU delta theta integral – X           |
+| 3     | theta[1] | rad   | IMU delta theta integral – Y           |
+| 4     | theta[2] | rad   | IMU delta theta integral – Z           |
+| 8     | vel[0]   | m/s   | IMU delta velocity integral – X        |
+| 9     | vel[1]   | m/s   | IMU delta velocity integral – Y        |
+| 10    | vel[2]   | m/s   | IMU delta velocity integral – Z        |
+| 14    | dt       | s     | Integration period for delta theta vel |
 
 ### PINS1
 INS output with Euler angles and NED offset from the reference LLA.
