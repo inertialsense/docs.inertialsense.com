@@ -2,7 +2,7 @@
 
 <center>
 
-![GPX-1](../images/GPX_1.0_800w.jpg)
+![GPX-1](../images/GPX-1_500w.png)
 
 </center>
 
