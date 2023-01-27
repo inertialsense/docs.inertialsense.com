@@ -54,7 +54,7 @@ The following ASCII messages can be received by the IMX.
 
 ### ASCB
 
-Enable ASCII message and set broadcast periods. The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum. Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable.
+Enable ASCII message and set broadcast periods.  The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum.  Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming.  Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). 
 
 ```
  $ASCB,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
@@ -64,18 +64,18 @@ Enable ASCII message and set broadcast periods. The period is in milliseconds wi
 | Index | Field           | Units | Description                                                  |
 | ----- | --------------- | ----- | ------------------------------------------------------------ |
 | 1     | options         |       | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-| 2     | [PIMU](#pimu)   | ms    | Broadcast period for PIMU dual IMU message.                  |
-| 3     | [PPIMU](#ppimu) | ms    | Broadcast period for PPIMU preintegrated dual IMU message.   |
-| 4     | [PINS1](#pins1) | ms    | Broadcast period for PINS1 INS output (euler, NED) message.  |
-| 5     | [PINS2](#pins2) | ms    | Broadcast period for PINS2 INS outpout (quaterion, LLA) message. |
-| 6     | [PGPSP](#pgpsp) | ms    | Broadcast period for PGPSP GPS position message.             |
-| 7     | -               | ms    | Reserved. Leave zero.                                        |
-| 8     | [GPGGA](#gpgga) | ms    | Broadcast period for NMEA GPGGA (fix, 3D location, and accuracy) message. |
-| 9     | [GPGLL](#gpgll) | ms    | Broadcast period for NMEA GPGLL (2D location and time) message. |
-| 10    | [GPGSA](#gpgsa) | ms    | Broadcast period for NMEA GPGSA (DOP and active satellites) message. |
-| 11    | [GPRMC](#gprmc) | ms    | Broadcast period for NMEA GPRMC (minimum specific GPS/Transit) message. |
-| 12    | [GPZDA](#gpzda)         | ms    | Broadcast period for NMEA GPZDA (UTC Time/Date) message.     |
-| 13    | [PASHR](#pashr)           | ms    | Broadcast period for NMEA PASHR (euler) message.        |
+| 2     | [PIMU](#pimu)   |     | Broadcast period multiple for PIMU dual IMU message.     |
+| 3     | [PPIMU](#ppimu) |     | Broadcast period multiple for PPIMU preintegrated dual IMU message. |
+| 4     | [PINS1](#pins1) |     | Broadcast period multiple for PINS1 INS output (euler, NED) message. |
+| 5     | [PINS2](#pins2) |     | Broadcast period multiple for PINS2 INS outpout (quaterion, LLA) message. |
+| 6     | [PGPSP](#pgpsp) |     | Broadcast period multiple for PGPSP GPS position message.    |
+| 7     | -               |     | Reserved. Leave zero.                                        |
+| 8     | [GPGGA](#gpgga) |     | Broadcast period multiple for NMEA GPGGA (fix, 3D location, and accuracy) message. |
+| 9     | [GPGLL](#gpgll) |     | Broadcast period multiple for NMEA GPGLL (2D location and time) message. |
+| 10    | [GPGSA](#gpgsa) |     | Broadcast period multiple for NMEA GPGSA (DOP and active satellites) message. |
+| 11    | [GPRMC](#gprmc) |     | Broadcast period multiple for NMEA GPRMC (minimum specific GPS/Transit) message. |
+| 12    | [GPZDA](#gpzda)         |     | Broadcast period multiple for NMEA GPZDA (UTC Time/Date) message. |
+| 13    | [PASHR](#pashr)           |     | Broadcast period multiple for NMEA PASHR (euler) message. |
 
 ### PERS
 
