@@ -8,12 +8,12 @@ Writing to and reading from InertialSense products is done using "Set" and "Get"
 
 ### Setting Data
 
-The `is_comm_set_data()` function will encode a message used to set data or configurations.  
+The `is_comm_set_data_ack()` function will encode a message used to set data or configurations.  
 
 ```c++
 // Set INS output Euler rotation in radians to 90 degrees roll for mounting
 float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-int messageSize = is_comm_set_data(comm, _DID_FLASH_CONFIG, offsetof(nvm_flash_cfg_t, insRotation), sizeof(float) * 3, rotation);
+int messageSize = is_comm_set_data_ack(comm, DID_FLASH_CONFIG, offsetof(nvm_flash_cfg_t, insRotation), sizeof(float) * 3, rotation);
 if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 {
 	printf("Failed to encode and write set INS rotation\r\n");
@@ -30,7 +30,7 @@ The `is_comm_get_data()` function will encode a PID_GET_DATA message that enable
 
 ```c++
 // Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
-int messageSize = is_comm_get_data(comm, _DID_INS_LLA_EULER_NED, 0, 0, 10);
+int messageSize = is_comm_get_data(comm, DID_INS_1, 0, 0, 10);
 if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 {
 	printf("Failed to encode and write get INS message\r\n");
@@ -76,7 +76,7 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
     // INS output data rate at 20Hz
     rmc.insPeriodMs = 50;
 
-	int messageSize = is_comm_set_data(comm, _DID_RMC, 0, sizeof(rmc_t), &rmc);
+	int messageSize = is_comm_set_data_ack(comm, DID_RMC, 0, sizeof(rmc_t), &rmc);
 	if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 	{
 		printf("Failed to encode and write RMC message\r\n");
