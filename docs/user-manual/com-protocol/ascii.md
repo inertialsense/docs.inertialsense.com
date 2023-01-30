@@ -145,15 +145,15 @@ $PIMU,lf,f,f,f,f,f,f*xx\r\n
        1 2 3 4 5 6 7
 ```
 
-| Index | Field      | Units   | Description                   |
-| ----- | ---------- | ------- | ----------------------------- |
-| 1     | time       | sec     | Time since system power up    |
-| 2     | IMU pqr[0] | rad/sec | IMU angular rate gyro – pitch |
-| 3     | IMU pqr[1] | rad/sec | IMU angular rate gyro – roll  |
-| 4     | IMU pqr[2] | rad/sec | IMU angular rate gyro – yaw   |
-| 5     | IMU acc[0] | m/s2    | IMU linear acceleration – X   |
-| 6     | IMU acc[1] | m/s2    | IMU linear acceleration – Y   |
-| 7     | IMU acc[2] | m/s2    | IMU linear acceleration – Z   |
+| Index | Field      | Units   | Description                 |
+| ----- | ---------- | ------- | --------------------------- |
+| 1     | time       | sec     | Time since system power up  |
+| 3     | IMU pqr[0] | rad/sec | IMU angular rate gyro – X   |
+| 2     | IMU pqr[1] | rad/sec | IMU angular rate gyro – Y   |
+| 4     | IMU pqr[2] | rad/sec | IMU angular rate gyro – Z   |
+| 5     | IMU acc[0] | m/s2    | IMU linear acceleration – X |
+| 6     | IMU acc[1] | m/s2    | IMU linear acceleration – Y |
+| 7     | IMU acc[2] | m/s2    | IMU linear acceleration – Z |
 
 ### PPIMU
 Preintegrated inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame.  Also known as coning and sculling integrals.
