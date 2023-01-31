@@ -61,21 +61,21 @@ Enable ASCII message and set broadcast periods.  The period is in milliseconds w
        1 2 3 4 5 6 7 8 9 0 1 2 3
 ```
 
-| Index | Field           | Units | Description                                                  |
-| ----- | --------------- | ----- | ------------------------------------------------------------ |
-| 1     | options         |       | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-| 2     | [PIMU](#pimu)   |     | Broadcast period multiple for PIMU dual IMU message.     |
-| 3     | [PPIMU](#ppimu) |     | Broadcast period multiple for PPIMU preintegrated dual IMU message. |
-| 4     | [PINS1](#pins1) |     | Broadcast period multiple for PINS1 INS output (euler, NED) message. |
-| 5     | [PINS2](#pins2) |     | Broadcast period multiple for PINS2 INS outpout (quaterion, LLA) message. |
-| 6     | [PGPSP](#pgpsp) |     | Broadcast period multiple for PGPSP GPS position message.    |
-| 7     | -               |     | Reserved. Leave zero.                                        |
-| 8     | [GPGGA](#gpgga) |     | Broadcast period multiple for NMEA GPGGA (fix, 3D location, and accuracy) message. |
-| 9     | [GPGLL](#gpgll) |     | Broadcast period multiple for NMEA GPGLL (2D location and time) message. |
-| 10    | [GPGSA](#gpgsa) |     | Broadcast period multiple for NMEA GPGSA (DOP and active satellites) message. |
-| 11    | [GPRMC](#gprmc) |     | Broadcast period multiple for NMEA GPRMC (minimum specific GPS/Transit) message. |
-| 12    | [GPZDA](#gpzda)         |     | Broadcast period multiple for NMEA GPZDA (UTC Time/Date) message. |
-| 13    | [PASHR](#pashr)           |     | Broadcast period multiple for NMEA PASHR (euler) message. |
+| Index | Field           | Description                                                  |
+| ----- | --------------- | ------------------------------------------------------------ |
+| 1     | options         | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
+| 2     | [PIMU](#pimu)   | Broadcast period multiple for PIMU IMU message.     |
+| 3     | [PPIMU](#ppimu) | Broadcast period multiple for PPIMU preintegrated IMU message. |
+| 4     | [PINS1](#pins1) | Broadcast period multiple for PINS1 INS output (euler, NED) message. |
+| 5     | [PINS2](#pins2) | Broadcast period multiple for PINS2 INS outpout (quaterion, LLA) message. |
+| 6     | [PGPSP](#pgpsp) | Broadcast period multiple for PGPSP GPS position message.    |
+| 7     | [PRIMU](#primu) | Broadcast period multiple for PRIMU Raw IMU message. |
+| 8     | [GPGGA](#gpgga) | Broadcast period multiple for NMEA GPGGA (fix, 3D location, and accuracy) message. |
+| 9     | [GPGLL](#gpgll) | Broadcast period multiple for NMEA GPGLL (2D location and time) message. |
+| 10    | [GPGSA](#gpgsa) | Broadcast period multiple for NMEA GPGSA (DOP and active satellites) message. |
+| 11    | [GPRMC](#gprmc) | Broadcast period multiple for NMEA GPRMC (minimum specific GPS/Transit) message. |
+| 12    | [GPZDA](#gpzda)         | Broadcast period multiple for NMEA GPZDA (UTC Time/Date) message. |
+| 13    | [PASHR](#pashr)           | Broadcast period multiple for NMEA PASHR (euler) message. |
 
 ### PERS
 
@@ -120,8 +120,9 @@ The following ASCII messages can be sent by the IMX.
 | Message         | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
 | [ASCB](#ascb)   | Broadcast rate of ASCII output messages.                     |
-| [PIMU](#pimu)   | Dual IMU data (two sets of 3-axis gyros and accelerometers) in the body frame. |
-| [PPIMU](#ppimu) | Preintegrated dual IMU: delta theta (rad) and delta velocity (m/s). |
+| [PIMU](#pimu)   | IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PPIMU](#ppimu) | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
+| [PRIMU](#primu) | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
 | [PINS1](#pins1) | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
 | [PINS2](#pins2) | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
 | [PGPSP](#pgpsp) | GPS position data.                                           |
@@ -174,7 +175,27 @@ $PPIMU,lf,f,f,f,f,f,f,f*xx\r\n
 | 10    | vel[2]   | m/s   | IMU delta velocity integral – Z        |
 | 14    | dt       | s     | Integration period for delta theta vel |
 
+### PRIMU
+
+Raw IMU sensor data (3-axis gyros and accelerometers) in the body frame (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of PIMU or PPIMU as they are oversampled and contain less noise. 0 to disable.
+
+```
+$PRIMU,lf,f,f,f,f,f,f*xx\r\n
+        1 2 3 4 5 6 7
+```
+
+| Index | Field          | Units   | Description                     |
+| ----- | -------------- | ------- | ------------------------------- |
+| 1     | time           | sec     | Time since system power up      |
+| 3     | Raw IMU pqr[0] | rad/sec | Raw IMU angular rate gyro – X   |
+| 2     | Raw IMU pqr[1] | rad/sec | Raw IMU angular rate gyro – Y   |
+| 4     | Raw IMU pqr[2] | rad/sec | Raw IMU angular rate gyro – Z   |
+| 5     | Raw IMU acc[0] | m/s2    | Raw IMU linear acceleration – X |
+| 6     | Raw IMU acc[1] | m/s2    | Raw IMU linear acceleration – Y |
+| 7     | Raw IMU acc[2] | m/s2    | Raw IMU linear acceleration – Z |
+
 ### PINS1
+
 INS output with Euler angles and NED offset from the reference LLA.
 
 ```
@@ -238,8 +259,8 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 
 | Index | Field        | Units | Description                                                  |
 | ----- | ------------ | ----- | ------------------------------------------------------------ |
-| 1     | timeMsOfWeek | ms    | Milliseconds since Sunday morning in GMT                     |
-| 2     | GPS week     | weeks | Number of weeks since January 1st of 1980 in GMT             |
+| 1     | timeOfWeekMs | ms    | GPS time of week in milliseconds since Sunday morning in GMT |
+| 2     | GPS week     | weeks | GPS number of weeks since January 1st of 1980 in GMT         |
 | 3     | status       |       | (see [eGpsStatus](../DID-descriptions/#gps-status)) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
 | 4     | Latitude     | deg   | WGS84 Latitude                                               |
 | 5     | Longitude    | deg   | WGS84 Longitude                                              |
