@@ -54,28 +54,28 @@ The following ASCII messages can be received by the IMX.
 
 ### ASCB
 
-Enable ASCII message and set broadcast periods. The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum. Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable.
+Enable ASCII message and set broadcast periods.  The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum.  Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming.  Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). 
 
 ```
  $ASCB,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
        1 2 3 4 5 6 7 8 9 0 1 2 3
 ```
 
-| Index | Field           | Units | Description                                                  |
-| ----- | --------------- | ----- | ------------------------------------------------------------ |
-| 1     | options         |       | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-| 2     | [PIMU](#pimu)   | ms    | Broadcast period for PIMU dual IMU message.                  |
-| 3     | [PPIMU](#ppimu) | ms    | Broadcast period for PPIMU preintegrated dual IMU message.   |
-| 4     | [PINS1](#pins1) | ms    | Broadcast period for PINS1 INS output (euler, NED) message.  |
-| 5     | [PINS2](#pins2) | ms    | Broadcast period for PINS2 INS outpout (quaterion, LLA) message. |
-| 6     | [PGPSP](#pgpsp) | ms    | Broadcast period for PGPSP GPS position message.             |
-| 7     | -               | ms    | Reserved. Leave zero.                                        |
-| 8     | [GPGGA](#gpgga) | ms    | Broadcast period for NMEA GPGGA (fix, 3D location, and accuracy) message. |
-| 9     | [GPGLL](#gpgll) | ms    | Broadcast period for NMEA GPGLL (2D location and time) message. |
-| 10    | [GPGSA](#gpgsa) | ms    | Broadcast period for NMEA GPGSA (DOP and active satellites) message. |
-| 11    | [GPRMC](#gprmc) | ms    | Broadcast period for NMEA GPRMC (minimum specific GPS/Transit) message. |
-| 12    | [GPZDA](#gpzda)         | ms    | Broadcast period for NMEA GPZDA (UTC Time/Date) message.     |
-| 13    | [PASHR](#pashr)           | ms    | Broadcast period for NMEA PASHR (euler) message.        |
+| Index | Field           | Description                                                  |
+| ----- | --------------- | ------------------------------------------------------------ |
+| 1     | options         | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
+| 2     | [PIMU](#pimu)   | Broadcast period multiple for PIMU IMU message.     |
+| 3     | [PPIMU](#ppimu) | Broadcast period multiple for PPIMU preintegrated IMU message. |
+| 4     | [PINS1](#pins1) | Broadcast period multiple for PINS1 INS output (euler, NED) message. |
+| 5     | [PINS2](#pins2) | Broadcast period multiple for PINS2 INS outpout (quaterion, LLA) message. |
+| 6     | [PGPSP](#pgpsp) | Broadcast period multiple for PGPSP GPS position message.    |
+| 7     | [PRIMU](#primu) | Broadcast period multiple for PRIMU Raw IMU message. |
+| 8     | [GPGGA](#gpgga) | Broadcast period multiple for NMEA GPGGA (fix, 3D location, and accuracy) message. |
+| 9     | [GPGLL](#gpgll) | Broadcast period multiple for NMEA GPGLL (2D location and time) message. |
+| 10    | [GPGSA](#gpgsa) | Broadcast period multiple for NMEA GPGSA (DOP and active satellites) message. |
+| 11    | [GPRMC](#gprmc) | Broadcast period multiple for NMEA GPRMC (minimum specific GPS/Transit) message. |
+| 12    | [GPZDA](#gpzda)         | Broadcast period multiple for NMEA GPZDA (UTC Time/Date) message. |
+| 13    | [PASHR](#pashr)           | Broadcast period multiple for NMEA PASHR (euler) message. |
 
 ### PERS
 
@@ -120,8 +120,9 @@ The following ASCII messages can be sent by the IMX.
 | Message         | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
 | [ASCB](#ascb)   | Broadcast rate of ASCII output messages.                     |
-| [PIMU](#pimu)   | Dual IMU data (two sets of 3-axis gyros and accelerometers) in the body frame. |
-| [PPIMU](#ppimu) | Preintegrated dual IMU: delta theta (rad) and delta velocity (m/s). |
+| [PIMU](#pimu)   | IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PPIMU](#ppimu) | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
+| [PRIMU](#primu) | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
 | [PINS1](#pins1) | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
 | [PINS2](#pins2) | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
 | [PGPSP](#pgpsp) | GPS position data.                                           |
@@ -138,55 +139,63 @@ The field codes used in the message descriptions are: lf = double, f = float, d 
 
 ### PIMU
 
-Dual IMU sensor data (two sets of 3-axis gyros and accelerometers) in the body frame.
+IMU sensor data (3-axis gyros and accelerometers) in the body frame.
 
 ```
-$PIMU,lf,f,f,f,f,f,f,f,f,f,f,f,f*xx\r\n
-       1 2 3 4 5 6 7 8 9 0 1 2 3
+$PIMU,lf,f,f,f,f,f,f*xx\r\n
+       1 2 3 4 5 6 7
 ```
 
-| Index | Field         | Units   | Description                    |
-| ----- | ------------- | ------- | ------------------------------ |
-| 1     | time          | sec     | Time since system power up     |
-| 2     | IMU1 pqr[0]   | rad/sec | IMU1 angular rate gyro – pitch |
-| 3     | IMU1 pqr[1]   | rad/sec | IMU1 angular rate gyro – roll  |
-| 4     | IMU1 pqr[2]   | rad/sec | IMU1 angular rate gyro – yaw   |
-| 5     | IMU1 acc[0]   | m/s2    | IMU1 linear acceleration – X   |
-| 6     | IMU1 acc[1]   | m/s2    | IMU1 linear acceleration – Y   |
-| 7     | IMU1 acc[2]   | m/s2    | IMU1 linear acceleration – Z   |
-| 8     | IMU2 pqr[0]   | rad/sec | IMU2 angular rate gyro – pitch |
-| 9     | IMU2 pqr[1]   | rad/sec | IMU2 angular rate gyro – roll  |
-| 10    | IMU2 pqr[2]   | rad/sec | IMU2 angular rate gyro – yaw   |
-| 11    | IMU2 acc[0]   | m/s2    | IMU2 linear acceleration – X   |
-| 12    | IMU2 acc[1]   | m/s2    | IMU2 linear acceleration – Y   |
-| 13    | IMU2 acc[2]   | m/s2    | IMU2 linear acceleration – Z   |
+| Index | Field      | Units   | Description                 |
+| ----- | ---------- | ------- | --------------------------- |
+| 1     | time       | sec     | Time since system power up  |
+| 3     | IMU pqr[0] | rad/sec | IMU angular rate gyro – X   |
+| 2     | IMU pqr[1] | rad/sec | IMU angular rate gyro – Y   |
+| 4     | IMU pqr[2] | rad/sec | IMU angular rate gyro – Z   |
+| 5     | IMU acc[0] | m/s2    | IMU linear acceleration – X |
+| 6     | IMU acc[1] | m/s2    | IMU linear acceleration – Y |
+| 7     | IMU acc[2] | m/s2    | IMU linear acceleration – Z |
 
 ### PPIMU
-Preintegrated dual inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame.  Also known as coning and sculling integrals.
+Preintegrated inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame.  Also known as coning and sculling integrals.
 
 ```
-$PPIMU,lf,f,f,f,f,f,f,f,f,f,f,f,f,f*xx\r\n
-        1 2 3 4 5 6 7 8 9 0 1 2 3 4
+$PPIMU,lf,f,f,f,f,f,f,f*xx\r\n
+        1 2 3 4 5 6 7 8
 ```
 
-| Index | Field         | Units | Description                         |
-| ----- | ------------- | ----- | ----------------------------------- |
-| 1     | time          | sec   | Time since system power up          |
-| 2     | theta1[0]     | rad   | IMU 1 delta theta integral – roll   |
-| 3     | theta1[1]     | rad   | IMU 1 delta theta integral – pitch  |
-| 4     | theta1[2]     | rad   | IMU 1 delta theta integral – yaw    |
-| 5     | theta2[0]     | rad   | IMU 2 delta theta integral – roll   |
-| 6     | theta2[1]     | rad   | IMU 2 delta theta integral – pitch  |
-| 7     | theta2[2]     | rad   | IMU 2 delta theta integral – yaw    |
-| 8     | vel1[0]       | m/s   | IMU 1 delta velocity integral – X   |
-| 9     | vel1[1]       | m/s   | IMU 1 delta velocity integral – Y   |
-| 10    | vel1[2]       | m/s   | IMU 1 delta velocity integral – Z   |
-| 11    | vel2[0]       | m/s   | IMU 2 delta velocity integral – X   |
-| 12    | vel2[1]       | m/s   | IMU 2 delta velocity integral – Y   |
-| 13    | vel2[2]       | m/s   | IMU 2 delta velocity integral – Z   |
-| 14    | dt            | s     | Integral period for delta theta vel |
+| Index | Field    | Units | Description                            |
+| ----- | -------- | ----- | -------------------------------------- |
+| 1     | time     | sec   | Time since system power up             |
+| 2     | theta[0] | rad   | IMU delta theta integral – X           |
+| 3     | theta[1] | rad   | IMU delta theta integral – Y           |
+| 4     | theta[2] | rad   | IMU delta theta integral – Z           |
+| 8     | vel[0]   | m/s   | IMU delta velocity integral – X        |
+| 9     | vel[1]   | m/s   | IMU delta velocity integral – Y        |
+| 10    | vel[2]   | m/s   | IMU delta velocity integral – Z        |
+| 14    | dt       | s     | Integration period for delta theta vel |
+
+### PRIMU
+
+Raw IMU sensor data (3-axis gyros and accelerometers) in the body frame (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of PIMU or PPIMU as they are oversampled and contain less noise. 0 to disable.
+
+```
+$PRIMU,lf,f,f,f,f,f,f*xx\r\n
+        1 2 3 4 5 6 7
+```
+
+| Index | Field          | Units   | Description                     |
+| ----- | -------------- | ------- | ------------------------------- |
+| 1     | time           | sec     | Time since system power up      |
+| 3     | Raw IMU pqr[0] | rad/sec | Raw IMU angular rate gyro – X   |
+| 2     | Raw IMU pqr[1] | rad/sec | Raw IMU angular rate gyro – Y   |
+| 4     | Raw IMU pqr[2] | rad/sec | Raw IMU angular rate gyro – Z   |
+| 5     | Raw IMU acc[0] | m/s2    | Raw IMU linear acceleration – X |
+| 6     | Raw IMU acc[1] | m/s2    | Raw IMU linear acceleration – Y |
+| 7     | Raw IMU acc[2] | m/s2    | Raw IMU linear acceleration – Z |
 
 ### PINS1
+
 INS output with Euler angles and NED offset from the reference LLA.
 
 ```
@@ -250,8 +259,8 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 
 | Index | Field        | Units | Description                                                  |
 | ----- | ------------ | ----- | ------------------------------------------------------------ |
-| 1     | timeMsOfWeek | ms    | Milliseconds since Sunday morning in GMT                     |
-| 2     | GPS week     | weeks | Number of weeks since January 1st of 1980 in GMT             |
+| 1     | timeOfWeekMs | ms    | GPS time of week in milliseconds since Sunday morning in GMT |
+| 2     | GPS week     | weeks | GPS number of weeks since January 1st of 1980 in GMT         |
 | 3     | status       |       | (see [eGpsStatus](../DID-descriptions/#gps-status)) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
 | 4     | Latitude     | deg   | WGS84 Latitude                                               |
 | 5     | Longitude    | deg   | WGS84 Longitude                                              |
