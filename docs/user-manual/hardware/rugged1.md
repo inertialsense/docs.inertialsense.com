@@ -117,7 +117,7 @@ System input voltage monitor surface mount resistors and capacitor (R2, R3, and 
 
 | Part                    | Manufacturer        | Manufacturer #       | Description                                   |
 | ----------------------- | ------------------- | -------------------- | --------------------------------------------- |
-| Main Connector          | Harwin              | G125-FC11205L0-0150F | 1.25MM F/F 12POS 26AWG 150MM                  |
+| Main Connector          | Harwin              | G125-FC11205L0-0150L | 1.25MM F/F 12POS 26AWG 150MM                  |
 | GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adaptor cable.     |
 | GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adaptor cable. |
 
