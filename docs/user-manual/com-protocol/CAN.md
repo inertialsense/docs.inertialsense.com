@@ -46,7 +46,7 @@ The Inertial Sense evaluation boards and Rugged unit have a built in transceiver
 
 ## CAN Data Sets (CIDs)
 
-The CAN Data Sets, in the form of C structures, define the format of the output data. The data sets are defined in SDK\hw-libs\communications\CAN_comm.h of the InertialSense SDK. The CID data is selected data from the standard Inertial Sense DIDs. The data types generally have been changed and scaled to fit the CAN2.0 8 byte payload restrictions.
+The CAN Data Sets, in the form of C structures, define the format of the output data. The data sets are defined in SDK\src\data_sets_canbus.h of the InertialSense SDK. The CID data is selected data from the standard Inertial Sense DIDs. The data types generally have been changed and scaled to fit the CAN2.0 8 byte payload restrictions.
 
 #### CID_INS_TIME
 
