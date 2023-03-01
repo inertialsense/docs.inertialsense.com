@@ -53,7 +53,17 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 | 24                                 | USB_N                                      | I/O  | USB  Data Negative Line                                      |
 | 25                                 | USB_P                                      | I/O  | USB Data Positive Line                                       |
 
+## Hardware Versions
 
+The following outlines differences in the IG-1.x hardware versions.
+
+**IG-1.1**
+
+- GPS1 PPS line connected to IMX TIMEPUSE G15 (pin 20).
+
+**IG-1.0**
+
+- GPS1 PPS line connected to IMX G8 (pin 8).
 
 ## Soldering
 
