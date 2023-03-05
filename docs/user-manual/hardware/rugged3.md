@@ -78,7 +78,7 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 ## I/O Configuration
 
-The Rugged 3.0 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the DID_FLASH_CONFIG.platformConfig.
+The Rugged 3 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the DID_FLASH_CONFIG.platformConfig.
 
 | RUG-3 Pin<br/>IMX Pin | 7,9<br/>G3,G4<br/>(G5,G8) | 8,10<br/>G1,G2 | 11,12<br/>G1,G2 | GPS1 | GPS2 |
 | --------------------- | ------------------------- | -------------- | --------------- | ---- | ---- |
@@ -93,7 +93,25 @@ The Rugged 3.0 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS
 | 8                     |                           |                | CAN             | S1   | S0   |
 | 9                     |                           | S2 TTL         |                 | S1   | S0   |
 
-<sup>\* RUG-3.0-G0 default<br/>\** RUG-3.0-G2 default</sup>
+<sup>\* RUG-3-G0 default<br/>\** RUG-3-G2 default</sup>
+
+## Hardware Versions
+
+The following outlines differences in the RUG-3 hardware versions.
+
+**RUG-3.1**
+
+Use platform config RUG-3 with this hardware version.
+
+- GPS1 PPS line connected to IMX G15 (pin 20).
+
+**RUG-2.1** (RUG-3.0)
+
+Use platform config RUG-2.1 with this hardware version.
+
+- GPS1 PPS line connected to IMX G9 (pin 10).
+
+
 
 ## Related Parts
 
