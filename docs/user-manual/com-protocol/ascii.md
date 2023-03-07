@@ -257,7 +257,7 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 | 17    | leapS        | s     | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. |
 
 ### GPGGA
-NMEA GPS fix, 3D location and accuracy data (see [NMEA GPGGA](http://www.gpsinformation.org/dale/nmea.htm#GGA) specification).
+NMEA GPS fix, 3D location and accuracy data.
 
 ```
 $GPGGA,204153,4003.3433,N,11139.5187,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r\n
@@ -278,7 +278,7 @@ $GPGGA,204153,4003.3433,N,11139.5187,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r\n
 | 14    | empty         |         | DGPS station ID number                                       |              |
 
 ### GPGLL
-NMEA geographic position, latitude / longitude and time (see [NMEA GPGLL](http://www.gpsinformation.org/dale/nmea.htm#GLL) specification).
+NMEA geographic position, latitude / longitude and time.
 
 ```
 $GPGLL,4916.4512,N,12311.1232,W,225444,A*33\r\n
@@ -294,7 +294,7 @@ $GPGLL,4916.4512,N,12311.1232,W,225444,A*33\r\n
 
 ### GPGSA
 
-NMEA GPS DOP and active satellites (see [NMEA GPGSA](http://www.gpsinformation.org/dale/nmea.htm#GSA) specification).
+NMEA GPS DOP and active satellites.
 
 ```
 $GPGSA,A,3,04,05,,09,12,,,24,,,,,2.5,1.3,2.1*39\r\n
@@ -312,7 +312,7 @@ $GPGSA,A,3,04,05,,09,12,,,24,,,,,2.5,1.3,2.1*39\r\n
 
 ### GPRMC
 
-NMEA GPS recommended minimum specific GPS/Transit data (see [NMEA GPRMC](http://www.gpsinformation.org/dale/nmea.htm#RMC) specification).
+NMEA GPS recommended minimum specific GPS/Transit data.
 
 ```
 eg1. $GPRMC,081836,A,3751.65,S,14507.36,E,000.0,360.0,130998,011.3,E*62
@@ -361,7 +361,7 @@ eg4. $GPRMC,hhmmss.ss,A,llll.ll,a,yyyyy.yy,a,x.x,x.x,ddmmyy,x.x,a*hh
 
 ### GPZDA
 
-NMEA GPS UTC Time and Date (see [NMEA GPZDA]( http://www.gpsinformation.org/dale/nmea.htm#ZDA ) specification).
+NMEA GPS UTC Time and Date specification).
 
 ```
 $GPZDA,001924,06,01,1980,00,00*41\r\n
@@ -379,7 +379,7 @@ $GPZDA,001924,06,01,1980,00,00*41\r\n
 
 ### PASHR
 
-NMEA GPS DOP and active satellites (see [NMEA GPGSA](http://www.gpsinformation.org/dale/nmea.htm#GSA) specification).
+NMEA GPS DOP and active satellites.
 
 ```
 $PASHR,001924.600,95.81,T,+0.60,+1.05,+0.00,0.038,0.035,0.526,0,0*08\r\n
@@ -387,18 +387,18 @@ $PASHR,001924.600,95.81,T,+0.60,+1.05,+0.00,0.038,0.035,0.526,0,0*08\r\n
 ```
 
 | Index | Field       | Units | Description                                       | Example    |
-| ----- | ----------- | ----- | ------------------------------------------------- | ---------- |
-| 1     |             |       | UTC Time                                          | 001924.600 |
-| 2     | Fix quality |       | Heading value in decimal degrees                  | 95.81      |
-| 3     | Sat ID      |       | T displayed if heading is relative to true north. | T          |
-| 4     | pDop        | m     | Roll in decimal degrees.                          | +0.60      |
-| 5     | hDop        | m     | Pitch in decimal degrees.                         | +1.05      |
-| 6     | vDop        | m     | Instantaneous heave in meters.                    | +0.00      |
-| 7     |             |       | Roll standard deviation in decimal degrees.       | +0.038     |
-| 8     |             |       | Pitch standard deviation in decimal degrees.      | 0.035      |
-| 9     |             |       | Heading standard deviation in decimal degrees.    | 0.526      |
-| 10    |             |       | GPS Status                                        | 0          |
-| 11    |             |       | INS Status                                        | 0          |
+| ----- | ---------------- | ----- | ------------------------------------------------- | ---------- |
+| 1     | Time             |       | UTC Time                                          | 001924.600 |
+| 2     | Heading          |       | Heading value in decimal degrees                  | 95.81      |
+| 3     | True Heading     |       | T displayed if heading is relative to true north. | T          |
+| 4     | Roll             | m     | Roll in decimal degrees.                          | +0.60      |
+| 5     | Pitch            | m     | Pitch in decimal degrees.                         | +1.05      |
+| 6     | Heave            | m     | Instantaneous heave in meters.                    | +0.00      |
+| 7     | Roll Accuracy    |       | Roll standard deviation in decimal degrees.       | +0.038     |
+| 8     | Pitch Accuracy   |       | Pitch standard deviation in decimal degrees.      | 0.035      |
+| 9     | Heading Accuracy |       | Heading standard deviation in decimal degrees.    | 0.526      |
+| 10    | GPS Status       |       | GPS Status                                        | 0          |
+| 11    | INS Status       |       | INS Status                                        | 0          |
 
 ### PSTRB
 
