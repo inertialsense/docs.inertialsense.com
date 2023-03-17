@@ -801,7 +801,7 @@ Flash memory configuration
 | startupNavDtMs | uint32_t | Navigation filter (system output data) update period in milliseconds set on startup. 1ms minimum (1KHz max). |
 | ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
 | ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
-| insRotation | float[3] | Rotation in radians about the X, Y, Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z, Y, X. |
+| insRotation | float[3] | Rotation in radians about the X,Y,Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z,Y,X. |
 | insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
 | gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
 | insDynModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
@@ -1148,7 +1148,7 @@ Standard deviation of INL2 EKF estimates in the NED frame.
 
 #### DID_INL2_STATES
 
-
+INS Extended Kalman Filter (EKF) states 
 
 `inl2_states_t`
 
