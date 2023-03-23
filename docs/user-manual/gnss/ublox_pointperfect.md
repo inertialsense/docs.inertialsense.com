@@ -11,7 +11,7 @@ L-band corrections requires a later version of F9P firmware. Use FW version HPG 
 1. Set `command` to `11` and `invCommand` to `-12` to enable passthrough to GNSS1 (set `12` and `-13` for GNSS2)
 1. Close the serial port (Settings tab)
 1. Open the device in uBlox u-center (we currently use u-center 22.07)
-1. Update the firmware in u-center per u-blox instructions.
+1. Update the firmware in u-center per u-blox instructions. Baudrate should be set to 921600.
 
 ![](images/evalPass.png)
 
@@ -32,3 +32,9 @@ The IMX acts as a transparent pipe for some UBX messages. In the mode shown belo
 ![](images/roverSettings.png)
 
 For L-band, the messages are sent as UBX-RXM-PMP messages. No additional configuration on the IMX is needed to switch between these messages and RTCM3, either will work. We have not tested using them together, contact uBlox if you are considering this.
+
+To set the SPARTNKEY message, use the u-center tool or send the proper message as specified in the HPG 1.32 manual to the IMX. SPARTNKEY messages are passed through the IMX.
+
+If you need to access additional settings on the F9P, you can use the serial passthrough mode used for firmware update, or there are settings under the `RTK Base` tab that allow passthrough of all uBlox messages.
+
+Corrections can be forwarded through the EvalTool using the `Correction Input` section of the tool. See the above screenshot for an example configuration.
