@@ -74,14 +74,17 @@ In the case that your units do not connect properly to the EvalTool, verify:
 
 The following steps can be used to downgrade the uINS firmware from 1.9.x (or newer) to 1.8.x (or older):
 
-1. Send the system command `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool (1.9.1 or later) firmware "**Downgrade**" button (see EvalTool -> Settings -> General -> Factory -> Downgrade) or using the SDK.
-2. Update the bootloader and firmware using the 1.8.x EvalTool or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. 
+1. Ensure the uINS is running with 1.9.x (or newer) firmware. 
+2. Send the system command `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool (1.9.1 or later) firmware "**Downgrade**" button (see EvalTool -> Settings -> General -> Factory -> Downgrade) or using the SDK.
+3. Update the bootloader and firmware using the 1.8.x EvalTool or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. 
 
-### Alternate Method
+### Chip Erase Downgrade
 
-An alternative process to downgrade firmware on the uINS is to chip erase the uINS, load the uINS 1.8.x (or later) bootloader and firmware, and then restore the IMU calibration.  Always make sure the bootloader version is compatible with the intended uINS firmware version.
+An alternative method to downgrade uINS firmware to 1.8.x is: 
 
-
+1. Chip erase the uINS.
+2. Load the uINS 1.8.x (or later) bootloader and firmware.
+3. Restore the IMU calibration.  Always make sure the bootloader version is compatible with the intended uINS firmware version.
 
 ## 1.7.6 Bug RTK Base GPS Raw work around
 
