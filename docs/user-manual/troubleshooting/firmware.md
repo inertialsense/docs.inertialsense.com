@@ -70,6 +70,19 @@ In the case that your units do not connect properly to the EvalTool, verify:
       - Drives without executable.
         - http://www.ftdichip.com/Drivers/D2XX.htm
 
+## Downgrading uINS to 1.8.x Firmware
+
+The following steps can be used to downgrade the uINS firmware from 1.9.x (or newer) to 1.8.x (or older):
+
+1. Send the system command `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool (1.9.1 or later) firmware "**Downgrade**" button (see EvalTool -> Settings -> General -> Factory -> Downgrade) or using the SDK.
+2. Update the bootloader and firmware using the 1.8.x EvalTool or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. 
+
+### Alternate Method
+
+An alternative process to downgrade firmware on the uINS is to chip erase the uINS, load the uINS 1.8.x (or later) bootloader and firmware, and then restore the IMU calibration.  Always make sure the bootloader version is compatible with the intended uINS firmware version.
+
+
+
 ## 1.7.6 Bug RTK Base GPS Raw work around
 
 If you are having base raw errors on your Rover, in the bottom right of the Evaltool, or a climbing Diffrential Age, in Data Sets DID_GPS1_RTK_REL, you maybe having this bug. Try this workaround.
