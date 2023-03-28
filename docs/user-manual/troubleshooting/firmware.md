@@ -75,8 +75,39 @@ In the case that your units do not connect properly to the EvalTool, verify:
 The following steps can be used to downgrade the uINS firmware from 1.9.x (or newer) to 1.8.x (or older):
 
 1. Ensure the uINS is running with 1.9.x (or newer) firmware. 
-2. Send the system command `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool (1.9.1 or later) firmware "**Downgrade**" button (see EvalTool -> Settings -> General -> Factory -> Downgrade) or using the SDK.  You will know the command was received when the uINS reboots into bootloader mode, causing the host serial port to disappear and reappear.  In bootloader update mode, the uINS will NOT support normal DID binary or ASCII communications.
-3. Update the bootloader and firmware using the 1.8.x EvalTool or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. 
+
+2. Send the system commands `SYS_CMD_MANF_UNLOCK` and `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the SDK, cltool, or the EvalTool (1.9.1 or later).
+
+   1. **EvalTool**: Use the firmware "**Downgrade**" button (see EvalTool -> Settings -> General -> Factory -> Downgrade).  
+
+   2. **cltool**: Use option `-sysCmd=1357924682` to send the downgrade command (available in software release 1.10):
+
+      ````
+      ./cltool -c /dev/ttyACM0 -sysCmd=1357924682
+      ````
+
+      **cltool alternate method**: use option `-edit 7` to end the downgrade command: 
+
+      ```
+      ./cltool -c /dev/ttyACM0 -edit 7
+      ```
+
+      Use `w` and `s` to move the cursor up or down.  Arrow keys do not work.  Make sure `invCommand` is set to zero before setting `command`
+
+      ```
+      invCommand = 0     // set to zero first
+      ```
+
+      ```
+      command = 1357924682
+      invCommand = 789558965
+      ```
+
+      The `invCommand` value is the bitwise inverse of the command and is required to validate the command.
+
+3. Verify the uINS has reboot into bootloader update mode.  The host serial port will disappear and reappear.  The uINS will NOT support normal DID binary or ASCII communications in this mode, but will be ready to update the bootloader.
+
+4. Update the bootloader and firmware using the 1.8.x EvalTool or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. 
 
 ### Chip Erase Downgrade
 
