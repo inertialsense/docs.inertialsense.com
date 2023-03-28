@@ -75,7 +75,7 @@ In the case that your units do not connect properly to the EvalTool, verify:
 The following steps can be used to downgrade the uINS firmware from 1.9.x (or newer) to 1.8.x (or older):
 
 1. Ensure the uINS is running with 1.9.x (or newer) firmware. 
-2. Send the system command `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool (1.9.1 or later) firmware "**Downgrade**" button (see EvalTool -> Settings -> General -> Factory -> Downgrade) or using the SDK.  You will know the command was received when the uINS reboots into bootloader mode, causing the host serial port to disappear and reappear, and will not communicate as normal.   
+2. Send the system command `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool (1.9.1 or later) firmware "**Downgrade**" button (see EvalTool -> Settings -> General -> Factory -> Downgrade) or using the SDK.  You will know the command was received when the uINS reboots into bootloader mode, causing the host serial port to disappear and reappear.  In bootloader update mode, the uINS will NOT support normal DID binary or ASCII communications.
 3. Update the bootloader and firmware using the 1.8.x EvalTool or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. 
 
 ### Chip Erase Downgrade
