@@ -98,41 +98,41 @@ Linux:
 sudo apt-get install cmake
 ```
 2. Create build directory
-```bash
-$ cd cltool
-$ mkdir build
-```
+   ```bash
+   cd cltool
+   mkdir build
+   ```
 
 2. Run cmake from within build directory
-```bash
-$ cd build
-$ cmake ..
-```
+   ```bash
+   cd build
+   cmake ..
+   ```
 
 3. Compile using make
- ```bash
- $ make
- ```
+   ```bash
+   make
+   ```
 
 4. If necessary, add current user to the "dialout" group in order to read and write to the USB serial communication ports:
-```bash
-$ sudo usermod -a -G dialout $USER
-$ sudo usermod -a -G plugdev $USER
-(reboot computer)
-```
+   ```bash
+   sudo usermod -a -G dialout $USER
+   sudo usermod -a -G plugdev $USER
+   (reboot computer)
+   ```
 
 5. Run executable
-``` bash
-$ ./cltool
-```
+   ``` bash
+   ./cltool
+   ```
 
 ## Compile & Run (Windows MS Visual Studio)
 1. Open Visual Studio solution file (InertialSenseSDK/cltool/VS_project/cltool.sln)
 2. Build (F7)
 3. Run executable
-``` bash
-C:\InertialSenseSDK\cltool\VS_project\Release\cltool.exe
-```
+   ``` bash
+   C:\InertialSenseSDK\cltool\VS_project\Release\cltool.exe
+   ```
 ## Update the Firmware
 In order to update the firmware of your unit on the CLTool, follow these steps:
 
@@ -155,17 +155,16 @@ In order to update the firmware of your unit on the CLTool, follow these steps:
 		* If you don’t include this option, your data will be saved to `/build/IS_logs` if that directory has already been created.
 	* `-lon` (Must be placed after all other options specified)
 1. This is an example of what you could use as your logging options:
-
-```
-cltool -lon -lts=1 -lp /media/usbdrive/data
-```
+   ```
+   cltool -lon -lts=1 -lp /media/usbdrive/data
+   ```
 
 ## Command Line Options
 
 Navigate to the directory `/cpp/SDK/cltool/build` and run the CLTool with the help option, "`-h`"
 
 ``` bash
-$ ./cltool -h
+./cltool -h
 ```
 
 to display the command line options

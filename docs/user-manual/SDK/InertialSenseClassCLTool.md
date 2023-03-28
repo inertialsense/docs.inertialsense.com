@@ -129,38 +129,38 @@ if (!cltool_setupLogger(inertialSenseInterface))
 
 ## Compile & Run (Linux/Mac)
 1. Create build directory
-``` bash
-$ cd cltool
-$ mkdir build
-```
+   ``` bash
+   cd cltool
+   mkdir build
+   ```
 2. Run cmake from within build directory
-``` bash
-$ cd build
-$ cmake ..
-```
+   ``` bash
+   cd build
+   cmake ..
+   ```
 3. Compile using make
- ``` bash
- $ make
- ```
+   ``` bash
+   make
+   ```
 4. If necessary, add current user to the "dialout" group in order to read and write to the USB serial communication ports:
-```bash
-$ sudo usermod -a -G dialout $USER
-$ sudo usermod -a -G plugdev $USER
-(reboot computer)
-```
+   ```bash
+   sudo usermod -a -G dialout $USER
+   sudo usermod -a -G plugdev $USER
+   (reboot computer)
+   ```
 5. Run executable
-``` bash
-$ ./cltool
-```
+   ``` bash
+   ./cltool
+   ```
 
 ## Compile & Run (Windows MS Visual Studio)
 1. [Install and Configure Visual Studio](../../software/SDK/#installing-and-configuring-visual-studio)
 2. Open Visual Studio solution file (InertialSenseSDK/cltool/VS_project/cltool.sln)
 3. Build (F7)
 4. Run executable
-``` bash
-C:\InertialSenseSDK\cltool\VS_project\Release\cltool.exe
-```
+   ``` bash
+   C:\InertialSenseSDK\cltool\VS_project\Release\cltool.exe
+   ```
 
 
 ## Summary

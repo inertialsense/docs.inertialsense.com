@@ -70,6 +70,57 @@ In the case that your units do not connect properly to the EvalTool, verify:
       - Drives without executable.
         - http://www.ftdichip.com/Drivers/D2XX.htm
 
+## Downgrading uINS to 1.8.x Firmware
+
+The following steps can be used to downgrade the uINS firmware to version 1.8.x (or older):
+
+1. Ensure the uINS is running 1.9.x (or newer) firmware. 
+
+2. Send the system commands `SYS_CMD_MANF_UNLOCK` and `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool, cltool, or SDK .
+
+   1. **EvalTool** (version 1.9.1 or later): Use the firmware "**Downgrade**" button (EvalTool -> Settings -> General -> Factory -> Downgrade).  
+
+   2. **cltool** (version 1.10 or later): Use option `-sysCmd=1357924682` to send the downgrade command:
+
+      ````
+      ./cltool -c /dev/ttyACM0 -sysCmd=1357924682
+      ````
+
+      **cltool alternate method**: use option `-edit 7` to edit the DID_SYS_CMD and send the downgrade command: 
+
+      ```
+      ./cltool -c /dev/ttyACM0 -edit 7
+      ```
+
+      Use `w` and `s` to move the cursor up or down (arrow keys do not work) and enter to submit the new value.  The `invCommand` value is the bitwise inverse of the command and is required to validate the command.  The `command` value will change to zero when the IMX accepts the `command` and `invCommand` values.
+
+      Send manufacture unlock command:
+      
+      ```
+      command = 1122334455
+      invCommand = 3172632840
+      ```
+      
+      Send downgrade command:
+
+      ```
+      command = 1357924682
+      invCommand = 2937042613
+      ```
+      
+
+3. Verify the uINS has reboot into bootloader update mode.  The host serial port will disappear and reappear.  The uINS will NOT support normal DID binary or ASCII communications in this mode, but will be ready to update the bootloader.
+
+4. Update the bootloader and firmware using the 1.8.x EvalTool, cltool, or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. 
+
+### Chip Erase Downgrade
+
+The above process using the `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` command is recommended as it prevents the need to reload the IMU calibration onto the uINS.  However,  an alternative method to downgrade uINS to 1.8.x firmware is as follows: 
+
+1. Chip erase the uINS.
+2. Load v5b (or older) bootloader and 1.8.x (or older) firmware using the 1.8.x EvalTool, cltool, or SDK. 
+3. Restore the IMU calibration.
+
 ## 1.7.6 Bug RTK Base GPS Raw work around
 
 If you are having base raw errors on your Rover, in the bottom right of the Evaltool, or a climbing Diffrential Age, in Data Sets DID_GPS1_RTK_REL, you maybe having this bug. Try this workaround.
