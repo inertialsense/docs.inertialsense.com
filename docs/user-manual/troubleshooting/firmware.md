@@ -80,11 +80,11 @@ The following steps can be used to downgrade the uINS firmware from 1.9.x (or ne
 
 ### Chip Erase Downgrade
 
-An alternative method to downgrade uINS firmware to 1.8.x is: 
+An alternative method to downgrade uINS to 1.8.x firmware: 
 
 1. Chip erase the uINS.
-2. Load the uINS 1.8.x (or later) bootloader and firmware.
-3. Restore the IMU calibration.  Always make sure the bootloader version is compatible with the intended uINS firmware version.
+2. Load v5b (or older) bootloader and 1.8.x (or older) firmware. 
+3. Restore the IMU calibration.
 
 ## 1.7.6 Bug RTK Base GPS Raw work around
 
