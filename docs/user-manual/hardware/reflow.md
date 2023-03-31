@@ -38,8 +38,9 @@ Use of "No Clean" soldering paste is recommended as it does not require cleaning
 !!! important
     A convection soldering oven is highly recommended over an infrared type radiation oven as it allows precision control of the temperature and all parts will be heated evenly.
 
+!!! warning
     To avoid falling off of the PCB, the IMX should be located on the topside of a PCB during reflow.
     
-    Care should be taken not disturb the IMX components during the reflow process as the solder on the IMX will reflow.
+    Care should be taken not disturb the components on the IMX during reflow as the solder on the IMX will also reflow.
     
     The part must not be soldered with a damp heat process.
