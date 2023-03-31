@@ -100,7 +100,7 @@ nav:
     - EVB-2: user-manual/hardware/EVB2.md
     - EVB-1: user-manual/hardware/EVB1.md
     - Design Files: user-manual/hardware/hardware_design.md
-    - Reflow Information: user-manual/hardware/reflow.md
+    - Reflow Soldering: user-manual/hardware/reflow.md
   - IS Software:
     - CLTool: user-manual/software/cltool.md
     - EvalTool: user-manual/software/evaltool.md
