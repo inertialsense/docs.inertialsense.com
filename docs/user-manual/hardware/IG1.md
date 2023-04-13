@@ -89,12 +89,6 @@ The default forward direction is indicated in the PCB footprint figure and on th
 
 Open source hardware design files, libraries, and example projects for the IMX module are found at the [Inertial Sense Hardware Design repository](https://github.com/inertialsense/IS-hdw) hosted on GitHub.  These include schematic and layout files for printed circuit board designs, and 3D step models of the InertialSense products usable for CAD and circuit board designs.
 
-## Related Parts
-
-| Part | Manufacturer | Manufacturer # | Description                                           |
-| ---- | ------------ | -------------- | ----------------------------------------------------- |
-| H1   | JST          | GHR-14V-S      | 14 pin connector 1.25mm pitch for IMX I/O connection. |
-
 ### Reference Design Projects
 
 The EVB-2 and IG-1 circuit board projects serve as reference designs that illustrate implementation of the IMX PCB module.
@@ -102,3 +96,9 @@ The EVB-2 and IG-1 circuit board projects serve as reference designs that illust
 [EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1)
 
 [IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-0)
+
+## Related Parts
+
+| Part | Manufacturer | Manufacturer # | Description                                           |
+| ---- | ------------ | -------------- | ----------------------------------------------------- |
+| H1   | JST          | GHR-14V-S      | 14 pin connector 1.25mm pitch for IMX I/O connection. |
