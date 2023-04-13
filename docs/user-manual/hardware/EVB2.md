@@ -1,6 +1,11 @@
 # Hardware Integration: EVB-2
 
-<center>![EVB-2](../images/evb-2.jpg)</center>
+<center>
+
+![EVB-2](../images/evb-2.jpg)
+
+</center>
+
 The Inertial Sense EVB-2 is a development board which contains the Inertial Sense µINS, µAHRS, or µIMU module. The EVB-2 builds on the foundation established by the EVB-1, but adds new features including:
 
 - 915MHz XBee radio for RTK (real-time-kinematics)
@@ -217,6 +222,13 @@ The EVB-2 and IMX firmware can be updated using the EVB-USB connector and only t
 The [EVB-2 PCB assembly design files](https://github.com/inertialsense/IS-hdw-EVB2) are available as open source hardware on GitHub.
 
 In particular, full schematics for the board can be found [here](https://github.com/inertialsense/IS-hdw-EVB2/blob/master/Schematic/EVB-2-1-2_Schematic%20Prints.PDF).
+
+## Related Parts
+
+| Part   | Manufacturer | Manufacturer # | Description                                                  |
+| ------ | ------------ | -------------- | ------------------------------------------------------------ |
+| H7, H8 | JST          | GHR-14V-S      | 14 pin connector 1.25mm pitch for IMX and SAME70 connection. |
+| H1     | JST          | PHR-2          | 2 pin connectors 2.00mm pitch for input power.               |
 
 ## XBee Radio Frequencies
 
