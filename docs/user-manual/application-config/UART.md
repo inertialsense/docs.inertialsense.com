@@ -6,9 +6,9 @@ The IMX has different UART TTL serial ports.  These serial ports can be converte
 
 The serial ports use different peripherals so the actual baud rates of the ports differ. Serial ports 0 and 2 are UART and Serial 1 is USART.
 
-Due to UART hardware integer rounding on the IMX serial ports 0 and 2, the following table outlines the difference between desired and actual UART baud rate settings. Note that the difference is more significant at higher baud rates.
+Due to UART hardware integer rounding on the IMX serial ports 0 and 2, the following table outlines the difference between desired and actual UART baud rate settings. Note that the difference is more significant at higher baud rates.  Actual baudrates for the uINS-3 are shown in the following table.  
 
-| Desired Baud Rate (bps) | Actual Baud Rate (bps) |
+| Desired Baud Rate (bps) | uINS-3 Baud Rate (bps) |
 | ----------------------- | ---------------------- |
 | 19200                   | 19211                  |
 | 38400                   | 38422                  |
