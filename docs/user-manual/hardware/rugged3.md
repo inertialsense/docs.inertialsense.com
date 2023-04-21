@@ -68,13 +68,13 @@ The following table shows the Rugged-3 pinout.  Note that pin function can chang
 | 5              |                  | GPS_PPS                                         | O             | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 6              |                  | USB.D-                                          | I/O           | USB Data Negative Line                                       |
 | 7              | G3<br/>G2<br/>G5 | Tx0<br/>485Tx2-<br/>SCLK                        | O<br/>O<br/>I | Serial 0 output (TTL or RS232)<br/>Serial 2 output- (RS485/RS422)<br/>SPI clock |
-| 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx2+<br/>Tx1/MISO                    | O<br/>O<br/>O | Serial 2 output (TTL or RS232)<br/>Serial 2 output+ (RS485/RS422)<br/>Serial 1 output (TTL or RS232) / SPI MISO |
-| 9              | G4<br/>G1<br/>G8 | Rx0<br/>485Rx2-<br/>CS/G8_STROBE                | I<br/>I<br/>I | Serial 0 input (TTL or RS232)<br/>Serial 2 input- (RS485/RS422)<br/>SPI chip select / G8-Strobe time sync input |
-| 10             | G1<br/>G1<br/>G6 | Rx2<br/>485Rx2+<br/>Rx1/MOSI                    | I<br/>I<br/>I | Serial 2 input (TTL/RS232)<br/>Serial 2 input+ (RS485 or RS422)<br/>Serial 1 input (TTL or RS232) / SPI MOSI |
-| 11             | G1<br/>G1        | CANL<sup>*</sup><br/>Rx2<sup>**</sup>           | I/O           | High level (CAN bus)<br/>Serial 2 input (TTL)**              |
-| 12             | G2<br/>G2        | CANH<sup>*</sup><br/>Tx2/G2_STROBE<sup>**</sup> | I/O           | Low level (CAN bus)\*. <br/>Serial 2 output (TTL)\** / G2-Strobe time sync input** |
+| 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx2+<br/>Tx1, MISO                   | O<br/>O<br/>O | Serial 2 output (TTL)<br/>Serial 2 output+ (RS485/RS422)<br/>Serial 1 output (TTL or RS232), SPI MISO |
+| 9              | G4<br/>G1<br/>G8 | Rx0<br/>485Rx2-<br/>CS, G8_STROBE               | I<br/>I<br/>I | Serial 0 input (TTL or RS232)<br/>Serial 2 input- (RS485/RS422)<br/>SPI chip select, G8-Strobe time sync input |
+| 10             | G1<br/>G1<br/>G6 | Rx2<br/>485Rx2+<br/>Rx1, MOSI                   | I<br/>I<br/>I | Serial 2 input (TTL)<br/>Serial 2 input+ (RS485/RS422)<br/>Serial 1 input (TTL or RS232), SPI MOSI |
+| 11             | G1<br/>G1        | CANL<sup>\*</sup><br/>Rx2<sup>\*\*</sup>        | I/O<br/>I     | High level (CAN bus)<br/>Serial 2 input (TTL)<sup>\*\*</sup>              |
+| 12             | G2<br/>G2        | CANH<sup>\*</sup><br/>Tx2, G2_STROBE<sup>\*\*</sup> | I/O<br/>I/O   | Low level (CAN bus)<sup>\*</sup>. <br/>Serial 2 output (TTL)<sup>\*\*</sup>, G2-Strobe time sync input<sup>\*\*</sup> |
 
-<sup>* (Default) To enable CAN bus on pins 11,12 remove R16,R17 and add 0402 zero ohm jumpers to R14,R15.<br/>** To enable Serial2 TTL or STROBE on pins 11,12 remove R14,R15 and add 0402 zero ohm jumpers to R16,R17.</sup>
+<sup>\* (Default) To enable CAN bus on pins 11,12 remove R16,R17 and add 0402 zero ohm jumpers to R14,R15.<br/>\** To enable Serial2 TTL or STROBE on pins 11,12 remove R14,R15 and add 0402 zero ohm jumpers to R16,R17.</sup>
 
 ![Rugged-3 Pin 11,12 SMT Jumpers](images/rug3_can_ser2_jumpers.png)
 
