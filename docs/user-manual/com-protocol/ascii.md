@@ -1,22 +1,22 @@
-﻿# ASCII (NMEA) Protocol
+﻿# ASCII (NMEA 0183) Protocol
 
-For simple use, the Inertial Sense device supports ASCII based communications protocol, including several common GPS [NMEA](http://www.gpsinformation.org/dale/nmea.htm) messages.  The ASCII protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](binary.md).
+For simple use, the Inertial Sense device supports a human-readable ASCII communications protocol based on NMEA 0183. The ASCII protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](binary.md) in terms of message length for the same amount of data.
 
 ## Communications Examples
 
-The [ASCII Communications Example Project](../SDK/CommunicationsAscii.md) demonstrates how to implement the ASCII (NMEA) protocol.
+The [ASCII Communications Example Project](../SDK/CommunicationsAscii.md) demonstrates how to implement the protocol.
 
 ## Packet Structure
 
 The Inertial Sense ASCII protocol follows the standard [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure:
 
- * 1 byte – Start packet, always the $ byte (`0x24`)
- * n bytes (usually 4 or 5) – packet identifier
- * 1 byte – a comma (`0x2C`)
- * n bytes – comma separated list of data, i.e. 1,2,3,4,5,6
- * 1 byte – checksum marker, always the * byte (`0x2A`)
- * 2 bytes – checksum in hex format (i.e. `f5` or `0a`), 0 padded if necessary and lowercase
- * 2 bytes – End packet, always carriage return and line feed (`\r\n` or `0x0D`, `0x0A`)
+* 1 byte – Start packet, `$` (`0x24`)
+* n bytes – packet identifier
+* 1 byte – comma (`0x2C`)
+* n bytes – comma separated list of data, can include decimals and text
+* 1 byte – checksum marker, `*` (`0x2A`)
+* 2 bytes – checksum in hex format (i.e. `f5` or `0a`), 0 padded and lowercase
+* 2 bytes – End packet, `\r\n` (`0x0D`, `0x0A`)
 
 The packet checksum is an 8 bit integer and is calculated by calculating the exclusive OR of all bytes in between and not including the $ and * bytes. The packet checksum byte is converted to a 2 byte ASCII hex code, and left padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details.  The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
@@ -24,8 +24,8 @@ The packet checksum is an 8 bit integer and is calculated by calculating the exc
 
 The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot,  eliminating the need to re-enable messages following a reset or power cycle.  
 
-- **To save current ASCII persistent messages** - send the [save persistent messages](#pers) command.  
-- **To disable persistent messages** - send the [stop all broadcasts](#stpb) followed by [save persistent messages](#pers). 
+- **To save current ASCII persistent messages** - send the [$PERS](#pers) command.  
+- **To disable persistent messages** - send the [$STPB](#stpb) followed by [$PERS](#pers). 
 
 [Binary persistent messages](../binary/#persistent-messages) are also available.
 
@@ -33,9 +33,9 @@ The *persistent messages* option saves the current data stream configuration to 
 
 To enable persistent ASCII messages using the EvalTool:
 
-- Enable the desired ASCII messages in the EvalTool "Data Sets" tab.  Select DID_ASCII_BCAST_PERIOD in the DID menu and set the desired ASCII messages period to a non-zero value.
+- Enable the desired ASCII messages in the EvalTool "Data Sets" tab. Select DID_ASCII_BCAST_PERIOD in the DID menu and set the desired ASCII messages period to a non-zero value.
 - Press the "Save Persistent" button in the EvalTool "Data Logs" tab to store the current message configuration to flash memory.
-- Reset the IMX and verify the messages are automatically streaming.  You can use a generic serial port program like putty or the EvalTool->Data Logs->Data Log->Messages dialog to view the ASCII messages.
+- Reset the IMX and verify the messages are automatically streaming. You can use a generic serial port program like putty or the EvalTool->Data Logs->Data Log->Messages dialog to view the ASCII messages.
 
 **To disable all persistent messages using the EvalTool**, click the "Stop Streaming" button and then "Save Persistent" button.   
 
@@ -54,11 +54,10 @@ The following ASCII messages can be received by the IMX.
 
 ### ASCB
 
-Enable ASCII message and set broadcast periods.  The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum.  Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming.  Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). 
+Enable NMEA messages and set broadcast periods. The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum. Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming. Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). 
 
 ```
  $ASCB,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
-       1 2 3 4 5 6 7 8 9 0 1 2 3
 ```
 
 | Index | Field           | Description                                                  |
@@ -74,8 +73,9 @@ Enable ASCII message and set broadcast periods.  The period is in milliseconds w
 | 9     | [GPGLL](#gpgll) | Broadcast period multiple for NMEA GPGLL (2D location and time) message. |
 | 10    | [GPGSA](#gpgsa) | Broadcast period multiple for NMEA GPGSA (DOP and active satellites) message. |
 | 11    | [GPRMC](#gprmc) | Broadcast period multiple for NMEA GPRMC (minimum specific GPS/Transit) message. |
-| 12    | [GPZDA](#gpzda)         | Broadcast period multiple for NMEA GPZDA (UTC Time/Date) message. |
-| 13    | [PASHR](#pashr)           | Broadcast period multiple for NMEA PASHR (euler) message. |
+| 12    | [GPZDA](#gpzda) | Broadcast period multiple for NMEA GPZDA (UTC Time/Date) message. |
+| 13    | [PASHR](#pashr) | Broadcast period multiple for NMEA PASHR (euler) message. |
+| 14    | [xxGSV](#gsv)   | Broadcast period multiple for NMEA xxGSV satellite info (all active constellations sent with corresponding talker IDs) |
 
 ### PERS
 
@@ -390,13 +390,44 @@ $GPZDA,001924,06,01,1980,00,00*41\r\n
 ```
 
 | Index | Field    | Units | Description             | Example |
-| ----- | -------- | ----- | ----------------------- | ------- |
+|-------|----------|-------|-------------------------|---------|
 | 1     | HrMinSec |       | UTC Time                | 001924  |
 | 2     | Day      |       | Day                     | 06      |
 | 3     | Month    |       | Month                   | 01      |
 | 4     | Year     |       | Year                    | 2020    |
-| 16    | localHrs |       | Local time zone hours   | 00      |
-| 17    | localMin |       | Local time zone minutes | 00      |
+| 5     | localHrs |       | Local time zone hours   | 00      |
+| 6     | localMin |       | Local time zone minutes | 00      |
+
+### xxGSV
+
+NMEA GNSS satellites in view. `xx` corresponds to a constellation talker ID, shown in the table below.
+
+Contains the number of sats in view, PRN numbers, elevation, azimuth and SNR value. Each message includes up to four satellites. When there are more than 4 sats for a constellation, multiple messages are sent. The total number of messages and the message number are included in each message.
+
+```
+$GAGSV,3,1,09,34,72,231,53,30,65,251,53,36,51,059,51,02,36,170,49*62
+```
+
+| Talker ID | Constellation                        |
+|-----------|--------------------------------------|
+| GP        | GPS                                  |
+| GQ        | QZSS                                 |
+| GA        | Galileo                              |
+| GL        | Glonass                              |
+| BD        | BeiDou                               |
+| GN        | Combination of active constellations |
+
+| Index   | Field   | Units | Description                                               | Example |
+|---------|---------|-------|-----------------------------------------------------------|---------|
+| 1       | numMsgs |       | Total number of messages for this constellation and epoch | 3       |
+| 2       | msgIdx  |       | Message number                                            | 09      |
+| 3       | numSats |       | Total number of sats for this constellation in view       | 09      |
+| 4+(n*5) | prn     |       | Satellite PRN number                                      | 03      |
+| 5+(n*5) | elev    | deg   | Elevation (0-90)                                          | 40      |
+| 6+(n*5) | azim    | deg   | Azimuth (000 to 359)                                      | 20      |
+| 7+(n*5) | snr     | dB    | SNR (00-99, empty when not tracking)                      | 41      |
+
+Where n is 0-3, for the four satellites supported by this message. 
 
 ### PASHR
 
