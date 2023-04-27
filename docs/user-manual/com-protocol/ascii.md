@@ -281,13 +281,13 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 NMEA GPS fix, 3D location and accuracy data.
 
 ```
-$GPGGA,204153,4003.34331,N,11139.51872,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r\n
-            1          2 3           4 5 6  7    8     9    0     1 2 3 4
+$GPGGA,204153.200,4003.34331,N,11139.51872,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r\n
+                1          2 3           4 5 6  7    8     9    0     1 2 3 4
 ```
 
 | Index | Field         | Units   | Description                                                  | Example      |
 | ----- | ------------- | ------- | ------------------------------------------------------------ | ------------ |
-| 1     | HHMMSS        |         | UTC time (fix taken at 12:39:19 UTC)                         | 123519       |
+| 1     | HHMMSS.sss    |         | UTC time (fix taken at 20:41:53.200 UTC)                     | 204153.200    |
 | 2,3   | Latitude      | deg,min | WGS84 latitude (DDmm.mmmmm,N)                                | 4003.34331,N  |
 | 4,5   | Longitude     | deg,min | WGS84 longitude (DDDmm.mmmmm,E)                              | 11139.51872,W |
 | 6     | Fix quality   |         | 0 = invalid, 1 = GPS fix (SPS), 2 = DGPS fix, 3 = PPS fix, 4 = RTK Fix, 5 = RTK Float, 6 = estimated (dead reckoning), 7 = Manual input mode, 8 = Simulation mode | 1            |
@@ -455,7 +455,7 @@ $INFO,d,d.d.d.d,d.d.d.d,d,d.d.d.d,d,s,YYYY-MM-DD,hh:mm:ss.ms,s*xx\r\n
 | 5     | Protocol version |       | Communications protocol version                              |
 | 6     | Repo revision    |       | Repository revision number                                   |
 | 7     | Manufacturer     |       | Manufacturer name                                            |
-| 8     | Build date       |       | Build date: <br/>[1] = year-2000, [2] = month, [3] = day     |
+| 8     | Build date       |       | Build date: <br/>[1] = year, [2] = month, [3] = day     |
 | 9     | Build time       |       | Build date: [0] = hour, [1] = minute, <br/>[2] = second, [3] = millisecond |
 | 10    | Add Info         |       | Additional information                                       |
 
