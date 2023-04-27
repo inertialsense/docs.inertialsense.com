@@ -302,16 +302,16 @@ $GPGGA,204153.200,4003.34331,N,11139.51872,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r
 NMEA geographic position, latitude / longitude and time.
 
 ```
-$GPGLL,4916.45123,N,12311.12324,W,225444,A*33\r\n
-                1 2           3 4      5 6
+$GPGLL,4916.45123,N,12311.12324,W,225444.800,A*33\r\n
+                1 2           3 4          5 6
 ```
 
-| Index | Field     | Units   | Description                          | Example      |
-| ----- | --------- | ------- | ------------------------------------ | ------------ |
-| 1,2   | Latitude  | deg,min | WGS84 latitude (DDmm.mmmmm,N)        | 4916.45123,N  |
-| 3,4   | Longitude | deg,min | WGS84 longitude (DDDmm.mmmmm,E)      | 12311.12324,W |
-| 5     | HHMMSS    |         | UTC time (fix taken at 22:54:44 UTC) | 225444       |
-| 6     | Valid     |         | Data valid (A=active, V=void)        | A            |
+| Index | Field      | Units   | Description                          | Example      |
+| ----- | ---------- | ------- | ------------------------------------ | ------------ |
+| 1,2   | Latitude   | deg,min | WGS84 latitude (DDmm.mmmmm,N)        | 4916.45123,N  |
+| 3,4   | Longitude  | deg,min | WGS84 longitude (DDDmm.mmmmm,E)      | 12311.12324,W |
+| 5     | HHMMSS.sss |         | UTC time (fix taken at 22:54:44.8 UTC) | 225444.800   |
+| 6     | Valid      |         | Data valid (A=active, V=void)        | A            |
 
 ### GPGSA
 
