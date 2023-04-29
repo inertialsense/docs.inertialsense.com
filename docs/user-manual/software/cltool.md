@@ -33,7 +33,7 @@ OPTIONS (General)
     -baud=BAUDRATE  Set serial port baudrate.  Options: 115200, 230400, 460800, 921600 (default)
     -magRecal[n]    Recalibrate magnetometers: 0=multi-axis, 1=single-axis
     -q              Quiet mode, no display
-    -reset          Issue software reset.  Use caution.
+    -reset          Issue software reset
     -s              Scroll displayed messages to show history
     -stats          Display statistics of data received
     -survey=[s],[d] Survey-in and store base position to refLla: s=[2=3D, 3=float, 4=fix], d=durationSec

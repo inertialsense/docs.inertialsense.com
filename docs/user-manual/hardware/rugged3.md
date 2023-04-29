@@ -57,41 +57,43 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 ## Pinout
 
-| Pin  | Name                                        | I/O  | Description                                                  |
-| ---- | :------------------------------------------ | ---- | ------------------------------------------------------------ |
-| 1    | GND                                         | PWR  | -                                                            |
-| 2    | G9/STROBE                                   | I/O  | Strobe time sync input.  (Includes 3K ohm series resistor)   |
-| 3    | VIN                                         | PWR  | 4V-20V supply voltage input                                  |
-| 4    | USB.D+                                      | I/O  | USB Data Positive Line                                       |
-| 5    | GPS_PPS                                     | O    | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
-| 6    | USB.D-                                      | I/O  | USB Data Negative Line                                       |
-| 7    | G3/Tx0/485Tx2-/SCLK                         | I/O  | Serial 0 output (TTL or RS232)<br/>Serial 2 output- (RS485/RS422)<br/>SPI clock |
-| 8    | G2/Tx2/485Tx2+/Tx1/MISO                     | I/O  | Serial 2 output (TTL or RS232)<br/>Serial 2 output+ (RS485/RS422)<br/>Serial 1 output (TTL or RS232)<br/>SPI MISO |
-| 9    | G4/Rx0/485Rx2-/CS                           | I/O  | Serial 0 input (TTL or RS232)<br/>Serial 2 input- (RS485/RS422)<br/>SPI chip select |
-| 10   | G1/Rx2/485Rx2+/Rx1/MOSI                     | I/O  | Serial 2 input (TTL/RS232)<br/>Serial 2 input+ (RS485 or RS422)<br/>Serial 1 input (TTL or RS232)<br/>SPI MOSI |
-| 11   | G1/CANL<sup>*</sup>/Rx2<sup>**</sup>        | I/O  | High level (CAN bus). Serial 2 input (TTL)*.                 |
-| 12   | G2/CANH<sup>*</sup>/Tx2<sup>**</sup>/STROBE | I/O  | Low level (CAN bus). Serial 2 output (TTL)*. Strobe time sync input*. |
+The following table shows the Rugged-3 pinout.  Note that pin function can change based on changing  `DID_FLASH_CONFIG.platformConfig` (see [I/O Configuration](#I/O Configuration) below).
 
-<sup>* (Default) To enable CAN bus on pins 11,12 remove R16,R17 and add 0402 zero ohm jumpers to R14,R15.<br/>* To enable Serial2 TTL or STROBE on pins 11,12 remove R14,R15 and add 0402 zero ohm jumpers to R16,R17.</sup>
+| Rugged<br/>Pin | IMX<br/>Pin      | Name                                            | I/O           | Description                                                  |
+| -------------- | ---------------- | :---------------------------------------------- | ------------- | ------------------------------------------------------------ |
+| 1              |                  | GND                                             | PWR           | -                                                            |
+| 2              | G9               | G9_STROBE                                       | I/O           | G9-Strobe time sync input.  (Includes 3K ohm series resistor) |
+| 3              |                  | VIN                                             | PWR           | 4V-20V supply voltage input                                  |
+| 4              |                  | USB.D+                                          | I/O           | USB Data Positive Line                                       |
+| 5              |                  | GPS_PPS                                         | O             | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
+| 6              |                  | USB.D-                                          | I/O           | USB Data Negative Line                                       |
+| 7              | G3<br/>G2<br/>G5 | Tx0<br/>485Tx2-<br/>SCLK                        | O<br/>O<br/>I | Serial 0 output (TTL or RS232)<br/>Serial 2 output- (RS485/RS422)<br/>SPI clock |
+| 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx2+<br/>Tx1, MISO                   | O<br/>O<br/>O | Serial 2 output (TTL)<br/>Serial 2 output+ (RS485/RS422)<br/>Serial 1 output (TTL or RS232), SPI MISO |
+| 9              | G4<br/>G1<br/>G8 | Rx0<br/>485Rx2-<br/>CS, G8_STROBE               | I<br/>I<br/>I | Serial 0 input (TTL or RS232)<br/>Serial 2 input- (RS485/RS422)<br/>SPI chip select, G8-Strobe time sync input |
+| 10             | G1<br/>G1<br/>G6 | Rx2<br/>485Rx2+<br/>Rx1, MOSI                   | I<br/>I<br/>I | Serial 2 input (TTL)<br/>Serial 2 input+ (RS485/RS422)<br/>Serial 1 input (TTL or RS232), SPI MOSI |
+| 11             | G1<br/>G1        | CANL<sup>\*</sup><br/>Rx2<sup>\*\*</sup>        | I/O<br/>I     | High level (CAN bus)<br/>Serial 2 input (TTL)<sup>\*\*</sup>              |
+| 12             | G2<br/>G2        | CANH<sup>\*</sup><br/>Tx2, G2_STROBE<sup>\*\*</sup> | I/O<br/>I/O   | Low level (CAN bus)<sup>\*</sup>. <br/>Serial 2 output (TTL)<sup>\*\*</sup>, G2-Strobe time sync input<sup>\*\*</sup> |
+
+<sup>\* (Default) To enable CAN bus on pins 11,12 remove R16,R17 and add 0402 zero ohm jumpers to R14,R15.<br/>\** To enable Serial2 TTL or STROBE on pins 11,12 remove R14,R15 and add 0402 zero ohm jumpers to R16,R17.</sup>
 
 ![Rugged-3 Pin 11,12 SMT Jumpers](images/rug3_can_ser2_jumpers.png)
 
 ## I/O Configuration
 
-The Rugged 3 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the DID_FLASH_CONFIG.platformConfig.
+The Rugged 3 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the  `DID_FLASH_CONFIG.platformConfig`.
 
-| RUG-3 Pin<br/>IMX Pin | 7,9<br/>G3,G4<br/>(G5,G8) | 8,10<br/>G1,G2 | 11,12<br/>G1,G2 | GPS1 | GPS2 |
-| --------------------- | ------------------------- | -------------- | --------------- | ---- | ---- |
-| **I/O Preset**        |                           |                |                 |      |      |
-| 1 *                   | S0 RS232                  |                | CAN             | S1   |      |
-| 2                     | S0 TTL                    |                | CAN             | S1   |      |
-| 3                     | S0 TTL                    | S2 TTL         |                 | S1   |      |
-| 4                     | S0 RS232                  | S1 RS232       |                 | S2   |      |
-| 5                     | S2 RS485                  | S2 RS485       |                 | S2   | S0   |
-| 6                     | SPI                       | SPI            |                 | S2   | S0   |
-| 7 **                  |                           | S1 RS232       |                 | S2   | S0   |
-| 8                     |                           |                | CAN             | S1   | S0   |
-| 9                     |                           | S2 TTL         |                 | S1   | S0   |
+| RUG-3 Pin<br/>IMX Pin | 7,9<br/>G3,G4<br/>(G5,G8) | 8,10<br/>G1,G2          | 11,12<br/>G1,G2 | GPS1 | GPS2 |
+| --------------------- | ------------------------- | ----------------------- | --------------- | ---- | ---- |
+| **I/O Preset**        |                           |                         |                 |      |      |
+| 1 *                   | S0-RS232                  |                         | CAN             | S1   |      |
+| 2                     | S0-TTL                    |                         | CAN             | S1   |      |
+| 3                     | S0-TTL                    | S2-TTL or<br/>G2-STROBE |                 | S1   |      |
+| 4                     | S0-RS232                  | S1-RS232                |                 | S2   |      |
+| 5                     | S2-RS485                  | S2-RS485                |                 | S2   | S0   |
+| 6                     | SPI or<br/>G8-STROBE      | SPI                     |                 | S2   | S0   |
+| 7 **                  |                           | S1-RS232                |                 | S2   | S0   |
+| 8                     |                           |                         | CAN             | S1   | S0   |
+| 9                     |                           | S2-TTL                  |                 | S1   | S0   |
 
 <sup>\* RUG-3-G0 default<br/>\** RUG-3-G2 default</sup>
 

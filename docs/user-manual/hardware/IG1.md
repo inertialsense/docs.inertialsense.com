@@ -96,3 +96,9 @@ The EVB-2 and IG-1 circuit board projects serve as reference designs that illust
 [EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1)
 
 [IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-0)
+
+## Related Parts
+
+| Part | Manufacturer | Manufacturer # | Description                                           |
+| ---- | ------------ | -------------- | ----------------------------------------------------- |
+| H1   | JST          | GHR-14V-S      | 14 pin connector 1.25mm pitch for IMX I/O connection. |
