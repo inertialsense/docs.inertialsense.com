@@ -9,7 +9,7 @@
 </object>
 
 
-## GPX-1 (Multi-Band (L1/L5) Dual GNSS Receiver)
+## GPX-1 (Multi-Band L1/L5 Dual GNSS Receiver)
 
 [Download Datasheet](http://docs.inertialsense.com/datasheets/GPX-1_GNSS_Datasheet.pdf)
 
