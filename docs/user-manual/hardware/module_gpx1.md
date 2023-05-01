@@ -21,7 +21,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 0    | GND                              |  Power  | Supply ground on center pads. |
 | 1    | USB_P                                         | I/O  | USB full-speed Positive Line. USB will be supported in future firmware updates.           |
 | 2    | USB_N                                         | I/O  | USB full-speed Negative Line. USB will be supported in future firmware updates.           |
-| 3    | VBKUP                                       | Power | Backup supply voltage input (1.65V to 3.6V). Future firmware updates will use voltage applied on this pin to backup GNSS ephemeris, almanac, and other operating parameters for a faster startup when VCC is applied again. If not used connect to VCC or leave floating. |
+| 3    | VBKUP                                       | Power | Backup supply voltage input (1.75V to 3.6V). Future firmware updates will use voltage applied on this pin to backup GNSS ephemeris, almanac, and other operating parameters for a faster startup when VCC is applied again. This pin MUST be connected to a backup battery or VCC. |
 | 4    | G1/Rx2/RxCAN/SCL                              | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line |
 | 5    | G2/Tx2/TxCAN/SDA/STROBE                        | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | 6    | G6/Rx1/MOSI                                   | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI                        |
@@ -47,7 +47,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 32   | VCC                                           | Power | 1.8V to 3.3V supply input.                                       |
 | 38 | G16/QDEC0.A | I/O | GPIO16 |
 | 39 | G17/QDEC0.B | I/O | GPIO17 |
-| 40 | VAUX | Power | Input supplies for the USB and VCC_RF.  Connect to +3.3V.  Must be less than 0.3V + VCC while VCC is below 1V. |
+| 40 | VAUX | Power | Input supplies for the USB and VCC_RF (GNSS antenna supply).  Connect to +3.3V (3.0V to 3.6V) to supply USB and VCC_RF.  Can be left floating if USB or VCC_RF are not needed.  |
 | 41 | G18/QDEC1.A | I/O | GPIO18 |
 | 42 | G19/QDEC1.B | I/O | GPIO19 |
 
