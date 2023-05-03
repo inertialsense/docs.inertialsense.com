@@ -41,7 +41,7 @@ The recommended procotol with the IMX and ZED-F9P receiver is the uBlox binary p
    - **Set the configuration**: (ublox u-center menu -> View -> Configuration View) change the following.  You must press the "Send" button to apply each change.
      - **PRT (Ports)** - Set Baudrate to match the GPS port baudrate (i.e. ser1BaudRate 921600)
      - **PRT (Ports)** - Enable NMEA on the connected port/UART
-     - **PRT (Ports)** - Enable RTCM3 on the connected port/UART is using RTK
+     - **PRT (Ports)** - Enable RTCM3 on the connected port/UART if using RTK
      - **RATE (Rates)** - Measurement Period: 200ms
      - **RATE (Rates)** - Navigation Rate: 1cyc
      - **MSG (Messages)** - Enable NMEA messages listed above for the connected port/UART (i.e. UART1 On)
