@@ -337,13 +337,15 @@ The current GPS firmware version can be read through the `DID_GPS1_VERSION` and 
 
 ### Firmware Update
 
+The following steps describe how to update the uBlox ZED-F9P firmware.  The uBlox U-Center application software and firmware binary can be downloaded from the uBlox [ZED-F9P documentation and resources webpage](https://www.u-blox.com/en/product/zed-f9p-module). 
+
 1. **Enable IMX Serial Bypass** - Send the system command (`DID_SYS_CMD`)  `SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS1` or `SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS2` to enable serial bypass on the IMX.  This will create a direct connection between the current IMX serial port and the GPS.  This is done in the EvalTool using the Factory Options dialog in the Settings -> General tab.<br/><center>![EvalTool factory options](./images/gnss_serial_bypass.png)</center><br/>
 
 2. **Update Using U-Center** - With the IMX serial bypass enabled, the uBlox U-Center software can connect directly to the ZED-F9P GPS.  Use the following steps in the ublox U-Center app:  
 
    - Open the serial port with baudrate 921600.  
 
-   - Select Tool -> Firmware Update and specify the uBlox F9P firmware file (i.e. `UBX_F9_100_HPG132...bin`).  This file can be downloaded from the uBlox ZED-F9P resources webpage.
+   - Select Tool -> Firmware Update and specify the uBlox F9P firmware file (i.e. `UBX_F9_100_HPG132...bin`).  
 
    - Enable "Use this baudrate for update" as 921600.
 
