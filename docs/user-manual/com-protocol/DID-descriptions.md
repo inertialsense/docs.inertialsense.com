@@ -772,18 +772,18 @@ Broadcast period for ASCII messages
 | Field | Type | Description |
 |-------|------|-------------|
 | options | uint32_t | Options: Port selection[0x0=current, 0xFF=all, 0x1=ser0, 0x2=ser1, 0x4=ser2, 0x8=USB] (see RMC_OPTIONS_...) |
-| pimu | uint16_t | Broadcast period (ms) - ASCII dual IMU data. 0 to disable. |
-| ppimu | uint16_t | Broadcast period (ms) - ASCII preintegrated dual IMU: delta theta (rad) and delta velocity (m/s). 0 to disable. |
-| pins1 | uint16_t | Broadcast period (ms) - ASCII INS output: euler rotation w/ respect to NED, NED position from reference LLA. 0 to disable. |
-| pins2 | uint16_t | Broadcast period (ms) - ASCII INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. 0 to disable. |
-| pgpsp | uint16_t | Broadcast period (ms) - ASCII GPS position data. 0 to disable. |
-| reserved | uint16_t | Broadcast period (ms) - Reserved.  Leave zero. |
-| gpgga | uint16_t | Broadcast period (ms) - ASCII NMEA GPGGA GPS 3D location, fix, and accuracy. 0 to disable. |
-| gpgll | uint16_t | Broadcast period (ms) - ASCII NMEA GPGLL GPS 2D location and time. 0 to disable. |
-| gpgsa | uint16_t | Broadcast period (ms) - ASCII NMEA GSA GPS DOP and active satellites. 0 to disable. |
-| gprmc | uint16_t | Broadcast period (ms) - ASCII NMEA recommended minimum specific GPS/Transit data. 0 to disable. |
-| gpzda | uint16_t | Broadcast period (ms) - ASCII NMEA Data and Time. 0 to disable. |
-| pashr | uint16_t | Broadcast period (ms) - ASCII NMEA Inertial Attitude Data. 0 to disable. |
+| pimu | uint16_t | Broadcast period multiple - ASCII IMU data. 0 to disable. |
+| ppimu | uint16_t | Broadcast period multiple - ASCII preintegrated IMU: delta theta (rad) and delta velocity (m/s). 0 to disable. |
+| pins1 | uint16_t | Broadcast period multiple - ASCII INS output: euler rotation w/ respect to NED, NED position from reference LLA. 0 to disable. |
+| pins2 | uint16_t | Broadcast period multiple - ASCII INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. 0 to disable. |
+| pgpsp | uint16_t | Broadcast period multiple - ASCII GPS position data. 0 to disable. |
+| primu | uint16_t | Broadcast period multiple - ASCII Raw IMU data (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of pimu or ppimu as they are oversampled and contain less noise. 0 to disable. |
+| gpgga | uint16_t | Broadcast period multiple - ASCII NMEA GPGGA GPS 3D location, fix, and accuracy. 0 to disable. |
+| gpgll | uint16_t | Broadcast period multiple - ASCII NMEA GPGLL GPS 2D location and time. 0 to disable. |
+| gpgsa | uint16_t | Broadcast period multiple - ASCII NMEA GSA GPS DOP and active satellites. 0 to disable. |
+| gprmc | uint16_t | Broadcast period multiple - ASCII NMEA recommended minimum specific GPS/Transit data. 0 to disable. |
+| gpzda | uint16_t | Broadcast period multiple - ASCII NMEA Data and Time. 0 to disable. |
+| pashr | uint16_t | Broadcast period multiple - ASCII NMEA Inertial Attitude Data. 0 to disable. |
 
 
 #### DID_FLASH_CONFIG
@@ -798,10 +798,10 @@ Flash memory configuration
 | checksum | uint32_t | Checksum, excluding size and checksum |
 | key | uint32_t | Manufacturer method for restoring flash defaults |
 | startupImuDtMs | uint32_t | IMU sample (system input data) period in milliseconds set on startup. Cannot be larger than startupNavDtMs. Zero disables sensor/IMU sampling. |
-| startupNavDtMs | uint32_t | Nav filter (system output data) update period in milliseconds set on startup. 1ms minimum (1KHz max). |
+| startupNavDtMs | uint32_t | Navigation filter (system output data) update period in milliseconds set on startup. 1ms minimum (1KHz max). |
 | ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
 | ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
-| insRotation | float[3] | Rotation in radians about the X, Y, Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z, Y, X. |
+| insRotation | float[3] | Rotation in radians about the X,Y,Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z,Y,X. |
 | insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
 | gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
 | insDynModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
@@ -814,11 +814,11 @@ Flash memory configuration
 | lastLlaWeek | uint32_t | Last LLA GPS number of weeks since January 6th, 1980 |
 | lastLlaUpdateDistance | float | Distance between current and last LLA that triggers an update of lastLla  |
 | ioConfig | uint32_t | Hardware interface configuration bits (see eIoConfig). |
-| platformConfig | uint32_t | Hardware platform (IMX carrier board, i.e. RUG, EVB, IG) configuration bits (see ePlatformConfig) |
+| platformConfig | uint32_t | Hardware platform specifying the IMX carrier board type (i.e. RUG, EVB, IG) and configuration bits (see ePlatformConfig).  The platform type is used to simplify the GPS and I/O configuration process.  |
 | gps2AntOffset | float[3] | X,Y,Z offset in meters from DOD_ Frame origin to GPS 2 antenna. |
 | zeroVelRotation | float[3] | Euler (roll, pitch, yaw) rotation in radians from INS Sensor Frame to Intermediate ZeroVelocity Frame.  Order applied: heading, pitch, roll. |
 | zeroVelOffset | float[3] | X,Y,Z offset in meters from Intermediate ZeroVelocity Frame to Zero Velocity Frame. |
-| magInclination | float | Earth magnetic field (magnetic north) inclination (negative pitch offset) in radians |
+| gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
 | magDeclination | float | Earth magnetic field (magnetic north) declination (heading offset from true north) in radians |
 | gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
 | startupGPSDtMs | uint32_t | GPS measurement (system input data) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
@@ -940,7 +940,7 @@ Addresses for CAN messages
 
 | Field | Type | Description |
 |-------|------|-------------|
-| can_period_mult | uint16_t[] | Broadcast period (ms) - CAN time message. 0 to disable. |
+| can_period_mult | uint16_t[] | Broadcast period multiple - CAN time message. 0 to disable. |
 | can_transmit_address | uint32_t[] | Transmit address. |
 | can_baudrate_kbps | uint16_t | Baud rate (kbps)  (See can_baudrate_t for valid baud rates)  |
 | can_receive_address | uint32_t | Receive address. |
@@ -1148,7 +1148,7 @@ Standard deviation of INL2 EKF estimates in the NED frame.
 
 #### DID_INL2_STATES
 
-
+INS Extended Kalman Filter (EKF) states 
 
 `inl2_states_t`
 
@@ -1419,8 +1419,8 @@ Timestamp for input strobe.
 |-------|------|-------------|
 | week | uint32_t | GPS number of weeks since January 6th, 1980 |
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| pin | uint32_t | Strobe input pin |
-| count | uint32_t | Strobe serial index number |
+| pin | uint16_t | Strobe input pin (i.e. G1, G2, G5, or G9) |
+| count | uint16_t | Strobe serial index number |
 
 
 #### DID_SURVEY_IN
@@ -1639,7 +1639,14 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_ENABLE_SENSOR_STATS | 3 |
 | SYS_CMD_ENABLE_RTOS_STATS | 4 |
 | SYS_CMD_ZERO_MOTION | 5 |
+| SYS_CMD_REF_POINT_STATIONARY | 6 |
+| SYS_CMD_REF_POINT_MOVING | 7 |
 | SYS_CMD_ENABLE_GPS_LOW_LEVEL_CONFIG | 10 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS1 | 11 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS2 | 12 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER0 | 13 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER1 | 14 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER2 | 15 |
 | SYS_CMD_SAVE_FLASH | 97 |
 | SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
 | SYS_CMD_SOFTWARE_RESET | 99 |
@@ -1674,6 +1681,7 @@ System status and configuration is made available through various enumeration an
 | GFC_INIT_MAGNETOMETER | 0x00400000 |
 | GFC_INIT_BAROMETER | 0x00200000 |
 | GFC_INIT_I2C | 0x00800000 |
+| GFC_CHIP_ERASE_INVALID | 0x01000000 |
 
 
 #### GNSS Satellite Flags
@@ -1751,7 +1759,6 @@ System status and configuration is made available through various enumeration an
 | GPS_STATUS_FLAGS_GPS1_RTK_POSITION_VALID | 0x04000000 |
 | GPS_STATUS_FLAGS_GPS2_RTK_COMPASS_VALID | 0x08000000 |
 | GPS_STATUS_FLAGS_GPS2_RTK_COMPASS_BASELINE_BAD | 0x00002000 |
-| GPS_STATUS_FLAGS_GPS2_RTK_COMPASS_BASELINE_UNSET | 0x00004000 |
 | GPS_STATUS_FLAGS_GPS_NMEA_DATA | 0x00008000 |
 | GPS_STATUS_FLAGS_GPS_PPS_TIMESYNC | 0x10000000 |
 | GPS_STATUS_FLAGS_MASK | 0xFFFFE000 |
@@ -1783,7 +1790,7 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00001000 |
 | HDW_STATUS_EKF_USING_REFERENCE_IMU | 0x00002000 |
 | HDW_STATUS_MAG_RECAL_COMPLETE | 0x00004000 |
-| HDW_STATUS_FLASH_WRITE_IN_PROGRESS | 0x00008000 |
+| HDW_STATUS_FLASH_WRITE_PENDING | 0x00008000 |
 | HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
 | HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
 | HDW_STATUS_ERR_NO_GPS_PPS | 0x00040000 |
@@ -1960,3 +1967,4 @@ System status and configuration is made available through various enumeration an
 | SYS_CFG_BITS_DISABLE_WHEEL_ENCODER_FUSION | 0x00100000 |
 | SYS_CFG_BITS_DISABLE_PACKET_ENCODING | 0x00400000 |
 | SYS_CFG_USE_REFERENCE_IMU_IN_EKF | 0x01000000 |
+| SYS_CFG_EKF_REF_POINT_STATIONARY_ON_STROBE_INPUT | 0x02000000 |

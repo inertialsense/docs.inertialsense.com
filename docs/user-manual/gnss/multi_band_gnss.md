@@ -325,6 +325,40 @@ The ZED-F9P operating in RTK base mode will generate the following RTCM 3.3 outp
 
 The NTRIP server must provide the necessary subset of [RTCM3 messages](#zed-f9-rover-messages) supported by the IMX-RTK.  See the [NTRIP](../rtk_ntrip) page for an overview of NTRIP.
 
+## ZED-F9P Firmware Update
+
+The following section describes how to view the current GPS firmware version and how to update the firmware on the uBlox ZED-F9P GNSS receiver through the IMX. 
+
+### GPS Firmware Version
+
+The current GPS firmware version can be read through the `DID_GPS1_VERSION` and `DID_GPS2_VERSION` messages.  
+
+![GPS Version](./images/gps_version.png)
+
+### Firmware Update
+
+The following steps describe how to update the uBlox ZED-F9P firmware.  The uBlox U-Center application software and firmware binary can be downloaded from the uBlox [ZED-F9P documentation and resources webpage](https://www.u-blox.com/en/product/zed-f9p-module). 
+
+1. **Enable IMX Serial Bypass** - Send the system command (`DID_SYS_CMD`)  `SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS1` or `SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS2` to enable serial bypass on the IMX.  This will create a direct connection between the current IMX serial port and the GPS.  This is done in the EvalTool using the Factory Options dialog in the Settings -> General tab.<br/><center>![EvalTool factory options](./images/gnss_serial_bypass.png)</center><br/>
+
+2. **Update Using U-Center** - With the IMX serial bypass enabled, the uBlox U-Center software can connect directly to the ZED-F9P GPS.  Use the following steps in the ublox U-Center app:  
+
+   - Open the serial port with baudrate 921600.  
+
+   - Select Tool -> Firmware Update and specify the uBlox F9P firmware file (i.e. `UBX_F9_100_HPG132...bin`).  
+
+   - Enable "Use this baudrate for update" as 921600.
+
+   - Disable "Enter safeboot before update".
+
+   - Enable "Send training sequence".
+
+   - Start the firmware update by pressing the small green "GO" circle in the bottom left corner of the Firmware Update Utility dialog.<center>
+
+     ![](./images/ucenter_firmware_update.png) </center>
+
+   - Power cycle the IMX. 
+
 ## Multi-Band GNSS Components
 
 The following is a list of the ZED-F9P GNSS receivers and compatible antenna(s).

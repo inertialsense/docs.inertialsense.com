@@ -11,7 +11,6 @@ Use of "No Clean" soldering paste is recommended as it does not require cleaning
 |Allow Specification    | Sn 95.5/ Ag 4/ Cu 0.5 (95.5% Tin/ 4% Silver/ 0.5% Copper)             |
 |Melting temperatures   | 217 °C                                                                |
 
-
 </center>
 
 ## The following reflow profile is recommended for soldering:
@@ -19,8 +18,6 @@ Use of "No Clean" soldering paste is recommended as it does not require cleaning
 <center>
 
 ![Reflow_plot](../images/Reflow.png)
-
-
 
 | Phase     | Name                  | Recommended   | Details                                               |
 | ------    |-----------------------|---------------|-------------------------------------------------------|
@@ -36,12 +33,14 @@ Use of "No Clean" soldering paste is recommended as it does not require cleaning
 <b> Cooling |                       |               |                                                       |
 |           |dT/dt                  | 4°C/sec| Maximum Cooling Temperature Fall Rate|
 
-
-
 </center>
 
+!!! important
+    A convection soldering oven is highly recommended over an infrared type radiation oven as it allows precision control of the temperature and all parts will be heated evenly.
 
-### Note:
-- A convection soldering oven is highly recommended over an infrared type radiation oven as it allows precision control of the temperature and all parts will be heated evenly.
-- To avoid falling off, the IMX should be placed on the topside of a PCB during soldering.
-- The part must not be soldered with a damp heat process.
+!!! warning
+    The IMX should be located on the topside of a PCB during reflow to avoid falling off.
+    
+    Care should be taken to not disturb the components on the IMX during reflow as the solder on the IMX will also reflow.
+    
+    The part must not be soldered with a damp heat process.

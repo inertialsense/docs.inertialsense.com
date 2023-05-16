@@ -53,7 +53,17 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 | 24                                 | USB_N                                      | I/O  | USB  Data Negative Line                                      |
 | 25                                 | USB_P                                      | I/O  | USB Data Positive Line                                       |
 
+## Hardware Versions
 
+The following outlines differences in the IG-1.x hardware versions.
+
+**IG-1.1**
+
+- GPS1 PPS line connected to IMX TIMEPUSE G15 (pin 20).
+
+**IG-1.0**
+
+- GPS1 PPS line connected to IMX G8 (pin 8).
 
 ## Soldering
 
@@ -86,3 +96,9 @@ The EVB-2 and IG-1 circuit board projects serve as reference designs that illust
 [EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1)
 
 [IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-0)
+
+## Related Parts
+
+| Part | Manufacturer | Manufacturer # | Description                                           |
+| ---- | ------------ | -------------- | ----------------------------------------------------- |
+| H1   | JST          | GHR-14V-S      | 14 pin connector 1.25mm pitch for IMX I/O connection. |

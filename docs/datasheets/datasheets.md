@@ -9,6 +9,14 @@
 </object>
 
 
+## GPX-1 (Multi-Band L1/L5 Dual GNSS Receiver)
+
+[Download Datasheet](http://docs.inertialsense.com/datasheets/GPX-1_GNSS_Datasheet.pdf)
+
+<object data="https://docs.inertialsense.com/datasheets/GPX-1_GNSS_Datasheet.pdf" type="application/pdf" width="700px" height="905px" >
+    <embed src="https://docs.inertialsense.com/datasheets/GPX-1_GNSS_Datasheet.pdf" type="application/pdf" />
+</object>
+
 
 ## uINS-3
 
