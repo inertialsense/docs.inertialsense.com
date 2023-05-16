@@ -69,13 +69,13 @@ Enable NMEA messages and set broadcast periods. The period is in milliseconds wi
 | 5     | [PINS2](#pins2) | Broadcast period multiple for PINS2 INS outpout (quaterion, LLA) message. |
 | 6     | [PGPSP](#pgpsp) | Broadcast period multiple for PGPSP GPS position message.    |
 | 7     | [PRIMU](#primu) | Broadcast period multiple for PRIMU Raw IMU message. |
-| 8     | [GPGGA](#gpgga) | Broadcast period multiple for NMEA GPGGA (fix, 3D location, and accuracy) message. |
-| 9     | [GPGLL](#gpgll) | Broadcast period multiple for NMEA GPGLL (2D location and time) message. |
-| 10    | [GPGSA](#gpgsa) | Broadcast period multiple for NMEA GPGSA (DOP and active satellites) message. |
-| 11    | [GPRMC](#gprmc) | Broadcast period multiple for NMEA GPRMC (minimum specific GPS/Transit) message. |
-| 12    | [GPZDA](#gpzda) | Broadcast period multiple for NMEA GPZDA (UTC Time/Date) message. |
+| 8     | [GGA](#gga)     | Broadcast period multiple for NMEA GGA (fix, 3D location, and accuracy) message. |
+| 9     | [GLL](#gll)     | Broadcast period multiple for NMEA GLL (2D location and time) message. |
+| 10    | [GSA](#gsa)     | Broadcast period multiple for NMEA GSA (DOP and active satellites) message. |
+| 11    | [RMC](#rmc)     | Broadcast period multiple for NMEA RMC (minimum specific GPS/Transit) message. |
+| 12    | [ZDA](#zda)     | Broadcast period multiple for NMEA ZDA (UTC Time/Date) message. |
 | 13    | [PASHR](#pashr) | Broadcast period multiple for NMEA PASHR (euler) message. |
-| 14    | [xxGSV](#gsv)   | Broadcast period multiple for NMEA xxGSV satellite info (all active constellations sent with corresponding talker IDs) |
+| 14    | [GxGSV](#gsv)   | Broadcast period multiple for NMEA GSV satellite info (all active constellations sent with corresponding talker IDs) |
 
 ### PERS
 
@@ -126,11 +126,12 @@ The following ASCII messages can be sent by the IMX.
 | [PINS1](#pins1) | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
 | [PINS2](#pins2) | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
 | [PGPSP](#pgpsp) | GPS position data.                                           |
-| [GPGGA](#gpgga) | NMEA GPGGA GPS 3D location, fix, and accuracy.               |
-| [GPGLL](#gpgll) | NMEA GPGLL GPS 2D location and time.                         |
-| [GPGSA](#gpgsa) | NMEA GSA GPS DOP and active satellites.                      |
-| [GPRMC](#gprmc) | NMEA Recommended minimum specific GPS/Transit data.          |
-| [GPZDA](#gpzda) | NMEA UTC Time/Date message.                                  |
+| [GGA](#gga) | NMEA GGA GPS 3D location, fix, and accuracy.               |
+| [GLL](#gll) | NMEA GLL GPS 2D location and time.                         |
+| [GSA](#gsa) | NMEA GSA GPS DOP and active satellites.                      |
+| [RMC](#rmc) | NMEA RMC Recommended minimum specific GPS/Transit data.          |
+| [ZDA](#zda) | NMEA ZDA UTC Time/Date message.                                  |
+| [GSV](#gsv) | NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
 | [PASHR](#pashr) | NMEA PASHR (euler) message.                                  |
 | [PSTRB](#pstrb) | Strobe event input time.                                     |
 | [INFO](#info)   | Device information.                                          |
@@ -254,7 +255,7 @@ GPS navigation data.
 $PGPSP,d,d,d,lf,lf,lf,f,f,f,f,f,f,f,f,f,f*xx\r\n
        1 2 3  4  5  6 7 8 9 0 1 2 3 4 5 6
 
-$PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,0.37,0.55,-0.02,0.02,-0.03,0.17,39.5,337182.4521*4d
+$PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,0.37,0.55,-0.02,0.02,-0.03,0.17,39.5,337182.4521*4d\r\n
 ```
 
 | Index | Field        | Units | Description                                                  |
@@ -277,7 +278,7 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 | 16    | towOffset    | s     | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
 | 17    | leapS        | s     | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. |
 
-### GPGGA
+### GGA
 NMEA GPS fix, 3D location and accuracy data.
 
 ```
@@ -298,7 +299,7 @@ $GPGGA,204153,4003.3433,N,11139.5187,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r\n
 | 13    | empty         | s       | Time since last DGPS update                                  |              |
 | 14    | empty         |         | DGPS station ID number                                       |              |
 
-### GPGLL
+### GLL
 NMEA geographic position, latitude / longitude and time.
 
 ```
@@ -313,7 +314,7 @@ $GPGLL,4916.4512,N,12311.1232,W,225444,A*33\r\n
 | 5     | HHMMSS    |         | UTC time (fix taken at 22:54:44 UTC) | 225444       |
 | 6     | Valid     |         | Data valid (A=active, V=void)        | A            |
 
-### GPGSA
+### GSA
 
 NMEA GPS DOP and active satellites.
 
@@ -331,13 +332,13 @@ $GPGSA,A,3,04,05,,09,12,,,24,,,,,2.5,1.3,2.1*39\r\n
 | 16    | hDop        | m     | Horizontal dilution of precision            | 1.3                    |
 | 17    | vDop        | m     | Vertical dilution of precision              | 2.1                    |
 
-### GPRMC
+### RMC
 
 NMEA GPS recommended minimum specific GPS/Transit data.
 
 ```
-eg1. $GPRMC,081836,A,3751.65,S,14507.36,E,000.0,360.0,130998,011.3,E*62
-eg2. $GPRMC,225446,A,4916.45,N,12311.12,W,000.5,054.7,191194,020.3,E*68
+eg1. $GPRMC,081836,A,3751.65,S,14507.36,E,000.0,360.0,130998,011.3,E*62\r\n
+eg2. $GPRMC,225446,A,4916.45,N,12311.12,W,000.5,054.7,191194,020.3,E*68\r\n
 
            225446       Time of fix 22:54:46 UTC
            A            Navigation receiver warning A = OK, V = warning
@@ -349,7 +350,7 @@ eg2. $GPRMC,225446,A,4916.45,N,12311.12,W,000.5,054.7,191194,020.3,E*68
            020.3,E      Magnetic variation 20.3 deg East
            *68          mandatory checksum
 
-eg3. $GPRMC,220516,A,5133.82,N,00042.24,W,173.8,231.8,130694,004.2,W*70
+eg3. $GPRMC,220516,A,5133.82,N,00042.24,W,173.8,231.8,130694,004.2,W*70\r\n
               1    2    3    4    5     6    7    8      9     10  11 12
 
       1   220516     Time Stamp
@@ -365,7 +366,7 @@ eg3. $GPRMC,220516,A,5133.82,N,00042.24,W,173.8,231.8,130694,004.2,W*70
       11  W          East/West
       12  *70        checksum
 
-eg4. $GPRMC,hhmmss.ss,A,llll.ll,a,yyyyy.yy,a,x.x,x.x,ddmmyy,x.x,a*hh
+eg4. $GPRMC,hhmmss.ss,A,llll.ll,a,yyyyy.yy,a,x.x,x.x,ddmmyy,x.x,a*hh\r\n
 1    = UTC of position fix
 2    = Data status (V=navigation receiver warning)
 3    = Latitude of fix
@@ -380,7 +381,7 @@ eg4. $GPRMC,hhmmss.ss,A,llll.ll,a,yyyyy.yy,a,x.x,x.x,ddmmyy,x.x,a*hh
 12   = Checksum
 ```
 
-### GPZDA
+### ZDA
 
 NMEA GPS UTC Time and Date specification).
 
@@ -398,14 +399,48 @@ $GPZDA,001924,06,01,1980,00,00*41\r\n
 | 5     | localHrs |       | Local time zone hours   | 00      |
 | 6     | localMin |       | Local time zone minutes | 00      |
 
-### xxGSV
+### GSV
 
 NMEA GNSS satellites in view. `xx` corresponds to a constellation talker ID, shown in the table below.
 
 Contains the number of sats in view, PRN numbers, elevation, azimuth and SNR value. Each message includes up to four satellites. When there are more than 4 sats for a constellation, multiple messages are sent. The total number of messages and the message number are included in each message.
 
+Example:
 ```
-$GAGSV,3,1,09,34,72,231,53,30,65,251,53,36,51,059,51,02,36,170,49*62
+$GPGSV,6,1,23,02,40,310,43,08,07,324,31,10,48,267,45,15,37,053,45*7C\r\n
+$GPGSV,6,2,23,16,12,268,35,18,69,078,41,23,74,336,40,24,15,111,37*79\r\n
+$GPGSV,6,3,23,26,02,239,31,27,35,307,38,29,12,162,37,32,14,199,39*7B\r\n
+$GPGSV,6,4,23,44,43,188,43,46,40,206,43,522,48,267,45,527,37,053,26*73\r\n
+$GPGSV,6,5,23,530,69,078,34,535,74,336,34,536,15,111,25,538,02,239,18*74\r\n
+$GPGSV,6,6,23,539,35,307,27,541,12,162,21,544,14,199,25*73\r\n
+$GAGSV,2,1,08,05,65,144,41,09,39,052,43,34,71,341,42,36,46,105,39*6A\r\n
+$GAGSV,2,2,08,517,65,144,30,521,39,052,30,546,71,341,27,548,46,105,30*64\r\n
+$GBGSV,3,1,10,11,09,141,34,14,52,047,44,27,32,313,43,28,80,263,44*64\r\n
+$GBGSV,3,2,10,33,81,039,43,41,43,230,42,43,33,148,42,58,,,44*5B\r\n
+$GBGSV,3,3,10,11,09,141,16,14,52,047,32*60\r\n
+$GQGSV,1,1,01,02,45,101,30*49\r\n
+$GLGSV,2,1,07,65,85,260,33,66,28,217,30,72,36,034,35,81,20,324,33*69\r\n
+$GLGSV,2,2,07,87,47,127,35,88,73,350,34,87,47,127,20*53\r\n
+```
+
+Example NMEA version 4.11:
+```
+$GPGSV,4,1,14,02,40,310,43,08,07,324,31,10,48,267,45,15,37,053,45,1*67\r\n
+$GPGSV,4,2,14,16,12,268,35,18,69,078,41,23,74,336,40,24,15,111,37,1*62\r\n
+$GPGSV,4,3,14,26,02,239,31,27,35,307,38,29,12,162,37,32,14,199,39,1*60\r\n
+$GPGSV,4,4,14,44,43,188,43,46,40,206,43,1*65\r\n
+$GPGSV,3,1,09,10,48,267,45,15,37,053,26,18,69,078,34,23,74,336,34,6*68\r\n
+$GPGSV,3,2,09,24,15,111,25,26,02,239,18,27,35,307,27,29,12,162,21,6*64\r\n
+$GPGSV,3,3,09,32,14,199,25,6*58\r\n
+$GAGSV,1,1,04,05,65,144,41,09,39,052,43,34,71,341,42,36,46,105,39,7*7E\r\n
+$GAGSV,1,1,04,05,65,144,30,09,39,052,30,34,71,341,27,36,46,105,30,2*73\r\n
+$GBGSV,2,1,08,11,09,141,34,14,52,047,44,27,32,313,43,28,80,263,44,1*71\r\n
+$GBGSV,2,2,08,33,81,039,43,41,43,230,42,43,33,148,42,58,,,44,1*4E\r\n
+$GBGSV,1,1,02,11,09,141,16,14,52,047,32,B*0D\r\n
+$GQGSV,1,1,01,02,45,101,30,1*54\r\n
+$GLGSV,2,1,06,65,85,260,33,66,28,217,30,72,36,034,35,81,20,324,33,1*75\r\n
+$GLGSV,2,2,06,87,47,127,35,88,73,350,34,1*75\r\n
+$GLGSV,1,1,01,87,47,127,20,3*41\r\n
 ```
 
 | Talker ID | Constellation                        |
@@ -414,18 +449,19 @@ $GAGSV,3,1,09,34,72,231,53,30,65,251,53,36,51,059,51,02,36,170,49*62
 | GQ        | QZSS                                 |
 | GA        | Galileo                              |
 | GL        | Glonass                              |
-| BD        | BeiDou                               |
+| GB        | BeiDou                               |
 | GN        | Combination of active constellations |
 
-| Index   | Field   | Units | Description                                               | Example |
-|---------|---------|-------|-----------------------------------------------------------|---------|
-| 1       | numMsgs |       | Total number of messages for this constellation and epoch | 3       |
-| 2       | msgIdx  |       | Message number                                            | 09      |
-| 3       | numSats |       | Total number of sats for this constellation in view       | 09      |
-| 4+(n*5) | prn     |       | Satellite PRN number                                      | 03      |
-| 5+(n*5) | elev    | deg   | Elevation (0-90)                                          | 40      |
-| 6+(n*5) | azim    | deg   | Azimuth (000 to 359)                                      | 20      |
-| 7+(n*5) | snr     | dB    | SNR (00-99, empty when not tracking)                      | 41      |
+| Index   | Field   | Units | Description                                               |
+|---------|---------|-------|-----------------------------------------------------------|
+| 1       | numMsgs |       | Total number of messages for this constellation and epoch |
+| 2       | msgNum  |       | Message number                                            |
+| 3       | numSats |       | Total number of known satellites for the talker ID and signal ID |
+| 4+(n*5) | prn     |       | Satellite PRN number                                      |
+| 5+(n*5) | elev    | deg   | Elevation (0-90)                                          |
+| 6+(n*5) | azim    | deg   | Azimuth (000 to 359)                                      |
+| 7+(n*5) | snr     | dB    | SNR (00-99, empty when not tracking)                      |
+| variable | system ID |    | GNSS system ID (distinguishes frequency band).  This field is only output if the NMEA version is 4.11. | 
 
 Where n is 0-3, for the four satellites supported by this message. 
 
@@ -559,7 +595,7 @@ $PINS1,256270.647,2021,427888998,1073741912,0.1153,-0.1473,-0.1632,0.001,0.001,0
 $PINS1,256270.667,2021,427888998,1073741912,0.1153,-0.1473,-0.1631,0.001,0.001,0.003,40.05569486,-111.65864500,1416.220,-7.738,-7.570,12.534*38
 ```
 
-**Stream PIMU @50Hz and GPGGA @5Hz on current port**
+**Stream PIMU @50Hz and GGA @5Hz on current port**
 
 ```
 $ASCB,0,20,0,0,0,0,0,200,0,0,0,0,0*3F
