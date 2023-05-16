@@ -76,9 +76,9 @@ if (!serialPortWriteAscii(&serialPort, "STPB", 4))
 	const char* asciiMessage = "ASCB,512,,,1000,,,,,,,,,";
 
     // Get PINS1 @ 50Hz and PGPSP @ 5Hz on the connected serial port, leave all other broadcasts the same
-	// const char* asciiMessage = "ASCB,,,,20,,200,,,,,,,";
+	// const char* asciiMessage = "ASCB,,,,20,,1,,,,,,,";
 
-	// Get PIMU @ 50Hz, GPGGA @ 5Hz, both serial ports, set all other periods to 0
+	// Get PIMU @ 50Hz, GGA @ 5Hz, both serial ports, set all other periods to 0
     //  const char* asciiMessage = "ASCB,3,20,0,0,0,0,0,100,0,0,0,0,0";
 
     if (!serialPortWriteAscii(&serialPort, asciiMessage, (int)strnlen(asciiMessage, 128)))

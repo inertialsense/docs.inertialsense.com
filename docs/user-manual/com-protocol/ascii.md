@@ -1,4 +1,6 @@
-﻿# ASCII (NMEA 0183) Protocol
+﻿
+
+# ASCII (NMEA 0183) Protocol
 
 For simple use, the Inertial Sense device supports a human-readable ASCII communications protocol based on NMEA 0183. The ASCII protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](binary.md) in terms of message length for the same amount of data.
 
@@ -57,25 +59,47 @@ The following ASCII messages can be received by the IMX.
 Enable NMEA messages and set broadcast periods. The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum. Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming. Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). 
 
 ```
- $ASCB,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
+$ASCB,options,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
 ```
 
 | Index | Field           | Description                                                  |
 | ----- | --------------- | ------------------------------------------------------------ |
 | 1     | options         | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-| 2     | [PIMU](#pimu)   | Broadcast period multiple for PIMU IMU message.     |
+| 2     | [PIMU](#pimu)   | Broadcast period multiple for PIMU IMU message.              |
 | 3     | [PPIMU](#ppimu) | Broadcast period multiple for PPIMU preintegrated IMU message. |
 | 4     | [PINS1](#pins1) | Broadcast period multiple for PINS1 INS output (euler, NED) message. |
-| 5     | [PINS2](#pins2) | Broadcast period multiple for PINS2 INS outpout (quaterion, LLA) message. |
+| 5     | [PINS2](#pins2) | Broadcast period multiple for PINS2 INS output (quaternion, LLA) message. |
 | 6     | [PGPSP](#pgpsp) | Broadcast period multiple for PGPSP GPS position message.    |
-| 7     | [PRIMU](#primu) | Broadcast period multiple for PRIMU Raw IMU message. |
+| 7     | [PRIMU](#primu) | Broadcast period multiple for PRIMU Raw IMU message.         |
 | 8     | [GGA](#gga)     | Broadcast period multiple for NMEA GGA (fix, 3D location, and accuracy) message. |
 | 9     | [GLL](#gll)     | Broadcast period multiple for NMEA GLL (2D location and time) message. |
 | 10    | [GSA](#gsa)     | Broadcast period multiple for NMEA GSA (DOP and active satellites) message. |
 | 11    | [RMC](#rmc)     | Broadcast period multiple for NMEA RMC (minimum specific GPS/Transit) message. |
 | 12    | [ZDA](#zda)     | Broadcast period multiple for NMEA ZDA (UTC Time/Date) message. |
-| 13    | [PASHR](#pashr) | Broadcast period multiple for NMEA PASHR (euler) message. |
+| 13    | [PASHR](#pashr) | Broadcast period multiple for NMEA PASHR (euler) message.    |
 | 14    | [GxGSV](#gsv)   | Broadcast period multiple for NMEA GSV satellite info (all active constellations sent with corresponding talker IDs) |
+
+### ASCE
+
+Enable NMEA messages and set broadcast periods.  The period is the a multiple of the [*data source period*](binary/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). 
+
+```
+$ASCE,options,(id,period)*xx\r\n
+```
+
+The following is an example of enabling **INS2** at 31.25Hz, **PPIMU** at 62.5Hz, and **GGA** at 5Hz. 
+
+```
+$ASCE,0,5,2,2,1,7,1*xx\r\n
+```
+
+| Index | Field   | Description                                                  |
+| ----- | ------- | ------------------------------------------------------------ |
+| 1     | options | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
+|       |         | *Start of repeated group (1...20 times)*                     |
+| 2+n*2 | ID      | NMEA message ID to be broadcast.  See the ID in the [ASCII output messages](#ascii output messages) table. |
+| 3+n*2 | period  | Broadcast period multiple for specified message.  Zero disables streaming. |
+|       |         | *End of repeated group (1...20 times)*                       |
 
 ### PERS
 
@@ -115,26 +139,26 @@ The hexadecimal equivalent is:
 
 ## ASCII Output Messages
 
-The following ASCII messages can be sent by the IMX.
+The following ASCII messages can be sent by the IMX.  The ID is used with the $ASCE message to enable message streaming. 
 
-| Message         | Description                                                  |
-| --------------- | ------------------------------------------------------------ |
-| [ASCB](#ascb)   | Broadcast rate of ASCII output messages.                     |
-| [PIMU](#pimu)   | IMU data (3-axis gyros and accelerometers) in the body frame. |
-| [PPIMU](#ppimu) | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
-| [PRIMU](#primu) | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
-| [PINS1](#pins1) | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
-| [PINS2](#pins2) | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
-| [PGPSP](#pgpsp) | GPS position data.                                           |
-| [GGA](#gga) | NMEA GGA GPS 3D location, fix, and accuracy.               |
-| [GLL](#gll) | NMEA GLL GPS 2D location and time.                         |
-| [GSA](#gsa) | NMEA GSA GPS DOP and active satellites.                      |
-| [RMC](#rmc) | NMEA RMC Recommended minimum specific GPS/Transit data.          |
-| [ZDA](#zda) | NMEA ZDA UTC Time/Date message.                                  |
-| [GSV](#gsv) | NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
-| [PASHR](#pashr) | NMEA PASHR (euler) message.                                  |
-| [PSTRB](#pstrb) | Strobe event input time.                                     |
-| [INFO](#info)   | Device information.                                          |
+| Message         | ID                                                | Description                                                  |
+| --------------- | ------------------------------------------------------------ | --------------- |
+| [ASCB](#ascb)   |                      | Broadcast rate of ASCII output messages.                     |
+| [PIMU](#pimu)   | 1 | IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PPIMU](#ppimu) | 2 | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
+| [PRIMU](#primu) | 3 | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PINS1](#pins1) | 4 | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
+| [PINS2](#pins2) | 5 | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
+| [PGPSP](#pgpsp) | 6                                          | GPS position data.                                           |
+| [GGA](#gga) | 7              | Standard NMEA GGA GPS 3D location, fix, and accuracy.   |
+| [GLL](#gll) | 8                        | Standard NMEA GLL GPS 2D location and time.                |
+| [GSA](#gsa) | 9                     | Standard NMEA GSA GPS DOP and active satellites.             |
+| [RMC](#rmc) | 10        | Standard NMEA RMC Recommended minimum specific GPS/Transit data. |
+| [ZDA](#zda) | 11                                | Standard NMEA ZDA UTC Time/Date message.                         |
+| [PASHR](#pashr) | 12                               | Standard NMEA PASHR (euler) message.                         |
+| [PSTRB](#pstrb) | 13                                  | Strobe event input time.                                     |
+| [INFO](#info)   | 14                                        | Device information.                                          |
+| [GSV](#gsv) | 15 | Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
 
 The field codes used in the message descriptions are: lf = double, f = float, d = int.
 
