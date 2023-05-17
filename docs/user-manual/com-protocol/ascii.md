@@ -325,15 +325,15 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 NMEA GPS fix, 3D location and accuracy data.
 
 ```
-$GPGGA,204153,4003.3433,N,11139.5187,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r\n
-            1         2 3          4 5 6  7    8     9    0     1 2 3 4
+$GPGGA,204153.200,4003.34331,N,11139.51872,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r\n
+                1          2 3           4 5 6  7    8     9    0     1 2 3 4
 ```
 
 | Index | Field         | Units   | Description                                                  | Example      |
 | ----- | ------------- | ------- | ------------------------------------------------------------ | ------------ |
-| 1     | HHMMSS        |         | UTC time (fix taken at 12:39:19 UTC)                         | 123519       |
-| 2,3   | Latitude      | deg,min | WGS84 latitude (DDmm.mmmm,N)                                 | 4003.3433,N  |
-| 4,5   | Longitude     | deg,min | WGS84 longitude (DDDmm.mmmm,E)                               | 11139.5187,W |
+| 1     | HHMMSS.sss    |         | UTC time (fix taken at 20:41:53.200 UTC)                     | 204153.200    |
+| 2,3   | Latitude      | deg,min | WGS84 latitude (DDmm.mmmmm,N)                                | 4003.34331,N  |
+| 4,5   | Longitude     | deg,min | WGS84 longitude (DDDmm.mmmmm,E)                              | 11139.51872,W |
 | 6     | Fix quality   |         | 0 = invalid, 1 = GPS fix (SPS), 2 = DGPS fix, 3 = PPS fix, 4 = RTK Fix, 5 = RTK Float, 6 = estimated (dead reckoning), 7 = Manual input mode, 8 = Simulation mode | 1            |
 | 7     | \# Satellites |         | Number of satellites in use                                  | 15           |
 | 8     | hDop          | m       | Horizontal dilution of precision                             | 0.9          |
@@ -346,16 +346,16 @@ $GPGGA,204153,4003.3433,N,11139.5187,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r\n
 NMEA geographic position, latitude / longitude and time.
 
 ```
-$GPGLL,4916.4512,N,12311.1232,W,225444,A*33\r\n
-               1 2          3 4      5 6
+$GPGLL,4916.45123,N,12311.12324,W,225444.800,A*33\r\n
+                1 2           3 4          5 6
 ```
 
-| Index | Field     | Units   | Description                          | Example      |
-| ----- | --------- | ------- | ------------------------------------ | ------------ |
-| 1,2   | Latitude  | deg,min | WGS84 latitude (DDmm.mmmm,N)         | 4916.4512,N  |
-| 3,4   | Longitude | deg,min | WGS84 longitude (DDDmm.mmmm,E)       | 12311.1232,W |
-| 5     | HHMMSS    |         | UTC time (fix taken at 22:54:44 UTC) | 225444       |
-| 6     | Valid     |         | Data valid (A=active, V=void)        | A            |
+| Index | Field      | Units   | Description                          | Example      |
+| ----- | ---------- | ------- | ------------------------------------ | ------------ |
+| 1,2   | Latitude   | deg,min | WGS84 latitude (DDmm.mmmmm,N)        | 4916.45123,N  |
+| 3,4   | Longitude  | deg,min | WGS84 longitude (DDDmm.mmmmm,E)      | 12311.12324,W |
+| 5     | HHMMSS.sss |         | UTC time (fix taken at 22:54:44.8 UTC) | 225444.800   |
+| 6     | Valid      |         | Data valid (A=active, V=void)        | A            |
 
 ### GSA
 
@@ -565,7 +565,7 @@ $INFO,d,d.d.d.d,d.d.d.d,d,d.d.d.d,d,s,YYYY-MM-DD,hh:mm:ss.ms,s*xx\r\n
 | 5     | Protocol version |       | Communications protocol version                              |
 | 6     | Repo revision    |       | Repository revision number                                   |
 | 7     | Manufacturer     |       | Manufacturer name                                            |
-| 8     | Build date       |       | Build date: <br/>[1] = year-2000, [2] = month, [3] = day     |
+| 8     | Build date       |       | Build date: <br/>[1] = year, [2] = month, [3] = day     |
 | 9     | Build time       |       | Build date: [0] = hour, [1] = minute, <br/>[2] = second, [3] = millisecond |
 | 10    | Add Info         |       | Additional information                                       |
 

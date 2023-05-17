@@ -117,38 +117,38 @@ if (!serialPortWriteAscii(&serialPort, "PERS", 4))
 ## Compile & Run (Linux/Mac)
 
 1. Create build directory
-``` bash
-$ cd InertialSenseSDK/ExampleProjects/Ascii
-$ mkdir build
-```
+   ``` bash
+   cd InertialSenseSDK/ExampleProjects/Ascii
+   mkdir build
+   ```
 2. Run cmake from within build directory
-``` bash
-$ cd build
-$ cmake ..
-```
+   ``` bash
+   cd build
+   cmake ..
+   ```
 3. Compile using make
- ``` bash
- $ make
- ```
+   ``` bash
+   make
+   ```
 4. If necessary, add current user to the "dialout" group in order to read and write to the USB serial communication ports:
-```bash
-$ sudo usermod -a -G dialout $USER
-$ sudo usermod -a -G plugdev $USER
-(reboot computer)
-```
+   ```bash
+   sudo usermod -a -G dialout $USER
+   sudo usermod -a -G plugdev $USER
+   (reboot computer)
+   ```
 5. Run executable
-``` bash
-$ ./ISAsciiExample /dev/ttyUSB0
-```
+   ``` bash
+   ./ISAsciiExample /dev/ttyUSB0
+   ```
 ## Compile & Run (Windows MS Visual Studio)
 
 1. [Install and Configure Visual Studio](../../software/SDK/#installing-and-configuring-visual-studio)
 2. Open Visual Studio solution file (InertialSenseSDK\ExampleProjects\Ascii\VS_project\ISAsciiExample.sln)
 3. Build (F7)
 4. Run executable
-``` bash
-C:\InertialSenseSDK\ExampleProjects\Ascii\VS_project\Release\ISAsciiExample.exe COM3
-```
+   ``` bash
+   C:\InertialSenseSDK\ExampleProjects\Ascii\VS_project\Release\ISAsciiExample.exe COM3
+   ```
 
 ## Summary
 
