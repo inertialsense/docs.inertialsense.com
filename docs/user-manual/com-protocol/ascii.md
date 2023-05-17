@@ -87,12 +87,6 @@ Enable NMEA messages and set broadcast periods.  The period is the a multiple of
 $ASCE,options,(id,period)*xx\r\n
 ```
 
-The following is an example of enabling **INS2** at 31.25Hz, **PPIMU** at 62.5Hz, and **GGA** at 5Hz. 
-
-```
-$ASCE,0,5,2,2,1,7,1*xx\r\n
-```
-
 | Index | Field   | Description                                                  |
 | ----- | ------- | ------------------------------------------------------------ |
 | 1     | options | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
@@ -100,6 +94,31 @@ $ASCE,0,5,2,2,1,7,1*xx\r\n
 | 2+n*2 | ID      | NMEA message ID to be broadcast.  See the ID in the [ASCII output messages](#ascii output messages) table. |
 | 3+n*2 | period  | Broadcast period multiple for specified message.  Zero disables streaming. |
 |       |         | *End of repeated group (1...20 times)*                       |
+
+#### Example Messages  
+
+The following examples NMEA messages enable IMX data streaming output.  The data period is 1, full [data source rates](binary/#data-source-update-rates), for those that do not specify the output rate.
+
+| Message             | Data (Output Rate)** |
+| ------------------- | ------- |
+| $ASCE,0,5,2,2,1,7,1*xx\r\n | PINS2 (31.25 Hz), PPIMU (62.5Hz), GGA (5Hz) |
+| $ASCE,0,0,1*09\r\n  | PIMU    |
+| $ASCE,0,1,1*08\r\n  | PPIMU   |
+| $ASCE,0,2,1*0B\r\n  | PRIMU   |
+| $ASCE,0,3,1*0A\r\n  | PINS1   |
+| $ASCE,0,4,1*0D\r\n  | PINS2   |
+| $ASCE,0,5,1*0C\r\n  | PGPSP   |
+| $ASCE,0,6,1*0F\r\n  | GGA     |
+| $ASCE,0,7,1*0E\r\n  | GLL     |
+| $ASCE,0,8,1*01\r\n  | GSA     |
+| $ASCE,0,9,1*00\r\n  | RMC     |
+| $ASCE,0,10,1*38\r\n | ZDA     |
+| $ASCE,0,11,1*39\r\n | PASHR   |
+| $ASCE,0,12,1*3A\r\n | PSTRB   |
+| $ASCE,0,13,1*3B\r\n | INFO    |
+| $ASCE,0,14,1*3C\r\n | GSV     |
+
+<sup>**</sup> These rates assume the default settings for [data source rates](binary/#data-source-update-rates).
 
 ### PERS
 
