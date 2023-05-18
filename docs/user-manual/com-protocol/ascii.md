@@ -91,7 +91,7 @@ $ASCE,options,(id,period)*xx\r\n
 | ----- | ------- | ------------------------------------------------------------ |
 | 1     | options | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
 |       |         | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | ID      | NMEA message ID to be broadcast.  See the ID in the [ASCII output messages](#ascii output messages) table. |
+| 2+n*2 | ID      | NMEA message ID to be broadcast.  See the ID in the [ASCII output messages](#ascii-output-messages) table. |
 | 3+n*2 | period  | Broadcast period multiple for specified message.  Zero disables streaming. |
 |       |         | *End of repeated group (1...20 times)*                       |
 
