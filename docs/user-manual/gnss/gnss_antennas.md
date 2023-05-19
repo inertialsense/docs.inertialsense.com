@@ -20,9 +20,9 @@ A ground plane width of 8 to 12 cm is typically large enough for most applicatio
 
 #### Helpful Links:
 
-[u-Blox: RF design considerations for GNSS receivers Application Note](https://www.u-blox.com/sites/default/files/products/documents/GPS-Antenna_AppNote_(GPS-X-08014).pdf?utm_source=en%2Fimages%2Fdownloads%2FProduct_Docs%2FGPS_Antennas_ApplicationNote(GPS-X-08014).pdf) 
+[u-Blox: RF design considerations for GNSS receivers Application Note](https://content.u-blox.com/sites/default/files/products/documents/GNSS-Antennas_AppNote_%28UBX-15030289%29.pdf) 
 
-[Taoglas:  GPS Patch Integration Application Note](https://www.taoglas.com/images/product_images/original_images/TAOGLAS - GPS Patch Antenna Integration Application Note.pdf) 
+[Taoglas:  GPS Patch Integration Application Note](https://cdn.taoglas.com/wp-content/uploads/pdf/TAOGLAS-GPS-Patch-Antenna-Integration-Application-NoteAPN-12-8-002.B.pdf) 
 
 [electronics.stackexchange.com: How big a ground plane does a GPS antenna need?](https://electronics.stackexchange.com/questions/150849/how-big-a-ground-plane-does-a-gps-antenna-need/247725) 
 
