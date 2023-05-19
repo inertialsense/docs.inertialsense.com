@@ -10,7 +10,7 @@ See the [multi-band dual GNSS](../multi_band_gnss/#evb-2-to-dual-zed-f9-interfac
 
 [//]: # "This comment won't appear in generated output. Source for above plot: google doc "GPS Compass Static Accuracy Testing" tab "Theoretical Accuracy""
 
-The generalized heading accuracy for both the single-band (L1) and the [dual GNSS multi-band](https://inertialsense.com/product/dual-gps-l1-l2-multi-band-ins-rtk-development-kit/) systems under ideal conditions is shown in the following plot.  
+The generalized heading accuracy for both the single-band (L1) and the [dual GNSS multi-band](https://inertialsense.com/product/dual-compassing-ins-sensor-series-5-ruggedized-module/) systems under ideal conditions is shown in the following plot.  
 
 ![Dual GNSS heading accuracy vs baseline](images/dual_f9p_heading_accuracy_vs_baseline.png) 
 
