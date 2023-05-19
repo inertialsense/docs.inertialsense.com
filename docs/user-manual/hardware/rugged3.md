@@ -112,7 +112,8 @@ Use platform config RUG-3 with this hardware version.
 Use platform config RUG-2.1 with this hardware version.
 
 - GPS1 PPS line connected to IMX G9 (pin 10).
-- GPS PPS is not connected to MAIN pin 5. 
+- MAIN pin 5 is connected to IMX G15 (pin 20).
+- MAIN pin 5 is not connected to GPS1 PPS. 
 
 ## Related Parts
 
