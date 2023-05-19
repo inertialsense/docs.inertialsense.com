@@ -12,7 +12,7 @@ The [Inertial Sense software development kit (SDK)](https://github.com/inertials
 
 **EVB-2** - Multi-purpose hardware evaluation and development kit for the IMX.  The EVB-2 includes the IMX-G2 with Dual GNSS, RTK heading / positioning, onboard logging to micro SD card, 915MHz XBee radio for RTK base corrections, WiFi and BLE interface, serial and SPI communications to IMX interface, and Microchip SAME70 processor as communications bridge and user project development environment.   
 
-**ROS** - The `inertial-sense-sdk/ros` directory contains the [ROS wrapper node implementation](ros) for the Inertial Sense IMX product line.
+**ROS** - The `inertial-sense-sdk/ros` directory contains the [ROS wrapper node implementation](ros/README.md) for the Inertial Sense IMX product line.
 
 ### Documents
 

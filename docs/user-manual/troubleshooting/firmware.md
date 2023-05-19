@@ -25,10 +25,10 @@ If attempting to enter NAV mode but the system reports AHRS despite GPS data bei
 There are different reasons a system may appear unresponsive and not communicate.  The following sections describe how to recover a system from these states.  
 
 !!! attention
-    The ONLY indicator that the bootloader is running is the fading cyan module LED.  NO communications will appear in the EvalTool or CLTool.  **Attempt to update the firmware before performing a [chip erase](chip_erase).**
+    The ONLY indicator that the bootloader is running is the fading cyan module LED.  NO communications will appear in the EvalTool or CLTool.  **Attempt to update the firmware before performing a [chip erase](chip_erase.md).**
 
 !!! attention
-    Hardware v3.1.3 and firmware IS_uINS-3_v1.2.1.0_b287_2017-09-17_103826.hex and older will not communicate and require following these instructions to be recovered. Do NOT use the [chip erase](chip_erase) procedure for this scenario.
+    Hardware v3.1.3 and firmware IS_uINS-3_v1.2.1.0_b287_2017-09-17_103826.hex and older will not communicate and require following these instructions to be recovered. Do NOT use the [chip erase](chip_erase.md) procedure for this scenario.
 
 ### Stuck in Bootloader Mode
 
