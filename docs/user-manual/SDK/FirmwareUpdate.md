@@ -6,7 +6,7 @@ This [ISBootloaderExample](https://github.com/inertialsense/InertialSenseSDK/tre
 
 #### Project Files
 
-* [ISBootloaderExample.c](https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects/Bootloader/ISBootloaderExample.c)
+* [ISBootloaderExample.cpp](https://github.com/inertialsense/inertial-sense-sdk/blob/master/ExampleProjects/Bootloader/ISBootloaderExample.cpp)
 
 #### SDK Files
 
@@ -30,7 +30,9 @@ This [ISBootloaderExample](https://github.com/inertialsense/InertialSenseSDK/tre
 // Change these include paths to the correct paths for your project
 #include "../../src/ISComm.h"
 #include "../../src/serialPortPlatform.h"
-#include "../../src/inertialSenseBootLoader.h"
+#include "../../src/ISBootloaderThread.h"
+#include "../../src/ISBootloaderBase.h"
+#include "../../src/ISSerialPort.h"
 ```
 
 ### Step 2: Initialize and open serial port
