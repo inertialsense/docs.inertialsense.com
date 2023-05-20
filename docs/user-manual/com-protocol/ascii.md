@@ -56,7 +56,7 @@ The following ASCII messages can be received by the IMX.
 
 ### ASCB
 
-Enable NMEA messages and set broadcast periods. The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum. Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming. Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). 
+Enable NMEA message and set broadcast periods.  The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum.  Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming.  Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](../binary/#data-source-update-rates)
 
 ```
 $ASCB,options,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
@@ -71,13 +71,13 @@ $ASCB,options,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
 | 5     | [PINS2](#pins2) | Broadcast period multiple for PINS2 INS output (quaternion, LLA) message. |
 | 6     | [PGPSP](#pgpsp) | Broadcast period multiple for PGPSP GPS position message.    |
 | 7     | [PRIMU](#primu) | Broadcast period multiple for PRIMU Raw IMU message.         |
-| 8     | [GGA](#gga)     | Broadcast period multiple for NMEA GGA (fix, 3D location, and accuracy) message. |
-| 9     | [GLL](#gll)     | Broadcast period multiple for NMEA GLL (2D location and time) message. |
-| 10    | [GSA](#gsa)     | Broadcast period multiple for NMEA GSA (DOP and active satellites) message. |
-| 11    | [RMC](#rmc)     | Broadcast period multiple for NMEA RMC (minimum specific GPS/Transit) message. |
-| 12    | [ZDA](#zda)     | Broadcast period multiple for NMEA ZDA (UTC Time/Date) message. |
-| 13    | [PASHR](#pashr) | Broadcast period multiple for NMEA PASHR (euler) message.    |
-| 14    | [GxGSV](#gsv)   | Broadcast period multiple for NMEA GSV satellite info (all active constellations sent with corresponding talker IDs) |
+| 8     | [GGA](#gga)     | Broadcast period multiple for NMEA standard GGA (fix, 3D location, and accuracy) message. |
+| 9     | [GLL](#gll)     | Broadcast period multiple for NMEA standard GLL (2D location and time) message. |
+| 10    | [GSA](#gsa)     | Broadcast period multiple for NMEA standard GSA (DOP and active satellites) message. |
+| 11    | [RMC](#rmc)     | Broadcast period multiple for NMEA standard RMC (minimum specific GPS/Transit) message. |
+| 12    | [ZDA](#zda)     | Broadcast period multiple for NMEA standard ZDA (UTC Time/Date) message. |
+| 13    | [PASHR](#pashr) | Broadcast period multiple for NMEA standard PASHR (euler) message.    |
+| 14    | [GxGSV](#gsv)   | Broadcast period multiple for NMEA standard GSV satellite info (all active constellations sent with corresponding talker IDs) |
 
 ### ASCE
 
