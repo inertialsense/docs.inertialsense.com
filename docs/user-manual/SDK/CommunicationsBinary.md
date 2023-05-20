@@ -146,7 +146,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 					handleIns1Message((ins_1_t*)comm.dataPtr);
 					break;
 
-				case DID_INS_2:
+				case _DID_INS_LLA_QN2B:
 					handleIns2Message((ins_2_t*)comm.dataPtr);
 					break;
 
@@ -154,7 +154,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 					handleGpsMessage((gps_pos_t*)comm.dataPtr);
 					break;
 
-				case _DID_IMU_DUAL:
+				case _DID_PIMU:
 					handleImuMessage((dual_imu_t*)comm.dataPtr);
 					break;
 

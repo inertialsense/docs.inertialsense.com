@@ -48,7 +48,7 @@ The following sections detail how to interface and configure the IMX for operati
 
 #### Dual ZED-F9 Heading Accuracy
 
-When using two multi-band ZED-F9 GNSS receivers in moving baseline mode (RTK compassing) such as the [EVB-2 Dual ZED-F9](https://inertialsense.com/product/dual-gps-l1-l2-multi-band-ins-rtk-development-kit/), the baseline error is composed of the measurement error plus the RTK solution error.  The heading accuracy with ideal conditions is shown in the following plot.
+When using two multi-band ZED-F9 GNSS receivers in moving baseline mode (RTK compassing) such as the [EVB-2 Dual ZED-F9](https://inertialsense.com/product/dual-compassing-ins-sensor-series-5-ruggedized-module/), the baseline error is composed of the measurement error plus the RTK solution error.  The heading accuracy with ideal conditions is shown in the following plot.
 
 ![Dual GNSS heading accuracy vs baseline](./images/dual_f9p_heading_accuracy_vs_baseline.png) 
 
