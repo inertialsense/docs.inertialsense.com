@@ -1,12 +1,12 @@
 ﻿
 
-# ASCII (NMEA 0183) Protocol
+# NMEA 0183 (ASCII) Protocol
 
 For simple use, the Inertial Sense device supports a human-readable ASCII communications protocol based on NMEA 0183. The ASCII protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](binary.md) in terms of message length for the same amount of data.
 
 ## Communications Examples
 
-The [ASCII Communications Example Project](../SDK/CommunicationsAscii.md) demonstrates how to implement the protocol.
+The [NMEA Communications Example Project](../SDK/CommunicationsAscii.md) demonstrates how to implement the protocol.
 
 ## Packet Structure
 
