@@ -139,22 +139,22 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 		{
 			switch (is_comm_parse_byte(&comm, inByte))
 			{
-			case _PTYPE_IS_V1_DATA:
+			case _PTYPE_INERTIAL_SENSE_DATA:
 				switch (comm.dataHdr.id)
 				{
-				case DID_INS_1:
+				case _DID_INS_LLA_EULER_NED:
 					handleIns1Message((ins_1_t*)comm.dataPtr);
 					break;
 
-				case DID_INS_2:
+				case _DID_INS_LLA_QN2B:
 					handleIns2Message((ins_2_t*)comm.dataPtr);
 					break;
 
-				case DID_GPS1_POS:
+				case _DID_GPS1_POS:
 					handleGpsMessage((gps_pos_t*)comm.dataPtr);
 					break;
 
-				case _DID_IMU_DUAL:
+				case _DID_PIMU:
 					handleImuMessage((dual_imu_t*)comm.dataPtr);
 					break;
 
