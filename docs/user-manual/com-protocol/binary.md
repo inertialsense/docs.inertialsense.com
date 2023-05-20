@@ -196,7 +196,25 @@ Figure 1 – Packet Structure
 1 byte – packet start byte (`0xFF`) <br>
 1 byte – packet identifier, determines the format of packet data <br>
 1 byte – packet counter (for retries) <br>
-1 byte – flags <br>
+1 byte – flags, ePktHdrFlags enum <br>	1 byte – flags <br>
+
+``` C++	
+#include "SDK/src/com_manager.h"	
+enum ePktHdrFlags	
+{	
+// bit set for little endian, bit cleared for big endian	
+CM_PKT_FLAGS_LITTLE_ENDIAN = 0x01,	
+// has any valid packet been received	
+CM_PKT_FLAGS_RX_VALID_DATA = 0x02,	
+// multi-packet data set	
+CM_PKT_FLAGS_MORE_DATA_AVAILABLE = 0x04,	
+// Allow for arbitrary length in bytes of data, not necessarily multiple of 4. Don't	
+auto-swap bytes for endianness	
+CM_PKT_FLAGS_RAW_DATA_NO_SWAP = 0x08,	
+// Checksum is the new 24 bit algorithm instead of the old 16 bit algorithm	
+CM_PKT_FLAGS_CHECKSUM_24_BIT = 0x10	
+};	
+```
 
 **Packet data may be 0 bytes, depending on packet identifier (PID)**
 
