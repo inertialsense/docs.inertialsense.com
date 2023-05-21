@@ -47,8 +47,9 @@ The following NMEA messages can be received by the IMX.
 
 | Message                     | Description                                                  |
 | --------------------------- | ------------------------------------------------------------ |
-| ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.           |
-| [ASCB](#ascb)               | Set the broadcast rate of NMEA output messages.             |
+| ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.            |
+| [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.            |
+| [ASCE](#asce)               | Set the broadcast period of selected NMEA output messages.   |
 | ```$INFO*0E\r\n```          | Query device information.                                    |
 | [```$PERS*13\r\n```](#pers) | Save persistent message to flash.                            |
 | [```$STPB*15\r\n```](#stpb) | Stop broadcast of all messages (NMEA and binary) on all ports. |
@@ -158,11 +159,11 @@ The hexadecimal equivalent is:
 
 ## NMEA Output Messages
 
-The following NMEA messages can be sent by the IMX.  The ID is used with the $ASCE message to enable message streaming. 
+The following NMEA messages can be sent by the IMX.  The message ID is used with the `$ASCE` message to enable message streaming. 
 
 | Message         | ID                                                | Description                                                  |
 | --------------- | ------------------------------------------------------------ | --------------- |
-| [ASCB](#ascb)   |                      | Broadcast rate of NMEA output messages.                     |
+| [ASCB](#ascb)   |                      | Broadcast period of NMEA output messages.                |
 | [PIMU](#pimu)   | 1 | IMU data (3-axis gyros and accelerometers) in the body frame. |
 | [PPIMU](#ppimu) | 2 | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
 | [PRIMU](#primu) | 3 | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
