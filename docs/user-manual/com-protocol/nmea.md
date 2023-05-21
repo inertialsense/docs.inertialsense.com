@@ -1,8 +1,8 @@
 ﻿
 
-# NMEA 0183 (ASCII) Protocol
+# NMEA 0183 (NMEA) Protocol
 
-For simple use, the Inertial Sense device supports a human-readable ASCII communications protocol based on NMEA 0183. The ASCII protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](binary.md) in terms of message length for the same amount of data.
+For simple use, the Inertial Sense device supports a human-readable NMEA communications protocol based on NMEA 0183. The NMEA protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](binary.md) in terms of message length for the same amount of data.
 
 ## Communications Examples
 
@@ -10,7 +10,7 @@ The [NMEA Communications Example Project](../SDK/CommunicationsAscii.md) demonst
 
 ## Packet Structure
 
-The Inertial Sense ASCII protocol follows the standard [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure:
+The Inertial Sense NMEA protocol follows the standard [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure:
 
 * 1 byte – Start packet, `$` (`0x24`)
 * n bytes – packet identifier
@@ -20,39 +20,39 @@ The Inertial Sense ASCII protocol follows the standard [NMEA 0183](https://en.wi
 * 2 bytes – checksum in hex format (i.e. `f5` or `0a`), 0 padded and lowercase
 * 2 bytes – End packet, `\r\n` (`0x0D`, `0x0A`)
 
-The packet checksum is an 8 bit integer and is calculated by calculating the exclusive OR of all bytes in between and not including the $ and * bytes. The packet checksum byte is converted to a 2 byte ASCII hex code, and left padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details.  The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
+The packet checksum is an 8 bit integer and is calculated by calculating the exclusive OR of all bytes in between and not including the $ and * bytes. The packet checksum byte is converted to a 2 byte NMEA hex code, and left padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details.  The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
 ## Persistent Messages
 
 The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot,  eliminating the need to re-enable messages following a reset or power cycle.  
 
-- **To save current ASCII persistent messages** - send the [$PERS](#pers) command.  
+- **To save current NMEA persistent messages** - send the [$PERS](#pers) command.  
 - **To disable persistent messages** - send the [$STPB](#stpb) followed by [$PERS](#pers). 
 
 [Binary persistent messages](../binary/#persistent-messages) are also available.
 
 ### Enabling Persistent Messages - EvalTool
 
-To enable persistent ASCII messages using the EvalTool:
+To enable persistent NMEA messages using the EvalTool:
 
-- Enable the desired ASCII messages in the EvalTool "Data Sets" tab. Select DID_ASCII_BCAST_PERIOD in the DID menu and set the desired ASCII messages period to a non-zero value.
+- Enable the desired NMEA messages in the EvalTool "Data Sets" tab. Select DID_NMEA_BCAST_PERIOD in the DID menu and set the desired NMEA messages period to a non-zero value.
 - Press the "Save Persistent" button in the EvalTool "Data Logs" tab to store the current message configuration to flash memory.
-- Reset the IMX and verify the messages are automatically streaming. You can use a generic serial port program like putty or the EvalTool->Data Logs->Data Log->Messages dialog to view the ASCII messages.
+- Reset the IMX and verify the messages are automatically streaming. You can use a generic serial port program like putty or the EvalTool->Data Logs->Data Log->Messages dialog to view the NMEA messages.
 
 **To disable all persistent messages using the EvalTool**, click the "Stop Streaming" button and then "Save Persistent" button.   
 
-## ASCII Input Messages
+## NMEA Input Messages
 
-The following ASCII messages can be received by the IMX.
+The following NMEA messages can be received by the IMX.
 
 | Message                     | Description                                                  |
 | --------------------------- | ------------------------------------------------------------ |
-| ```$ASCB*13\r\n```          | Query the broadcast rate of ASCII output messages.           |
-| [ASCB](#ascb)               | Set the broadcast rate of ASCII output messages.             |
+| ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.           |
+| [ASCB](#ascb)               | Set the broadcast rate of NMEA output messages.             |
 | ```$INFO*0E\r\n```          | Query device information.                                    |
 | [```$PERS*13\r\n```](#pers) | Save persistent message to flash.                            |
-| [```$STPB*15\r\n```](#stpb) | Stop broadcast of all messages (ASCII and binary) on all ports. |
-| [```$STPC*14\r\n```](#stpc) | Stop broadcast of all messages (ASCII and binary) on current port. |
+| [```$STPB*15\r\n```](#stpb) | Stop broadcast of all messages (NMEA and binary) on all ports. |
+| [```$STPC*14\r\n```](#stpc) | Stop broadcast of all messages (NMEA and binary) on current port. |
 
 ### ASCB
 
@@ -91,7 +91,7 @@ $ASCE,options,(id,period)*xx\r\n
 | ----- | ------- | ------------------------------------------------------------ |
 | 1     | options | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
 |       |         | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | ID      | NMEA message ID to be broadcast.  See the ID in the [ASCII output messages](#ascii-output-messages) table. |
+| 2+n*2 | ID      | NMEA message ID to be broadcast.  See the ID in the [NMEA output messages](#nmea-output-messages) table. |
 | 3+n*2 | period  | Broadcast period multiple for specified message.  Zero disables streaming. |
 |       |         | *End of repeated group (1...20 times)*                       |
 
@@ -130,7 +130,7 @@ $PERS*14\r\n
 
 ### STPB
 
-Stop all broadcasts (both binary and ASCII) on all ports by sending the following packet:
+Stop all broadcasts (both binary and NMEA) on all ports by sending the following packet:
 
 ```
 $STPB*15\r\n
@@ -144,7 +144,7 @@ The hexadecimal equivalent is:
 
 ### STPC
 
-Stop all broadcasts (both binary and ASCII) on the current port by sending the following packet:
+Stop all broadcasts (both binary and NMEA) on the current port by sending the following packet:
 
 ```
 $STPC*14\r\n
@@ -156,13 +156,13 @@ The hexadecimal equivalent is:
 24 53 54 50 43 2A 31 34 0D 0A
 ```
 
-## ASCII Output Messages
+## NMEA Output Messages
 
-The following ASCII messages can be sent by the IMX.  The ID is used with the $ASCE message to enable message streaming. 
+The following NMEA messages can be sent by the IMX.  The ID is used with the $ASCE message to enable message streaming. 
 
 | Message         | ID                                                | Description                                                  |
 | --------------- | ------------------------------------------------------------ | --------------- |
-| [ASCB](#ascb)   |                      | Broadcast rate of ASCII output messages.                     |
+| [ASCB](#ascb)   |                      | Broadcast rate of NMEA output messages.                     |
 | [PIMU](#pimu)   | 1 | IMU data (3-axis gyros and accelerometers) in the body frame. |
 | [PPIMU](#ppimu) | 2 | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
 | [PRIMU](#primu) | 3 | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
@@ -569,14 +569,14 @@ $INFO,d,d.d.d.d,d.d.d.d,d,d.d.d.d,d,s,YYYY-MM-DD,hh:mm:ss.ms,s*xx\r\n
 | 9     | Build time       |       | Build date: [0] = hour, [1] = minute, <br/>[2] = second, [3] = millisecond |
 | 10    | Add Info         |       | Additional information                                       |
 
-## ASCII Examples
+## NMEA Examples
 
-This section illustrates common ASCII message strings for configuration.
+This section illustrates common NMEA message strings for configuration.
 !!! note
     If the command strings below are altered, their checksum must be recalculated.
 
 !!! note
-    All ASCII command strings must be followed with a carriage return and new line character (`\r\n` or `0x0D`, `0x0A`).
+    All NMEA command strings must be followed with a carriage return and new line character (`\r\n` or `0x0D`, `0x0A`).
 
 The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/serialPort.c#L219-L268) or can be generated using an online NMEA checksum calculator. For example:  [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
@@ -666,7 +666,7 @@ $PIMU,3218.763,0.0019,-0.0062,-0.0086,-1.426,-1.114,-9.509,0.0054,0.0029,-0.0070
 
 ### Using Tera Term App
 
-The example ASCII command strings can be sent using standard serial port terminal that supports sending the line ending characters (carriage return and new line).  The Windows desktop app [Tera Term](https://osdn.net/projects/ttssh2/releases/) can be used for this.
+The example NMEA command strings can be sent using standard serial port terminal that supports sending the line ending characters (carriage return and new line).  The Windows desktop app [Tera Term](https://osdn.net/projects/ttssh2/releases/) can be used for this.
 
 **Setup:**
 
@@ -674,7 +674,7 @@ The example ASCII command strings can be sent using standard serial port termina
 
 2. Setup > Terminal...
     - Receive:		CR
-    - Transmit:	CR+LF	**(IMPORTANT - Ensures each ASCII string ends with `\r\n` or `0x0D`, `0x0A`)** 
+    - Transmit:	CR+LF	**(IMPORTANT - Ensures each NMEA string ends with `\r\n` or `0x0D`, `0x0A`)** 
     - Local echo:	Yes		This shows what was sent.
 
 3. Setup > Serial port...
@@ -690,8 +690,8 @@ The example ASCII command strings can be sent using standard serial port termina
 
 1. File > log  -  Be sure to save as a .txt so it can be viewed in notepad. Controls for the log are in the Logger popup window after starting a log.
 
-**Sending an ASCII command:**
+**Sending an NMEA command:**
 
 1. Copy one of the command messages above to the clipboard.
 
-2. Use the Tera Term > Edit > `Paste<CR>`  option to send the copied command.  This method in conjunction with the above "CR+LF" terminal transmit setting ensures that a carriage return and line feed character terminate the sent string.  Only one ASCII string command can be sent at a time. 
+2. Use the Tera Term > Edit > `Paste<CR>`  option to send the copied command.  This method in conjunction with the above "CR+LF" terminal transmit setting ensures that a carriage return and line feed character terminate the sent string.  Only one NMEA string command can be sent at a time. 

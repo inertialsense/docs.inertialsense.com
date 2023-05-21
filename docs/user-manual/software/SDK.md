@@ -51,7 +51,7 @@ When compiling an Inertial Sense SDK example project in Visual Studio, the curre
 
 | Example Project                                         | Language | Description                                                  |
 | ------------------------------------------------------- | -------- | ------------------------------------------------------------ |
-| [ASCII Communications](../SDK/CommunicationsAscii.md)   | C        | How to use SDK for ASCII NMEA communications.                |
+| [NMEA Communications](../SDK/CommunicationsAscii.md)   | C        | How to use SDK for NMEA NMEA communications.                |
 | [Binary Communications](../SDK/CommunicationsBinary.md) | C        | How to use SDK for binary communications.                    |
 | [Fimrware Update](../SDK/FirmwareUpdate.md)             | C        | How to use bootloader for embedded firmware update.          |
 | [Data Logger](../SDK/DataLogger.md)                     | C++      | How to use SDK data logging.                                 |

@@ -110,7 +110,7 @@ nav:
     - Overview: user-manual/com-protocol/overview.md
     - Data Sets (DIDs): user-manual/com-protocol/DID-descriptions.md
     - Binary: user-manual/com-protocol/binary.md
-    - NMEA (ASCII): user-manual/com-protocol/nmea.md
+    - NMEA: user-manual/com-protocol/nmea.md
     - SPI: user-manual/com-protocol/SPI.md
     - CAN: user-manual/com-protocol/CAN.md
   - GNSS - RTK:
@@ -141,7 +141,7 @@ nav:
     - Overview: user-manual/SDK/README.md
     - Example Projects:
       - Comm-Binary (C): user-manual/SDK/CommunicationsBinary.md
-      - Comm-ASCII (C): user-manual/SDK/CommunicationsAscii.md
+      - Comm-NMEA (C): user-manual/SDK/CommunicationsAscii.md
       - Comm-Arduino (C): user-manual/SDK/CommunicationsArduino.md
       - Firmware Update (C): user-manual/SDK/FirmwareUpdate.md
       - InertialSense Class CLTool (C++): user-manual/SDK/InertialSenseClassCLTool.md

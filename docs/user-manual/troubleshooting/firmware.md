@@ -109,7 +109,7 @@ The following steps can be used to downgrade the uINS firmware to version 1.8.x 
       ```
       
 
-3. Verify the uINS has reboot into bootloader update mode.  The host serial port will disappear and reappear.  The uINS will NOT support normal DID binary or ASCII communications in this mode, but will be ready to update the bootloader.
+3. Verify the uINS has reboot into bootloader update mode.  The host serial port will disappear and reappear.  The uINS will NOT support normal DID binary or NMEA communications in this mode, but will be ready to update the bootloader.
 
 4. Update the bootloader and firmware using the 1.8.x EvalTool, cltool, or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. 
 

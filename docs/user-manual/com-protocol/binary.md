@@ -1,6 +1,6 @@
 # Inertial Sense Binary Protocol
 
-The Inertial Sense binary protocol provides the most efficient way to communicate with the µINS, µAHRS, and µIMU because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [ASCII Protocol](../com-protocol/ascii.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
+The Inertial Sense binary protocol provides the most efficient way to communicate with the µINS, µAHRS, and µIMU because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [NMEA Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
 
 ## Communication
 
@@ -89,7 +89,7 @@ The *persistent messages* option saves the current data stream configuration to 
 - **To save persistent messages** - (to flash memory), bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field or set DID_CONFIG.system = 0x00000001 and DID_CONFIG.system = 0xFFFFFFFE.   See the [save persistent messages example](../../SDK/CommunicationsBinary/#step-7-save-persistent-messages) in the Binary Communications example project.
 - **To disable persistent messages** - a [stop all broadcasts packet](../../SDK/CommunicationsBinary/#step-4-stop-any-message-broadcasting) followed by a *save persistent messages* command.   
 
-[ASCII persistent messages](../ascii/#persistent-messages) are also available. 
+[NMEA persistent messages](../nmea/#persistent-messages) are also available. 
 
 ##### Enabling Persistent Messages - EvalTool  
 
@@ -109,7 +109,7 @@ cltool -c /dev/ttyS3 -persistent -msgINS2 -msgGPS
 
 #### Example Projects
 
-Examples on how to use the Inertial Sense SDK for binary communications are found in the [Binary Communications Example Project](../SDK/CommunicationsBinary.md) and [cltool project](../SDK/InertialSenseClassCLTool.md).  [ASCII communications](../com-protocol/ascii.md) examples are found in the [ASCII Example Project](../SDK/CommunicationsAscii.md).
+Examples on how to use the Inertial Sense SDK for binary communications are found in the [Binary Communications Example Project](../SDK/CommunicationsBinary.md) and [cltool project](../SDK/InertialSenseClassCLTool.md).  [NMEA communications](../com-protocol/nmea.md) examples are found in the [NMEA Example Project](../SDK/CommunicationsAscii.md).
 
 ### Parsing Data
 
@@ -136,7 +136,7 @@ The following parser code is simpler to implement.  This method uses the `is_com
 				break;
 			case _PTYPE_RTCM3:
 				break;
-			case _PTYPE_ASCII_NMEA:
+			case _PTYPE_NMEA:
 				break;
 			}
 		}
@@ -172,7 +172,7 @@ The following parser code uses less processor time to parse data by copying mult
 				break;
 			case _PTYPE_RTCM3:
 				break;
-			case _PTYPE_ASCII_NMEA:
+			case _PTYPE_NMEA:
 				break;
 			}
 		}
@@ -256,7 +256,7 @@ For a full example of encoding and decoding binary packets, please reference the
 
 ## Stop Broadcasts Packets
 
-Two *stop all broadcasts* packets are special packet types that will disable all binary and ASCII data streams.  The following functions calls are provided in the SDK to generate and send the stop all broadcasts packet.
+Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate and send the stop all broadcasts packet.
 
 ### All Ports
 

@@ -41,7 +41,7 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 * Attitude (Roll, Pitch, Yaw, Quaternions), Velocity, and Position UTC Time Synchronized
 * Triple Redundant IMUs Calibrated for Bias, Scale Factor, Cross-axis Alignment, and G-sensitivity
 * -40°C to 85°C Sensor Temperature Calibration
-* Binary and NMEA ASCII Protocol
+* Binary and NMEA Protocol
 * Barometric Pressure and Humidity
 * Strobe In/Out Data Sync (Camera Shutter Event)
 * Fast Integration with SDK and Example Software

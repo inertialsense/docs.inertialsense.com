@@ -10,10 +10,10 @@ This example shows how to communicate with the IMX using the Inertial Sense [Bin
 This example demonstrates how to use the Inertial Sense EVB with an Arduino Due. The Due was selected because it has two serial ports.  This way the Arduino can communicate with the IMX using one of the ports, and write the output over the Serial Monitor to the computer using the other.
 
 !!! warning
-    The InertialSense SDK requires 64-bit double support.  32-bit processors (Arduino Due, Zero, and M0) are supported.  8-bit processors (i.e. Arduino Mega and Uno) are NOT supported.  The [ASCII protocol](../com-protocol/ascii.md) (not covered in this example) may be used on an 8-bit Arduino.
+    The InertialSense SDK requires 64-bit double support.  32-bit processors (Arduino Due, Zero, and M0) are supported.  8-bit processors (i.e. Arduino Mega and Uno) are NOT supported.  The [ASCII protocol](../com-protocol/nmea.md) (not covered in this example) may be used on an 8-bit Arduino.
 
 !!! note
-    A [Raspberry PI](https://www.raspberrypi.org/products/) (similar in price to the Arduino) is a good alternative to the Arduino.  Either the [Binary Communications](../com-protocol/binary.md) and [ASCII Communications](../com-protocol/ascii.md) example projects can be run on a Raspberry PI. 
+    A [Raspberry PI](https://www.raspberrypi.org/products/) (similar in price to the Arduino) is a good alternative to the Arduino.  Either the [Binary Communications](../com-protocol/binary.md) and [ASCII Communications](../com-protocol/nmea.md) example projects can be run on a Raspberry PI. 
 
 ## Wiring Guide
 
