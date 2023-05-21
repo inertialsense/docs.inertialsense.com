@@ -35,7 +35,7 @@ The *persistent messages* option saves the current data stream configuration to 
 
 To enable persistent ASCII messages using the EvalTool:
 
-- Enable the desired ASCII messages in the EvalTool "Data Sets" tab. Select DID_ASCII_BCAST_PERIOD in the DID menu and set the desired ASCII messages period to a non-zero value.
+- Enable the desired ASCII messages in the EvalTool "Data Sets" tab. Select DID_NMEA_BCAST_PERIOD in the DID menu and set the desired ASCII messages period to a non-zero value.
 - Press the "Save Persistent" button in the EvalTool "Data Logs" tab to store the current message configuration to flash memory.
 - Reset the IMX and verify the messages are automatically streaming. You can use a generic serial port program like putty or the EvalTool->Data Logs->Data Log->Messages dialog to view the ASCII messages.
 
@@ -47,8 +47,8 @@ The following ASCII messages can be received by the IMX.
 
 | Message                     | Description                                                  |
 | --------------------------- | ------------------------------------------------------------ |
-| ```$ASCB*13\r\n```          | Query the broadcast rate of ASCII output messages.           |
-| [ASCB](#ascb)               | Set the broadcast rate of ASCII output messages.             |
+| ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.           |
+| [ASCB](#ascb)               | Set the broadcast rate of NMEA output messages.             |
 | ```$INFO*0E\r\n```          | Query device information.                                    |
 | [```$PERS*13\r\n```](#pers) | Save persistent message to flash.                            |
 | [```$STPB*15\r\n```](#stpb) | Stop broadcast of all messages (ASCII and binary) on all ports. |
@@ -91,7 +91,7 @@ $ASCE,options,(id,period)*xx\r\n
 | ----- | ------- | ------------------------------------------------------------ |
 | 1     | options | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
 |       |         | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | ID      | NMEA message ID to be broadcast.  See the ID in the [ASCII output messages](#ascii-output-messages) table. |
+| 2+n*2 | ID      | NMEA message ID to be broadcast.  See the ID in the [NMEA output messages](#nmea-output-messages) table. |
 | 3+n*2 | period  | Broadcast period multiple for specified message.  Zero disables streaming. |
 |       |         | *End of repeated group (1...20 times)*                       |
 
@@ -156,13 +156,13 @@ The hexadecimal equivalent is:
 24 53 54 50 43 2A 31 34 0D 0A
 ```
 
-## ASCII Output Messages
+## NMEA Output Messages
 
 The following ASCII messages can be sent by the IMX.  The ID is used with the $ASCE message to enable message streaming. 
 
 | Message         | ID                                                | Description                                                  |
 | --------------- | ------------------------------------------------------------ | --------------- |
-| [ASCB](#ascb)   |                      | Broadcast rate of ASCII output messages.                     |
+| [ASCB](#ascb)   |                      | Broadcast rate of NMEA output messages.                     |
 | [PIMU](#pimu)   | 1 | IMU data (3-axis gyros and accelerometers) in the body frame. |
 | [PPIMU](#ppimu) | 2 | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
 | [PRIMU](#primu) | 3 | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |

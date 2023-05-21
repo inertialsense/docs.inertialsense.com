@@ -763,11 +763,11 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 
 ### Configuration
 
-#### DID_ASCII_BCAST_PERIOD
+#### DID_NMEA_BCAST_PERIOD
 
 Broadcast period for ASCII messages 
 
-`ascii_msgs_t`
+`nmea_msgs_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
