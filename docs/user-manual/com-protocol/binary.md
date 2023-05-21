@@ -1,6 +1,6 @@
 # Inertial Sense Binary Protocol
 
-The Inertial Sense binary protocol provides the most efficient way to communicate with the µINS, µAHRS, and µIMU because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [ASCII Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
+The Inertial Sense binary protocol provides the most efficient way to communicate with the µINS, µAHRS, and µIMU because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [NMEA Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
 
 ## Communication
 
@@ -109,7 +109,7 @@ cltool -c /dev/ttyS3 -persistent -msgINS2 -msgGPS
 
 #### Example Projects
 
-Examples on how to use the Inertial Sense SDK for binary communications are found in the [Binary Communications Example Project](../SDK/CommunicationsBinary.md) and [cltool project](../SDK/InertialSenseClassCLTool.md).  [ASCII communications](../com-protocol/nmea.md) examples are found in the [ASCII Example Project](../SDK/CommunicationsAscii.md).
+Examples on how to use the Inertial Sense SDK for binary communications are found in the [Binary Communications Example Project](../SDK/CommunicationsBinary.md) and [cltool project](../SDK/InertialSenseClassCLTool.md).  [NMEA communications](../com-protocol/nmea.md) examples are found in the [NMEA Example Project](../SDK/CommunicationsAscii.md).
 
 ### Parsing Data
 
@@ -136,7 +136,7 @@ The following parser code is simpler to implement.  This method uses the `is_com
 				break;
 			case _PTYPE_RTCM3:
 				break;
-			case _PTYPE_ASCII_NMEA:
+			case _PTYPE_NMEA:
 				break;
 			}
 		}
@@ -172,7 +172,7 @@ The following parser code uses less processor time to parse data by copying mult
 				break;
 			case _PTYPE_RTCM3:
 				break;
-			case _PTYPE_ASCII_NMEA:
+			case _PTYPE_NMEA:
 				break;
 			}
 		}
@@ -274,7 +274,7 @@ For a full example of encoding and decoding binary packets, please reference the
 
 ## Stop Broadcasts Packets
 
-Two *stop all broadcasts* packets are special packet types that will disable all binary and ASCII data streams.  The following functions calls are provided in the SDK to generate and send the stop all broadcasts packet.
+Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate and send the stop all broadcasts packet.
 
 ### All Ports
 

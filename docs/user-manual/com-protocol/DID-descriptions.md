@@ -778,12 +778,12 @@ Broadcast period for ASCII messages
 | pins2 | uint16_t | Broadcast period multiple - ASCII INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. 0 to disable. |
 | pgpsp | uint16_t | Broadcast period multiple - ASCII GPS position data. 0 to disable. |
 | primu | uint16_t | Broadcast period multiple - ASCII Raw IMU data (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of pimu or ppimu as they are oversampled and contain less noise. 0 to disable. |
-| gpgga | uint16_t | Broadcast period multiple - ASCII NMEA GPGGA GPS 3D location, fix, and accuracy. 0 to disable. |
-| gpgll | uint16_t | Broadcast period multiple - ASCII NMEA GPGLL GPS 2D location and time. 0 to disable. |
-| gpgsa | uint16_t | Broadcast period multiple - ASCII NMEA GSA GPS DOP and active satellites. 0 to disable. |
-| gprmc | uint16_t | Broadcast period multiple - ASCII NMEA recommended minimum specific GPS/Transit data. 0 to disable. |
-| gpzda | uint16_t | Broadcast period multiple - ASCII NMEA Data and Time. 0 to disable. |
-| pashr | uint16_t | Broadcast period multiple - ASCII NMEA Inertial Attitude Data. 0 to disable. |
+| gga | uint16_t | Broadcast period multiple - NMEA standard GGA GPS 3D location, fix, and accuracy. 0 to disable. |
+| gll | uint16_t | Broadcast period multiple - NMEA standard GLL GPS 2D location and time. 0 to disable. |
+| gsa | uint16_t | Broadcast period multiple - NMEA standard GSA GPS DOP and active satellites. 0 to disable. |
+| rmc | uint16_t | Broadcast period multiple - NMEA standard RMC recommended minimum specific GPS/Transit data. 0 to disable. |
+| zda | uint16_t | Broadcast period multiple - NMEA standard ZDA Data and Time. 0 to disable. |
+| pashr | uint16_t | Broadcast period multiple - NMEA standard PASHR Inertial Attitude Data. 0 to disable. |
 
 
 #### DID_FLASH_CONFIG
