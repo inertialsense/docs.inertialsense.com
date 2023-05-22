@@ -301,7 +301,7 @@ RTK precision position base to rover relative info.
 
 #### DID_GPS1_SAT
 
-GPS 1 GNSS and sat identifiers, carrier to noise ratio (signal strength), elevation and azimuth angles, pseudo range residual. 
+GPS 1 GNSS satellite information: sat identifiers, carrier to noise ratio, elevation and azimuth angles, pseudo range residual. 
 
 `gps_sat_t`
 
@@ -361,8 +361,7 @@ GPS 1 version info
 |-------|------|-------------|
 | swVersion | uint8_t[30] | Software version |
 | hwVersion | uint8_t[10] | Hardware version |
-| extension | uint8_t[30] | Extension |
-| reserved | uint8_t[2] | ensure 32 bit aligned in memory |
+| extension | gps_extension_ver_t[6] | Extension 30 bytes array description  |
 
 
 #### DID_GPS2_POS
@@ -455,7 +454,7 @@ Dual GNSS RTK compassing / moving base to rover (GPS 1 to GPS 2) relative info.
 
 #### DID_GPS2_SAT
 
-GPS 2 GNSS and sat identifiers, carrier to noise ratio (signal strength), elevation and azimuth angles, pseudo range residual. 
+GPS 2 GNSS satellite information: sat identifiers, carrier to noise ratio, elevation and azimuth angles, pseudo range residual. 
 
 `gps_sat_t`
 
@@ -490,8 +489,7 @@ GPS 2 version info
 |-------|------|-------------|
 | swVersion | uint8_t[30] | Software version |
 | hwVersion | uint8_t[10] | Hardware version |
-| extension | uint8_t[30] | Extension |
-| reserved | uint8_t[2] | ensure 32 bit aligned in memory |
+| extension | gps_extension_ver_t[6] | Extension 30 bytes array description  |
 
 
 #### DID_GPS_RTK_OPT
@@ -742,13 +740,12 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 
 | Field | Type | Description |
 |-------|------|-------------|
-| gnssId | uint8_t | GNSS identifier: 0 GPS, 1 SBAS, 2 Galileo, 3 BeiDou, 5 QZSS, 6 GLONASS |
+| gnssId | uint8_t | GNSS identifier (see eSatSvGnssId) |
 | svId | uint8_t | Satellite identifier |
-| cno | uint8_t | (dBHz) Carrier to noise ratio (signal strength) |
 | elev | int8_t | (deg) Elevation (range: +/-90) |
 | azim | int16_t | (deg) Azimuth (range: +/-180) |
-| prRes | int16_t | (m) Pseudo range residual |
-| flags | uint32_t | (see eSatSvFlags) |
+| cno | uint8_t | (dBHz) Carrier to noise ratio (signal strength) |
+| status | uint16_t | (see eSatSvStatus) |
 
 
 #### Inertial Measurement Unit (IMU)
@@ -762,29 +759,6 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 
 
 ### Configuration
-
-#### DID_NMEA_BCAST_PERIOD
-
-Broadcast period for ASCII messages 
-
-`nmea_msgs_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| options | uint32_t | Options: Port selection[0x0=current, 0xFF=all, 0x1=ser0, 0x2=ser1, 0x4=ser2, 0x8=USB] (see RMC_OPTIONS_...) |
-| pimu | uint16_t | Broadcast period multiple - ASCII IMU data. 0 to disable. |
-| ppimu | uint16_t | Broadcast period multiple - ASCII preintegrated IMU: delta theta (rad) and delta velocity (m/s). 0 to disable. |
-| pins1 | uint16_t | Broadcast period multiple - ASCII INS output: euler rotation w/ respect to NED, NED position from reference LLA. 0 to disable. |
-| pins2 | uint16_t | Broadcast period multiple - ASCII INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. 0 to disable. |
-| pgpsp | uint16_t | Broadcast period multiple - ASCII GPS position data. 0 to disable. |
-| primu | uint16_t | Broadcast period multiple - ASCII Raw IMU data (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of pimu or ppimu as they are oversampled and contain less noise. 0 to disable. |
-| gga | uint16_t | Broadcast period multiple - NMEA standard GGA GPS 3D location, fix, and accuracy. 0 to disable. |
-| gll | uint16_t | Broadcast period multiple - NMEA standard GLL GPS 2D location and time. 0 to disable. |
-| gsa | uint16_t | Broadcast period multiple - NMEA standard GSA GPS DOP and active satellites. 0 to disable. |
-| rmc | uint16_t | Broadcast period multiple - NMEA standard RMC recommended minimum specific GPS/Transit data. 0 to disable. |
-| zda | uint16_t | Broadcast period multiple - NMEA standard ZDA Data and Time. 0 to disable. |
-| pashr | uint16_t | Broadcast period multiple - NMEA standard PASHR Inertial Attitude Data. 0 to disable. |
-
 
 #### DID_FLASH_CONFIG
 
@@ -1025,6 +999,19 @@ EVB-2 RTOS information.
 | task | rtos_task_t[] | Tasks |
 
 
+#### DID_GPS1_SIG
+
+GPS 1 GNSS signal information. 
+
+`gps_sig_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| numSigs | uint32_t | Number of satellite signals in the following satelliate signal list |
+| sig | gps_sig_sv_t[100] | Satellite signal list |
+
+
 #### DID_GPS1_TIMEPULSE
 
 
@@ -1033,6 +1020,19 @@ EVB-2 RTOS information.
 
 | Field | Type | Description |
 |-------|------|-------------|
+
+
+#### DID_GPS2_SIG
+
+GPS 2 GNSS signal information. 
+
+`gps_sig_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| numSigs | uint32_t | Number of satellite signals in the following satelliate signal list |
+| sig | gps_sig_sv_t[100] | Satellite signal list |
 
 
 #### DID_GROUND_VEHICLE
@@ -1215,6 +1215,31 @@ Manufacturing info
 | date | char[16] | Inertial Sense manufacturing date (YYYYMMDDHHMMSS) |
 | key | uint32_t | Key |
 | uid | uint32_t[4] | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
+
+
+#### DID_NMEA_BCAST_PERIOD
+
+Set broadcast periods for NMEA messages 
+
+`nmea_msgs_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| options | uint32_t | Options: Port selection[0x0=current, 0xFF=all, 0x1=ser0, 0x2=ser1, 0x4=ser2, 0x8=USB] (see RMC_OPTIONS_...) |
+| pimu | uint16_t | Broadcast period multiple - NMEA IMU data. 0 to disable. |
+| ppimu | uint16_t | Broadcast period multiple - NMEA preintegrated IMU: delta theta (rad) and delta velocity (m/s). 0 to disable. |
+| pins1 | uint16_t | Broadcast period multiple - NMEA INS output: euler rotation w/ respect to NED, NED position from reference LLA. 0 to disable. |
+| pins2 | uint16_t | Broadcast period multiple - NMEA INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. 0 to disable. |
+| pgpsp | uint16_t | Broadcast period multiple - NMEA GPS position data. 0 to disable. |
+| primu | uint16_t | Broadcast period multiple - NMEA Raw IMU data (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of pimu or ppimu as they are oversampled and contain less noise. 0 to disable. |
+| gga | uint16_t | Broadcast period multiple - NMEA standard GGA GNSS 3D location, fix, and accuracy. 0 to disable. |
+| gll | uint16_t | Broadcast period multiple - NMEA standard GLL GNSS 2D location and time. 0 to disable. |
+| gsa | uint16_t | Broadcast period multiple - NMEA standard GSA GNSS DOP and active satellites. 0 to disable. |
+| rmc | uint16_t | Broadcast period multiple - NMEA standard recommended minimum specific GPS/Transit data. 0 to disable. |
+| zda | uint16_t | Broadcast period multiple - NMEA standard Data and Time. 0 to disable. |
+| pashr | uint16_t | Broadcast period multiple - NMEA standard Inertial Attitude Data. 0 to disable. |
+| gsv | uint16_t | Broadcast period multiple - NMEA standard satelliate information. |
+| reserved | uint16_t | Reserved |
 
 
 #### DID_PIMU_MAG
@@ -1474,8 +1499,8 @@ System parameters / info
 | sysStatus | uint32_t | System status flags (eSysStatusFlags) |
 | imuPeriodMs | uint32_t | IMU sample period in milliseconds. Zero disables sampling. |
 | navPeriodMs | uint32_t | Preintegrated IMU (PIMU) integration period and navigation filter update period (ms). |
-| sensorTruePeriod | double | Actual sample period relative to GPS PPS |
-| reserved2 | float | Reserved |
+| sensorTruePeriod | double | Actual sample period relative to GPS PPS (sec) |
+| flashCfgChecksum | uint32_t | Reserved |
 | reserved3 | float | Reserved |
 | genFaultCode | uint32_t | General fault code descriptor (eGenFaultCodes).  Set to zero to reset fault code. |
 
@@ -1634,6 +1659,7 @@ System status and configuration is made available through various enumeration an
 
 | Field | Value |
 |-------|------|
+| SYS_CMD_NONE | 0 |
 | SYS_CMD_SAVE_PERSISTENT_MESSAGES | 1 |
 | SYS_CMD_ENABLE_BOOTLOADER_AND_RESET | 2 |
 | SYS_CMD_ENABLE_SENSOR_STATS | 3 |
@@ -1647,6 +1673,7 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER0 | 13 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER1 | 14 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER2 | 15 |
+| SYS_CMD_DISABLE_SERIAL_PORT_BRIDGE | 16 |
 | SYS_CMD_SAVE_FLASH | 97 |
 | SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
 | SYS_CMD_SOFTWARE_RESET | 99 |
@@ -1682,31 +1709,6 @@ System status and configuration is made available through various enumeration an
 | GFC_INIT_BAROMETER | 0x00200000 |
 | GFC_INIT_I2C | 0x00800000 |
 | GFC_CHIP_ERASE_INVALID | 0x01000000 |
-
-
-#### GNSS Satellite Flags
-
-(eSatSvFlags)  
-
-| Field | Value |
-|-------|------|
-| SAT_SV_FLAGS_QUALITYIND_MASK | 0x00000007 |
-| SAT_SV_FLAGS_SV_USED | 0x00000008 |
-| SAT_SV_FLAGS_HEALTH_MASK | 0x00000030 |
-| NAV_SAT_FLAGS_HEALTH_OFFSET | 4 |
-| SAT_SV_FLAGS_DIFFCORR | 0x00000040 |
-| SAT_SV_FLAGS_SMOOTHED | 0x00000080 |
-| SAT_SV_FLAGS_ORBITSOURCE_MASK | 0x00000700 |
-| SAT_SV_FLAGS_ORBITSOURCE_OFFSET | 8 |
-| SAT_SV_FLAGS_EPHAVAIL | 0x00000800 |
-| SAT_SV_FLAGS_ALMAVAIL | 0x00001000 |
-| SAT_SV_FLAGS_ANOAVAIL | 0x00002000 |
-| SAT_SV_FLAGS_AOPAVAIL | 0x00004000 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_MASK | 0x03000000 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_OFFSET | 24 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_FLOAT | 1 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_FIX | 2 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_HOLD | 3 |
 
 
 #### GPS Navigation Fix Type
