@@ -96,7 +96,7 @@ The EVB-2, IG-1, and IG-2 circuit board projects serve as reference designs that
 
 [EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1)
 
-[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-0)
+[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-1-G2)
 
 [IG-2 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-2-0)
 
