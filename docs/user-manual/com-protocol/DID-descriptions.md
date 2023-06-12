@@ -778,7 +778,7 @@ Flash memory configuration
 | insRotation | float[3] | Rotation in radians about the X,Y,Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z,Y,X. |
 | insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
 | gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
-| insDynModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
+| dynamicModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
 | debug | uint8_t | Debug |
 | gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
 | sysCfgBits | uint32_t | System configuration bits (see eSysConfigBits). |

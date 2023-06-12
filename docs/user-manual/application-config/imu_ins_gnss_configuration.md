@@ -64,10 +64,10 @@ The IMU sample period is configured by setting `DID_FLASH_CONFIG.startupImuDtMs`
 The INS and AHRS kalman filter update period is configured using `DID_FLASH_CONFIG.startupNavDtMs`.  This parameter sets the integration period for the preintegrated IMU (PIMU) a.k.a. Coning and Sculling (delta theta, delta velocity) integrals, which serve as an anti-aliased moving average of the IMU value.  The `DID_IMU`  is the derivative of the `DID_PIMU` value over a single integration period.
 
 ## INS-GNSS Dynamic Model
-The `DID_FLASH_CONFIG.insDynModel` setting allows the user to adjust how the EKF behaves in different dynamic environments. All values except for 2 (STATIONARY) and 8 (AIR <4g) are experimental. The user is encouraged to attempt to use different settings to improve performance, however in most applications
+The `DID_FLASH_CONFIG.dynamicModel` setting allows the user to adjust how the EKF behaves in different dynamic environments. All values except for 2 (STATIONARY) and 8 (AIR <4g) are experimental. The user is encouraged to attempt to use different settings to improve performance, however in most applications
 the default setting, 8: airborne <4g, will yield best performance.
 
-The STATIONARY configuration (insDynModel = 2) can be used to configure the EKF for static applications. It is a permanent implementation of the [Zero Motion Command](../application-config/zero_motion_command.md) which will reduce EKF drift under stationary conditions.
+The STATIONARY configuration (dynamicModel = 2) can be used to configure the EKF for static applications. It is a permanent implementation of the [Zero Motion Command](../application-config/zero_motion_command.md) which will reduce EKF drift under stationary conditions.
 
 ## Disable Magnetometer and Barometer Updates
 

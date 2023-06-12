@@ -19,7 +19,7 @@ Knowledge about the vehicle's kinematic constraints is applied to reduce drift a
 
 ### Enabling
 
-Dead reckoning is enabled by setting the `DID_FLASH_CONFIG.insDynModel` to 4 for ground vehicles.  This is done automatically during Learning Mode and stored to flash memory.
+Dead reckoning is enabled by setting the `DID_FLASH_CONFIG.dynamicModel` to 4 for ground vehicles.  This is done automatically during Learning Mode and stored to flash memory.
 
 ### Learning Mode
 
