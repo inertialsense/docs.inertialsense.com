@@ -80,7 +80,7 @@ The feed direction to the pick and place pick-up is shown by the orientation of 
 
 The dimensions of the tapes for the IMX-5 are shown in the drawing below:
 
-<object data="https://docs.inertialsense.com/dimensions/Tape_and_Reel_IMX.pdf" type="application/pdf" width="700px" height="1150px" >
+<object data="https://docs.inertialsense.com/dimensions/Tape_and_Reel_IMX.pdf" type="application/pdf" width="700px" height="600px" >
     <embed src="https://docs.inertialsense.com/dimensions/Tape_and_Reel_IMX.pdf" type="application/pdf" />
 </object>
 
