@@ -72,8 +72,8 @@ The SPI interface is enabled by holding the pin 10 low during boot up.
 The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual
 
 ## Manufacturing
-### Tapes
-The follow image shows the feed direction and illustrates the orientation of the IMX-5 module on the tape:
+### Tape Packaging
+The IMX-5 modules are available in **cut tape** as well as **tape and reel** packaging.  The follow image shows the feed direction and illustrates the orientation of the IMX-5 module on the tape:
 
 ![IMX-5 Tape](images/IMX_Tape.png)
 The feed direction to the pick and place pick-up is shown by the orientation of the IMX-5 pin 1 location. With pin 1 location on the bottom of the tape, the feed direction into the pick and place pick-up is from the reel (located to the right of the figure) towards the left.
