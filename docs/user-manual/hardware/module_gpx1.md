@@ -93,12 +93,13 @@ For achieving a minimal Time To First Fix (TTFF) after a power down (warm starts
 !!! important
     Active antenna(s) are required for the GPX-1.
 
-## Soldering
+## Manufacturing
+### Soldering
 
 The GPX-1 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual.
 
-## Manufacturing
 ### Tape Packaging
+
 The GPX-5 modules are available in **cut tape** as well as **tape and reel** packaging.  The follow image shows the feed direction and illustrates the orientation of the GPX-1 module on the tape:
 
 ![GPX-1 Tape](images/GPX_Tape.png)

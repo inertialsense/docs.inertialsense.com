@@ -67,12 +67,13 @@ The SPI interface is enabled by holding the pin 10 low during boot up.
 
 ![](../images/interface_spi.svg)
 
-## Soldering
-
-The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual
-
 ## Manufacturing
+### Soldering
+
+The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual.
+
 ### Tape Packaging
+
 The IMX-5 modules are available in **cut tape** as well as **tape and reel** packaging.  The follow image shows the feed direction and illustrates the orientation of the IMX-5 module on the tape:
 
 ![IMX-5 Tape](images/IMX_Tape.png)
