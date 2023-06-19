@@ -84,8 +84,8 @@ The dimensions of the tapes for the IMX-5 are shown in the drawing below:
     <embed src="https://docs.inertialsense.com/dimensions/Tape_and_Reel_IMX.pdf" type="application/pdf" />
 </object>
 
-### Reels
-The GPS-1 modules are delivered in quantities of 100 pieces on a reel.
+<!-- ### Reels
+The GPS-1 modules are delivered in quantities of 100 pieces on a reel. -->
 
 ## Hardware Design
 
