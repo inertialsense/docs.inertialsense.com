@@ -26,7 +26,7 @@ Data broadcasting or streaming is enabled by using the Realtime Message Controll
 
 #### Get Data Command
 
-The `is_comm_get_data()` function will encode a PID_GET_DATA message that enables broadcast of a given message at a multiple of the [*Data Source Update Rates*](#data-source-update-rates).  Set the data rate (period multiple) to zero disable message broadcast and pull a single packet of data.  Set the data size and offset to zero to request the entire data set.
+The `is_comm_get_data()` function will encode a PKT_TYPE_GET_DATA message that enables broadcast of a given message at a multiple of the [*Data Source Update Rates*](#data-source-update-rates).  Set the data rate (period multiple) to zero disable message broadcast and pull a single packet of data.  Set the data size and offset to zero to request the entire data set.
 
 ```c++
 // Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
@@ -205,7 +205,7 @@ Figure 1 – Packet Structure
 <p style="text-align: center;">
 <span style="color:grey">
 <i>
-Figure 2 – PID_GET_DATA Packet
+Figure 2 – PKT_TYPE_GET_DATA Packet
 </i>
 </span>
 </p>
@@ -215,13 +215,13 @@ Figure 2 – PID_GET_DATA Packet
 <p style="text-align: center;">
 <span style="color:grey">
 <i>
-Figure 3 – PID_SET_DATA and PID_DATA Packet
+Figure 3 – PKT_TYPE_SET_DATA and PKT_TYPE_DATA Packet
 </i>
 </span>
 </p>
 
-The format of the packet data is determined by the packet identifier. For a data packet (PID_DATA (4) or
-PID_SET_DATA (5)) the first 12 bytes are always the data identifier (4 byte int), the offset into the data (4 byte int), and the length of data (4 byte int, not including the 12 bytes or packet header / footer).
+The format of the packet data is determined by the packet identifier. For a data packet (PKT_TYPE_DATA (4) or
+PKT_TYPE_SET_DATA (5)) the first 12 bytes are always the data identifier (4 byte int), the offset into the data (4 byte int), and the length of data (4 byte int, not including the 12 bytes or packet header / footer).
 
 
 **Packet footer (4 bytes)**<br>
