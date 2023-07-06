@@ -12,14 +12,14 @@ GNSS receivers that output NMEA ascii protocol can be used to aid the IMX EKF.
    | --------------------------- | ---------- |
    | ioConfig (firmware >=1.8.5) | 0x00840040 |
 
-3. Enabled the NMEA messages on the external GNSS:
+3. Enable the NMEA messages on the external GNSS:
 
    | Message | Description                                                  |
    | ------- | ------------------------------------------------------------ |
-   | **GNS** | GNS Fix data (preferred) or **GGA** - Time, position, and fix related data. |
+   | **GNS** | GNSS Fix data (preferred) or **GGA** - Global positioning System Fix Data. |
    | **ZDA** | UTC time and date.                                           |
-   | **RMC** | Position, velocity, and time (optional / recommended).       |
-   | **GSV** | Satellite signal strength (optional / recommended).          |
+   | **RMC** | Recommended Minimum Specific GNSS Data.      |
+   | **GSA** | GNSS DOP and Active Satellites.          |
 
 4. If RTK positioning is supported by the NMEA receiver, Enable RTK rover mode by selecting **Precision Position External**.  This will run the INS kalman filter in high accuracy mode and forward any RTK base station corrections to the external GNSS receiver. 
 

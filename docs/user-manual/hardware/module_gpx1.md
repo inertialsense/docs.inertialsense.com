@@ -93,9 +93,26 @@ For achieving a minimal Time To First Fix (TTFF) after a power down (warm starts
 !!! important
     Active antenna(s) are required for the GPX-1.
 
-## Soldering
+## Manufacturing
+### Soldering
 
 The GPX-1 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual.
+
+### Tape Packaging
+
+The GPX-5 modules are available in **cut tape** as well as **tape and reel** packaging.  The follow image shows the feed direction and illustrates the orientation of the GPX-1 module on the tape:
+
+![GPX-1 Tape](images/GPX_Tape.png)
+The feed direction to the pick and place pick-up is shown by the orientation of the GPX-1 pin 1 location. With pin 1 location on the bottom of the tape, the feed direction into the pick and place pick-up is from the reel (located to the right of the figure) towards the left.
+
+The dimensions of the tapes for the GPX-1 are shown in the drawing below:
+
+<object data="https://docs.inertialsense.com/dimensions/Tape_and_Reel_GPX.pdf" type="application/pdf" width="700px" height="600px" >
+    <embed src="https://docs.inertialsense.com/dimensions/Tape_and_Reel_GPX.pdf" type="application/pdf" />
+</object>
+
+<!-- ### Reels
+The GPS-1 modules are delivered in quantities of 100 pieces on a reel. -->
 
 ## Hardware Design
 
