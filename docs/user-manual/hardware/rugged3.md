@@ -67,10 +67,10 @@ The following table shows the Rugged-3 pinout.  Note that pin function can chang
 | 4              |                  | USB.D+                                          | I/O           | USB Data Positive Line                                       |
 | 5              |                  | GPS_PPS                                         | O             | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 6              |                  | USB.D-                                          | I/O           | USB Data Negative Line                                       |
-| 7              | G3<br/>G2<br/>G5 | Tx0<br/>485Tx2-<br/>SCLK                        | O<br/>O<br/>I | Serial 0 output (TTL or RS232)<br/>Serial 2 output- (RS485/RS422)<br/>SPI clock |
-| 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx2+<br/>Tx1, MISO                   | O<br/>O<br/>O | Serial 2 output (TTL)<br/>Serial 2 output+ (RS485/RS422)<br/>Serial 1 output (TTL or RS232), SPI MISO |
-| 9              | G4<br/>G1<br/>G8 | Rx0<br/>485Rx2-<br/>CS, G8_STROBE               | I<br/>I<br/>I | Serial 0 input (TTL or RS232)<br/>Serial 2 input- (RS485/RS422)<br/>SPI chip select, G8-Strobe time sync input |
-| 10             | G1<br/>G1<br/>G6 | Rx2<br/>485Rx2+<br/>Rx1, MOSI                   | I<br/>I<br/>I | Serial 2 input (TTL)<br/>Serial 2 input+ (RS485/RS422)<br/>Serial 1 input (TTL or RS232), SPI MOSI |
+| 7              | G3<br/>G2<br/>G5 | Tx0<br/>485Tx1-<br/>SCLK                        | O<br/>O<br/>I | Serial 0 output (TTL or RS232)<br/>Serial 1 output- (RS485/RS422)<br/>SPI clock |
+| 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx1+<br/>Tx1, MISO                   | O<br/>O<br/>O | Serial 2 output (TTL)<br/>Serial 1 output+ (RS485/RS422)<br/>Serial 1 output (TTL or RS232), SPI MISO |
+| 9              | G4<br/>G1<br/>G8 | Rx0<br/>485Rx1-<br/>CS, G8_STROBE               | I<br/>I<br/>I | Serial 0 input (TTL or RS232)<br/>Serial 1 input- (RS485/RS422)<br/>SPI chip select, G8-Strobe time sync input |
+| 10             | G1<br/>G1<br/>G6 | Rx2<br/>485Rx1+<br/>Rx1, MOSI                   | I<br/>I<br/>I | Serial 2 input (TTL)<br/>Serial 1 input+ (RS485/RS422)<br/>Serial 1 input (TTL or RS232), SPI MOSI |
 | 11             | G1<br/>G1        | CANL<sup>\*</sup><br/>Rx2<sup>\*\*</sup>        | I/O<br/>I     | High level (CAN bus)<br/>Serial 2 input (TTL)<sup>\*\*</sup>              |
 | 12             | G2<br/>G2        | CANH<sup>\*</sup><br/>Tx2, G2_STROBE<sup>\*\*</sup> | I/O<br/>I/O   | Low level (CAN bus)<sup>\*</sup>. <br/>Serial 2 output (TTL)<sup>\*\*</sup>, G2-Strobe time sync input<sup>\*\*</sup> |
 
@@ -89,7 +89,7 @@ The Rugged 3 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS48
 | 2                     | S0-TTL                    |                         | CAN             | S1   |      |
 | 3                     | S0-TTL                    | S2-TTL or<br/>G2-STROBE |                 | S1   |      |
 | 4                     | S0-RS232                  | S1-RS232                |                 | S2   |      |
-| 5                     | S2-RS485                  | S2-RS485                |                 | S2   | S0   |
+| 5                     | S1-RS485                  | S1-RS485                |                 | S2   | S0   |
 | 6                     | SPI or<br/>G8-STROBE      | SPI                     |                 | S2   | S0   |
 | 7 **                  |                           | S1-RS232                |                 | S2   | S0   |
 | 8                     |                           |                         | CAN             | S1   | S0   |
