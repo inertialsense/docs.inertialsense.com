@@ -42,7 +42,7 @@ DID_FLASH_CONFIG.gps1AntOffset[X,Y,Z]
 DID_FLASH_CONFIG.gps2AntOffset[X,Y,Z]
 ```
 
-These values describe the distance of each GPS antenna from the IMX [Sensor Frame](../../reference/coordinate_frames/#sensor-frame) origin in the direction of the Sensor Frame axes.  The [Sensor Frame](../../reference/coordinate_frames/#sensor-frame) is identified by the X, Y, Z axes labeled on the hardware.  The Z-axis is positive in the downward direction.
+These values describe the distance of each GPS antenna from the IMX [Sensor Frame](../../reference/coordinate_frames/#sensor-frame) origin in the direction of the Sensor Frame axes.  The [Sensor Frame](../../reference/coordinate_frames/#sensor-frame) is defined using DID_FLASH_CONFIG.sensorConfig.
 
 ![coordinate_frames](../images/coordinate_frames.png)
 
