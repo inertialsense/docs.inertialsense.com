@@ -107,6 +107,8 @@ Use platform config RUG-3 with this hardware version.
 
 - GPS1 PPS line connected to IMX G15 (pin 20).
 
+- RS485 Tx pins polarity swapped between pins 7,8 (from RUG-2)
+
 **RUG-2.1** (RUG-3.0)
 
 Use platform config RUG-2.1 with this hardware version.
