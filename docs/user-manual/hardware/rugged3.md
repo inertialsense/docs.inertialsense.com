@@ -67,8 +67,8 @@ The following table shows the Rugged-3 pinout.  Note that pin function can chang
 | 4              |                  | USB.D+                                          | I/O           | USB Data Positive Line                                       |
 | 5              |                  | GPS_PPS                                         | O             | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 6              |                  | USB.D-                                          | I/O           | USB Data Negative Line                                       |
-| 7              | G3<br/>G2<br/>G5 | Tx0<br/>485Tx1-<br/>SCLK                        | O<br/>O<br/>I | Serial 0 output (TTL or RS232)<br/>Serial 1 output- (RS485/RS422)<br/>SPI clock |
-| 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx1+<br/>Tx1, MISO                   | O<br/>O<br/>O | Serial 2 output (TTL)<br/>Serial 1 output+ (RS485/RS422)<br/>Serial 1 output (TTL or RS232), SPI MISO |
+| 7              | G3<br/>G2<br/>G5 | Tx0<br/>485Tx1+<br/>SCLK                        | O<br/>O<br/>I | Serial 0 output (TTL or RS232)<br/>Serial 1 output- (RS485/RS422)<br/>SPI clock |
+| 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx1-<br/>Tx1, MISO                   | O<br/>O<br/>O | Serial 2 output (TTL)<br/>Serial 1 output+ (RS485/RS422)<br/>Serial 1 output (TTL or RS232), SPI MISO |
 | 9              | G4<br/>G1<br/>G8 | Rx0<br/>485Rx1-<br/>CS, G8_STROBE               | I<br/>I<br/>I | Serial 0 input (TTL or RS232)<br/>Serial 1 input- (RS485/RS422)<br/>SPI chip select, G8-Strobe time sync input |
 | 10             | G1<br/>G1<br/>G6 | Rx2<br/>485Rx1+<br/>Rx1, MOSI                   | I<br/>I<br/>I | Serial 2 input (TTL)<br/>Serial 1 input+ (RS485/RS422)<br/>Serial 1 input (TTL or RS232), SPI MOSI |
 | 11             | G1<br/>G1        | CANL<sup>\*</sup><br/>Rx2<sup>\*\*</sup>        | I/O<br/>I     | High level (CAN bus)<br/>Serial 2 input (TTL)<sup>\*\*</sup>              |
