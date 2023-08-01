@@ -32,7 +32,7 @@ The **RUG-3-IMX-5-Dual** includes two multi-frequency GNSS receivers with RTK pr
 - Low power consumption: <1500mW
 - UART x3, RS232, RS485, CAN, and SPI interfaces
 - Integrated CAN and RS232 / RS485 transceivers
-- Voltage regulation for 3.3V - 17V input
+- Voltage regulation for 4V - 20V input
 
 ## Applications
 
