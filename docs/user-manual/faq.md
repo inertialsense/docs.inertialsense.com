@@ -69,6 +69,10 @@ The IMX inertial navigation integrates the IMU data to dead reckoning position a
 
 IMX can estimate the position for extended periods of time without GPS for ground vehicle dead reckoning applications only (see [Ground Vehicle Dead Reckoning](dead-reckoning/dead_reckoning.md)).  When in standard mode (not ground vehicle dead reckoning) GPS is required to provide initial position estimation and to aid in IMU bias estimation.  The IMX can dead reckon (estimate position without GPS) for brief periods of time.  However, the quality of dead reckoning is a function of IMU bias estimation, which improves while the GPS is aiding the INS.      
 
+## How does the IMX-5 estimate roll/pitch during airborne coordinate turns, when acceleration is only observed in the Z axis and not in the X and Y axes of the sensor?  
+
+Using acceleration alone will incorrectly indicate the platform is level.  GPS informs the IMX extended Kalman filter (EKF) about any motion the system experiences and as a result the EKF can distinguish between acceleration due to motion and gravity.  Without a GPS (in AHRS mode) the IMX EKF can only assume the direction of gravity equals the average direction of acceleration measured slowly over time.  The IMX can estimate roll/pitch under accelerated conditions during a coordinated turn because gyro integration prevents attitude drift over short term and level coordinate turns are cyclical allowing the average gravity for an entire heading rotation to be observed.  However, the IMX AHRS solution under accelerated conditions (moving) will have degraded attitude accuracy.  The IMX solution is more accurate when aided by GPS.
+
 ## How does vibration affect navigation accuracy? 
 
 The IMX accuracy may degrade in the presence of mechanical vibrations that exceed 3g of acceleration. Empirical data shows degradation at approximately 100 - 150 Hz. Adding vibration isolation to the mount may be necessary to reduce the vibrations seen by the product and to improve accuracy.
