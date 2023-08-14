@@ -129,7 +129,7 @@ The following parser code is simpler to implement.  This method uses the `is_com
 		{
 			switch (ptype)
 			{
-			case _PTYPE_IS_V1_DATA:
+			case _PTYPE_INERTIAL_SENSE_DATA:
 			case _PTYPE_IS_V1_CMD:
 				break;
 			case _PTYPE_UBLOX:
@@ -165,7 +165,7 @@ The following parser code uses less processor time to parse data by copying mult
 		{
 			switch (ptype)
 			{
-			case _PTYPE_IS_V1_DATA:
+			case _PTYPE_INERTIAL_SENSE_DATA:
 			case _PTYPE_IS_V1_CMD:
 				break;
 			case _PTYPE_UBLOX:

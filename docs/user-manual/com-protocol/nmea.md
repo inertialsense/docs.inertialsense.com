@@ -426,6 +426,32 @@ eg4. $GPRMC,hhmmss.ss,A,llll.ll,a,yyyyy.yy,a,x.x,x.x,ddmmyy,x.x,a*hh\r\n
 12   = Checksum
 ```
 
+### VTG
+
+NMEA GPS track made good and speed over ground.
+
+```
+eg1. $GPVTG,140.88,T,,M,8.04,N,14.89,K,D*05\r\n
+
+0	Message ID $GPVTG
+1	Track made good (degrees true)
+2	T: track made good is relative to true north
+3	Track made good (degrees magnetic)
+4	M: track made good is relative to magnetic north
+5	Speed, in knots
+6	N: speed is measured in knots
+7	Speed over ground in kilometers/hour (kph)
+8	K: speed over ground is measured in kph
+9	Mode indicator:
+        A: Autonomous mode
+        D: Differential mode
+        E: Estimated (dead reckoning) mode
+        M: Manual Input mode
+        S: Simulator mode
+        N: Data not valid
+10	The checksum data, always begins with *
+```
+
 ### ZDA
 
 NMEA GPS UTC Time and Date specification).
