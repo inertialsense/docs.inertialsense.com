@@ -522,15 +522,15 @@ $GPVTG,140.88,T,,M,8.04,N,14.89,K,D*05\r\n
 ```
 | Index | Field  | Units | Description                                        | Example |
 |-------|--------|-------|----------------------------------------------------|---------|
-| 1     | Course | deg   | Ground track heading (true north)                  | 140.88  |
+| 1     | track true | deg   | Ground track heading (true north)                  | 140.88  |
 | 2     | T      |       | Ground track heading is relative to true north     | T       |
-| 3     | Course | deg   | Ground track heading (magnetic north)              |         |
-| 4     | M      |       | Ground track heading is relative to magnetic north | M       |
-| 5     | Speed  | knots | Speed                                              | 8.04    |
+| 3     | track mag | deg   | Ground track heading (magnetic north)              |         |
+| 4     | M      |       | Ground track heading is relative to magnetic north (track mag = track true + magVarCorrection) | M       |
+| 5     | speed Kn  | knots | Speed                                              | 8.04    |
 | 6     | N      |       | Speed is measured in knots                         | N       |
-| 7     | Speed  | kph   | Speed over ground in kilometers/hour               | 14.89   |
+| 7     | speed Km  | kph   | Speed over ground in kilometers/hour               | 14.89   |
 | 8     | K      |       | Speed over ground is measured in kph               | K       |
-| 9     | Mode   |       | Mode indicator:                                    | D       |
+| 9     | mode ind   |       | Mode indicator:                                    | D       |
 |       |        |       |   A: Autonomous mode                               |         |
 |       |        |       |   D: Differential mode                             |         |
 |       |        |       |   E: Estimated (dead reckoning) mode               |         |
