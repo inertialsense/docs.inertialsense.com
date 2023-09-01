@@ -439,7 +439,7 @@ $GPZDA,213301.200,31,08,2023,00,00*41\r\n
 
 | Index | Field       | Units | Description             | Example    |
 |-------|-------------|-------|-------------------------|------------|
-| 1     | HHMMSSS.sss |       | UTC Time                | 213301.200 |
+| 1     | HHMMSS.sss  |       | UTC Time                | 213301.200 |
 | 2     | Day         |       | Day                     | 31         |
 | 3     | Month       |       | Month                   | 08         |
 | 4     | Year        |       | Year                    | 2023       |
