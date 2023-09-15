@@ -123,6 +123,8 @@ nav:
       - Rover Setup: user-manual/gnss/rtk_rover.md
       - Base Setup: user-manual/gnss/rtk_base.md
       - NTRIP: user-manual/gnss/rtk_ntrip.md
+      - Point Perfect: user-manual/gnss/ublox_pointperfect.md
+      - SBAS: user-manual/gnss/SBAS.md
     - RTK Compassing: user-manual/gnss/rtk_compassing.md
   - Dead Reckoning:
     - Overview & Installation: user-manual/dead-reckoning/dead_reckoning.md

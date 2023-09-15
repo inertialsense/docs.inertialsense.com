@@ -139,8 +139,8 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 		{
 			switch (is_comm_parse_byte(&comm, inByte))
 			{
-			case _PTYPE_IS_V1_DATA:
-				switch (comm.pkt.hdr.id)
+			case _PTYPE_INERTIAL_SENSE_DATA:
+				switch (comm.dataHdr.id)
 				{
 				case DID_INS_1:
 					handleIns1Message((ins_1_t*)comm.pkt.data.ptr);

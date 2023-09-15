@@ -1,6 +1,6 @@
 ﻿
 
-# NMEA 0183 (NMEA) Protocol
+# NMEA 0183 (ASCII) Protocol
 
 For simple use, the Inertial Sense device supports a human-readable NMEA communications protocol based on NMEA 0183. The NMEA protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](binary.md) in terms of message length for the same amount of data.
 
@@ -60,7 +60,7 @@ The following NMEA messages can be received by the IMX.
 Enable NMEA message and set broadcast periods.  The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum.  Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming.  Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](../binary/#data-source-update-rates)
 
 ```
-$ASCB,options,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
+$ASCB,options,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
 ```
 
 | Index | Field           | Description                                                  |
@@ -78,7 +78,8 @@ $ASCB,options,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
 | 11    | [RMC](#rmc)     | Broadcast period multiple for NMEA standard RMC (minimum specific GPS/Transit) message. |
 | 12    | [ZDA](#zda)     | Broadcast period multiple for NMEA standard ZDA (UTC Time/Date) message. |
 | 13    | [PASHR](#pashr) | Broadcast period multiple for NMEA standard PASHR (euler) message.    |
-| 14    | [GxGSV](#gsv)   | Broadcast period multiple for NMEA standard GSV satellite info (all active constellations sent with corresponding talker IDs) |
+| 14    | [GxGSV](#gsv)   | Broadcast period multiple for NMEA standard GSV satellite info (all active constellations sent with corresponding talker IDs). |
+| 15    | [VTG](#vtg)     | Broadcast period multiple for NMEA standard VTG track made good and speed over ground. | 
 
 ### ASCE
 
@@ -119,6 +120,7 @@ The following examples NMEA messages enable IMX data streaming output.  The data
 | $ASCE,0,12,1*3A\r\n | PSTRB   |
 | $ASCE,0,13,1*3B\r\n | INFO    |
 | $ASCE,0,14,1*3C\r\n | GSV     |
+| $ASCE,0,15,1*3D\r\n | VTG     |
 
 <sup>**</sup> These rates assume the default settings for [data source rates](binary/#data-source-update-rates).
 
@@ -162,24 +164,25 @@ The hexadecimal equivalent is:
 
 The following NMEA messages can be sent by the IMX.  The message ID is used with the `$ASCE` message to enable message streaming. 
 
-| Message         | ID                                                | Description                                                  |
-| --------------- | ------------------------------------------------------------ | --------------- |
-| [ASCB](#ascb)   |                      | Broadcast period of NMEA output messages.                |
-| [PIMU](#pimu)   | 1 | IMU data (3-axis gyros and accelerometers) in the body frame. |
-| [PPIMU](#ppimu) | 2 | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
-| [PRIMU](#primu) | 3 | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
-| [PINS1](#pins1) | 4 | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
-| [PINS2](#pins2) | 5 | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
-| [PGPSP](#pgpsp) | 6                                          | GPS position data.                                           |
-| [GGA](#gga) | 7              | Standard NMEA GGA GPS 3D location, fix, and accuracy.   |
-| [GLL](#gll) | 8                        | Standard NMEA GLL GPS 2D location and time.                |
-| [GSA](#gsa) | 9                     | Standard NMEA GSA GPS DOP and active satellites.             |
-| [RMC](#rmc) | 10        | Standard NMEA RMC Recommended minimum specific GPS/Transit data. |
-| [ZDA](#zda) | 11                                | Standard NMEA ZDA UTC Time/Date message.                         |
-| [PASHR](#pashr) | 12                               | Standard NMEA PASHR (euler) message.                         |
-| [PSTRB](#pstrb) | 13                                  | Strobe event input time.                                     |
-| [INFO](#info)   | 14                                        | Device information.                                          |
-| [GSV](#gsv) | 15 | Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
+| Message         | ID | Description                                                  |
+| --------------- | -- | ------------------------------------------------------------ |
+| [ASCB](#ascb)   |    | Broadcast period of NMEA output messages.                |
+| [PIMU](#pimu)   | 0  | IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PPIMU](#ppimu) | 1  | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
+| [PRIMU](#primu) | 2  | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PINS1](#pins1) | 3  | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
+| [PINS2](#pins2) | 4  | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
+| [PGPSP](#pgpsp) | 5  | GPS position data.                                           |
+| [GGA](#gga)     | 6  | Standard NMEA GGA GPS 3D location, fix, and accuracy.   |
+| [GLL](#gll)     | 7  | Standard NMEA GLL GPS 2D location and time.                |
+| [GSA](#gsa)     | 8  | Standard NMEA GSA GPS DOP and active satellites.             |
+| [RMC](#rmc)     | 9  | Standard NMEA RMC Recommended minimum specific GPS/Transit data. |
+| [ZDA](#zda)     | 10 | Standard NMEA ZDA UTC Time/Date message.                         |
+| [PASHR](#pashr) | 11 | Standard NMEA PASHR (euler) message.                         |
+| [PSTRB](#pstrb) | 12 | Strobe event input time.                                     |
+| [INFO](#info)   | 13 | Device information.                                          |
+| [GSV](#gsv)     | 14 | Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
+| [VTG](#VTG)     | 15 | Standard NMEA VTG track made good and speed over ground. |
 
 The field codes used in the message descriptions are: lf = double, f = float, d = int.
 
@@ -426,23 +429,49 @@ eg4. $GPRMC,hhmmss.ss,A,llll.ll,a,yyyyy.yy,a,x.x,x.x,ddmmyy,x.x,a*hh\r\n
 12   = Checksum
 ```
 
+### VTG
+
+NMEA GPS track made good and speed over ground.
+
+```
+eg1. $GPVTG,140.88,T,,M,8.04,N,14.89,K,D*05\r\n
+
+0	Message ID $GPVTG
+1	Track made good (degrees true)
+2	T: track made good is relative to true north
+3	Track made good (degrees magnetic)
+4	M: track made good is relative to magnetic north
+5	Speed, in knots
+6	N: speed is measured in knots
+7	Speed over ground in kilometers/hour (kph)
+8	K: speed over ground is measured in kph
+9	Mode indicator:
+        A: Autonomous mode
+        D: Differential mode
+        E: Estimated (dead reckoning) mode
+        M: Manual Input mode
+        S: Simulator mode
+        N: Data not valid
+10	The checksum data, always begins with *
+```
+
 ### ZDA
 
-NMEA GPS UTC Time and Date specification).
+NMEA GPS UTC Time and Date specification.
 
 ```
-$GPZDA,001924,06,01,1980,00,00*41\r\n
-          1    2  3   4   5  6
+$GPZDA,213301.200,31,08,2023,00,00*41\r\n
+                1  2  3    4  5  6
 ```
 
-| Index | Field    | Units | Description             | Example |
-|-------|----------|-------|-------------------------|---------|
-| 1     | HrMinSec |       | UTC Time                | 001924  |
-| 2     | Day      |       | Day                     | 06      |
-| 3     | Month    |       | Month                   | 01      |
-| 4     | Year     |       | Year                    | 2020    |
-| 5     | localHrs |       | Local time zone hours   | 00      |
-| 6     | localMin |       | Local time zone minutes | 00      |
+| Index | Field       | Units | Description             | Example    |
+|-------|-------------|-------|-------------------------|------------|
+| 1     | HHMMSS.sss  |       | UTC Time                | 213301.200 |
+| 2     | Day         |       | Day                     | 31         |
+| 3     | Month       |       | Month                   | 08         |
+| 4     | Year        |       | Year                    | 2023       |
+| 5     | localHrs    |       | Local time zone hours   | 00         |
+| 6     | localMin    |       | Local time zone minutes | 00         |
 
 ### GSV
 
@@ -509,6 +538,32 @@ $GLGSV,1,1,01,87,47,127,20,3*41\r\n
 | variable | system ID |    | GNSS system ID (distinguishes frequency band).  This field is only output if the NMEA version is 4.11. | 
 
 Where n is 0-3, for the four satellites supported by this message. 
+
+### VTG
+
+NMEA GPS track made good and speed over ground.
+
+```
+$GPVTG,140.88,T,,M,8.04,N,14.89,K,D*05\r\n
+            1 2 3 4   5 6     7 8 9
+```
+| Index | Field  | Units | Description                                        | Example |
+|-------|--------|-------|----------------------------------------------------|---------|
+| 1     | track true | deg   | Ground track heading (true north)                  | 140.88  |
+| 2     | T      |       | Ground track heading is relative to true north     | T       |
+| 3     | track mag | deg   | Ground track heading (magnetic north)              |         |
+| 4     | M      |       | Ground track heading is relative to magnetic north (track mag = track true + magVarCorrection) | M       |
+| 5     | speed Kn  | knots | Speed                                              | 8.04    |
+| 6     | N      |       | Speed is measured in knots                         | N       |
+| 7     | speed Km  | kph   | Speed over ground in kilometers/hour               | 14.89   |
+| 8     | K      |       | Speed over ground is measured in kph               | K       |
+| 9     | mode ind   |       | Mode indicator:                                    | D       |
+|       |        |       |   A: Autonomous mode                               |         |
+|       |        |       |   D: Differential mode                             |         |
+|       |        |       |   E: Estimated (dead reckoning) mode               |         |
+|       |        |       |   M: Manual Input mode                             |         |
+|       |        |       |   S: Simulator mode                                |         |
+|       |        |       |   N: Data not valid                                |         |
 
 ### PASHR
 
