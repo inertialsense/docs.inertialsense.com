@@ -45,14 +45,15 @@ To enable persistent NMEA messages using the EvalTool:
 
 The following NMEA messages can be received by the IMX.
 
-| Message                     | Description                                                  |
-| --------------------------- | ------------------------------------------------------------ |
-| ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.            |
-| [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.            |
-| [ASCE](#asce)               | Set the broadcast period of selected NMEA output messages.   |
-| ```$INFO*0E\r\n```          | Query device information.                                    |
-| [```$PERS*13\r\n```](#pers) | Save persistent message to flash.                            |
-| [```$STPB*15\r\n```](#stpb) | Stop broadcast of all messages (NMEA and binary) on all ports. |
+| Message                     | Description                                                       |
+| --------------------------- | ------------------------------------------------------------------|
+| ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.                 |
+| [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.                 |
+| [ASCE](#asce)               | Set the broadcast period of selected NMEA output messages.        |
+| ```$INFO*0E\r\n```          | Query device information.                                         |
+| ```$SRST*06\r\n```          | Software reset.                                                   |
+| [```$PERS*14\r\n```](#pers) | Save persistent messages to flash.                                |
+| [```$STPB*15\r\n```](#stpb) | Stop broadcast of all messages (NMEA and binary) on all ports.    |
 | [```$STPC*14\r\n```](#stpc) | Stop broadcast of all messages (NMEA and binary) on current port. |
 
 ### ASCB
@@ -622,9 +623,11 @@ $INFO,d,d.d.d.d,d.d.d.d,d,d.d.d.d,d,s,YYYY-MM-DD,hh:mm:ss.ms,s*xx\r\n
 | 5     | Protocol version |       | Communications protocol version                              |
 | 6     | Repo revision    |       | Repository revision number                                   |
 | 7     | Manufacturer     |       | Manufacturer name                                            |
-| 8     | Build date       |       | Build date: <br/>[1] = year, [2] = month, [3] = day     |
+| 8     | Build date       |       | Build date: <br/>[1] = year, [2] = month, [3] = day          |
 | 9     | Build time       |       | Build date: [0] = hour, [1] = minute, <br/>[2] = second, [3] = millisecond |
 | 10    | Add Info         |       | Additional information                                       |
+| 11    | Hardware         |       | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX                        |
+| 12    | Reserved         |       | Reserved for internal purpose.                               |
 
 ## NMEA Examples
 
