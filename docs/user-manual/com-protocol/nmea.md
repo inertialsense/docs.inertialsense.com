@@ -51,7 +51,7 @@ The following NMEA messages can be received by the IMX.
 | [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.            |
 | [ASCE](#asce)               | Set the broadcast period of selected NMEA output messages.   |
 | ```$INFO*0E\r\n```          | Query device information.                                    |
-| [```$PERS*13\r\n```](#pers) | Save persistent message to flash.                            |
+| [```$PERS*13\r\n```](#pers) | Save persistent messages to flash.                           |
 | [```$STPB*15\r\n```](#stpb) | Stop broadcast of all messages (NMEA and binary) on all ports. |
 | [```$STPC*14\r\n```](#stpc) | Stop broadcast of all messages (NMEA and binary) on current port. |
 
