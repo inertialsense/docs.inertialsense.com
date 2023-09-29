@@ -2,7 +2,7 @@
 
 ## Translation
 
-The IMX can be mounted and operated in any arbitrary orientation.  It is often desirable and conventional to translate the IMX output so that it is rotated into the vehicle frame and located at certain location for control and navigation of the vehicle.  This is done using the ***Sensor Rotation***, ***INS Rotation***, and ***INS Offset*** parameters.  
+The IMX can be mounted and operated in any arbitrary orientation.  It is often desirable and conventional to translate the IMX output so that it is translated into the vehicle frame located at certain point for control and navigation of the vehicle.  This is done using the ***Sensor Rotation***, ***INS Rotation***, and ***INS Offset*** parameters.  
 
 In most common applications, output is translated to the vehicle frame (X to the front, Y to the right, and Z down): 
 
@@ -16,7 +16,7 @@ The relationship between the Hardware Frame, Sensor Frame, and INS Output Frame 
 
 ![](../images/coordinate_frame_relationship.svg)
 
-The ***Hardware Frame*** and ***Sensor Frame*** are equivalent when the ***Sensor Rotation*** in `DID_FLASH_CONFIG.sensorConfig` is zero.  The ***Hardware Frame origin*** and ***Sensor Frame origin*** are always at the same location and may differ in directy according to the ***Sensor Rotation*** in `DID_FLASH_CONFIG.sensorConfig`.  The ***Sensor Frame*** and ***INS output Frame*** are equivalent when the `DID_FLASH_CONFIG.insRotation` and `DID_FLASH_CONFIG.insOffset` are zero.  
+The ***Hardware Frame*** and ***Sensor Frame*** are equivalent when the ***Sensor Rotation*** in `DID_FLASH_CONFIG.sensorConfig` is zero.  The ***Hardware Frame origin*** and ***Sensor Frame origin*** are always at the same location and may differ in direction according to the ***Sensor Rotation*** in `DID_FLASH_CONFIG.sensorConfig`.  The ***Sensor Frame*** and ***INS output Frame*** are equivalent when the `DID_FLASH_CONFIG.insRotation` and `DID_FLASH_CONFIG.insOffset` are zero.  
 
 ### Sensor Rotation (Hardware Frame to Sensor Frame)
 
