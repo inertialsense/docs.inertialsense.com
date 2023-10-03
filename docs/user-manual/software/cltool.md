@@ -90,57 +90,77 @@ OPTIONS (RTK Rover / Base)
 ## Compile & Run (Linux/Mac)
 
 1. You must have cmake installed on your machine. To do this, download the cmake application at https://cmake.org/download/. Then, using the command line, you will need to install cmake with either of the following commands depending on your platform:
-```bash
-Mac:
-sudo "/Applications/CMake.app/Contents.bin/cmake-gui" --install
+    ```bash
+    Mac:
+    sudo "/Applications/CMake.app/Contents.bin/cmake-gui" --install
 
-Linux:
-sudo apt-get install cmake
-```
+    Linux:
+    sudo apt-get install cmake
+    ```
 2. Create build directory
    ```bash
    cd cltool
    mkdir build
    ```
 
-2. Run cmake from within build directory
+3. Run cmake from within build directory
    ```bash
    cd build
    cmake ..
    ```
 
-3. Compile using make
+4. Compile using make
    ```bash
    make
    ```
 
-4. If necessary, add current user to the "dialout" group in order to read and write to the USB serial communication ports:
+5. If necessary, add current user to the "dialout" group in order to read and write to the USB serial communication ports:
    ```bash
    sudo usermod -a -G dialout $USER
    sudo usermod -a -G plugdev $USER
    (reboot computer)
    ```
 
-5. Run executable
+6. Run executable
    ``` bash
+   cd build
    ./cltool
    ```
 
-## Compile & Run (Windows MS Visual Studio)
-1. Open Visual Studio solution file (InertialSenseSDK/cltool/VS_project/cltool.sln)
-2. Build (F7)
-3. Run executable
-   ``` bash
-   C:\InertialSenseSDK\cltool\VS_project\Release\cltool.exe
+## Compile & Run (Windows CMake CL)
+1. Install CMake for Windows
+
+2. Create build directory
+    ```cd cltool
+    mkdir build
+
+3. Run cmake from within build directory
+   ```bash
+   cd build
+   cmake ..
    ```
+
+4. Compile
+   ```bash
+   cmake --build .
+   ```
+5. Run executable
+   ``` bash
+   cd Release (or Debug depending on CMake configuration you selected)
+   cltool.exe
+   ```
+## Compile & Run (Windows CMake Visual Studio)
+Windows Visual Studio supports CMake projects. Follow the instructions provided by Microsoft:
+https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170
+
 ## Update the Firmware
 In order to update the firmware of your unit on the CLTool, follow these steps:
 
 1. Navigate to the directory with the CLTool executable
-1. Set the unit's COM port as an option, e.g. `-c COM15`
-1. Specify the FILEPATH to the .hex file, e.g. `-uf foo/bar/IS_uINS-3.hex`
-1. Optionally specify the bootloader BLFILEPATH to the .bin file, e.g. `-ub foo/bar/bootloader-SAMx70.bin`
-1. Run the executable
+2. Set the unit's COM port as an option, e.g. `-c COM15`
+3. Specify the FILEPATH to the .hex file, e.g. `-uf foo/bar/IS_uINS-3.hex`
+4. Optionally specify the bootloader BLFILEPATH to the .bin file, e.g. `-ub foo/bar/bootloader-SAMx70.bin`
+5. Run the executable
 
 *Note: The firmware can only be updated at the following baud rates: 300000, 921600, 460800, 230400, 115200
 
