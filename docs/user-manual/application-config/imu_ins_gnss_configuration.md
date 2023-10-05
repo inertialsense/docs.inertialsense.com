@@ -2,7 +2,7 @@
 
 ## Translation
 
-The IMX can be mounted and operated in any arbitrary orientation.  It is often desirable and conventional to translate the IMX output so that it is rotated into the vehicle frame and located at certain location for control and navigation of the vehicle.  This is done using the ***Sensor Rotation***, ***INS Rotation***, and ***INS Offset*** parameters.  
+The IMX can be mounted and operated in any arbitrary orientation.  It is often desirable and conventional to translate the IMX output so that it is translated into the vehicle frame located at certain point for control and navigation of the vehicle.  This is done using the ***Sensor Rotation***, ***INS Rotation***, and ***INS Offset*** parameters.  
 
 In most common applications, output is translated to the vehicle frame (X to the front, Y to the right, and Z down): 
 
@@ -16,7 +16,7 @@ The relationship between the Hardware Frame, Sensor Frame, and INS Output Frame 
 
 ![](../images/coordinate_frame_relationship.svg)
 
-The ***Hardware Frame*** and ***Sensor Frame*** are equivalent when the sensor rotation in `DID_FLASH_CONFIG.sensorConfig` is zero.  The ***Sensor Frame*** and ***INS output Frame*** are equivalent when the `DID_FLASH_CONFIG.insRotation` and `DID_FLASH_CONFIG.insOffset` are zero.  
+The ***Hardware Frame*** and ***Sensor Frame*** are equivalent when the ***Sensor Rotation*** in `DID_FLASH_CONFIG.sensorConfig` is zero.  The ***Hardware Frame origin*** and ***Sensor Frame origin*** are always at the same location and may differ in direction according to the ***Sensor Rotation*** in `DID_FLASH_CONFIG.sensorConfig`.  The ***Sensor Frame*** and ***INS output Frame*** are equivalent when the `DID_FLASH_CONFIG.insRotation` and `DID_FLASH_CONFIG.insOffset` are zero.  
 
 ### Sensor Rotation (Hardware Frame to Sensor Frame)
 
@@ -53,7 +53,7 @@ The [*Infield Calibration*](../infield_calibration) provides a method to 1.) zer
 
 ## GNSS Antenna Offset
 
-If the setup includes a significant distance (40cm or more) between the GPS antenna and the IMX central unit, enter a non-zero value for the GPS lever arm, `DID_FLASH_CONFIG.gps1AntOffset` (or  `DID_FLASH_CONFIG.gpsAnt2Offset`) X,Y,Z offset in meters from Sensor Frame origin to GPS antenna.  The sensor frame is labeled on the IMX EVB case.
+If the setup includes a significant distance (40cm or more) between the GPS antenna and the IMX central unit, enter a non-zero value for the GPS lever arm, `DID_FLASH_CONFIG.gps1AntOffset` (or  `DID_FLASH_CONFIG.gpsAnt2Offset`) X,Y,Z offset in meters from Sensor Frame origin to GPS antenna.  The Sensor Frame origin and Hardware Frame origin are always at the same location but may differ in direction according to the Sensor Rotation.
 
 ## IMU Sample and Navigation Periods
 
