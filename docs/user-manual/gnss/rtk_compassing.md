@@ -59,13 +59,13 @@ The following are examples that illustrate what the GPS antenna offsets should b
 </center>
 
 ```
-DID_FLASH_CONFIG.gps1AntOffsetX =  0.0
-DID_FLASH_CONFIG.gps1AntOffsetY = -0.3	(negative direction of Y axis)
-DID_FLASH_CONFIG.gps1AntOffsetZ =  0.0
+DID_FLASH_CONFIG.gps1AntOffset[0] =  0.0
+DID_FLASH_CONFIG.gps2AntOffset[1] = -0.3	(negative direction of Y axis)
+DID_FLASH_CONFIG.gps2AntOffset[2] =  0.0
 
-DID_FLASH_CONFIG.gps2AntOffsetX =  0.0
-DID_FLASH_CONFIG.gps2AntOffsetY =  0.3
-DID_FLASH_CONFIG.gps2AntOffsetZ =  0.0
+DID_FLASH_CONFIG.gps2AntOffset[0] =  0.0
+DID_FLASH_CONFIG.gps2AntOffset[1] =  0.3
+DID_FLASH_CONFIG.gps2AntOffset[2] =  0.0
 ```
 
 #### Automobile
