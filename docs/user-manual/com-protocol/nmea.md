@@ -628,6 +628,7 @@ $INFO,d,d.d.d.d,d.d.d.d,d,d.d.d.d,d,s,YYYY-MM-DD,hh:mm:ss.ms,s*xx\r\n
 | 10    | Add Info         |       | Additional information                                       |
 | 11    | Hardware         |       | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX                        |
 | 12    | Reserved         |       | Reserved for internal purpose.                               |
+| 13    | Build type       |       | Build type: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=debug |
 
 ## NMEA Examples
 
