@@ -40,7 +40,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 24   | G13/DRDY/XSDA                                 | I/O  | GPIO13<br /> SPI Data Ready<br /> Alt I2C SDA                                           |
 | 25   | G12/XSCL                                      | I/O  | GPIO12<br /> Alt I2C SCL                                                  |
 | 26   | G11/SWDIO                                     | I/O  | GPIO11                                                             |
-| 27   | G10/CHIP_ERASE                                | I/O  | Leave unconnected. CHIP ERASE used in manufacturing. !!! WARNING !!! Asserting a logic high will erase all flash memory, including calibration data. |
+| 27   | G10/BOOT_MODE                                 | I/O  | Leave unconnected. BOOT MODE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
 | 28   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 29   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
 | 30   | GNSS1_PPS                                 | O    | GNSS1 PPS time synchronization output pulse (1Hz, 10% duty cycle) |

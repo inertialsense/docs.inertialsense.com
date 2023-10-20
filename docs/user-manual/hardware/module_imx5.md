@@ -36,7 +36,7 @@ The IMX-5 module is pin compatible with the uINS-3.
 | 14   | G13/DRDY/XSDA                                 |   I/O   | GPIO13<br /> SPI Data Ready<br /> Alt I2C SDA                                           |
 | 15   | G12/SWO/XSCL                                  | I/O    | GPIO12<br /> Alt I2C SCL                                                  |
 | 16   | G11/SWDIO                                      | I/O    | GPIO11                                                             |
-| 17   | G10/CHIP_ERASE                                 | I/O    | Leave unconnected. CHIP ERASE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will erase all IMX flash memory, including calibration data. |
+| 17   | G10/BOOT_MODE                         | I/O    | Leave unconnected. BOOT MODE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
 | 18   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 19   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
 | 20   | G15/GNSS_PPS                               | I   | Input for GNSS PPS for time synchronization pulse. |
