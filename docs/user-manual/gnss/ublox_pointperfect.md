@@ -5,12 +5,13 @@ The IMX-5 can receive corrections from the uBlox D9S device, which provides L-ba
 ## Firmware update
 
 L-band corrections requires a later version of F9P firmware. Use FW version HPG 1.32 from the F9P downloads page on the uBlox site. 
-To check your firmware version, follow these steps.
+
+To check your firmware version, follow these steps:
 
 1. Open the Inertial Sense EvalTool
 2. Navigate to the Data Sets tab.
 3. Select `DID_GPSx_VERSION`
-4. The firmware version is displayed in extension[1] For Example, FWVER=HPG 1.12
+4. The firmware version is displayed in extension[1]. For Example, FWVER=HPG 1.12
 
 To update the firmware on the F9P, follow these steps:
 
