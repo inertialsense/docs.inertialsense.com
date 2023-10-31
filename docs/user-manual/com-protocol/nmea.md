@@ -48,7 +48,7 @@ The following NMEA messages can be received by the IMX.
 | Message                     | Description                                                       |
 | --------------------------- | ------------------------------------------------------------------|
 | ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.                 |
-| [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.                 |
+| [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.  (_Outdated. Use [ASCE](#asce) instead._)               |
 | [ASCE](#asce)               | Set the broadcast period of selected NMEA output messages.        |
 | ```$INFO*0E\r\n```          | Query device information.                                         |
 | ```$SRST*06\r\n```          | Software reset.                                                   |
@@ -58,6 +58,7 @@ The following NMEA messages can be received by the IMX.
 
 ### ASCB
 
+(_ASCB is outdated and [ASCE](#asce) is recommended for use instead._)  
 Enable NMEA message and set broadcast periods.  The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum.  Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming.  Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](../binary/#data-source-update-rates)
 
 ```
