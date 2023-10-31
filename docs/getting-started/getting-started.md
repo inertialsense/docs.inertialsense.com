@@ -58,5 +58,14 @@ Once a connection to the unit has been established, please follow one of the fol
 - [CLTool](../user-manual/software/cltool.md)
 - [SDK Example Projects](../user-manual/software/SDK.md)
 
+
+## Demonstration Videos
+### Rugged-3-G2 GPS Compassing Configuration Demo
+
+<center>
+<iframe width="800" height="480" src="https://www.youtube.com/embed/3pCre66Wbxw?si=-zPEm2B2ivJ5v-61" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+</center>
+
 ## Troubleshooting
 If at any time issues are encountered, please check the troubleshooting sections of this manual.
