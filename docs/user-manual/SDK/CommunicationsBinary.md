@@ -77,7 +77,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 ```C++
 	// Set INS output Euler rotation in radians to 90 degrees roll for mounting
 	float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-	int messageSize = is_comm_set_data(comm, _DID_FLASH_CONFIG, offsetof(nvm_flash_cfg_t, insRotation), sizeof(float) * 3, rotation);
+	int messageSize = is_comm_set_data(comm, DID_FLASH_CONFIG, offsetof(nvm_flash_cfg_t, insRotation), sizeof(float) * 3, rotation);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to encode and write set INS rotation\r\n");
@@ -88,21 +88,21 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 
 ```C++
 	// Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
-	int messageSize = is_comm_get_data(comm, _DID_INS_LLA_EULER_NED, 0, 0, 10);
+	int messageSize = is_comm_get_data(comm, DID_INS_1, 0, 0, 10);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to encode and write get INS message\r\n");
 	}
 
 	// Ask for GPS message at period of 200ms (200ms source period x 1).  Offset and size can be left at 0 unless you want to just pull a specific field from a data set.
-	messageSize = is_comm_get_data(comm, _DID_GPS1_POS, 0, 0, 1);
+	messageSize = is_comm_get_data(comm, DID_GPS1_POS, 0, 0, 1);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to encode and write get GPS message\r\n");
 	}
 
 	// Ask for IMU message at period of 96ms (DID_FLASH_CONFIG.startupNavDtMs (16ms default) source period x 6).  This could be as high as 1000 times a second (period multiple of 1)
-	messageSize = is_comm_get_data(comm, _DID_IMU, 0, 0, 6);
+	messageSize = is_comm_get_data(comm, DID_IMU, 0, 0, 6);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to encode and write get IMU message\r\n");
@@ -142,19 +142,19 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 			case _PTYPE_INERTIAL_SENSE_DATA:
 				switch (comm.dataHdr.id)
 				{
-				case _DID_INS_LLA_EULER_NED:
+				case DID_INS_1:
 					handleIns1Message((ins_1_t*)comm.dataPtr);
 					break;
 
-				case DID_INS_2:
+				case _DID_INS_LLA_QN2B:
 					handleIns2Message((ins_2_t*)comm.dataPtr);
 					break;
 
-				case _DID_GPS1_POS:
+				case DID_GPS1_POS:
 					handleGpsMessage((gps_pos_t*)comm.dataPtr);
 					break;
 
-				case _DID_IMU_DUAL:
+				case _DID_PIMU:
 					handleImuMessage((dual_imu_t*)comm.dataPtr);
 					break;
 

@@ -1,6 +1,6 @@
 # Inertial Sense Binary Protocol
 
-The Inertial Sense binary protocol provides the most efficient way to communicate with the µINS, µAHRS, and µIMU because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [ASCII Protocol](../com-protocol/ascii.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
+The Inertial Sense binary protocol provides the most efficient way to communicate with the µINS, µAHRS, and µIMU because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [NMEA Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
 
 ## Communication
 
@@ -13,7 +13,7 @@ The `is_comm_set_data()` function will encode a message used to set data or conf
 ```c++
 // Set INS output Euler rotation in radians to 90 degrees roll for mounting
 float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-int messageSize = is_comm_set_data(comm, _DID_FLASH_CONFIG, offsetof(nvm_flash_cfg_t, insRotation), sizeof(float) * 3, rotation);
+int messageSize = is_comm_set_data(comm, DID_FLASH_CONFIG, offsetof(nvm_flash_cfg_t, insRotation), sizeof(float) * 3, rotation);
 if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 {
 	printf("Failed to encode and write set INS rotation\r\n");
@@ -30,7 +30,7 @@ The `is_comm_get_data()` function will encode a PID_GET_DATA message that enable
 
 ```c++
 // Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
-int messageSize = is_comm_get_data(comm, _DID_INS_LLA_EULER_NED, 0, 0, 10);
+int messageSize = is_comm_get_data(comm, DID_INS_1, 0, 0, 10);
 if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 {
 	printf("Failed to encode and write get INS message\r\n");
@@ -76,7 +76,7 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
     // INS output data rate at 20Hz
     rmc.insPeriodMs = 50;
 
-	int messageSize = is_comm_set_data(comm, _DID_RMC, 0, sizeof(rmc_t), &rmc);
+	int messageSize = is_comm_set_data(comm, DID_RMC, 0, sizeof(rmc_t), &rmc);
 	if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 	{
 		printf("Failed to encode and write RMC message\r\n");
@@ -89,7 +89,7 @@ The *persistent messages* option saves the current data stream configuration to 
 - **To save persistent messages** - (to flash memory), bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field or set DID_CONFIG.system = 0x00000001 and DID_CONFIG.system = 0xFFFFFFFE.   See the [save persistent messages example](../../SDK/CommunicationsBinary/#step-7-save-persistent-messages) in the Binary Communications example project.
 - **To disable persistent messages** - a [stop all broadcasts packet](../../SDK/CommunicationsBinary/#step-4-stop-any-message-broadcasting) followed by a *save persistent messages* command.   
 
-[ASCII persistent messages](../ascii/#persistent-messages) are also available. 
+[NMEA persistent messages](../nmea/#persistent-messages) are also available. 
 
 ##### Enabling Persistent Messages - EvalTool  
 
@@ -109,7 +109,7 @@ cltool -c /dev/ttyS3 -persistent -msgINS2 -msgGPS
 
 #### Example Projects
 
-Examples on how to use the Inertial Sense SDK for binary communications are found in the [Binary Communications Example Project](../SDK/CommunicationsBinary.md) and [cltool project](../SDK/InertialSenseClassCLTool.md).  [ASCII communications](../com-protocol/ascii.md) examples are found in the [ASCII Example Project](../SDK/CommunicationsAscii.md).
+Examples on how to use the Inertial Sense SDK for binary communications are found in the [Binary Communications Example Project](../SDK/CommunicationsBinary.md) and [cltool project](../SDK/InertialSenseClassCLTool.md).  [NMEA communications](../com-protocol/nmea.md) examples are found in the [NMEA Example Project](../SDK/CommunicationsAscii.md).
 
 ### Parsing Data
 
@@ -130,13 +130,13 @@ The following parser code is simpler to implement.  This method uses the `is_com
 			switch (ptype)
 			{
 			case _PTYPE_INERTIAL_SENSE_DATA:
-			case _PTYPE_INERTIAL_SENSE_CMD:
+			case _PTYPE_IS_V1_CMD:
 				break;
 			case _PTYPE_UBLOX:
 				break;
 			case _PTYPE_RTCM3:
 				break;
-			case _PTYPE_ASCII_NMEA:
+			case _PTYPE_NMEA:
 				break;
 			}
 		}
@@ -166,13 +166,13 @@ The following parser code uses less processor time to parse data by copying mult
 			switch (ptype)
 			{
 			case _PTYPE_INERTIAL_SENSE_DATA:
-			case _PTYPE_INERTIAL_SENSE_CMD:
+			case _PTYPE_IS_V1_CMD:
 				break;
 			case _PTYPE_UBLOX:
 				break;
 			case _PTYPE_RTCM3:
 				break;
-			case _PTYPE_ASCII_NMEA:
+			case _PTYPE_NMEA:
 				break;
 			}
 		}
@@ -196,25 +196,7 @@ Figure 1 – Packet Structure
 1 byte – packet start byte (`0xFF`) <br>
 1 byte – packet identifier, determines the format of packet data <br>
 1 byte – packet counter (for retries) <br>
-1 byte – flags, ePktHdrFlags enum <br>
-
-``` C++
-#include "SDK/src/com_manager.h"
-enum ePktHdrFlags
-{
-// bit set for little endian, bit cleared for big endian
-CM_PKT_FLAGS_LITTLE_ENDIAN = 0x01,
-// has any valid packet been received
-CM_PKT_FLAGS_RX_VALID_DATA = 0x02,
-// multi-packet data set
-CM_PKT_FLAGS_MORE_DATA_AVAILABLE = 0x04,
-// Allow for arbitrary length in bytes of data, not necessarily multiple of 4. Don't
-auto-swap bytes for endianness
-CM_PKT_FLAGS_RAW_DATA_NO_SWAP = 0x08,
-// Checksum is the new 24 bit algorithm instead of the old 16 bit algorithm
-CM_PKT_FLAGS_CHECKSUM_24_BIT = 0x10
-};
-```
+1 byte – flags <br>
 
 **Packet data may be 0 bytes, depending on packet identifier (PID)**
 
@@ -274,7 +256,7 @@ For a full example of encoding and decoding binary packets, please reference the
 
 ## Stop Broadcasts Packets
 
-Two *stop all broadcasts* packets are special packet types that will disable all binary and ASCII data streams.  The following functions calls are provided in the SDK to generate and send the stop all broadcasts packet.
+Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate and send the stop all broadcasts packet.
 
 ### All Ports
 

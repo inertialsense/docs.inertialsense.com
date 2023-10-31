@@ -5,7 +5,7 @@ The *Zero Motion Command* is user initiated and informs the EKF that the system 
 - Overriding incorrect GPS motion caused by weak GPS signal.  
 - Speeding up gyro biases convergence time when there is no GPS signal.   
 
-In normal AHRS mode (stationary with or without GPS), only the IMU gyro biases are estimated by the EKF.  Setting `DID_FLASH_CONFIG.insDynModel = INS_DYN_MODEL_STATIONARY (2)` is equivalent to continually issuing the zero motion command.
+In normal AHRS mode (stationary with or without GPS), only the IMU gyro biases are estimated by the EKF.  Setting `DID_FLASH_CONFIG.dynamicModel = DYNAMIC_MODEL_STATIONARY (2)` is equivalent to continually issuing the zero motion command.
 
 To use the *Zero Motion Command*: 
 

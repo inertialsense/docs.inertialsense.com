@@ -188,7 +188,32 @@ System sensor information
 
 #### DID_GPS1_POS
 
-GPS 1 position data.  This comes from DID_GPS1_UBX_POS or DID_GPS1_RTK_POS, depending on whichever is more accurate. 
+GPS 1 position data.  This comes from DID_GPS1_RCVR_POS or DID_GPS1_RTK_POS, depending on whichever is more accurate. 
+
+`gps_pos_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| ecef | double[3] | Position in ECEF {x,y,z} (m) |
+| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
+| hMSL | float | Height above mean sea level (MSL) in meters |
+| hAcc | float | Horizontal accuracy in meters |
+| vAcc | float | Vertical accuracy in meters |
+| pDop | float | Position dilution of precision (unitless) |
+| cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
+| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
+| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
+| satsUsed | uint8_t | Number of satellites used |
+| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
+| reserved | uint8_t | Reserved for future use |
+
+
+#### DID_GPS1_RCVR_POS
+
+GPS 1 position data from GNSS receiver. 
 
 `gps_pos_t`
 
@@ -301,7 +326,7 @@ RTK precision position base to rover relative info.
 
 #### DID_GPS1_SAT
 
-GPS 1 GNSS and sat identifiers, carrier to noise ratio (signal strength), elevation and azimuth angles, pseudo range residual. 
+GPS 1 GNSS satellite information: sat identifiers, carrier to noise ratio, elevation and azimuth angles, pseudo range residual. 
 
 `gps_sat_t`
 
@@ -310,31 +335,6 @@ GPS 1 GNSS and sat identifiers, carrier to noise ratio (signal strength), elevat
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSats | uint32_t | Number of satellites in the sky |
 | sat | gps_sat_sv_t[50] | Satellite information list |
-
-
-#### DID_GPS1_UBX_POS
-
-GPS 1 position data from ublox receiver. 
-
-`gps_pos_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| week | uint32_t | GPS number of weeks since January 6th, 1980 |
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
-| ecef | double[3] | Position in ECEF {x,y,z} (m) |
-| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
-| hMSL | float | Height above mean sea level (MSL) in meters |
-| hAcc | float | Horizontal accuracy in meters |
-| vAcc | float | Vertical accuracy in meters |
-| pDop | float | Position dilution of precision (unitless) |
-| cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
-| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
-| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
-| satsUsed | uint8_t | Number of satellites used |
-| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
-| reserved | uint8_t | Reserved for future use |
 
 
 #### DID_GPS1_VEL
@@ -361,8 +361,7 @@ GPS 1 version info
 |-------|------|-------------|
 | swVersion | uint8_t[30] | Software version |
 | hwVersion | uint8_t[10] | Hardware version |
-| extension | uint8_t[30] | Extension |
-| reserved | uint8_t[2] | ensure 32 bit aligned in memory |
+| extension | gps_extension_ver_t[6] | Extension 30 bytes array description  |
 
 
 #### DID_GPS2_POS
@@ -455,7 +454,7 @@ Dual GNSS RTK compassing / moving base to rover (GPS 1 to GPS 2) relative info.
 
 #### DID_GPS2_SAT
 
-GPS 2 GNSS and sat identifiers, carrier to noise ratio (signal strength), elevation and azimuth angles, pseudo range residual. 
+GPS 2 GNSS satellite information: sat identifiers, carrier to noise ratio, elevation and azimuth angles, pseudo range residual. 
 
 `gps_sat_t`
 
@@ -490,8 +489,7 @@ GPS 2 version info
 |-------|------|-------------|
 | swVersion | uint8_t[30] | Software version |
 | hwVersion | uint8_t[10] | Hardware version |
-| extension | uint8_t[30] | Extension |
-| reserved | uint8_t[2] | ensure 32 bit aligned in memory |
+| extension | gps_extension_ver_t[6] | Extension 30 bytes array description  |
 
 
 #### DID_GPS_RTK_OPT
@@ -742,13 +740,12 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 
 | Field | Type | Description |
 |-------|------|-------------|
-| gnssId | uint8_t | GNSS identifier: 0 GPS, 1 SBAS, 2 Galileo, 3 BeiDou, 5 QZSS, 6 GLONASS |
+| gnssId | uint8_t | GNSS identifier (see eSatSvGnssId) |
 | svId | uint8_t | Satellite identifier |
-| cno | uint8_t | (dBHz) Carrier to noise ratio (signal strength) |
 | elev | int8_t | (deg) Elevation (range: +/-90) |
 | azim | int16_t | (deg) Azimuth (range: +/-180) |
-| prRes | int16_t | (m) Pseudo range residual |
-| flags | uint32_t | (see eSatSvFlags) |
+| cno | uint8_t | (dBHz) Carrier to noise ratio (signal strength) |
+| status | uint16_t | (see eSatSvStatus) |
 
 
 #### Inertial Measurement Unit (IMU)
@@ -762,29 +759,6 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 
 
 ### Configuration
-
-#### DID_ASCII_BCAST_PERIOD
-
-Broadcast period for ASCII messages 
-
-`ascii_msgs_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| options | uint32_t | Options: Port selection[0x0=current, 0xFF=all, 0x1=ser0, 0x2=ser1, 0x4=ser2, 0x8=USB] (see RMC_OPTIONS_...) |
-| pimu | uint16_t | Broadcast period multiple - ASCII IMU data. 0 to disable. |
-| ppimu | uint16_t | Broadcast period multiple - ASCII preintegrated IMU: delta theta (rad) and delta velocity (m/s). 0 to disable. |
-| pins1 | uint16_t | Broadcast period multiple - ASCII INS output: euler rotation w/ respect to NED, NED position from reference LLA. 0 to disable. |
-| pins2 | uint16_t | Broadcast period multiple - ASCII INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. 0 to disable. |
-| pgpsp | uint16_t | Broadcast period multiple - ASCII GPS position data. 0 to disable. |
-| primu | uint16_t | Broadcast period multiple - ASCII Raw IMU data (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of pimu or ppimu as they are oversampled and contain less noise. 0 to disable. |
-| gpgga | uint16_t | Broadcast period multiple - ASCII NMEA GPGGA GPS 3D location, fix, and accuracy. 0 to disable. |
-| gpgll | uint16_t | Broadcast period multiple - ASCII NMEA GPGLL GPS 2D location and time. 0 to disable. |
-| gpgsa | uint16_t | Broadcast period multiple - ASCII NMEA GSA GPS DOP and active satellites. 0 to disable. |
-| gprmc | uint16_t | Broadcast period multiple - ASCII NMEA recommended minimum specific GPS/Transit data. 0 to disable. |
-| gpzda | uint16_t | Broadcast period multiple - ASCII NMEA Data and Time. 0 to disable. |
-| pashr | uint16_t | Broadcast period multiple - ASCII NMEA Inertial Attitude Data. 0 to disable. |
-
 
 #### DID_FLASH_CONFIG
 
@@ -804,7 +778,7 @@ Flash memory configuration
 | insRotation | float[3] | Rotation in radians about the X,Y,Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z,Y,X. |
 | insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
 | gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
-| insDynModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
+| dynamicModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
 | debug | uint8_t | Debug |
 | gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
 | sysCfgBits | uint32_t | System configuration bits (see eSysConfigBits). |
@@ -827,6 +801,31 @@ Flash memory configuration
 | gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
 | ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
 | wheelConfig | wheel_config_t | Wheel encoder: euler angles describing the rotation from imu to left wheel |
+
+
+#### DID_NMEA_BCAST_PERIOD
+
+Set broadcast periods for NMEA messages 
+
+`nmea_msgs_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| options | uint32_t | Options: Port selection[0x0=current, 0xFF=all, 0x1=ser0, 0x2=ser1, 0x4=ser2, 0x8=USB] (see RMC_OPTIONS_...) |
+| pimu | uint16_t | Broadcast period multiple - NMEA IMU data. 0 to disable. |
+| ppimu | uint16_t | Broadcast period multiple - NMEA preintegrated IMU: delta theta (rad) and delta velocity (m/s). 0 to disable. |
+| pins1 | uint16_t | Broadcast period multiple - NMEA INS output: euler rotation w/ respect to NED, NED position from reference LLA. 0 to disable. |
+| pins2 | uint16_t | Broadcast period multiple - NMEA INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. 0 to disable. |
+| pgpsp | uint16_t | Broadcast period multiple - NMEA GPS position data. 0 to disable. |
+| primu | uint16_t | Broadcast period multiple - NMEA Raw IMU data (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of pimu or ppimu as they are oversampled and contain less noise. 0 to disable. |
+| gga | uint16_t | Broadcast period multiple - NMEA standard GGA GNSS 3D location, fix, and accuracy. 0 to disable. |
+| gll | uint16_t | Broadcast period multiple - NMEA standard GLL GNSS 2D location and time. 0 to disable. |
+| gsa | uint16_t | Broadcast period multiple - NMEA standard GSA GNSS DOP and active satellites. 0 to disable. |
+| rmc | uint16_t | Broadcast period multiple - NMEA standard recommended minimum specific GPS/Transit data. 0 to disable. |
+| zda | uint16_t | Broadcast period multiple - NMEA standard Data and Time. 0 to disable. |
+| pashr | uint16_t | Broadcast period multiple - NMEA standard Inertial Attitude Data. 0 to disable. |
+| gsv | uint16_t | Broadcast period multiple - NMEA standard satelliate information. |
+| reserved | uint16_t | Reserved |
 
 
 #### DID_RMC
@@ -1025,6 +1024,19 @@ EVB-2 RTOS information.
 | task | rtos_task_t[] | Tasks |
 
 
+#### DID_GPS1_SIG
+
+GPS 1 GNSS signal information. 
+
+`gps_sig_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| numSigs | uint32_t | Number of satellite signals in the following satelliate signal list |
+| sig | gps_sig_sv_t[100] | Satellite signal list |
+
+
 #### DID_GPS1_TIMEPULSE
 
 
@@ -1033,6 +1045,89 @@ EVB-2 RTOS information.
 
 | Field | Type | Description |
 |-------|------|-------------|
+
+
+#### DID_GPS2_SIG
+
+GPS 2 GNSS signal information. 
+
+`gps_sig_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| numSigs | uint32_t | Number of satellite signals in the following satelliate signal list |
+| sig | gps_sig_sv_t[100] | Satellite signal list |
+
+
+#### DID_GPX_DEBUG_ARRAY
+
+GPX debug 
+
+`debug_array_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+
+
+#### DID_GPX_DEV_INFO
+
+GPX device information 
+
+`dev_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| reserved | uint32_t | Reserved bits |
+| serialNumber | uint32_t | Serial number |
+| hardwareVer | uint8_t[4] | Hardware version |
+| firmwareVer | uint8_t[4] | Firmware (software) version |
+| buildNumber | uint32_t | Build number |
+| protocolVer | uint8_t[4] | Communications protocol version |
+| repoRevision | uint32_t | Repository revision number |
+| manufacturer | char[24] | Manufacturer name |
+| buildDate | uint8_t[4] | Build date, little endian order: [0] = status ('r'=release, 'd'=debug), [1] = year-2000, [2] = month, [3] = day.  Reversed byte order for big endian systems |
+| buildTime | uint8_t[4] | Build date, little endian order: [0] = hour, [1] = minute, [2] = second, [3] = millisecond.  Reversed byte order for big endian systems |
+| addInfo | char[24] | Additional info |
+
+
+#### DID_GPX_FLASH_CFG
+
+GPX flash configuration 
+
+`gpx_flash_cfg_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| size | uint32_t | Size of this struct |
+| checksum | uint32_t | Checksum, excluding size and checksum |
+| key | uint32_t | Manufacturer method for restoring flash defaults |
+
+
+#### DID_GPX_RTOS_INFO
+
+GPX RTOs info 
+
+`rtos_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| freeHeapSize | uint32_t | Heap high water mark bytes |
+| mallocSize | uint32_t | Total memory allocated using RTOS pvPortMalloc() |
+| freeSize | uint32_t | Total memory freed using RTOS vPortFree() |
+| task | rtos_task_t[] | Tasks |
+
+
+#### DID_GPX_STATUS
+
+GPX status 
+
+`gpx_status_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| gpxStatus | uint32_t | Status (eGpxStatus) |
 
 
 #### DID_GROUND_VEHICLE
@@ -1474,8 +1569,8 @@ System parameters / info
 | sysStatus | uint32_t | System status flags (eSysStatusFlags) |
 | imuPeriodMs | uint32_t | IMU sample period in milliseconds. Zero disables sampling. |
 | navPeriodMs | uint32_t | Preintegrated IMU (PIMU) integration period and navigation filter update period (ms). |
-| sensorTruePeriod | double | Actual sample period relative to GPS PPS |
-| reserved2 | float | Reserved |
+| sensorTruePeriod | double | Actual sample period relative to GPS PPS (sec) |
+| flashCfgChecksum | uint32_t | Reserved |
 | reserved3 | float | Reserved |
 | genFaultCode | uint32_t | General fault code descriptor (eGenFaultCodes).  Set to zero to reset fault code. |
 
@@ -1634,6 +1729,7 @@ System status and configuration is made available through various enumeration an
 
 | Field | Value |
 |-------|------|
+| SYS_CMD_NONE | 0 |
 | SYS_CMD_SAVE_PERSISTENT_MESSAGES | 1 |
 | SYS_CMD_ENABLE_BOOTLOADER_AND_RESET | 2 |
 | SYS_CMD_ENABLE_SENSOR_STATS | 3 |
@@ -1647,6 +1743,11 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER0 | 13 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER1 | 14 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER2 | 15 |
+| SYS_CMD_DISABLE_SERIAL_PORT_BRIDGE | 16 |
+| SYS_CMD_GPX_ENABLE_BOOTLOADER_MODE | 30 |
+| SYS_CMD_GPX_ENABLE_GNSS1_CHIPSET_BOOTLOADER | 31 |
+| SYS_CMD_GPX_ENABLE_GNSS2_CHIPSET_BOOTLOADER | 32 |
+| SYS_CMD_TEST_GPIO | 64 |
 | SYS_CMD_SAVE_FLASH | 97 |
 | SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
 | SYS_CMD_SOFTWARE_RESET | 99 |
@@ -1682,31 +1783,6 @@ System status and configuration is made available through various enumeration an
 | GFC_INIT_BAROMETER | 0x00200000 |
 | GFC_INIT_I2C | 0x00800000 |
 | GFC_CHIP_ERASE_INVALID | 0x01000000 |
-
-
-#### GNSS Satellite Flags
-
-(eSatSvFlags)  
-
-| Field | Value |
-|-------|------|
-| SAT_SV_FLAGS_QUALITYIND_MASK | 0x00000007 |
-| SAT_SV_FLAGS_SV_USED | 0x00000008 |
-| SAT_SV_FLAGS_HEALTH_MASK | 0x00000030 |
-| NAV_SAT_FLAGS_HEALTH_OFFSET | 4 |
-| SAT_SV_FLAGS_DIFFCORR | 0x00000040 |
-| SAT_SV_FLAGS_SMOOTHED | 0x00000080 |
-| SAT_SV_FLAGS_ORBITSOURCE_MASK | 0x00000700 |
-| SAT_SV_FLAGS_ORBITSOURCE_OFFSET | 8 |
-| SAT_SV_FLAGS_EPHAVAIL | 0x00000800 |
-| SAT_SV_FLAGS_ALMAVAIL | 0x00001000 |
-| SAT_SV_FLAGS_ANOAVAIL | 0x00002000 |
-| SAT_SV_FLAGS_AOPAVAIL | 0x00004000 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_MASK | 0x03000000 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_OFFSET | 24 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_FLOAT | 1 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_FIX | 2 |
-| SAT_SV_FLAGS_RTK_SOL_FIX_STATUS_HOLD | 3 |
 
 
 #### GPS Navigation Fix Type

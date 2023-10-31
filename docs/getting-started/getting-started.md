@@ -44,7 +44,7 @@ The configuration settings found in DID_FLASH_CONFIG need to be set to appropria
 
 2. gps2AntOffset[X-Z] - Position offset of sensor frame with respect to GPS2 antenna.
 
-3. insDynModel - Dynamic model that most closely represents sensor application.*
+3. dynamicModel - Dynamic model that most closely represents sensor application.*
 
    *Note - This feature is experimental. For most applications setting 8 will yield the best results. The user is encouraged to try different settings.
 
