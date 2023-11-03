@@ -1,4 +1,4 @@
-**Software Release 1.10.0 - 17 May 2023**
+**Software Release 1.11.0 - 03 Nov 2023**
 
 <center>
 
