@@ -48,7 +48,7 @@ The following NMEA messages can be received by the IMX.
 | Message                     | Description                                                       |
 | --------------------------- | ------------------------------------------------------------------|
 | ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.                 |
-| [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.                 |
+| [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.  (_Outdated. Use [ASCE](#asce) instead._)               |
 | [ASCE](#asce)               | Set the broadcast period of selected NMEA output messages.        |
 | ```$INFO*0E\r\n```          | Query device information.                                         |
 | ```$SRST*06\r\n```          | Software reset.                                                   |
@@ -58,6 +58,7 @@ The following NMEA messages can be received by the IMX.
 
 ### ASCB
 
+(_ASCB is outdated and [ASCE](#asce) is recommended for use instead._)  
 Enable NMEA message and set broadcast periods.  The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum.  Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming.  Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](../binary/#data-source-update-rates)
 
 ```
@@ -84,7 +85,7 @@ $ASCB,options,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
 
 ### ASCE
 
-Enable NMEA messages and set broadcast periods.  The period is the a multiple of the [*data source period*](binary/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). 
+Enable NMEA message output streaming by specifying the [NMEA message ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](binary/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to twenty different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
 
 ```
 $ASCE,options,(id,period)*xx\r\n
@@ -94,7 +95,7 @@ $ASCE,options,(id,period)*xx\r\n
 | ----- | ------- | ------------------------------------------------------------ |
 | 1     | options | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
 |       |         | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | ID      | NMEA message ID to be broadcast.  See the ID in the [NMEA output messages](#nmea-output-messages) table. |
+| 2+n*2 | ID      | NMEA message ID to be streamed.  See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
 | 3+n*2 | period  | Broadcast period multiple for specified message.  Zero disables streaming. |
 |       |         | *End of repeated group (1...20 times)*                       |
 
