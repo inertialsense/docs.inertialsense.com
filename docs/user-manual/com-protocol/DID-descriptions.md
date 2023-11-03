@@ -1070,7 +1070,7 @@ GPX debug
 |-------|------|-------------|
 
 
-#### DID_GPX_DEV_INFO
+#### DID_GPX_DEVICE_INFO
 
 GPX device information 
 
