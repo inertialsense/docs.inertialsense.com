@@ -48,7 +48,7 @@ This [ISLoggerExample](https://github.com/inertialsense/InertialSenseSDK/tree/re
 	inertialSense.BroadcastBinaryDataRmcPreset();
 
 	// instead of the rmc preset (real-time message controller) you can request individual messages...
-	// inertialSense.BroadcastBinaryData(DID_IMU, 6); // imu every 6x 16ms (startupNavDtMs default) (96 hz)
+	// inertialSense.BroadcastBinaryData(DID_IMU, 6); // (startupNavDtMs default)
 ```
 
 By default, data logs will be stored in the "IS_logs" directory in the current directory.
