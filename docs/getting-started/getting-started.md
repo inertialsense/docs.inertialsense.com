@@ -63,7 +63,14 @@ Once a connection to the unit has been established, please follow one of the fol
 ### Rugged-3-G2 GPS Compassing Configuration Demo
 
 <center>
-<iframe width="800" height="480" src="https://www.youtube.com/embed/3pCre66Wbxw?si=-zPEm2B2ivJ5v-61" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="800" height="400" src="https://www.youtube.com/embed/3pCre66Wbxw?si=-zPEm2B2ivJ5v-61" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+</center>
+
+### Rugged-3-G2 RS-485/422 Configuration Demo
+
+<center>
+<iframe width="800" height="400" src="https://www.youtube.com/embed/dG4w2MkVch4?si=awCGX5lEGiaDz7FY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 </center>
 
