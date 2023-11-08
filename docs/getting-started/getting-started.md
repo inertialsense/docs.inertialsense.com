@@ -67,5 +67,12 @@ Once a connection to the unit has been established, please follow one of the fol
 
 </center>
 
+### Rugged-3-G2 RS-485/422 Configuration Demo
+
+<center>
+<iframe width="800" height="315" src="https://www.youtube.com/embed/dG4w2MkVch4?si=awCGX5lEGiaDz7FY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+</center>
+
 ## Troubleshooting
 If at any time issues are encountered, please check the troubleshooting sections of this manual.
