@@ -1,10 +1,10 @@
 # UART Interface
 
-The IMX has different UART TTL serial ports.  These serial ports can be converted from TTL to RS232 or RS422 using a level converter, such as found on the Rugged, EVB-1, and EVB-2 carrier boards. 
+The IMX has different UART TTL serial ports.  These serial ports can be converted from TTL to RS232 or RS422 using a level converter, such as found on the Rugged-3, EVB-1, and EVB-2 carrier boards. 
 
-## Actual UART Baud Rates - (Serial 0 and Serial 2)
+## Actual UART Baud Rates
 
-The serial ports use different peripherals so the actual baud rates of the ports differ. Serial ports 0 and 2 are UART and Serial 1 is USART.
+The serial ports use different peripherals so the actual baud rates of the ports differ. 
 
 Due to UART limitations, the ***actual baud rate*** that the hardware is capable of generating differs from the target or desired baud rate.  This difference is more pronounced at higher baud rates (>921600 bps).  The following table outlines these differences.      
 
@@ -27,16 +27,24 @@ Due to UART limitations, the ***actual baud rate*** that the hardware is capable
 
 The actual baud rate that the IMX-5 hardware is capable of generating is described in the following equation. 
 
+Baud rates <= 5 Mbps: 
+
 ```
-Divisor = floor((80e6 + ((Target Baud Rate)/2)) / (Target Baud Rate))
+Divisor = floor( (80e6 + ((Target Baud Rate)/2)) / (Target Baud Rate) )
 Actual Baud Rate = floor( 80e6 / Divisor )
+```
+Baud rates > 5 Mbps: 
+
+```
+Divisor = floor( (160e6 + ((Target Baud Rate)/2)) / (Target Baud Rate) )
+Actual Baud Rate = floor( 160e6 / Divisor )
 ```
 
 ### uINS-3 UART Baud Rate Equation
 
-The actual baud rate that the IMX-5 hardware is capable of generating is described in the following equation.
+The actual baud rate that the IMX-5 hardware is capable of generating is described in the following equations.
 
 ```
-Divisor = floor((18750000 + ((Target Baud Rate)/2)) / (Target Baud Rate))
+Divisor = floor( (18750000 + ((Target Baud Rate)/2)) / (Target Baud Rate) )
 Actual Baud Rate = floor( 18750000 / Divisor )
 ```
