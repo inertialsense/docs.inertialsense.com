@@ -2,7 +2,7 @@
 
 The IMX has different UART TTL serial ports.  These serial ports can be converted from TTL to RS232 or RS422 using a level converter, such as found on the Rugged, EVB-1, and EVB-2 carrier boards. 
 
-## Actual Baud Rates - UART (Serial 0 and Serial 2)
+## Actual UART Baud Rates - (Serial 0 and Serial 2)
 
 The serial ports use different peripherals so the actual baud rates of the ports differ. Serial ports 0 and 2 are UART and Serial 1 is USART.
 

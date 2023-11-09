@@ -8,7 +8,7 @@ Standard UART baud rates available on the IMX are: 921600, 460800, 230400, 11520
 
 ### High Speed Baud Rates
 
-Non-standard high speed UART baud rates (>921600 bps) can be set to arbitrary values up to 10 Mbps.  Due to hardware limitations, applied baud rate will be rounded to the closest available baud rate and reported back via the `DID_FLASH_CONFIG.serXBaudRate` parameter. 
+Non-standard high speed UART baud rates (>921600 bps) can be set to arbitrary values up to 10 Mbps.  Due to hardware limitations, the applied baud rate will be rounded to the closest available baud rate and reported back via the `DID_FLASH_CONFIG.serXBaudRate` parameter. 
 
 ### Baud Rate Configuration
 
