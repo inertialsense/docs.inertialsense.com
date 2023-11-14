@@ -65,19 +65,19 @@ The preintegrated IMU (PIMU) a.k.a. Coning and Sculling (delta theta, delta velo
 
 ### Navigation Update and Output Periods
 
-The navigation filter output period should be set using the flash parameter `DID_FLASH_CONFIG.startupNavDtMs`.  This value sets the `DID_SYS_PARAMS.navOutputDtMs` and `DID_SYS_PARAMS.navUpdateDtMs` on startup of the IMX.
+The navigation filter output period should be set using the flash parameter `DID_FLASH_CONFIG.startupNavDtMs`.  This value sets the `DID_SYS_PARAMS.navOutputDtMs` and `DID_SYS_PARAMS.navUpdateDtMs` during startup of the IMX.
 
 The **navigation filter output period** (`DID_SYS_PARAMS.navOutputDtMs`) determines the EKF output data rate, the maximum rate for messages DID_INS_1, DID_INS_2, and DID_INS_3.
 
-The **navigation filter update period** (`DID_SYS_PARAMS.navUpdateDtMs`) controls the EKF update rate and sets the standard integration period for the preintegrated IMU (PIMU) output.  This parameter is automatically adjusted based on the value of `DID_SYS_PARAMS.navOutputDtMs` and the available CPU of the IMX.
+The **navigation filter update period** (`DID_SYS_PARAMS.navUpdateDtMs`) controls the EKF update rate and sets the standard integration period for the preintegrated IMU (PIMU) output.  This parameter is automatically adjusted based on the value of `DID_SYS_PARAMS.navOutputDtMs` and the amount of CPU available.
 
-The following table contains the minimum output period and update period for the IMX. 
+The following table lists the output and update period minimum limits for the IMX. 
 
-| Features Enabled             | Minimum Output Period | Minimum Update Period |
-| ---------------------------- | --------------------- | --------------------- |
-| INS (w/ GPS)                 | 7 ms (142 Hz)         | 14 ms                 |
-| AHRS (no GPS)                | 5 ms (200 Hz)         | 10 ms                 |
-| VRS (no GPS or magnetometer) | 4 ms (250 Hz)         | 8                     |
+| Operation Mode                           | IMX-5.0 Minimum<br/>Output Period / Update Period | IMX-5.1, uINS-3 Minimum<br/>Output Period / Update Period |
+| ---------------------------------------- | ------------------------------------------------- | --------------------------------------------------------- |
+| INS (GPS enabled)                        | 7 ms (142 Hz) / 14 ms                             | 2 ms (500 Hz) / 4 ms                                      |
+| AHRS (GPS disabled)                      | 5 ms (200 Hz) / 10 ms                             | 2 ms (500 Hz) / 4 ms                                      |
+| VRS (GPS and <br/>magnetometer disabled) | 4 ms (250 Hz) / 8 ms                              | 2 ms (500 Hz) / 4 ms                                      |
 
 ## INS-GNSS Dynamic Model
 The `DID_FLASH_CONFIG.dynamicModel` setting allows the user to adjust how the EKF behaves in different dynamic environments. All values except for 2 (STATIONARY) and 8 (AIR <4g) are experimental. The user is encouraged to attempt to use different settings to improve performance, however in most applications
