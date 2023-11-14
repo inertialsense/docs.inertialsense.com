@@ -61,7 +61,21 @@ The IMU sample period is configured by setting `DID_FLASH_CONFIG.startupImuDtMs`
 
 ![IMU Chain](../images/imu_chain.svg)
 
-The INS and AHRS kalman filter update period is configured using `DID_FLASH_CONFIG.startupNavDtMs`.  This parameter sets the integration period for the preintegrated IMU (PIMU) a.k.a. Coning and Sculling (delta theta, delta velocity) integrals, which serve as an anti-aliased moving average of the IMU value.  The `DID_IMU`  is the derivative of the `DID_PIMU` value over a single integration period.
+The preintegrated IMU (PIMU) a.k.a. Coning and Sculling (delta theta, delta velocity) integrals serve as an anti-aliased moving average of the IMU value.  The `DID_IMU`  is the derivative of the `DID_PIMU` value over a single integration period.
+
+### Navigation Update and Output Periods
+
+The **navigation filter update period** (`DID_SYS_PARAMS.navUpdateDtMs`) controls the EKF update rate and sets the standard integration period for the preintegrated IMU (PIMU) output. 
+
+The **navigation filter output period** (`DID_SYS_PARAMS.navOutputDtMs`) determines the EKF output data rate, the maximum rate for messages DID_INS_1, DID_INS_2, and DID_INS_3.  For typical operation, the flash parameter `DID_FLASH_CONFIG.startupNavDtMs` should be used, which sets `DID_SYS_PARAMS.navOutputDtMs` during IMX startup.
+
+The following table contains the minimum output period and update period for the IMX. 
+
+| Features Enabled             | Minimum Output Period | Minimum Update Period |
+| ---------------------------- | --------------------- | --------------------- |
+| INS (w/ GPS)                 | 7 ms (142 Hz)         | 14 ms                 |
+| AHRS (no GPS)                | 5 ms (200 Hz)         | 10 ms                 |
+| VRS (no GPS or magnetometer) | 4 ms (250 Hz)         | 8                     |
 
 ## INS-GNSS Dynamic Model
 The `DID_FLASH_CONFIG.dynamicModel` setting allows the user to adjust how the EKF behaves in different dynamic environments. All values except for 2 (STATIONARY) and 8 (AIR <4g) are experimental. The user is encouraged to attempt to use different settings to improve performance, however in most applications
