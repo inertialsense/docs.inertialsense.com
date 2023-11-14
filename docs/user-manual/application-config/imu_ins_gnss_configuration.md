@@ -65,9 +65,11 @@ The preintegrated IMU (PIMU) a.k.a. Coning and Sculling (delta theta, delta velo
 
 ### Navigation Update and Output Periods
 
-The **navigation filter update period** (`DID_SYS_PARAMS.navUpdateDtMs`) controls the EKF update rate and sets the standard integration period for the preintegrated IMU (PIMU) output. 
+The navigation filter output period should be set using the flash parameter `DID_FLASH_CONFIG.startupNavDtMs`.  This value sets the `DID_SYS_PARAMS.navOutputDtMs` and `DID_SYS_PARAMS.navUpdateDtMs` on startup of the IMX.
 
-The **navigation filter output period** (`DID_SYS_PARAMS.navOutputDtMs`) determines the EKF output data rate, the maximum rate for messages DID_INS_1, DID_INS_2, and DID_INS_3.  For typical operation, the flash parameter `DID_FLASH_CONFIG.startupNavDtMs` should be used, which sets `DID_SYS_PARAMS.navOutputDtMs` during IMX startup.
+The **navigation filter output period** (`DID_SYS_PARAMS.navOutputDtMs`) determines the EKF output data rate, the maximum rate for messages DID_INS_1, DID_INS_2, and DID_INS_3.
+
+The **navigation filter update period** (`DID_SYS_PARAMS.navUpdateDtMs`) controls the EKF update rate and sets the standard integration period for the preintegrated IMU (PIMU) output.  This parameter is automatically adjusted based on the value of `DID_SYS_PARAMS.navOutputDtMs` and the available CPU of the IMX.
 
 The following table contains the minimum output period and update period for the IMX. 
 
