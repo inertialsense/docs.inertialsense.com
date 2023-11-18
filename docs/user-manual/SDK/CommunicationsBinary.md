@@ -101,7 +101,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 		printf("Failed to encode and write get GPS message\r\n");
 	}
 
-	// Ask for IMU message at period of 96ms (DID_FLASH_CONFIG.startupNavDtMs (16ms default) source period x 6).  This could be as high as 1000 times a second (period multiple of 1)
+	// Ask for IMU message at period of 96ms (DID_FLASH_CONFIG.startupNavDtMs source period x 6).  This could be as high as 1000 times a second (period multiple of 1)
 	messageSize = is_comm_get_data(comm, DID_IMU, 0, 0, 6);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{

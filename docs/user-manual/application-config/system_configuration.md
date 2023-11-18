@@ -2,11 +2,15 @@
 
 See the [Binary Protocol](../com-protocol/binary.md) page for descriptions of each [flash configuration](../../com-protocol/DID-descriptions/#did_flash_config) value and [enumeration bit values](../../com-protocol/DID-descriptions/#enumerations-and-defines).
 
-## Serial Port Baud Rate
+## Serial Port Baud Rates
 
-Choose the baud rate for serial communications through either available port. (3000000, 921600, 460800, 230400, 115200, 57600, 38400, 19200).
+UART standard baud rates available on the IMX are: 921600, 460800, 230400, 115200, 57600, 38400, 19200.  When operating within the standard baud rate range (<= 921600 bps), only these specific baud rates can be used.  Non-standard high speed baud rates (>921600) listed in the following section allow for arbitary custom baud rates.
 
-### Manual Baud Configuration
+### High Speed Baud Rates
+
+Non-standard high speed UART baud rates (>921600 bps) can be set to arbitrary values up to 10 Mbps.  Due to hardware limitations, the applied baud rate will be rounded to the closest available baud rate and reported back via the `DID_FLASH_CONFIG.serXBaudRate` parameter. 
+
+### Baud Rate Configuration
 
 The IMX baud rate can be manually set by changing the following flash configuration parameters:
 
