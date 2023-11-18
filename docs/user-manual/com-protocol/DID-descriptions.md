@@ -1303,13 +1303,15 @@ Manufacturing info
 
 `manufacturing_info_t`
 
-| Field | Type | Description |
-|-------|------|-------------|
-| serialNumber | uint32_t | Inertial Sense serial number |
-| lotNumber | uint32_t | Inertial Sense lot number |
-| date | char[16] | Inertial Sense manufacturing date (YYYYMMDDHHMMSS) |
-| key | uint32_t | Key |
-| uid | uint32_t[4] | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
+| Field        | Type        | Description                                                        |
+|--------------|-------------|--------------------------------------------------------------------|
+| serialNumber | uint32_t    | Inertial Sense serial number                                       |
+| lotNumber    | uint16_t    | Inertial Sense lot number                                          |
+| hardware     | uint16_t    | Inertial Sense Hardware Identifier (unique product id)             |
+| date         | char[16]    | Inertial Sense manufacturing date (YYYYMMDDHHMMSS)                 |
+| key          | uint32_t    | Key                                                                |
+| reserved     | uint32_t    | Reserved for internal purposes/future expansion                    |
+| uid          | uint32_t[4] | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
 
 
 #### DID_PIMU_MAG
