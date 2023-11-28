@@ -57,6 +57,9 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 ## Pinout
 
+!!! warning
+    Pin numbering should be confirmed according to drawings in the Dimensions and Pinouts page.
+
 The following table shows the Rugged-3 pinout.  Note that pin function can change based on changing  `DID_FLASH_CONFIG.platformConfig` (see [I/O Configuration](#I/O Configuration) below).
 
 | Rugged<br/>Pin | IMX<br/>Pin      | Name                                            | I/O           | Description                                                  |
