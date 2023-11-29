@@ -58,7 +58,7 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 ## Pinout
 
 !!! warning
-    Pin numbering should be confirmed according to drawings in the Dimensions and Pinouts page.
+    The pin numbering of the Rugged main connector does not match that of the connector manufacturer.  Please refer to the drawings in the Dimensions and Pinouts page for the correct pin numbering.
 
 The following table shows the Rugged-3 pinout.  Note that pin function can change based on changing  `DID_FLASH_CONFIG.platformConfig` (see [I/O Configuration](#I/O Configuration) below).
 
