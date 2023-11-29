@@ -22,6 +22,9 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 ## Pinout
 
+!!! warning
+    The pin numbering of the Rugged main connector does not match that of the connector manufacturer.  Please refer to the drawings in the Dimensions and Pinouts page for the correct pin numbering.
+
 | Pin  | Name                                       | I/O  | Description                                                  |
 | ---- | :----------------------------------------- | ---- | ------------------------------------------------------------ |
 | 1    | GND                                        | PWR  | -                                                            |
