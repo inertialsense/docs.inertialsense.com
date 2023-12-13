@@ -188,32 +188,7 @@ System sensor information
 
 #### DID_GPS1_POS
 
-GPS 1 position data.  This comes from DID_GPS1_RCVR_POS or DID_GPS1_RTK_POS, depending on whichever is more accurate. 
-
-`gps_pos_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| week | uint32_t | GPS number of weeks since January 6th, 1980 |
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
-| ecef | double[3] | Position in ECEF {x,y,z} (m) |
-| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
-| hMSL | float | Height above mean sea level (MSL) in meters |
-| hAcc | float | Horizontal accuracy in meters |
-| vAcc | float | Vertical accuracy in meters |
-| pDop | float | Position dilution of precision (unitless) |
-| cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
-| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
-| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
-| satsUsed | uint8_t | Number of satellites used |
-| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
-| reserved | uint8_t | Reserved for future use |
-
-
-#### DID_GPS1_RCVR_POS
-
-GPS 1 position data from GNSS receiver. 
+GPS 1 position data.  This comes from DID_GPS1_UBX_POS or DID_GPS1_RTK_POS, depending on whichever is more accurate. 
 
 `gps_pos_t`
 
@@ -335,6 +310,31 @@ GPS 1 GNSS satellite information: sat identifiers, carrier to noise ratio, eleva
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSats | uint32_t | Number of satellites in the sky |
 | sat | gps_sat_sv_t[50] | Satellite information list |
+
+
+#### DID_GPS1_UBX_POS
+
+GPS 1 position data from ublox receiver. 
+
+`gps_pos_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| ecef | double[3] | Position in ECEF {x,y,z} (m) |
+| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
+| hMSL | float | Height above mean sea level (MSL) in meters |
+| hAcc | float | Horizontal accuracy in meters |
+| vAcc | float | Vertical accuracy in meters |
+| pDop | float | Position dilution of precision (unitless) |
+| cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
+| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
+| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
+| satsUsed | uint8_t | Number of satellites used |
+| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
+| reserved | uint8_t | Reserved for future use |
 
 
 #### DID_GPS1_VEL
@@ -771,14 +771,14 @@ Flash memory configuration
 | size | uint32_t | Size of group or union, which is nvm_group_x_t + padding |
 | checksum | uint32_t | Checksum, excluding size and checksum |
 | key | uint32_t | Manufacturer method for restoring flash defaults |
-| startupImuDtMs | uint32_t | IMU sample (system input data) period in milliseconds set on startup. Cannot be larger than startupNavDtMs. Zero disables sensor/IMU sampling. |
-| startupNavDtMs | uint32_t | Navigation filter (system output data) update period in milliseconds set on startup. 1ms minimum (1KHz max). |
+| startupImuDtMs | uint32_t | IMU sample (system input) period in milliseconds set on startup. Cannot be larger than startupNavDtMs. Zero disables sensor/IMU sampling. |
+| startupNavDtMs | uint32_t | Navigation filter (system output) output period in milliseconds set on startup.  Used to initialize sysParams.navOutputPeriodMs. |
 | ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
 | ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
 | insRotation | float[3] | Rotation in radians about the X,Y,Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z,Y,X. |
 | insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
 | gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
-| dynamicModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
+| insDynModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
 | debug | uint8_t | Debug |
 | gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
 | sysCfgBits | uint32_t | System configuration bits (see eSysConfigBits). |
@@ -795,12 +795,13 @@ Flash memory configuration
 | gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
 | magDeclination | float | Earth magnetic field (magnetic north) declination (heading offset from true north) in radians |
 | gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
-| startupGPSDtMs | uint32_t | GPS measurement (system input data) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
+| startupGPSDtMs | uint32_t | GPS measurement (system input) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
 | RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
 | sensorConfig | uint32_t | Sensor config to specify the full-scale sensing ranges and output rotation for the IMU and magnetometer (see eSensorConfig in data_sets.h) |
 | gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
 | ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
 | wheelConfig | wheel_config_t | Wheel encoder: euler angles describing the rotation from imu to left wheel |
+| magInterferenceThreshold | float | Magnetometer interference sensitivity threshold. Typical range is 2-10 (3 default) and 1000 to disable mag interference detection. |
 
 
 #### DID_NMEA_BCAST_PERIOD
@@ -825,7 +826,7 @@ Set broadcast periods for NMEA messages
 | zda | uint16_t | Broadcast period multiple - NMEA standard Data and Time. 0 to disable. |
 | pashr | uint16_t | Broadcast period multiple - NMEA standard Inertial Attitude Data. 0 to disable. |
 | gsv | uint16_t | Broadcast period multiple - NMEA standard satelliate information. |
-| reserved | uint16_t | Reserved |
+| vtg | uint16_t | Broadcast period multiple - NMEA track made good and speed over ground. |
 
 
 #### DID_RMC
@@ -953,7 +954,8 @@ Device information
 
 | Field | Type | Description |
 |-------|------|-------------|
-| reserved | uint32_t | Reserved bits |
+| reserved | uint16_t | Reserved bits |
+| hardware | uint16_t | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eDevInfoHardware) |
 | serialNumber | uint32_t | Serial number |
 | hardwareVer | uint8_t[4] | Hardware version |
 | firmwareVer | uint8_t[4] | Firmware (software) version |
@@ -997,7 +999,8 @@ EVB device information
 
 | Field | Type | Description |
 |-------|------|-------------|
-| reserved | uint32_t | Reserved bits |
+| reserved | uint16_t | Reserved bits |
+| hardware | uint16_t | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eDevInfoHardware) |
 | serialNumber | uint32_t | Serial number |
 | hardwareVer | uint8_t[4] | Hardware version |
 | firmwareVer | uint8_t[4] | Firmware (software) version |
@@ -1058,76 +1061,6 @@ GPS 2 GNSS signal information.
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSigs | uint32_t | Number of satellite signals in the following satelliate signal list |
 | sig | gps_sig_sv_t[100] | Satellite signal list |
-
-
-#### DID_GPX_DEBUG_ARRAY
-
-GPX debug 
-
-`debug_array_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-
-
-#### DID_GPX_DEV_INFO
-
-GPX device information 
-
-`dev_info_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| reserved | uint32_t | Reserved bits |
-| serialNumber | uint32_t | Serial number |
-| hardwareVer | uint8_t[4] | Hardware version |
-| firmwareVer | uint8_t[4] | Firmware (software) version |
-| buildNumber | uint32_t | Build number |
-| protocolVer | uint8_t[4] | Communications protocol version |
-| repoRevision | uint32_t | Repository revision number |
-| manufacturer | char[24] | Manufacturer name |
-| buildDate | uint8_t[4] | Build date, little endian order: [0] = status ('r'=release, 'd'=debug), [1] = year-2000, [2] = month, [3] = day.  Reversed byte order for big endian systems |
-| buildTime | uint8_t[4] | Build date, little endian order: [0] = hour, [1] = minute, [2] = second, [3] = millisecond.  Reversed byte order for big endian systems |
-| addInfo | char[24] | Additional info |
-
-
-#### DID_GPX_FLASH_CFG
-
-GPX flash configuration 
-
-`gpx_flash_cfg_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| size | uint32_t | Size of this struct |
-| checksum | uint32_t | Checksum, excluding size and checksum |
-| key | uint32_t | Manufacturer method for restoring flash defaults |
-
-
-#### DID_GPX_RTOS_INFO
-
-GPX RTOs info 
-
-`rtos_info_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| freeHeapSize | uint32_t | Heap high water mark bytes |
-| mallocSize | uint32_t | Total memory allocated using RTOS pvPortMalloc() |
-| freeSize | uint32_t | Total memory freed using RTOS vPortFree() |
-| task | rtos_task_t[] | Tasks |
-
-
-#### DID_GPX_STATUS
-
-GPX status 
-
-`gpx_status_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| gpxStatus | uint32_t | Status (eGpxStatus) |
 
 
 #### DID_GROUND_VEHICLE
@@ -1308,7 +1241,8 @@ Manufacturing info
 | serialNumber | uint32_t | Inertial Sense serial number |
 | lotNumber | uint32_t | Inertial Sense lot number |
 | date | char[16] | Inertial Sense manufacturing date (YYYYMMDDHHMMSS) |
-| key | uint32_t | Key |
+| key | uint32_t | Key - write: unlock manufacting info, read: number of times OTP has been set, 15 max |
+| platformType | int32_t | Platform / carrier board (ePlatformConfig::PLATFORM_CFG_TYPE_MASK).  Only valid if greater than zero. |
 | uid | uint32_t[4] | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
 
 
@@ -1567,11 +1501,11 @@ System parameters / info
 | baroTemp | float | Baro temperature |
 | mcuTemp | float | MCU temperature (not available yet) |
 | sysStatus | uint32_t | System status flags (eSysStatusFlags) |
-| imuPeriodMs | uint32_t | IMU sample period in milliseconds. Zero disables sampling. |
-| navPeriodMs | uint32_t | Preintegrated IMU (PIMU) integration period and navigation filter update period (ms). |
+| imuSamplePeriodMs | uint32_t | IMU sample period (ms). Zero disables sampling. |
+| navOutputPeriodMs | uint32_t | Preintegrated IMU (PIMU) integration period and navigation/AHRS filter output period (ms). |
 | sensorTruePeriod | double | Actual sample period relative to GPS PPS (sec) |
-| flashCfgChecksum | uint32_t | Reserved |
-| reserved3 | float | Reserved |
+| flashCfgChecksum | uint32_t | Flash config checksum used with host SDK synchronization |
+| navUpdatePeriodMs | uint32_t | Navigation/AHRS filter update period (ms) |
 | genFaultCode | uint32_t | General fault code descriptor (eGenFaultCodes).  Set to zero to reset fault code. |
 
 
@@ -1645,11 +1579,13 @@ System status and configuration is made available through various enumeration an
 | Field | Value |
 |-------|------|
 | GNSS_SAT_SIG_CONST_GPS | 0x0003 |
-| GNSS_SAT_SIG_CONST_QZSS | 0x000C |
+| GNSS_SAT_SIG_CONST_QZS | 0x000C |
 | GNSS_SAT_SIG_CONST_GAL | 0x0030 |
 | GNSS_SAT_SIG_CONST_BDS | 0x00C0 |
 | GNSS_SAT_SIG_CONST_GLO | 0x0300 |
-| GNSS_SAT_SIG_CONST_SBAS | 0x1000 |
+| GNSS_SAT_SIG_CONST_SBS | 0x1000 |
+| GNSS_SAT_SIG_CONST_IRN | 0x2000 |
+| GNSS_SAT_SIG_CONST_IME | 0x4000 |
 
 
 #### DID_FLASH_CONFIG.sensorConfig
@@ -1737,17 +1673,26 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_ZERO_MOTION | 5 |
 | SYS_CMD_REF_POINT_STATIONARY | 6 |
 | SYS_CMD_REF_POINT_MOVING | 7 |
+| SYS_CMD_RESET_RTOS_STATS | 8 |
 | SYS_CMD_ENABLE_GPS_LOW_LEVEL_CONFIG | 10 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS1 | 11 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS2 | 12 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER0 | 13 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER1 | 14 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER2 | 15 |
-| SYS_CMD_DISABLE_SERIAL_PORT_BRIDGE | 16 |
-| SYS_CMD_GPX_ENABLE_BOOTLOADER_MODE | 30 |
-| SYS_CMD_GPX_ENABLE_GNSS1_CHIPSET_BOOTLOADER | 31 |
-| SYS_CMD_GPX_ENABLE_GNSS2_CHIPSET_BOOTLOADER | 32 |
-| SYS_CMD_TEST_GPIO | 64 |
+| SYS_CMD_DISABLE_SERIAL_PORT_BRIDGE | 11 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS1 | 12 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS2 | 13 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER0 | 14 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER1 | 15 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER2 | 16 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER0_TO_GPS1 | 17 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GPS1 | 18 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GPS2 | 19 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_USB | 20 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER0 | 21 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER1 | 22 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER2 | 23 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_LOOPBACK | 24 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER0_LOOPBACK | 25 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER1_LOOPBACK | 26 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER2_LOOPBACK | 27 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_LOOPBACK | 28 |
 | SYS_CMD_SAVE_FLASH | 97 |
 | SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
 | SYS_CMD_SOFTWARE_RESET | 99 |
@@ -2025,13 +1970,14 @@ System status and configuration is made available through various enumeration an
 | Field | Value |
 |-------|------|
 | UNUSED1 | 0x00000001 |
-| UNUSED2 | 0x00000002 |
+| SYS_CFG_BITS_ENABLE_MAG_CONTINUOUS_CAL | 0x00000002 |
 | SYS_CFG_BITS_AUTO_MAG_RECAL | 0x00000004 |
 | SYS_CFG_BITS_DISABLE_MAG_DECL_ESTIMATION | 0x00000008 |
 | SYS_CFG_BITS_DISABLE_LEDS | 0x00000010 |
 | Magnetometer |  multi-axis |
 | SYS_CFG_BITS_MAG_RECAL_MODE_MASK | 0x00000700 |
 | SYS_CFG_BITS_MAG_RECAL_MODE_OFFSET | 8 |
+| SYS_CFG_BITS_MAG_ENABLE_WMM_DECLINATION | 0x00000800 |
 | SYS_CFG_BITS_DISABLE_MAGNETOMETER_FUSION | 0x00001000 |
 | SYS_CFG_BITS_DISABLE_BAROMETER_FUSION | 0x00002000 |
 | SYS_CFG_BITS_DISABLE_GPS1_FUSION | 0x00004000 |
