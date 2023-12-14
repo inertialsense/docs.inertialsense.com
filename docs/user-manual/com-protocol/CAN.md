@@ -301,7 +301,7 @@ Dual IMU gyro and accelerometer values from accelerometer 0
 
 #### CID_GPS1_POS
 
-`is_can_gps1_pos_status`
+`is_can_gps_pos_status`
 
 GPS CNO Mean and GPS status flags
 
@@ -312,7 +312,7 @@ GPS CNO Mean and GPS status flags
 
 #### CID_GPS1_RTK_REL
 
-`is_can_gps1_rtk_rel`
+`is_can_gps_rtk_rel`
 
 RTK-GPS performance metrics
 
