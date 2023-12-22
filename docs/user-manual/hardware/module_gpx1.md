@@ -63,6 +63,11 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 
 ![GPX-1 Typical Application](images/gpx1_imx5_typical_app.svg)
 
+| Designator | Manufacturer | Part Number    | Description                      |
+| ---------- | ------------ | -------------- | -------------------------------- |
+| D1, D2     | Littlefuse   | PESD0402-140   | TVS DIODE 14VWM 40VC 0402        |
+| I1, I4     | Murata       | LQW15ANR12J00D | FIXED IND 120NH 110MA 2.66OHM SM |
+
 ![GPX-1 IMX-5 Layout](images/gpx1_imx5_layout_3d.png)
 
 ## Layout Guidance
