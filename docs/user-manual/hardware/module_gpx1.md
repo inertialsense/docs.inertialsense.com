@@ -32,7 +32,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 11,13,15,31,40 | GND                               | Power | Supply ground                                          |
 | 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-14V TVS diode for ESD and surge projection (e.g. Littlefuse PESD0402-140). |
 | 14 | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
-| 16 | VCC_RF | O | Supply output for GNSS active antenna.  Connect through 33nH inductor to GNSS1_RF and GNSS2_RF to inject DC supply for active antenna(s). |
+| 16 | VCC_RF | O | Supply output for GNSS active antenna.  Connect through 33-120nH inductor to GNSS1_RF and GNSS2_RF to inject DC supply for active antenna(s).  VCC_RF is supplied from VAUX through an onboard load switch. |
 | 20 | G20/LNA-EN | I/O | GPIO20 |
 | 21 | GNSS2_PPS | O | GNSS2 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 22   | nRESET                                        | I    | System reset on logic low. May be left unconnected if not used. |
