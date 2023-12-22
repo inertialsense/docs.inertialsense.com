@@ -2,7 +2,7 @@
 
 <center>
 
-![GPX-1](../images/GPX-1_500w.png)
+![GPX-1](../images/GPX-1_500w_both.png)
 
 </center>
 
@@ -29,10 +29,10 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY        | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
-| 11,13,15,31,40 | GND                               | Power | Supply ground                                          |
-| 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-12V TVS diode for ESD and surge projection. |
+| 11,13,15,31 | GND                               | Power | Supply ground                                          |
+| 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-14V TVS diode for ESD and surge projection (e.g. Littlefuse PESD0402-140). |
 | 14 | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
-| 16 | VCC_RF | O | Supply output for GNSS active antenna.  Connect through 33nH inductor to GNSS1_RF and GNSS2_RF to inject DC supply for active antenna(s). |
+| 16 | VCC_RF | O | Supply output for GNSS active antenna.  Connect VCC_RF through 33-120nH inductor (e.g. Murata LQW15ANR12J00D, 110mA max) to GNSS1_RF and GNSS2_RF to inject DC supply for active antenna(s).  VCC_RF is supplied from VAUX through an onboard load switch. |
 | 20 | G20/LNA-EN | I/O | GPIO20 |
 | 21 | GNSS2_PPS | O | GNSS2 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 22   | nRESET                                        | I    | System reset on logic low. May be left unconnected if not used. |
@@ -62,6 +62,11 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 ### Typical Application: GPX-1 IMX-5
 
 ![GPX-1 Typical Application](images/gpx1_imx5_typical_app.svg)
+
+| Designator | Manufacturer | Part Number    | Description                      |
+| ---------- | ------------ | -------------- | -------------------------------- |
+| D1, D2     | Littlefuse   | PESD0402-140   | TVS DIODE 14VWM 40VC 0402        |
+| I1, I4     | Murata       | LQW15ANR12J00D | FIXED IND 120NH 110MA 2.66OHM SM |
 
 ![GPX-1 IMX-5 Layout](images/gpx1_imx5_layout_3d.png)
 
