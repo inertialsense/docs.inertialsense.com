@@ -50,8 +50,7 @@ The Info Bar can be seen from any tab and shows basic connection information for
 ## Update Firmware
 
 1. Enter the Settings tab.
-1. Open the COM ports of the units you would like to update.
-	1. If the units don't open up, you may have to change the baud rate.
+1. Open the COM ports of the units you would like to update.  If the units don't open up, you may have to change the baud rate.
 1. Click "Update Firmware".
 1. Choose the firmware file by clicking on the ellipsis (three dots) button next to the file name and navigating to the directory where your .hex file is located. Select it and press "Open".
 1. Repeat for the bootloader .bin file or check the bootloader update "Skip" checkbox. The bootloader will only be updated if the unit has an older bootloader than the file provided.
