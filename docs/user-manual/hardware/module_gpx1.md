@@ -123,7 +123,7 @@ The GPS-1 modules are delivered in quantities of 100 pieces on a reel. -->
 
 ### Recommend PCB Footprint and Layout
 
-A single ceramic 100nF decoupling capacitor should be placed in close proximity between the Vcc and GND pins. It is recommended that this capacitor be on the same side of the PCB as the GPX and that there not be any vias between the capacitor and the Vcc and GND pins.
+A single ceramic 100nF decoupling capacitor should be placed between and in close proximity to the module pins 31 and 32 (GND and Vcc). It is recommended that this capacitor be on the same side of the PCB as the GPX and that there not be any vias between the capacitor and the Vcc and GND pins.
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-GPX-1.0_Dimensions_and_Pinout_GPX-1.pdf)
 
