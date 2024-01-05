@@ -18,7 +18,7 @@
     <embed src="https://docs.inertialsense.com/dimensions/IS-GPX-1.0_Dimensions_and_Pinout_GPX-1.pdf" type="application/pdf" />
 </object>
 
-### RUG-3-IMX-5
+### RUG-3-IMX-5-IMU
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-RUG-3.0-G0_Dimensions_and_Pinout_RUG-3-IMX-5.pdf)
 
