@@ -20,16 +20,19 @@ Inertial Sense SPI interface uses 5 lines to interface with other devices.
 | MOSI | SPI Master Out Slave In       |
 | DR   | SPI Data Ready Pin (optional) |
 
-### Hardware configuration
+### Hardware Configuration
 
-The Inertial Sense units operate as slave devices using SPI Mode 3:
+The IMX and GPX modules operate as SPI slave device using **SPI Mode 3**:
 
-| SPI Master Settings |                         |
+| SPI Settings        |                         |
 | ------------------- | ----------------------- |
-| Clock Polarity      | Idle High (CPOL = 1)    |
-| Clock Phase         | Falling Edge (CPHA = 1) |
-| Chip Select         | Active Low              |
-| Data Ready          | Active High             |
+| SPI Mode            | 3                       |
+| CPOL (Clock Polarity) | 1                |
+| CPHA (Clock Phase)  | 1               |
+| Clock Polarity in Idle State | Logic high    |
+| Clock Phase Used to Sample and/or Shift Data | Data sampled on the rising edge and shifted out on the falling edge. |
+| Chip Select         | Active low             |
+| Data Ready          | Active high            |
 
 ###  Data Transfer
 
