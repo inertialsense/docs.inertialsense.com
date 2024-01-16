@@ -22,7 +22,7 @@ Inertial Sense SPI interface uses 5 lines to interface with other devices.
 
 ### Hardware Configuration
 
-The IMX and GPX modules operate as SPI slave device using **SPI Mode 3**:
+The IMX and GPX modules operate as a SPI slave device using **SPI Mode 3**:
 
 | SPI Settings        |                         |
 | ------------------- | ----------------------- |
