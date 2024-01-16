@@ -92,7 +92,7 @@ The GPS-1 modules are delivered in quantities of 100 pieces on a reel. -->
 
 ### Recommend PCB Footprint and Layout
 
-A single ceramic 100nF decoupling capacitor should be placed in close proximity between the Vcc and GND pins. It is recommended that this capacitor be on the same side of the PCB as the IMX and that there not be any vias between the capacitor and the Vcc and GND pins. The default forward direction is indicated in the PCB footprint figure and on the IMX shield as the X axis. The forward direction is reconfigurable in software as necessary.
+A single ceramic 100nF decoupling capacitor should be placed between and in close proximity to the IMX pins 21 and 22 (GND and Vcc).  It is recommended that this capacitor be on the same side of the PCB as the IMX and that there not be any vias between the capacitor and the Vcc and GND pins. The default forward direction is indicated in the PCB footprint figure and on the IMX shield as the X axis. The forward direction is reconfigurable in software as necessary.
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout_IMX-5.pdf)
 
