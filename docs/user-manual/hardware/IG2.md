@@ -43,7 +43,7 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 | ![](../images/square-orange.png)14 | GPS.TIMEPULSE                              | O    | GPS PPS UTC time synchronization signal.                     |
 | 15                                 | GND                                        | I/O  | -                                                            |
 | 16                                 | VBAT                                       | I/O  | GPS backup supply voltage. (1.4V to 3.6V) enables GPS hardware backup mode for hot or warm startup (faster GPS lock acquisition). MUST connect GPS_VBAT to VCC if no backup battery is used. |
-| 17                                 | G10/CHIP_ERASE                             | I/O  | Leave unconnected. CHIP ERASE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will erase all IMX flash memory, including calibration data. |
+| 17                                 | G10/BOOT_MODE                              | I/O  | Leave unconnected. BOOT MODE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
 | 18                                 | G11                                        | I/O  | GPIO11                                                       |
 | 19                                 | G12                                        | I/O  | GPIO12<br/>GPS reset                                         |
 | 20                                 | G13/DRDY                                   | I/O  | GPIO13<br/>SPI data ready                                    |
