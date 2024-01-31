@@ -72,9 +72,7 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
     // Enable broadcasts of DID_INS_1 and DID_GPS_NAV
 	rmc.bits = RMC_BITS_INS1 | RMC_BITS_GPS1_POS;       
     // Remember configuration following reboot for automatic data streaming.
-	rmc.options = RMC_OPTIONS_PERSISTENT;				
-    // INS output data rate at 20Hz
-    rmc.insPeriodMs = 50;
+	rmc.options = RMC_OPTIONS_PERSISTENT;
 
 	int messageSize = is_comm_set_data(comm, DID_RMC, 0, sizeof(rmc_t), &rmc);
 	if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
@@ -82,6 +80,9 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
 		printf("Failed to encode and write RMC message\r\n");
 	}
 ```
+
+The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is required to apply the change).  Independently, the DID_INS_x broadcast period multiple can be used to set the output data rate down to 1ms.
+
 #### Persistent Messages
 
 The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot,  eliminating the need to re-enable messages following a reset or power cycle.  
