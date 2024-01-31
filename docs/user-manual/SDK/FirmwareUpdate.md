@@ -114,14 +114,27 @@ This [ISBootloaderExample](https://github.com/inertialsense/InertialSenseSDK/tre
    ``` bash
    ./ISBootloaderExample /dev/ttyUSB0 IS_uINS-3.hex bootloader-SAMx70.bin
    ```
-## Compile & Run (Windows MS Visual Studio)
+## Compile & Run (Windows Powershell)
+*Note - Install CMake for Windows natively, or install the CMake for Windows extension for Visual Studio
 
-1. [Install and Configure Visual Studio](../../software/SDK/#installing-and-configuring-visual-studio)
-2. Open Visual Studio solution file (InertialSenseSDK\ExampleProjects\Bootloader\VS_project\ISBootloaderExample.sln)
-3. Build (F7)
+1. Create build directory
+   ``` bash
+   cd InertialSenseSDK/ExampleProjects/IS_firmwareUpdate_v2
+   mkdir build
+   ```
+2. Run cmake from within build directory
+   ``` bash
+   cd build
+   cmake ..
+   ```
+3. Compile using make
+   ``` bash
+   cmake --build .
+   ```
+
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\ExampleProjects\Bootloader\VS_project\Release\ISBootloaderExample.exe COM3 IS_uINS-3.hex bootloader-SAMx70.bin
+   C:\InertialSenseSDK\ExampleProjects\IS_firmwareUpdate_v2\build\Release\ISBootloaderExample.exe COM3 IS_uINS-3.hex bootloader-SAMx70.bin
    ```
 
 ## Summary
