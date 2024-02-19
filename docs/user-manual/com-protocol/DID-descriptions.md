@@ -812,21 +812,8 @@ Set broadcast periods for NMEA messages
 
 | Field | Type | Description |
 |-------|------|-------------|
-| options | uint32_t | Options: Port selection[0x0=current, 0xFF=all, 0x1=ser0, 0x2=ser1, 0x4=ser2, 0x8=USB] (see RMC_OPTIONS_...) |
-| pimu | uint16_t | Broadcast period multiple - NMEA IMU data. 0 to disable. |
-| ppimu | uint16_t | Broadcast period multiple - NMEA preintegrated IMU: delta theta (rad) and delta velocity (m/s). 0 to disable. |
-| pins1 | uint16_t | Broadcast period multiple - NMEA INS output: euler rotation w/ respect to NED, NED position from reference LLA. 0 to disable. |
-| pins2 | uint16_t | Broadcast period multiple - NMEA INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. 0 to disable. |
-| pgpsp | uint16_t | Broadcast period multiple - NMEA GPS position data. 0 to disable. |
-| primu | uint16_t | Broadcast period multiple - NMEA Raw IMU data (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of pimu or ppimu as they are oversampled and contain less noise. 0 to disable. |
-| gga | uint16_t | Broadcast period multiple - NMEA standard GGA GNSS 3D location, fix, and accuracy. 0 to disable. |
-| gll | uint16_t | Broadcast period multiple - NMEA standard GLL GNSS 2D location and time. 0 to disable. |
-| gsa | uint16_t | Broadcast period multiple - NMEA standard GSA GNSS DOP and active satellites. 0 to disable. |
-| rmc | uint16_t | Broadcast period multiple - NMEA standard recommended minimum specific GPS/Transit data. 0 to disable. |
-| zda | uint16_t | Broadcast period multiple - NMEA standard Data and Time. 0 to disable. |
-| pashr | uint16_t | Broadcast period multiple - NMEA standard Inertial Attitude Data. 0 to disable. |
-| gsv | uint16_t | Broadcast period multiple - NMEA standard satelliate information. |
-| vtg | uint16_t | Broadcast period multiple - NMEA track made good and speed over ground. |
+| options | uint32_t | Options: Port selection[0x0=current, 0x1=ser0, 0x2=ser1, 0x4=ser2, 0x8=USB, 0x100=preserve, 0x200=Persistant] (see RMC_OPTIONS_...) |
+| msgCount | uint8_t | The number of messages being set in this message |
 
 
 #### DID_RMC
@@ -1241,7 +1228,7 @@ Manufacturing info
 | serialNumber | uint32_t | Inertial Sense serial number |
 | lotNumber | uint32_t | Inertial Sense lot number |
 | date | char[16] | Inertial Sense manufacturing date (YYYYMMDDHHMMSS) |
-| key | uint32_t | Key - write: unlock manufacting info, read: number of times OTP has been set, 15 max |
+| key | uint32_t | Key - write: unlock manufacturing info, read: number of times OTP has been set, 15 max |
 | platformType | int32_t | Platform / carrier board (ePlatformConfig::PLATFORM_CFG_TYPE_MASK).  Only valid if greater than zero. |
 | uid | uint32_t[4] | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
 
@@ -1605,8 +1592,8 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_ACC_FS_4G | 0x00000001 |
 | SENSOR_CFG_ACC_FS_8G | 0x00000002 |
 | SENSOR_CFG_ACC_FS_16G | 0x00000003 |
-| SENSOR_CFG_ACC_FS_MASK | 0x00000018 |
-| SENSOR_CFG_ACC_FS_OFFSET |  (int)3 |
+| SENSOR_CFG_ACC_FS_MASK | 0x00000030 |
+| SENSOR_CFG_ACC_FS_OFFSET |  (int)4 |
 | SENSOR_CFG_GYR_DLPF_250HZ | 0x00000000 |
 | SENSOR_CFG_GYR_DLPF_184HZ | 0x00000001 |
 | SENSOR_CFG_GYR_DLPF_92HZ | 0x00000002 |
@@ -1701,6 +1688,7 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_MANF_FACTORY_RESET | 1357924680 |
 | SYS_CMD_MANF_CHIP_ERASE | 1357924681 |
 | SYS_CMD_MANF_DOWNGRADE_CALIBRATION | 1357924682 |
+| SYS_CMD_MANF_ENABLE_ROM_BOOTLOADER | 1357924683 |
 
 
 #### DID_SYS_PARAMS.genFaultCode
@@ -1890,11 +1878,12 @@ System status and configuration is made available through various enumeration an
 | INS_STATUS_SOLUTION_OFFSET | 16 |
 | INS_STATUS_SOLUTION_OFF | 0 |
 | INS_STATUS_SOLUTION_ALIGNING | 1 |
-| INS_STATUS_SOLUTION_ALIGNMENT_COMPLETE | 2 |
 | INS_STATUS_SOLUTION_NAV | 3 |
 | INS_STATUS_SOLUTION_NAV_HIGH_VARIANCE | 4 |
 | INS_STATUS_SOLUTION_AHRS | 5 |
 | INS_STATUS_SOLUTION_AHRS_HIGH_VARIANCE | 6 |
+| INS_STATUS_SOLUTION_VRS | 7 |
+| INS_STATUS_SOLUTION_VRS_HIGH_VARIANCE | 8 |
 | INS_STATUS_RTK_COMPASSING_BASELINE_UNSET | 0x00100000 |
 | INS_STATUS_RTK_COMPASSING_BASELINE_BAD | 0x00200000 |
 | INS_STATUS_RTK_COMPASSING_MASK | (INS_STATUS_RTK_COMPASSING_BASELINE_UNSET\|INS_STATUS_RTK_COMPASSING_BASELINE_BAD\) |
