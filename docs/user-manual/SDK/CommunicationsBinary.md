@@ -195,14 +195,27 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
    ``` bash
    ./ISCommunicationsExample /dev/ttyUSB0
    ```
-## Compile & Run (Windows MS Visual Studio)
+## Compile & Run (Windows Powershell)
+*Note - Install CMake for Windows natively, or install the CMake for Windows extension for Visual Studio
 
-1. [Install and Configure Visual Studio](../../software/SDK/#installing-and-configuring-visual-studio)
-2. Open Visual Studio solution file (InertialSenseSDK\ExampleProjects\Communications\VS_project\ISCommunicationsExample.sln)
-3. Build (F7)
+1. Create build directory
+   ``` bash
+   cd InertialSenseSDK/ExampleProjects/Communications
+   mkdir build
+   ```
+2. Run cmake from within build directory
+   ``` bash
+   cd build
+   cmake ..
+   ```
+3. Compile using make
+   ``` bash
+   cmake --build .
+   ```
+
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\ExampleProjects\Communications\VS_project\Release\ISCommunicationsExample.exe COM3
+   C:\InertialSenseSDK\ExampleProjects\Communications\build\Release\ISCommunicationsExample.exe COM3
    ```
 
 ## Summary

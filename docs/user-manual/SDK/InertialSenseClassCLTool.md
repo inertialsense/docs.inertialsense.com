@@ -153,13 +153,27 @@ if (!cltool_setupLogger(inertialSenseInterface))
    ./cltool
    ```
 
-## Compile & Run (Windows MS Visual Studio)
-1. [Install and Configure Visual Studio](../../software/SDK/#installing-and-configuring-visual-studio)
-2. Open Visual Studio solution file (InertialSenseSDK/cltool/VS_project/cltool.sln)
-3. Build (F7)
+## Compile & Run (Windows Powershell)
+*Note - Install CMake for Windows natively, or install the CMake for Windows extension for Visual Studio
+
+1. Create build directory
+   ``` bash
+   cd InertialSenseSDK/cltool
+   mkdir build
+   ```
+2. Run cmake from within build directory
+   ``` bash
+   cd build
+   cmake ..
+   ```
+3. Compile using make
+   ``` bash
+   cmake --build .
+   ```
+
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\cltool\VS_project\Release\cltool.exe
+   C:\InertialSenseSDK\cltool\build\Release\cltool.exe
    ```
 
 
