@@ -14,25 +14,30 @@ The EvalTool Windows desktop app installer (.exe) can be downloaded from the [In
 
 With a device connected to your computer:
 
-1. Connect your INS to your computer using directions in the [getting started](../../../getting-started/getting-started) section of this guide
-1. Open the “Settings” tab -> "Serial Ports" tab
-1. Click, “Find Devices”
-1. Ensure that the checkbox under “Open” is selected for your unit
-1. Wait until the box under “Port” turns green and shows a com-port number
-1. You can select a specific baud-rate for data transmission on this same tab. This is done in the drop-down menu shown at the top-middle of the page.
+1. Connect your INS to your computer using directions in the [getting started](../../../getting-started/getting-started) section of this guide.
+1. Open the **Settings** > **Serial Ports** tab.
+1. Click the **Find All** button.
+1. Open the port to your device by checking the **Open** checkbox.
+1. The status box in the **Port** column will turn green and the **Link** status bar will turn green while data is being received from the device.
+1. You can specify the serial port baud rate using the **Baud Rate** dropdown menu when using a serial interface like RS232. 
 
 #### Data Logging Steps
 
 In order to log data from your INS device, follow the steps listed below:
 
-1. Make sure your unit is connected to the EvalTool and the port is open.
-2. Open the “Data Logs” tab.
-3. Select “Open Folder” to verify that the log will be saved in your desired location.
-4. Change the selection in “Format:” to your desired file format (.dat .csv .sdat etc..)
-5. Change the selection in “Data Streams” to the data that you would like collected.
-6. Press “Enable” in "Data Log" when you are ready to record the data.
-7. The data you are currently recording will be shown in the “Log Summary” sub-tab.
-8. When you are finished recording data, press “Disable”. Your data will be saved in the location shown in “Open Folder”.
+1. Connected your device to the EvalTool and open the port.
+2. Go to the **Data Logs** tab.
+3. Enable the data that you would like collected in the **Data Streams** area:
+   1. Select one of the **RMC Preset** menu options.  This automatically enables standard messages commonly used for logging.  **PPD** (Post Processed Data) is the recommended default.
+   2. Enable any of the **DID** messages listed below by checking the **On** checkbox and setting the **Period Mult**.  
+
+4. Configure and enable logging in the **Data Log** area: 
+   1. The **Open Folder** button opens the log directory in a file explorer window where logs are saved.  
+   2. The **Format** dropdown menu selects the output log file format (.dat .sdat .csv .kml .raw).
+   3. Press **Log** to start recording a new log.
+
+5. The data you are currently recording will be shown in the “Log Summary” sub-tab.
+6. When you are finished recording data, press “Disable”. Your data will be saved in the location shown in “Open Folder”.
 
 
 
