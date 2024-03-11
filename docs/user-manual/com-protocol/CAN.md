@@ -310,11 +310,24 @@ GPS CNO Mean and GPS status flags
 | status  | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
 | cnoMean | uint32_t | (dBHz) Average of all satellite carrier to noise ratios (signal strengths) that are non-zero |
 
-#### CID_GPS1_RTK_REL
+#### CID_GPS1_RTK_POS_REL
 
 `is_can_gps_rtk_rel`
 
-RTK-GPS performance metrics
+RTK-GPS positioning performance metrics
+
+| Type            | Field   | Description                                                  |
+| --------------- | ------- | ------------------------------------------------------------ |
+| arRatio         | uint8_t | Ambiguity resolution ratio factor for validation             |
+| differentialAge | uint8_t | Age of differential (seconds)                                |
+| distanceToBase  | float   | Distance to Base (m)                                         |
+| headingToBase   | int16_t | Angle from north to vectorToBase in local tangent plane. (rad, scaled by 1000) |
+
+#### CID_GPS2_RTK_CMP_REL
+
+`is_can_gps_rtk_rel`
+
+RTK-GPS compassing performance metrics
 
 | Type            | Field   | Description                                                  |
 | --------------- | ------- | ------------------------------------------------------------ |
