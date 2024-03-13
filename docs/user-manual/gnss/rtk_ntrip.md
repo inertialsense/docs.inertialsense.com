@@ -18,16 +18,12 @@ The EvalTool/CLTool software applications provide NTRIP client functionality to 
 
 The NTRIP server must provide the necessary subset of [RTCM3 messages](../multi_band_gnss/#zed-f9-rover-messages) supported by the IMX-RTK.  The following is an example of compatible RTCM3 base output messages provided from a Trimble NTRIP RTK base station.
 
-| Message Type | Period (sec) | Description                           |
-| ---- | ------------ | ------------------------------------- |
-| RTCM 1005 | 5            | Stationary RTK reference station ARP  |
-| RTCM 1007 | 5            | Antenna Descriptor                    |
-| RTCM 1030 | 3            | GPS Network RTK Residual              |
-| RTCM 1031 | 3            | GLONASS Network RTK Residual          |
-| RTCM 1032 | 1            | Physical Reference Station Position   |
-| RTCM 1033 | 5            | Receiver and Antenna Descriptors      |
-| RTCM 1075 | 1            | GPS MSM5                              |
-| RTCM 1085 | 1            | GLONASS MSM5                          |
-| RTCM 1095 | 1            | Galileo MSM5                          |
-| RTCM 1230 | 5            | GLONASS code-phase biases             |
-| RTCM 4094 | 5            | Assigned to : Trimble Navigation Ltd. |
+### Required RTCM Messages for RTK Positioning
+
+| Message Type | Description                           |
+| ---- | ------------------------------------- |
+| RTCM 1005 | Stationary RTK reference station ARP  |
+| RTCM 1074, 1075, or 1077 | GPS MSM4, MSM5, or MSM7        |
+| RTCM 1084, 1085, or 1087 | GLONASS MSM4, MSM5, or MSM7     |
+| RTCM 1094, 1095, or 1097 | Galileo MSM4, MSM5, or MSM7          |
+| RTCM 1230 | GLONASS code-phase biases             |
