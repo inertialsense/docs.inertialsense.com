@@ -13,7 +13,7 @@ The `is_comm_set_data()` function will encode a message used to set data or conf
 ```c++
 // Set INS output Euler rotation in radians to 90 degrees roll for mounting
 float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-int messageSize = is_comm_set_data(comm, DID_FLASH_CONFIG, offsetof(nvm_flash_cfg_t, insRotation), sizeof(float) * 3, rotation);
+int messageSize = is_comm_set_data(comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
 if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 {
 	printf("Failed to encode and write set INS rotation\r\n");
@@ -26,7 +26,7 @@ Data broadcasting or streaming is enabled by using the Realtime Message Controll
 
 #### Get Data Command
 
-The `is_comm_get_data()` function will encode a PID_GET_DATA message that enables broadcast of a given message at a multiple of the [*Data Source Update Rates*](#data-source-update-rates).  Set the data rate (period multiple) to zero disable message broadcast and pull a single packet of data.  Set the data size and offset to zero to request the entire data set.
+The `is_comm_get_data()` function will encode a PKT_TYPE_GET_DATA message that enables broadcast of a given message at a multiple of the [*Data Source Update Rates*](#data-source-update-rates).  Set the data rate (period multiple) to zero disable message broadcast and pull a single packet of data.  Set the data size and offset to zero to request the entire data set.
 
 ```c++
 // Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
@@ -74,7 +74,7 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
     // Remember configuration following reboot for automatic data streaming.
 	rmc.options = RMC_OPTIONS_PERSISTENT;
 
-	int messageSize = is_comm_set_data(comm, DID_RMC, 0, sizeof(rmc_t), &rmc);
+	int messageSize = is_comm_set_data(comm, DID_RMC, 0, 0, &rmc);
 	if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 	{
 		printf("Failed to encode and write RMC message\r\n");
@@ -206,7 +206,7 @@ Figure 1 – Packet Structure
 <p style="text-align: center;">
 <span style="color:grey">
 <i>
-Figure 2 – PID_GET_DATA Packet
+Figure 2 – PKT_TYPE_GET_DATA Packet
 </i>
 </span>
 </p>
@@ -216,13 +216,13 @@ Figure 2 – PID_GET_DATA Packet
 <p style="text-align: center;">
 <span style="color:grey">
 <i>
-Figure 3 – PID_SET_DATA and PID_DATA Packet
+Figure 3 – PKT_TYPE_SET_DATA and PKT_TYPE_DATA Packet
 </i>
 </span>
 </p>
 
-The format of the packet data is determined by the packet identifier. For a data packet (PID_DATA (4) or
-PID_SET_DATA (5)) the first 12 bytes are always the data identifier (4 byte int), the offset into the data (4 byte int), and the length of data (4 byte int, not including the 12 bytes or packet header / footer).
+The format of the packet data is determined by the packet identifier. For a data packet (PKT_TYPE_DATA (4) or
+PKT_TYPE_SET_DATA (5)) the first 12 bytes are always the data identifier (4 byte int), the offset into the data (4 byte int), and the length of data (4 byte int, not including the 12 bytes or packet header / footer).
 
 
 **Packet footer (4 bytes)**<br>

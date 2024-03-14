@@ -47,41 +47,13 @@ The following NMEA messages can be received by the IMX.
 
 | Message                     | Description                                                       |
 | --------------------------- | ------------------------------------------------------------------|
-| ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.                 |
-| [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.  (_Outdated. Use [ASCE](#asce) instead._)               |
+| ```$ASCE*14\r\n```          | Query the broadcast rate of NMEA output messages.                 |
 | [ASCE](#asce)               | Set the broadcast period of selected NMEA output messages.        |
 | ```$INFO*0E\r\n```          | Query device information.                                         |
 | ```$SRST*06\r\n```          | Software reset.                                                   |
 | [```$PERS*14\r\n```](#pers) | Save persistent messages to flash.                                |
 | [```$STPB*15\r\n```](#stpb) | Stop broadcast of all messages (NMEA and binary) on all ports.    |
 | [```$STPC*14\r\n```](#stpc) | Stop broadcast of all messages (NMEA and binary) on current port. |
-
-### ASCB
-
-(_ASCB is outdated and [ASCE](#asce) is recommended for use instead._)  
-Enable NMEA message and set broadcast periods.  The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum.  Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming.  Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](../binary/#data-source-update-rates)
-
-```
-$ASCB,options,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
-```
-
-| Index | Field           | Description                                                  |
-| ----- | --------------- | ------------------------------------------------------------ |
-| 1     | options         | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-| 2     | [PIMU](#pimu)   | Broadcast period multiple for PIMU IMU message.              |
-| 3     | [PPIMU](#ppimu) | Broadcast period multiple for PPIMU preintegrated IMU message. |
-| 4     | [PINS1](#pins1) | Broadcast period multiple for PINS1 INS output (euler, NED) message. |
-| 5     | [PINS2](#pins2) | Broadcast period multiple for PINS2 INS output (quaternion, LLA) message. |
-| 6     | [PGPSP](#pgpsp) | Broadcast period multiple for PGPSP GPS position message.    |
-| 7     | [PRIMU](#primu) | Broadcast period multiple for PRIMU Raw IMU message.         |
-| 8     | [GGA](#gga)     | Broadcast period multiple for NMEA standard GGA (fix, 3D location, and accuracy) message. |
-| 9     | [GLL](#gll)     | Broadcast period multiple for NMEA standard GLL (2D location and time) message. |
-| 10    | [GSA](#gsa)     | Broadcast period multiple for NMEA standard GSA (DOP and active satellites) message. |
-| 11    | [RMC](#rmc)     | Broadcast period multiple for NMEA standard RMC (minimum specific GPS/Transit) message. |
-| 12    | [ZDA](#zda)     | Broadcast period multiple for NMEA standard ZDA (UTC Time/Date) message. |
-| 13    | [PASHR](#pashr) | Broadcast period multiple for NMEA standard PASHR (euler) message.    |
-| 14    | [GxGSV](#gsv)   | Broadcast period multiple for NMEA standard GSV satellite info (all active constellations sent with corresponding talker IDs). |
-| 15    | [VTG](#vtg)     | Broadcast period multiple for NMEA standard VTG track made good and speed over ground. | 
 
 ### ASCE
 
@@ -168,7 +140,7 @@ The following NMEA messages can be sent by the IMX.  The message ID is used with
 
 | Message         | ID | Description                                                  |
 | --------------- | -- | ------------------------------------------------------------ |
-| [ASCB](#ascb)   |    | Broadcast period of NMEA output messages.                |
+| [ASCE](#asce)   |    | Broadcast period of NMEA output messages.                |
 | [PIMU](#pimu)   | 0  | IMU data (3-axis gyros and accelerometers) in the body frame. |
 | [PPIMU](#ppimu) | 1  | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
 | [PRIMU](#primu) | 2  | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
@@ -651,7 +623,7 @@ $STPB*15
 **Stop all streams on ALL ports**
 
 ```
-$ASCB,255,0,0,0,0,0,0,0,0,0,0,0,0*0D
+$STPC*14
 ```
 
 **Query device version information**
@@ -666,16 +638,16 @@ Response:
 $INFO,30612,3.1.2.0,1.7.0.0,3522,1.2.74.7,6275,Inertial Sense INC,0018-10-16,23:20:38.41,INL2*58
 ```
 
-**Stream INS1 @25Hz on port 0**
+**Stream INS1 @5Hz on port 0**
 
 ```
-$ASCB,1,,,40,,,,,,,,,*0A
+$ASCE,1,3,1*0B
 ```
 
-**Stream INS1 @10Hz on current port**
+**Stream INS1 @400ms on current port**
 
 ```
-$ASCB,0,,,100,,,,,,,,,*3E
+$ASCE,0,3,2*09
 ```
 
 Response:
@@ -686,10 +658,10 @@ $PINS1,244272.498,2021,427888998,805306448,0.0469,-0.3830,-0.0902,0.232,-0.081,-
 $PINS1,244272.598,2021,427888998,805306448,0.0469,-0.3830,-0.0902,0.232,-0.081,-0.089,40.05575022,-111.65861562,1438.449,-1.587,-5.070,-9.695*1e
 ```
 
-**Stream INS1 @50Hz on serial port 1**
+**Stream INS1 @600ms on serial port 1**
 
 ```
-$ASCB,2,,,20,,,,,,,,,*0F
+$ASCE,2,3,3*0A
 ```
 
 Response:
@@ -700,10 +672,10 @@ $PINS1,256270.647,2021,427888998,1073741912,0.1153,-0.1473,-0.1632,0.001,0.001,0
 $PINS1,256270.667,2021,427888998,1073741912,0.1153,-0.1473,-0.1631,0.001,0.001,0.003,40.05569486,-111.65864500,1416.220,-7.738,-7.570,12.534*38
 ```
 
-**Stream PIMU @50Hz and GGA @5Hz on current port**
+**Stream PIMU @400ms and GGA @5Hz on current port**
 
 ```
-$ASCB,0,20,0,0,0,0,0,200,0,0,0,0,0*3F
+$ASCE,0,6,1,0,2*0D
 ```
 
 Response:
@@ -711,18 +683,11 @@ Response:
 ```
 $PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069,-1.433,-1.072,-9.585*1f
 $GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.16,M,18.82,M,,*59
-$PIMU,3218.563,0.0022,-0.0057,-0.0091,-1.416,-1.123,-9.512,0.0061,0.0035,-0.0068,-1.430,-1.091,-9.563*19
-$PIMU,3218.583,0.0007,-0.0059,-0.0081,-1.420,-1.125,-9.508,0.0056,0.0047,-0.0086,-1.432,-1.078,-9.591*1e
-$PIMU,3218.603,0.0015,-0.0062,-0.0077,-1.419,-1.130,-9.499,0.0069,0.0044,-0.0066,-1.434,-1.079,-9.579*10
-$PIMU,3218.623,-0.0001,-0.0052,-0.0097,-1.413,-1.123,-9.529,0.0066,0.0047,-0.0072,-1.427,-1.085,-9.593*39
-$PIMU,3218.643,0.0012,-0.0060,-0.0080,-1.423,-1.122,-9.508,0.0071,0.0047,-0.0070,-1.425,-1.083,-9.563*19
-$PIMU,3218.663,-0.0004,-0.0065,-0.0088,-1.413,-1.118,-9.540,0.0057,0.0029,-0.0059,-1.430,-1.082,-9.604*3a
-$PIMU,3218.683,-0.0001,-0.0064,-0.0096,-1.418,-1.121,-9.511,0.0059,0.0033,-0.0070,-1.431,-1.084,-9.585*39
-$PIMU,3218.703,0.0007,-0.0055,-0.0079,-1.417,-1.128,-9.497,0.0046,0.0043,-0.0077,-1.428,-1.085,-9.565*18
-$PIMU,3218.723,0.0024,-0.0054,-0.0085,-1.416,-1.106,-9.510,0.0051,0.0033,-0.0079,-1.429,-1.089,-9.588*1b
-$PIMU,3218.743,0.0019,-0.0058,-0.0081,-1.430,-1.126,-9.533,0.0063,0.0032,-0.0073,-1.435,-1.093,-9.585*1d
 $GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.19,M,18.82,M,,*56
 $PIMU,3218.763,0.0019,-0.0062,-0.0086,-1.426,-1.114,-9.509,0.0054,0.0029,-0.0070,-1.431,-1.085,-9.579*13
+$GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.16,M,18.82,M,,*59
+$GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.19,M,18.82,M,,*56
+$PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069,-1.433,-1.072,-9.585*1f
 ```
 
 

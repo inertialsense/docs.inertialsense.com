@@ -188,7 +188,32 @@ System sensor information
 
 #### DID_GPS1_POS
 
-GPS 1 position data.  This comes from DID_GPS1_UBX_POS or DID_GPS1_RTK_POS, depending on whichever is more accurate. 
+GPS 1 position data.  This comes from DID_GPS1_RCVR_POS or DID_GPS1_RTK_POS, depending on whichever is more accurate. 
+
+`gps_pos_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| ecef | double[3] | Position in ECEF {x,y,z} (m) |
+| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
+| hMSL | float | Height above mean sea level (MSL) in meters |
+| hAcc | float | Horizontal accuracy in meters |
+| vAcc | float | Vertical accuracy in meters |
+| pDop | float | Position dilution of precision (unitless) |
+| cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
+| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
+| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
+| satsUsed | uint8_t | Number of satellites used |
+| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
+| reserved | uint8_t | Reserved for future use |
+
+
+#### DID_GPS1_RCVR_POS
+
+GPS 1 position data from GNSS receiver. 
 
 `gps_pos_t`
 
@@ -310,31 +335,6 @@ GPS 1 GNSS satellite information: sat identifiers, carrier to noise ratio, eleva
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSats | uint32_t | Number of satellites in the sky |
 | sat | gps_sat_sv_t[50] | Satellite information list |
-
-
-#### DID_GPS1_UBX_POS
-
-GPS 1 position data from ublox receiver. 
-
-`gps_pos_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| week | uint32_t | GPS number of weeks since January 6th, 1980 |
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
-| ecef | double[3] | Position in ECEF {x,y,z} (m) |
-| lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
-| hMSL | float | Height above mean sea level (MSL) in meters |
-| hAcc | float | Horizontal accuracy in meters |
-| vAcc | float | Vertical accuracy in meters |
-| pDop | float | Position dilution of precision (unitless) |
-| cnoMean | float | Average of all non-zero satellite carrier to noise ratios (signal strengths) in dBHz |
-| towOffset | double | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
-| leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
-| satsUsed | uint8_t | Number of satellites used |
-| cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
-| reserved | uint8_t | Reserved for future use |
 
 
 #### DID_GPS1_VEL
@@ -526,7 +526,7 @@ RTK options - requires little endian CPU.
 | intpref | int32_t | interpolate reference obs (for post mission) |
 | rovpos | int32_t | rover position for fixed mode |
 | refpos | int32_t | base position for relative mode |
-| eratio | double[1] | code/phase error ratio |
+| eratio | double[] | code/phase error ratio |
 | err | double[5] | measurement error factor |
 | std | double[3] | initial-state std [0]bias,[1]iono [2]trop |
 | prn | double[6] | process-noise std [0]bias,[1]iono [2]trop [3]acch [4]accv [5] pos |
@@ -535,18 +535,18 @@ RTK options - requires little endian CPU.
 | elmaskar | double | elevation mask of AR for rising satellite (rad) |
 | elmaskhold | double | elevation mask to hold ambiguity (rad) |
 | thresslip | double | slip threshold of geometry-free phase (m) |
-| varholdamb | double | variance for fix-and-hold pseudo measurements (cycle^2) |
-| gainholdamb | double | gain used for GLO and SBAS sats to adjust ambiguity |
-| maxtdiff | double | max difference of time (sec) |
-| fix_reset_base_msgs | int | reset sat biases after this long trying to get fix if not acquired |
-| maxinnocode | double | reject threshold of NIS |
-| maxinnophase | double | reject threshold of gdop |
-| maxnis | double | baseline length constraint {const,sigma before fix, sigma after fix} (m) |
-| maxgdop | double | maximum error wrt ubx position (triggers reset if more than this far) (m) |
-| baseline | double[3] | rover position for fixed mode {x,y,z} (ecef) (m) |
-| max_baseline_error | double | base position for relative mode {x,y,z} (ecef) (m) |
-| reset_baseline_error | double | max averaging epochs |
-| max_ubx_error | float | output single by dgps/float/fix/ppp outage |
+| thresdop | double | variance for fix-and-hold pseudo measurements (cycle^2) |
+| varholdamb | double | gain used for GLO and SBAS sats to adjust ambiguity |
+| gainholdamb | double | max difference of time (sec) |
+| maxtdiff | double | reset sat biases after this long trying to get fix if not acquired |
+| fix_reset_base_msgs | int | reject thresholds of NIS |
+| maxinno | double[2] | reject threshold of gdop |
+| maxnis_lo | double | baseline length constraint {const,sigma before fix, sigma after fix} (m) |
+| maxnis_hi | double | maximum error wrt ubx position (triggers reset if more than this far) (m) |
+| maxgdop | double | rover position for fixed mode {x,y,z} (ecef) (m) |
+| baseline | double[3] | base position for relative mode {x,y,z} (ecef) (m) |
+| max_baseline_error | double | max averaging epochs |
+| reset_baseline_error | double | output single by dgps/float/fix/ppp outage |
 
 
 ### Raw GPS Data
@@ -703,26 +703,6 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 | stationId | int32_t | station id |
 
 
-#### Observation Data
-
-`obsd_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| time | gtime_t | Receiver local time approximately aligned to the GPS time system (GPST) |
-| sat | uint8_t | Satellite number in RTKlib notation.  GPS: 1-32, GLONASS: 33-59, Galilleo: 60-89, SBAS: 90-95 |
-| rcv | uint8_t | receiver number |
-| SNR | uint8_t[1] | Cno, carrier-to-noise density ratio (signal strength) (0.25 dB-Hz) |
-| LLI | uint8_t[1] | Loss of Lock Indicator. Set to non-zero values only when carrier-phase is valid (L > 0).  bit1 = loss-of-lock, bit2 = half-cycle-invalid |
-| code | uint8_t[1] | Code indicator: CODE_L1C (1) = L1C/A,G1C/A,E1C (GPS,GLO,GAL,QZS,SBS), CODE_L1X (12) = E1B+C,L1C(D+P) (GAL,QZS), CODE_L1I (47) = B1I (BeiDou) |
-| qualL | uint8_t[1] | Estimated carrier phase measurement standard deviation (0.004 cycles), zero means invalid |
-| qualP | uint8_t[1] | Estimated pseudorange measurement standard deviation (0.01 m), zero means invalid |
-| reserved | uint8_t | reserved, for alignment |
-| L | double[1] | Observation data carrier-phase (cycle). The carrier phase initial ambiguity is initialized using an approximate value to make the magnitude of the phase close to the pseudorange measurement. Clock resets are applied to both phase and code measurements in accordance with the RINEX specification. |
-| P | double[1] | Observation data pseudorange (m). GLONASS inter frequency channel delays are compensated with an internal calibration table |
-| D | float[1] | Observation data Doppler measurement (positive sign for approaching satellites) (Hz) |
-
-
 #### Satellite Observation
 
 `obs_t`
@@ -778,7 +758,7 @@ Flash memory configuration
 | insRotation | float[3] | Rotation in radians about the X,Y,Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z,Y,X. |
 | insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
 | gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
-| insDynModel | uint8_t | INS dynamic platform model (see eInsDynModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
+| dynamicModel | uint8_t | INS dynamic platform model (see eDynamicModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
 | debug | uint8_t | Debug |
 | gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
 | sysCfgBits | uint32_t | System configuration bits (see eSysConfigBits). |
@@ -789,7 +769,7 @@ Flash memory configuration
 | lastLlaUpdateDistance | float | Distance between current and last LLA that triggers an update of lastLla  |
 | ioConfig | uint32_t | Hardware interface configuration bits (see eIoConfig). |
 | platformConfig | uint32_t | Hardware platform specifying the IMX carrier board type (i.e. RUG, EVB, IG) and configuration bits (see ePlatformConfig).  The platform type is used to simplify the GPS and I/O configuration process.  |
-| gps2AntOffset | float[3] | X,Y,Z offset in meters from DOD_ Frame origin to GPS 2 antenna. |
+| gps2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame origin to GPS 2 antenna. |
 | zeroVelRotation | float[3] | Euler (roll, pitch, yaw) rotation in radians from INS Sensor Frame to Intermediate ZeroVelocity Frame.  Order applied: heading, pitch, roll. |
 | zeroVelOffset | float[3] | X,Y,Z offset in meters from Intermediate ZeroVelocity Frame to Zero Velocity Frame. |
 | gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
@@ -950,9 +930,16 @@ Device information
 | protocolVer | uint8_t[4] | Communications protocol version |
 | repoRevision | uint32_t | Repository revision number |
 | manufacturer | char[24] | Manufacturer name |
-| buildDate | uint8_t[4] | Build date, little endian order: [0] = status ('r'=release, 'd'=debug), [1] = year-2000, [2] = month, [3] = day.  Reversed byte order for big endian systems |
-| buildTime | uint8_t[4] | Build date, little endian order: [0] = hour, [1] = minute, [2] = second, [3] = millisecond.  Reversed byte order for big endian systems |
+| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=debug) |
+| buildYear | uint8_t | Build date year - 2000 |
+| buildMonth | uint8_t | Build date month |
+| buildDay | uint8_t | Build date day |
+| buildHour | uint8_t | Build time hour |
+| buildMinute | uint8_t | Build time minute |
+| buildSecond | uint8_t | Build time second |
+| buildMillisecond | uint8_t | Build time millisecond |
 | addInfo | char[24] | Additional info |
+| firmwareMD5Hash | uint32_t[4] | Firmware MD5 hash |
 
 
 #### DID_DIAGNOSTIC_MESSAGE
@@ -995,9 +982,16 @@ EVB device information
 | protocolVer | uint8_t[4] | Communications protocol version |
 | repoRevision | uint32_t | Repository revision number |
 | manufacturer | char[24] | Manufacturer name |
-| buildDate | uint8_t[4] | Build date, little endian order: [0] = status ('r'=release, 'd'=debug), [1] = year-2000, [2] = month, [3] = day.  Reversed byte order for big endian systems |
-| buildTime | uint8_t[4] | Build date, little endian order: [0] = hour, [1] = minute, [2] = second, [3] = millisecond.  Reversed byte order for big endian systems |
+| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=debug) |
+| buildYear | uint8_t | Build date year - 2000 |
+| buildMonth | uint8_t | Build date month |
+| buildDay | uint8_t | Build date day |
+| buildHour | uint8_t | Build time hour |
+| buildMinute | uint8_t | Build time minute |
+| buildSecond | uint8_t | Build time second |
+| buildMillisecond | uint8_t | Build time millisecond |
 | addInfo | char[24] | Additional info |
+| firmwareMD5Hash | uint32_t[4] | Firmware MD5 hash |
 
 
 #### DID_EVB_RTOS_INFO
@@ -1048,6 +1042,129 @@ GPS 2 GNSS signal information.
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSigs | uint32_t | Number of satellite signals in the following satelliate signal list |
 | sig | gps_sig_sv_t[100] | Satellite signal list |
+
+
+#### DID_GPX_BIT
+
+GPX BIT test 
+
+`GPX_bit_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| results | uint32_t | Calibration BIT status (see eCalBitStatusFlags) |
+| command | uint8_t | Command   |
+| port | uint8_t | Built-in self-test state |
+
+
+#### DID_GPX_DEBUG_ARRAY
+
+GPX debug 
+
+`debug_array_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+
+
+#### DID_GPX_DEV_INFO
+
+GPX device information 
+
+`dev_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| reserved | uint16_t | Reserved bits |
+| hardware | uint16_t | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eDevInfoHardware) |
+| serialNumber | uint32_t | Serial number |
+| hardwareVer | uint8_t[4] | Hardware version |
+| firmwareVer | uint8_t[4] | Firmware (software) version |
+| buildNumber | uint32_t | Build number |
+| protocolVer | uint8_t[4] | Communications protocol version |
+| repoRevision | uint32_t | Repository revision number |
+| manufacturer | char[24] | Manufacturer name |
+| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=debug) |
+| buildYear | uint8_t | Build date year - 2000 |
+| buildMonth | uint8_t | Build date month |
+| buildDay | uint8_t | Build date day |
+| buildHour | uint8_t | Build time hour |
+| buildMinute | uint8_t | Build time minute |
+| buildSecond | uint8_t | Build time second |
+| buildMillisecond | uint8_t | Build time millisecond |
+| addInfo | char[24] | Additional info |
+| firmwareMD5Hash | uint32_t[4] | Firmware MD5 hash |
+
+
+#### DID_GPX_FLASH_CFG
+
+GPX flash configuration 
+
+`gpx_flash_cfg_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| size | uint32_t | Size of this struct |
+| checksum | uint32_t | Checksum, excluding size and checksum |
+| key | uint32_t | Manufacturer method for restoring flash defaults |
+| ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
+| ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
+| ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
+| startupGPSDtMs | uint32_t | GPS measurement (system input data) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
+| gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
+| gps2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 2 antenna. |
+| gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
+| dynamicModel | uint8_t | Dynamic platform model (see eDynamicModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
+| debug | uint8_t | Debug |
+| gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
+| gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
+| gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
+| RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
+
+
+#### DID_GPX_RMC
+
+GPX rmc  
+
+`rmc_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| bits | uint64_t | Data stream enable bits for the specified ports.  (see RMC_BITS_...) |
+| options | uint32_t | Options to select alternate ports to output data, etc.  (see RMC_OPTIONS_...) |
+
+
+#### DID_GPX_RTOS_INFO
+
+GPX RTOs info 
+
+`gpx_rtos_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| freeHeapSize | uint32_t | Heap high water mark bytes |
+| mallocSize | uint32_t | Total memory allocated using RTOS pvPortMalloc() |
+| freeSize | uint32_t | Total memory freed using RTOS vPortFree() |
+| task | rtos_task_t[] | Tasks |
+
+
+#### DID_GPX_STATUS
+
+GPX status 
+
+`gpx_status_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | Status (eGpxStatus) |
+| grmcBitsSer0 | uint64_t | GRMC BITS  |
+| grmcBitsSer1 | uint64_t | Hardware status flags (eHdwStatusFlags) |
+| grmcBitsSer2 | uint64_t | MCU temperature (not available yet) |
+| grmcBitsUSB | uint64_t | Nav output period (ms). |
+| grmcNMEABitsSer0 | uint64_t | Flash config checksum used with host SDK synchronization |
+| grmcNMEABitsSer1 | uint64_t | RTK Mode bits (see eRTKConfigBits)  |
+| grmcNMEABitsSer2 | uint64_t | GNSS status (see RunState)  |
 
 
 #### DID_GROUND_VEHICLE
@@ -1226,11 +1343,12 @@ Manufacturing info
 | Field | Type | Description |
 |-------|------|-------------|
 | serialNumber | uint32_t | Inertial Sense serial number |
-| lotNumber | uint32_t | Inertial Sense lot number |
+| hardwareId | uint16_t | Hardware ID: This is a packed identifier, which includes the Hardware Type, hardwareVer Major, and hardwareVer Minor |
+| lotNumber | uint16_t | Inertial Sense lot number |
 | date | char[16] | Inertial Sense manufacturing date (YYYYMMDDHHMMSS) |
 | key | uint32_t | Key - write: unlock manufacturing info, read: number of times OTP has been set, 15 max |
 | platformType | int32_t | Platform / carrier board (ePlatformConfig::PLATFORM_CFG_TYPE_MASK).  Only valid if greater than zero. |
-| uid | uint32_t[4] | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
+| reserved | int32_t | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
 
 
 #### DID_PIMU_MAG
@@ -1334,6 +1452,16 @@ RTOS information.
 | mallocSize | uint32_t | Total memory allocated using RTOS pvPortMalloc() |
 | freeSize | uint32_t | Total memory freed using RTOS vPortFree() |
 | task | rtos_task_t[] | Tasks |
+
+
+#### DID_RUNTIME_PROFILER
+
+System runtime profiler 
+
+`runtime_profiler_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
 
 
 #### DID_SCOMP
@@ -1681,6 +1809,13 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER1_LOOPBACK | 26 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER2_LOOPBACK | 27 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_LOOPBACK | 28 |
+| SYS_CMD_GPX_ENABLE_BOOTLOADER_MODE | 30 |
+| SYS_CMD_GPX_ENABLE_GNSS1_CHIPSET_BOOTLOADER | 31 |
+| SYS_CMD_GPX_ENABLE_GNSS2_CHIPSET_BOOTLOADER | 32 |
+| SYS_CMD_GPX_ENABLE_GNSS1_PASS_THROUGH | 33 |
+| SYS_CMD_GPX_ENABLE_GNSS2_PASS_THROUGH | 34 |
+| SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK | 35 |
+| SYS_CMD_TEST_GPIO | 64 |
 | SYS_CMD_SAVE_FLASH | 97 |
 | SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
 | SYS_CMD_SOFTWARE_RESET | 99 |
@@ -1868,7 +2003,7 @@ System status and configuration is made available through various enumeration an
 | INS_STATUS_GPS_AIDING_HEADING | 0x00000080 |
 | INS_STATUS_GPS_AIDING_POS | 0x00000100 |
 | INS_STATUS_GPS_UPDATE_IN_SOLUTION | 0x00000200 |
-| INS_STATUS_RESERVED_1 | 0x00000400 |
+| INS_STATUS_MAG_ACTIVE_CAL_SET | 0x00000400 |
 | INS_STATUS_MAG_AIDING_HEADING | 0x00000800 |
 | INS_STATUS_NAV_MODE | 0x00001000 |
 | INS_STATUS_STATIONARY_MODE | 0x00002000 |
@@ -1977,6 +2112,8 @@ System status and configuration is made available through various enumeration an
 | SYS_CFG_BITS_DISABLE_INS_EKF | 0x00040000 |
 | SYS_CFG_BITS_DISABLE_AUTO_BIT_ON_STARTUP | 0x00080000 |
 | SYS_CFG_BITS_DISABLE_WHEEL_ENCODER_FUSION | 0x00100000 |
-| SYS_CFG_BITS_DISABLE_PACKET_ENCODING | 0x00400000 |
+| SYS_CFG_BITS_UNUSED3 | 0x00200000 |
+| SYS_CFG_BITS_UNUSED4 | 0x00400000 |
+| SYS_CFG_BITS_UNUSED5 | 0x00800000 |
 | SYS_CFG_USE_REFERENCE_IMU_IN_EKF | 0x01000000 |
 | SYS_CFG_EKF_REF_POINT_STATIONARY_ON_STROBE_INPUT | 0x02000000 |
