@@ -109,7 +109,7 @@ nav:
   - Communication Protocols:
     - Overview: user-manual/com-protocol/overview.md
     - Data Sets (DIDs): user-manual/com-protocol/DID-descriptions.md
-    - Binary: user-manual/com-protocol/binary.md
+    - Binary: user-manual/com-protocol/isb.md
     - NMEA: user-manual/com-protocol/nmea.md
     - SPI: user-manual/com-protocol/SPI.md
     - CAN: user-manual/com-protocol/CAN.md

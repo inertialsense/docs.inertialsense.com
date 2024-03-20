@@ -1,10 +1,17 @@
-# Inertial Sense Binary Protocol
+# Inertial Sense Binary (ISB) Protocol
 
 The Inertial Sense binary protocol provides the most efficient way to communicate with the µINS, µAHRS, and µIMU because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [NMEA Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
 
 ## Communication
 
-Writing to and reading from InertialSense products is done using "Set" and "Get" commands.
+Writing to and reading from InertialSense products is done using "Set" and "Get" commands.  The following helper function `portWrite()` which assists with writing data to the serial port is used throughout this document.
+
+```c++
+static int portWrite(int port, const unsigned char* buf, int len)
+{
+    return serialPortWrite(&serialPort, buf, len);
+}
+```
 
 ### Setting Data
 
@@ -12,17 +19,15 @@ The `is_comm_set_data()` function will encode a message used to set data or conf
 
 ```c++
 // Set INS output Euler rotation in radians to 90 degrees roll for mounting
-float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-int messageSize = is_comm_set_data(comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
-if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
+void setInsOutputRotation()
 {
-	printf("Failed to encode and write set INS rotation\r\n");
-	return -3;
+    float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
+    int messageSize = is_comm_set_data(portWrite, 0, comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
 }
 ```
 ### Getting Data
 
-Data broadcasting or streaming is enabled by using the Realtime Message Controller (RMC) or the get data command.
+Data broadcasting or streaming is enabled by using the ***Realtime Message Controller*** (**RMC**) or the get data command.
 
 #### Get Data Command
 
@@ -30,11 +35,7 @@ The `is_comm_get_data()` function will encode a PKT_TYPE_GET_DATA message that e
 
 ```c++
 // Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
-int messageSize = is_comm_get_data(comm, DID_INS_1, 0, 0, 10);
-if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
-{
-	printf("Failed to encode and write get INS message\r\n");
-}
+is_comm_get_data(portWrite, 0, comm, DID_INS_1, 0, 0, 10);
 ```
 
 #### Data Source Update Rates
@@ -68,17 +69,12 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
 
 ```c++
 	rmc_t rmc;
-
     // Enable broadcasts of DID_INS_1 and DID_GPS_NAV
 	rmc.bits = RMC_BITS_INS1 | RMC_BITS_GPS1_POS;       
     // Remember configuration following reboot for automatic data streaming.
 	rmc.options = RMC_OPTIONS_PERSISTENT;
 
-	int messageSize = is_comm_set_data(comm, DID_RMC, 0, 0, &rmc);
-	if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
-	{
-		printf("Failed to encode and write RMC message\r\n");
-	}
+	is_comm_set_data(portWrite, 0, comm, DID_RMC, 0, 0, &rmc);
 ```
 
 The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is required to apply the change).  Independently, the DID_INS_x broadcast period multiple can be used to set the output data rate down to 1ms.
@@ -124,24 +120,21 @@ The following parser code is simpler to implement.  This method uses the `is_com
 	uint8_t c;
 	protocol_type_t ptype;
 	// Read from serial buffer until empty
-	while (mySerialPortRead(&c, 1))
-	{
-		if ((ptype = is_comm_parse_byte(comm, c)) != _PTYPE_NONE)
-		{
-			switch (ptype)
-			{
-			case _PTYPE_INERTIAL_SENSE_DATA:
-			case _PTYPE_IS_V1_CMD:
-				break;
-			case _PTYPE_UBLOX:
-				break;
-			case _PTYPE_RTCM3:
-				break;
-			case _PTYPE_NMEA:
-				break;
-			}
-		}
-	}
+    while (serialPortReadChar(&s_serialPort, &c) > 0)
+    {
+        // timeMs = current_timeMs();
+        switch (is_comm_parse_byte(&comm, inByte))
+        {
+        case _PTYPE_INERTIAL_SENSE_DATA:
+            break;
+        case _PTYPE_UBLOX:
+            break;
+        case _PTYPE_RTCM3:
+            break;
+        case _PTYPE_NMEA:
+            break;
+        }
+    }
 ```
 
 #### Set of Bytes (Fast Method)
@@ -156,7 +149,7 @@ The following parser code uses less processor time to parse data by copying mult
 	int n = is_comm_free(comm);
 
 	// Read data directly into comm buffer
-	if ((n = mySerialPortRead(comm->buf.tail, n)))
+	if ((n = serialPortRead(comm->buf.tail, n)))
 	{
 		// Update comm buffer tail pointer
 		comm->buf.tail += n;
@@ -180,11 +173,11 @@ The following parser code uses less processor time to parse data by copying mult
 	}
 ```
 
-## Packet Structure
+## ISB Packet Structure
 
-The SDK is provided to encode and decode binary packets. This section can be disregareded if the SDK is used.  This section is provided to detail the packet and data structures format used in the binary protocol.  The µINS, µAHRS, and µIMU communicate using the following binary packet formatting:
+The SDK is provided to encode and decode binary packets. This section can be disregarded if the SDK is used.  This section is provided to detail the packet and data structures format used in the binary protocol.  The IMX and GPX communicate using the following binary packet structure:
 
-![packet_structure](../images/packet_structure.svg)
+![packet_structure](images/pkt_structure.png)
 <p style="text-align: center;">
 <span style="color:grey">
 <i>
@@ -192,16 +185,21 @@ Figure 1 – Packet Structure
 </i>
 </span>
 </p>
+<sub>*The first two bytes of the payload may be a uint16 offset of the data for the target DID data set if the flag ISB_FLAGS_PAYLOAD_W_OFFSET is set.</sub> 
 
-**Packet Header (4 bytes)** <br>
-1 byte – packet start byte (`0xFF`) <br>
-1 byte – packet identifier, determines the format of packet data <br>
-1 byte – packet counter (for retries) <br>
-1 byte – flags <br>
+![Packet Structure with data offset](images/pkt_structure_w_offset.png)
+
+<p style="text-align: center;">
+<span style="color:grey">
+<i>
+Figure 2 – Packet Structure with Data Offset
+</i>
+</span>
+</p>
 
 **Packet data may be 0 bytes, depending on packet identifier (PID)**
 
-![](../images/pid_get_data.svg)
+![](images/pkt_structure_get_data.png)
 
 <p style="text-align: center;">
 <span style="color:grey">
@@ -210,18 +208,31 @@ Figure 2 – PKT_TYPE_GET_DATA Packet
 </i>
 </span>
 </p>
+### Packet Type
 
-![](../images/pid_set_data.svg)
+The packet type is lower nibble (bits 0:3) at byte offset 2 in the packet.
 
-<p style="text-align: center;">
-<span style="color:grey">
-<i>
-Figure 3 – PKT_TYPE_SET_DATA and PKT_TYPE_DATA Packet
-</i>
-</span>
-</p>
+| Packet Type                                 | Payload Size | Description                                                  |
+| ------------------------------------------- | ------------ | ------------------------------------------------------------ |
+| (1) `PKT_TYPE_ACK`                          | 0            | Received valid packet                                        |
+| (2) `PKT_TYPE_NACK`                         | 0            | Received invalid packet                                      |
+| (3) `PKT_TYPE_GET_DATA`                     | 8            | Request for data to be broadcast, response is PKT_TYPE_DATA. See data structures for list of possible broadcast data. |
+| (4) `PKT_TYPE_DATA`                         | n            | Data sent in response to PKT_TYPE_GET_DATA (no PKT_TYPE_ACK is sent). |
+| (5) `PKT_TYPE_SET_DATA`                     | n            | Data sent, such as configuration options.  PKT_TYPE_ACK is sent in response. |
+| (6) `PKT_TYPE_STOP_BROADCASTS_ALL_PORTS`    | 0            | Stop all data broadcasts on all ports. Responds with an ACK. |
+| (7) `PKT_TYPE_STOP_DID_BROADCAST`           | 0            | Stop a specific broadcast.                                   |
+| (8) `PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT` | 0            | Stop all data broadcasts on current port. Responds with an ACK. |
 
-The format of the packet data is determined by the packet identifier. For a data packet (PKT_TYPE_DATA (4) or
+### Packet Flags
+
+The packet type is the upper nibble (bits 4:7) at byte offset 2 in the packet.
+
+| Flag Name                    | Value | Description                                                  |
+| ---------------------------- | ----- | ------------------------------------------------------------ |
+| `ISB_FLAGS_EXTENDED_PAYLOAD` | 0x10  | Payload is larger than 2048 bytes and extends into next packet. |
+| `ISB_FLAGS_PAYLOAD_W_OFFSET` | 0x20  | The first two bytes of the payload are the byte offset of the payload data into the data set. |
+
+The format of the packet data is determined by the packet identifier.  For a data packet (PKT_TYPE_DATA (4) or
 PKT_TYPE_SET_DATA (5)) the first 12 bytes are always the data identifier (4 byte int), the offset into the data (4 byte int), and the length of data (4 byte int, not including the 12 bytes or packet header / footer).
 
 
@@ -247,40 +258,30 @@ The packet checksum is a 24-bit integer that can be created as follows:
 
 If the CPU architecture does not match the packet flags, the bytes need to be swapped appropriately. The SDK does this automatically.
 
-### Packet Encoding/Decoding - Special Bytes
-Bytes `0x0A`, `0x24`, `0xB5`, `0xD3`, `0xFD`, `0xFE` and `0xFF` are reserved bytes, with `0xFD` being a
-reserved byte prefix. When those bytes are written to a packet, they are prefixed with `0xFD` and then written with all the bits inverted. The packet start and end byte are never encoded. When calculating a checksum, decode the byte if necessary first and then add the byte to the checksum calculation.
-
-A raw packet can never be more than 2048 bytes. A decoded packet will never be more than 1024 bytes.
-
-For a full example of encoding and decoding binary packets, please reference the following files in the SDK source: `com_manager.c`, `com_manager.h`, `data_structures.c` and `data_structures.h`, and in particular, the functions `encodeBinaryPacket()` and `decodeBinaryPacket()`.
-
 ## Stop Broadcasts Packets
 
 Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate and send the stop all broadcasts packet.
 
 ### All Ports
 
-```c
-int messageSize = is_comm_stop_broadcasts_all_ports(comm);
-serialPortWrite(serialPort, comm->buffer, messageSize);
+```c++
+is_comm_stop_broadcasts_all_ports(portWrite, 0, &comm);
 ```
 Hexadecimal value of the stop all broadcasts packet.  
 
-```
+```c++
 0xff 0x06 0x00 0x11 0xbb 0xaa 0xac 0xfe
 ```
 
 ### Current Port Only
 
-```c
-int messageSize = is_comm_stop_broadcasts_current_port(comm);
-serialPortWrite(serialPort, comm->buffer, messageSize);
+```c++
+is_comm_stop_broadcasts_current_port(portWrite, 0, &comm);
 ```
 
 Hexadecimal value of the stop all broadcasts packet.  
 
-```
+```c++
 0xff 0x08 0x00 0x11 0xbb 0xaa 0xa2 0xfe
 ```
 

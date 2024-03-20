@@ -2,7 +2,7 @@
 
 # NMEA 0183 (ASCII) Protocol
 
-For simple use, the Inertial Sense device supports a human-readable NMEA communications protocol based on NMEA 0183. The NMEA protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](binary.md) in terms of message length for the same amount of data.
+For simple use, the Inertial Sense device supports a human-readable NMEA communications protocol based on NMEA 0183. The NMEA protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](isb.md) in terms of message length for the same amount of data.
 
 ## Communications Examples
 

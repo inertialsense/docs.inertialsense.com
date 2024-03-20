@@ -128,14 +128,13 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 ### Step 8: Handle received data
 
 ```C++
-	int count;
 	uint8_t inByte;
 
 	// You can set running to false with some other piece of code to break out of the loop and end the program
 	while (running)
 	{
 		// Read one byte with a 20 millisecond timeout
-		while ((count = serialPortReadCharTimeout(&serialPort, &inByte, 20)) > 0)
+		while (serialPortReadCharTimeout(&serialPort, &inByte, 20) > 0)
 		{
 			switch (is_comm_parse_byte(&comm, inByte))
 			{
