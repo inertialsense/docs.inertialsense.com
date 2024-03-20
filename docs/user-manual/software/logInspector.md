@@ -8,7 +8,7 @@ Log Inspector can open and plot [.dat PPD log files](../../logging-plotting/data
 Once the log is opened, the buttons in the upper left hand corner are used to graph various data sets.
 
 
-![NED Map](../images/NEDMap.png "NED Map")
+![NED Map](../images/loginspector_nedmap.png "NED Map")
 
 ## Standard data sets
 

@@ -155,6 +155,22 @@ Windows Visual Studio supports CMake projects. Follow the instructions provided 
 https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170
 
 ## Updating Firmware with CLTool
+### Updating using Firmware Package
+
+Updating firmware using a firmware package file provides a simple method to update multiple devices in one process.  This include the ability to update an IMX-GPX module pair in one step.  The cltool only needs know the file path of the firmware package file and the serial port of the device to be updated.  The file extension for a firmware package is `.fpkg`.
+
+```bash
+cltool -c [serial port] -uf-cmd "package=[.fpkg file path]"
+```
+
+The following is a specific example using a firmware package file:
+
+```bash
+cltool -c /dev/ttyACM0 -uf-cmd "package=IS-firmware_2.0.3_2024-03-18_213925.fpkg"
+```
+
+### Updating using Single Firmware File
+
 The CLTool can be used to update device firmware with the following options:  
 
 ```bash
