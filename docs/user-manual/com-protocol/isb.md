@@ -175,7 +175,7 @@ The following parser code uses less processor time to parse data by copying mult
 
 ## ISB Packet Structure
 
-The SDK is provided to encode and decode binary packets. This section can be disregarded if the SDK is used.  This section is provided to detail the packet and data structures format used in the binary protocol.  The IMX and GPX communicate using the following binary packet structure:
+The SDK is provided to encode and decode binary packets.  This section is provided to detail the packet structure used in the Inertial Sense binary (ISB) protocol standard in the 2.x protocol and 2.x software releases.  The IMX and GPX communicate using the following binary packet structure:
 
 ![packet_structure](images/pkt_structure.png)
 <p style="text-align: center;">
@@ -185,29 +185,47 @@ Figure 1 – Packet Structure
 </i>
 </span>
 </p>
-<sub>*The first two bytes of the payload may be a uint16 offset of the data for the target DID data set if the flag ISB_FLAGS_PAYLOAD_W_OFFSET is set.</sub> 
+### Packet with Data Offset
+
+*The first two bytes of the payload may be a uint16 offset for the data into the target data set if the flag ISB_FLAGS_PAYLOAD_W_OFFSET is set.  The following is an example of when the the data offset flag is set.
 
 ![Packet Structure with data offset](images/pkt_structure_w_offset.png)
 
 <p style="text-align: center;">
 <span style="color:grey">
 <i>
-Figure 2 – Packet Structure with Data Offset
+Figure 2 – Packet with Data Offset
 </i>
 </span>
 </p>
 
-**Packet data may be 0 bytes, depending on packet identifier (PID)**
+### Packet with No Payload
+
+Packet types `PKT_TYPE_STOP_BROADCASTS_ALL_PORTS`, `PKT_TYPE_STOP_DID_BROADCAST`, 
+`PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT` have payload size zero and no payload.  
+
+![](images/pkt_structure_no_payload.png)
+
+<p style="text-align: center;">
+<span style="color:grey">
+<i>
+Figure 3 – Packet with No Payload
+</i>
+</span>
+</p>
+
+### Get Data Type Packet
 
 ![](images/pkt_structure_get_data.png)
 
 <p style="text-align: center;">
 <span style="color:grey">
 <i>
-Figure 2 – PKT_TYPE_GET_DATA Packet
+Figure 4 – PKT_TYPE_GET_DATA Packet
 </i>
 </span>
 </p>
+
 ### Packet Type
 
 The packet type is lower nibble (bits 0:3) at byte offset 2 in the packet.
@@ -232,31 +250,23 @@ The packet type is the upper nibble (bits 4:7) at byte offset 2 in the packet.
 | `ISB_FLAGS_EXTENDED_PAYLOAD` | 0x10  | Payload is larger than 2048 bytes and extends into next packet. |
 | `ISB_FLAGS_PAYLOAD_W_OFFSET` | 0x20  | The first two bytes of the payload are the byte offset of the payload data into the data set. |
 
-The format of the packet data is determined by the packet identifier.  For a data packet (PKT_TYPE_DATA (4) or
-PKT_TYPE_SET_DATA (5)) the first 12 bytes are always the data identifier (4 byte int), the offset into the data (4 byte int), and the length of data (4 byte int, not including the 12 bytes or packet header / footer).
+### Packet Checksum
 
+The ISB packet footer contains a Fletcher-16 (16-bit integer).  This checksum is computed for the entire packet byte sequence excluding the last two checksum bytes.  The following algorithm is used for this checksum.  The initial value (`cksum_init`) is zero.  
 
-**Packet footer (4 bytes)**<br>
-1 byte – checksum byte A (most significant byte)<br>
-1 byte – checksum byte B (middle byte)<br>
-1 byte – checksum byte C (least significant byte)<br>
-1 byte – packet stop byte (`0xFE`)<br>
-
-The packet checksum is a 24-bit integer that can be created as follows:
-
- * Start the checksum value at `0x00AAAAAA` and skip the packet start byte
- * Exclusive OR the checksum with the packet header (identifier, counter, and packet flags)
-    * checksum ^= packetId
-    * checksum ^= (counter << 8)
-    * checksum ^= (packetFlags << 16)
- * Exclusive OR the checksum with each data byte in packet, repeating the following three steps, until all data is included (i == dataLength).
-    * checksum ^= ( dataByte[i++] )
-    * checksum ^= ( dataByte[i++] << 8 )
-    * checksum ^= ( dataByte[i++] << 16 )
- * Decode encoded bytes (bytes prefixed by 0xFD) before calculating checksum for that byte.
- * Perform any endianness byte swapping AFTER checksum is fully calculated.
-
-If the CPU architecture does not match the packet flags, the bytes need to be swapped appropriately. The SDK does this automatically.
+```c++
+uint16_t is_comm_fletcher16(uint16_t cksum_init, const void* data, uint32_t size)
+{
+	checksum16_u cksum;
+	cksum.ck = cksum_init;
+	for (uint32_t i=0; i<size; i++)
+	{
+		cksum.a += ((uint8_t*)data)[i];
+		cksum.b += cksum.a;
+	}	
+	return cksum.ck;
+}
+```
 
 ## Stop Broadcasts Packets
 
@@ -267,10 +277,10 @@ Two *stop all broadcasts* packets are special packet types that will disable all
 ```c++
 is_comm_stop_broadcasts_all_ports(portWrite, 0, &comm);
 ```
-Hexadecimal value of the stop all broadcasts packet.  
+The hexadecimal string to stop all broadcasts on all ports is: 
 
 ```c++
-0xff 0x06 0x00 0x11 0xbb 0xaa 0xac 0xfe
+0xef 0x49 0x06 0x00 0x00 0x00 0x3e 0x1f
 ```
 
 ### Current Port Only
@@ -279,10 +289,20 @@ Hexadecimal value of the stop all broadcasts packet.
 is_comm_stop_broadcasts_current_port(portWrite, 0, &comm);
 ```
 
-Hexadecimal value of the stop all broadcasts packet.  
+The hexadecimal string to stop all broadcasts on the current port is:  
 
 ```c++
-0xff 0x08 0x00 0x11 0xbb 0xaa 0xa2 0xfe
+0xef 0x49 0x08 0x00 0x00 0x00 0x40 0x27
+```
+
+## RMC Presets
+
+### RMC Preset Stream PPD
+
+The hexadecimal string for the RMC Preset enable PPD is:
+
+```c++
+0xef 0x49 0x05 0x09 0x0c 0x00 0xe2 0x3c 0x35 0x01 0x90 0x00 0x00 0xc0 0x00 0x01 0x00 0x00 0xf7 0xb0
 ```
 
 
