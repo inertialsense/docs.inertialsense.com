@@ -177,27 +177,25 @@ The following parser code uses less processor time to parse data by copying mult
 
 The SDK is provided to encode and decode binary packets.  This section is provided to detail the packet structure used in the Inertial Sense binary (ISB) protocol standard in the 2.x protocol and 2.x software releases.  The IMX and GPX communicate using the following binary packet structure:
 
-![packet_structure](images/pkt_structure.svg)
+![packet_structure](images/isb_structure.svg)
 ### Packet with Data Offset
 
-*The first two bytes of the payload may be a uint16 offset for the data into the target data set if the flag ISB_FLAGS_PAYLOAD_W_OFFSET is set.  The following is an example of when the the data offset flag is set.
+![Packet Structure with data offset](images/isb_structure_w_offset.svg)
 
-![Packet Structure with data offset](images/pkt_structure_w_offset.svg)
-
+*The first two bytes of the payload may be a uint16 offset for the data offset in the target data set when the `ISB_FLAGS_PAYLOAD_W_OFFSET` flag is set in the header flags.
 
 ### Packet with No Payload
+
+![](images/isb_structure_no_payload.svg)
 
 Packet types `PKT_TYPE_STOP_BROADCASTS_ALL_PORTS`, `PKT_TYPE_STOP_DID_BROADCAST`, 
 `PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT` have payload size zero and no payload.  
 
-![](images/pkt_structure_no_payload.svg)
+### Get Data Packet
 
-### Get Data Type Packet
+![](images/isb_structure_get_data.svg)
 
-The get data packet type is used to query specific data according to data set ID, size, offset, and streaming period multiple.
-
-![](images/pkt_structure_get_data.svg)
-
+The ***Get Data*** packet of type `PKT_TYPE_GET_DATA` is used to query specific data according to data set ID, size, offset, and streaming period multiple.  The payload size is 8.  Setting the payload period to zero will result in a single response and a continuous stream of data for a non-zero period.
 
 ### Packet Type
 
