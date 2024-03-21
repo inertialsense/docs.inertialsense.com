@@ -5,8 +5,8 @@ The Inertial Sense CLTool is a command line utility that can be used to read and
 
 ## Help Menu
 
-```
-Command line utility for communicating, logging, and updating firmware with Inertial Sense product line.
+```bash
+# Command line utility for communicating, logging, and updating firmware with Inertial Sense product line.
 
 EXAMPLES
     cltool -c /dev/ttyS2 -did DID_INS_1 DID_GPS1_POS DID_PIMU      # stream DID messages
@@ -16,16 +16,16 @@ EXAMPLES
     cltool -c /dev/ttyS2 -presetPPD -lon -lts=1     # stream PPD + INS2 data, logging, dir timestamp
     cltool -c /dev/ttyS2 -edit DID_FLASH_CFG        # edit DID_FLASH_CONFIG message
     cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGPSDtMs
-    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password    # Connect to RTK NTRIP base
-    cltool -rp logs/20170117_222549                 # replay log files from a folder
-    cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv
-                                                    # update application firmware and bootloader
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
+    cltool -rp logs/20170117_222549                 # replay log files from a folder
+    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password    # Connect to RTK NTRIP base
+FIRMWARE UPDATE EXAMPLES
+    cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
+    cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv
 
 OPTIONS (General)
     -h --help       Display this help menu.
-    -c COM_PORT     Select the serial port. Set COM_PORT to "*" for all ports and "*4" to use
-                    only the first four ports. 
+    -c DEVICE_PORT  Select the serial port. Set DEVICE_PORT to "*" for all ports or "*4" for only first four available.
     -baud=BAUDRATE  Set serial port baudrate.  Options: 115200, 230400, 460800, 921600 (default)
     -magRecal[n]    Recalibrate magnetometers: 0=multi-axis, 1=single-axis
     -q              Quiet mode, no display.
@@ -33,11 +33,11 @@ OPTIONS (General)
     -s              Scroll displayed messages to show history.
     -stats          Display statistics of data received.
     -survey=[s],[d] Survey-in and store base position to refLla: s=[2=3D, 3=float, 4=fix], d=durationSec
+    -ufpkg FILEPATH Update firmware using firmware package file (.fpkg) at FILEPATH.
     -uf FILEPATH    Update application firmware using .hex file FILEPATH.  Add -baud=115200 for systems w/ baud rate limits.
     -ub FILEPATH    Update bootloader using .bin file FILEPATH if version is old. Must be used along with option -uf.
     -fb             Force bootloader update regardless of the version.
     -uv             Run verification after application firmware update.
-    -uf-cmd CMDSET  Update one or more V2-protocol devices using V2 command sets.
     -sysCmd=[c]     Send DID_SYS_CMD c (see eSystemCommand) preceeded by unlock command then exit the program.
     -factoryReset   Reset IMX flash config to factory defaults.
     -romBootloader  Reboot into ROM bootloader mode.  Requires power cycle and reloading bootloader and firmware.
@@ -160,7 +160,7 @@ https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view
 Updating firmware using a firmware package file provides a simple method to update multiple devices in one process.  This include the ability to update an IMX-GPX module pair in one step.  The cltool only needs know the file path of the firmware package file and the serial port of the device to be updated.  The file extension for a firmware package is `.fpkg`.
 
 ```bash
-cltool -c [serial port] -uf-cmd "package=[.fpkg file path]"
+cltool -c DEVICE_PORT -ufpkg FILEPATH
 ```
 
 The following is a specific example using a firmware package file:
@@ -174,15 +174,15 @@ cltool -c /dev/ttyACM0 -uf-cmd "package=IS-firmware_2.0.3_2024-03-18_213925.fpkg
 The CLTool can be used to update device firmware with the following options:  
 
 ```bash
-cltool -c [serial port] -uf [firmware file path] -ub [bootloader file path] -uv
+cltool -c DEVICE_PORT -uf [FW_FILEPATH] -ub [BL_FILEPATH] -uv
 ```
 
-| Options           | Description                                                  |
-| ----------------- | ------------------------------------------------------------ |
-| `-c [serialport]` | Specifies the device serial port.                            |
-| `-uf [filepath]`  | Specifies the application firmware file path.                |
-| `-ub [filepath]`  | (Optional) Specified the bootloader firmware file.  The bootloader is only updated if the version of the file provided is newer than the bootloader version currently on the device. |
-| `-uv`             | (Optional) Run verification after application firmware update. |
+| Options             | Description                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| `-c DEVICE_PORT`    | Specifies the device serial or USB port (i.e. `/dev/ttyACM0`). |
+| `-uf [FW_FILEPATH]` | Specifies the application firmware file path.                |
+| `-ub [BL_FILEPATH]` | (Optional) Specified the bootloader firmware file.  The bootloader is only updated if the version of the file provided is newer than the bootloader version currently on the device. |
+| `-uv`               | (Optional) Run verification after application firmware update. |
 
 The following is a specific example:
 
@@ -197,14 +197,14 @@ Note: The firmware can only be updated at the following baud rates: 300000, 9216
 The CLTool can be used to log data to file with the following options: 
 
 ```	bash
-cltool -c [serial port] -lon -lt=[log type] -lp [directory]
+cltool -c DEVICE_PORT -lon -lt=LOG_TYPE -lp DIRECTORY
 ```
 
-| Options           | Description                                                  |
-| ----------------- | ------------------------------------------------------------ |
-| `-lon`            | Enable logging.                                              |
-| `-lt=[logtype]`   | Specifies the  [log file type](#log-type) to be written.  Log types include: `dat`, `raw`, `sdat`, and `csv`. |
-| `-lp [directory]` | (Optional) Specifies the path where log files will be written.  When not specified, the default location will be the current working directory. |
+| Options         | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `-lon`          | Enable logging.                                              |
+| `-lt=LOG_TYPE`  | Specifies the  [log file type](#log-type) to be written.  LOG_TYPE can be `dat`, `raw`, `sdat`, or `csv`. |
+| `-lp DIRECTORY` | (Optional) Specifies the path where log files will be written.  When not specified, the default location will be the current working directory. |
 
 ### Log File Types
 

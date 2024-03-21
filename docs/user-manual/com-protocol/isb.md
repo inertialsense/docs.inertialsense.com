@@ -110,7 +110,7 @@ Examples on how to use the Inertial Sense SDK for binary communications are foun
 
 ### Parsing Data
 
-The [ISComm](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/ISComm.h ) library in the [InertialSenseSDK]( https://github.com/inertialsense/InertialSenseSDK/ ) provides a communications parser that can parse InertialSense binary protocol as well as other protocols. 
+The [ISComm](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/ISComm.h ) library in the [InertialSenseSDK]( https://github.com/inertialsense/InertialSenseSDK/ ) provides a communications parser that can parse InertialSense binary protocol as well as other protocols. 
 
 #### One Byte (Simple Method)
 
@@ -177,54 +177,27 @@ The following parser code uses less processor time to parse data by copying mult
 
 The SDK is provided to encode and decode binary packets.  This section is provided to detail the packet structure used in the Inertial Sense binary (ISB) protocol standard in the 2.x protocol and 2.x software releases.  The IMX and GPX communicate using the following binary packet structure:
 
-![packet_structure](images/pkt_structure.png)
-<p style="text-align: center;">
-<span style="color:grey">
-<i>
-Figure 1 – Packet Structure
-</i>
-</span>
-</p>
+![packet_structure](images/pkt_structure.svg)
 ### Packet with Data Offset
 
 *The first two bytes of the payload may be a uint16 offset for the data into the target data set if the flag ISB_FLAGS_PAYLOAD_W_OFFSET is set.  The following is an example of when the the data offset flag is set.
 
-![Packet Structure with data offset](images/pkt_structure_w_offset.png)
+![Packet Structure with data offset](images/pkt_structure_w_offset.svg)
 
-<p style="text-align: center;">
-<span style="color:grey">
-<i>
-Figure 2 – Packet with Data Offset
-</i>
-</span>
-</p>
 
 ### Packet with No Payload
 
 Packet types `PKT_TYPE_STOP_BROADCASTS_ALL_PORTS`, `PKT_TYPE_STOP_DID_BROADCAST`, 
 `PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT` have payload size zero and no payload.  
 
-![](images/pkt_structure_no_payload.png)
-
-<p style="text-align: center;">
-<span style="color:grey">
-<i>
-Figure 3 – Packet with No Payload
-</i>
-</span>
-</p>
+![](images/pkt_structure_no_payload.svg)
 
 ### Get Data Type Packet
 
-![](images/pkt_structure_get_data.png)
+The get data packet type is used to query specific data according to data set ID, size, offset, and streaming period multiple.
 
-<p style="text-align: center;">
-<span style="color:grey">
-<i>
-Figure 4 – PKT_TYPE_GET_DATA Packet
-</i>
-</span>
-</p>
+![](images/pkt_structure_get_data.svg)
+
 
 ### Packet Type
 

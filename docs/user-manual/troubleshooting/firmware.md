@@ -66,7 +66,7 @@ In the case that your units do not connect properly to the EvalTool, verify:
 4. Check your computer's Device Manager to see if your unit shows up there. If it doesn't show up, you may have an FTDI driver issue.
    1. If you suspect you don't have the FTDI driver installed on your Windows computer, use the following links to download the driver:
       - Executable for the FTDI USB driver:
-        - http://www.ftdichip.com/Drivers/CDM/CDM21228_Setup.zip
+        - https://ftdichip.com/wp-content/uploads/2023/09/CDM-v2.12.36.4-WHQL-Certified.zip
       - Drives without executable.
         - http://www.ftdichip.com/Drivers/D2XX.htm
 

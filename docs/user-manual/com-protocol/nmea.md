@@ -20,7 +20,7 @@ The Inertial Sense NMEA protocol follows the standard [NMEA 0183](https://en.wik
 * 2 bytes – checksum in hex format (i.e. `f5` or `0a`), 0 padded and lowercase
 * 2 bytes – End packet, `\r\n` (`0x0D`, `0x0A`)
 
-The packet checksum is an 8 bit integer and is calculated by calculating the exclusive OR of all bytes in between and not including the $ and * bytes. The packet checksum byte is converted to a 2 byte NMEA hex code, and left padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details.  The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
+The packet checksum is an 8 bit integer and is calculated by calculating the exclusive OR of all bytes in between and not including the $ and * bytes. The packet checksum byte is converted to a 2 byte NMEA hex code, and left padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details.  The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
 ## Persistent Messages
 
@@ -57,7 +57,7 @@ The following NMEA messages can be received by the IMX.
 
 ### ASCE
 
-Enable NMEA message output streaming by specifying the [NMEA message ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](binary/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+Enable NMEA message output streaming by specifying the [NMEA message ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](isb/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
 
 ```
 $ASCE,options,(id,period)*xx\r\n
@@ -612,7 +612,7 @@ This section illustrates common NMEA message strings for configuration.
 !!! note
     All NMEA command strings must be followed with a carriage return and new line character (`\r\n` or `0x0D`, `0x0A`).
 
-The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/serialPort.c#L219-L268) or can be generated using an online NMEA checksum calculator. For example:  [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
+The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online NMEA checksum calculator. For example:  [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
 **Stop streams on CURRENT port**
 
@@ -690,35 +690,3 @@ $GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.19,M,18.82,M,,*56
 $PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069,-1.433,-1.072,-9.585*1f
 ```
 
-
-### Using Tera Term App
-
-The example NMEA command strings can be sent using standard serial port terminal that supports sending the line ending characters (carriage return and new line).  The Windows desktop app [Tera Term](https://osdn.net/projects/ttssh2/releases/) can be used for this.
-
-**Setup:**
-
-1. Start Tera Term > New connection.  Select the correct serial port.
-
-2. Setup > Terminal...
-    - Receive:		CR
-    - Transmit:	CR+LF	**(IMPORTANT - Ensures each NMEA string ends with `\r\n` or `0x0D`, `0x0A`)** 
-    - Local echo:	Yes		This shows what was sent.
-
-3. Setup > Serial port...
-    - Speed:		921600	This is the default setting and must match the IMX serial port baudrate. 
-    - Data:		8 bit
-    - Parity:		none
-    - Stop bits: 	1 bit
-    - Flow control: none
-
-4. menu bar > setup > save setup  -  This saves time the next time Tera Term is used.
-
-**Saving a log:**
-
-1. File > log  -  Be sure to save as a .txt so it can be viewed in notepad. Controls for the log are in the Logger popup window after starting a log.
-
-**Sending an NMEA command:**
-
-1. Copy one of the command messages above to the clipboard.
-
-2. Use the Tera Term > Edit > `Paste<CR>`  option to send the copied command.  This method in conjunction with the above "CR+LF" terminal transmit setting ensures that a carriage return and line feed character terminate the sent string.  Only one NMEA string command can be sent at a time. 
