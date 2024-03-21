@@ -173,57 +173,53 @@ The following parser code uses less processor time to parse data by copying mult
 	}
 ```
 
-## ISB Packet Structure
+## ISB Packet Overview
 
-The SDK is provided to encode and decode binary packets.  This section is provided to detail the packet structure used in the Inertial Sense binary (ISB) protocol standard in the 2.x protocol and 2.x software releases.  The IMX and GPX communicate using the following binary packet structure:
+The IMX and GPX communicate using the Inertial Sense Binary (ISB) protocol.  This section details the ISB protocol packet structure specific for protocol 2.x (software releases 2.x).  Refer to the [release 1.x ISB protocol](https://github.com/inertialsense/docs.inertialsense.com/blob/1.11.0/docs/user-manual/com-protocol/binary.md) document for a description of protocol 1.x (software releases 1.x).  The [Inertial-Sense-SDK ISComm](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h) provides functions to encode and decode ISB packets. 
+
+### ISB Packet
 
 ![packet_structure](images/isb_structure.svg)
-### Packet with Data Offset
 
-![Packet Structure with data offset](images/isb_structure_w_offset.svg)
+The ISB packet structure is defined in the typedef `packet_t` found in [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h).
 
-*The first two bytes of the payload may be a uint16 offset for the data offset in the target data set when the `ISB_FLAGS_PAYLOAD_W_OFFSET` flag is set in the header flags.
+#### Header Type and Flags
 
-### Packet with No Payload
+The packet type and flags are found in the byte at offset 2 in the ISB packet.  The **Type** is the lower nibble and the **Flags** are the upper nibble.  The packet  and is defined in [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h).
 
-![](images/isb_structure_no_payload.svg)
+```c++
+typedef enum
+{
+	PKT_TYPE_INVALID                        = 0,    // Invalid packet id
+	PKT_TYPE_ACK                            = 1,    // (ACK) received valid packet
+	PKT_TYPE_NACK                           = 2,    // (NACK) received invalid packet
+	PKT_TYPE_GET_DATA                       = 3,    // Request for data to be broadcast, response is PKT_TYPE_DATA. See data structures for list of possible broadcast data.
+	PKT_TYPE_DATA                           = 4,    // Data sent in response to PKT_TYPE_GET_DATA (no PKT_TYPE_ACK is sent)
+	PKT_TYPE_SET_DATA                       = 5,    // Data sent, such as configuration options.  PKT_TYPE_ACK is sent in response.
+	PKT_TYPE_STOP_BROADCASTS_ALL_PORTS      = 6,    // Stop all data broadcasts on all ports. Responds with an ACK
+	PKT_TYPE_STOP_DID_BROADCAST             = 7,    // Stop a specific broadcast
+	PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT   = 8,    // Stop all data broadcasts on current port. Responds with an ACK
+	PKT_TYPE_COUNT                          = 9,    // The number of packet identifiers, keep this at the end!
+	PKT_TYPE_MAX_COUNT                      = 16,   // The maximum count of packet identifiers, 0x1F (PACKET_INFO_ID_MASK)
+	PKT_TYPE_MASK                           = 0x0F, // ISB packet type bitmask
 
-Packet types `PKT_TYPE_STOP_BROADCASTS_ALL_PORTS`, `PKT_TYPE_STOP_DID_BROADCAST`, 
-`PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT` have payload size zero and no payload.  
+	ISB_FLAGS_MASK                          = 0xF0, // ISB packet flags bitmask (4 bits upper nibble)
+	ISB_FLAGS_EXTENDED_PAYLOAD              = 0x10, // Payload is larger than 2048 bytes and extends into next packet.
+	ISB_FLAGS_PAYLOAD_W_OFFSET              = 0x20, // The first two bytes of the payload are the byte offset of the payload data into the data set.
+} eISBPacketFlags;
+```
 
-### Get Data Packet
+#### Header DID
 
-![](images/isb_structure_get_data.svg)
+The data ID (DID) values are defined at the top of [data_sets.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.h#L33) and identify which data set is requested or contained in the ISB packet.
 
-The ***Get Data*** packet of type `PKT_TYPE_GET_DATA` is used to query specific data according to data set ID, size, offset, and streaming period multiple.  The payload size is 8.  Setting the payload period to zero will result in a single response and a continuous stream of data for a non-zero period.
+#### Header Payload Size
 
-### Packet Type
+The ISB packet payload size is a uint16 that will 
 
-The packet type is lower nibble (bits 0:3) at byte offset 2 in the packet.
+#### Footer Checksum
 
-| Packet Type                                 | Payload Size | Description                                                  |
-| ------------------------------------------- | ------------ | ------------------------------------------------------------ |
-| (1) `PKT_TYPE_ACK`                          | 0            | Received valid packet                                        |
-| (2) `PKT_TYPE_NACK`                         | 0            | Received invalid packet                                      |
-| (3) `PKT_TYPE_GET_DATA`                     | 8            | Request for data to be broadcast, response is PKT_TYPE_DATA. See data structures for list of possible broadcast data. |
-| (4) `PKT_TYPE_DATA`                         | n            | Data sent in response to PKT_TYPE_GET_DATA (no PKT_TYPE_ACK is sent). |
-| (5) `PKT_TYPE_SET_DATA`                     | n            | Data sent, such as configuration options.  PKT_TYPE_ACK is sent in response. |
-| (6) `PKT_TYPE_STOP_BROADCASTS_ALL_PORTS`    | 0            | Stop all data broadcasts on all ports. Responds with an ACK. |
-| (7) `PKT_TYPE_STOP_DID_BROADCAST`           | 0            | Stop a specific broadcast.                                   |
-| (8) `PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT` | 0            | Stop all data broadcasts on current port. Responds with an ACK. |
-
-### Packet Flags
-
-The packet type is the upper nibble (bits 4:7) at byte offset 2 in the packet.
-
-| Flag Name                    | Value | Description                                                  |
-| ---------------------------- | ----- | ------------------------------------------------------------ |
-| `ISB_FLAGS_EXTENDED_PAYLOAD` | 0x10  | Payload is larger than 2048 bytes and extends into next packet. |
-| `ISB_FLAGS_PAYLOAD_W_OFFSET` | 0x20  | The first two bytes of the payload are the byte offset of the payload data into the data set. |
-
-### Packet Checksum
-
-The ISB packet footer contains a Fletcher-16 (16-bit integer).  This checksum is computed for the entire packet byte sequence excluding the last two checksum bytes.  The following algorithm is used for this checksum.  The initial value (`cksum_init`) is zero.  
+The ISB packet footer contains a Fletcher-16 (16-bit integer).  The following algorithm is used for this checksum and is found in [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h).   
 
 ```c++
 uint16_t is_comm_fletcher16(uint16_t cksum_init, const void* data, uint32_t size)
@@ -239,9 +235,33 @@ uint16_t is_comm_fletcher16(uint16_t cksum_init, const void* data, uint32_t size
 }
 ```
 
+The ISB packet footer checksum is computed using the Fletcher-16 algorithm starting with an initial value of zero and sequencing over the entire packet (excluding the two footer checksum bytes).
+
+### ISB Packet with Data Offset
+
+![Packet Structure with data offset](images/isb_structure_w_offset.svg)
+
+*The first two bytes of the payload may be a uint16 offset for the data offset in the target data set when the `ISB_FLAGS_PAYLOAD_W_OFFSET` flag is set in the header flags.
+
+### ISB Packet with No Payload
+
+![](images/isb_structure_no_payload.svg)
+
+Packet types `PKT_TYPE_STOP_BROADCASTS_ALL_PORTS`, `PKT_TYPE_STOP_DID_BROADCAST`, 
+`PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT` have payload size zero and no payload.  
+
+### ISB Get Data Packet
+
+![](images/isb_structure_get_data.svg)
+
+The ***Get Data*** packet of type `PKT_TYPE_GET_DATA` is used to query specific data according to data set ID, size, offset, and streaming period multiple.  The payload size is 8.  Setting the payload period to zero will result in a single response and a continuous stream of data for a non-zero period.
+
 ## Stop Broadcasts Packets
 
-Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate and send the stop all broadcasts packet.
+!!! note
+    The [NEMA $STPB](nmea/#stpb) stop broadcasts command is recommended as the protocol version-independent method for disabling data streaming. 
+
+Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate the stop all broadcasts packets.  
 
 ### All Ports
 
