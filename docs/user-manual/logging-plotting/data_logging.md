@@ -1,6 +1,6 @@
 # Logging
 
-The SDK logging interface is defined in [SDK/src/ISLogger.h](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/ISLogger.h). Data logs can be converted between file formats using the Inertial Sense data logger. The logging interface is used in the Inertial Sense software described below.
+The SDK logging interface is defined in [SDK/src/ISLogger.h](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/ISLogger.h). Data logs can be converted between file formats using the Inertial Sense data logger. The logging interface is used in the Inertial Sense software described below.
 
 ## Logging using Inertial Sense software
 
@@ -28,7 +28,7 @@ Post process data (PPD) logs include both the input to and output from the navig
 
 ### PPD RMC bits Preset
 
-PPD logs are created by enabling PPD data streaming by setting the RMC bits to `RMC_PRESET_PPD_BITS` and logging this stream to a .dat binary file.  `RMC_PRESET_PPD_BITS` is [defined in data_sets.h](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/data_sets.h#L1153-L1169).
+PPD logs are created by enabling PPD data streaming by setting the RMC bits to `RMC_PRESET_PPD_BITS` and logging this stream to a .dat binary file.  `RMC_PRESET_PPD_BITS` is [defined in data_sets.h](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/data_sets.h#L1153-L1169).
 
 ### Logging PPD in EvalTool
 

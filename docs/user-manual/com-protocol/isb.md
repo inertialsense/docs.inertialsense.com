@@ -1,10 +1,17 @@
-# Inertial Sense Binary Protocol
+# Inertial Sense Binary (ISB) Protocol
 
 The Inertial Sense binary protocol provides the most efficient way to communicate with the µINS, µAHRS, and µIMU because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [NMEA Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
 
 ## Communication
 
-Writing to and reading from InertialSense products is done using "Set" and "Get" commands.
+Writing to and reading from InertialSense products is done using "Set" and "Get" commands.  The following helper function `portWrite()` which assists with writing data to the serial port is used throughout this document.
+
+```c++
+static int portWrite(int port, const unsigned char* buf, int len)
+{
+    return serialPortWrite(&serialPort, buf, len);
+}
+```
 
 ### Setting Data
 
@@ -12,17 +19,15 @@ The `is_comm_set_data()` function will encode a message used to set data or conf
 
 ```c++
 // Set INS output Euler rotation in radians to 90 degrees roll for mounting
-float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-int messageSize = is_comm_set_data(comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
-if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
+void setInsOutputRotation()
 {
-	printf("Failed to encode and write set INS rotation\r\n");
-	return -3;
+    float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
+    int messageSize = is_comm_set_data(portWrite, 0, comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
 }
 ```
 ### Getting Data
 
-Data broadcasting or streaming is enabled by using the Realtime Message Controller (RMC) or the get data command.
+Data broadcasting or streaming is enabled by using the ***Realtime Message Controller*** (**RMC**) or the get data command.
 
 #### Get Data Command
 
@@ -30,11 +35,7 @@ The `is_comm_get_data()` function will encode a PKT_TYPE_GET_DATA message that e
 
 ```c++
 // Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
-int messageSize = is_comm_get_data(comm, DID_INS_1, 0, 0, 10);
-if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
-{
-	printf("Failed to encode and write get INS message\r\n");
-}
+is_comm_get_data(portWrite, 0, comm, DID_INS_1, 0, 0, 10);
 ```
 
 #### Data Source Update Rates
@@ -68,17 +69,12 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
 
 ```c++
 	rmc_t rmc;
-
     // Enable broadcasts of DID_INS_1 and DID_GPS_NAV
 	rmc.bits = RMC_BITS_INS1 | RMC_BITS_GPS1_POS;       
     // Remember configuration following reboot for automatic data streaming.
 	rmc.options = RMC_OPTIONS_PERSISTENT;
 
-	int messageSize = is_comm_set_data(comm, DID_RMC, 0, 0, &rmc);
-	if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
-	{
-		printf("Failed to encode and write RMC message\r\n");
-	}
+	is_comm_set_data(portWrite, 0, comm, DID_RMC, 0, 0, &rmc);
 ```
 
 The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is required to apply the change).  Independently, the DID_INS_x broadcast period multiple can be used to set the output data rate down to 1ms.
@@ -114,7 +110,7 @@ Examples on how to use the Inertial Sense SDK for binary communications are foun
 
 ### Parsing Data
 
-The [ISComm](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/ISComm.h ) library in the [InertialSenseSDK]( https://github.com/inertialsense/InertialSenseSDK/ ) provides a communications parser that can parse InertialSense binary protocol as well as other protocols. 
+The [ISComm](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/ISComm.h ) library in the [InertialSenseSDK]( https://github.com/inertialsense/InertialSenseSDK/ ) provides a communications parser that can parse InertialSense binary protocol as well as other protocols. 
 
 #### One Byte (Simple Method)
 
@@ -124,24 +120,21 @@ The following parser code is simpler to implement.  This method uses the `is_com
 	uint8_t c;
 	protocol_type_t ptype;
 	// Read from serial buffer until empty
-	while (mySerialPortRead(&c, 1))
-	{
-		if ((ptype = is_comm_parse_byte(comm, c)) != _PTYPE_NONE)
-		{
-			switch (ptype)
-			{
-			case _PTYPE_INERTIAL_SENSE_DATA:
-			case _PTYPE_IS_V1_CMD:
-				break;
-			case _PTYPE_UBLOX:
-				break;
-			case _PTYPE_RTCM3:
-				break;
-			case _PTYPE_NMEA:
-				break;
-			}
-		}
-	}
+    while (serialPortReadChar(&s_serialPort, &c) > 0)
+    {
+        // timeMs = current_timeMs();
+        switch (is_comm_parse_byte(&comm, inByte))
+        {
+        case _PTYPE_INERTIAL_SENSE_DATA:
+            break;
+        case _PTYPE_UBLOX:
+            break;
+        case _PTYPE_RTCM3:
+            break;
+        case _PTYPE_NMEA:
+            break;
+        }
+    }
 ```
 
 #### Set of Bytes (Fast Method)
@@ -156,7 +149,7 @@ The following parser code uses less processor time to parse data by copying mult
 	int n = is_comm_free(comm);
 
 	// Read data directly into comm buffer
-	if ((n = mySerialPortRead(comm->buf.tail, n)))
+	if ((n = serialPortRead(comm->buf.tail, n)))
 	{
 		// Update comm buffer tail pointer
 		comm->buf.tail += n;
@@ -180,108 +173,127 @@ The following parser code uses less processor time to parse data by copying mult
 	}
 ```
 
-## Packet Structure
+## ISB Packet Overview
 
-The SDK is provided to encode and decode binary packets. This section can be disregareded if the SDK is used.  This section is provided to detail the packet and data structures format used in the binary protocol.  The µINS, µAHRS, and µIMU communicate using the following binary packet formatting:
+The IMX and GPX communicate using the Inertial Sense Binary (ISB) protocol.  This section details the ISB protocol packet structure specific for protocol 2.x (software releases 2.x).  Refer to the [release 1.x ISB protocol](https://github.com/inertialsense/docs.inertialsense.com/blob/1.11.0/docs/user-manual/com-protocol/binary.md) document for a description of protocol 1.x (software releases 1.x).  The [Inertial-Sense-SDK ISComm](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h) provides functions to encode and decode ISB packets. 
 
-![packet_structure](../images/packet_structure.svg)
-<p style="text-align: center;">
-<span style="color:grey">
-<i>
-Figure 1 – Packet Structure
-</i>
-</span>
-</p>
+### ISB Packet
 
-**Packet Header (4 bytes)** <br>
-1 byte – packet start byte (`0xFF`) <br>
-1 byte – packet identifier, determines the format of packet data <br>
-1 byte – packet counter (for retries) <br>
-1 byte – flags <br>
+![packet_structure](images/isb_structure.svg)
 
-**Packet data may be 0 bytes, depending on packet identifier (PID)**
+The ISB packet structure is defined in the typedef `packet_t` found in [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h).
 
-![](../images/pid_get_data.svg)
+#### Header Type and Flags
 
-<p style="text-align: center;">
-<span style="color:grey">
-<i>
-Figure 2 – PKT_TYPE_GET_DATA Packet
-</i>
-</span>
-</p>
+The packet type and flags are found in the byte at offset 2 in the ISB packet.  The **Type** is the lower nibble and the **Flags** are the upper nibble.  The packet  and is defined in [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h).
 
-![](../images/pid_set_data.svg)
+```c++
+typedef enum
+{
+	PKT_TYPE_INVALID                        = 0,    // Invalid packet id
+	PKT_TYPE_ACK                            = 1,    // (ACK) received valid packet
+	PKT_TYPE_NACK                           = 2,    // (NACK) received invalid packet
+	PKT_TYPE_GET_DATA                       = 3,    // Request for data to be broadcast, response is PKT_TYPE_DATA. See data structures for list of possible broadcast data.
+	PKT_TYPE_DATA                           = 4,    // Data sent in response to PKT_TYPE_GET_DATA (no PKT_TYPE_ACK is sent)
+	PKT_TYPE_SET_DATA                       = 5,    // Data sent, such as configuration options.  PKT_TYPE_ACK is sent in response.
+	PKT_TYPE_STOP_BROADCASTS_ALL_PORTS      = 6,    // Stop all data broadcasts on all ports. Responds with an ACK
+	PKT_TYPE_STOP_DID_BROADCAST             = 7,    // Stop a specific broadcast
+	PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT   = 8,    // Stop all data broadcasts on current port. Responds with an ACK
+	PKT_TYPE_COUNT                          = 9,    // The number of packet identifiers, keep this at the end!
+	PKT_TYPE_MAX_COUNT                      = 16,   // The maximum count of packet identifiers, 0x1F (PACKET_INFO_ID_MASK)
+	PKT_TYPE_MASK                           = 0x0F, // ISB packet type bitmask
 
-<p style="text-align: center;">
-<span style="color:grey">
-<i>
-Figure 3 – PKT_TYPE_SET_DATA and PKT_TYPE_DATA Packet
-</i>
-</span>
-</p>
+	ISB_FLAGS_MASK                          = 0xF0, // ISB packet flags bitmask (4 bits upper nibble)
+	ISB_FLAGS_EXTENDED_PAYLOAD              = 0x10, // Payload is larger than 2048 bytes and extends into next packet.
+	ISB_FLAGS_PAYLOAD_W_OFFSET              = 0x20, // The first two bytes of the payload are the byte offset of the payload data into the data set.
+} eISBPacketFlags;
+```
 
-The format of the packet data is determined by the packet identifier. For a data packet (PKT_TYPE_DATA (4) or
-PKT_TYPE_SET_DATA (5)) the first 12 bytes are always the data identifier (4 byte int), the offset into the data (4 byte int), and the length of data (4 byte int, not including the 12 bytes or packet header / footer).
+#### Header DID
 
+The data ID (DID) values are defined at the top of [data_sets.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.h#L33) and identify which data set is requested or contained in the ISB packet.
 
-**Packet footer (4 bytes)**<br>
-1 byte – checksum byte A (most significant byte)<br>
-1 byte – checksum byte B (middle byte)<br>
-1 byte – checksum byte C (least significant byte)<br>
-1 byte – packet stop byte (`0xFE`)<br>
+#### Header Payload Size
 
-The packet checksum is a 24-bit integer that can be created as follows:
+The ISB packet payload size is a uint16 that will 
 
- * Start the checksum value at `0x00AAAAAA` and skip the packet start byte
- * Exclusive OR the checksum with the packet header (identifier, counter, and packet flags)
-    * checksum ^= packetId
-    * checksum ^= (counter << 8)
-    * checksum ^= (packetFlags << 16)
- * Exclusive OR the checksum with each data byte in packet, repeating the following three steps, until all data is included (i == dataLength).
-    * checksum ^= ( dataByte[i++] )
-    * checksum ^= ( dataByte[i++] << 8 )
-    * checksum ^= ( dataByte[i++] << 16 )
- * Decode encoded bytes (bytes prefixed by 0xFD) before calculating checksum for that byte.
- * Perform any endianness byte swapping AFTER checksum is fully calculated.
+#### Footer Checksum
 
-If the CPU architecture does not match the packet flags, the bytes need to be swapped appropriately. The SDK does this automatically.
+The ISB packet footer contains a Fletcher-16 (16-bit integer).  The following algorithm is used for this checksum and is found in [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h).   
 
-### Packet Encoding/Decoding - Special Bytes
-Bytes `0x0A`, `0x24`, `0xB5`, `0xD3`, `0xFD`, `0xFE` and `0xFF` are reserved bytes, with `0xFD` being a
-reserved byte prefix. When those bytes are written to a packet, they are prefixed with `0xFD` and then written with all the bits inverted. The packet start and end byte are never encoded. When calculating a checksum, decode the byte if necessary first and then add the byte to the checksum calculation.
+```c++
+uint16_t is_comm_fletcher16(uint16_t cksum_init, const void* data, uint32_t size)
+{
+	checksum16_u cksum;
+	cksum.ck = cksum_init;
+	for (uint32_t i=0; i<size; i++)
+	{
+		cksum.a += ((uint8_t*)data)[i];
+		cksum.b += cksum.a;
+	}	
+	return cksum.ck;
+}
+```
 
-A raw packet can never be more than 2048 bytes. A decoded packet will never be more than 1024 bytes.
+The ISB packet footer checksum is computed using the Fletcher-16 algorithm starting with an initial value of zero and sequencing over the entire packet (excluding the two footer checksum bytes).
 
-For a full example of encoding and decoding binary packets, please reference the following files in the SDK source: `com_manager.c`, `com_manager.h`, `data_structures.c` and `data_structures.h`, and in particular, the functions `encodeBinaryPacket()` and `decodeBinaryPacket()`.
+### ISB Packet with Data Offset
+
+![Packet Structure with data offset](images/isb_structure_w_offset.svg)
+
+*The first two bytes of the payload may be a uint16 offset for the data offset in the target data set when the `ISB_FLAGS_PAYLOAD_W_OFFSET` flag is set in the header flags.
+
+### ISB Packet with No Payload
+
+![](images/isb_structure_no_payload.svg)
+
+Packet types `PKT_TYPE_STOP_BROADCASTS_ALL_PORTS`, `PKT_TYPE_STOP_DID_BROADCAST`, 
+`PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT` have payload size zero and no payload.  
+
+### ISB Get Data Packet
+
+![](images/isb_structure_get_data.svg)
+
+The ***Get Data*** packet of type `PKT_TYPE_GET_DATA` is used to query specific data according to data set ID, size, offset, and streaming period multiple.  The payload size is 8.  Setting the payload period to zero will result in a single response and a continuous stream of data for a non-zero period.
 
 ## Stop Broadcasts Packets
 
-Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate and send the stop all broadcasts packet.
+!!! note
+    The [NEMA $STPB](nmea/#stpb) stop broadcasts command is recommended as the protocol version-independent method for disabling data streaming. 
+
+Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate the stop all broadcasts packets.  
 
 ### All Ports
 
-```c
-int messageSize = is_comm_stop_broadcasts_all_ports(comm);
-serialPortWrite(serialPort, comm->buffer, messageSize);
+```c++
+is_comm_stop_broadcasts_all_ports(portWrite, 0, &comm);
 ```
-Hexadecimal value of the stop all broadcasts packet.  
+The hexadecimal string to stop all broadcasts on all ports is: 
 
-```
-0xff 0x06 0x00 0x11 0xbb 0xaa 0xac 0xfe
+```c++
+0xef 0x49 0x06 0x00 0x00 0x00 0x3e 0x1f
 ```
 
 ### Current Port Only
 
-```c
-int messageSize = is_comm_stop_broadcasts_current_port(comm);
-serialPortWrite(serialPort, comm->buffer, messageSize);
+```c++
+is_comm_stop_broadcasts_current_port(portWrite, 0, &comm);
 ```
 
-Hexadecimal value of the stop all broadcasts packet.  
+The hexadecimal string to stop all broadcasts on the current port is:  
 
+```c++
+0xef 0x49 0x08 0x00 0x00 0x00 0x40 0x27
 ```
-0xff 0x08 0x00 0x11 0xbb 0xaa 0xa2 0xfe
+
+## RMC Presets
+
+### RMC Preset Stream PPD
+
+The hexadecimal string for the RMC Preset enable PPD is:
+
+```c++
+0xef 0x49 0x05 0x09 0x0c 0x00 0xe2 0x3c 0x35 0x01 0x90 0x00 0x00 0xc0 0x00 0x01 0x00 0x00 0xf7 0xb0
 ```
 
 

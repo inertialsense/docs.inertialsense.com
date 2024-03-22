@@ -10,7 +10,7 @@ This [ISLoggerExample](https://github.com/inertialsense/InertialSenseSDK/tree/re
 
 #### SDK Files
 
-* [SDK](https://github.com/inertialsense/InertialSenseSDK/tree/master/src)
+* [SDK](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src)
 
 
 ## Implementation

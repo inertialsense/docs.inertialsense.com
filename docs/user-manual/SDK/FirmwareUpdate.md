@@ -6,20 +6,20 @@ This [ISBootloaderExample](https://github.com/inertialsense/InertialSenseSDK/tre
 
 #### Project Files
 
-* [ISBootloaderExample.cpp](https://github.com/inertialsense/inertial-sense-sdk/blob/master/ExampleProjects/Bootloader/ISBootloaderExample.cpp)
+* [ISBootloaderExample.cpp](https://github.com/inertialsense/inertial-sense-sdk/blob/main/ExampleProjects/Bootloader/ISBootloaderExample.cpp)
 
 #### SDK Files
 
-* [data_sets.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.c)
-* [data_sets.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.h)
-* [inertialSenseBootLoader.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/inertialSenseBootLoader.c)
-* [inertialSenseBootLoader.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/inertialSenseBootLoader.h)
-* [ISComm.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.c)
-* [ISComm.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.h)
-* [serialPort.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.c)
-* [serialPort.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.h)
-* [serialPortPlatform.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.c)
-* [serialPortPlatform.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.h)
+* [data_sets.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.c)
+* [data_sets.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.h)
+* [inertialSenseBootLoader.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISBootloaderBase.cpp)
+* [inertialSenseBootLoader.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISBootloaderBase.h)
+* [ISComm.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.c)
+* [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h)
+* [serialPort.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.c)
+* [serialPort.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.h)
+* [serialPortPlatform.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.c)
+* [serialPortPlatform.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.h)
 
 
 ## Implementation

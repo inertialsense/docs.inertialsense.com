@@ -63,7 +63,7 @@ In the USB hub modes (6-7), the following communications bridge/forwarding exist
 ```DID_EVB_FLASH_CFG.uinsComPort``` <-> All ports except XBee, WiFi, and XRadio
 ```DID_EVB_FLASH_CFG.uinsAuxPort``` <-> XBee, WiFi, and XRadio. XBee and WiFi only enabled when ```DID_EVB_FLASH_CFG.cbPreset == EVB2_CB_PRESET_RS232_XBEE```
 
-```EVB2_PORT_UINS0``` is the default value for both of these. See the source code [here](https://github.com/inertialsense/inertial-sense-sdk/blob/master/EVB-2/IS_EVB-2/src/globals.c#L458-L459).
+```EVB2_PORT_UINS0``` is the default value for both of these.
 
 Bit ```EVB2_PORT_OPTIONS_RADIO_RTK_FILTER``` of ```DID_EVB_FLASH_CFG.portOptions``` only allows RTK corrections to pass through the ```uinsAuxPort```, reducing the wireless communications burden to only essential RTK base connections. This bit is enabled by default.
 

@@ -137,7 +137,7 @@ The STROBE output feature is used to indicate start and end of the preintegrated
 
 ### Configuring Message Output
 
-By default, triggering a strobe input event will cause the IMX to produce an ASCII [PINS2](../../com-protocol/ascii/#pins2) message as well as a [PSTRB](../../com-protocol/ascii/#pstrb) message which contains the time stamp of the strobe event.
+By default, triggering a strobe input event will cause the IMX to produce an NMEA [PINS2](../../com-protocol/nmea/#pins2) message as well as a [PSTRB](../../com-protocol/nmea/#pstrb) message which contains the time stamp of the strobe event.
 
 To instead send a binary [DID_INS_2](../../com-protocol/DID-descriptions/#did_ins_2) and [DID_STROBE_IN_TIME](../../com-protocol/DID-descriptions/#did_strobe_in_time) message, set the `RMC_BITS_STROBE_IN_TIME`flag of `DID_RMC/bits`field.
 

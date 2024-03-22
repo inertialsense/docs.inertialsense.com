@@ -11,14 +11,14 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 
 #### SDK Files
 
-* [data_sets.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.c)
-* [data_sets.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.h)
-* [ISComm.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.c)
-* [ISComm.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.h)
-* [serialPort.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.c)
-* [serialPort.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.h)
-* [serialPortPlatform.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.c)
-* [serialPortPlatform.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.h)
+* [data_sets.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.c)
+* [data_sets.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.h)
+* [ISComm.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.c)
+* [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h)
+* [serialPort.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.c)
+* [serialPort.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.h)
+* [serialPortPlatform.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.c)
+* [serialPortPlatform.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.h)
 
 
 ## Implementation
@@ -128,14 +128,13 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 ### Step 8: Handle received data
 
 ```C++
-	int count;
 	uint8_t inByte;
 
 	// You can set running to false with some other piece of code to break out of the loop and end the program
 	while (running)
 	{
 		// Read one byte with a 20 millisecond timeout
-		while ((count = serialPortReadCharTimeout(&serialPort, &inByte, 20)) > 0)
+		while (serialPortReadCharTimeout(&serialPort, &inByte, 20) > 0)
 		{
 			switch (is_comm_parse_byte(&comm, inByte))
 			{

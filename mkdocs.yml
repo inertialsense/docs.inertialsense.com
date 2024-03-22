@@ -4,7 +4,7 @@ site_url: https://docs.inertialsense.com
 
 # Repository
 # repo_url: https://github.com/inertialsense/docs
-# edit_uri: blob/master/docs/   # Commented out to hide edit icon from top right corner of each page.
+# edit_uri: blob/main/docs/   # Commented out to hide edit icon from top right corner of each page.
 
 # Google Analytics - This is going to be phased out and moved to 'theme.analytics.gtag' using 'G-' ID rather than the "UA-" ID.
 # (see https://www.mkdocs.org/about/release-notes/)
@@ -109,7 +109,7 @@ nav:
   - Communication Protocols:
     - Overview: user-manual/com-protocol/overview.md
     - Data Sets (DIDs): user-manual/com-protocol/DID-descriptions.md
-    - Binary: user-manual/com-protocol/binary.md
+    - Inertial Sense Binary (ISB): user-manual/com-protocol/isb.md
     - NMEA: user-manual/com-protocol/nmea.md
     - SPI: user-manual/com-protocol/SPI.md
     - CAN: user-manual/com-protocol/CAN.md
