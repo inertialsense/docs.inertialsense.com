@@ -159,19 +159,21 @@ https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view
 
 Updating firmware using a firmware package file provides a simple method to update multiple devices in one process.  This include the ability to update an IMX-GPX module pair in one step.  The cltool only needs know the file path of the firmware package file and the serial port of the device to be updated.  The file extension for a firmware package is `.fpkg`.
 
+**NOTE:** Updating the IMX firmware using a firmware package currently not supported and will become available in a future update.
+
 ```bash
 cltool -c DEVICE_PORT -ufpkg FILEPATH
 ```
 
-The following is a specific example using a firmware package file:
+The following is a specific example of using a firmware package file:
 
 ```bash
-cltool -c /dev/ttyACM0 -uf-cmd "package=IS-firmware_2.0.3_2024-03-18_213925.fpkg"
+cltool -c /dev/ttyACM0 -ufpkg IS-firmware_2.0.3_2024-03-18_213925.fpkg
 ```
 
-### Updating using Single Firmware File
+### Updating using Single Firmware File (Legacy Mode)
 
-The CLTool can be used to update device firmware with the following options:  
+The CLTool can be used to update device firmware with the following options.  This is the legacy firmware update methods that works only with the IMX-5.0 and earlier products (uINS-3, EVB-2, etc.).
 
 ```bash
 cltool -c DEVICE_PORT -uf [FW_FILEPATH] -ub [BL_FILEPATH] -uv
