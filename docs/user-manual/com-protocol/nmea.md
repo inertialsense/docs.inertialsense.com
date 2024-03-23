@@ -57,19 +57,26 @@ The following NMEA messages can be received by the IMX.
 
 ### ASCE
 
-Enable NMEA message output streaming by specifying the [NMEA message ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](isb/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](binary/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
 
 ```
-$ASCE,options,(id,period)*xx\r\n
+$ASCE,OPTIONS,(ID,PERIOD)*xx\r\n
 ```
 
-| Index | Field   | Description                                                  |
-| ----- | ------- | ------------------------------------------------------------ |
-| 1     | options | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-|       |         | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | ID      | NMEA message ID to be streamed.  See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
-| 3+n*2 | period  | Broadcast period multiple for specified message.  Zero disables streaming. |
-|       |         | *End of repeated group (1...20 times)*                       |
+The following examples will enable the same NMEA message output:
+
+```
+$ASCE,0,PPIMU,1,PINS2,10,GxGGA,1*10\r\n
+$ASCE,0,2,1,5,10,7,1*39\r\n
+```
+
+| Index | Field     | Description                                                  |
+| ----- | --------- | ------------------------------------------------------------ |
+| 1     | `OPTIONS` | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
+|       |           | *Start of repeated group (1...20 times)*                     |
+| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e. PPIMU, PINS1, GxGGA) excluding packet start character `$` or **2.) message ID** (eNmeaAsciiMsgId) of the NMEA message to be streamed.  See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
+| 3+n*2 | `PERIOD`  | Broadcast period multiple for specified message.  Zero disables streaming. |
+|       |           | *End of repeated group (1...20 times)*                       |
 
 #### Example Messages  
 
@@ -136,27 +143,27 @@ The hexadecimal equivalent is:
 
 ## NMEA Output Messages
 
-The following NMEA messages can be sent by the IMX.  The message ID is used with the `$ASCE` message to enable message streaming. 
+The following NMEA messages can be sent by the IMX.  The message ID (`eNmeaAsciiMsgId`) is used with the `$ASCE` message to enable message streaming. 
 
-| Message         | ID | Description                                                  |
-| --------------- | -- | ------------------------------------------------------------ |
-| [ASCE](#asce)   |    | Broadcast period of NMEA output messages.                |
-| [PIMU](#pimu)   | 0  | IMU data (3-axis gyros and accelerometers) in the body frame. |
-| [PPIMU](#ppimu) | 1  | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
-| [PRIMU](#primu) | 2  | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
-| [PINS1](#pins1) | 3  | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
-| [PINS2](#pins2) | 4  | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
-| [PGPSP](#pgpsp) | 5  | GPS position data.                                           |
-| [GGA](#gga)     | 6  | Standard NMEA GGA GPS 3D location, fix, and accuracy.   |
-| [GLL](#gll)     | 7  | Standard NMEA GLL GPS 2D location and time.                |
-| [GSA](#gsa)     | 8  | Standard NMEA GSA GPS DOP and active satellites.             |
-| [RMC](#rmc)     | 9  | Standard NMEA RMC Recommended minimum specific GPS/Transit data. |
-| [ZDA](#zda)     | 10 | Standard NMEA ZDA UTC Time/Date message.                         |
-| [PASHR](#pashr) | 11 | Standard NMEA PASHR (euler) message.                         |
-| [PSTRB](#pstrb) | 12 | Strobe event input time.                                     |
-| [INFO](#info)   | 13 | Device information.                                          |
-| [GSV](#gsv)     | 14 | Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
-| [VTG](#VTG)     | 15 | Standard NMEA VTG track made good and speed over ground. |
+| Identifier      | ID   | Description                                                  |
+| --------------- | ---- | ------------------------------------------------------------ |
+| [ASCB](#ascb)   |      | Broadcast period of NMEA output messages.                    |
+| [PIMU](#pimu)   | 1    | IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PPIMU](#ppimu) | 2    | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
+| [PRIMU](#primu) | 3    | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PINS1](#pins1) | 4    | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
+| [PINS2](#pins2) | 5    | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
+| [PGPSP](#pgpsp) | 6    | GPS position data.                                           |
+| [GGA](#gga)     | 7    | Standard NMEA GGA GPS 3D location, fix, and accuracy.        |
+| [GLL](#gll)     | 8    | Standard NMEA GLL GPS 2D location and time.                  |
+| [GSA](#gsa)     | 9    | Standard NMEA GSA GPS DOP and active satellites.             |
+| [RMC](#rmc)     | 10   | Standard NMEA RMC Recommended minimum specific GPS/Transit data. |
+| [ZDA](#zda)     | 11   | Standard NMEA ZDA UTC Time/Date message.                     |
+| [PASHR](#pashr) | 12   | Standard NMEA PASHR (euler) message.                         |
+| [PSTRB](#pstrb) | 13   | Strobe event input time.                                     |
+| [INFO](#info)   | 14   | Device information.                                          |
+| [GSV](#gsv)     | 15   | Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
+| [VTG](#VTG)     | 16   | Standard NMEA VTG track made good and speed over ground.     |
 
 The field codes used in the message descriptions are: lf = double, f = float, d = int.
 
