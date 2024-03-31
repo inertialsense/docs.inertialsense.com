@@ -19,7 +19,8 @@ EXAMPLES
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
     cltool -rp logs/20170117_222549                 # replay log files from a folder
     cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password    # Connect to RTK NTRIP base
-FIRMWARE UPDATE EXAMPLES
+
+EXAMPLES (Firmware Update)
     cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
     cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv
 
@@ -66,14 +67,17 @@ OPTIONS (Logging to file, disabled by default)
     -rp PATH        Replay data log from PATH
     -rs=SPEED       Replay data log at x SPEED. SPEED=0 runs as fast as possible.
 
-OPTIONS (Read or write flash configuration from command line)
-    -flashCfg       List all IMX "keys" and "values"
-   "-flashCfg=[key]=[value]|[key]=[value]" 
-                    Set key / value pairs in flash config. Surround with "quotes" when using pipe operator.
+OPTIONS (Read flash configuration from command line)
+    -flashCfg                                   # List all "keys" and "values"
+   "-flashCfg=[key]|[key]|[key]"                # List select values
+
+OPTIONS (Write flash configuration from command line)
+   "-flashCfg=[key]=[value]|[key]=[value]"      # Set key / value pairs in flash config. 
+                                                # Surround with "quotes" when using pipe operator.
 EXAMPLES
     cltool -c /dev/ttyS2 -flashCfg  # Read from device and print all keys and values
-    cltool -c /dev/ttyS2 -flashCfg=insRotation[0]=1.5708|insOffset[1]=1.2  
-                                  # Set multiple flashCfg values
+    cltool -c /dev/ttyS2 "-flashCfg=insOffset[1]=1.2|=ser2BaudRate=115200"  # Set multiple values
+
 OPTIONS (RTK Rover / Base)
     -rover=[type]:[IP or URL]:[port]:[mountpoint]:[username]:[password]
         As a rover (client), receive RTK corrections.  Examples:
