@@ -55,10 +55,10 @@ The IG-2 module and IG-2 header H1 have the same pinout assignment for pins 1-14
 
 ## IG-2 Schematic
 
-[Download Schematic](https://github.com/inertialsense/IS-hdw/blob/main/Products/IG-2-0/Schematic/IG-2_schematic.PDF)
+[Download Schematic](http://docs.inertialsense.com/datasheets/IG-2_schematic.pdf)
 
-<object data="https://github.com/inertialsense/IS-hdw/blob/main/Products/IG-2-0/Schematic/IG-2_schematic.PDF" type="application/pdf" width="700px" height="905px" >
-    <embed src="https://github.com/inertialsense/IS-hdw/blob/main/Products/IG-2-0/Schematic/IG-2_schematic.PDF" type="application/pdf" />
+<object data="https://github.com/inertialsense/IS-hdw/blob/main/Products/IG-2-0/Schematic/IG-2_schematic.pdf" type="application/pdf" width="700px" height="905px" >
+    <embed src="https://github.com/inertialsense/IS-hdw/blob/main/Products/IG-2-0/Schematic/IG-2_schematic.pdf" type="application/pdf" />
 </object>
 
 ## Hardware Versions
