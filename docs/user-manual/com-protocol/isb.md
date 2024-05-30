@@ -22,7 +22,7 @@ The `is_comm_set_data()` function will encode a message used to set data or conf
 void setInsOutputRotation()
 {
     float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-    int messageSize = is_comm_set_data(portWrite, 0, comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
+    is_comm_set_data(portWrite, 0, comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
 }
 ```
 ### Getting Data
