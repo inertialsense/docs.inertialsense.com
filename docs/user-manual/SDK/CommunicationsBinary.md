@@ -94,7 +94,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 		printf("Failed to encode and write get INS message\r\n");
 	}
 
-	// Ask for GPS message at period of 200ms (200ms source period x 1).  Offset and size can be left at 0 unless you want to just pull a specific field from a data set.
+	// Ask for GPS message at period of 200ms (200ms source period x 1).  Size and offset can be left at 0 unless you want to just pull a specific field from a data set.
 	messageSize = is_comm_get_data_to_buf(buffer, bufferSize, comm, DID_GPS1_POS, 0, 0, 1);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
