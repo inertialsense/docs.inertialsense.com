@@ -85,9 +85,10 @@ The default forward direction is indicated in the PCB footprint figure and on th
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-IG-2.0_Dimensions_and_Pinout.pdf)
 
-<object data="https://docs.inertialsense.com/dimensions/IS-IG-2.0_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
+<object data="https://docs.inertialsense.com/dimensions/IS-IG-2.0_Dimensions_and_Pinout.pdf" type="application/pdf" width="800px" height="600px" >
     <embed src="https://docs.inertialsense.com/dimensions/IS-IG-2.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
+
 
 ## Design Files
 
