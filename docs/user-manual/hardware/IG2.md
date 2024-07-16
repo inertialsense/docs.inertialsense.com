@@ -70,9 +70,10 @@ The IG-2 module and IG-2 header H1 have the same pinout assignment for pins 1-14
 
 [Download Schematic](https://docs.inertialsense.com/datasheets/IG-2_schematic.pdf)
 
-<object data="https://docs.inertialsense.com/datasheets/IG-2_schematic.pdf" type="application/pdf" width="750px" height="600px" >
+<object data="https://docs.inertialsense.com/datasheets/IG-2_schematic.pdf" type="application/pdf" width="700px" height="600px" >
     <embed src="https://docs.inertialsense.com/datasheets/IG-2_schematic.pdf" type="application/pdf" />
 </object>
+
 
 ## Soldering
 
@@ -86,9 +87,10 @@ The default forward direction is indicated in the PCB footprint figure and on th
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-IG-2.0_Dimensions_and_Pinout.pdf)
 
-<object data="https://docs.inertialsense.com/dimensions/IS-IG-2.0_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="1150px" >
+<object data="https://docs.inertialsense.com/dimensions/IS-IG-2.0_Dimensions_and_Pinout.pdf" type="application/pdf" width="700px" height="600px" >
     <embed src="https://docs.inertialsense.com/dimensions/IS-IG-2.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
+
 
 
 
