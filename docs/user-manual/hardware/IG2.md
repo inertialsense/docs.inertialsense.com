@@ -18,7 +18,7 @@ The Inertial Sense IG-2 is a PCB module with IMX-5 and GPX-1 multi-frequency GNS
 
 **Module Pinout**
 
-![IG1 Module Pinout](images/ig2_pinout.svg)
+<img src="images/ig2_pinout.svg" alt="IG1 Module Pinout" style="zoom:80%;" />
 
 **Header H1 Pinout**
 
