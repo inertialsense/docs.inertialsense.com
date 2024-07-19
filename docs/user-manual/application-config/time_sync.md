@@ -86,7 +86,7 @@ Example:
 rmc_t rmc;
 rmc.bits = RMC_BITS_STROBE_IN_TIME;
 
-int messageSize = is_comm_set_data(comm, DID_RMC, sizeof(uint64_t), offsetof(rmc_t, bits), &rmc);
+int messageSize = is_comm_set_data_to_buf(buffer, bufferSize, comm, DID_RMC, sizeof(uint64_t), offsetof(rmc_t, bits), &rmc);
 if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 {
     printf("Failed to write save persistent message\r\n");
