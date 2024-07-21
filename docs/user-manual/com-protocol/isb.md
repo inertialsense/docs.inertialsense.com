@@ -145,14 +145,14 @@ The following parser code uses less processor time to parse data by copying mult
 	// Read a set of bytes (fast method)
 	protocol_type_t ptype;
 
-	// Get available size of comm buffer
+	// Get available size of comm buffer.  is_comm_free() modifies comm->rxBuf pointers, call it before using comm->rxBuf.tail.
 	int n = is_comm_free(comm);
 
 	// Read data directly into comm buffer
-	if ((n = serialPortRead(comm->buf.tail, n)))
+	if ((n = serialPortRead(comm->rxBuf.tail, n)))
 	{
 		// Update comm buffer tail pointer
-		comm->buf.tail += n;
+		comm->rxBuf.tail += n;
 
 		// Search comm buffer for valid packets
 		while ((ptype = is_comm_parse(comm)) != _PTYPE_NONE)
@@ -160,7 +160,7 @@ The following parser code uses less processor time to parse data by copying mult
 			switch (ptype)
 			{
 			case _PTYPE_INERTIAL_SENSE_DATA:
-			case _PTYPE_IS_V1_CMD:
+			case _PTYPE_INERTIAL_SENSE_CMD:
 				break;
 			case _PTYPE_UBLOX:
 				break;
