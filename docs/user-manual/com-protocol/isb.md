@@ -110,7 +110,7 @@ Examples on how to use the Inertial Sense SDK for binary communications are foun
 
 ### Parsing Data
 
-The [ISComm](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/ISComm.h ) library in the [InertialSenseSDK]( https://github.com/inertialsense/InertialSenseSDK/ ) provides a communications parser that can parse InertialSense binary protocol as well as other protocols.  
+The [ISComm](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/ISComm.h ) library in the [InertialSenseSDK]( https://github.com/inertialsense/InertialSenseSDK/ ) provides a communications parser that can parse InertialSense binary protocol as well as other protocols. 
 
 #### One Byte (Simple Method)
 
