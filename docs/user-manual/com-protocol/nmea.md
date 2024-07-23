@@ -24,10 +24,10 @@ The packet checksum is an 8 bit integer and is calculated by calculating the exc
 
 ## Persistent Messages
 
-The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot,  eliminating the need to re-enable messages following a reset or power cycle.  
+The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot, eliminating the need to re-enable messages following a reset or power cycle.  
 
 - **To save current NMEA persistent messages** - send the [$PERS](#pers) command.  
-- **To disable persistent messages** - send the [$STPB](#stpb) followed by [$PERS](#pers). 
+- **To disable persistent messages** - send [$STPB](#stpb) followed by [$PERS](#pers). 
 
 [Binary persistent messages](../binary/#persistent-messages) are also available.
 
@@ -522,7 +522,7 @@ Where n is 0-3, for the four satellites supported by this message.
 
 #### GSV Output Filtering
 
-Verbosity and size of the GSV NMEA message can be reduced to only select constellation and frequencies by using a [Filtered GSV NMEA Message IDs](Filtered GSV NMEA Message IDs) instead of the standard GSV message ID `15` (`NMEA_MSG_ID_GxGSV`) with the [$ASCE command](ASCE).  Note that the GSV output filter can only hide or mask information for satellites currently enabled in the `DID_FLASH_CONFIG.gnssSatSigConst` satellite system constellation.  Usage:
+Verbosity and size of the GSV NMEA message can be reduced to only select constellation and frequencies by using a [Filtered GSV NMEA Message IDs](#filtered-gsv-nmea-message-ids) instead of the standard GSV message ID `15` (`NMEA_MSG_ID_GxGSV`) with the [$ASCE command](#asce).  Note that the GSV output filter can only hide or mask information for satellites currently enabled in the `DID_FLASH_CONFIG.gnssSatSigConst` satellite system constellation.  Usage:
 
 ```c++
 $ASCE,[Message ID]*[checksum]\r\n
