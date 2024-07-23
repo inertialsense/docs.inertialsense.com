@@ -520,6 +520,100 @@ $GLGSV,1,1,01,87,47,127,20,3*41\r\n
 
 Where n is 0-3, for the four satellites supported by this message. 
 
+#### GSV Output Filtering
+
+Verbosity and size of the GSV NMEA message can be reduced to only select constellation and frequencies by using a [Filtered GSV NMEA Message IDs](Filtered GSV NMEA Message IDs) instead of the standard GSV message ID `15` (`NMEA_MSG_ID_GxGSV`) with the [$ASCE command](ASCE).  Note that the GSV output filter can only hide or mask information for satellites currently enabled in the `DID_FLASH_CONFIG.gnssSatSigConst` satellite system constellation.  Usage:
+
+```c++
+$ASCE,[Message ID]*[checksum]\r\n
+```
+
+For example, using message ID `3857` (`NMEA_MSG_ID_GPGSV_1`) will output only the GPS L1 frequency and prevent all other frequency and constellation satellite information from being displayed.
+
+```
+$ASCE,3857*31\r\n
+```
+
+##### Filtered GSV NMEA Message IDs
+
+The following extended GSV NMEA message IDs are defined in data_sets.h.
+
+| All Constellations          | Message ID | Description |
+|-----------------------------|------|-------------|
+| NMEA_MSG_ID_GNGSV_0         | 3840 | Clear all constellations and frequencies |
+| NMEA_MSG_ID_GNGSV_1         | 3841 | Enable all constellations band1 |
+| NMEA_MSG_ID_GNGSV_2         | 3842 | Enable all constellations band2 |
+| NMEA_MSG_ID_GNGSV_2_1       | 3843 | Enable all constellations band1, band2 |
+| NMEA_MSG_ID_GNGSV_3         | 3844 | Enable all constellations band3 |
+| NMEA_MSG_ID_GNGSV_3_1       | 3845 | Enable all constellations band1, band3 |
+| NMEA_MSG_ID_GNGSV_3_2       | 3846 | Enable all constellations band2, band3 |
+| NMEA_MSG_ID_GNGSV_3_2_1     | 3847 | Enable all constellations band1, band2, band3 |
+| NMEA_MSG_ID_GNGSV_5         | 3848 | Enable all constellations band5 |
+| NMEA_MSG_ID_GNGSV_5_1       | 3849 | Enable all constellations band1, band5 |
+| NMEA_MSG_ID_GNGSV_5_2       | 3850 | Enable all constellations band2, band5 |
+| NMEA_MSG_ID_GNGSV_5_2_1     | 3851 | Enable all constellations band1, band2, band5 |
+| NMEA_MSG_ID_GNGSV_5_3       | 3852 | Enable all constellations band3, band5 |
+| NMEA_MSG_ID_GNGSV_5_3_1     | 3853 | Enable all constellations band1, band3, band5 |
+| NMEA_MSG_ID_GNGSV_5_3_2     | 3854 | Enable all constellations band2, band3, band5 |
+| NMEA_MSG_ID_GNGSV_5_3_2_1   | 3855 | Enable all constellations band1, band2, band3, band5 |
+| NMEA_MSG_ID_GxGSV or<br/>NMEA_MSG_ID_GNGSV | 15<br/>3855 | Enable all constellations and frequencies |
+
+| GPGSV - GPS                 | Message ID | Description |
+|-----------------------------|------|-------------|
+| NMEA_MSG_ID_GPGSV_0         | 3856 | Disable all GPS frequencies |
+| NMEA_MSG_ID_GPGSV_1         | 3857 | Enable GPS L1 |
+| NMEA_MSG_ID_GPGSV_2         | 3858 | Enable GPS L2 |
+| NMEA_MSG_ID_GPGSV_2_1       | 3859 | Enable GPS L1, L2 |
+| NMEA_MSG_ID_GPGSV_5         | 3864 | Enable GPS L5 |
+| NMEA_MSG_ID_GPGSV_5_1       | 3865 | Enable GPS L1, L5 |
+| NMEA_MSG_ID_GPGSV_5_2       | 3866 | Enable GPS L2, L5 |
+| NMEA_MSG_ID_GPGSV_5_2_1     | 3867 | Enable GPS L1, L2, L5 |
+| NMEA_MSG_ID_GPGSV           | 3871 | Enable all GPS frequencies |
+
+| GAGSV - Galileo          | Message ID | Description |
+|-----------------------------|-------|-------------|
+| NMEA_MSG_ID_GAGSV_0         | 3888 | Disable all Galileo frequencies |
+| NMEA_MSG_ID_GAGSV_1         | 3889 | Enable Galileo E1 |
+| NMEA_MSG_ID_GAGSV_5         | 3896 | Enable Galileo E5 |
+| NMEA_MSG_ID_GAGSV_5_1       | 3897 | Enable Galileo E1, E5 |
+| NMEA_MSG_ID_GAGSV           | 3903 | Enable all Galileo frequencies     |
+
+| GBGSV - Beido          | Message ID | Description |
+|-----------------------------|-------|-------------|
+| NMEA_MSG_ID_GBGSV_0         | 3904 | Disable all Beidou frequencies |
+| NMEA_MSG_ID_GBGSV_1         | 3905 | Enable Beidou B1 |
+| NMEA_MSG_ID_GBGSV_2         | 3906 | Enable Beidou B2 |
+| NMEA_MSG_ID_GBGSV_2_1       | 3907 | Enable Beidou B1, B2 |
+| NMEA_MSG_ID_GBGSV_3         | 3908 | Enable Beidou B3  |
+| NMEA_GBGSV_3_1              | 3909 | Enable Beidou B1, B3 |
+| NMEA_MSG_ID_GBGSV_3_2       | 3910 | Enable Beidou B2, B3 |
+| NMEA_MSG_ID_GBGSV_3_2_1     | 3911 | Enable Beidou B1, B2, B3 |
+| NMEA_MSG_ID_GBGSV           | 3919 | Enable all Beidou frequencies |
+
+| GQGSV - QZSS          | Message ID | Description |
+|-----------------------------|-------|-------------|
+| NMEA_MSG_ID_GQGSV_0         | 3920 | Disable all QZSS frequencies |
+| NMEA_MSG_ID_GQGSV_1         | 3921 | Enable QZSS L1 |
+| NMEA_MSG_ID_GQGSV_2         | 3922 | Enable QZSS L2 |
+| NMEA_MSG_ID_GQGSV_2_1       | 3923 | Enable QZSS L1, L2 |
+| NMEA_MSG_ID_GQGSV_5         | 3928 | Enable QZSS L5 |
+| NMEA_MSG_ID_GQGSV_5_1       | 3929 | Enable QZSS L1, L5 |
+| NMEA_MSG_ID_GQGSV_5_2       | 3930 | Enable QZSS L2, L5 |
+| NMEA_MSG_ID_GQGSV_5_2_1     | 3931 | Enable QZSS L1, L2, L5 |
+| NMEA_MSG_ID_GQGSV           | 3935 | Enable all QZSS frequencies |
+
+| GLGSV - Glonass          | Message ID | Description |
+|-----------------------------|-------|-------------|
+| NMEA_MSG_ID_GLGSV_0         | 3936 | Disable all Glonass frequencies |
+| NMEA_MSG_ID_GLGSV_1         | 3937 | Enable Glonass L1 |
+| NMEA_MSG_ID_GLGSV_2         | 3938 | Enable Glonass L2 |
+| NMEA_MSG_ID_GLGSV_2_1       | 3939 | Enable Glonass L1, L2 |
+| NMEA_MSG_ID_GLGSV_3         | 3940 | Enable Glonass L3 |
+| NMEA_MSG_ID_GLGSV_3_1       | 3941 | Enable Glonass L1, L3 |
+| NMEA_MSG_ID_GLGSV_3_2       | 3942 | Enable Glonass L2, L3 |
+| NMEA_MSG_ID_GLGSV_3_2_1     | 3943 | Enable Glonass L1, L2, L3 |
+| NMEA_MSG_ID_GLGSV           | 3951 | Enable all Glonass frequencies |
+
 ### VTG
 
 NMEA GPS track made good and speed over ground.
