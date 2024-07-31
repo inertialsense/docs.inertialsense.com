@@ -1,6 +1,6 @@
 # World Magnetic Model (WMM)
 
-The World Magnetic Model (WMM) is a mathematical model that represents the Earth's magnetic field and is. It is developed by the National Centers for Environmental Information (NCEI) and the British Geological Survey (BGS) and is updated every five years to account for changes in the Earth's magnetic field.
+The World Magnetic Model (WMM) is a mathematical model that represents the Earth's magnetic field. It is developed by the National Centers for Environmental Information (NCEI) and the British Geological Survey (BGS) and is updated every five years to account for changes in the Earth's magnetic field.
 
 The IMX-5 uses an on-board WMM to estimate the magnetic declination, which is the angle between magnetic north and true north. 
 
