@@ -2,7 +2,7 @@
 
 <center>
 
-![uINS_rugged_thumb](../images/ig-2.0.png)
+![IG-2](../images/ig-2.0.png)
 
 </center>
 
@@ -18,11 +18,11 @@ The Inertial Sense IG-2 is a PCB module with IMX-5 and GPX-1 multi-frequency GNS
 
 **Module Pinout**
 
-![IG1 Module Pinout](images/ig2_pinout.svg)
+![IG2 Module Pinout](images/ig2_pinout.svg)
 
 **Header H1 Pinout**
 
-![IG1 H1 Pinout](images/ig-1.1_h1_pinout.png)
+![IG2 H1 Pinout](images/ig-1.1_h1_pinout.png)
 
 The IG-2 module and IG-2 header H1 have the same pinout assignment for pins 1-14.  Because H1 only has 14 pins, pins 15 and above listed in the following table are only on the IG-2 module.
 
