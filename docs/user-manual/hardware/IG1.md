@@ -18,7 +18,7 @@ The Inertial Sense IG-1 is a PCB module with IMX-5 and dual ublox ZED-F9P multi-
 
 **Module Pinout**
 
-![IG2 Module Pinout](images/ig1_pinout.svg)
+![IG1 Module Pinout](images/ig1_pinout.svg)
 
 **Header H1 Pinout**
 
