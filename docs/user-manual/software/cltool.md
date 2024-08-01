@@ -14,7 +14,7 @@ EXAMPLES
     cltool -c /dev/ttyS2 -did 3=5                   # stream DID_PIMU at startupNavDtMs x 5
     cltool -c /dev/ttyS2 -presetPPD                 # stream post processing data (PPD) with INS2
     cltool -c /dev/ttyS2 -presetPPD -lon -lts=1     # stream PPD + INS2 data, logging, dir timestamp
-    cltool -c /dev/ttyS2 -edit DID_FLASH_CFG        # edit DID_FLASH_CONFIG message
+    cltool -c /dev/ttyS2 -edit DID_FLASH_CONFIG     # edit DID_FLASH_CONFIG message
     cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGPSDtMs
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
     cltool -rp logs/20170117_222549                 # replay log files from a folder
