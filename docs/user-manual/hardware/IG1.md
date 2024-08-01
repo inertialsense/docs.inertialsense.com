@@ -2,7 +2,7 @@
 
 <center>
 
-![uINS_rugged_thumb](../images/ig-1.1-g2.png)
+![IG-1](../images/ig-1.1-g2.png)
 
 </center>
 
@@ -18,7 +18,9 @@ The Inertial Sense IG-1 is a PCB module with IMX-5 and dual ublox ZED-F9P multi-
 
 **Module Pinout**
 
-![IG1 Module Pinout](images/ig-1.1_module_pinout.png)**Header H1 Pinout**
+![IG2 Module Pinout](images/ig1_pinout.svg)
+
+**Header H1 Pinout**
 
 ![IG1 H1 Pinout](images/ig-1.1_h1_pinout.png)
 
@@ -26,7 +28,6 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 
 | Module<br/>& H1 Pin                | Name                                       | I/O  | Description                                                  |
 | ---------------------------------- | :----------------------------------------- | ---- | ------------------------------------------------------------ |
-| 0                                  | GND                                        | PWR  | All other pins not shown in the image are pin 0 tied to GND. |
 | ![](../images/square-black.png)1   | GND                                        | PWR  | -                                                            |
 | ![](../images/square-black.png)2   | VIN                                        | PWR  | 4V-20V supply voltage input                                  |
 | ![](../images/square-red.png)3     | +3.3V                                      | PWR  | Regulated 3.3V supply input/output.                          |
@@ -40,7 +41,7 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 | ![](../images/square-white.png)11  | G7/Tx1/MISO                                | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO             |
 | ![](../images/square-grey.png)12   | G8/CS/STROBE                               | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input              |
 | ![](../images/square-brown.png)13  | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/SPI_DRDY | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location. |
-| ![](../images/square-orange.png)14 | GPS.TIMEPULSE                              | O    | GPS PPS UTC time synchronization signal.                     |
+| ![](../images/square-orange.png)14 | GPS_TIMEPULSE                              | O    | GPS1 PPS UTC time synchronization signal.                    |
 | 15                                 | GND                                        | I/O  | -                                                            |
 | 16                                 | VBAT                                       | I/O  | GPS backup supply voltage. (1.4V to 3.6V) enables GPS hardware backup mode for hot or warm startup (faster GPS lock acquisition). MUST connect GPS_VBAT to VCC if no backup battery is used. |
 | 17                                 | G10/BOOT_MODE                              | I/O  | Leave unconnected. BOOT MODE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
@@ -52,6 +53,14 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 | 23                                 | GND                                        | PWR  | -                                                            |
 | 24                                 | USB_N                                      | I/O  | USB  Data Negative Line                                      |
 | 25                                 | USB_P                                      | I/O  | USB Data Positive Line                                       |
+| 26                                 | GPS1_RX2                                   | I    | Ublox ZED-F9P RXD2 (GPS1)                                    |
+| 27                                 | GPS1_TX2                                   | O    | Ublox ZED-F9P TXD2 (GPS1)                                    |
+| 28                                 | GPS2_RX2                                   | I    | Ublox ZED-F9P RXD2 (GPS2)                                    |
+| 29                                 | GPS2_TX2                                   | O    | Ublox ZED-F9P TXD2 (GPS2)                                    |
+| 30                                 | +3.3V                                      | PWR  | Regulated 3.3V supply input/output.                          |
+| 31                                 | GPS2_TIMEPULSE                             | O    | GPS2 PPS UTC time synchronization signal.                    |
+| 32-36                              | NC                                         | -    | Not connected internally                                     |
+| 37-69                              | GND                                        | PWR  | -                                                            |
 
 ## Hardware Versions
 
@@ -60,10 +69,19 @@ The following outlines differences in the IG-1.x hardware versions.
 **IG-1.1**
 
 - GPS1 PPS line connected to IMX TIMEPUSE G15 (pin 20).
+- IG-1 pins 26-36 are connected to ground.
 
 **IG-1.0**
 
 - GPS1 PPS line connected to IMX G8 (pin 8).
+- IG-1 pins 26-36 are connected to ground.
+
+**IG-1.2**
+
+- GPS1 ZED-F9P RXD2/TXD2 lines connected to IG-1 pins 26, 27.
+- GPS2 ZED-F9P RXD2/TXD2 lines connected to IG-1 pins 28, 29.
+- GPS1 ZED-F9P PPS (TIMEPULSE) line connected to IG-1 pin 31.
+- IG-1 pins 32-36 are not connected internally (not connected to ground).
 
 ## Soldering
 
