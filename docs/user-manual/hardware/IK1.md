@@ -2,7 +2,7 @@
 
 <center>
 
-![IG-1](../images/IK-1.0.png)
+![IG-1](../images/ik-1.png)
 
 </center>
 
