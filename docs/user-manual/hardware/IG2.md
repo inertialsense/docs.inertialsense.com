@@ -74,11 +74,6 @@ The IG-2 module and IG-2 header H1 have the same pinout assignment for pins 1-14
     <embed src="https://docs.inertialsense.com/datasheets/IG-2_schematic.pdf" type="application/pdf" />
 </object>
 
-
-## Soldering
-
-The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual
-
 ## Hardware Design
 
 ### Recommend PCB Footprint and Layout
@@ -91,8 +86,9 @@ The default forward direction is indicated in the PCB footprint figure and on th
     <embed src="https://docs.inertialsense.com/dimensions/IS-IG-2.0_Dimensions_and_Pinout.pdf" type="application/pdf" />
 </object>
 
+## Soldering
 
-
+The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) section of this manual.
 
 ## Design Files
 

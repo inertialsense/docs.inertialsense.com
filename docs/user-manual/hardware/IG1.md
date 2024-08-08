@@ -83,9 +83,13 @@ The following outlines differences in the IG-1.x hardware versions.
 - GPS1 PPS line connected to IMX G8 (pin 8).
 - IG-1 pins 26-36 are connected to ground.
 
-## Soldering
+## IG-1 Schematic
 
-The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual
+[Download Schematic](https://docs.inertialsense.com/datasheets/IG-1_schematic.pdf)
+
+<object data="https://docs.inertialsense.com/datasheets/IG-1_schematic.pdf" type="application/pdf" width="700px" height="600px" >
+    <embed src="https://docs.inertialsense.com/datasheets/IG-1_schematic.pdf" type="application/pdf" />
+</object>
 
 ## Hardware Design
 
@@ -99,7 +103,9 @@ The default forward direction is indicated in the PCB footprint figure and on th
     <embed src="https://docs.inertialsense.com/dimensions/IS-IG-1.1-G2-Dual_Dimensions_and_Pinout_IG-1-IMX-5-Dual.pdf" type="application/pdf" />
 </object>
 
+## Soldering
 
+The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) section of this manual.
 
 ## Design Files
 

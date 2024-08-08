@@ -65,7 +65,6 @@ The IK-1 module pinout is as follows
     <embed src="https://docs.inertialsense.com/datasheets/IK-1_schematic.pdf" type="application/pdf" />
 </object>
 
-
 ## Design Files
 
 <img src="https://www.oshwa.org/wp-content/uploads/2014/03/oshw-logo.svg" width="100" align="right" />
