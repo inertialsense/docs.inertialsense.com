@@ -83,7 +83,7 @@ The following outlines differences in the IG-1.x hardware versions.
 - GPS1 PPS line connected to IMX G8 (pin 8).
 - IG-1 pins 26-36 are connected to ground.
 
-## IG-1 Schematic
+## Schematic
 
 [Download Schematic](https://docs.inertialsense.com/datasheets/IG-1_schematic.pdf)
 

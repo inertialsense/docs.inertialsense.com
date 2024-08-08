@@ -66,7 +66,7 @@ The IG-2 module and IG-2 header H1 have the same pinout assignment for pins 1-14
 | 36                                 | GPX_G9/SPI_EN                              | I/O  | GPX GPIO9<br/>GPX SPI Enable: Hold LOW during bootup to enable SPI on G5-G8 |
 | 37-47                              | GND                                        | PWR  | -                                                            |
 
-## IG-2 Schematic
+## Schematic
 
 [Download Schematic](https://docs.inertialsense.com/datasheets/IG-2_schematic.pdf)
 

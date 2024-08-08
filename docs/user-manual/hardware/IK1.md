@@ -57,7 +57,7 @@ The IK-1 module pinout is as follows
 | U.FL1 | - | 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-14V TVS diode for ESD and surge projection (e.g. Littlefuse PESD0402-140). |
 | U.FL2 | - | 14 | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
 
-## IK-1 Schematic
+## Schematic
 
 [Download Schematic](https://docs.inertialsense.com/datasheets/IK-1_schematic.pdf)
 
