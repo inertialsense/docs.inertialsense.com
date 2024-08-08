@@ -18,7 +18,7 @@ The Inertial Sense IG-1 is a PCB module with IMX-5 and dual ublox ZED-F9P multi-
 
 **Module Pinout**
 
-![IG2 Module Pinout](images/ig1_pinout.svg)
+![IG1 Module Pinout](images/ig1_pinout.svg)
 
 **Header H1 Pinout**
 
@@ -66,6 +66,13 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 
 The following outlines differences in the IG-1.x hardware versions.
 
+**IG-1.2** 
+
+- GPS1 ZED-F9P RXD2/TXD2 lines connected to IG-1 pins 26, 27.
+- GPS2 ZED-F9P RXD2/TXD2 lines connected to IG-1 pins 28, 29.
+- GPS1 ZED-F9P PPS (TIMEPULSE) line connected to IG-1 pin 31.
+- IG-1 pins 32-36 are not connected internally (not connected to ground).
+
 **IG-1.1**
 
 - GPS1 PPS line connected to IMX TIMEPUSE G15 (pin 20).
@@ -75,13 +82,6 @@ The following outlines differences in the IG-1.x hardware versions.
 
 - GPS1 PPS line connected to IMX G8 (pin 8).
 - IG-1 pins 26-36 are connected to ground.
-
-**IG-1.2**
-
-- GPS1 ZED-F9P RXD2/TXD2 lines connected to IG-1 pins 26, 27.
-- GPS2 ZED-F9P RXD2/TXD2 lines connected to IG-1 pins 28, 29.
-- GPS1 ZED-F9P PPS (TIMEPULSE) line connected to IG-1 pin 31.
-- IG-1 pins 32-36 are not connected internally (not connected to ground).
 
 ## Soldering
 
@@ -111,9 +111,7 @@ Open source hardware design files, libraries, and example projects for the IMX m
 
 The IG-1 circuit board projects serve as reference designs that illustrate implementation of the IMX PCB module.
 
-[IG-1-G2 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-1-G2)
-
-[IG-1-G1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-1-G1)
+[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1)
 
 ## Related Parts
 
