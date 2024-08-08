@@ -76,13 +76,13 @@ Open source hardware design files, libraries, and example projects for the IMX m
 
 The EVB-2, IG-1, IG-2, and IK-1 circuit board projects serve as reference designs that illustrate implementation of the IMX PCB module.
 
-[EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1)
+[EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2)
 
-[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-1-G2)
+[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1)
 
-[IG-2 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-2-0)
+[IG-2 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-2)
 
-[IK-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IK-1-0)
+[IK-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IK-1)
 
 ## Related Parts
 
