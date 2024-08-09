@@ -11,6 +11,7 @@ Check the following:
 - The input supply is at 3.3V and clean without noise.
 - The serial connection is grounded (no floating grounds).
 - The serial wires between the uINS module and the next active device (buffer, converter, or processor) are not longer than 1 meter when bootloading firmware.
+- Reset or power cycle the IMX and promptly run the firmware update within 30 seconds of reset.  If the IMX firmware update is interrupted and the IMX reset, a 50 second timeout will cause all UARTs to be disabled.  Resetting the IMX will restart this timer and re-enable UARTs for 50 seconds.
 
 ## Bootloader Update fails first time
 
