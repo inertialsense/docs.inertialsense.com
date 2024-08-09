@@ -6,10 +6,10 @@ The IMX bootloader is embedded firmware stored on the IMX and is used to update 
 
 The following are conditions for the IMX firmware update.
 
-- At start of the firmware update process, the IMX is sent a "bootloader enable" command to reboot the processor into bootloader mode.  The IMX will not reboot into application mode until a valid firmware upload has completed.
-- A handshake sequence consisting of five consecutive sync characters (`U`) spaced 10 ms (minimum 5 ms) apart is sent to the IMX to initiate a given port and close all other ports to prevent interference.
-- All UART ports automatically close if no handshake sequence is received after 50 seconds of the bootloader start.  The USB port does not automatically close due to no handshake reception.
-- The IMX reboots into application mode only after a valid firmware upload has completed. 
+- **Bootloader Enable** - At start of the firmware update process, the IMX is sent a "bootloader enable" command to reboot the processor into bootloader mode.  The IMX will not reboot into application mode until a valid firmware upload has completed.
+- **Handshake Sequence** - A handshake sequence consisting of five consecutive sync characters (`U`) spaced 10 ms (minimum 5 ms) apart is sent to the IMX to initiate a given port and close all other ports to prevent interference.
+- **UART Auto Close** - All UART ports automatically close if no handshake sequence is received after 50 seconds of the bootloader start.  The USB port does not automatically close due to no handshake reception.
+- **Application Enable** - The IMX reboots into application mode only after a valid firmware upload has completed. 
 
 ## Bootloader Update
 
