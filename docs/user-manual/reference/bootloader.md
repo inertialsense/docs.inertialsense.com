@@ -12,7 +12,7 @@ The following are conditions for the IMX firmware update.
 
 ## Bootloader Update
 
-Updating the bootloader firmware is required occasionally when new functionality is required.  The bootloader is checked and updated at the same time as loading new firmware. The following steps outline how to update the IMX bootloader and firmware.
+Updating the bootloader firmware is occasionally necessary when new functionality is required.  The bootloader is checked and updated at the same time as loading new firmware. The following steps outline how to update the IMX bootloader and firmware.
 
 1. **Ensure IMX Firmware is Running** - *(This step is not necessary if the IMX firmware is running and the EvalTool is communicating with the IMX)*. If the bootloader is running but the firmware is not, version information will not appear in the EvalTool. The LED will also be a fading cyan.
 2. **Select Baud Rate** - Select a slower baud rate (i.e. 115,200 or 230,400) for systems with known baud rate limits. 
