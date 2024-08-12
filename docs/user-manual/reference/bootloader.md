@@ -1,6 +1,6 @@
-# IMX Bootloader
+# IMX-5.0 Bootloader
 
-The IMX bootloader is embedded firmware stored on the IMX and is used to update the IMX application firmware.  
+The IMX-5.0 bootloader is embedded firmware stored on the IMX and is used to update the IMX application firmware.  
 
 ## Application Firmware Update
 
@@ -19,4 +19,7 @@ Updating the bootloader firmware is occasionally necessary when new functionalit
 3. **Update the Bootloader and Firmware** - Use the EvalTool "Update Firmware" button in the Settings tab to upload the latest [bootloader](https://github.com/inertialsense/InertialSenseSDK/releases/tag/bootloader) and the latest firmware. **The bootloader can only be updated using serial0 or the native USB ports.**
 
 ## Known Issues 
-**UART 50s Disable** - In the IMX-5.0 bootloader version v5g and prior versions all UARTs get disabled if no handshake sequence is received within 50 seconds of the bootloader start.  The USB port does not automatically close due to no handshake reception.
+
+The following are known issues in the IMX-5.0 bootloader.
+
+- **UART 50s Disable** - As of version v5g and prior, all UARTs get disabled if no handshake sequence is received within 50 seconds of the bootloader start.  The USB port does not automatically close due to no handshake reception.
