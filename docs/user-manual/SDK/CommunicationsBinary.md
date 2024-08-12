@@ -11,14 +11,14 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 
 #### SDK Files
 
-* [data_sets.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.c)
-* [data_sets.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.h)
-* [ISComm.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.c)
-* [ISComm.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.h)
-* [serialPort.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.c)
-* [serialPort.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.h)
-* [serialPortPlatform.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.c)
-* [serialPortPlatform.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.h)
+* [data_sets.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.c)
+* [data_sets.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.h)
+* [ISComm.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.c)
+* [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h)
+* [serialPort.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.c)
+* [serialPort.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.h)
+* [serialPortPlatform.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.c)
+* [serialPortPlatform.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.h)
 
 
 ## Implementation
@@ -77,7 +77,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 ```C++
 	// Set INS output Euler rotation in radians to 90 degrees roll for mounting
 	float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-	int messageSize = is_comm_set_data(comm, DID_FLASH_CONFIG, offsetof(nvm_flash_cfg_t, insRotation), sizeof(float) * 3, rotation);
+	int messageSize = is_comm_set_data_to_buf(comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to encode and write set INS rotation\r\n");
@@ -88,21 +88,21 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 
 ```C++
 	// Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
-	int messageSize = is_comm_get_data(comm, DID_INS_1, 0, 0, 10);
+	int messageSize = is_comm_get_data_to_buf(buffer, bufferSize, comm, DID_INS_1, 0, 0, 10);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to encode and write get INS message\r\n");
 	}
 
-	// Ask for GPS message at period of 200ms (200ms source period x 1).  Offset and size can be left at 0 unless you want to just pull a specific field from a data set.
-	messageSize = is_comm_get_data(comm, DID_GPS1_POS, 0, 0, 1);
+	// Ask for GPS message at period of 200ms (200ms source period x 1).  Size and offset can be left at 0 unless you want to just pull a specific field from a data set.
+	messageSize = is_comm_get_data_to_buf(buffer, bufferSize, comm, DID_GPS1_POS, 0, 0, 1);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to encode and write get GPS message\r\n");
 	}
 
 	// Ask for IMU message at period of 96ms (DID_FLASH_CONFIG.startupNavDtMs source period x 6).  This could be as high as 1000 times a second (period multiple of 1)
-	messageSize = is_comm_get_data(comm, DID_IMU, 0, 0, 6);
+	messageSize = is_comm_get_data_to_buf(buffer, bufferSize, comm, DID_IMU, 0, 0, 6);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to encode and write get IMU message\r\n");
@@ -118,7 +118,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 	cfg.command = SYS_CMD_SAVE_PERSISTENT_MESSAGES;
 	cfg.invCommand = ~cfg.command;
 
-	int messageSize = is_comm_set_data(comm, DID_SYS_CMD, 0, sizeof(system_command_t), &cfg);
+	int messageSize = is_comm_set_data_to_buf(buffer, bufferSize, comm, DID_SYS_CMD, 0, 0, &cfg);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to write save persistent message\r\n");
@@ -128,14 +128,13 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 ### Step 8: Handle received data
 
 ```C++
-	int count;
 	uint8_t inByte;
 
 	// You can set running to false with some other piece of code to break out of the loop and end the program
 	while (running)
 	{
 		// Read one byte with a 20 millisecond timeout
-		while ((count = serialPortReadCharTimeout(&serialPort, &inByte, 20)) > 0)
+		while (serialPortReadCharTimeout(&serialPort, &inByte, 20) > 0)
 		{
 			switch (is_comm_parse_byte(&comm, inByte))
 			{
@@ -143,19 +142,19 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 				switch (comm.dataHdr.id)
 				{
 				case DID_INS_1:
-					handleIns1Message((ins_1_t*)comm.dataPtr);
+					handleIns1Message((ins_1_t*)comm.pkt.data.ptr);
 					break;
 
 				case _DID_INS_LLA_QN2B:
-					handleIns2Message((ins_2_t*)comm.dataPtr);
+					handleIns2Message((ins_2_t*)comm.pkt.data.ptr);
 					break;
 
 				case DID_GPS1_POS:
-					handleGpsMessage((gps_pos_t*)comm.dataPtr);
+					handleGpsMessage((gps_pos_t*)comm.pkt.data.ptr);
 					break;
 
 				case _DID_PIMU:
-					handleImuMessage((dual_imu_t*)comm.dataPtr);
+					handleImuMessage((dual_imu_t*)comm.pkt.data.ptr);
 					break;
 
 				// TODO: add other cases for other data ids that you care about

@@ -2,7 +2,7 @@
 
 ## Interfacing with the IMX over serial
 
-This example shows how to communicate with the IMX using the Inertial Sense [Binary Communications Protocol](../com-protocol/binary.md). The example code can be found in the [Inertial Sense SDK](<https://github.com/inertialsense/InertialSenseSDK>)/ExampleProjects/Arduino.
+This example shows how to communicate with the IMX using the Inertial Sense [Binary Communications Protocol](../com-protocol/isb.md). The example code can be found in the [Inertial Sense SDK](<https://github.com/inertialsense/InertialSenseSDK>)/ExampleProjects/Arduino.
 
 !!! important
     [Update](../../software/evaltool/#update-firmware) the IMX to the <a href="https://github.com/inertialsense/InertialSenseSDK/releases">latest firmware</a>
@@ -13,7 +13,7 @@ This example demonstrates how to use the Inertial Sense EVB with an Arduino Due.
     The InertialSense SDK requires 64-bit double support.  32-bit processors (Arduino Due, Zero, and M0) are supported.  8-bit processors (i.e. Arduino Mega and Uno) are NOT supported.  The [ASCII protocol](../com-protocol/nmea.md) (not covered in this example) may be used on an 8-bit Arduino.
 
 !!! note
-    A [Raspberry PI](https://www.raspberrypi.org/products/) (similar in price to the Arduino) is a good alternative to the Arduino.  Either the [Binary Communications](../com-protocol/binary.md) and [ASCII Communications](../com-protocol/nmea.md) example projects can be run on a Raspberry PI. 
+    A [Raspberry PI](https://www.raspberrypi.org/products/) (similar in price to the Arduino) is a good alternative to the Arduino.  Either the [Binary Communications](../com-protocol/isb.md) and [ASCII Communications](../com-protocol/nmea.md) example projects can be run on a Raspberry PI. 
 
 ## Wiring Guide
 
@@ -90,12 +90,12 @@ void setup()
 
     // Stop all the broadcasts on the device
     int messageSize = is_comm_stop_broadcasts_all_ports(&comm);
-    Serial1.write(comm.buf.start, messageSize); // Transmit the message to the inertialsense device
+    Serial1.write(comm.rxBuf.start, messageSize); // Transmit the message to the inertialsense device
 
     // Ask for ins_1 message 20 times per second.  Ask for the whole thing, so
     // set 0's for the offset and size
-    messageSize = is_comm_get_data(&comm, DID_INS_1, 0, sizeof(ins_1_t), 1000);
-    Serial1.write(comm.buf.start, messageSize); // Transmit the message to the inertialsense device
+    messageSize = is_comm_get_data_to_buf(buffer, bufferSize, &comm, DID_INS_1, sizeof(ins_1_t), 0, 1000);
+    Serial1.write(comm.rxBuf.start, messageSize); // Transmit the message to the inertialsense device
 }
 ```
 
@@ -135,7 +135,7 @@ void loop()
             case DID_NULL:
                 break;
             case DID_INS_1:
-                handleINSMessage((ins_1_t *)(comm.dataPtr));
+                handleINSMessage((ins_1_t *)(comm.pkt.data.ptr));
                 break;
             default:
                 Serial.print("Got an unexpected message DID: ");

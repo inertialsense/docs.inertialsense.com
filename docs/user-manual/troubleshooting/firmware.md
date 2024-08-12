@@ -11,6 +11,7 @@ Check the following:
 - The input supply is at 3.3V and clean without noise.
 - The serial connection is grounded (no floating grounds).
 - The serial wires between the uINS module and the next active device (buffer, converter, or processor) are not longer than 1 meter when bootloading firmware.
+- Reset or power cycle the IMX and promptly run the firmware update within 30 seconds of reset.  A known issue in the IMX-5.0 bootloader version v6g and prior versions that disables all UARTS if no handshake is received within 50 second following startup.  Resetting the IMX will re-enable UARTs for 50 seconds.
 
 ## Bootloader Update fails first time
 
@@ -66,7 +67,7 @@ In the case that your units do not connect properly to the EvalTool, verify:
 4. Check your computer's Device Manager to see if your unit shows up there. If it doesn't show up, you may have an FTDI driver issue.
    1. If you suspect you don't have the FTDI driver installed on your Windows computer, use the following links to download the driver:
       - Executable for the FTDI USB driver:
-        - http://www.ftdichip.com/Drivers/CDM/CDM21228_Setup.zip
+        - https://ftdichip.com/wp-content/uploads/2023/09/CDM-v2.12.36.4-WHQL-Certified.zip
       - Drives without executable.
         - http://www.ftdichip.com/Drivers/D2XX.htm
 

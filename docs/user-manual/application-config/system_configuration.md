@@ -1,6 +1,6 @@
 # System Configuration
 
-See the [Binary Protocol](../com-protocol/binary.md) page for descriptions of each [flash configuration](../../com-protocol/DID-descriptions/#did_flash_config) value and [enumeration bit values](../../com-protocol/DID-descriptions/#enumerations-and-defines).
+See the [Binary Protocol](../com-protocol/isb.md) page for descriptions of each [flash configuration](../../com-protocol/DID-descriptions/#did_flash_config) value and [enumeration bit values](../../com-protocol/DID-descriptions/#enumerations-and-defines).
 
 ## Serial Port Baud Rates
 
