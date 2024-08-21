@@ -21,8 +21,12 @@ If updating the bootloader firmware and using the USB direct connection on the I
 
 If attempting to enter NAV mode but the system reports AHRS despite GPS data beig received, then assure your units are not set to Rover RTK mode. This will override your ability to lock in GPS Nav mode.
 
+## "IMX-5 Bricked" System Recovery
+<!-- ## Todo -->
+## "GPX-1 Bricked" System Recovery
+<!-- ## TODO -->
 
-## "Bricked" System Recovery
+## "uINS Bricked" System Recovery
 There are different reasons a system may appear unresponsive and not communicate.  The following sections describe how to recover a system from these states.  
 
 !!! attention

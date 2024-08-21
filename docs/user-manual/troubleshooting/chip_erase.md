@@ -53,13 +53,13 @@ EvalTool internal mode is used to access the EvalTool Manufacturing tab, used to
 
 #### Restore Sensor Calibration
 
-[Contact InertialSense](mailto:support@inertialsense.com) and provide your uINS serial number to request the sensor calibration that corresponds with your uINS.  Use the EvalTool to upload the senor calibration onto your uINS.  
+[Contact InertialSense](mailto:support@inertialsense.com) and provide your unit serial number to request the sensor calibration that corresponds with your unit.  Use the EvalTool to upload the senor calibration onto your unit.  
 
 1. Ensure the EvalTool is in [Internal Mode](#enable-evaltool-internal-mode) which provides access the Manufacturing tab.
-2. Ensure uINS is communicating with EvalTool.
+2. Ensure unit is communicating with EvalTool.
 3. Upload calibration data: EvalTool -> Manufacturing Tab -> "Load" button next to "System Test" button.
 4. Verify "TC Pts" which is the number of calibration points located just below the "Load" button changes from "0,0" to two numbers larger than 12 (i.e. "18,18"). 
-5. Reset the uINS.
+5. Reset the unit.
 6. **Run "Built-In Test"**  - Verify the built-in test passes by pressing the "Built-In Test" button in the EvalTool INS tab.
-7. **Verify IMU output** - Place the uINS on a flat level surface.  Using the EvalTool Sensor tab, verify that the gyro rates are near zero, the accelerometer X and Y axes are near zero, and accelerometer Z axis is near -9.8m/s^2 for gravity.
+7. **Verify IMU output** - Place the unit on a flat level surface.  Using the EvalTool Sensor tab, verify that the gyro rates are near zero, the accelerometer X and Y axes are near zero, and accelerometer Z axis is near -9.8m/s^2 for gravity.
 
