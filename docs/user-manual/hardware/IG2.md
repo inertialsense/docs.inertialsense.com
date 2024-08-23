@@ -33,7 +33,7 @@ The IG-2 module and IG-2 header H1 have the same pinout assignment for pins 1-14
 | ![](../images/square-red.png)3     | +3.3V                                      | PWR  | Regulated 3.3V supply input/output.                          |
 | ![](../images/square-red.png)4     | Reserved                                   |      | Not Connected                                                |
 | ![](../images/square-brown.png)5   | G1/Rx2/RxCAN/SCL                           | I/O  | IMX GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line6 |
-| ![](../images/square-orange.png)6  | G2/Tx/TxCAN/SDA/STROBE                     | I/O  | IMX GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
+| ![](../images/square-orange.png)6  | G2/Tx2/TxCAN/SDA/STROBE                    | I/O  | IMX GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | ![](../images/square-yellow.png)7  | G3/Tx0                                     | I/O  | IMX GPIO3<br /> Serial 0 output (TTL)                        |
 | ![](../images/square-green.png)8   | G4/Rx0                                     | I/O  | IMX GPIO4<br /> Serial 0 input (TTL)                         |
 | ![](../images/square-blue.png)9    | G5/SCLK/STROBE                             | I/O  | IMX GPIO5<br /> SPI SCLK<br /> Strobe time sync input        |
