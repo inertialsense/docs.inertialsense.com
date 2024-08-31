@@ -22,9 +22,17 @@ If updating the bootloader firmware and using the USB direct connection on the I
 If attempting to enter NAV mode but the system reports AHRS despite GPS data beig received, then assure your units are not set to Rover RTK mode. This will override your ability to lock in GPS Nav mode.
 
 ## "IMX-5 Bricked" System Recovery
-<!-- ## Todo -->
-## "GPX-1 Bricked" System Recovery
-<!-- ## TODO -->
+Assert chip erase pin high (3.3V) while booting (power cycle or reset) to erase all flash memory and place IMX into ROM bootloader (DFU) mode.  
+
+Note: the IMX bootloader will timeout and disable all UARTS (not USB) after 30 seconds if the sync handshake is not received.  This will render the IMX unresponsive over UART.  To prevent this, do not interrupt the standard firmware update process.  To recover the IMX, reset the IMX and then re-apply the firmware update within 30 seconds of reset.  https://docs.inertialsense.com/user-manual/reference/bootloader/#known-issues
+
+Note: Following chip erase:
+Update firmware using standard procedure including app and bootloader firmware images. 
+Upload IMU calibration.
+
+## "GPX-1 and IMX-5.1 Bricked" System Recovery
+
+Assert boot mode pin high (3.3V) while booting (power cycle or reset) to put the device into bootloader mode.  Inertial Sense customer support is required to facilitate bootloader communications with this device.
 
 ## "uINS Bricked" System Recovery
 There are different reasons a system may appear unresponsive and not communicate.  The following sections describe how to recover a system from these states.  
