@@ -1,4 +1,5 @@
 **Software Release 1.11.0 - 04 Nov 2023**
+
 *Non-current version of the User Manual are found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
 
 <center>
