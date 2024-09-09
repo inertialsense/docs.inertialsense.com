@@ -1,4 +1,4 @@
-**Software Release 2.1.2 - 29 Aug 2024**
+**Software Release 2.1.3 - 9 Sept 2024**
 <!-- [UPDATE_RELEASE_VERSION_HERE] Update this version info at time of release. -->
 
 <center>
