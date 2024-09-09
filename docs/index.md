@@ -1,6 +1,6 @@
-**Software Release 2.1.2 - 29 Aug 2024**\
+**Software Release 2.1.2 - 29 Aug 2024**
 <!-- [UPDATE_RELEASE_VERSION_HERE] Update this version info at time of release. -->
-*Non-current version of the User Manual are found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
+*Older (non-current) versions of the User Manual can be found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
 
 <center>
 
