@@ -5,12 +5,8 @@ The Inertial Sense CLTool is a command line utility that can be used to read and
 
 ## Help Menu
 
-```
-Run "cltool -h" to display the help menu.
------------------------------------------------------------------
-
-DESCRIPTION
-    Command line utility for communicating, logging, and updating firmware with Inertial Sense product line.
+```bash
+# Command line utility for communicating, logging, and updating firmware with Inertial Sense product line.
 
 EXAMPLES
     cltool -c /dev/ttyS2 -did DID_INS_1 DID_GPS1_POS DID_PIMU      # stream DID messages
@@ -18,33 +14,40 @@ EXAMPLES
     cltool -c /dev/ttyS2 -did 3=5                   # stream DID_PIMU at startupNavDtMs x 5
     cltool -c /dev/ttyS2 -presetPPD                 # stream post processing data (PPD) with INS2
     cltool -c /dev/ttyS2 -presetPPD -lon -lts=1     # stream PPD + INS2 data, logging, dir timestamp
-    cltool -c /dev/ttyS2 -edit DID_FLASH_CFG        # edit DID_FLASH_CONFIG message
+    cltool -c /dev/ttyS2 -edit DID_FLASH_CONFIG     # edit DID_FLASH_CONFIG message
     cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGPSDtMs
-    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password # Connect to RTK NTRIP base
-    cltool -rp logs/20170117_222549                 # replay log files from a folder
-    cltool -c /dev/ttyS2 -uf fw/IS_uINS-3.hex -ub fw/bootloader-SAMx70.bin -uv
-                                                    # update application firmware and bootloader
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
+    cltool -rp logs/20170117_222549                 # replay log files from a folder
+    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password    # Connect to RTK NTRIP base
+
+EXAMPLES (Firmware Update)
+    cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
+    cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv
 
 OPTIONS (General)
-    -h --help       Display this help menu
-    -c COM_PORT     Select the serial port. Set COM_PORT to "*" for all ports and "*4" to use
-                    only the first four ports.
+    -h --help       Display this help menu.
+    -c DEVICE_PORT  Select the serial port. Set DEVICE_PORT to "*" for all ports or "*4" for only first four available.
     -baud=BAUDRATE  Set serial port baudrate.  Options: 115200, 230400, 460800, 921600 (default)
     -magRecal[n]    Recalibrate magnetometers: 0=multi-axis, 1=single-axis
-    -q              Quiet mode, no display
-    -reset          Issue software reset
-    -s              Scroll displayed messages to show history
-    -stats          Display statistics of data received
+    -q              Quiet mode, no display.
+    -reset          Issue software reset.
+    -s              Scroll displayed messages to show history.
+    -stats          Display statistics of data received.
     -survey=[s],[d] Survey-in and store base position to refLla: s=[2=3D, 3=float, 4=fix], d=durationSec
+    -ufpkg FILEPATH Update firmware using firmware package file (.fpkg) at FILEPATH.
     -uf FILEPATH    Update application firmware using .hex file FILEPATH.  Add -baud=115200 for systems w/ baud rate limits.
-    -ub FILEPATH    Update bootloader using .bin file FILEPATH if version is old.
+    -ub FILEPATH    Update bootloader using .bin file FILEPATH if version is old. Must be used along with option -uf.
+    -fb             Force bootloader update regardless of the version.
     -uv             Run verification after application firmware update.
+    -sysCmd=[c]     Send DID_SYS_CMD c (see eSystemCommand) preceeded by unlock command then exit the program.
+    -factoryReset   Reset IMX flash config to factory defaults.
+    -romBootloader  Reboot into ROM bootloader mode.  Requires power cycle and reloading bootloader and firmware.
+    -v              Print version information.
 
 OPTIONS (Message Streaming)
     -did [DID#<=PERIODMULT> DID#<=PERIODMULT> ...]  Stream 1 or more datasets and display w/ compact view.
     -edit [DID#<=PERIODMULT>]                       Stream and edit 1 dataset.
-          Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency.
+          Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency. 
           Message period = source period x PERIODMULT. PERIODMULT is 1 if not specified.
           Common DIDs: DID_INS_1, DID_INS_2, DID_INS_4, DID_PIMU, DID_IMU, DID_GPS1_POS,
           DID_GPS2_RTK_CMP_REL, DID_BAROMETER, DID_MAGNETOMETER, DID_FLASH_CONFIG (see data_sets.h for complete list)
@@ -55,7 +58,7 @@ OPTIONS (Message Streaming)
 
 OPTIONS (Logging to file, disabled by default)
     -lon            Enable logging
-    -lt=TYPE        Log type: dat (default), sdat, kml or csv
+    -lt=TYPE        Log type: dat (default), raw, sdat, kml or csv
     -lp PATH        Log data to path (default: ./IS_logs)
     -lms=PERCENT    Log max space in percent of free space (default: 0.5)
     -lmf=BYTES      Log max file size in bytes (default: 5242880)
@@ -64,23 +67,24 @@ OPTIONS (Logging to file, disabled by default)
     -rp PATH        Replay data log from PATH
     -rs=SPEED       Replay data log at x SPEED. SPEED=0 runs as fast as possible.
 
-OPTIONS (Read or write flash configuration from command line)
-    -flashCfg       List all IMX "keys" and "values"
-   "-flashCfg=[key]=[value]|[key]=[value]"
-    -evbFlashCfg    List all EVB "keys" and "values"
-   "-evbFlashCfg=[key]=[value]|[key]=[value]"
-                    Set key / value pairs in flash config. Surround with "quotes" when using pipe operator.
+OPTIONS (Read flash configuration from command line)
+    -flashCfg                                   # List all "keys" and "values"
+   "-flashCfg=[key]|[key]|[key]"                # List select values
+
+OPTIONS (Write flash configuration from command line)
+   "-flashCfg=[key]=[value]|[key]=[value]"      # Set key / value pairs in flash config. 
+                                                # Surround with "quotes" when using pipe operator.
 EXAMPLES
     cltool -c /dev/ttyS2 -flashCfg  # Read from device and print all keys and values
-    cltool -c /dev/ttyS2 -flashCfg=insRotation[0]=1.5708|insOffset[1]=1.2
-                                  # Set multiple flashCfg values
+    cltool -c /dev/ttyS2 "-flashCfg=insOffset[1]=1.2|=ser2BaudRate=115200"  # Set multiple values
+
 OPTIONS (RTK Rover / Base)
     -rover=[type]:[IP or URL]:[port]:[mountpoint]:[username]:[password]
         As a rover (client), receive RTK corrections.  Examples:
             -rover=TCP:RTCM3:192.168.1.100:7777:mountpoint:username:password   (NTRIP)
             -rover=TCP:RTCM3:192.168.1.100:7777
             -rover=TCP:UBLOX:192.168.1.100:7777
-            -rover=SERIAL:RTCM3:/dev/ttyS2:57600       (port, baud rate)
+            -rover=SERIAL:RTCM3:/dev/ttyS2:57600             (port, baud rate)
     -base=[IP]:[port]   As a Base (sever), send RTK corrections.  Examples:
             -base=TCP::7777                            (IP is optional)
             -base=TCP:192.168.1.43:7777
@@ -93,7 +97,7 @@ OPTIONS (RTK Rover / Base)
     ```bash
     Mac:
     sudo "/Applications/CMake.app/Contents.bin/cmake-gui" --install
-
+    
     Linux:
     sudo apt-get install cmake
     ```
@@ -131,9 +135,10 @@ OPTIONS (RTK Rover / Base)
 1. Install CMake for Windows
 
 2. Create build directory
-    ```cd cltool
+    ```bash
+    cd cltool
     mkdir build
-
+    
 3. Run cmake from within build directory
    ```bash
    cd build
@@ -153,31 +158,73 @@ OPTIONS (RTK Rover / Base)
 Windows Visual Studio supports CMake projects. Follow the instructions provided by Microsoft:
 https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170
 
-## Update the Firmware
-In order to update the firmware of your unit on the CLTool, follow these steps:
+## Updating Firmware with CLTool
+### Updating using Firmware Package
 
-1. Navigate to the directory with the CLTool executable
-2. Set the unit's COM port as an option, e.g. `-c COM15`
-3. Specify the FILEPATH to the .hex file, e.g. `-uf foo/bar/IS_uINS-3.hex`
-4. Optionally specify the bootloader BLFILEPATH to the .bin file, e.g. `-ub foo/bar/bootloader-SAMx70.bin`
-5. Run the executable
+Updating firmware using a firmware package file provides a simple method to update multiple devices in one process.  This include the ability to update an IMX-GPX module pair in one step.  The cltool only needs know the file path of the firmware package file and the serial port of the device to be updated.  The file extension for a firmware package is `.fpkg`.
 
-*Note: The firmware can only be updated at the following baud rates: 300000, 921600, 460800, 230400, 115200
+**NOTE:** Updating the IMX firmware using a firmware package currently not supported and will become available in a future update.
 
-## Logging
+```bash
+cltool -c DEVICE_PORT -ufpkg FILEPATH
+```
 
-1. Make sure you have followed the steps shown above to compile your CLTool.
-1. Change your current directory to `/cpp/SDK/cltool/build`
-1. Type `./cltool` into the command line while appending your desired options (All possible options can be accessed from the CLTool’s help menu which is accessed by entering `./cltool -h` into the command line)
-1. The options you will minimally need to log are these:
-	* `-lt=#` (Defines the log type. Either e.g. -lt=dat or -lt=csv)
-	* `-lp /directory1/directory2/directory3` (Specifies the path into which your files will be placed.)
-		* If you don’t include this option, your data will be saved to `/build/IS_logs` if that directory has already been created.
-	* `-lon` (Must be placed after all other options specified)
-1. This is an example of what you could use as your logging options:
-   ```
-   cltool -lon -lts=1 -lp /media/usbdrive/data
-   ```
+The following is a specific example of using a firmware package file:
+
+```bash
+cltool -c /dev/ttyACM0 -ufpkg IS-firmware_2.0.3_2024-03-18_213925.fpkg
+```
+
+### Updating using Single Firmware File (Legacy Mode)
+
+The CLTool can be used to update device firmware with the following options.  This is the legacy firmware update methods that works only with the IMX-5.0 and earlier products (uINS-3, EVB-2, etc.).
+
+```bash
+cltool -c DEVICE_PORT -uf [FW_FILEPATH] -ub [BL_FILEPATH] -uv
+```
+
+| Options             | Description                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| `-c DEVICE_PORT`    | Specifies the device serial or USB port (i.e. `/dev/ttyACM0`). |
+| `-uf [FW_FILEPATH]` | Specifies the application firmware file path.                |
+| `-ub [BL_FILEPATH]` | (Optional) Specified the bootloader firmware file.  The bootloader is only updated if the version of the file provided is newer than the bootloader version currently on the device. |
+| `-uv`               | (Optional) Run verification after application firmware update. |
+
+The following is a specific example:
+
+```bash
+cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv	
+```
+
+Note: The firmware can only be updated at the following baud rates: 300000, 921600, 460800, 230400, 115200
+
+## Logging with CLTool
+
+The CLTool can be used to log data to file with the following options: 
+
+```	bash
+cltool -c DEVICE_PORT -lon -lt=LOG_TYPE -lp DIRECTORY
+```
+
+| Options         | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `-lon`          | Enable logging.                                              |
+| `-lt=LOG_TYPE`  | Specifies the  [log file type](#log-type) to be written.  LOG_TYPE can be `dat`, `raw`, `sdat`, or `csv`. |
+| `-lp DIRECTORY` | (Optional) Specifies the path where log files will be written.  When not specified, the default location will be the current working directory. |
+
+### Log File Types
+
+| Log Type | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| `dat`    | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups containing data in serial order as they appear over the serial port.  Default file format.  ***Recommended for post processing.*** |
+| `raw`    | Binary file containing byte for byte data received over the serial ports.  All packets remain in their native form.  Used for logging InertialSense binary (ISB), NMEA, RTCM3, uBlox UBX binary and SPARTN, and any other packet formats.  ***Recommended for logging all data formats and post processing***. |
+| `sdat`   | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups organized by DID.  Each chunk contains only one DID type, and at least one chunk allocated for each DID data set type.  Not recommended for future use. |
+| `csv`    | Comma-Separated Values - Plain text file that uses specific structuring to arrange tabular data. Its basic format involves separating each data field (or cell in a table) with a comma and each record (or row) is on a new line. This simple format allows for ease in data import and export between programs that handle tabular data, such as databases and spreadsheets. |
+
+The following is an example of enabling the logger with type raw and specifying the output directory:
+```bash
+./cltool -c /dev/ttyACM0 -lon -lt=raw -lp /media/usbdrive/data
+```
 
 ## Command Line Options
 

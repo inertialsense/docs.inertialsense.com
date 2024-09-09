@@ -12,15 +12,15 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 
 #### SDK Files
 
-* [data_sets.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.c)
-* [data_sets.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.h)
-* [ISComm.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.c)
-* [ISComm.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.h)
-* [ISConstants.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISConstants.h)
-* [serialPort.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.c)
-* [serialPort.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.h)
-* [serialPortPlatform.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.c)
-* [serialPortPlatform.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.h)
+* [data_sets.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.c)
+* [data_sets.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.h)
+* [ISComm.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.c)
+* [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h)
+* [ISConstants.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISConstants.h)
+* [serialPort.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.c)
+* [serialPort.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.h)
+* [serialPortPlatform.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.c)
+* [serialPortPlatform.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.h)
 
 ## Implementation
 
@@ -66,20 +66,39 @@ if (!serialPortWriteAscii(&serialPort, "STPB", 4))
    	// ASCII protocol is based on NMEA protocol https://en.wikipedia.org/wiki/NMEA_0183
 	// turn on the INS message at a period of 100 milliseconds (10 hz)
 	// serialPortWriteAscii takes care of the leading $ character, checksum and ending \r\n newline
-	// ASCB message enables ASCII broadcasts
-	// ASCB fields: 1:options, 2:PIMU, 3:PPIMU, 4:PINS1, 5:PINS2, 6:PGPSP, 7:reserved, 8:GPGGA, 9:GPGLL, 10:GPGSA, 11:GPRMC
+	// ASCE message enables ASCII broadcasts
+	// ASCE fields: 1:options, ID0, Period0, ID1, Period1, ........ ID19, Period19
+	// IDs:
+	// NMEA_MSG_ID_PIMU      = 0,
+    // NMEA_MSG_ID_PPIMU     = 1,
+    // NMEA_MSG_ID_PRIMU     = 2,
+    // NMEA_MSG_ID_PINS1     = 3,
+    // NMEA_MSG_ID_PINS2     = 4,
+    // NMEA_MSG_ID_PGPSP     = 5,
+    // NMEA_MSG_ID_GxGGA     = 6,
+    // NMEA_MSG_ID_GxGLL     = 7,
+    // NMEA_MSG_ID_GxGSA     = 8,
+    // NMEA_MSG_ID_GxRMC     = 9,
+    // NMEA_MSG_ID_GxZDA     = 10,
+    // NMEA_MSG_ID_PASHR     = 11, 
+    // NMEA_MSG_ID_PSTRB     = 12,
+    // NMEA_MSG_ID_INFO      = 13,
+    // NMEA_MSG_ID_GxGSV     = 14,
+    // NMEA_MSG_ID_GxVTG     = 15,
+    // NMEA_MSG_ID_INTEL     = 16,
+
 	// options can be 0 for current serial port, 1 for serial 0, 2 for serial 1 or 3 for both serial ports
 	// Instead of a 0 for a message, it can be left blank (,,) to not modify the period for that message
 	// please see the user manual for additional updates and notes
 
-    // Get PINS1 @ 10Hz on the connected serial port, leave all other broadcasts the same, and save persistent messages.
-	const char* asciiMessage = "ASCB,512,,,1000,,,,,,,,,";
+    // Get PINS1 @ 5Hz on the connected serial port, leave all other broadcasts the same, and save persistent messages.
+	const char* asciiMessage = "ASCE,0,3,1";
 
-    // Get PINS1 @ 50Hz and PGPSP @ 5Hz on the connected serial port, leave all other broadcasts the same
-	// const char* asciiMessage = "ASCB,,,,20,,1,,,,,,,";
+    // Get PINS1 @ 1Hz and PGPSP @ 1Hz on the connected serial port, leave all other broadcasts the same
+	// const char* asciiMessage = "ASCE,0,5,5";
 
-	// Get PIMU @ 50Hz, GGA @ 5Hz, both serial ports, set all other periods to 0
-    //  const char* asciiMessage = "ASCB,3,20,0,0,0,0,0,100,0,0,0,0,0";
+	// Get PIMU @ 50Hz, GGA @ 5Hz, serial0 and serial1 ports, set all other periods to 0
+    //  const char* asciiMessage = "ASCE,3,6,1";
 
     if (!serialPortWriteAscii(&serialPort, asciiMessage, (int)strnlen(asciiMessage, 128)))
 	{
@@ -140,14 +159,27 @@ if (!serialPortWriteAscii(&serialPort, "PERS", 4))
    ``` bash
    ./ISAsciiExample /dev/ttyUSB0
    ```
-## Compile & Run (Windows MS Visual Studio)
+## Compile & Run (Windows Powershell)
+*Note - Install CMake for Windows natively, or install the CMake for Windows extension for Visual Studio
 
-1. [Install and Configure Visual Studio](../../software/SDK/#installing-and-configuring-visual-studio)
-2. Open Visual Studio solution file (InertialSenseSDK\ExampleProjects\Ascii\VS_project\ISAsciiExample.sln)
-3. Build (F7)
+1. Create build directory
+   ``` bash
+   cd InertialSenseSDK/ExampleProjects/Ascii
+   mkdir build
+   ```
+2. Run cmake from within build directory
+   ``` bash
+   cd build
+   cmake ..
+   ```
+3. Compile using make
+   ``` bash
+   cmake --build .
+   ```
+
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\ExampleProjects\Ascii\VS_project\Release\ISAsciiExample.exe COM3
+   C:\InertialSenseSDK\ExampleProjects\Ascii\build\Release\ISAsciiExample.exe COM3
    ```
 
 ## Summary

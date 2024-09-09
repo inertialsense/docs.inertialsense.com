@@ -6,20 +6,20 @@ This [ISBootloaderExample](https://github.com/inertialsense/InertialSenseSDK/tre
 
 #### Project Files
 
-* [ISBootloaderExample.cpp](https://github.com/inertialsense/inertial-sense-sdk/blob/master/ExampleProjects/Bootloader/ISBootloaderExample.cpp)
+* [ISBootloaderExample.cpp](https://github.com/inertialsense/inertial-sense-sdk/blob/main/ExampleProjects/Bootloader/ISBootloaderExample.cpp)
 
 #### SDK Files
 
-* [data_sets.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.c)
-* [data_sets.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/data_sets.h)
-* [inertialSenseBootLoader.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/inertialSenseBootLoader.c)
-* [inertialSenseBootLoader.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/inertialSenseBootLoader.h)
-* [ISComm.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.c)
-* [ISComm.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/ISComm.h)
-* [serialPort.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.c)
-* [serialPort.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPort.h)
-* [serialPortPlatform.c](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.c)
-* [serialPortPlatform.h](https://github.com/inertialsense/InertialSenseSDK/tree/master/src/serialPortPlatform.h)
+* [data_sets.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.c)
+* [data_sets.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.h)
+* [inertialSenseBootLoader.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISBootloaderBase.cpp)
+* [inertialSenseBootLoader.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISBootloaderBase.h)
+* [ISComm.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.c)
+* [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h)
+* [serialPort.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.c)
+* [serialPort.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPort.h)
+* [serialPortPlatform.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.c)
+* [serialPortPlatform.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/serialPortPlatform.h)
 
 
 ## Implementation
@@ -114,14 +114,27 @@ This [ISBootloaderExample](https://github.com/inertialsense/InertialSenseSDK/tre
    ``` bash
    ./ISBootloaderExample /dev/ttyUSB0 IS_uINS-3.hex bootloader-SAMx70.bin
    ```
-## Compile & Run (Windows MS Visual Studio)
+## Compile & Run (Windows Powershell)
+*Note - Install CMake for Windows natively, or install the CMake for Windows extension for Visual Studio
 
-1. [Install and Configure Visual Studio](../../software/SDK/#installing-and-configuring-visual-studio)
-2. Open Visual Studio solution file (InertialSenseSDK\ExampleProjects\Bootloader\VS_project\ISBootloaderExample.sln)
-3. Build (F7)
+1. Create build directory
+   ``` bash
+   cd InertialSenseSDK/ExampleProjects/IS_firmwareUpdate_v2
+   mkdir build
+   ```
+2. Run cmake from within build directory
+   ``` bash
+   cd build
+   cmake ..
+   ```
+3. Compile using make
+   ``` bash
+   cmake --build .
+   ```
+
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\ExampleProjects\Bootloader\VS_project\Release\ISBootloaderExample.exe COM3 IS_uINS-3.hex bootloader-SAMx70.bin
+   C:\InertialSenseSDK\ExampleProjects\IS_firmwareUpdate_v2\build\Release\ISBootloaderExample.exe COM3 IS_uINS-3.hex bootloader-SAMx70.bin
    ```
 
 ## Summary

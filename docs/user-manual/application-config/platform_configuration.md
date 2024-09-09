@@ -1,6 +1,6 @@
 # Platform Configuration
 
-The `DID_FLASH_CONFIG.platformConfig` allows for specification of the IMX carrier board type and configuration settings.   This is important and helpful for configuring I/O specific to the platform (carrier board).  Values for the Platform Config are specified in the **enum ePlatformConfig** in the SDK [data_sets.h](https://github.com/inertialsense/inertial-sense-sdk/blob/master/src/data_sets.h).
+The `DID_FLASH_CONFIG.platformConfig` allows for specification of the IMX carrier board type and configuration settings.   This is important and helpful for configuring I/O specific to the platform (carrier board).  Values for the Platform Config are specified in the **enum ePlatformConfig** in the SDK [data_sets.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/data_sets.h).
 
 ## Platform Type
 

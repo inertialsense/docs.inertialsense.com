@@ -11,6 +11,7 @@ Check the following:
 - The input supply is at 3.3V and clean without noise.
 - The serial connection is grounded (no floating grounds).
 - The serial wires between the uINS module and the next active device (buffer, converter, or processor) are not longer than 1 meter when bootloading firmware.
+- Reset or power cycle the IMX and promptly run the firmware update within 30 seconds of reset.  A known issue in the IMX-5.0 bootloader version v6g and prior versions that disables all UARTS if no handshake is received within 50 second following startup.  Resetting the IMX will re-enable UARTs for 50 seconds.
 
 ## Bootloader Update fails first time
 
@@ -20,8 +21,20 @@ If updating the bootloader firmware and using the USB direct connection on the I
 
 If attempting to enter NAV mode but the system reports AHRS despite GPS data beig received, then assure your units are not set to Rover RTK mode. This will override your ability to lock in GPS Nav mode.
 
+## "IMX-5 Bricked" System Recovery
+Assert chip erase pin high (3.3V) while booting (power cycle or reset) to erase all flash memory and place IMX into ROM bootloader (DFU) mode.  
 
-## "Bricked" System Recovery
+Note: the IMX bootloader will timeout and disable all UARTS (not USB) after 30 seconds if the sync handshake is not received.  This will render the IMX unresponsive over UART.  To prevent this, do not interrupt the standard firmware update process.  To recover the IMX, reset the IMX and then re-apply the firmware update within 30 seconds of reset.  https://docs.inertialsense.com/user-manual/reference/bootloader/#known-issues
+
+Note: Following chip erase:
+Update firmware using standard procedure including app and bootloader firmware images. 
+Upload IMU calibration.
+
+## "GPX-1 and IMX-5.1 Bricked" System Recovery
+
+Assert boot mode pin high (3.3V) while booting (power cycle or reset) to put the device into bootloader mode.  Inertial Sense customer support is required to facilitate bootloader communications with this device.
+
+## "uINS Bricked" System Recovery
 There are different reasons a system may appear unresponsive and not communicate.  The following sections describe how to recover a system from these states.  
 
 !!! attention
@@ -66,7 +79,7 @@ In the case that your units do not connect properly to the EvalTool, verify:
 4. Check your computer's Device Manager to see if your unit shows up there. If it doesn't show up, you may have an FTDI driver issue.
    1. If you suspect you don't have the FTDI driver installed on your Windows computer, use the following links to download the driver:
       - Executable for the FTDI USB driver:
-        - http://www.ftdichip.com/Drivers/CDM/CDM21228_Setup.zip
+        - https://ftdichip.com/wp-content/uploads/2023/09/CDM-v2.12.36.4-WHQL-Certified.zip
       - Drives without executable.
         - http://www.ftdichip.com/Drivers/D2XX.htm
 

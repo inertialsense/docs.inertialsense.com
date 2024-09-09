@@ -2,7 +2,7 @@
 
 # NMEA 0183 (ASCII) Protocol
 
-For simple use, the Inertial Sense device supports a human-readable NMEA communications protocol based on NMEA 0183. The NMEA protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](binary.md) in terms of message length for the same amount of data.
+For simple use, the Inertial Sense device supports a human-readable NMEA communications protocol based on NMEA 0183. The NMEA protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](isb.md) in terms of message length for the same amount of data.
 
 ## Communications Examples
 
@@ -20,14 +20,14 @@ The Inertial Sense NMEA protocol follows the standard [NMEA 0183](https://en.wik
 * 2 bytes – checksum in hex format (i.e. `f5` or `0a`), 0 padded and lowercase
 * 2 bytes – End packet, `\r\n` (`0x0D`, `0x0A`)
 
-The packet checksum is an 8 bit integer and is calculated by calculating the exclusive OR of all bytes in between and not including the $ and * bytes. The packet checksum byte is converted to a 2 byte NMEA hex code, and left padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details.  The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
+The packet checksum is an 8 bit integer and is calculated by calculating the exclusive OR of all bytes in between and not including the $ and * bytes. The packet checksum byte is converted to a 2 byte NMEA hex code, and left padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details.  The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
 ## Persistent Messages
 
-The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot,  eliminating the need to re-enable messages following a reset or power cycle.  
+The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot, eliminating the need to re-enable messages following a reset or power cycle.  
 
 - **To save current NMEA persistent messages** - send the [$PERS](#pers) command.  
-- **To disable persistent messages** - send the [$STPB](#stpb) followed by [$PERS](#pers). 
+- **To disable persistent messages** - send [$STPB](#stpb) followed by [$PERS](#pers). 
 
 [Binary persistent messages](../binary/#persistent-messages) are also available.
 
@@ -47,8 +47,7 @@ The following NMEA messages can be received by the IMX.
 
 | Message                     | Description                                                       |
 | --------------------------- | ------------------------------------------------------------------|
-| ```$ASCB*13\r\n```          | Query the broadcast rate of NMEA output messages.                 |
-| [ASCB](#ascb)               | Set the broadcast period of NMEA output messages.  (_Outdated. Use [ASCE](#asce) instead._)               |
+| ```$ASCE*14\r\n```          | Query the broadcast rate of NMEA output messages.                 |
 | [ASCE](#asce)               | Set the broadcast period of selected NMEA output messages.        |
 | ```$INFO*0E\r\n```          | Query device information.                                         |
 | ```$SRST*06\r\n```          | Software reset.                                                   |
@@ -56,48 +55,28 @@ The following NMEA messages can be received by the IMX.
 | [```$STPB*15\r\n```](#stpb) | Stop broadcast of all messages (NMEA and binary) on all ports.    |
 | [```$STPC*14\r\n```](#stpc) | Stop broadcast of all messages (NMEA and binary) on current port. |
 
-### ASCB
-
-(_ASCB is outdated and [ASCE](#asce) is recommended for use instead._)  
-Enable NMEA message and set broadcast periods.  The period is in milliseconds with no thousands separator character. “xx” is the two-character checksum.  Each field can be left blank in which case the existing broadcast period for that field is not modified, or 0 to disable streaming.  Actual broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](../binary/#data-source-update-rates)
-
-```
-$ASCB,options,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d*xx\r\n
-```
-
-| Index | Field           | Description                                                  |
-| ----- | --------------- | ------------------------------------------------------------ |
-| 1     | options         | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-| 2     | [PIMU](#pimu)   | Broadcast period multiple for PIMU IMU message.              |
-| 3     | [PPIMU](#ppimu) | Broadcast period multiple for PPIMU preintegrated IMU message. |
-| 4     | [PINS1](#pins1) | Broadcast period multiple for PINS1 INS output (euler, NED) message. |
-| 5     | [PINS2](#pins2) | Broadcast period multiple for PINS2 INS output (quaternion, LLA) message. |
-| 6     | [PGPSP](#pgpsp) | Broadcast period multiple for PGPSP GPS position message.    |
-| 7     | [PRIMU](#primu) | Broadcast period multiple for PRIMU Raw IMU message.         |
-| 8     | [GGA](#gga)     | Broadcast period multiple for NMEA standard GGA (fix, 3D location, and accuracy) message. |
-| 9     | [GLL](#gll)     | Broadcast period multiple for NMEA standard GLL (2D location and time) message. |
-| 10    | [GSA](#gsa)     | Broadcast period multiple for NMEA standard GSA (DOP and active satellites) message. |
-| 11    | [RMC](#rmc)     | Broadcast period multiple for NMEA standard RMC (minimum specific GPS/Transit) message. |
-| 12    | [ZDA](#zda)     | Broadcast period multiple for NMEA standard ZDA (UTC Time/Date) message. |
-| 13    | [PASHR](#pashr) | Broadcast period multiple for NMEA standard PASHR (euler) message.    |
-| 14    | [GxGSV](#gsv)   | Broadcast period multiple for NMEA standard GSV satellite info (all active constellations sent with corresponding talker IDs). |
-| 15    | [VTG](#vtg)     | Broadcast period multiple for NMEA standard VTG track made good and speed over ground. | 
-
 ### ASCE
 
-Enable NMEA message output streaming by specifying the [NMEA message ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](binary/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](binary/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
 
 ```
-$ASCE,options,(id,period)*xx\r\n
+$ASCE,OPTIONS,(ID,PERIOD)*xx\r\n
 ```
 
-| Index | Field   | Description                                                  |
-| ----- | ------- | ------------------------------------------------------------ |
-| 1     | options | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-|       |         | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | ID      | NMEA message ID to be streamed.  See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
-| 3+n*2 | period  | Broadcast period multiple for specified message.  Zero disables streaming. |
-|       |         | *End of repeated group (1...20 times)*                       |
+The following examples will enable the same NMEA message output:
+
+```
+$ASCE,0,PPIMU,1,PINS2,10,GxGGA,1*10\r\n
+$ASCE,0,2,1,5,10,7,1*39\r\n
+```
+
+| Index | Field     | Description                                                  |
+| ----- | --------- | ------------------------------------------------------------ |
+| 1     | `OPTIONS` | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
+|       |           | *Start of repeated group (1...20 times)*                     |
+| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e. PPIMU, PINS1, GxGGA) excluding packet start character `$` or **2.) message ID** (eNmeaAsciiMsgId) of the NMEA message to be streamed.  See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
+| 3+n*2 | `PERIOD`  | Broadcast period multiple for specified message.  Zero disables streaming. |
+|       |           | *End of repeated group (1...20 times)*                       |
 
 #### Example Messages  
 
@@ -164,27 +143,27 @@ The hexadecimal equivalent is:
 
 ## NMEA Output Messages
 
-The following NMEA messages can be sent by the IMX.  The message ID is used with the `$ASCE` message to enable message streaming. 
+The following NMEA messages can be sent by the IMX.  The message ID (`eNmeaAsciiMsgId`) is used with the `$ASCE` message to enable message streaming. 
 
-| Message         | ID | Description                                                  |
-| --------------- | -- | ------------------------------------------------------------ |
-| [ASCB](#ascb)   |    | Broadcast period of NMEA output messages.                |
-| [PIMU](#pimu)   | 0  | IMU data (3-axis gyros and accelerometers) in the body frame. |
-| [PPIMU](#ppimu) | 1  | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
-| [PRIMU](#primu) | 2  | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
-| [PINS1](#pins1) | 3  | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
-| [PINS2](#pins2) | 4  | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
-| [PGPSP](#pgpsp) | 5  | GPS position data.                                           |
-| [GGA](#gga)     | 6  | Standard NMEA GGA GPS 3D location, fix, and accuracy.   |
-| [GLL](#gll)     | 7  | Standard NMEA GLL GPS 2D location and time.                |
-| [GSA](#gsa)     | 8  | Standard NMEA GSA GPS DOP and active satellites.             |
-| [RMC](#rmc)     | 9  | Standard NMEA RMC Recommended minimum specific GPS/Transit data. |
-| [ZDA](#zda)     | 10 | Standard NMEA ZDA UTC Time/Date message.                         |
-| [PASHR](#pashr) | 11 | Standard NMEA PASHR (euler) message.                         |
-| [PSTRB](#pstrb) | 12 | Strobe event input time.                                     |
-| [INFO](#info)   | 13 | Device information.                                          |
-| [GSV](#gsv)     | 14 | Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
-| [VTG](#VTG)     | 15 | Standard NMEA VTG track made good and speed over ground. |
+| Identifier      | ID   | Description                                                  |
+| --------------- | ---- | ------------------------------------------------------------ |
+| [ASCB](#ascb)   |      | Broadcast period of NMEA output messages.                    |
+| [PIMU](#pimu)   | 1    | IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PPIMU](#ppimu) | 2    | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
+| [PRIMU](#primu) | 3    | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
+| [PINS1](#pins1) | 4    | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
+| [PINS2](#pins2) | 5    | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
+| [PGPSP](#pgpsp) | 6    | GPS position data.                                           |
+| [GGA](#gga)     | 7    | Standard NMEA GGA GPS 3D location, fix, and accuracy.        |
+| [GLL](#gll)     | 8    | Standard NMEA GLL GPS 2D location and time.                  |
+| [GSA](#gsa)     | 9    | Standard NMEA GSA GPS DOP and active satellites.             |
+| [RMC](#rmc)     | 10   | Standard NMEA RMC Recommended minimum specific GPS/Transit data. |
+| [ZDA](#zda)     | 11   | Standard NMEA ZDA UTC Time/Date message.                     |
+| [PASHR](#pashr) | 12   | Standard NMEA PASHR (euler) message.                         |
+| [PSTRB](#pstrb) | 13   | Strobe event input time.                                     |
+| [INFO](#info)   | 14   | Device information.                                          |
+| [GSV](#gsv)     | 15   | Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
+| [VTG](#VTG)     | 16   | Standard NMEA VTG track made good and speed over ground.     |
 
 The field codes used in the message descriptions are: lf = double, f = float, d = int.
 
@@ -541,6 +520,101 @@ $GLGSV,1,1,01,87,47,127,20,3*41\r\n
 
 Where n is 0-3, for the four satellites supported by this message. 
 
+#### GSV Output Filtering
+
+Verbosity and size of the GSV NMEA message can be reduced to only select constellation and frequencies by using a [Filtered GSV NMEA Message IDs](Filtered GSV NMEA Message IDs) instead of the standard GSV message ID `GPGSV` or `15` (`NMEA_MSG_ID_GxGSV`), either ASCII or integer.  Note that the GSV output filter can only hide or mask information for satellites currently enabled in the `DID_FLASH_CONFIG.gnssSatSigConst` satellite system constellation.  Usage:
+
+```c++
+$ASCE,[options],[Message ID]*[checksum]\r\n
+```
+
+For example, using message ID `GPGSV_1` or `3857` (`NMEA_MSG_ID_GPGSV_1`) will output only the GPS L1 frequency and prevent all other frequency and constellation satellite information from being displayed.
+
+```
+$ASCE,0,GPGSV_1,2*01\r\n
+$ASCE,0,3857,2*33\r\n
+```
+
+##### Filtered GSV NMEA Message IDs
+
+The following extended GSV NMEA message IDs are defined in data_sets.h.
+
+| All Constellations          | Message ID ASCII | Message ID Int | Description |
+|-----------------------------|------------------|----------------|-------------|
+| NMEA_MSG_ID_GNGSV_0         | GNGSV_0 | 3840 | Clear all constellations and frequencies |
+| NMEA_MSG_ID_GNGSV_1         | GNGSV_1 | 3841 | Enable all constellations band1 |
+| NMEA_MSG_ID_GNGSV_2         | GNGSV_2 | 3842 | Enable all constellations band2 |
+| NMEA_MSG_ID_GNGSV_2_1       | GNGSV_2_1 | 3843 | Enable all constellations band1, band2 |
+| NMEA_MSG_ID_GNGSV_3         | GNGSV_3 | 3844 | Enable all constellations band3 |
+| NMEA_MSG_ID_GNGSV_3_1       | GNGSV_3_1 | 3845 | Enable all constellations band1, band3 |
+| NMEA_MSG_ID_GNGSV_3_2       | GNGSV_3_2 | 3846 | Enable all constellations band2, band3 |
+| NMEA_MSG_ID_GNGSV_3_2_1     | GNGSV_3_2_1 | 3847 | Enable all constellations band1, band2, band3 |
+| NMEA_MSG_ID_GNGSV_5         | GNGSV_5 | 3848 | Enable all constellations band5 |
+| NMEA_MSG_ID_GNGSV_5_1       | GNGSV_5_1 | 3849 | Enable all constellations band1, band5 |
+| NMEA_MSG_ID_GNGSV_5_2       | GNGSV_5_2 | 3850 | Enable all constellations band2, band5 |
+| NMEA_MSG_ID_GNGSV_5_2_1     | GNGSV_5_2_1 | 3851 | Enable all constellations band1, band2, band5 |
+| NMEA_MSG_ID_GNGSV_5_3       | GNGSV_5_3 | 3852 | Enable all constellations band3, band5 |
+| NMEA_MSG_ID_GNGSV_5_3_1     | GNGSV_5_3_1 | 3853 | Enable all constellations band1, band3, band5 |
+| NMEA_MSG_ID_GNGSV_5_3_2     | GNGSV_5_3_2 | 3854 | Enable all constellations band2, band3, band5 |
+| NMEA_MSG_ID_GNGSV_5_3_2_1   | GNGSV_5_3_2_1 | 3855 | Enable all constellations band1, band2, band3, band5 |
+| NMEA_MSG_ID_GxGSV or<br/>NMEA_MSG_ID_GNGSV | GxGSV | 15 or 3855 | Enable all constellations and frequencies |
+
+| GPGSV - GPS                 | Message ID ASCII | Message ID Int | Description |
+|-----------------------------|------------------|----------------|-------------|
+| NMEA_MSG_ID_GPGSV_0         | GPGSV_0 | 3856 | Disable all GPS frequencies |
+| NMEA_MSG_ID_GPGSV_1         | GPGSV_1 | 3857 | Enable GPS L1 |
+| NMEA_MSG_ID_GPGSV_2         | GPGSV_2 | 3858 | Enable GPS L2 |
+| NMEA_MSG_ID_GPGSV_2_1       | GPGSV_2_1 | 3859 | Enable GPS L1, L2 |
+| NMEA_MSG_ID_GPGSV_5         | GPGSV_5 | 3864 | Enable GPS L5 |
+| NMEA_MSG_ID_GPGSV_5_1       | GPGSV_5_1 | 3865 | Enable GPS L1, L5 |
+| NMEA_MSG_ID_GPGSV_5_2       | GPGSV_5_2 | 3866 | Enable GPS L2, L5 |
+| NMEA_MSG_ID_GPGSV_5_2_1     | GPGSV_5_2_1 | 3867 | Enable GPS L1, L2, L5 |
+| NMEA_MSG_ID_GPGSV           | GPGSV | 3871 | Enable all GPS frequencies |
+
+| GAGSV - Galileo             | Message ID ASCII | Message ID Int | Description |
+|-----------------------------|------------------|----------------|-------------|
+| NMEA_MSG_ID_GAGSV_0         | GAGSV_0 | 3888 | Disable all Galileo frequencies |
+| NMEA_MSG_ID_GAGSV_1         | GAGSV_1 | 3889 | Enable Galileo E1 |
+| NMEA_MSG_ID_GAGSV_5         | GAGSV_5 | 3896 | Enable Galileo E5 |
+| NMEA_MSG_ID_GAGSV_5_1       | GAGSV_5_1 | 3897 | Enable Galileo E1, E5 |
+| NMEA_MSG_ID_GAGSV           | GAGSV | 3903 | Enable all Galileo frequencies     |
+
+| GBGSV - Beido               | Message ID ASCII | Message ID Int | Description |
+|-----------------------------|------------------|----------------|-------------|
+| NMEA_MSG_ID_GBGSV_0         | GBGSV_0 | 3904 | Disable all Beidou frequencies |
+| NMEA_MSG_ID_GBGSV_1         | GBGSV_1 | 3905 | Enable Beidou B1 |
+| NMEA_MSG_ID_GBGSV_2         | GBGSV_2 | 3906 | Enable Beidou B2 |
+| NMEA_MSG_ID_GBGSV_2_1       | GBGSV_2_1 | 3907 | Enable Beidou B1, B2 |
+| NMEA_MSG_ID_GBGSV_3         | GBGSV_3 | 3908 | Enable Beidou B3  |
+| NMEA_MSG_ID_GBGSV_3_1       | GBGSV_3_1 | 3909 | Enable Beidou B1, B3 |
+| NMEA_MSG_ID_GBGSV_3_2       | GBGSV_3_2 | 3910 | Enable Beidou B2, B3 |
+| NMEA_MSG_ID_GBGSV_3_2_1     | GBGSV_3_2_1 | 3911 | Enable Beidou B1, B2, B3 |
+| NMEA_MSG_ID_GBGSV           | GBGSV | 3919 | Enable all Beidou frequencies |
+
+| GQGSV - QZSS                | Message ID ASCII | Message ID Int | Description |
+|-----------------------------|------------------|----------------|-------------|
+| NMEA_MSG_ID_GQGSV_0         | GQGSV_0 | 3920 | Disable all QZSS frequencies |
+| NMEA_MSG_ID_GQGSV_1         | GQGSV_1 | 3921 | Enable QZSS L1 |
+| NMEA_MSG_ID_GQGSV_2         | GQGSV_2 | 3922 | Enable QZSS L2 |
+| NMEA_MSG_ID_GQGSV_2_1       | GQGSV_2_1 | 3923 | Enable QZSS L1, L2 |
+| NMEA_MSG_ID_GQGSV_5         | GQGSV_5 | 3928 | Enable QZSS L5 |
+| NMEA_MSG_ID_GQGSV_5_1       | GQGSV_5_1 | 3929 | Enable QZSS L1, L5 |
+| NMEA_MSG_ID_GQGSV_5_2       | GQGSV_5_2 | 3930 | Enable QZSS L2, L5 |
+| NMEA_MSG_ID_GQGSV_5_2_1     | GQGSV_5_2_1 | 3931 | Enable QZSS L1, L2, L5 |
+| NMEA_MSG_ID_GQGSV           | GQGSV | 3935 | Enable all QZSS frequencies |
+
+| GLGSV - Glonass             | Message ID ASCII | Message ID Int | Description |
+|-----------------------------|------------------|----------------|-------------|
+| NMEA_MSG_ID_GLGSV_0         | GLGSV_0 | 3936 | Disable all Glonass frequencies |
+| NMEA_MSG_ID_GLGSV_1         | GLGSV_1 | 3937 | Enable Glonass L1 |
+| NMEA_MSG_ID_GLGSV_2         | GLGSV_2 | 3938 | Enable Glonass L2 |
+| NMEA_MSG_ID_GLGSV_2_1       | GLGSV_2_1 | 3939 | Enable Glonass L1, L2 |
+| NMEA_MSG_ID_GLGSV_3         | GLGSV_3 | 3940 | Enable Glonass L3 |
+| NMEA_MSG_ID_GLGSV_3_1       | GLGSV_3_1 | 3941 | Enable Glonass L1, L3 |
+| NMEA_MSG_ID_GLGSV_3_2       | GLGSV_3_2 | 3942 | Enable Glonass L2, L3 |
+| NMEA_MSG_ID_GLGSV_3_2_1     | GLGSV_3_2_1 | 3943 | Enable Glonass L1, L2, L3 |
+| NMEA_MSG_ID_GLGSV           | GLGSV | 3951 | Enable all Glonass frequencies |
+
 ### VTG
 
 NMEA GPS track made good and speed over ground.
@@ -640,7 +714,7 @@ This section illustrates common NMEA message strings for configuration.
 !!! note
     All NMEA command strings must be followed with a carriage return and new line character (`\r\n` or `0x0D`, `0x0A`).
 
-The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/master/src/serialPort.c#L219-L268) or can be generated using an online NMEA checksum calculator. For example:  [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
+The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online NMEA checksum calculator. For example:  [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
 **Stop streams on CURRENT port**
 
@@ -651,7 +725,7 @@ $STPB*15
 **Stop all streams on ALL ports**
 
 ```
-$ASCB,255,0,0,0,0,0,0,0,0,0,0,0,0*0D
+$STPC*14
 ```
 
 **Query device version information**
@@ -666,16 +740,16 @@ Response:
 $INFO,30612,3.1.2.0,1.7.0.0,3522,1.2.74.7,6275,Inertial Sense INC,0018-10-16,23:20:38.41,INL2*58
 ```
 
-**Stream INS1 @25Hz on port 0**
+**Stream INS1 @5Hz on port 0**
 
 ```
-$ASCB,1,,,40,,,,,,,,,*0A
+$ASCE,1,3,1*0B
 ```
 
-**Stream INS1 @10Hz on current port**
+**Stream INS1 @400ms on current port**
 
 ```
-$ASCB,0,,,100,,,,,,,,,*3E
+$ASCE,0,3,2*09
 ```
 
 Response:
@@ -686,10 +760,10 @@ $PINS1,244272.498,2021,427888998,805306448,0.0469,-0.3830,-0.0902,0.232,-0.081,-
 $PINS1,244272.598,2021,427888998,805306448,0.0469,-0.3830,-0.0902,0.232,-0.081,-0.089,40.05575022,-111.65861562,1438.449,-1.587,-5.070,-9.695*1e
 ```
 
-**Stream INS1 @50Hz on serial port 1**
+**Stream INS1 @600ms on serial port 1**
 
 ```
-$ASCB,2,,,20,,,,,,,,,*0F
+$ASCE,2,3,3*0A
 ```
 
 Response:
@@ -700,10 +774,10 @@ $PINS1,256270.647,2021,427888998,1073741912,0.1153,-0.1473,-0.1632,0.001,0.001,0
 $PINS1,256270.667,2021,427888998,1073741912,0.1153,-0.1473,-0.1631,0.001,0.001,0.003,40.05569486,-111.65864500,1416.220,-7.738,-7.570,12.534*38
 ```
 
-**Stream PIMU @50Hz and GGA @5Hz on current port**
+**Stream PIMU @400ms and GGA @5Hz on current port**
 
 ```
-$ASCB,0,20,0,0,0,0,0,200,0,0,0,0,0*3F
+$ASCE,0,6,1,0,2*0D
 ```
 
 Response:
@@ -711,49 +785,10 @@ Response:
 ```
 $PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069,-1.433,-1.072,-9.585*1f
 $GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.16,M,18.82,M,,*59
-$PIMU,3218.563,0.0022,-0.0057,-0.0091,-1.416,-1.123,-9.512,0.0061,0.0035,-0.0068,-1.430,-1.091,-9.563*19
-$PIMU,3218.583,0.0007,-0.0059,-0.0081,-1.420,-1.125,-9.508,0.0056,0.0047,-0.0086,-1.432,-1.078,-9.591*1e
-$PIMU,3218.603,0.0015,-0.0062,-0.0077,-1.419,-1.130,-9.499,0.0069,0.0044,-0.0066,-1.434,-1.079,-9.579*10
-$PIMU,3218.623,-0.0001,-0.0052,-0.0097,-1.413,-1.123,-9.529,0.0066,0.0047,-0.0072,-1.427,-1.085,-9.593*39
-$PIMU,3218.643,0.0012,-0.0060,-0.0080,-1.423,-1.122,-9.508,0.0071,0.0047,-0.0070,-1.425,-1.083,-9.563*19
-$PIMU,3218.663,-0.0004,-0.0065,-0.0088,-1.413,-1.118,-9.540,0.0057,0.0029,-0.0059,-1.430,-1.082,-9.604*3a
-$PIMU,3218.683,-0.0001,-0.0064,-0.0096,-1.418,-1.121,-9.511,0.0059,0.0033,-0.0070,-1.431,-1.084,-9.585*39
-$PIMU,3218.703,0.0007,-0.0055,-0.0079,-1.417,-1.128,-9.497,0.0046,0.0043,-0.0077,-1.428,-1.085,-9.565*18
-$PIMU,3218.723,0.0024,-0.0054,-0.0085,-1.416,-1.106,-9.510,0.0051,0.0033,-0.0079,-1.429,-1.089,-9.588*1b
-$PIMU,3218.743,0.0019,-0.0058,-0.0081,-1.430,-1.126,-9.533,0.0063,0.0032,-0.0073,-1.435,-1.093,-9.585*1d
 $GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.19,M,18.82,M,,*56
 $PIMU,3218.763,0.0019,-0.0062,-0.0086,-1.426,-1.114,-9.509,0.0054,0.0029,-0.0070,-1.431,-1.085,-9.579*13
+$GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.16,M,18.82,M,,*59
+$GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.19,M,18.82,M,,*56
+$PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069,-1.433,-1.072,-9.585*1f
 ```
 
-
-### Using Tera Term App
-
-The example NMEA command strings can be sent using standard serial port terminal that supports sending the line ending characters (carriage return and new line).  The Windows desktop app [Tera Term](https://osdn.net/projects/ttssh2/releases/) can be used for this.
-
-**Setup:**
-
-1. Start Tera Term > New connection.  Select the correct serial port.
-
-2. Setup > Terminal...
-    - Receive:		CR
-    - Transmit:	CR+LF	**(IMPORTANT - Ensures each NMEA string ends with `\r\n` or `0x0D`, `0x0A`)** 
-    - Local echo:	Yes		This shows what was sent.
-
-3. Setup > Serial port...
-    - Speed:		921600	This is the default setting and must match the IMX serial port baudrate. 
-    - Data:		8 bit
-    - Parity:		none
-    - Stop bits: 	1 bit
-    - Flow control: none
-
-4. menu bar > setup > save setup  -  This saves time the next time Tera Term is used.
-
-**Saving a log:**
-
-1. File > log  -  Be sure to save as a .txt so it can be viewed in notepad. Controls for the log are in the Logger popup window after starting a log.
-
-**Sending an NMEA command:**
-
-1. Copy one of the command messages above to the clipboard.
-
-2. Use the Tera Term > Edit > `Paste<CR>`  option to send the copied command.  This method in conjunction with the above "CR+LF" terminal transmit setting ensures that a carriage return and line feed character terminate the sent string.  Only one NMEA string command can be sent at a time. 

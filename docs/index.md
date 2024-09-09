@@ -1,4 +1,5 @@
-**Software Release 1.11.0 - 04 Nov 2023**\
+**Software Release 2.1.2 - 29 Aug 2024**\
+<!-- [UPDATE_RELEASE_VERSION_HERE] Update this version info at time of release. -->
 *Non-current version of the User Manual are found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
 
 <center>
@@ -30,9 +31,8 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 * **Tactical Grade IMU**
   - **Gyro: 1.5 °/hr Bias Instability, 0.16 °/√hr ARW**
   - **Accel: 19 µg Bias Instability, 0.02 m/s/√hr VRW**
-* **INS, AHRS**
-  - **Dynamic: 0.04° Roll/Pitch, 0.13° Heading**
-  - **Static: 0.1° Roll/Pitch, 0.5° Heading**
+* **0.04° Dynamic Roll/Pitch**
+* **0.13° Dynamic Heading**
 * **Surface Mount Reflowable (PCB Module)**
 * Up to 1KHz IMU Output Data Rate
 * Small Form Factor: 15.6 x 12.5 x 2.9 mm
@@ -90,7 +90,7 @@ Phone 801-610-6771<br>
 Email support@inertialsense.com<br>
 Website: InertialSense.com<br>
 
-© 2014-2022 Inertial Sense
+© 2014-2024 Inertial Sense
 
 Inertial Sense®, Inertial Sense logo and combinations thereof are registered trademarks or trademarks of Inertial Sense, Inc. Other terms and product names may be trademarks of others.
 

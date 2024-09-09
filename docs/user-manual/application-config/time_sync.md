@@ -86,7 +86,7 @@ Example:
 rmc_t rmc;
 rmc.bits = RMC_BITS_STROBE_IN_TIME;
 
-int messageSize = is_comm_set_data(comm, DID_RMC, offsetof(rmc_t, bits), sizeof(uint64_t), &rmc);
+int messageSize = is_comm_set_data_to_buf(buffer, bufferSize, comm, DID_RMC, sizeof(uint64_t), offsetof(rmc_t, bits), &rmc);
 if (messageSize != serialPortWrite(serialPort, comm->buffer, messageSize))
 {
     printf("Failed to write save persistent message\r\n");
@@ -137,7 +137,7 @@ The STROBE output feature is used to indicate start and end of the preintegrated
 
 ### Configuring Message Output
 
-By default, triggering a strobe input event will cause the IMX to produce an ASCII [PINS2](../../com-protocol/ascii/#pins2) message as well as a [PSTRB](../../com-protocol/ascii/#pstrb) message which contains the time stamp of the strobe event.
+By default, triggering a strobe input event will cause the IMX to produce an NMEA [PINS2](../../com-protocol/nmea/#pins2) message as well as a [PSTRB](../../com-protocol/nmea/#pstrb) message which contains the time stamp of the strobe event.
 
 To instead send a binary [DID_INS_2](../../com-protocol/DID-descriptions/#did_ins_2) and [DID_STROBE_IN_TIME](../../com-protocol/DID-descriptions/#did_strobe_in_time) message, set the `RMC_BITS_STROBE_IN_TIME`flag of `DID_RMC/bits`field.
 

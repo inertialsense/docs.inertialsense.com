@@ -10,7 +10,7 @@ This [ISLoggerExample](https://github.com/inertialsense/InertialSenseSDK/tree/re
 
 #### SDK Files
 
-* [SDK](https://github.com/inertialsense/InertialSenseSDK/tree/master/src)
+* [SDK](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src)
 
 
 ## Implementation
@@ -83,14 +83,27 @@ build/IS_logs/LOG_SN30664_20180323_112822_0001.dat
    ``` bash
    ./ISLoggerExample /dev/ttyUSB0
    ```
-## Compile & Run (Windows MS Visual Studio)
+## Compile & Run (Windows Powershell)
+*Note - Install CMake for Windows natively, or install the CMake for Windows extension for Visual Studio
 
-1. [Install and Configure Visual Studio](../../software/SDK/#installing-and-configuring-visual-studio)
-2. Open Visual Studio solution file (InertialSenseSDK\ExampleProjects\Logger\VS_project\InertialSenseCLTool.sln)
-3. Build (F7)
+1. Create build directory
+   ``` bash
+   cd InertialSenseSDK/ExampleProjects/Logger
+   mkdir build
+   ```
+2. Run cmake from within build directory
+   ``` bash
+   cd build
+   cmake ..
+   ```
+3. Compile using make
+   ``` bash
+   cmake --build .
+   ```
+
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\ExampleProjects\Logger\VS_project\Release\ISLoggerExample.exe COM3
+   C:\InertialSenseSDK\ExampleProjects\Logger\build\Release\ISLoggerExample.exe COM3
    ```
 
 ## Summary

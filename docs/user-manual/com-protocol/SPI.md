@@ -1,6 +1,6 @@
 # SPI Protocol
 
-The SPI interface provides an alternative method of communications with the µINS, µAHRS, and µIMU. The SPI protocol uses much of the same structure and format as the serial communication binary protocol which is outlined in the [Binary Protocol](../com-protocol/SPI.md) section of the users manual.
+The SPI interface provides an alternative method of communications with the IMX-5. The SPI protocol uses much of the same structure and format as the serial communication binary protocol which is outlined in the [Binary Protocol](../com-protocol/SPI.md) section of the users manual.
 
 ## Enable SPI
 

@@ -150,12 +150,12 @@ The hardware status flags, **hdwStatus**, are found in the `DID_INS1`, `DID_INS2
 | HDW\_STATUS\_FAULT\_POR\_RESET | Software or Triggered Reset |
 
 ## Built-in Test (BIT)
-Built-in test (BIT) is enabled by setting `DID_BIT.state` to any of the following values. 
+Built-in test (BIT) is enabled by setting `DID_BIT.command` to any of the following values. 
 
 ```c++
-BIT_STATE_CMD_FULL_STATIONARY               = (int)2, // (FULL) Comprehensive test.  Requires system be completely stationary without vibrations. 
-BIT_STATE_CMD_BASIC_MOVING                  = (int)3, // (BASIC) Ignores sensor output.  Can be run while moving.  This mode is automatically run after bootup.
-BIT_STATE_CMD_FULL_STATIONARY_HIGH_ACCURACY = (int)4, // Same as BIT_STATE_CMD_FULL_STATIONARY but with higher requirements for accuracy.
+BIT_CMD_FULL_STATIONARY               = (int)2, // (FULL) Comprehensive test.  Requires system be completely stationary without vibrations. 
+BIT_CMD_BASIC_MOVING                  = (int)3, // (BASIC) Ignores sensor output.  Can be run while moving.  This mode is automatically run after bootup.
+BIT_CMD_FULL_STATIONARY_HIGH_ACCURACY = (int)4, // (FULL-HA) Same as BIT_CMD_FULL_STATIONARY but with higher accuracy requirements.
 ```
 
 BIT takes about 5 seconds to run, and is completed when `DID_BIT.state == BIT_STATE_DONE (1)`.  All BIT tests except those related to GPS require the system to be stationary to be accurate.
