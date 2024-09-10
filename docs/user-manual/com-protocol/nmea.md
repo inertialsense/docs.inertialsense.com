@@ -66,7 +66,7 @@ $ASCE,OPTIONS,(ID,PERIOD)*xx\r\n
 The following examples will enable the same NMEA message output:
 
 ```
-$ASCE,0,PPIMU,1,PINS2,10,GxGGA,1*10\r\n
+$ASCE,0,PPIMU,1,PINS2,10,GNGGA,1*26\r\n
 $ASCE,0,2,1,5,10,7,1*39\r\n
 ```
 
@@ -74,7 +74,7 @@ $ASCE,0,2,1,5,10,7,1*39\r\n
 | ----- | --------- | ------------------------------------------------------------ |
 | 1     | `OPTIONS` | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
 |       |           | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e. PPIMU, PINS1, GxGGA) excluding packet start character `$` or **2.) message ID** (eNmeaAsciiMsgId) of the NMEA message to be streamed.  See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
+| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e. PPIMU, PINS1, GNGGA) excluding packet start character `$` or **2.) message ID** (eNmeaAsciiMsgId) of the NMEA message to be streamed.  See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
 | 3+n*2 | `PERIOD`  | Broadcast period multiple for specified message.  Zero disables streaming. |
 |       |           | *End of repeated group (1...20 times)*                       |
 
@@ -522,7 +522,7 @@ Where n is 0-3, for the four satellites supported by this message.
 
 #### GSV Output Filtering
 
-Verbosity and size of the GSV NMEA message can be reduced to only select constellation and frequencies by using a [Filtered GSV NMEA Message IDs](Filtered GSV NMEA Message IDs) instead of the standard GSV message ID `GPGSV` or `15` (`NMEA_MSG_ID_GxGSV`), either ASCII or integer.  Note that the GSV output filter can only hide or mask information for satellites currently enabled in the `DID_FLASH_CONFIG.gnssSatSigConst` satellite system constellation.  Usage:
+Verbosity and size of the GSV NMEA message can be reduced to only select constellation and frequencies by using a [Filtered GSV NMEA Message IDs](Filtered GSV NMEA Message IDs) instead of the standard GSV message ID `GPGSV` or `15` (`NMEA_MSG_ID_GNGSV`), either ASCII or integer.  Note that the GSV output filter can only hide or mask information for satellites currently enabled in the `DID_FLASH_CONFIG.gnssSatSigConst` satellite system constellation.  Usage:
 
 ```c++
 $ASCE,[options],[Message ID]*[checksum]\r\n
@@ -557,7 +557,6 @@ The following extended GSV NMEA message IDs are defined in data_sets.h.
 | NMEA_MSG_ID_GNGSV_5_3_1     | GNGSV_5_3_1 | 3853 | Enable all constellations band1, band3, band5 |
 | NMEA_MSG_ID_GNGSV_5_3_2     | GNGSV_5_3_2 | 3854 | Enable all constellations band2, band3, band5 |
 | NMEA_MSG_ID_GNGSV_5_3_2_1   | GNGSV_5_3_2_1 | 3855 | Enable all constellations band1, band2, band3, band5 |
-| NMEA_MSG_ID_GxGSV or<br/>NMEA_MSG_ID_GNGSV | GxGSV | 15 or 3855 | Enable all constellations and frequencies |
 
 | GPGSV - GPS                 | Message ID ASCII | Message ID Int | Description |
 |-----------------------------|------------------|----------------|-------------|
