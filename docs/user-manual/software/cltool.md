@@ -58,7 +58,7 @@ OPTIONS (Message Streaming)
 
 OPTIONS (Logging to file, disabled by default)
     -lon            Enable logging
-    -lt=TYPE        Log type: dat (default), raw, sdat, kml or csv
+    -lt=TYPE        Log type: raw (default), dat, kml or csv
     -lp PATH        Log data to path (default: ./IS_logs)
     -lms=PERCENT    Log max space in percent of free space (default: 0.5)
     -lmf=BYTES      Log max file size in bytes (default: 5242880)
@@ -209,16 +209,15 @@ cltool -c DEVICE_PORT -lon -lt=LOG_TYPE -lp DIRECTORY
 | Options         | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
 | `-lon`          | Enable logging.                                              |
-| `-lt=LOG_TYPE`  | Specifies the  [log file type](#log-type) to be written.  LOG_TYPE can be `dat`, `raw`, `sdat`, or `csv`. |
+| `-lt=LOG_TYPE`  | Specifies the  [log file type](#log-type) to be written.  LOG_TYPE can be `raw`, `dat`, or `csv`. |
 | `-lp DIRECTORY` | (Optional) Specifies the path where log files will be written.  When not specified, the default location will be the current working directory. |
 
 ### Log File Types
 
 | Log Type | Description                                                  |
 | -------- | ------------------------------------------------------------ |
-| `dat`    | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups containing data in serial order as they appear over the serial port.  Default file format.  ***Recommended for post processing.*** |
 | `raw`    | Binary file containing byte for byte data received over the serial ports.  All packets remain in their native form.  Used for logging InertialSense binary (ISB), NMEA, RTCM3, uBlox UBX binary and SPARTN, and any other packet formats.  ***Recommended for logging all data formats and post processing***. |
-| `sdat`   | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups organized by DID.  Each chunk contains only one DID type, and at least one chunk allocated for each DID data set type.  Not recommended for future use. |
+| `dat`    | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups containing data in serial order as they appear over the serial port.  Default file format.  ***Recommended for post processing.*** |
 | `csv`    | Comma-Separated Values - Plain text file that uses specific structuring to arrange tabular data. Its basic format involves separating each data field (or cell in a table) with a comma and each record (or row) is on a new line. This simple format allows for ease in data import and export between programs that handle tabular data, such as databases and spreadsheets. |
 
 The following is an example of enabling the logger with type raw and specifying the output directory:

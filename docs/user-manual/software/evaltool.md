@@ -33,7 +33,7 @@ In order to log data from your INS device, follow the steps listed below:
 
 4. Configure and enable logging in the **Data Log** area: 
    1. The **Open Folder** button opens the log directory in a file explorer window where logs are saved.  
-   2. The **Format** dropdown menu selects the output log file format (.dat .sdat .csv .kml .raw).
+   2. The **Format** dropdown menu selects the output log file format (.raw .dat .csv .kml).
    3. Press **Log** to start recording a new log.
 
 5. The data you are currently recording will be shown in the “Log Summary” sub-tab.
@@ -138,15 +138,14 @@ This area allow users to enable streaming of various DIDs.
 
 1. Enable/Disable Button - Starts/stops a log of all currently streaming data and saves it to a sub-folder with the current time-stamp within your "Logs" folder.
 2. Open Folder Button - Opens the "Logs" folder where your previous logs are saved.
-3. Format Dropdown - Select the file output type of the data log , such as .dat, .raw, .sdat, .csv, or .kml.
+3. Format Dropdown - Select the file output type of the data log , such as .raw, .dat, .csv, or .kml.
 
    ​	
 
    | Log Format             | Description                                                  |
    | ---------------------- | ------------------------------------------------------------ |
-   | Serial binary (.dat)   | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups containing data in serial order as they appear over the serial port.  Default file format.  ***Recommended for post processing.*** |
    | Raw packet (.raw)      | Binary file containing byte for byte data received over the serial ports.  All packets remain in their native form.  Used for logging InertialSense binary (ISB), NMEA, RTCM3, uBlox UBX binary and SPARTN, and any other packet formats.  ***Recommended for logging all data formats and post processing***. |
-   | Sorted binary (.sdat)  | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups organized by DID.  Each chunk contains only one DID type, and at least one chunk allocated for each DID data set type.  Not recommended for future use. |
+   | Serial binary (.dat)   | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups containing data in serial order as they appear over the serial port.  Default file format.  ***Recommended for post processing.*** |
    | Comma separated (.csv) | Plain text file that uses specific structuring to arrange tabular data. Its basic format involves separating each data field (or cell in a table) with a comma and each record (or row) is on a new line. This simple format allows for ease in data import and export between programs that handle tabular data, such as databases and spreadsheets. |
 
    

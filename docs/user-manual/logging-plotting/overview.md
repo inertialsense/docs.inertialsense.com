@@ -108,16 +108,11 @@ uint32_t reserved; //!< Unused
 ```
 
 ### Chunk Data
-The Chunk data is defined for both the `.dat` and `.sdat` file types.
+The Chunk data is defined for the `.dat` file types.
 
 ![ChunkData](../images/ChunkData.png)
 
-### Chunk Sub-Header
-The Chunk sub-header is used for `.sdat` file types.
-
-![ChunkSubHeader](../images/ChunkSubHeader.png)
-
 ### Data Set Header
-The Data set header is used for both the `.dat` and `.sdat` file types.
+The Data set header is used for the `.dat` file types.
 
 ![DataSetHeader](../images/DataSetHeader.png)
