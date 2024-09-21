@@ -3,12 +3,6 @@ Inertial Sense provides data a logging capability in the EvalTool, CLTool, and S
 
 ## Data Log Types
 
-<!-- ### Serial Logger File (*.dat)
-
-### Sorted Logger File (*.sdat) -->
-
-<!-- The sorted data log (*.sdat) file format is provided for fast loading of uniform c type binary data from a file. It is the fastest method for loading large data sets and is ideal for plotting data. -->
-
 ### Comma Seperated Values (`*.csv`)
 
 The comma separated value (.csv) file format can be imported into many software packages, including Excel, Matlab, and Python.
@@ -17,50 +11,45 @@ The comma separated value (.csv) file format can be imported into many software 
 
 KML is a file format used to display geographic data in an Earth browser such as Google Earth.
 
-### Binary Data Log Types (`*.dat` and `*.sdat`)
+### Binary Data Log (`*.raw` and `*.dat`)
 
 <table>
 <tr>
-    <td> </td>
+    <td></td>
+    <td><b>Raw Logger (*.raw)</b></td>
     <td><b>Serial Logger (*.dat)</b></td>
-    <td><b>Sorted Logger (*.sdat)</b></td>
 </tr>
 <tr>
     <td><b>Description</b></td>
-    <td>Stores data to file in the same serial
-order it was passed into the logger. This
-is the default logger used in the CLTool
-and EvalTool.</td>
-    <td>Sorts data of similar types into separate
-chunks, allowing for faster load times
-into analysis tools. </td>
+    <td>Data stored in the same byte for byte form as it appears over a serial port, without parsing and removing packet header/footer.</td>
+    <td>Stores data to file in the same serial order it was passed into the logger. This is the default logger used in the CLTool and EvalTool.</td>
 </tr>
 <tr>
     <td><b>Advantages</b></td>
+    <td>Allows logging of all data/packet formats.  Preserves all data in the original form as communicated over serial port. Can be logged by writting serial port data to file, no parsing needed.</td>
     <td>Optimized for real-time data logging.</td>
-    <td>Optimized for loading data into analysis
-tools (i.e. Matlab, Python).</td>
 </tr>
 <tr>
     <td><b>Source File</b></td>
+    <td>DeviceLogRaw.h / .cpp</td>
     <td>DeviceLogSerial.h / .cpp</td>
-    <td>DeviceLogSorted.h / .cpp</td>
 </tr>
 <tr>
     <td><b>File extension</b></td>
+    <td>.raw</td>
     <td>.dat</td>
-    <td>.sdat</td>
 </tr>
 </table>
 
+
 ## Binary Data Log Format
 
-This section outlines the Inertial Sense binary data log types known as serial data and sorted data (`.dat` and `.sdat` file extensions).  Both data log file types are composed of several data containers know as chunks.  Each chunk contains a header, sub-header, and data.  
+This section outlines the Inertial Sense binary data log types known as raw data and serial data (`.raw` and `.dat` file extensions).  The .dat data log file type are composed of several data containers know as chunks.  Each chunk contains a header, sub-header, and data.  
 
 ### File
 
 The data log file name has the format _LOG_SNXXXXX_YYYYMMDD_HHMMSS_CNT.dat_ which contains the device
-serial number, date, time, and log file count. The two primary log file formats are `.dat` and `.sdat`. These log files consist of a series of data Chunks.
+serial number, date, time, and log file count. The serial data log file formats is  `.dat`. This log consist of files containing series of data Chunks.
 
 ![DataLogFile](../images/DataLogFile.png)
 
@@ -110,7 +99,7 @@ char name[4]; //!< Chunk name
 char invName[4]; //!< Bitwise inverse of chunk name
 uint32_t dataSize; //!< Chunk data length in bytes
 uint32_t invDataSize; //!< Bitwise inverse of chunk data length
-uint32_t grpNum; //!< Chunk Group Number: 0 = serial data, 1 = sorted data...
+uint32_t grpNum; //!< Chunk Group Number: 0 = serial data...
 uint32_t devSerialNum; //!< Device serial number
 uint32_t pHandle; //!< Device port handle
 uint32_t reserved; //!< Unused
