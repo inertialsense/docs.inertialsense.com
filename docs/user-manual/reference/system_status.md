@@ -13,8 +13,10 @@ Heading alignment varies based on available heading aiding sensors and condition
 
 Heading aiding status is also identified when the `INS_STATUS_SOLUTION_MASK` of the `insStatus` equals: 
 
-- `INS_STATUS_SOLUTION_NAV`  
+- `INS_STATUS_SOLUTION_NAV`
+- `INS_STATUS_SOLUTION_NAV_HIGH_VARIANCE`
 - `INS_STATUS_SOLUTION_AHRS` 
+- `INS_STATUS_SOLUTION_AHRS_HIGH_VARIANCE`
 
 The source of heading aiding can be identified by the following flags:
 
