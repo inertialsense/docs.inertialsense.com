@@ -145,7 +145,7 @@ Magnetometer sensor output
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| mag | float[3] | Magnetometers in Gauss |
+| mag | float[3] | Magnetometers |
 
 
 #### DID_MAG_CAL
@@ -173,7 +173,7 @@ System sensor information
 | temp | float | Temperature in Celsius |
 | pqr | float[3] | Gyros in radians / second |
 | acc | float[3] | Accelerometers in meters / second squared |
-| mag | float[3] | Magnetometers in Gauss |
+| mag | float[3] | Magnetometers |
 | bar | float | Barometric pressure in kilopascals |
 | barTemp | float | Temperature of barometric pressure sensor in Celsius |
 | mslBar | float | MSL altitude from barometric pressure sensor in meters |
@@ -645,7 +645,7 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 | cus | double | Amplitude of the Sine Harmonic Correction Term to the Argument of Latitude (rad) |
 | cic | double | Amplitude of the Cosine Harmonic Correction Term to the Angle of Inclination (rad) |
 | cis | double | Amplitude of the Sine Harmonic Correction Term to the Angle of Inclination (rad) |
-| toes | double | Time Of Ephemeris, ephemeris reference epoch in seconds within the week (s), same as <toe> above but represented as double type. Note that toe is computed as eph->toe = gst2time(week, eph->toes) |
+| toes | double | Time Of Ephemeris, ephemeris reference epoch in seconds within the week (s), same as <toe> above but represented as double type. Note that toe is computed as eph->toe = gst2time(week, eph->toes). This is the expiration time and is generally ~2 hours ahead of current time. |
 | fit | double | Fit interval (h) (0: 4 hours, 1: greater than 4 hours) |
 | f0 | double | SV clock offset, af0 (s) |
 | f1 | double | SV clock drift, af1 (s/s, non-dimensional) |
@@ -768,7 +768,7 @@ Flash memory configuration
 | lastLlaWeek | uint32_t | Last LLA GPS number of weeks since January 6th, 1980 |
 | lastLlaUpdateDistance | float | Distance between current and last LLA that triggers an update of lastLla  |
 | ioConfig | uint32_t | Hardware interface configuration bits (see eIoConfig). |
-| platformConfig | uint32_t | Hardware platform specifying the IMX carrier board type (i.e. RUG, EVB, IG) and configuration bits (see ePlatformConfig).  The platform type is used to simplify the GPS and I/O configuration process.  |
+| platformConfig | uint32_t | Hardware platform specifying the IMX carrier board type (i.e. RUG, EVB, IG) and configuration bits (see ePlatformConfig).  The platform type is used to simplify the GPS and I/O configuration process.  Bit PLATFORM_CFG_UPDATE_IO_CONFIG is excluded from the flashConfig checksum and from determining whether to upload. |
 | gps2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame origin to GPS 2 antenna. |
 | zeroVelRotation | float[3] | Euler (roll, pitch, yaw) rotation in radians from INS Sensor Frame to Intermediate ZeroVelocity Frame.  Order applied: heading, pitch, roll. |
 | zeroVelOffset | float[3] | X,Y,Z offset in meters from Intermediate ZeroVelocity Frame to Zero Velocity Frame. |
@@ -782,6 +782,7 @@ Flash memory configuration
 | ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
 | wheelConfig | wheel_config_t | Wheel encoder: euler angles describing the rotation from imu to left wheel |
 | magInterferenceThreshold | float | Magnetometer interference sensitivity threshold. Typical range is 2-10 (3 default) and 1000 to disable mag interference detection. |
+| magCalibrationQualityThreshold | float | Magnetometer calibration quality sensitivity threshold. Typical range is 10-20 (10 default) and 1000 to disable mag calibration quality check, forcing it to be always good. |
 
 
 #### DID_NMEA_BCAST_PERIOD
@@ -792,8 +793,8 @@ Set broadcast periods for NMEA messages
 
 | Field | Type | Description |
 |-------|------|-------------|
-| options | uint32_t | Options: Port selection[0x0=current, 0x1=ser0, 0x2=ser1, 0x4=ser2, 0x8=USB, 0x100=preserve, 0x200=Persistant] (see RMC_OPTIONS_...) |
-| msgCount | uint8_t | The number of messages being set in this message |
+| options | uint32_t | Options: Port selection[0x0=current, 0x1=ser0, 0x2=ser1, 0x4=ser2, 0x8=USB, 0x100=preserve, 0x200=Persistent] (see RMC_OPTIONS_...) |
+| nmeaBroadcastMsgs | nmeaBroadcastMsgPair_t[20] | NMEA message to be set.  Up to 20 message ID/period pairs.  Message ID of zero indicates the remaining pairs are not used. (see eNmeaMsgId) |
 
 
 #### DID_RMC
@@ -886,7 +887,10 @@ System built-in self-test
 
 | Field | Type | Description |
 |-------|------|-------------|
-| state | uint32_t | Built-in self-test state (see eBitState) |
+| command | uint8_t | BIT input command (see eBitCommand).  Ignored when zero.  |
+| lastCommand | uint8_t | BIT last input command (see eBitCommand) |
+| state | uint8_t | BIT current state (see eBitState) |
+| reserved | uint8_t | Unused |
 | hdwBitStatus | uint32_t | Hardware BIT status (see eHdwBitStatusFlags) |
 | calBitStatus | uint32_t | Calibration BIT status (see eCalBitStatusFlags) |
 | tcPqrBias | float | Temperature calibration bias |
@@ -897,6 +901,8 @@ System built-in self-test
 | tcAccLinearity | float | Angular rate standard deviation |
 | pqr | float | Acceleration standard deviation |
 | acc | float | Self-test mode (see eBitTestMode) |
+| pqrSigma | float | Self-test mode bi-directional variable used with testMode |
+| accSigma | float | The hardware type detected (see "Product Hardware ID").  This is used to ensure correct firmware is used. |
 
 
 #### DID_CAN_CONFIG
@@ -922,7 +928,8 @@ Device information
 | Field | Type | Description |
 |-------|------|-------------|
 | reserved | uint16_t | Reserved bits |
-| hardware | uint16_t | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eDevInfoHardware) |
+| hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
+| reserved2 | uint8_t | Unused |
 | serialNumber | uint32_t | Serial number |
 | hardwareVer | uint8_t[4] | Hardware version |
 | firmwareVer | uint8_t[4] | Firmware (software) version |
@@ -930,7 +937,7 @@ Device information
 | protocolVer | uint8_t[4] | Communications protocol version |
 | repoRevision | uint32_t | Repository revision number |
 | manufacturer | char[24] | Manufacturer name |
-| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=debug) |
+| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=developer/debug) |
 | buildYear | uint8_t | Build date year - 2000 |
 | buildMonth | uint8_t | Build date month |
 | buildDay | uint8_t | Build date day |
@@ -974,7 +981,8 @@ EVB device information
 | Field | Type | Description |
 |-------|------|-------------|
 | reserved | uint16_t | Reserved bits |
-| hardware | uint16_t | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eDevInfoHardware) |
+| hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
+| reserved2 | uint8_t | Unused |
 | serialNumber | uint32_t | Serial number |
 | hardwareVer | uint8_t[4] | Hardware version |
 | firmwareVer | uint8_t[4] | Firmware (software) version |
@@ -982,7 +990,7 @@ EVB device information
 | protocolVer | uint8_t[4] | Communications protocol version |
 | repoRevision | uint32_t | Repository revision number |
 | manufacturer | char[24] | Manufacturer name |
-| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=debug) |
+| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=developer/debug) |
 | buildYear | uint8_t | Build date year - 2000 |
 | buildMonth | uint8_t | Build date month |
 | buildDay | uint8_t | Build date day |
@@ -1008,6 +1016,32 @@ EVB-2 RTOS information.
 | task | rtos_task_t[] | Tasks |
 
 
+#### DID_EVENT
+
+`did_event_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time (uptime in seconds) |
+| senderSN | uint32_t | Serial number |
+| senderHdwId | uint16_t | Hardware: 0=Host, 1=uINS, 2=EVB, 3=IMX, 4=GPX (see "Product Hardware ID") |
+| priority | int8_t | see eEventPriority |
+| res8 | uint8_t | see eEventMsgTypeID |
+
+
+#### DID_EVENT_HEADER_SIZE
+
+`did_event_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time (uptime in seconds) |
+| senderSN | uint32_t | Serial number |
+| senderHdwId | uint16_t | Hardware: 0=Host, 1=uINS, 2=EVB, 3=IMX, 4=GPX (see "Product Hardware ID") |
+| priority | int8_t | see eEventPriority |
+| res8 | uint8_t | see eEventMsgTypeID |
+
+
 #### DID_GPS1_SIG
 
 GPS 1 GNSS signal information. 
@@ -1023,7 +1057,7 @@ GPS 1 GNSS signal information.
 
 #### DID_GPS1_TIMEPULSE
 
-
+GPS1 PPS time synchronization. 
 
 `gps_timepulse_t`
 
@@ -1048,13 +1082,17 @@ GPS 2 GNSS signal information.
 
 GPX BIT test 
 
-`GPX_bit_t`
+`gpx_bit_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| results | uint32_t | Calibration BIT status (see eCalBitStatusFlags) |
-| command | uint8_t | Command   |
-| port | uint8_t | Built-in self-test state |
+| results | uint32_t | GPX built-in test status (see eGPXBit_results) |
+| command | uint8_t | Command (see eGPXBit_CMD) |
+| port | uint8_t | Port used with the test |
+| testMode | uint8_t | Self-test mode (see eGPXBit_test_mode) |
+| state | uint8_t | Built-in self-test state (see eGPXBit_state) |
+| detectedHardwareId | uint16_t | The hardware ID detected (see "Product Hardware ID").  This is used to ensure correct firmware is used. |
+| reserved | uint8_t[2] | Unused |
 
 
 #### DID_GPX_DEBUG_ARRAY
@@ -1076,7 +1114,8 @@ GPX device information
 | Field | Type | Description |
 |-------|------|-------------|
 | reserved | uint16_t | Reserved bits |
-| hardware | uint16_t | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eDevInfoHardware) |
+| hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
+| reserved2 | uint8_t | Unused |
 | serialNumber | uint32_t | Serial number |
 | hardwareVer | uint8_t[4] | Hardware version |
 | firmwareVer | uint8_t[4] | Firmware (software) version |
@@ -1084,7 +1123,7 @@ GPX device information
 | protocolVer | uint8_t[4] | Communications protocol version |
 | repoRevision | uint32_t | Repository revision number |
 | manufacturer | char[24] | Manufacturer name |
-| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=debug) |
+| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=developer/debug) |
 | buildYear | uint8_t | Build date year - 2000 |
 | buildMonth | uint8_t | Build date month |
 | buildDay | uint8_t | Build date day |
@@ -1120,6 +1159,19 @@ GPX flash configuration
 | gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
 | gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
 | RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
+| haltReason | uint32_t | (Internal use only) Reason for system halt (see k_fatal_error_reason and k_fatal_error_reason_arch). Cleared on startup. |
+| reserved | uint32_t | (Internal use only) reserved |
+
+
+#### DID_GPX_PORT_MONITOR
+
+Data rate and status monitoring for each communications port. 
+
+`port_monitor_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| port | port_monitor_set_t[6] | Port monitor set |
 
 
 #### DID_GPX_RMC
@@ -1159,12 +1211,12 @@ GPX status
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | status | uint32_t | Status (eGpxStatus) |
 | grmcBitsSer0 | uint64_t | GRMC BITS  |
-| grmcBitsSer1 | uint64_t | Hardware status flags (eHdwStatusFlags) |
+| grmcBitsSer1 | uint64_t | Hardware status flags (eGPXHdwStatusFlags) |
 | grmcBitsSer2 | uint64_t | MCU temperature (not available yet) |
 | grmcBitsUSB | uint64_t | Nav output period (ms). |
 | grmcNMEABitsSer0 | uint64_t | Flash config checksum used with host SDK synchronization |
 | grmcNMEABitsSer1 | uint64_t | RTK Mode bits (see eRTKConfigBits)  |
-| grmcNMEABitsSer2 | uint64_t | GNSS status (see RunState)  |
+| grmcNMEABitsSer2 | uint64_t | port |
 
 
 #### DID_GROUND_VEHICLE
@@ -1307,21 +1359,6 @@ INS Extended Kalman Filter (EKF) states
 |-------|------|-------------|
 
 
-#### DID_INTERNAL_DIAGNOSTIC
-
-Internal diagnostic info 
-
-`internal_diagnostic_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| gapCountSerialDriver | uint32_t[6] | Count of gap of more than 0.5 seconds receiving serial data, driver level, one entry for each com port |
-| gapCountSerialParser | uint32_t[6] | Count of gap of more than 0.5 seconds receiving serial data, class / parser level, one entry for each com port |
-| rxOverflowCount | uint32_t[6] | Count of rx overflow, one entry for each com port |
-| txOverflowCount | uint32_t[6] | Count of tx overflow, one entry for each com port |
-| checksumFailCount | uint32_t[6] | Count of checksum failures, one entry for each com port |
-
-
 #### DID_IO
 
 I/O 
@@ -1409,7 +1446,7 @@ Reference or truth magnetometer used for manufacturing calibration and testing
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| mag | float[3] | Magnetometers in Gauss |
+| mag | float[3] | Magnetometers |
 
 
 #### DID_REFERENCE_PIMU
@@ -1530,7 +1567,7 @@ Temperature compensated IMU output.
 | temp | float | Temperature in Celsius |
 | pqr | float[3] | Gyros in radians / second |
 | acc | float[3] | Accelerometers in meters / second squared |
-| mag | float[3] | Magnetometers in Gauss |
+| mag | float[3] | Magnetometers |
 | bar | float | Barometric pressure in kilopascals |
 | barTemp | float | Temperature of barometric pressure sensor in Celsius |
 | mslBar | float | MSL altitude from barometric pressure sensor in meters |
@@ -1622,6 +1659,7 @@ System parameters / info
 | flashCfgChecksum | uint32_t | Flash config checksum used with host SDK synchronization |
 | navUpdatePeriodMs | uint32_t | Navigation/AHRS filter update period (ms) |
 | genFaultCode | uint32_t | General fault code descriptor (eGenFaultCodes).  Set to zero to reset fault code. |
+| upTime | double | System up time in seconds (with double precision) |
 
 
 #### DID_WHEEL_ENCODER
@@ -1809,13 +1847,20 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER1_LOOPBACK | 26 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER2_LOOPBACK | 27 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_LOOPBACK | 28 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_LOOPBACK_TESTMODE | 29 |
 | SYS_CMD_GPX_ENABLE_BOOTLOADER_MODE | 30 |
 | SYS_CMD_GPX_ENABLE_GNSS1_CHIPSET_BOOTLOADER | 31 |
 | SYS_CMD_GPX_ENABLE_GNSS2_CHIPSET_BOOTLOADER | 32 |
 | SYS_CMD_GPX_ENABLE_GNSS1_PASS_THROUGH | 33 |
 | SYS_CMD_GPX_ENABLE_GNSS2_PASS_THROUGH | 34 |
-| SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK | 35 |
+| SYS_CMD_GPX_HARD_RESET_GNSS1 | 36 |
+| SYS_CMD_GPX_HARD_RESET_GNSS2 | 37 |
+| SYS_CMD_GPX_SOFT_RESET_GPX | 38 |
+| SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK | 39 |
+| SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK_TESTMODE | 40 |
 | SYS_CMD_TEST_GPIO | 64 |
+| SYS_CMD_TEST_CHECK_INIT_SER0 | 65 |
+| SYS_CMD_TEST_FORCE_INIT_SER0 | 66 |
 | SYS_CMD_SAVE_FLASH | 97 |
 | SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
 | SYS_CMD_SOFTWARE_RESET | 99 |
@@ -1836,11 +1881,14 @@ System status and configuration is made available through various enumeration an
 | GFC_INS_STATE_ORUN_LAT | 0x00000002 |
 | GFC_INS_STATE_ORUN_ALT | 0x00000004 |
 | GFC_UNHANDLED_INTERRUPT | 0x00000010 |
+| GFC_GNSS_SYS_FAULT | 0x00000020 |
+| GFC_GNSS_TX_LIMITED | 0x00000040 |
+| GFC_GNSS_RX_OVERRUN | 0x00000080 |
 | GFC_INIT_SENSORS | 0x00000100 |
 | GFC_INIT_SPI | 0x00000200 |
 | GFC_CONFIG_SPI | 0x00000400 |
-| GFC_INIT_GPS1 | 0x00000800 |
-| GFC_INIT_GPS2 | 0x00001000 |
+| GFC_GNSS1_INIT | 0x00000800 |
+| GFC_GNSS2_INIT | 0x00001000 |
 | GFC_FLASH_INVALID_VALUES | 0x00002000 |
 | GFC_FLASH_CHECKSUM_FAILURE | 0x00004000 |
 | GFC_FLASH_WRITE_FAILURE | 0x00008000 |
@@ -1848,8 +1896,8 @@ System status and configuration is made available through various enumeration an
 | GFC_SYS_FAULT_CRITICAL | 0x00020000 |
 | GFC_SENSOR_SATURATION | 0x00040000 |
 | GFC_INIT_IMU | 0x00100000 |
-| GFC_INIT_MAGNETOMETER | 0x00400000 |
 | GFC_INIT_BAROMETER | 0x00200000 |
+| GFC_INIT_MAGNETOMETER | 0x00400000 |
 | GFC_INIT_I2C | 0x00800000 |
 | GFC_CHIP_ERASE_INVALID | 0x01000000 |
 
@@ -1933,7 +1981,7 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_SATURATION_MASK | 0x00000F00 |
 | HDW_STATUS_SATURATION_OFFSET | 8 |
 | HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00001000 |
-| HDW_STATUS_EKF_USING_REFERENCE_IMU | 0x00002000 |
+| HDW_STATUS_ERR_GPS_PPS_NOISE | 0x00002000 |
 | HDW_STATUS_MAG_RECAL_COMPLETE | 0x00004000 |
 | HDW_STATUS_FLASH_WRITE_PENDING | 0x00008000 |
 | HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
@@ -2003,6 +2051,7 @@ System status and configuration is made available through various enumeration an
 | INS_STATUS_GPS_AIDING_HEADING | 0x00000080 |
 | INS_STATUS_GPS_AIDING_POS | 0x00000100 |
 | INS_STATUS_GPS_UPDATE_IN_SOLUTION | 0x00000200 |
+| INS_STATUS_EKF_USING_REFERENCE_IMU | 0x00000400 |
 | INS_STATUS_MAG_AIDING_HEADING | 0x00000800 |
 | INS_STATUS_NAV_MODE | 0x00001000 |
 | INS_STATUS_STATIONARY_MODE | 0x00002000 |
