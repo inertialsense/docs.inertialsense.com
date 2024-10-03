@@ -1159,8 +1159,6 @@ GPX flash configuration
 | gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
 | gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
 | RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
-| haltReason | uint32_t | (Internal use only) Reason for system halt (see k_fatal_error_reason and k_fatal_error_reason_arch). Cleared on startup. |
-| reserved | uint32_t | (Internal use only) reserved |
 
 
 #### DID_GPX_PORT_MONITOR
