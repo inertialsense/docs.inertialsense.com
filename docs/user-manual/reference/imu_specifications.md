@@ -10,11 +10,9 @@ Given IMU specifications for the **IMX-5**:
 - **Accelerometer Velocity Random Walk (VRW)**: \(0.02 \, \text{m/s} / \sqrt{\text{hr}}\)
 - **Sampling Rate**: 100 Hz (which corresponds to a time interval, \(\Delta t\), of \(0.01\) seconds)
 
-Since the random walk values are given per \(\sqrt{\text{hr}}\), we need to convert from hours to seconds.
+### Time Conversion Factor
 
-### Conversion Factor
-
-1 hour is 3600 seconds, so:
+Since the random walk values are given per \(\sqrt{\text{hr}}\), we need to convert from hours to seconds. 1 hour is 3600 seconds, so:
 \[
 \text{1 hr} = 3600 \, \text{s} \Rightarrow \sqrt{\text{1 hr}} = \sqrt{3600} = 60 \, \text{s}^{1/2}
 \]
@@ -69,4 +67,4 @@ Thus, the **accelerometer noise standard deviation in terms of acceleration at 1
 - **Velocity Drift Standard Deviation at 100 Hz**: **0.0000333 m/s**
 - **Acceleration Noise Standard Deviation at 100 Hz**: **0.00333 m/s²**
 
-These values represent the Gaussian noise standard deviations for each sensor at the 100 Hz sampling rate, with the correct conversion from hours to seconds and the updated equation terminology.
+These values represent the Gaussian noise standard deviations for each sensor at 100 Hz sampling rate.
