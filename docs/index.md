@@ -74,7 +74,11 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 * Robotics and Ground Vehicles
 * Maritime
 
-<center>![dime](indeximages/dime.PNG)</center>
+<center>
+
+![dime](indeximages/dime.png)
+  
+</center>
 <br>
 <br>
 <br>
