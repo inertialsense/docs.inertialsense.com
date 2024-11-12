@@ -1,6 +1,6 @@
 # IMU Specifications
 
-## IMX-5 IMU Noise Specification Conversion to Standard Deviation
+## IMU Noise Specification Conversion to Standard Deviation
 
 The following calculations convert the noise specifications from the IMX-5 inertial measurement unit (IMU) datasheet into usable standard deviation values for simulating sensor noise at a sampling rate of 100 Hz. IMUs typically provide specifications for gyroscope and accelerometer noise in terms of "Angular Random Walk" (ARW) and "Velocity Random Walk" (VRW), expressed per \(\sqrt{\text{hours}}\). These values represent the rate at which random walk (drift) accumulates over time. To model this noise accurately in simulations, we need to translate the datasheet specifications into standard deviations that correspond to the chosen sampling rate (100 Hz, or 0.01 seconds per sample). This involves converting the ARW and VRW values from per \(\sqrt{\text{hour}}\) to per \(\sqrt{\text{second}}\) and then adjusting them based on the sampling interval, yielding noise characteristics that realistically represent the IMU's behavior in a simulated environment.
 
