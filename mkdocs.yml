@@ -23,6 +23,8 @@ theme:
   logo: 'img/Logo_Circle_white.svg'
   feature:
     tabs: false
+  features:
+    - content.math  # Enables KaTeX for math rendering
 # theme_dir: docs/custom_theme
 # copycode: true
 
@@ -157,6 +159,7 @@ nav:
     - Bootloader: user-manual/reference/bootloader.md
     - Coordinate Frames: user-manual/reference/coordinate_frames.md
     - Definitions: user-manual/reference/definitions.md
+    - IMU Specifications: user-manual/reference/imu_specifications.md
     - Interference: user-manual/reference/interference.md
     - Magnetometer: user-manual/reference/magnetometer.md
     - System Status: user-manual/reference/system_status.md
