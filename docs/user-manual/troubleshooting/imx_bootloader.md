@@ -30,7 +30,7 @@ The `STM32 BOOTLOADER` device will appear in the Device Manager under **Universa
 
 ![](images/dfu_device_driver_stm32_bootloader.png)
 
-Attempt the firmware update to test the newly installed device driver.
+Run the firmware update to test the newly installed device driver.
 
 **NOTE:**  The negotiation at the beginning of the IMX-5 bootloader update can be interrupted if the IMX-5 receives data on other ports than that used for the update (i.e. from a connected GPS receiver).  If this happens, the firmware update will fail but can be re-run.  To prevent interruption so that the bootloader update occurs in one process, data stream into other ports of the IMX must be turned off.  
 
