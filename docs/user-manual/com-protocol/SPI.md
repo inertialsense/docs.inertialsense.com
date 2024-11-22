@@ -59,13 +59,21 @@ Keeping CS low should not cause any issues. However, if the clocking between the
 
 ### Data Ready Pin Option
 
-There is a data ready pin option. This signal will be raised when data becomes ready. Depending on when this happens there can be 1-4 bytes of zeros that will come out before the packet starts. Also this line will go inactive a byte or two before the end of the packet gets sent. There is not a "not in a data packet" character to send. It is strictly done by data ready pin and parsing.
+There is a data ready pin option. This signal will be raised when data becomes ready.Also this line will go inactive a byte or two before the end of the packet gets sent. There is not a "not in a data packet" character to send. It is strictly done by data ready pin and parsing.
+
+![SPI_Hello](../images/SPI_Hello.png)
+
+ Depending on when this happens there can be 1-4 bytes of zeros that will come out before the packet starts. 
+
+![SPI_Pad](../images/SPI_Zero_Pad.png)
 
 If the chip select line is lowered during a data packet, the byte being transmitted (or that would be transmitted) can be lost. It is recommended to only lower the chip select when outside of a data packet and the data ready pin is inactive.
 
 The internal SPI buffer is 4096 bytes. If there is a buffer overflow, the buffer gets dropped. This is indicated by a data ready pin that is high without data being there. When an overflow happens, it clears the buffer, so the system could be in the middle of a packet and the IMX would just send zeros. If a request is sent to the IMX or the IMX sends a packet periodically it will resolve the situation.
 
 The SPI interface supports up to 3 Mbs data rate. (5 Mbs works if the data ready pin is used to receive the data - see B below.)
+
+
 
 ### Reading Data
 There are two strategies that can be used to read the data:
@@ -107,7 +115,7 @@ B. Read while the data ready pin is active **or** we are inside a data packet. O
 1. Parse data looking for start of packet (0xFF) discarding data until found. Once found start saving the data.
 1. Save and parse data looking for end of packet (0xFE). Once found send packet off for use. If a start of packet character is seen while looking for the end, discard previous data and start the packet saving over.
 
-
+![SPI_NMEA](../images/SPI_NMEA.png)
 
 
 
