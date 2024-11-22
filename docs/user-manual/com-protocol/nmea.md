@@ -29,7 +29,7 @@ The *persistent messages* option saves the current data stream configuration to 
 - **To save current NMEA persistent messages** - send the [$PERS](#pers) command.  
 - **To disable persistent messages** - send [$STPB](#stpb) followed by [$PERS](#pers). 
 
-[Binary persistent messages](../binary/#persistent-messages) are also available.
+[Binary persistent messages](../isb/#persistent-messages) are also available.
 
 ### Enabling Persistent Messages - EvalTool
 
@@ -57,7 +57,7 @@ The following NMEA messages can be received by the IMX.
 
 ### ASCE
 
-Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](binary/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](../isb/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
 
 ```
 $ASCE,OPTIONS,(ID,PERIOD)*xx\r\n
@@ -522,7 +522,7 @@ Where n is 0-3, for the four satellites supported by this message.
 
 #### GSV Output Filtering
 
-Verbosity and size of the GSV NMEA message can be reduced to only select constellation and frequencies by using a [Filtered GSV NMEA Message IDs](Filtered GSV NMEA Message IDs) instead of the standard GSV message ID `GPGSV` or `15` (`NMEA_MSG_ID_GNGSV`), either ASCII or integer.  Note that the GSV output filter can only hide or mask information for satellites currently enabled in the `DID_FLASH_CONFIG.gnssSatSigConst` satellite system constellation.  Usage:
+Verbosity and size of the GSV NMEA message can be reduced to only select constellation and frequencies by using a [Filtered GSV NMEA Message IDs](#filtered-gsv-nmea-message-ids) instead of the standard GSV message ID `GPGSV` or `15` (`NMEA_MSG_ID_GNGSV`), either ASCII or integer.  Note that the GSV output filter can only hide or mask information for satellites currently enabled in the `DID_FLASH_CONFIG.gnssSatSigConst` satellite system constellation.  Usage:
 
 ```c++
 $ASCE,[options],[Message ID]*[checksum]\r\n
