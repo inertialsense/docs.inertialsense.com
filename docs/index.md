@@ -1,5 +1,6 @@
 **Software Release 2.2.0 - 8 Nov 2024**
 <!-- [UPDATE_RELEASE_VERSION_HERE] Update this version info at time of release. -->
+
 *Older (non-current) versions of the User Manual can be found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
 
 <center>
@@ -73,7 +74,11 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 * Robotics and Ground Vehicles
 * Maritime
 
-<center>![dime](indeximages/dime.PNG)</center>
+<center>
+
+![dime](indeximages/dime.png)
+  
+</center>
 <br>
 <br>
 <br>
