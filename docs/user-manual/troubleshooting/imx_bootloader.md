@@ -12,7 +12,7 @@ When updating the bootloader, the IMX-5 will switch into ROM bootloader mode and
 
 **NOTE:** To see the device in the device manager, the IMX-5 should be connected over USB and the IMX-5 in ROM bootloader mode.  Run the firmware update with bootloader **Force Update** option to enable ROM bootloader mode on the IMX-5. 
 
-**NOTE:** An incorrect version of the `STM32 BOOTLOADER` device driver commonly appears under the `Universal Serial Bus Controllers` device.  The correct device driver will appear under `Universal Serial Bus Devices`.
+**NOTE:** An incorrect version of the device driver can be identified when the `STM32 BOOTLOADER` device appears under `Universal Serial Bus Controllers`.  The correct device driver will cause the `STM32 BOOTLOADER` device to appear under `Universal Serial Bus Devices`.
 
 ![Remove Device Driver](images/dfu_device_driver_uninstall.png)
 
