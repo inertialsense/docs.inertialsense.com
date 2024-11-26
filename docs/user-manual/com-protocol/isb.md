@@ -259,7 +259,7 @@ The ***Get Data*** packet of type `PKT_TYPE_GET_DATA` is used to query specific 
 ## Stop Broadcasts Packets
 
 !!! note
-    The [NEMA $STPB](nmea/#stpb) stop broadcasts command is recommended as the protocol version-independent method for disabling data streaming. 
+    The [NEMA $STPB](../nmea/#stpb) stop broadcasts command is recommended as the protocol version-independent method for disabling data streaming. 
 
 Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate the stop all broadcasts packets.  
 
