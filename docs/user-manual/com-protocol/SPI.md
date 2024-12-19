@@ -39,6 +39,9 @@ The IMX and GPX modules operate as a SPI slave device using **SPI Mode 3**:
 To ensure correct behavior of the receiver in SPI Slave mode, the master device sending the frame must ensure a minimum delay of one t<sub>bit</sub> (t<sub>bit</sub> being the nominal time required to transmit a bit) between each character transmission. Inertial Sense devices do not require a falling edge of the [Chip Select (CS)] to initiate a character reception but only a low level. However, this low level must be present on the [Chip Select (CS)] at least one t<sub>bit</sub> before the first serial clock cycle corresponding to the MSB bit. <sup>(1)</sup>
 
 ![SPI_Data_Transfer](../images/SPI_Data_Transfer.png)
+
+![SPI_Zoomed_Bytes](../images/SPI_zoomed.png)
+
 <!-- Wavedrom figure compatible with v1.8.0 https://github.com/wavedrom/wavedrom.github.io/releases/tag/v1.8.0
 {signal: [
   {name: 'SCK', wave: '1...lhlhlhlhlhlhlhlh..lhlhlhlhlhlhlhlh..', period: .5 },
