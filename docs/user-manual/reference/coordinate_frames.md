@@ -66,6 +66,14 @@ The following example converts body velocity `DID_INS_2.uvw` to NED velocity `ve
 quatRot( vel_ned, DID_INS_2.qn2b, DID_INS_2.uvw );
 ```
 
+The following computes ground track heading based on `DID_INS_2.uvw` body velocity in the local tagent plane.
+
+``` C++
+#include "SDK/src/ISPose.h"
+quatRot( vel_ned, DID_INS_2.qn2b, DID_INS_2.uvw );
+ground_track_heading = atan2f( vel_ned[1], vel_ned[0] ); 
+```
+
 This following example removes gravity from the IMU measured acceleration.  
 
 ``` C++
