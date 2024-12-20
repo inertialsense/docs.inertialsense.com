@@ -506,47 +506,47 @@ RTK options - requires little endian CPU.
 | navsys | int32_t | navigation systems |
 | elmin | double | elevation mask angle (rad) |
 | snrmin | int32_t | Min snr to consider satellite for rtk |
-| modear | int32_t | AR mode (0:off,1:continuous,2:instantaneous,3:fix and hold,4:ppp-ar) |
-| glomodear | int32_t | GLONASS AR mode (0:off,1:on,2:auto cal,3:ext cal) |
-| gpsmodear | int32_t | GPS AR mode (0:off,1:on) |
-| sbsmodear | int32_t | SBAS AR mode (0:off,1:on) |
-| bdsmodear | int32_t | BeiDou AR mode (0:off,1:on) |
-| arfilter | int32_t | AR filtering to reject bad sats (0:off,1:on) |
-| maxout | int32_t | obs outage count to reset bias |
-| maxrej | int32_t | reject count to reset bias |
-| minlock | int32_t | min lock count to fix ambiguity |
-| minfixsats | int32_t | min sats to fix integer ambiguities |
-| minholdsats | int32_t | min sats to hold integer ambiguities |
-| mindropsats | int32_t | min sats to drop sats in AR |
-| rcvstds | int32_t | use stdev estimates from receiver to adjust measurement variances |
-| minfix | int32_t | min fix count to hold ambiguity |
-| armaxiter | int32_t | max iteration to resolve ambiguity |
-| dynamics | int32_t | dynamics model (0:none,1:velociy,2:accel) |
-| niter | int32_t | number of filter iteration |
-| intpref | int32_t | interpolate reference obs (for post mission) |
-| rovpos | int32_t | rover position for fixed mode |
-| refpos | int32_t | base position for relative mode |
-| eratio | double[] | code/phase error ratio |
-| err | double[5] | measurement error factor |
-| std | double[3] | initial-state std [0]bias,[1]iono [2]trop |
-| prn | double[6] | process-noise std [0]bias,[1]iono [2]trop [3]acch [4]accv [5] pos |
-| sclkstab | double | satellite clock stability (sec/sec) |
-| thresar | double[8] | AR validation threshold |
-| elmaskar | double | elevation mask of AR for rising satellite (rad) |
-| elmaskhold | double | elevation mask to hold ambiguity (rad) |
-| thresslip | double | slip threshold of geometry-free phase (m) |
-| thresdop | double | variance for fix-and-hold pseudo measurements (cycle^2) |
-| varholdamb | double | gain used for GLO and SBAS sats to adjust ambiguity |
-| gainholdamb | double | max difference of time (sec) |
-| maxtdiff | double | reset sat biases after this long trying to get fix if not acquired |
-| fix_reset_base_msgs | int | reject thresholds of NIS |
-| maxinno | double[2] | reject threshold of gdop |
-| maxnis_lo | double | baseline length constraint {const,sigma before fix, sigma after fix} (m) |
-| maxnis_hi | double | maximum error wrt ubx position (triggers reset if more than this far) (m) |
-| maxgdop | double | rover position for fixed mode {x,y,z} (ecef) (m) |
-| baseline | double[3] | base position for relative mode {x,y,z} (ecef) (m) |
-| max_baseline_error | double | max averaging epochs |
-| reset_baseline_error | double | output single by dgps/float/fix/ppp outage |
+| snrrange | int32_t | AR mode (0:off,1:continuous,2:instantaneous,3:fix and hold,4:ppp-ar) |
+| modear | int32_t | GLONASS AR mode (0:off,1:on,2:auto cal,3:ext cal) |
+| glomodear | int32_t | GPS AR mode (0:off,1:on) |
+| gpsmodear | int32_t | SBAS AR mode (0:off,1:on) |
+| sbsmodear | int32_t | BeiDou AR mode (0:off,1:on) |
+| bdsmodear | int32_t | AR filtering to reject bad sats (0:off,1:on) |
+| arfilter | int32_t | obs outage count to reset bias |
+| maxout | int32_t | reject count to reset bias |
+| maxrej | int32_t | min lock count to fix ambiguity |
+| minlock | int32_t | min sats to fix integer ambiguities |
+| minfixsats | int32_t | min sats to hold integer ambiguities |
+| minholdsats | int32_t | min sats to drop sats in AR |
+| mindropsats | int32_t | use stdev estimates from receiver to adjust measurement variances |
+| rcvstds | int32_t | min fix count to hold ambiguity |
+| minfix | int32_t | max iteration to resolve ambiguity |
+| armaxiter | int32_t | dynamics model (0:none,1:velociy,2:accel) |
+| dynamics | int32_t | number of filter iteration |
+| niter | int32_t | interpolate reference obs (for post mission) |
+| intpref | int32_t | rover position for fixed mode |
+| rovpos | int32_t | base position for relative mode |
+| refpos | int32_t | code/phase error ratio |
+| eratio | double[] | measurement error factor |
+| err | double[5] | initial-state std [0]bias,[1]iono [2]trop |
+| std | double[3] | process-noise std [0]bias,[1]iono [2]trop [3]acch [4]accv [5] pos |
+| prn | double[6] | satellite clock stability (sec/sec) |
+| sclkstab | double | AR validation threshold |
+| thresar | double[8] | elevation mask of AR for rising satellite (rad) |
+| elmaskar | double | elevation mask to hold ambiguity (rad) |
+| elmaskhold | double | slip threshold of geometry-free phase (m) |
+| thresslip | double | variance for fix-and-hold pseudo measurements (cycle^2) |
+| thresdop | double | gain used for GLO and SBAS sats to adjust ambiguity |
+| varholdamb | double | max difference of time (sec) |
+| gainholdamb | double | reset sat biases after this long trying to get fix if not acquired |
+| maxtdiff | double | reject thresholds of NIS |
+| fix_reset_base_msgs | int | reject threshold of gdop |
+| maxinno | double[2] | baseline length constraint {const,sigma before fix, sigma after fix} (m) |
+| maxnis_lo | double | maximum error wrt ubx position (triggers reset if more than this far) (m) |
+| maxnis_hi | double | rover position for fixed mode {x,y,z} (ecef) (m) |
+| maxgdop | double | base position for relative mode {x,y,z} (ecef) (m) |
+| baseline | double[3] | max averaging epochs |
+| max_baseline_error | double | output single by dgps/float/fix/ppp outage |
 
 
 ### Raw GPS Data
@@ -783,6 +783,10 @@ Flash memory configuration
 | wheelConfig | wheel_config_t | Wheel encoder: euler angles describing the rotation from imu to left wheel |
 | magInterferenceThreshold | float | Magnetometer interference sensitivity threshold. Typical range is 2-10 (3 default) and 1000 to disable mag interference detection. |
 | magCalibrationQualityThreshold | float | Magnetometer calibration quality sensitivity threshold. Typical range is 10-20 (10 default) and 1000 to disable mag calibration quality check, forcing it to be always good. |
+| gnssCn0Minimum | uint8_t | (dBHz) GNSS CN0 absolute minimum threshold for signals.  Used to filter signals in RTK solution. |
+| gnssCn0DynMinOffset | uint8_t | (dBHz) GNSS CN0 dynamic minimum threshold offset below max CN0 across all satellites. Used to filter signals used in RTK solution. To disable, set gnssCn0DynMinOffset to zero and increase gnssCn0Minimum. |
+| reserved1 | uint8_t[2] | Reserved |
+| reserved2 | uint32_t[2] | Reserved |
 
 
 #### DID_NMEA_BCAST_PERIOD
@@ -1159,6 +1163,10 @@ GPX flash configuration
 | gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
 | gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
 | RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
+| gnssCn0Minimum | uint8_t | (dBHz) GNSS CN0 absolute minimum threshold for signals.  Used to filter signals in RTK solution. |
+| gnssCn0DynMinOffset | uint8_t | (dBHz) GNSS CN0 dynamic minimum threshold offset below max CN0 across all satellites. Used to filter signals used in RTK solution. To disable, set gnssCn0DynMinOffset to zero and increase gnssCn0Minimum. |
+| reserved1 | uint8_t[2] | Reserved |
+| reserved2 | uint32_t[2] | Reserved |
 
 
 #### DID_GPX_PORT_MONITOR
@@ -1208,13 +1216,14 @@ GPX status
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | status | uint32_t | Status (eGpxStatus) |
-| grmcBitsSer0 | uint64_t | GRMC BITS  |
-| grmcBitsSer1 | uint64_t | Hardware status flags (eGPXHdwStatusFlags) |
-| grmcBitsSer2 | uint64_t | MCU temperature (not available yet) |
-| grmcBitsUSB | uint64_t | Nav output period (ms). |
-| grmcNMEABitsSer0 | uint64_t | Flash config checksum used with host SDK synchronization |
-| grmcNMEABitsSer1 | uint64_t | RTK Mode bits (see eRTKConfigBits)  |
-| grmcNMEABitsSer2 | uint64_t | port |
+| grmcBitsSer0 | uint64_t | GRMC BITS (see GRMC_BITS_...)  |
+| grmcBitsSer1 | uint64_t | (see NMEA_MSG_ID...) |
+| grmcBitsSer2 | uint64_t | Hardware status flags (eGPXHdwStatusFlags) |
+| grmcBitsUSB | uint64_t | MCU temperature (not available yet) |
+| grmcNMEABitsSer0 | uint64_t | Nav output period (ms). |
+| grmcNMEABitsSer1 | uint64_t | Flash config checksum used with host SDK synchronization |
+| grmcNMEABitsSer2 | uint64_t | RTK Mode bits (see eRTKConfigBits)  |
+| grmcNMEABitsUSB | uint64_t | port |
 
 
 #### DID_GROUND_VEHICLE
@@ -1859,6 +1868,10 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_TEST_GPIO | 64 |
 | SYS_CMD_TEST_CHECK_INIT_SER0 | 65 |
 | SYS_CMD_TEST_FORCE_INIT_SER0 | 66 |
+| SYS_CMD_TEST_BIT_BANG_SER0_STPB | 67 |
+| SYS_CMD_TEST_BIT_BANG_SER0_SRST | 68 |
+| SYS_CMD_TEST_SER0_TX_PIN_HIGH | 69 |
+| SYS_CMD_TEST_SER0_TX_PIN_LOW | 70 |
 | SYS_CMD_SAVE_FLASH | 97 |
 | SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
 | SYS_CMD_SOFTWARE_RESET | 99 |
@@ -1898,6 +1911,7 @@ System status and configuration is made available through various enumeration an
 | GFC_INIT_MAGNETOMETER | 0x00400000 |
 | GFC_INIT_I2C | 0x00800000 |
 | GFC_CHIP_ERASE_INVALID | 0x01000000 |
+| GFC_GNSS_TIME_FAULT | 0x02000000 |
 
 
 #### GPS Navigation Fix Type
@@ -1994,11 +2008,11 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_BIT_MASK | 0x03000000 |
 | HDW_STATUS_ERR_TEMPERATURE | 0x04000000 |
 | HDW_STATUS_SPI_INTERFACE_ENABLED | 0x08000000 |
-| HDW_STATUS_FAULT_RESET_MASK | 0x70000000 |
-| HDW_STATUS_FAULT_RESET_BACKUP_MODE | 0x10000000 |
-| HDW_STATUS_FAULT_RESET_WATCHDOG | 0x20000000 |
-| HDW_STATUS_FAULT_RESET_SOFT | 0x30000000 |
-| HDW_STATUS_FAULT_RESET_HDW | 0x40000000 |
+| HDW_STATUS_RESET_CAUSE_MASK | 0x70000000 |
+| HDW_STATUS_RESET_CAUSE_BACKUP_MODE | 0x10000000 |
+| HDW_STATUS_RESET_CAUSE_WATCHDOG_FAULT | 0x20000000 |
+| HDW_STATUS_RESET_CAUSE_SOFT | 0x30000000 |
+| HDW_STATUS_RESET_CAUSE_HDW | 0x40000000 |
 | HDW_STATUS_FAULT_SYS_CRITICAL | 0x80000000 |
 
 
@@ -2016,6 +2030,7 @@ System status and configuration is made available through various enumeration an
 | IMU_STATUS_SATURATION_IMU3_ACC | 0x00000020 |
 | IMU_STATUS_SATURATION_MASK | 0x0000003F |
 | IMU_STATUS_MAG_UPDATE | 0x00000100 |
+| IMU_STATUS_REFERENCE_IMU_PRESENT | 0x00000200 |
 | IMU_STATUS_RESERVED2 | 0x00000400 |
 | IMU_STATUS_SATURATION_HISTORY | 0x00000100 |
 | IMU_STATUS_SAMPLE_RATE_FAULT_HISTORY | 0x00000200 |
