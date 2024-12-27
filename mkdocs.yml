@@ -132,7 +132,6 @@ nav:
       - Point Perfect: user-manual/gnss/ublox_pointperfect.md
       - SBAS: user-manual/gnss/SBAS.md
     - RTK Compassing: user-manual/gnss/rtk_compassing.md
-    - GPX-1: user-manual/gnss/GPX-1.md
   - Dead Reckoning:
     - Overview & Installation: user-manual/dead-reckoning/dead_reckoning.md
     - Examples: user-manual/dead-reckoning/dead_reckoning_examples.md

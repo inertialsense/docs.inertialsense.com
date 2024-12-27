@@ -1,16 +1,20 @@
+#IMX-5 Quick Start Guide
+## Basic Configuration
+The configuration settings found in DID_FLASH_CONFIG are used to configure the various features of the device. These can be modified directly to the appropriate values using either the [EvalTool](../user-manual/software/evaltool.md), the [CLTool](../user-manual/software/cltool.md), or the [SDK](../user-manual/software/SDK.md). However, it is convenient initially to configure the main features by modifying the settings in the GPS and General tabs withing the Settings tab of the EvalTool. 
 
-## 3. Configuring Settings
-The configuration settings found in DID_FLASH_CONFIG need to be set to appropriate values using either the [EvalTool](../user-manual/software/evaltool.md), the [CLTool](../user-manual/software/cltool.md), or the [SDK](../user-manual/software/SDK.md). A full explanation can be found on the [System Configuration](../user-manual/application-config/system_configuration.md) page. Most users initially configure the unit using the [EvalTool](../user-manual/software/evaltool.md). This is done by going to the Data Sets Tab and selecting DID_FLASH_CONFIG. The values of each field can then be edited. Pay special attention to the following fields:
+The antenna offset should also be configured by going to the Data Sets Tab and selecting DID_FLASH_CONFIG. The values of each field can then be edited. Modify the following fields after identifying the [antenna positions](../user-manual/gnss/rtk_compassing.md#dual-antenna-locations):
 
 1. gps1AntOffset[X-Z] - Position offset of sensor frame with respect to GPS1 antenna.
 
 2. gps2AntOffset[X-Z] - Position offset of sensor frame with respect to GPS2 antenna.
 
-3. dynamicModel - Dynamic model that most closely represents sensor application.*
+IMX-5 data sets can then be requested by one of several methods:
 
-   *Note - This feature is experimental. For most applications setting 8 will yield the best results. The user is encouraged to try different settings.
+1. Requesting NMEA data using the [ASCE](../../user-manual/com-protocol/nmea/#asce) command. There is a convenient tool in the lower left corner of the Data Logs tab of the EvalTool.
 
+2. Request data using the SDK commands: [SDK Function](../..//user-manual/com-protocol/isb/#getting-data)
 
+3. Use the EvalTool to modify the value of DID_GPX_RMC.bits as outlined in the [SDK](https://github.com/inertialsense/inertial-sense-sdk/blob/68e5f20b994a0df43ef57720815aa7a16035d51f/src/data_sets.h#L2055).
 
 
 ## Demonstration Videos
