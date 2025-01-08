@@ -14,7 +14,9 @@ The Inertial Sense IK-1 is a breakout evaluation board for either the IMX-5 or G
 - Onboard voltage regulation.
 - Dual U.FL connectors for GPX GNSS antennas.
 
+## Connecting Your Unit
 
+For the purposes of basic evaluation, the easiest interface available on the IK-1 is by using a micro-USB cable. A cable included in the evaluation kit. The cable provides power and communications with the installed module via USB virtual communications port.
 
 ## Pinout
 
