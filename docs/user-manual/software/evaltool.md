@@ -4,6 +4,11 @@
 
 The EvalTool (Evaluation Tool) is a desktop GUI application that allows you to explore and test functionality of the Inertial Sense products in real-time. It has scrolling plots, 3D model representation, table views of all data, data logger, and firmware updating interface for the IMX, uAHRS, or uIMU. The EvalTool can simultaneously interface with multiple Inertial Sense devices.
 
+<center>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/31Sv49VBa9Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</center>
+
 ## Download and Install
 
 The EvalTool Windows desktop app installer (.exe) can be downloaded from the [Inertial Sense releases](https://github.com/inertialsense/InertialSenseSDK/releases) page.
@@ -14,10 +19,9 @@ The EvalTool Windows desktop app installer (.exe) can be downloaded from the [In
 
 With a device connected to your computer:
 
-1. Connect your INS to your computer using directions in the [getting started](../../../getting-started/getting-started) section of this guide.
+1. Connect your INS to your computer using directions in the IS Hardware section of this guide corresponding to the correct model.
 1. Open the **Settings** > **Serial Ports** tab.
-1. Click the **Find All** button.
-1. Open the port to your device by checking the **Open** checkbox.
+1. Click the **Find All** button, or open the port to your device by checking the **Open** checkbox.
 1. The status box in the **Port** column will turn green and the **Link** status bar will turn green while data is being received from the device.
 1. You can specify the serial port baud rate using the **Baud Rate** dropdown menu when using a serial interface like RS232. 
 

@@ -1,4 +1,4 @@
-**Software Release 2.2.1 - 20 Dec 2024**
+**Software Release 2.2.2 - 10 Jan 2025**
 <!-- [UPDATE_RELEASE_VERSION_HERE] Update this version info at time of release. -->
 
 *Older (non-current) versions of the User Manual can be found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
@@ -95,7 +95,7 @@ Phone 801-610-6771<br>
 Email support@inertialsense.com<br>
 Website: InertialSense.com<br>
 
-© 2014-2024 Inertial Sense
+© 2014-2025 Inertial Sense
 
 Inertial Sense®, Inertial Sense logo and combinations thereof are registered trademarks or trademarks of Inertial Sense, Inc. Other terms and product names may be trademarks of others.
 

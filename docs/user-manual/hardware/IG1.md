@@ -12,7 +12,9 @@ The Inertial Sense IG-1 is a PCB module with IMX-5 and dual ublox ZED-F9P multi-
 - Onboard dual GNSS for simultaneous RTK positioning and GPS compassing. 
 - Micro USB and 14 pin I/O header for convenient evaluation.
 
+## Connecting Your Unit
 
+For the purposes of basic evaluation, the easiest interface available on the IG-1 is by using a micro-USB cable. A cable included in the evaluation kit. The cable provides power and communications with the installed module via USB virtual communications port.
 
 ## Pinout
 
