@@ -90,7 +90,7 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 <a href="https://www.linkedin.com/company/inertial-sense">![linkedin](indeximages/linkedin.png)</a>
 
 <a href="https://inertialsense.com/">Inertial Sense, Inc.</a>
-<br>3000 S Sierra Vista Way Suite 2, Provo, UT 84606 USA<br>
+<br>3000 S Sierra Vista Way Suite 5, Provo, UT 84606 USA<br>
 Phone 801-610-6771<br>
 Email support@inertialsense.com<br>
 Website: InertialSense.com<br>
