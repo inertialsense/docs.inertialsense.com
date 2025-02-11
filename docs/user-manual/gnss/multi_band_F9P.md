@@ -21,7 +21,7 @@ The following sections detail how to interface and configure the IMX for operati
 
 #### Dual ZED-F9 Heading Accuracy
 
-When using two multi-band ZED-F9 GNSS receivers in moving baseline mode (RTK compassing) such as the [EVB-2 Dual ZED-F9](https://inertialsense.com/product/dual-compassing-ins-sensor-series-5-ruggedized-module/), the baseline error is composed of the measurement error plus the RTK solution error.  The heading accuracy with ideal conditions is shown in the following plot.
+When using two multi-band ZED-F9 GNSS receivers in moving baseline mode (RTK compassing) such as the [RUG-3-IMX-5-DUAL](https://inertialsense.com/product/dual-compassing-ins-sensor-series-5-ruggedized-module/), the baseline error is composed of the measurement error plus the RTK solution error.  The heading accuracy with ideal conditions is shown in the following plot.
 
 ![Dual GNSS heading accuracy vs baseline](./images/dual_f9p_heading_accuracy_vs_baseline.png) 
 
@@ -41,7 +41,7 @@ RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded 
 
 #### Dual GNSS RTK Positioning and RTK Compassing
 
-RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to GPS1 for RTK positioning.  RTK moving base messages from GPS1 are forwarded to GPS2 for RTK compassing.  The RTK precision position from GPS 1 and the RTK compassing heading from GPS2 are used in the IMX EKF solution.  Note that typically the Rugged-2 uses Serial 0 and the EVB-2 uses Serial 2 to communicate with the GPS2 F9P receiver.
+RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to GPS1 for RTK positioning.  RTK moving base messages from GPS1 are forwarded to GPS2 for RTK compassing.  The RTK precision position from GPS 1 and the RTK compassing heading from GPS2 are used in the IMX EKF solution.  Note that typically the Rugged-3 uses Serial 0 and the EVB-2 uses Serial 2 to communicate with the GPS2 F9P receiver.
 
 <center>
 
@@ -49,15 +49,15 @@ RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded 
 
 </center>
 
-### Rugged-2
+### Rugged-3
 
 ![](../images/rugged2.png)
 
-The Rugged-2 INS contains the either single or dual ZED-F9P onboard supporting RTK positioning and compassing.  GPS 1 and GPS 2 are connected to serial ports 1 and 0 respectively on the IMX.
+The Rugged-3 INS contains the either single or dual ZED-F9P onboard supporting RTK positioning and compassing.  GPS 1 and GPS 2 are connected to serial ports 1 and 0 respectively on the IMX.
 
 #### Single GNSS Settings
 
-Use the following IMX settings with the Rugged-2-G1 (single GNSS receiver).  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
+Use the following IMX settings with the Rugged-3-G1 (single GNSS receiver).  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
 
 ##### GPS Ports
 
@@ -91,7 +91,7 @@ To configuring a system as an RTK base, disable the RTK Rover by setting the GPS
 
 #### Dual GNSS Settings
 
-Use the following IMX settings with the Rugged-2-G2 (dual GNSS receivers).  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
+Use the following IMX settings with the Rugged-3-G2 (dual GNSS receivers).  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
 
 ##### GPS Ports
 
