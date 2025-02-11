@@ -71,6 +71,8 @@ The **navigation filter output period** (`DID_SYS_PARAMS.navOutputDtMs`) determi
 
 The **navigation filter update period** (`DID_SYS_PARAMS.navUpdateDtMs`) controls the EKF update rate and sets the standard integration period for the preintegrated IMU (PIMU) output.  This parameter is automatically adjusted based on the value of `DID_SYS_PARAMS.navOutputDtMs` and the amount of CPU available.
 
+#### Minimum NAV Output and Update Period (Maximum Data Rate)
+
 The following table lists the output and update period minimum limits for the IMX. 
 
 | Operation Mode                           | IMX-5.0 Minimum<br/>Output Period / Update Period | IMX-5.1, uINS-3 Minimum<br/>Output Period / Update Period |
