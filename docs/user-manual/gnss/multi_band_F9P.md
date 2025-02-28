@@ -19,36 +19,6 @@ The IMX can be configured for use with uBlox ZED-F9P multi-band GNSS receivers. 
 
 The following sections detail how to interface and configure the IMX for operation using the ZED-F9P.  See [RTK precision positioning](../rtk_positioning_overview/) and [RTK compassing](../rtk_compassing/) for RTK operation principles.  
 
-#### Dual ZED-F9 Heading Accuracy
-
-When using two multi-band ZED-F9 GNSS receivers in moving baseline mode (RTK compassing) such as the [RUG-3-IMX-5-DUAL](https://inertialsense.com/product/dual-compassing-ins-sensor-series-5-ruggedized-module/), the baseline error is composed of the measurement error plus the RTK solution error.  The heading accuracy with ideal conditions is shown in the following plot.
-
-![Dual GNSS heading accuracy vs baseline](./images/dual_f9p_heading_accuracy_vs_baseline.png) 
-
-### Typical Interface
-
-The IMX will automatically configure the ZED-F9P for communications.    
-
-#### Single GNSS RTK Positioning w/ LiDAR
-
-RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to GPS1 for RTK positioning.  The RTK precision position from GPS 1 is used in the IMX EKF solution.  The IMX can be configured to output NMEA messages such as GPGGA or GPRMC on any serial port.
-
-<center>
-
-![](images/F9P_Positioning_Connection_Diagram.svg)
-
-</center>
-
-#### Dual GNSS RTK Positioning and RTK Compassing
-
-RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to GPS1 for RTK positioning.  RTK moving base messages from GPS1 are forwarded to GPS2 for RTK compassing.  The RTK precision position from GPS 1 and the RTK compassing heading from GPS2 are used in the IMX EKF solution.  Note that typically the Rugged-3 uses Serial 0 and the EVB-2 uses Serial 2 to communicate with the GPS2 F9P receiver.
-
-<center>
-
-![](images/F9P_Compassing_Connection_Diagram.svg)
-
-</center>
-
 ### Rugged-3
 
 ![](../images/rugged2.png)
@@ -123,122 +93,13 @@ To configuring a system as an RTK base, skip the RTK rover settings, and select 
 | ---------------- | ---------- |
 | RTKCfgBits       | 0x00000900 |
 
-### EVB-2 to ZED-F9P
-
-![ZED-F9P to EVB-2](images/MF-EVB2-1F9-angle-v1.png)
-
-The ZED-F9P can be powered using the EVB-2 +3.3V output.  Either serial 0 or serial 1 can be used to communicate with the ZED-F9P.  See the [EVB-2 H7 pinout](../../hardware/EVB2/#h7-ins-connections) for details.
-
-#### Single GNSS Pinout
-
-| EVB-2                                  | IMX         | ZED-F9P |
-| -------------------------------------- | ------------ | ------- |
-| ![](../images/square-black.png) H7-1   | GND          | GND     |
-| ![](../images/square-red.png) H7-3     | +3.3V        | 3V3     |
-| ![](../images/square-white.png) H7-11  | Ser1 Tx      | GPS RxD |
-| ![](../images/square-purple.png) H7-10 | Ser1 Rx      | GPS TxD |
-| ![](../images/square-grey.png) H7-12   | G8 TIMEPULSE | PPS     |
-
-#### Single GNSS Settings
-
-Use the following settings when only one GPS receiver is connected to the IMX.  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
-
-##### GPS Ports
-
-Set the serial port that the ZED-F9P is connected to and type to **ublox F9P**. 
-
-![](images/evaltool_gps_f9p_ports_evb.png)
-
-| DID_FLASH_CONFIG            | Value      |
-| --------------------------- | ---------- |
-| ioConfig (firmware >=1.8.5) | 0x0244a040 |
-
-##### RTK Rover
-
-Enable RTK rover mode by selecting **Precision Position External**.
-
-![](images/evaltool_gps_f9p_rover.png)
-
-| DID_FLASH_CONFIG | Value      |
-| ---------------- | ---------- |
-| RTKCfgBits       | 0x00000002 |
-
-##### RTK Base
-
-To configuring a system as an RTK base, disable the RTK Rover by setting the RTK Mode for GPS1 and GPS2 to off, and select the appropriate correction output port on the IMX. 
-
-![](images/evaltool_gps_dual_f9p_base.png)
-
-| DID_FLASH_CONFIG | Value      |
-| ---------------- | ---------- |
-| RTKCfgBits       | 0x00000900 |
-
-### Rugged-1 to ZED-F9P![ZED-F9P to Rugged](images/zed_f9p_interface_rugged.png)
+### Rugged-3-IMX-5 to ZED-F9P![ZED-F9P to Rugged](images/zed_f9p_interface_rugged.png)
 
 A +3.3V or +5V supply is needed to power the ZED-F9P when using the Rugged-1 IMX.  A USB +5V supply can be used if available.  The Rugged-1 must be configured for Serial Port 1 TTL voltage.  See hardware configuration for [Rugged v1.0](../../hardware/rugged1/#ser1-ttl) or [Rugged v1.1](../../hardware/rugged1/#rugged-v11-dipswitch-config) for details.
 
 #### Settings
 
 See the [single GNSS settings](./#single-gnss-settings).
-
-### EVB-2 to Dual ZED-F9![ZED-F9P to EVB-2](images/MF-EVB2-1F9-G2-angle-v1.png)
-
-Two ZED-F9 units can be used to provide either or both multi-band RTK compassing and RTK positioning for the INS solution.  The ZED-F9Ps can be powered using the EVB-2 +3.3V output.  Serial port 0 and 1 must both be used to communicate with the ZED-F9P.   
-
-#### Dual GNSS Pinout
-
-| EVB-2                                  | IMX         | GPS1 ZED-F9P |
-| -------------------------------------- | ------------ | ----------------- |
-| ![](../images/square-black.png) H7-1   | GND          | GND          |
-| ![](../images/square-red.png) H7-3     | +3.3V        | 3V3          |
-| ![](../images/square-white.png) H7-11  | Ser1 Tx      | RxD          |
-| ![](../images/square-purple.png) H7-10 | Ser1 Rx      | TxD          |
-| ![](../images/square-grey.png) H7-12   | G8 TIMEPULSE | PPS          |
-
-| EVB-2                             | IMX                    | GPS2 ZED-F9P |
-| -------------------------------------- | ------------ | ----------------- |
-| ![](../images/square-black.png) H7-2 | GND | GND          |
-| ![](../images/square-red.png) H7-3 | +3.3V | 3V3          |
-| ![](../images/square-orange.png) H7-6 | Ser2 Tx* | RxD          |
-| ![](../images/square-brown.png) H7-5 | Ser2 Rx* | TxD          |
-
-*R17 and R18 on the EVB-2 must be loaded with a zero ohm jumpers to connect Ser2 to H7 and U5 must be removed from the EVB-2. 
-
-![R27 on EVB-2](images/evb_2_r27.png)
-
-#### Dual GNSS Settings
-
-The following settings are used when two GPS receivers are connected to the IMX.  These settings can be applied either using the EvalTool GPS Settings tab or the IMX `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.RTKCfgBits` fields.
-
-##### GPS Ports
-
-Set the serial port that the ZED-F9P is connected to and type to **ublox F9P**. 
-
-![](images/evaltool_gps_dual_f9p_ports_evb.png)
-
-| DID_FLASH_CONFIG            | Value      |
-| --------------------------- | ---------- |
-| ioConfig (firmware >=1.8.5) | 0x026ca040 |
-
-##### RTK Rover
-
-Enable RTK rover mode by selecting **Precision Position External**.  **GPS1** is designated for **Precision Position External** and **GPS2** for **F9P Compass settings**.  Either or both can be enabled at the same time.  
-
-![](images/evaltool_gps_dual_f9p_rover.png)
-
-| DID_FLASH_CONFIG | Value      |
-| ---------------- | ---------- |
-| RTKCfgBits       | 0x00000006 |
-
-##### RTK Base
-
-To configuring a system as an RTK base, skip the RTK rover settings, and select the appropriate correction output port on the IMX.  Notice that IMX serial port 0 and 1 may be unavailable and occupied by the dual ZED-F9P receivers.
-
-![](images/evaltool_gps_dual_f9p_base.png)
-
-| DID_FLASH_CONFIG | Value      |
-| ---------------- | ---------- |
-| RTKCfgBits       | 0x00000900 |
 
 ## RTK Base Messages
 

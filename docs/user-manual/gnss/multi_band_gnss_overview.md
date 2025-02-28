@@ -25,3 +25,28 @@ The IMX (GPS-INS) can be interfaced with external multi-band (multi-frequency) G
 
 Refer to the Hardware section of this manual for serial port pinout information. 
 
+#### Dual GNSS Heading Accuracy
+
+When using two multi-band GNSS receivers in moving baseline mode (RTK compassing) such as the [RUG-3-IMX-5-DUAL](https://inertialsense.com/product/dual-compassing-ins-sensor-series-5-ruggedized-module/), the baseline error is composed of the measurement error plus the RTK solution error.  The heading accuracy with ideal conditions is shown in the following plot.
+
+![Dual GNSS heading accuracy vs baseline](./images/dual_f9p_heading_accuracy_vs_baseline.png) 
+
+#### Single GNSS RTK Positioning w/ LiDAR
+
+RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to the GPX-1 for RTK positioning.  The RTK precision position is used in the IMX EKF solution. The IMX can be configured to output NMEA messages such as GPGGA or GPRMC on any serial port.
+
+<center>
+
+![](images/F9P_Positioning_Connection_Diagram.svg)
+
+</center>
+
+#### Dual GNSS RTK Positioning and RTK Compassing
+
+RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to GPS1 for RTK positioning.  RTK moving base messages from GPS1 are forwarded to GPS2 for RTK compassing.  The RTK precision position from GPS 1 and the RTK compassing heading from GPS2 are used in the IMX EKF solution.
+
+<center>
+
+![](images/F9P_Compassing_Connection_Diagram.svg)
+
+</center>
