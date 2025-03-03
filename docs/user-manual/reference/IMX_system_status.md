@@ -57,7 +57,7 @@ The hardware status flags, **hdwStatus**, are found in the `DID_INS1`, `DID_INS2
 | **Field**                 | **Description**                          |
 | ------------------------- | ---------------------------------------- |
 | HDW_STATUS_MOTION_MASK | Accelerometers and Gyros are operational |
-| HDW_STATUS_GPS_SATELLITE_RX | Antenna is connected to the GPS receiver and signal is received |
+|HDW_STATUS_GPS_SATELLITE_RX_VALID | Antenna is connected to the GPS receiver and signal is valid. Unset indicates weak signal or no output from 1 or more enabled GPS receivers |
 | HDW_STATUS_STROBE_IN_EVENT | Event occurred on strobe input pin |
 | HDW_STATUS_GPS_TIME_OF_WEEK_VALID | GPS time of week is valid and reported.  Otherwise the timeOfWeek is local system time. |
 | HDW_STATUS_SATURATION_MASK | Acc., Gyro, Mag or Baro is saturated |
