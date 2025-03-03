@@ -777,7 +777,7 @@ Flash memory configuration
 | gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
 | startupGPSDtMs | uint32_t | GPS measurement (system input) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
 | RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
-| sensorConfig | uint32_t | Sensor config to specify the full-scale sensing ranges and output rotation for the IMU and magnetometer (see eSensorConfig in data_sets.h) |
+| sensorConfig | uint32_t | Sensor config to specify the full-scale sensing ranges and output rotation for the IMU and magnetometer (see eSensorConfig) |
 | gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
 | ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
 | wheelConfig | wheel_config_t | Wheel encoder: euler angles describing the rotation from imu to left wheel |
@@ -1629,13 +1629,13 @@ Survey in, used to determine position for RTK base station. Base correction outp
 
 #### DID_SYS_FAULT
 
-System fault information 
+System fault information. This is broadcast automatically every 10s if a critical fault is detected. 
 
 `system_fault_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| status | uint32_t | System fault status |
+| status | uint32_t | System fault status (see eSysFaultStatus) |
 | g1Task | uint32_t | Fault Type at HardFault |
 | g2FileNum | uint32_t | Multipurpose register - Line number of fault |
 | g3LineNum | uint32_t | Multipurpose register - File number at fault |
@@ -1811,13 +1811,12 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_90 |  (int)21 |
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_180 |  (int)22 |
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_N90 |  (int)23 |
-| SENSOR_CFG_IMU_FAULT_DETECT_MASK | 0x0F000000 |
-| SENSOR_CFG_IMU_FAULT_DETECT_OFFSET |  (int)24 |
-| SENSOR_CFG_IMU_FAULT_DETECT_NONE |  (int)0 |
-| SENSOR_CFG_IMU_FAULT_DETECT_OFFLINE |  (int)1 |
-| SENSOR_CFG_IMU_FAULT_DETECT_LARGE_BIAS |  (int)2 |
-| SENSOR_CFG_IMU_FAULT_DETECT_BIAS_JUMPS |  (int)3 |
-| SENSOR_CFG_IMU_FAULT_DETECT_SENSOR_NOISE |  (int)4 |
+| SENSOR_CFG_IMU_FAULT_DETECT_MASK | 0xFF000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_GYR | 0x01000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_ACC | 0x02000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_OFFLINE | 0x04000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_LARGE_BIAS | 0x08000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_SENSOR_NOISE | 0x10000000 |
 
 
 #### DID_SYS_CMD.command
@@ -1865,9 +1864,13 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_GPX_SOFT_RESET_GPX | 38 |
 | SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK | 39 |
 | SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK_TESTMODE | 40 |
-| SYS_CMD_TEST_GPIO | 64 |
-| SYS_CMD_TEST_CHECK_INIT_SER0 | 65 |
-| SYS_CMD_TEST_FORCE_INIT_SER0 | 66 |
+| SYS_CMD_TEST_CHECK_INIT_SER0 | 60 |
+| SYS_CMD_TEST_FORCE_INIT_SER0 | 61 |
+| SYS_CMD_TEST_CHECK_INIT_SER1 | 62 |
+| SYS_CMD_TEST_FORCE_INIT_SER1 | 63 |
+| SYS_CMD_TEST_CHECK_INIT_SER2 | 64 |
+| SYS_CMD_TEST_FORCE_INIT_SER2 | 65 |
+| SYS_CMD_TEST_GPIO | 66 |
 | SYS_CMD_TEST_BIT_BANG_SER0_STPB | 67 |
 | SYS_CMD_TEST_BIT_BANG_SER0_SRST | 68 |
 | SYS_CMD_TEST_SER0_TX_PIN_HIGH | 69 |
@@ -1880,6 +1883,9 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_MANF_CHIP_ERASE | 1357924681 |
 | SYS_CMD_MANF_DOWNGRADE_CALIBRATION | 1357924682 |
 | SYS_CMD_MANF_ENABLE_ROM_BOOTLOADER | 1357924683 |
+| SYS_CMD_FAULT_TEST_TRIG_MALLOC | 57005 |
+| SYS_CMD_FAULT_TEST_TRIG_HARD_FAULT | 57006 |
+| SYS_CMD_FAULT_TEST_TRIG_WATCHDOG | 57007 |
 
 
 #### DID_SYS_PARAMS.genFaultCode
@@ -1892,7 +1898,7 @@ System status and configuration is made available through various enumeration an
 | GFC_INS_STATE_ORUN_LAT | 0x00000002 |
 | GFC_INS_STATE_ORUN_ALT | 0x00000004 |
 | GFC_UNHANDLED_INTERRUPT | 0x00000010 |
-| GFC_GNSS_SYS_FAULT | 0x00000020 |
+| GFC_GNSS_CRITICAL_FAULT | 0x00000020 |
 | GFC_GNSS_TX_LIMITED | 0x00000040 |
 | GFC_GNSS_RX_OVERRUN | 0x00000080 |
 | GFC_INIT_SENSORS | 0x00000100 |
@@ -1906,12 +1912,16 @@ System status and configuration is made available through various enumeration an
 | GFC_SYS_FAULT_GENERAL | 0x00010000 |
 | GFC_SYS_FAULT_CRITICAL | 0x00020000 |
 | GFC_SENSOR_SATURATION | 0x00040000 |
+| GFC_SER_CHECK_INIT | 0x00080000 |
 | GFC_INIT_IMU | 0x00100000 |
 | GFC_INIT_BAROMETER | 0x00200000 |
 | GFC_INIT_MAGNETOMETER | 0x00400000 |
 | GFC_INIT_I2C | 0x00800000 |
 | GFC_CHIP_ERASE_INVALID | 0x01000000 |
-| GFC_GNSS_TIME_FAULT | 0x02000000 |
+| GFC_EKF_GNSS_TIME_FAULT | 0x02000000 |
+| GFC_GNSS_RECEIVER_TIME | 0x04000000 |
+| GFC_GNSS_GENERAL_FAULT | 0x08000000 |
+| GFC_GPX_STATUS_COMMON_MASK | GFC_GNSS1_INIT\|GFC_GNSS2_INIT\|GFC_GNSS_TX_LIMITED\|GFC_GNSS_RX_OVERRUN\|GFC_GNSS_CRITICAL_FAULT\|GFC_GNSS_RECEIVER_TIME\|GFC_GNSS_GENERAL_FAULT |
 
 
 #### GPS Navigation Fix Type
@@ -1976,13 +1986,13 @@ System status and configuration is made available through various enumeration an
 
 | Field | Value |
 |-------|------|
-| HDW_STATUS_MOTION_GYR_SIG | 0x00000001 |
-| HDW_STATUS_MOTION_ACC_SIG | 0x00000002 |
-| HDW_STATUS_MOTION_SIG_MASK | 0x00000003 |
-| HDW_STATUS_MOTION_GYR_DEV | 0x00000004 |
-| HDW_STATUS_MOTION_ACC_DEV | 0x00000008 |
-| HDW_STATUS_MOTION_MASK | 0x0000000F |
-|HDW_STATUS_GPS_SATELLITE_RX_VALID | 0x00000010 |
+| HDW_STATUS_MOTION_GYR | 0x00000001 |
+| HDW_STATUS_MOTION_ACC | 0x00000002 |
+| HDW_STATUS_MOTION_MASK | 0x00000003 |
+| HDW_STATUS_IMU_FAULT_REJECT_GYR | 0x00000004 |
+| HDW_STATUS_IMU_FAULT_REJECT_ACC | 0x00000008 |
+| HDW_STATUS_IMU_FAULT_REJECT_MASK | 0x0000000C |
+| HDW_STATUS_GPS_SATELLITE_RX | 0x00000010 |
 | HDW_STATUS_STROBE_IN_EVENT | 0x00000020 |
 | HDW_STATUS_GPS_TIME_OF_WEEK_VALID | 0x00000040 |
 | HDW_STATUS_REFERENCE_IMU_RX | 0x00000080 |
@@ -2004,7 +2014,7 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 20 |
 | HDW_STATUS_BIT_RUNNING | 0x01000000 |
 | HDW_STATUS_BIT_PASSED | 0x02000000 |
-| HDW_STATUS_BIT_FAULT | 0x03000000 |
+| HDW_STATUS_BIT_FAILED | 0x03000000 |
 | HDW_STATUS_BIT_MASK | 0x03000000 |
 | HDW_STATUS_ERR_TEMPERATURE | 0x04000000 |
 | HDW_STATUS_SPI_INTERFACE_ENABLED | 0x08000000 |
@@ -2044,6 +2054,8 @@ System status and configuration is made available through various enumeration an
 | IMU_STATUS_IMU2_OK | (int)(IMU_STATUS_GYR2_OK\|IMU_STATUS_ACC2_OK\) |
 | IMU_STATUS_IMU3_OK | (int)(IMU_STATUS_GYR3_OK\|IMU_STATUS_ACC3_OK\) |
 | IMU_STATUS_IMU_OK_MASK | 0x003F0000 |
+| IMU_STATUS_GYR_FAULT_REJECT | 0x01000000 |
+| IMU_STATUS_ACC_FAULT_REJECT | 0x02000000 |
 
 
 #### INS status Flags

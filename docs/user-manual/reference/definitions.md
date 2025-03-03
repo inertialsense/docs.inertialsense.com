@@ -12,7 +12,7 @@ Battery backed-up power supplied to the IMX preserves the GPS time, position, an
 
 ## Preintegrated IMU
 
-Also known as Coning and Sculling Integrals, Δ Theta Δ Velocity, or Integrated IMU.  For clarification, we will use the name "Preintegrated IMU" through the User Manual. They are integrated by the IMU at IMU update rates (1KHz). These integrals are reset each time they are output. Preintegrated IMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay. It is most effective for systems that have higher dynamics and lower communications data rates.
+Also known as Coning and Sculling Integrals, Δ Theta Δ Velocity, or Integrated IMU.  For clarification, we will use the name "Preintegrated IMU" or "PIMU" throughout the User Manual. They are integrated by the IMU at IMU update rates (1KHz). These integrals are reset each time they are output. Preintegrated IMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay. It is most effective for systems that have higher dynamics and lower communications data rates.  The IMX-5 uses Bortz for angular rates (which yield rotation from the previous pose) and full dual gyro and accelerometer integration for change in body velocities from the previous pose.  The PIMU is NOT integrated from each axis separately.
 
 ## IMU Bias Repeatability (Turn-on to Turn-on Bias)
 
