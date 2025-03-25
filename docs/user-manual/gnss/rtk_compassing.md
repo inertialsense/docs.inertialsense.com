@@ -160,11 +160,11 @@ RTK compassing fix is indicated when the RTK-Cmp radio button turns purple in th
 The ambiguity resolution ratio, `arRatio`, is a metric that indicates progress of the solution that ranges from 0 to 999.  Typically values above 3 indicate RTK fix progress.  The base to rover heading accuracy indicates how much error is in the base to rover heading (RTK compassing heading). 
 
 ```c++
-DID_GPS1_RTK_CMP_REL.arRatio						// Ambiguity resolution ratio
-DID_GPS1_RTK_CMP_REL.baseToRoverHeadingAcc			// (rad) RTK compassing accuracy
+DID_GPS2_RTK_CMP_REL.arRatio						// Ambiguity resolution ratio
+DID_GPS2_RTK_CMP_REL.baseToRoverHeadingAcc			// (rad) RTK compassing accuracy
 ```
 
-The DID_GPS1_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
+The DID_GPS2_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
 
 <center>
 
