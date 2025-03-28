@@ -68,7 +68,7 @@ The preintegrated IMU (PIMU) a.k.a. Coning and Sculling (delta theta, delta velo
 The IMU low-pass filter (LPF) adds latency (delay) to the signal in the IMU output.  This latency can be expressed as: 
 
 $$
-IMU Latency \cong \frac{2.197}{LPF bandwith}
+IMU Latency \cong \frac{2.197}{LPF bandwidth}
 $$
 
 The default IMU sensor bandwidths (cutoff frequencies) and corresponding signal latencies are:
