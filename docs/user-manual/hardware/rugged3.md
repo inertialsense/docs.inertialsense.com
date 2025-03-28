@@ -77,7 +77,7 @@ The following table shows the Rugged-3 pinout.  Note that pin function can chang
 | 11             | G1<br/>G1        | CANL<sup>\*</sup><br/>Rx2<sup>\*\*</sup>        | I/O<br/>I     | High level (CAN bus)<br/>Serial 2 input (TTL)<sup>\*\*</sup>              |
 | 12             | G2<br/>G2        | CANH<sup>\*</sup><br/>Tx2, G2_STROBE<sup>\*\*</sup> | I/O<br/>I/O   | Low level (CAN bus)<sup>\*</sup>. <br/>Serial 2 output (TTL)<sup>\*\*</sup>, G2-Strobe time sync input<sup>\*\*</sup> |
 
-<sup>\* (Default) To enable CAN bus on pins 11,12 remove R16,R17 and add 0402 zero ohm jumpers to R14,R15.<br/>\** To enable Serial2 TTL or STROBE on pins 11,12 remove R14,R15 and add 0402 zero ohm jumpers to R16,R17.</sup>
+<sup>\* The CAN bus is enabled by default on pins 11,12 (R16,R17 removed and R14,R15 loaded with 0402 zero ohm jumpers).<br/>\** To disable CAN bus and enable Serial2 TTL or STROBE on pins 11,12, remove R14,R15 and load R16,R17 with 0402 zero ohm jumpers.</sup>
 
 ![Rugged-3 Pin 11,12 SMT Jumpers](images/rug3_can_ser2_jumpers.png)
 
