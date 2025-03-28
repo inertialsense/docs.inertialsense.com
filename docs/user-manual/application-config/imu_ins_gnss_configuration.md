@@ -73,7 +73,7 @@ $$
 
 The default IMU sensor bandwidths (cutoff frequencies) and corresponding signal latencies are:
 
-| Sensor        | Bandwith | Signal Latency |
+| Sensor        | Bandwidth | Signal Latency |
 | ------------- | -------- | -------------- |
 | Gyro          | 539 Hz   | 4.1 ms         |
 | Accelerometer | 416 Hz   | 5.3 ms         |
