@@ -63,6 +63,23 @@ The IMU sample period is configured by setting `DID_FLASH_CONFIG.startupImuDtMs`
 
 The preintegrated IMU (PIMU) a.k.a. Coning and Sculling (delta theta, delta velocity) integrals serve as an anti-aliased moving average of the IMU value.  The `DID_IMU`  is the derivative of the `DID_PIMU` value over a single integration period.
 
+### IMU Latency
+
+The IMU low-pass filter (LPF) adds latency (delay) to the signal in the IMU output.  This latency can be expressed as: 
+
+$$
+IMU Latency \cong \frac{2.197}{LPF bandwidth}
+$$
+
+The default IMU sensor bandwidths (cutoff frequencies) and corresponding signal latencies are:
+
+| Sensor        | Bandwidth | Signal Latency |
+| ------------- | -------- | -------------- |
+| Gyro          | 539 Hz   | 4.1 ms         |
+| Accelerometer | 416 Hz   | 5.3 ms         |
+
+<!-- Note that the IMX INS output timestamp does not account for IMU signal latency.  As a result the INS output timestamp is shifted approximately by the amount IMU latency. -->
+
 ### Navigation Update and Output Periods
 
 The navigation filter output period should be set using the flash parameter `DID_FLASH_CONFIG.startupNavDtMs`.  This value sets the `DID_SYS_PARAMS.navOutputDtMs` and `DID_SYS_PARAMS.navUpdateDtMs` during startup of the IMX.
