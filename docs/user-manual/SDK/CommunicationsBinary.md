@@ -214,7 +214,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\ExampleProjects\Communications\build\Release\ISCommunicationsExample.exe COM3
+   C:\InertialSenseSDK\ExampleProjects\Communications\build-release\ISCommunicationsExample.exe COM3
    ```
 
 ## Summary

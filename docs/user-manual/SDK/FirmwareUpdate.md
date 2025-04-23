@@ -134,7 +134,7 @@ This [ISBootloaderExample](https://github.com/inertialsense/InertialSenseSDK/tre
 
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\ExampleProjects\IS_firmwareUpdate_v2\build\Release\ISBootloaderExample.exe COM3 IS_uINS-3.hex bootloader-SAMx70.bin
+   C:\InertialSenseSDK\ExampleProjects\IS_firmwareUpdate_v2\build-release\ISBootloaderExample.exe COM3 IS_uINS-3.hex bootloader-SAMx70.bin
    ```
 
 ## Summary

@@ -179,7 +179,7 @@ if (!serialPortWriteAscii(&serialPort, "PERS", 4))
 
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\ExampleProjects\Ascii\build\Release\ISAsciiExample.exe COM3
+   C:\InertialSenseSDK\ExampleProjects\Ascii\build-release\ISAsciiExample.exe COM3
    ```
 
 ## Summary

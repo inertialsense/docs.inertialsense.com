@@ -173,7 +173,7 @@ if (!cltool_setupLogger(inertialSenseInterface))
 
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\cltool\build\Release\cltool.exe
+   C:\InertialSenseSDK\cltool\build-release\cltool.exe
    ```
 
 

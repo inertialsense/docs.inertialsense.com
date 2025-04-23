@@ -104,7 +104,7 @@ build/IS_logs/LOG_SN30664_20180323_112822_0001.dat
 
 4. Run executable
    ``` bash
-   C:\InertialSenseSDK\ExampleProjects\Logger\build\Release\ISLoggerExample.exe COM3
+   C:\InertialSenseSDK\ExampleProjects\Logger\build-release\ISLoggerExample.exe COM3
    ```
 
 ## Summary
