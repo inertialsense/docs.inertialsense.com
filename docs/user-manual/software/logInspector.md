@@ -47,7 +47,7 @@ python3 setup.py build_ext --inplace
 ### Create a config file.
 
 ```
-C:\Users\[USER]\Documents\Inertial_Sense\config.yaml
+C:\Users\[USER]\Documents\Inertial_Sense\log_inspector.yaml
 ```
 
 ### Add the following or similar contents to this file.

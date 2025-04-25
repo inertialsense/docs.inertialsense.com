@@ -68,3 +68,53 @@ Thus, the **accelerometer noise standard deviation in terms of acceleration at 1
 - **Acceleration Noise Standard Deviation at 100 Hz**: **0.00333 m/s²**
 
 These values represent the Gaussian noise standard deviations for each sensor at 100 Hz sampling rate.
+
+
+<!-- 
+% Assumed gyro model:
+% b(i) = b(i-1) + v(i);
+% x(i) = b(i) + n(i);
+%
+% Given the angle random walk (ARW) spec from Allan variance
+% (noise density, usually in deg/sqrt(hr)), transform ARW to rad/sqrt(s) or
+% any other desired units and simulate noise n at sampling intervals Ts as
+% a white noise:
+% n = ARW / sqrt(Ts) * randn();
+%
+% Given the rate random walk (RRW) spec from Allan variance (usually in
+% deg/hr/sqrt(hr)), transform RRW to rad/s/sqrt(s) or any other desired
+% units and simulate noise v in the gyro model above at sampling intervals
+% Ts as a white noise:
+% v = RRW * sqrt(Ts) * randn();
+%
+% NOTE 1: RRW is not typically mentioned in specifications but can be found
+% from the Allan deviation plot. On the right side of the AD plot, find
+% where the plot slope is +1/2 and fit a straight line at the same slope,
+% the RRW value can be taken as a value on the straight line at correlation
+% time tau=3 seconds. For Inertial Sense gyros, that value is approximately
+% RRW = 0.001 deg/hr/sqrt(hr) = 2.9e-7 deg/s/sqrt(s)
+%
+% NOTE 2: Using just ARW and RRW in the gyro model will result in somewhat
+% optimistic bias stability. Bias stability can not be modeled with a usual
+% dynamic model (filter) due to the nature of the noise, but it can be
+% approximated. To account for the actual sensor bias stability, the gyro
+% bias model can be extended from pure random walk to use an additional
+% first-order Markov process term. This introduces am aditional bias
+% estimate and will increase state space dimension.
+% b(i) = b(i-1) + v(i);
+% bm(i) = (1 - Ts/Tb) * bm(i-1) + w(i);
+% x1(i) = b(i) + bm(i) + n_arw(i);
+% where Tb > 0 is the correlation time of the process. Tb can be selsected
+% so that 1.89 Tb lies near the flat portion of the AD plot. Then, choose
+% PSD so that the value of noise standard deviation at tau=1.89*Tb
+% approximates the value of the AD plot in its flat region.
+% Simulate noise w as a white noise:
+% w(i) = BI / sqrt(Tb) / 0.4365  * sqrt(Ts)
+%
+% The two models should yield the same ARW and BI on Allan variance plot
+% for different sampling times Ts.
+% For additional details, see https://www.mathworks.com/help/nav/ug/inertial-sensor-noise-analysis-using-allan-variance.html
+% For details on Note 2 see J. Farrell, F. Silva, F. Rahman, J. Wendel
+% "IMU Error Modeling Tutorial: INS state estimation with real-time sensor
+% calibration", IEEE Control Systems Magazine, vol. 42, no. 6, Dec. 2022. (edited)  
+-->

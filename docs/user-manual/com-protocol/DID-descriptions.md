@@ -106,7 +106,7 @@ IMU data averaged from DID_IMU3_RAW.  Use this IMU data for output data rates fa
 
 #### DID_PIMU
 
-Preintegrated IMU (a.k.a. Coning and Sculling integral) in body/IMU frame.  Updated at IMU rate. Also know as delta theta delta velocity, or preintegrated IMU (PIMU). For clarification, the name "Preintegrated IMU" or "PIMU" throughout our User Manual. This data is integrated from the IMU data at the IMU update rate (startupImuDtMs, default 1ms).  The integration period (dt) and output data rate are the same as the NAV rate (startupNavDtMs) and cannot be output at any other rate. If a faster output data rate is desired, DID_IMU_RAW can be used instead. PIMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay and addresses antialiasing. It is most effective for systems that have higher dynamics and lower communications data rates.  The minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). The PIMU value can be converted to IMU by dividing PIMU by dt (i.e. IMU = PIMU / dt)  
+Preintegrated IMU (a.k.a. Coning and Sculling integral) in body/IMU frame.  Updated at IMU rate. Also know as delta theta delta velocity, or preintegrated IMU (PIMU). For clarification, the name "Preintegrated IMU" or "PIMU" throughout our User Manual. This data is integrated from the IMU data at the IMU update rate (startupImuDtMs, default 1ms).  The PIMU integration period (dt) and INS NAV update data period are the same.  DID_FLASH_CONFIG.startupNavDtMs sets the NAV output period at startup.  The minimum NAV update and output periods are found here:  https://docs.inertialsense.com/user-manual/application-config/imu_ins_gnss_configuration/#navigation-update-and-output-periods.  If a faster output data rate for IMU is desired, DID_IMU_RAW can be used instead. PIMU data acts as a form of compression, adding the benefit of higher integration rates for slower output data rates, preserving the IMU data without adding filter delay and addresses antialiasing. It is most effective for systems that have higher dynamics and lower communications data rates.  The minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). The PIMU value can be converted to IMU by dividing PIMU by dt (i.e. IMU = PIMU / dt)  
 
 `pimu_t`
 
@@ -547,6 +547,102 @@ RTK options - requires little endian CPU.
 | maxgdop | double | base position for relative mode {x,y,z} (ecef) (m) |
 | baseline | double[3] | max averaging epochs |
 | max_baseline_error | double | output single by dgps/float/fix/ppp outage |
+| reset_baseline_error | double | velocity constraint in compassing mode {var before fix, var after fix} (m^2/s^2)  |
+
+
+### GPX
+
+#### DID_GPX_DEV_INFO
+
+GPX device information 
+
+`dev_info_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| reserved | uint16_t | Reserved bits |
+| hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
+| reserved2 | uint8_t | Unused |
+| serialNumber | uint32_t | Serial number |
+| hardwareVer | uint8_t[4] | Hardware version |
+| firmwareVer | uint8_t[4] | Firmware (software) version |
+| buildNumber | uint32_t | Build number |
+| protocolVer | uint8_t[4] | Communications protocol version |
+| repoRevision | uint32_t | Repository revision number |
+| manufacturer | char[24] | Manufacturer name |
+| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=developer/debug) |
+| buildYear | uint8_t | Build date year - 2000 |
+| buildMonth | uint8_t | Build date month |
+| buildDay | uint8_t | Build date day |
+| buildHour | uint8_t | Build time hour |
+| buildMinute | uint8_t | Build time minute |
+| buildSecond | uint8_t | Build time second |
+| buildMillisecond | uint8_t | Build time millisecond |
+| addInfo | char[24] | Additional info |
+| firmwareMD5Hash | uint32_t[4] | Firmware MD5 hash |
+
+
+#### DID_GPX_FLASH_CFG
+
+GPX flash configuration 
+
+`gpx_flash_cfg_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| size | uint32_t | Size of this struct |
+| checksum | uint32_t | Checksum, excluding size and checksum |
+| key | uint32_t | Manufacturer method for restoring flash defaults |
+| ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
+| ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
+| ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
+| startupGPSDtMs | uint32_t | GPS measurement (system input data) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
+| gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
+| gps2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 2 antenna. |
+| gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
+| dynamicModel | uint8_t | Dynamic platform model (see eDynamicModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
+| debug | uint8_t | Debug |
+| gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
+| gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
+| gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
+| RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
+| gnssCn0Minimum | uint8_t | (dBHz) GNSS CN0 absolute minimum threshold for signals.  Used to filter signals in RTK solution. |
+| gnssCn0DynMinOffset | uint8_t | (dBHz) GNSS CN0 dynamic minimum threshold offset below max CN0 across all satellites. Used to filter signals used in RTK solution. To disable, set gnssCn0DynMinOffset to zero and increase gnssCn0Minimum. |
+| reserved1 | uint8_t[2] | Reserved |
+| sysCfgBits | uint32_t | System configuration bits (see eGpxSysConfigBits). |
+| reserved2 | uint32_t | Reserved |
+
+
+#### DID_GPX_RMC
+
+GPX rmc  
+
+`rmc_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| bits | uint64_t | Data stream enable bits for the specified ports.  (see RMC_BITS_...) |
+| options | uint32_t | Options to select alternate ports to output data, etc.  (see RMC_OPTIONS_...) |
+
+
+#### DID_GPX_STATUS
+
+GPX status 
+
+`gpx_status_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | Status (eGpxStatus) |
+| grmcBitsSer0 | uint64_t | GRMC BITS (see GRMC_BITS_...)  |
+| grmcBitsSer1 | uint64_t | (see NMEA_MSG_ID...) |
+| grmcBitsSer2 | uint64_t | Hardware status flags (eGPXHdwStatusFlags) |
+| grmcBitsUSB | uint64_t | MCU temperature (GPX_INVALID_MCU_TEMP if not availible) |
+| grmcNMEABitsSer0 | uint64_t | Nav output period (ms). |
+| grmcNMEABitsSer1 | uint64_t | Flash config checksum used with host SDK synchronization |
+| grmcNMEABitsSer2 | uint64_t | RTK Mode bits (see eRTKConfigBits)  |
+| grmcNMEABitsUSB | uint64_t | port |
 
 
 ### Raw GPS Data
@@ -1109,66 +1205,6 @@ GPX debug
 |-------|------|-------------|
 
 
-#### DID_GPX_DEV_INFO
-
-GPX device information 
-
-`dev_info_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| reserved | uint16_t | Reserved bits |
-| hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
-| reserved2 | uint8_t | Unused |
-| serialNumber | uint32_t | Serial number |
-| hardwareVer | uint8_t[4] | Hardware version |
-| firmwareVer | uint8_t[4] | Firmware (software) version |
-| buildNumber | uint32_t | Build number |
-| protocolVer | uint8_t[4] | Communications protocol version |
-| repoRevision | uint32_t | Repository revision number |
-| manufacturer | char[24] | Manufacturer name |
-| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=developer/debug) |
-| buildYear | uint8_t | Build date year - 2000 |
-| buildMonth | uint8_t | Build date month |
-| buildDay | uint8_t | Build date day |
-| buildHour | uint8_t | Build time hour |
-| buildMinute | uint8_t | Build time minute |
-| buildSecond | uint8_t | Build time second |
-| buildMillisecond | uint8_t | Build time millisecond |
-| addInfo | char[24] | Additional info |
-| firmwareMD5Hash | uint32_t[4] | Firmware MD5 hash |
-
-
-#### DID_GPX_FLASH_CFG
-
-GPX flash configuration 
-
-`gpx_flash_cfg_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| size | uint32_t | Size of this struct |
-| checksum | uint32_t | Checksum, excluding size and checksum |
-| key | uint32_t | Manufacturer method for restoring flash defaults |
-| ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
-| ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
-| ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
-| startupGPSDtMs | uint32_t | GPS measurement (system input data) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
-| gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
-| gps2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 2 antenna. |
-| gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
-| dynamicModel | uint8_t | Dynamic platform model (see eDynamicModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
-| debug | uint8_t | Debug |
-| gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
-| gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
-| gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
-| RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
-| gnssCn0Minimum | uint8_t | (dBHz) GNSS CN0 absolute minimum threshold for signals.  Used to filter signals in RTK solution. |
-| gnssCn0DynMinOffset | uint8_t | (dBHz) GNSS CN0 dynamic minimum threshold offset below max CN0 across all satellites. Used to filter signals used in RTK solution. To disable, set gnssCn0DynMinOffset to zero and increase gnssCn0Minimum. |
-| reserved1 | uint8_t[2] | Reserved |
-| reserved2 | uint32_t[2] | Reserved |
-
-
 #### DID_GPX_PORT_MONITOR
 
 Data rate and status monitoring for each communications port. 
@@ -1178,18 +1214,6 @@ Data rate and status monitoring for each communications port.
 | Field | Type | Description |
 |-------|------|-------------|
 | port | port_monitor_set_t[6] | Port monitor set |
-
-
-#### DID_GPX_RMC
-
-GPX rmc  
-
-`rmc_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| bits | uint64_t | Data stream enable bits for the specified ports.  (see RMC_BITS_...) |
-| options | uint32_t | Options to select alternate ports to output data, etc.  (see RMC_OPTIONS_...) |
 
 
 #### DID_GPX_RTOS_INFO
@@ -1204,26 +1228,6 @@ GPX RTOs info
 | mallocSize | uint32_t | Total memory allocated using RTOS pvPortMalloc() |
 | freeSize | uint32_t | Total memory freed using RTOS vPortFree() |
 | task | rtos_task_t[] | Tasks |
-
-
-#### DID_GPX_STATUS
-
-GPX status 
-
-`gpx_status_t`
-
-| Field | Type | Description |
-|-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | Status (eGpxStatus) |
-| grmcBitsSer0 | uint64_t | GRMC BITS (see GRMC_BITS_...)  |
-| grmcBitsSer1 | uint64_t | (see NMEA_MSG_ID...) |
-| grmcBitsSer2 | uint64_t | Hardware status flags (eGPXHdwStatusFlags) |
-| grmcBitsUSB | uint64_t | MCU temperature (not available yet) |
-| grmcNMEABitsSer0 | uint64_t | Nav output period (ms). |
-| grmcNMEABitsSer1 | uint64_t | Flash config checksum used with host SDK synchronization |
-| grmcNMEABitsSer2 | uint64_t | RTK Mode bits (see eRTKConfigBits)  |
-| grmcNMEABitsUSB | uint64_t | port |
 
 
 #### DID_GROUND_VEHICLE
@@ -1677,14 +1681,14 @@ Wheel encoder data to be fused with GPS-INS measurements, set DID_GROUND_VEHICLE
 
 | Field | Type | Description |
 |-------|------|-------------|
-| timeOfWeek | double | Time of measurement wrt current week |
-| status | uint32_t | Status Word |
-| theta_l | float | Left wheel angle (rad) |
-| theta_r | float | Right wheel angle (rad) |
-| omega_l | float | Left wheel angular rate (rad/s) |
-| omega_r | float | Right wheel angular rate (rad/s) |
-| wrap_count_l | uint32_t | Left wheel revolution count |
-| wrap_count_r | uint32_t | Right wheel revolution count |
+| timeOfWeek | double | (Do not use, internal development only) Time of measurement in current GPS week |
+| status | uint32_t | Status |
+| theta_l | float | (Do not use, internal development only) Left wheel angle (rad) |
+| theta_r | float | (Do not use, internal development only) Right wheel angle (rad) |
+| omega_l | float | Left wheel angular rate (rad/s). Positive when wheel is turning toward the forward direction of the vehicle. Use WHEEL_CFG_BITS_DIRECTION_REVERSE_LEFT in DID_FLASH_CONFIG::wheelConfig to reverse this. |
+| omega_r | float | Right wheel angular rate (rad/s). Positive when wheel is turning toward the forward direction of the vehicle. Use WHEEL_CFG_BITS_DIRECTION_REVERSE_RIGHT in DID_FLASH_CONFIG::wheelConfig to reverse this. |
+| wrap_count_l | uint32_t | (Do not use, internal development only) Left wheel revolution count |
+| wrap_count_r | uint32_t | (Do not use, internal development only) Right wheel revolution count |
 
 
 ## Enumerations and Defines
@@ -1785,7 +1789,7 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_ACC_DLPF_5HZ | 0x00000006 |
 | SENSOR_CFG_ACC_DLPF_MASK | 0x0000F000 |
 | SENSOR_CFG_ACC_DLPF_OFFSET |  (int)12 |
-| SENSOR_CFG_SENSOR_ROTATION_MASK | 0x00FF0000 |
+| SENSOR_CFG_SENSOR_ROTATION_MASK | 0x001F0000 |
 | SENSOR_CFG_SENSOR_ROTATION_OFFSET |  (int)16 |
 | SENSOR_CFG_SENSOR_ROTATION_0_0_0 |  (int)0 |
 | SENSOR_CFG_SENSOR_ROTATION_0_0_90 |  (int)1 |
@@ -1811,13 +1815,184 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_90 |  (int)21 |
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_180 |  (int)22 |
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_N90 |  (int)23 |
-| SENSOR_CFG_IMU_FAULT_DETECT_MASK | 0x0F000000 |
-| SENSOR_CFG_IMU_FAULT_DETECT_OFFSET |  (int)24 |
-| SENSOR_CFG_IMU_FAULT_DETECT_NONE |  (int)0 |
-| SENSOR_CFG_IMU_FAULT_DETECT_OFFLINE |  (int)1 |
-| SENSOR_CFG_IMU_FAULT_DETECT_LARGE_BIAS |  (int)2 |
-| SENSOR_CFG_IMU_FAULT_DETECT_BIAS_JUMPS |  (int)3 |
-| SENSOR_CFG_IMU_FAULT_DETECT_SENSOR_NOISE |  (int)4 |
+| SENSOR_CFG_MAG_ODR_100_HZ | 0x00200000 |
+| SENSOR_CFG_DISABLE_MAGNETOMETER | 0x00400000 |
+| SENSOR_CFG_DISABLE_BAROMETER | 0x00800000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_MASK | 0xFF000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_GYR | 0x01000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_ACC | 0x02000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_OFFLINE | 0x04000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_LARGE_BIAS | 0x08000000 |
+| SENSOR_CFG_IMU_FAULT_DETECT_SENSOR_NOISE | 0x10000000 |
+
+
+#### DID_FLASH_CONFIG.sysCfgBits
+
+(eSysConfigBits)  
+
+| Field | Value |
+|-------|------|
+| UNUSED1 | 0x00000001 |
+| SYS_CFG_BITS_ENABLE_MAG_CONTINUOUS_CAL | 0x00000002 |
+| SYS_CFG_BITS_AUTO_MAG_RECAL | 0x00000004 |
+| SYS_CFG_BITS_DISABLE_MAG_DECL_ESTIMATION | 0x00000008 |
+| SYS_CFG_BITS_DISABLE_LEDS | 0x00000010 |
+| Magnetometer |  multi-axis |
+| SYS_CFG_BITS_MAG_RECAL_MODE_MASK | 0x00000700 |
+| SYS_CFG_BITS_MAG_RECAL_MODE_OFFSET | 8 |
+| SYS_CFG_BITS_MAG_ENABLE_WMM_DECLINATION | 0x00000800 |
+| SYS_CFG_BITS_DISABLE_MAGNETOMETER_FUSION | 0x00001000 |
+| SYS_CFG_BITS_DISABLE_BAROMETER_FUSION | 0x00002000 |
+| SYS_CFG_BITS_DISABLE_GPS1_FUSION | 0x00004000 |
+| SYS_CFG_BITS_DISABLE_GPS2_FUSION | 0x00008000 |
+| SYS_CFG_BITS_DISABLE_AUTO_ZERO_VELOCITY_UPDATES | 0x00010000 |
+| SYS_CFG_BITS_DISABLE_AUTO_ZERO_ANGULAR_RATE_UPDATES | 0x00020000 |
+| SYS_CFG_BITS_DISABLE_INS_EKF | 0x00040000 |
+| SYS_CFG_BITS_DISABLE_AUTO_BIT_ON_STARTUP | 0x00080000 |
+| SYS_CFG_BITS_DISABLE_WHEEL_ENCODER_FUSION | 0x00100000 |
+| SYS_CFG_BITS_UNUSED3 | 0x00200000 |
+| SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 |
+| SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 |
+| SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 |
+| SYS_CFG_BITS_BOR_LEVEL_3 | 0x3 |
+| SYS_CFG_BITS_BOR_THREHOLD_MASK | 0x00C00000 |
+| SYS_CFG_BITS_BOR_THREHOLD_OFFSET | 22 |
+| SYS_CFG_USE_REFERENCE_IMU_IN_EKF | 0x01000000 |
+| SYS_CFG_EKF_REF_POINT_STATIONARY_ON_STROBE_INPUT | 0x02000000 |
+
+
+#### DID_GPX_FLASH_CFG.sysCfgBits
+
+(eGpxSysConfigBits)  
+
+| Field | Value |
+|-------|------|
+| GPX_SYS_CFG_BITS_DISABLE_VCC_RF | 0x00000001 |
+| GPX_SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 |
+| GPX_SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 |
+| GPX_SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 |
+| GPX_SYS_CFG_BITS_BOR_LEVEL_3 | 0x3 |
+| GPX_SYS_CFG_BITS_BOR_THREHOLD_MASK | 0x00C00000 |
+| GPX_SYS_CFG_BITS_BOR_THREHOLD_OFFSET | 22 |
+
+
+#### DID_GPX_STATUS.hdwStatus
+
+(eGPXHdwStatusFlags)  
+
+| Field | Value |
+|-------|------|
+| GPX_HDW_STATUS_GNSS1_SATELLITE_RX | 0x00000001 |
+| GPX_HDW_STATUS_GNSS2_SATELLITE_RX | 0x00000002 |
+| GPX_HDW_STATUS_GNSS1_TIME_OF_WEEK_VALID | 0x00000004 |
+| GPX_HDW_STATUS_GNSS2_TIME_OF_WEEK_VALID | 0x00000008 |
+| GPX_HDW_STATUS_GNSS1_RESET_COUNT_MASK | 0x00000070 |
+| GPX_HDW_STATUS_GNSS1_RESET_COUNT_OFFSET | 4 |
+| GPX_HDW_STATUS_FAULT_GNSS1_INIT | 0x00000080 |
+| GPX_HDW_STATUS_GNSS1_FAULT_FLAG_OFFSET | 7 |
+| GPX_HDW_STATUS_GNSS2_RESET_COUNT_MASK | 0x00000700 |
+| GPX_HDW_STATUS_GNSS2_RESET_COUNT_OFFSET | 8 |
+| GPX_HDW_STATUS_FAULT_GNSS2_INIT | 0x00000800 |
+| GPX_HDW_STATUS_GNSS2_FAULT_FLAG_OFFSET | 11 |
+| GPX_HDW_STATUS_GNSS_FW_UPDATE_REQUIRED | 0x00001000 |
+| GPX_HDW_STATUS_UNUSED | 0x00002000 |
+| GPX_HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00004000 |
+| GPX_HDW_STATUS_FLASH_WRITE_PENDING | 0x00008000 |
+| GPX_HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
+| GPX_HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
+| GPX_HDW_STATUS_ERR_NO_GPS1_PPS | 0x00040000 |
+| GPX_HDW_STATUS_ERR_NO_GPS2_PPS | 0x00080000 |
+| GPX_HDW_STATUS_ERR_PPS_MASK | 0x000C0000 |
+| GPX_HDW_STATUS_ERR_LOW_CNO_GPS1 | 0x00100000 |
+| GPX_HDW_STATUS_ERR_LOW_CNO_GPS2 | 0x00200000 |
+| GPX_HDW_STATUS_ERR_CNO_GPS1_IR | 0x00400000 |
+| GPX_HDW_STATUS_ERR_CNO_GPS2_IR | 0x00800000 |
+| GPX_HDW_STATUS_ERR_CNO_MASK | 0x00F00000 |
+| GPX_HDW_STATUS_BIT_RUNNING | 0x01000000 |
+| GPX_HDW_STATUS_BIT_PASSED | 0x02000000 |
+| GPX_HDW_STATUS_BIT_FAULT | 0x03000000 |
+| GPX_HDW_STATUS_BIT_MASK | 0x03000000 |
+| GPX_HDW_STATUS_BIT_OFFSET | 24 |
+| GPX_HDW_STATUS_ERR_TEMPERATURE | 0x04000000 |
+| GPX_HDW_STATUS_GPS_PPS_TIMESYNC | 0x08000000 |
+| GPX_HDW_STATUS_RESET_CAUSE_MASK | 0x70000000 |
+| GPX_HDW_STATUS_RESET_CAUSE_BACKUP_MODE | 0x10000000 |
+| GPX_HDW_STATUS_RESET_CAUSE_SOFT | 0x20000000 |
+| GPX_HDW_STATUS_RESET_CAUSE_HDW | 0x40000000 |
+| GPX_HDW_STATUS_FAULT_SYS_CRITICAL | 0x80000000 |
+
+
+#### DID_GPX_STATUS.rtkMode
+
+(eRTKConfigBits)  
+
+| Field | Value |
+|-------|------|
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING | 0x00000001 |
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_EXTERNAL | 0x00000002 |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_F9P | 0x00000004 |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING | 0x00000008 |
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_EXTERNAL\) |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_F9P\) |
+| RTK_CFG_BITS_ROVER_MODE_MASK | 0x0000000F |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER0 | 0x00000010 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER1 | 0x00000020 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER2 | 0x00000040 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_USB | 0x00000080 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER0 | 0x00000100 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER1 | 0x00000200 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER2 | 0x00000400 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_USB | 0x00000800 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER0 | 0x00001000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER1 | 0x00002000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER2 | 0x00004000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_USB | 0x00008000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER0 | 0x00010000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER1 | 0x00020000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER2 | 0x00040000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_USB | 0x00080000 |
+| RTK_CFG_BITS_BASE_POS_MOVING | 0x00100000 |
+| RTK_CFG_BITS_RESERVED1 | 0x00200000 |
+| RTK_CFG_BITS_RTK_BASE_IS_IDENTICAL_TO_ROVER | 0x00400000 |
+| RTK_CFG_BITS_GPS_PORT_PASS_THROUGH | 0x00800000 |
+| RTK_CFG_BITS_ROVER_MODE_ONBOARD_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\) |
+| RTK_CFG_BITS_ALL_MODES_MASK | (RTK_CFG_BITS_ROVER_MODE_MASK\|RTK_CFG_BITS_BASE_MODE\) |
+
+
+#### DID_GPX_STATUS.status
+
+(eGpxStatus)  
+
+| Field | Value |
+|-------|------|
+| GPX_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x0000000F |
+| GPX_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 0 |
+| GPX_STATUS_COM0_RX_TRAFFIC_NOT_DECTECTED | 0x00000010 |
+| GPX_STATUS_COM1_RX_TRAFFIC_NOT_DECTECTED | 0x00000020 |
+| GPX_STATUS_COM2_RX_TRAFFIC_NOT_DECTECTED | 0x00000040 |
+| GPX_STATUS_GENERAL_FAULT_MASK | 0xFFFF0000 |
+| GPX_STATUS_FAULT_RTK_QUEUE_LIMITED | 0x00010000 |
+| GPX_STATUS_FAULT_GNSS_RCVR_TIME | 0x00100000 |
+| GPX_STATUS_FAULT_DMA | 0x00800000 |
+| GPX_STATUS_FATAL_MASK | 0x1F000000 |
+| GPX_STATUS_FATAL_OFFSET | 24 |
+| GPX_STATUS_FATAL_RESET_LOW_POW |  (int)1 |
+| GPX_STATUS_FATAL_RESET_BROWN |  (int)2 |
+| GPX_STATUS_FATAL_RESET_WATCHDOG |  (int)3 |
+| GPX_STATUS_FATAL_CPU_EXCEPTION |  (int)4 |
+| GPX_STATUS_FATAL_UNHANDLED_INTERRUPT |  (int)5 |
+| GPX_STATUS_FATAL_STACK_OVERFLOW |  (int)6 |
+| GPX_STATUS_FATAL_KERNEL_OOPS |  (int)7 |
+| GPX_STATUS_FATAL_KERNEL_PANIC |  (int)8 |
+| GPX_STATUS_FATAL_UNALIGNED_ACCESS |  (int)9 |
+| GPX_STATUS_FATAL_MEMORY_ERROR |  (int)10 |
+| GPX_STATUS_FATAL_BUS_ERROR |  (int)11 |
+| GPX_STATUS_FATAL_USAGE_ERROR |  (int)12 |
+| GPX_STATUS_FATAL_DIV_ZERO |  (int)13 |
+| GPX_STATUS_FATAL_SER0_REINIT |  (int)14 |
+| GPX_STATUS_FATAL_UNKNOWN | 0x1F |
+| GPX_STATUS_FAULT_RP | 0x20000000 |
+| GPX_STATUS_FAULT_UNUSED | 0xC0000000 |
 
 
 #### DID_SYS_CMD.command
@@ -1865,13 +2040,15 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_GPX_SOFT_RESET_GPX | 38 |
 | SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK | 39 |
 | SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK_TESTMODE | 40 |
-| SYS_CMD_TEST_GPIO | 64 |
-| SYS_CMD_TEST_CHECK_INIT_SER0 | 65 |
-| SYS_CMD_TEST_FORCE_INIT_SER0 | 66 |
-| SYS_CMD_TEST_BIT_BANG_SER0_STPB | 67 |
-| SYS_CMD_TEST_BIT_BANG_SER0_SRST | 68 |
-| SYS_CMD_TEST_SER0_TX_PIN_HIGH | 69 |
+| SYS_CMD_GPX_ENABLE_RTOS_STATS | 41 |
+| SYS_CMD_SET_GPX_SER0_PIN_DEFAULT | 67 |
+| SYS_CMD_SET_GPX_SER0_PIN_REINIT | 68 |
 | SYS_CMD_TEST_SER0_TX_PIN_LOW | 70 |
+| SYS_CMD_TEST_SER0_TX_PIN_HIGH | 71 |
+| SYS_CMD_TEST_SER0_TX_INPUT | 72 |
+| SYS_CMD_TEST_SER0_TX_PP_NONE | 80 |
+| SYS_CMD_TEST_SER0_TX_PP_U | 81 |
+| SYS_CMD_TEST_SER0_TX_PP_D | 82 |
 | SYS_CMD_SAVE_FLASH | 97 |
 | SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
 | SYS_CMD_SOFTWARE_RESET | 99 |
@@ -1976,13 +2153,13 @@ System status and configuration is made available through various enumeration an
 
 | Field | Value |
 |-------|------|
-| HDW_STATUS_MOTION_GYR_SIG | 0x00000001 |
-| HDW_STATUS_MOTION_ACC_SIG | 0x00000002 |
-| HDW_STATUS_MOTION_SIG_MASK | 0x00000003 |
-| HDW_STATUS_MOTION_GYR_DEV | 0x00000004 |
-| HDW_STATUS_MOTION_ACC_DEV | 0x00000008 |
-| HDW_STATUS_MOTION_MASK | 0x0000000F |
-|HDW_STATUS_GPS_SATELLITE_RX_VALID | 0x00000010 |
+| HDW_STATUS_MOTION_GYR | 0x00000001 |
+| HDW_STATUS_MOTION_ACC | 0x00000002 |
+| HDW_STATUS_MOTION_MASK | 0x00000003 |
+| HDW_STATUS_IMU_FAULT_REJECT_GYR | 0x00000004 |
+| HDW_STATUS_IMU_FAULT_REJECT_ACC | 0x00000008 |
+| HDW_STATUS_IMU_FAULT_REJECT_MASK | 0x0000000C |
+| HDW_STATUS_GPS_SATELLITE_RX_VALID | 0x00000010 |
 | HDW_STATUS_STROBE_IN_EVENT | 0x00000020 |
 | HDW_STATUS_GPS_TIME_OF_WEEK_VALID | 0x00000040 |
 | HDW_STATUS_REFERENCE_IMU_RX | 0x00000080 |
@@ -2174,7 +2351,11 @@ System status and configuration is made available through various enumeration an
 | SYS_CFG_BITS_DISABLE_AUTO_BIT_ON_STARTUP | 0x00080000 |
 | SYS_CFG_BITS_DISABLE_WHEEL_ENCODER_FUSION | 0x00100000 |
 | SYS_CFG_BITS_UNUSED3 | 0x00200000 |
-| SYS_CFG_BITS_UNUSED4 | 0x00400000 |
-| SYS_CFG_BITS_UNUSED5 | 0x00800000 |
+| SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 |
+| SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 |
+| SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 |
+| SYS_CFG_BITS_BOR_LEVEL_3 | 0x3 |
+| SYS_CFG_BITS_BOR_THREHOLD_MASK | 0x00C00000 |
+| SYS_CFG_BITS_BOR_THREHOLD_OFFSET | 22 |
 | SYS_CFG_USE_REFERENCE_IMU_IN_EKF | 0x01000000 |
 | SYS_CFG_EKF_REF_POINT_STATIONARY_ON_STROBE_INPUT | 0x02000000 |
