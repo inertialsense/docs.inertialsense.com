@@ -40,12 +40,12 @@ is_comm_get_data(portWrite, 0, comm, DID_INS_1, 0, 0, 10);
 
 #### Data Source Update Rates
 
-| DID                                                    | Update Rate (Period)                                         |
+| DID                                                    | Default Update Rate (Period)                                 |
 | ------------------------------------------------------ | ------------------------------------------------------------ |
-| DID_INS_[1-4]                                          | (4ms default) Configured with DID_FLASH_CONFIG.startupNavDtMs |
-| DID_IMU, <br/>DID_PIMU<sup>*</sup>   | (4ms default) Configured with DID_FLASH_CONFIG.startupImuDtMs |
-| DID_BAROMETER                                          | ~8ms                                                         |
-| DID_MAGNETOMETER_[1-2]                                 | ~10ms                                                        |
+| DID_INS_[1-4]                                          | (7ms default) Configured with DID_FLASH_CONFIG.startupNavDtMs |
+| DID_IMU, <br/>DID_PIMU<sup>*</sup>                     | (14ms default) Configured with DID_FLASH_CONFIG.startupImuDtMs |
+| DID_BAROMETER                                          | ~20ms                                                        |
+| DID_MAGNETOMETER_[1-2]                                 | ~20ms                                                        |
 | DID_GPS[1-2]_[X] <br/>(Any DID beginning with DID_GPS) | (200ms default) Configured with DID_FLASH_CONFIG. startupGPSDtMs |
 | All other DIDs                                         | 1ms                                                          |
 
