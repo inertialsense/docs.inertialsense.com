@@ -167,9 +167,9 @@ The following NMEA messages can be sent by the IMX.  The message ID (`eNmeaAscii
 
 The field codes used in the message descriptions are: lf = double, f = float, d = int.
 
-### Selecting NMEA Output Source
+### NMEA Output GNSS Source
 
-Following IMX power on/reset the default source for NMEA output is GPS1 if available or GPS2 if GPS1 is disabled.  This source is reported via bit SYS_STATUS_PRIMARY_GNSS_SOURCE_IS_GNSS2 (0x00000004) of DID_SYS_PARAMS.sysStatus where cleared means GNSS1 and set means GNSS2.  Users may manually set or clear this bit to control the NMEA output source.
+Following IMX power on/reset the default source for NMEA output is GPS1 if available or GPS2 if GPS1 is disabled.  This source is reported via bit SYS_STATUS_PRIMARY_GNSS_SOURCE_IS_GNSS2 (0x00000004) of DID_SYS_PARAMS.sysStatus where cleared means GNSS1 and set means GNSS2.  Users may manually set or clear this bit to control the NMEA output GNSS source.
 
 ### PIMU
 
