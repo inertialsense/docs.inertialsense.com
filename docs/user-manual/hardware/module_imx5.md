@@ -8,12 +8,11 @@
 
 ## Pinout
 
-The IMX-5 module is pin compatible with the uINS-3.
-
 <center>
 
+![](images/imx5_pinout.svg)
 
-![](../images/IMX5_pinout.png)
+<center>IMX-5 Pinout from the TOP</center>
 
 </center>
 
@@ -41,6 +40,11 @@ The IMX-5 module is pin compatible with the uINS-3.
 | 19   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
 | 20   | G15/GNSS_PPS                               | I   | Input for GNSS PPS for time synchronization pulse. |
 | 22   | VCC                                           | I   | 3.3V supply input                                |
+| 28 | QDEC0.A | I | Ground vehicle wheel sensor 0 quadrature channel A input. |
+| 29 | QDEC0.B | I | Ground vehicle wheel sensor 0 quadrature channel B input. |
+| 30 | VUSB | I | 3.0V to 3.6V required for USB operation.  Can be left floating if USB is not needed. |
+| 31 | QDEC1.A | I | Ground vehicle wheel sensor 1 quadrature channel A input. |
+| 32 | QDEC1.B | I | Ground vehicle wheel sensor 1 quadrature channel B input. |
 
 <sup>\*</sup>External transceiver required for CAN interface.
 
