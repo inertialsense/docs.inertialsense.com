@@ -12,9 +12,9 @@
 
 ![](images/imx5_pinout.svg)
 
-<center>IMX-5 Pinout from the TOP</center>
-
 </center>
+
+<center>IMX-5 Pinout from the TOP</center>
 
 | Pin  | Name                                          | I/O  | Description                                                  |
 | ---- | --------------------------------------------- | ---- | ------------------------------------------------------------ |
