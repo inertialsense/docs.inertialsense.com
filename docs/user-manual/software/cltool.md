@@ -104,13 +104,13 @@ OPTIONS (Logging to file, disabled by default)
     -rp PATH        Replay data log from PATH
     -rs=SPEED       Replay data log at x SPEED. SPEED=0 runs as fast as possible.
 
-OPTIONS (READ flash config - DEPRECATED, use `-getdid` and `-setdid` instead)
+OPTIONS (READ flash config) - DEPRECATED, use `-get` instead
     -imxFlashCfg                                # List all "keys" and "values" in IMX
     -gpxFlashCfg                                # List all "keys" and "values" in GPX
     "-imxFlashCfg=[key]|[key]|[key]"            # List specific IMX values
     "-gpxFlashCfg=[key]|[key]|[key]"            # List specific GPX values
 
-OPTIONS (WRITE flash config)
+OPTIONS (WRITE flash config) - DEPRECATED, use `-set` instead
     "-imxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in IMX flash config. 
     "-gpxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in GPX flash config. 
                                                 # Surround with "quotes" when using pipe operator.
