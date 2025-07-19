@@ -217,7 +217,7 @@ cltool -c /dev/ttyACM0 -ufpkg IS-firmware_2.0.3_2024-03-18_213925.fpkg
 
 ### Updating using Single Firmware File (Legacy Mode)
 
-The CLTool can be used to update device firmware with the following options.  This is the legacy firmware update methods that works only with the IMX-5.0 and earlier products (uINS-3, EVB-2, etc.).
+The CLTool can be used to update device firmware with the following options.  This is the legacy firmware update methods that works only with the IMX-5 and earlier products (uINS-3, EVB-2, etc.).
 
 ```bash
 cltool -c DEVICE_PORT -uf [FW_FILEPATH] -ub [BL_FILEPATH] -uv
