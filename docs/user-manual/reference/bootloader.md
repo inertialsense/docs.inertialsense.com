@@ -1,6 +1,6 @@
-# IMX-5.0 Bootloader
+# IMX-5 Bootloader
 
-The IMX-5.0 bootloader is embedded firmware stored on the IMX and is used to update the IMX application firmware.  
+The IMX-5 bootloader is embedded firmware stored on the IMX and is used to update the IMX application firmware.  
 
 ## Application Firmware Update
 
@@ -20,6 +20,6 @@ Updating the bootloader firmware is occasionally necessary when new functionalit
 
 ## Known Issues 
 
-The following are known issues in the IMX-5.0 bootloader.
+The following are known issues in the IMX-5 bootloader.
 
 - **UART 50s Disable** - (Version v5g and prior) All UARTs get disabled if no handshake sequence is received within 50 seconds of the bootloader start.  The USB port does not automatically close due to no handshake reception.

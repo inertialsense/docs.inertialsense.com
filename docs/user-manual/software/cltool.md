@@ -18,33 +18,68 @@ EXAMPLES
     cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGPSDtMs
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
     cltool -rp logs/20170117_222549                 # replay log files from a folder
-    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password    # Connect to RTK NTRIP base
+    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password         # Connect to RTK NTRIP base
+    cltool -c /dev/ttyS2 -get 1,4,13,DID_GPS1_POS                                    # Return specific DIDs
+    cltool -c /dev/ttyS2 -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"   # Return portion of two DIDs
+    cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gps1AntOffset[1]: 0.8}}"          # Set one value in DID array
+    cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gps1AntOffset: [0.8, 0.0, 1.2]}}" # Set values in DID
 
 EXAMPLES (Firmware Update)
     cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
     cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv
 
 OPTIONS (General)
-    -h --help       Display this help menu.
-    -c DEVICE_PORT  Select the serial port. Set DEVICE_PORT to "*" for all ports or "*4" for only first four available.
     -baud=BAUDRATE  Set serial port baudrate.  Options: 115200, 230400, 460800, 921600 (default)
+    -c DEVICE_PORT  Select serial port. Set DEVICE_PORT to "*" for all ports or "*4" for only first four.
+    -dboc           Send stop-broadcast command `$STPB` on close.
+    -h --help       Display this help menu.
+    -list-devices   Discovers and prints a list of discovered Inertial Sense devices and connected ports.
+    -lm             Listen mode for ISB. Disables device verification (-vd) and does not send stop-broadcast command on start.
     -magRecal[n]    Recalibrate magnetometers: 0=multi-axis, 1=single-axis
+    -nmea=[s]       Send NMEA message s with added checksum footer. Display rx messages. (`-nmea=ASCE,0,GxGGA,1`)
+    -nmea           Listen mode for NMEA message without sending stop-broadcast command `$STPB` at start.
     -q              Quiet mode, no display.
+    -raw-out        Outputs all data in a human-readable raw format (used for debugging/learning the ISB protocol).
     -reset          Issue software reset.
     -s              Scroll displayed messages to show history.
     -stats          Display statistics of data received.
     -survey=[s],[d] Survey-in and store base position to refLla: s=[2=3D, 3=float, 4=fix], d=durationSec
-    -ufpkg FILEPATH Update firmware using firmware package file (.fpkg) at FILEPATH.
-    -uf FILEPATH    Update application firmware using .hex file FILEPATH.  Add -baud=115200 for systems w/ baud rate limits.
-    -ub FILEPATH    Update bootloader using .bin file FILEPATH if version is old. Must be used along with option -uf.
-    -fb             Force bootloader update regardless of the version.
-    -uv             Run verification after application firmware update.
-    -sysCmd=[c]     Send DID_SYS_CMD c (see eSystemCommand) preceeded by unlock command then exit the program.
-    -factoryReset   Reset IMX flash config to factory defaults.
-    -romBootloader  Reboot into ROM bootloader mode.  Requires power cycle and reloading bootloader and firmware.
+    -sysCmd=[c]     Send DID_SYS_CMD c (see eSystemCommand) command then exit the program.
+    -vd             Disable device validation.  Use to keep port(s) open even if device response is not received.
+    -verbose[=n]    Enable verbose event logging. Use optional '=n' to specify log level between 0 (errors only) and 99 (all events)
     -v              Print version information.
 
-OPTIONS (Message Streaming)
+OPTIONS (Special)
+    -factoryReset   Reset IMX flash config to factory defaults.
+    -romBootloader  Reboot into ROM bootloader mode.  Requires power cycle and reloading bootloader and firmware.
+
+OPTIONS (Event)
+    -evf=[t],[po],[pr],[id]    Sets which DID_EVENT's can be broadcast for debug purposes.
+         target:        t=[0=device, 1=device's GNSS1 port, 2=device's GNSS2 port],
+         portMask:      po=[0x80=currentPort, 0x08=USB port, 0x04=UART2, 0x02=UART1, 0x01=UART)],
+         priorityLevel: pr=[Priority ID's to be enabled. See:eEventPriority for protocol EV_ID values].
+             It is recommended to have a minimum level of 1 at all times to allow broadcast of critical errors.
+         msgTypeIdMask: id=[Protocol ID's to be enabled. Mask together protocol EV_ID value (0x01 << EV_ID).
+             See:eEventProtocol for protocol EV_ID values]. It is recommended to mask (0x01 << EVENT_MSG_TYPE_ID_ASCII)
+             at all times to allow broadcast of critical errors.
+
+OPTIONS (Firmware Update)
+    -ufpkg FILEPATH Update firmware using firmware package file (.fpkg) at FILEPATH.
+    -uf FILEPATH    Update app firmware using .hex file FILEPATH.  Add -baud=115200 for systems w/ baud limits.
+    -ub FILEPATH    Update bootloader using .bin file FILEPATH if version is old. Must be used with option -uf.
+    -fb             Force bootloader update regardless of the version.
+    -uv             Run verification after application firmware update.
+
+OPTIONS (Messages)
+    -get <DID1>,<DID2>,...                   Return values of dataset(s). DID may be a name or number.
+    -get "{<DID>: {<FIELD1>,<FIELD2>,...}}"  Return values of dataset(s). DID may be a name or number. YAML input format.
+                                             Examples: -get 1,4,12,DID_GPS1_POS
+                                                       -get "{DID_INS_1,DID_GPS1_POS}"
+                                                       -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"
+    -set "{<DID>: {<FIELD1>: <VALUE>, ...}}" Set values of dataset(s). DID may be a number or name. YAML input format.
+                                             Examples: -set "{DID_FLASH_CONFIG: {gps1AntOffset: [0.8, 0.0, 1.2]}}"
+                                                       -set "{DID_FLASH_CONFIG: {gps1AntOffset[2]: 1.2}}"
+                                                       -set "{12: {ioConfig: 0x1a2b012c, ser2BaudRate: 921600}}"
     -did [DID#<=PERIODMULT> DID#<=PERIODMULT> ...]  Stream 1 or more datasets and display w/ compact view.
     -edit [DID#<=PERIODMULT>]                       Stream and edit 1 dataset.
           Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency. 
@@ -53,30 +88,35 @@ OPTIONS (Message Streaming)
           DID_GPS2_RTK_CMP_REL, DID_BAROMETER, DID_MAGNETOMETER, DID_FLASH_CONFIG (see data_sets.h for complete list)
     -dids           Print list of all DID datasets
     -persistent     Save current streams as persistent messages enabled on startup
-    -presetPPD      Stream preset post processing datasets (PPD)
-    -presetINS2     Stream preset INS2 datasets
+    -presetPPD      Send RMC preset to enable IMX post processing data (PPD) stream
+    -presetINS      Send RMC preset to enable INS data stream
+    -presetGPXPPD   Send RMC preset to enable GPX post processing data (PPD) stream
 
 OPTIONS (Logging to file, disabled by default)
     -lon            Enable logging
-    -lt=TYPE        Log type: raw (default), dat, kml or csv
+    -lt=TYPE        Log type: raw (default), dat, sdat, kml or csv
     -lp PATH        Log data to path (default: ./IS_logs)
-    -lms=PERCENT    Log max space in percent of free space (default: 0.5)
+    -lmb=MB         File culling: Log drive usage limit in MB. (default: 0). `-lmb=0 -lms=0` disables file culling.
+    -lms=PERCENT    File culling: Log drive space limit in percent of total drive, 0.0 to 1.0. (default: 0.5)
     -lmf=BYTES      Log max file size in bytes (default: 5242880)
     -lts=0          Log sub folder, 0 or blank for none, 1 for timestamp, else use as is
     -r              Replay data log from default path
     -rp PATH        Replay data log from PATH
     -rs=SPEED       Replay data log at x SPEED. SPEED=0 runs as fast as possible.
 
-OPTIONS (Read flash configuration from command line)
-    -flashCfg                                   # List all "keys" and "values"
-   "-flashCfg=[key]|[key]|[key]"                # List select values
+OPTIONS (READ flash config) - DEPRECATED, use `-get` instead
+    -imxFlashCfg                                # List all "keys" and "values" in IMX
+    -gpxFlashCfg                                # List all "keys" and "values" in GPX
+    "-imxFlashCfg=[key]|[key]|[key]"            # List specific IMX values
+    "-gpxFlashCfg=[key]|[key]|[key]"            # List specific GPX values
 
-OPTIONS (Write flash configuration from command line)
-   "-flashCfg=[key]=[value]|[key]=[value]"      # Set key / value pairs in flash config. 
+OPTIONS (WRITE flash config) - DEPRECATED, use `-set` instead
+    "-imxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in IMX flash config. 
+    "-gpxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in GPX flash config. 
                                                 # Surround with "quotes" when using pipe operator.
 EXAMPLES
-    cltool -c /dev/ttyS2 -flashCfg  # Read from device and print all keys and values
-    cltool -c /dev/ttyS2 "-flashCfg=insOffset[1]=1.2|=ser2BaudRate=115200"  # Set multiple values
+    cltool -c /dev/ttyS2 -imxFlashCfg  # Read from device and print all keys and values
+    cltool -c /dev/ttyS2 "-imxFlashCfg=insOffset[1]=1.2|ser2BaudRate=115200"  # Set multiple values
 
 OPTIONS (RTK Rover / Base)
     -rover=[type]:[IP or URL]:[port]:[mountpoint]:[username]:[password]
@@ -84,9 +124,9 @@ OPTIONS (RTK Rover / Base)
             -rover=TCP:RTCM3:192.168.1.100:7777:mountpoint:username:password   (NTRIP)
             -rover=TCP:RTCM3:192.168.1.100:7777
             -rover=TCP:UBLOX:192.168.1.100:7777
-            -rover=SERIAL:RTCM3:/dev/ttyS2:57600             (port, baud rate)
+            -rover=SERIAL:RTCM3:/dev/ttyS2:57600        (port, baud rate)
     -base=[IP]:[port]   As a Base (sever), send RTK corrections.  Examples:
-            -base=TCP::7777                            (IP is optional)
+            -base=TCP::7777                             (IP is optional)
             -base=TCP:192.168.1.43:7777
             -base=SERIAL:/dev/ttyS2:921600
 ```
@@ -177,7 +217,7 @@ cltool -c /dev/ttyACM0 -ufpkg IS-firmware_2.0.3_2024-03-18_213925.fpkg
 
 ### Updating using Single Firmware File (Legacy Mode)
 
-The CLTool can be used to update device firmware with the following options.  This is the legacy firmware update methods that works only with the IMX-5.0 and earlier products (uINS-3, EVB-2, etc.).
+The CLTool can be used to update device firmware with the following options.  This is the legacy firmware update methods that works only with the IMX-5 and earlier products (uINS-3, EVB-2, etc.).
 
 ```bash
 cltool -c DEVICE_PORT -uf [FW_FILEPATH] -ub [BL_FILEPATH] -uv
