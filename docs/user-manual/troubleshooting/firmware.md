@@ -11,7 +11,7 @@ Check the following:
 - The input supply is at 3.3V and clean without noise.
 - The serial connection is grounded (no floating grounds).
 - The serial wires between the uINS module and the next active device (buffer, converter, or processor) are not longer than 1 meter when bootloading firmware.
-- Reset or power cycle the IMX and promptly run the firmware update within 30 seconds of reset.  A known issue in the IMX-5.0 bootloader version v6g and prior versions that disables all UARTS if no handshake is received within 50 second following startup.  Resetting the IMX will re-enable UARTs for 50 seconds.
+- Reset or power cycle the IMX and promptly run the firmware update within 30 seconds of reset.  A known issue in the IMX-5 bootloader version v6g and prior versions that disables all UARTS if no handshake is received within 50 second following startup.  Resetting the IMX will re-enable UARTs for 50 seconds.
 
 ## Bootloader Update fails first time
 
@@ -30,7 +30,7 @@ Note: Following chip erase:
 Update firmware using standard procedure including app and bootloader firmware images. 
 Upload IMU calibration.
 
-## "GPX-1 and IMX-5.1 Bricked" System Recovery
+## "GPX-1 and IMX-6 Bricked" System Recovery
 
 Assert boot mode pin high (3.3V) while booting (power cycle or reset) to put the device into bootloader mode.  Inertial Sense customer support is required to facilitate bootloader communications with this device.
 
