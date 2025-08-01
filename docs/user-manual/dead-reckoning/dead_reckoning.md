@@ -59,6 +59,43 @@ From the EvalTool INS tab:
 
 2. Disable learning and save kinematic calibration to flash memory by setting `DID_GROUND_VEHICLE.mode` to 5.
 
+### Wheel Encoder Input (Optional)
+
+Wheel encoder input is optional for dead reckoning operation. The implementation of wheel encoder input will improve dead reckoning performance. Encoders constrain drift along the axis of travel. The IMX-5 does not support direct wheel encoder input via I/O pins. To provide wheel encoder input, an external system must generate `DID_WHEEL_ENCODER` messagese that are then streamed into an IMX-5 port.
+
+DID_WHEEL_ENCODER struct is defined below. Only omega_l and omega_r are required to be populated. All other value can be left as zero. Once populated, the full struct is streamed to the IMX-5 using the [Set Data](../../../user-manual/com-protocol/isb/#setting-data) method from the SDK.
+
+```
+/** (DID_WHEEL_ENCODER) Message to communicate wheel encoder measurements to GPS-INS */
+typedef struct PACKED
+{
+    /** (Do not use, internal development only) Time of measurement in current GPS week */
+    double timeOfWeek;
+
+    /** Status */
+    uint32_t status;
+
+    /** (Do not use, internal development only) Left wheel angle (rad) */
+    float theta_l;
+
+    /** (Do not use, internal development only) Right wheel angle (rad) */
+    float theta_r;
+    
+    /** Left wheel angular rate (rad/s). Positive when wheel is turning toward the forward direction of the vehicle. Use WHEEL_CFG_BITS_DIRECTION_REVERSE_LEFT in DID_FLASH_CONFIG::wheelConfig to reverse this. */
+    float omega_l;
+
+    /** Right wheel angular rate (rad/s). Positive when wheel is turning toward the forward direction of the vehicle. Use WHEEL_CFG_BITS_DIRECTION_REVERSE_RIGHT in DID_FLASH_CONFIG::wheelConfig to reverse this. */
+    float omega_r;
+
+    /** (Do not use, internal development only) Left wheel revolution count */
+    uint32_t wrap_count_l;
+
+    /** (Do not use, internal development only) Right wheel revolution count */
+    uint32_t wrap_count_r;
+
+} wheel_encoder_t;
+```
+
 ## Examples
 
 [Dead reckoning examples can be found here.](../dead_reckoning_examples)
