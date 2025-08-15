@@ -12,9 +12,11 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 
 <center>
 
-![](../images/gpx1_pinout.png)
+![](images/gpx1_pinout.svg)
 
 </center>
+
+<center>GPX-1 Pinout from the TOP</center>
 
 | Pin  | Name                                          | Type | Description                                                  |
 | ---- | --------------------------------------------- | ---- | ------------------------------------------------------------ |

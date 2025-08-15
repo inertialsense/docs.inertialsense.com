@@ -94,6 +94,7 @@ nav:
     - GPX-1: getting-started/GPX-1.md
   - IS Hardware:
     #- Overview: user-manual/hardware/overview.md
+    - IMX-6: user-manual/hardware/module_imx6.md
     - IMX-5: user-manual/hardware/module_imx5.md
     - GPX-1: user-manual/hardware/module_gpx1.md
     # - uINS-3: user-manual/hardware/module_uins3.md
