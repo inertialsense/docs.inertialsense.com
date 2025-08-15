@@ -1,6 +1,10 @@
 # Inertial Sense Binary (ISB) Protocol
 
-The Inertial Sense binary protocol provides the most efficient way to communicate with the µINS, µAHRS, and µIMU because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [NMEA Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
+The Inertial Sense binary protocol provides the most efficient way to communicate with the IMX and GPX because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [NMEA Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
+
+## Endianness
+
+The IMX and GPX devices use little-endian byte order in the ISB protocol.
 
 ## Communication
 
@@ -215,7 +219,7 @@ The data ID (DID) values are defined at the top of [data_sets.h](https://github.
 
 #### Header Payload Size
 
-The ISB packet payload size is a uint16 that will 
+In the ISB protocol, the packet payload size is a 16-bit unsigned integer (uint16) that specifies the payload’s byte length, excluding the packet header and footer/checksum.  If the ISB_FLAGS_PAYLOAD_W_OFFSET flag (0x20) is set in the header’s flags byte, the optional 16-bit offset value is included in the payload length.
 
 #### Footer Checksum
 
