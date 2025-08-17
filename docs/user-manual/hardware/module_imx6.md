@@ -1,8 +1,8 @@
-# Hardware Integration: IMX-5 Module
+# Hardware Integration: IMX-6 Module
 
 <center>
 
-![IMX-5](../images/IMX_5.0_800w.jpg)
+![IMX-6](../images/IMX_5.0_800w.jpg)
 
 </center>
 
@@ -14,7 +14,7 @@
 
 </center>
 
-<center>IMX-5 Pinout from the TOP</center>
+<center>IMX-6 Pinout from the TOP</center>
 
 | Pin  | Name                                          | I/O  | Description                                                  |
 | ---- | --------------------------------------------- | ---- | ------------------------------------------------------------ |
@@ -52,7 +52,7 @@
 
 ### Serial Interface
 
-The following schematic demonstrates a typical setup for the IMX-5 module. A rechargeable lithium backup battery enables the GNSS to perform a warm or hot start. If no backup battery is connected, VBKUP (pin 3) should be connected to VCC and the module will perform a cold start on power up. If the system processor is not capable of updating the IMX firmware, it is recommended to add a header to an alternate IMX serial port for firmware updates via an external computer. The reset line is not necessary for typical use.
+The following schematic demonstrates a typical setup for the IMX-6 module. A rechargeable lithium backup battery enables the GNSS to perform a warm or hot start. If no backup battery is connected, VBKUP (pin 3) should be connected to VCC and the module will perform a cold start on power up. If the system processor is not capable of updating the IMX firmware, it is recommended to add a header to an alternate IMX serial port for firmware updates via an external computer. The reset line is not necessary for typical use.
 
 ![](../images/interface_serial.svg)
 
@@ -74,16 +74,16 @@ The SPI interface is enabled by holding the pin 10 low during boot up.
 ## Manufacturing
 ### Soldering
 
-The IMX-5 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual.
+The IMX-6 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual.
 
 ### Tape Packaging
 
-The IMX-5 modules are available in **cut tape** as well as **tape and reel** packaging.  The follow image shows the feed direction and illustrates the orientation of the IMX-5 module on the tape:
+The IMX-6 modules are available in **cut tape** as well as **tape and reel** packaging.  The follow image shows the feed direction and illustrates the orientation of the IMX-6 module on the tape:
 
-![IMX-5 Tape](images/IMX_Tape.png)
-The feed direction to the pick and place pick-up is shown by the orientation of the IMX-5 pin 1 location. With pin 1 location on the bottom of the tape, the feed direction into the pick and place pick-up is from the reel (located to the right of the figure) towards the left.
+![IMX-6 Tape](images/IMX_Tape.png)
+The feed direction to the pick and place pick-up is shown by the orientation of the IMX-6 pin 1 location. With pin 1 location on the bottom of the tape, the feed direction into the pick and place pick-up is from the reel (located to the right of the figure) towards the left.
 
-The dimensions of the tapes for the IMX-5 are shown in the drawing below:
+The dimensions of the tapes for the IMX-6 are shown in the drawing below:
 
 <object data="https://docs.inertialsense.com/dimensions/Tape_and_Reel_IMX.pdf" type="application/pdf" width="700px" height="600px" >
     <embed src="https://docs.inertialsense.com/dimensions/Tape_and_Reel_IMX.pdf" type="application/pdf" />
