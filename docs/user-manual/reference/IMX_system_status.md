@@ -57,17 +57,17 @@ The hardware status flags, **hdwStatus**, are found in the `DID_INS1`, `DID_INS2
 | **Field**                 | **Description**                          |
 | ------------------------- | ---------------------------------------- |
 | HDW_STATUS_MOTION_MASK | Accelerometers and Gyros are operational |
-|HDW_STATUS_GPS_SATELLITE_RX_VALID | Antenna is connected to the GPS receiver and signal is valid. Unset indicates weak signal or no output from 1 or more enabled GPS receivers |
+|HDW_STATUS_GNSS_SATELLITE_RX_VALID | Antenna is connected to the GPS receiver and signal is valid. Unset indicates weak signal or no output from 1 or more enabled GPS receivers |
 | HDW_STATUS_STROBE_IN_EVENT | Event occurred on strobe input pin |
-| HDW_STATUS_GPS_TIME_OF_WEEK_VALID | GPS time of week is valid and reported.  Otherwise the timeOfWeek is local system time. |
+| HDW_STATUS_GNSS_TIME_OF_WEEK_VALID | GPS time of week is valid and reported.  Otherwise the timeOfWeek is local system time. |
 | HDW_STATUS_SATURATION_MASK | Acc., Gyro, Mag or Baro is saturated |
 | HDW_STATUS_SYSTEM_RESET_REQUIRED | System Reset is required for proper function |
-| HDW_STATUS_ERR_GPS_PPS_NOISE | GPS PPS timepulse signal has noise and occurred too frequently |
+| HDW_STATUS_ERR_GNSS_PPS_NOISE | GPS PPS timepulse signal has noise and occurred too frequently |
 | HDW_STATUS_MAG_RECAL_COMPLETE | Magnetometer recalibration has finished (when INS_STATUS_MAG_RECALIBRATING is unset). |
 | HDW_STATUS_ERR_COM_TX_LIMITED | Communications Tx buffer limited |
 | HDW_STATUS_ERR_COM_RX_OVERRUN | Communications Rx buffer overrun |
-| HDW_STATUS_ERR_NO_GPS_PPS | GPS PPS timepulse signal has not been received or is in error |
-| HDW_STATUS_GPS_PPS_TIMESYNC | Time synchronized by GPS PPS |
+| HDW_STATUS_ERR_NO_GNSS_PPS | GPS PPS timepulse signal has not been received or is in error |
+| HDW_STATUS_GNSS_PPS_TIMESYNC | Time synchronized by GPS PPS |
 |  | (BIT) Built-in self-test mask |
 | HDW_STATUS_ERR_TEMPERATURE | Outside of operational range |
 | HDW_STATUS_FAULT_BOD_RESET | Low Power Reset |

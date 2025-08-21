@@ -78,10 +78,10 @@ The RTK precision positioning fix status can be identified using the valid bit i
 
 ```c++
 // INS status
-INS_STATUS_NAV_FIX_STATUS(DID_INS_1.insStatus) == GPS_NAV_FIX_POSITIONING_RTK_FIX
+INS_STATUS_NAV_FIX_STATUS(DID_INS_1.insStatus) == GNSS_NAV_FIX_POSITIONING_RTK_FIX
 
 // GPS status
-DID_GPS1_POS.status & GPS_STATUS_FLAGS_GPS1_RTK_POSITION_VALID
+DID_GPS1_POS.status & GNSS_STATUS_FLAGS_GNSS1_RTK_POSITION_VALID
 ```
 
 RTK precision positioning fix is indicated is indicated when the RTK-Pos radio button turns purple in the EvalTool INS tab.

@@ -144,7 +144,7 @@ The RTK compassing fix status can be identified using the valid bit in the INS a
 
 ```c++
 DID_INS_1.insStatus & INS_STATUS_RTK_COMPASSING_VALID			    // INS status - RTK heading is valid and aiding INS heading.
-DID_GPS1_POS.status & GPS_STATUS_FLAGS_GPS2_RTK_COMPASS_VALID		// GPS status - RTK heading is valid and available in DID_GPS2_RTK_CMP_REL.
+DID_GPS1_POS.status & GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_VALID		// GPS status - RTK heading is valid and available in DID_GPS2_RTK_CMP_REL.
 ```
 
 RTK compassing fix is indicated when the RTK-Cmp radio button turns purple in the EvalTool INS tab.

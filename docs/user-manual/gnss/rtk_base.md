@@ -74,7 +74,7 @@ The Base IMX must be configured to stream base corrections to the radio so it ca
 3. Under "Correction Output", find the fields for serial ports 0, 1, or USB. Select the serial port from which the corrections will be transmitted. This port must also be connected to the radio. Choose one of the options listed below. Leave the unused serial port off.
    - "GPS1 - RTCM3": *Output standard RTCM3 messages.*
    - "GPS1 - uBlox": *Output uBlox messages. This will provide more accuracy but requires significantly more bandwidth.*
-4. Change the "Data Rate(ms)" field. This determines how many milliseconds pass between message outputs (e.g. Data Rate(ms) = 1,000 means one message/second). It is usually best to match the startupGPSDtMs value found in DID_FLASH_CONFIG.
+4. Change the "Data Rate(ms)" field. This determines how many milliseconds pass between message outputs (e.g. Data Rate(ms) = 1,000 means one message/second). It is usually best to match the startupGNSSDtMs value found in DID_FLASH_CONFIG.
 5. In the "Position" section, a the Base Station position is required so that it can transmit accurate corrections. Please refer to [Surveying In Base Position](#surveying-in-base-position) if the base station location is unknown.
 6. Click Apply, and reset the µINS. The unit will now start up in Base Station mode. Verify the base station is working by looking in the section labeled "Status". It will display the serial port of the radio and the message type. 
    e.g. "SER1:UBX"
