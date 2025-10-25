@@ -39,7 +39,7 @@ Once the log is opened, the buttons in the upper left hand corner are used to gr
 ### Navigate to the Inertial Sense SDK directory
 
 ``` bash
-pip3 install logInspector/ # (this will return an error message, but will install all the dependencies you need)
+python -m pip install logInspector/ # (this will return an error message, but will install all the dependencies you need)
 cd logInspector
 python3 setup.py build_ext --inplace
 ```

@@ -19,8 +19,8 @@ Be sure to select the "add python.exe to path" option in the installers
 
 To install mkdocs and latex, open a command prompt and use pip
 ``` powershell
-pip3 install mkdocs pygments pymarkdown pymdown-extensions mkdocs-material mdx_truly_sane_lists
-pip3 install https://github.com/mitya57/python-markdown-math/archive/master.zip
+python3 -m pip install mkdocs pygments pymarkdown pymdown-extensions mkdocs-material mdx_truly_sane_lists
+python3 -m pip install https://github.com/mitya57/python-markdown-math/archive/master.zip
 ```
 
 ## Install mkdocs-pdf-export-plugin
