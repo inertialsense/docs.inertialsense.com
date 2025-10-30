@@ -18,7 +18,11 @@ EXAMPLES
     cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGPSDtMs
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
     cltool -rp logs/20170117_222549                 # replay log files from a folder
-    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password    # Connect to RTK NTRIP base
+    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password         # Connect to RTK NTRIP base
+    cltool -c /dev/ttyS2 -get 1,4,13,DID_GPS1_POS                                    # Return specific DIDs
+    cltool -c /dev/ttyS2 -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"   # Return portion of two DIDs
+    cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gps1AntOffset[1]: 0.8}}"          # Set one value in DID array
+    cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gps1AntOffset: [0.8, 0.0, 1.2]}}" # Set values in DID
 
 EXAMPLES (Firmware Update)
     cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
@@ -66,7 +70,16 @@ OPTIONS (Firmware Update)
     -fb             Force bootloader update regardless of the version.
     -uv             Run verification after application firmware update.
 
-OPTIONS (Message Streaming)
+OPTIONS (Messages)
+    -get <DID1>,<DID2>,...                   Return values of dataset(s). DID may be a name or number.
+    -get "{<DID>: {<FIELD1>,<FIELD2>,...}}"  Return values of dataset(s). DID may be a name or number. YAML input format.
+                                             Examples: -get 1,4,12,DID_GPS1_POS
+                                                       -get "{DID_INS_1,DID_GPS1_POS}"
+                                                       -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"
+    -set "{<DID>: {<FIELD1>: <VALUE>, ...}}" Set values of dataset(s). DID may be a number or name. YAML input format.
+                                             Examples: -set "{DID_FLASH_CONFIG: {gps1AntOffset: [0.8, 0.0, 1.2]}}"
+                                                       -set "{DID_FLASH_CONFIG: {gps1AntOffset[2]: 1.2}}"
+                                                       -set "{12: {ioConfig: 0x1a2b012c, ser2BaudRate: 921600}}"
     -did [DID#<=PERIODMULT> DID#<=PERIODMULT> ...]  Stream 1 or more datasets and display w/ compact view.
     -edit [DID#<=PERIODMULT>]                       Stream and edit 1 dataset.
           Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency. 
@@ -91,19 +104,19 @@ OPTIONS (Logging to file, disabled by default)
     -rp PATH        Replay data log from PATH
     -rs=SPEED       Replay data log at x SPEED. SPEED=0 runs as fast as possible.
 
-OPTIONS (READ flash config)
+OPTIONS (READ flash config) - DEPRECATED, use `-get` instead
     -imxFlashCfg                                # List all "keys" and "values" in IMX
     -gpxFlashCfg                                # List all "keys" and "values" in GPX
     "-imxFlashCfg=[key]|[key]|[key]"            # List specific IMX values
     "-gpxFlashCfg=[key]|[key]|[key]"            # List specific GPX values
 
-OPTIONS (WRITE flash config)
+OPTIONS (WRITE flash config) - DEPRECATED, use `-set` instead
     "-imxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in IMX flash config. 
     "-gpxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in GPX flash config. 
                                                 # Surround with "quotes" when using pipe operator.
 EXAMPLES
     cltool -c /dev/ttyS2 -imxFlashCfg  # Read from device and print all keys and values
-    cltool -c /dev/ttyS2 "-imxFlashCfg=insOffset[1]=1.2|=ser2BaudRate=115200"  # Set multiple values
+    cltool -c /dev/ttyS2 "-imxFlashCfg=insOffset[1]=1.2|ser2BaudRate=115200"  # Set multiple values
 
 OPTIONS (RTK Rover / Base)
     -rover=[type]:[IP or URL]:[port]:[mountpoint]:[username]:[password]
@@ -204,7 +217,7 @@ cltool -c /dev/ttyACM0 -ufpkg IS-firmware_2.0.3_2024-03-18_213925.fpkg
 
 ### Updating using Single Firmware File (Legacy Mode)
 
-The CLTool can be used to update device firmware with the following options.  This is the legacy firmware update methods that works only with the IMX-5.0 and earlier products (uINS-3, EVB-2, etc.).
+The CLTool can be used to update device firmware with the following options.  This is the legacy firmware update methods that works only with the IMX-5 and earlier products (uINS-3, EVB-2, etc.).
 
 ```bash
 cltool -c DEVICE_PORT -uf [FW_FILEPATH] -ub [BL_FILEPATH] -uv

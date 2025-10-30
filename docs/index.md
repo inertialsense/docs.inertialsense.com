@@ -1,4 +1,4 @@
-**Software Release 2.5.0 - 27 June 2025**
+**Software Release 2.6.0 - 19 Sept 2025**
 <!-- [UPDATE_RELEASE_VERSION_HERE] Update this version info at time of release. -->
 
 *Older (non-current) versions of the User Manual can be found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
@@ -11,34 +11,35 @@
 
 # Overview
 
-## IMX-5 (IMU, AHRS, and GPS-INS)
+## IMX-6 (IMU, AHRS, and GPS-INS)
 <center>
 
 ![](user-manual/images/IMX_5.0_800w.jpg)
 
 </center>
 
-The **IMX-5**™ is a 10-DOF sensor module consisting of a tactical grade Inertial Measurement Unit (IMU), magnetometer, and barometer. Output includes angular rate, linear acceleration, magnetic vector, and barometric pressure and altitude. IMU calibration consists of bias, scale factor, cross-axis alignment, and temperature compensation.  The IMX-5 includes Attitude Heading Reference System (**AHRS**) sensor fusion to estimate roll, pitch, and heading. Adding GNSS input to the IMX-5 enables onboard Inertial Navigation System (**INS**) sensor fusion for roll, pitch, heading, velocity, and position.
+The **IMX-6**™ is a 10-DOF sensor module consisting of a tactical grade Inertial Measurement Unit (IMU), magnetometer, and barometer. Output includes angular rate, linear acceleration, magnetic vector, and barometric pressure and altitude. IMU calibration consists of bias, scale factor, cross-axis alignment, and temperature compensation.  The IMX-6 includes Attitude Heading Reference System (**AHRS**) sensor fusion to estimate roll, pitch, and heading. Adding GNSS input to the IMX-6 enables onboard Inertial Navigation System (**INS**) sensor fusion for roll, pitch, heading, velocity, and position.
 
-The **RUG-3-IMX-5**™ series adds a rugged aluminum enclosure and RS232, RS485, and CAN bus to the IMX-5.  
+The **RUG-4-IMX-6**™ series adds a rugged aluminum enclosure and RS232, RS485, and CAN bus to the IMX-6.  
 
-The **RUG-3-IMX-5-RTK**™ includes a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. 
+The **RUG-4-IMX-6-RTK**™ includes a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. 
 
-The **RUG-3-IMX-5-Dual**™ includes two multi-frequency GNSS receivers with RTK precision position and dual GNSS heading/compass.
+The **RUG-4-IMX-6-Dual**™ includes two multi-frequency GNSS receivers with RTK precision position and dual GNSS heading/compass.
 
 The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk) is an open-source software development kit for quick integration to configure and communicate with Inertial Sense products. The SDK includes data logger, math libraries, and interface for Linux, Windows, and embedded platforms.
 
 ## Features
+* **30% More Accurate Than IMX-5**
 * **Tactical Grade IMU**
-  - **Gyro: 1.5 °/hr Bias Instability, 0.16 °/√hr ARW**
-  - **Accel: 19 µg Bias Instability, 0.02 m/s/√hr VRW**
-* **0.04° Dynamic Roll/Pitch**
-* **0.13° Dynamic Heading**
+  - **Gyro: 1.1 °/hr Bias Instability, 0.12 °/√hr ARW**
+  - **Accel: 14 µg Bias Instability, 0.015 m/s/√hr VRW**
+* **0.03° Dynamic Roll/Pitch**
+* **0.09° Dynamic Heading**
 * **Surface Mount Reflowable (PCB Module)**
 * Up to 1KHz IMU Output Data Rate
 * Small Form Factor: 15.6 x 12.5 x 2.9 mm
-* Light Weight: 0.8 g
-* Low power consumption: <110mW
+* Light Weight: 0.9 g
+* Low power consumption: <120mW
 * External GNSS Support (Multi-Band)
 * Attitude (Roll, Pitch, Yaw, Quaternions), Velocity, and Position UTC Time Synchronized
 * Triple Redundant IMUs Calibrated for Bias, Scale Factor, Cross-axis Alignment, and G-sensitivity

@@ -69,9 +69,9 @@ The Info Bar can be seen from any tab and shows basic connection information for
    | -------------- | ------------------------------------------------------------ |
    | FwPkg (.fpkg)  | Batch firmware update method for updating multiple devices in one process.  The .fpkg file contains multiple firmware files and instructions for sequencing firmware updates for all available devices.  **NOTE:** IMX-5 firmware update is not yet supported but will be in a future update. |
    | GPX-1 (.bin)   | GPX-1 firmware update.                                       |
-   | IMX-5.0 (.hex) | (Legacy mode) IMX-5.0 firmware update that used the legacy InertialSense bootloader (ISB). |
+   | IMX-5 (.hex) | (Legacy mode) IMX-5 firmware update that used the legacy InertialSense bootloader (ISB). |
 1. Select the firmware file by clicking on the ellipsis (three dots) button next to the file name and navigating to and opening the file.
-1. For the IMX-5.0 update type, you can optionally select the bootloader .bin file. The bootloader will only be updated if the selected file is newer than the bootloader on the connected unit.
+1. For the IMX-5 update type, you can optionally select the bootloader .bin file. The bootloader will only be updated if the selected file is newer than the bootloader on the connected unit.
 1. Click **Start**.
 1. Wait for the progress to reach 100% and click **Done**.
 

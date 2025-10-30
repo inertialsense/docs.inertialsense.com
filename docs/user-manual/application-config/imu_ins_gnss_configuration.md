@@ -92,7 +92,7 @@ The **navigation filter update period** (`DID_SYS_PARAMS.navUpdateDtMs`) control
 
 The following table lists the output and update period minimum limits for the IMX. 
 
-| Operation Mode                           | IMX-5.0 Minimum<br/>Output Period / Update Period | IMX-5.1, uINS-3 Minimum<br/>Output Period / Update Period |
+| Operation Mode                           | IMX-5 Minimum<br/>Output Period / Update Period | IMX-6, uINS-3 Minimum<br/>Output Period / Update Period |
 | ---------------------------------------- | ------------------------------------------------- | --------------------------------------------------------- |
 | INS (GPS enabled)                        | 7 ms (142 Hz) / 14 ms                             | 2 ms (500 Hz) / 4 ms                                      |
 | AHRS (GPS disabled)                      | 5 ms (200 Hz) / 10 ms                             | 2 ms (500 Hz) / 4 ms                                      |
