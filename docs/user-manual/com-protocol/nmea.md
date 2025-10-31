@@ -805,7 +805,7 @@ Configure the serial port parameters (i.e. baudrate, etc).
 stty -F /dev/ttyACM0 921600 raw -echo -crtscts
 ```
 
-Stop message streaming on the current port to prevent interference with the following command response.
+Stop message streaming on the current port. This prevents previously streamed messages from interfering with the response to a specific request.
 
 ```bash
 cat < /dev/ttyACM0 & printf '%s\r\n' '$STPC*14' > /dev/ttyACM0
