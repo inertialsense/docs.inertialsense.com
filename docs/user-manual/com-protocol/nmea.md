@@ -797,7 +797,7 @@ $PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069
 
 ## Linux Command Line NMEA Query
 
-This section illustrates how to request NMEA output using standard Linux commands without relying on the InertialSense SDK.  This provides a simple way to communicate directly with the device over a port, making it useful for quickly identifying device information, firmware version, or any available NMEA message.   
+This section illustrates how to request NMEA output using standard Linux commands without relying on the InertialSense SDK, cltool, or EvalTool.  This provides a simple way to communicate directly with the device over a port, making it useful for quickly identifying device information, firmware version, or any available NMEA message.   
 
 Configure the serial port parameters (i.e. baudrate, etc).
 
