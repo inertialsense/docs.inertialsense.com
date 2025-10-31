@@ -795,27 +795,29 @@ $GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.19,M,18.82,M,,*56
 $PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069,-1.433,-1.072,-9.585*1f
 ```
 
-## How to Query NMEA from Linux Command Line
+## Linux Command Line NMEA Query
 
-Configure serial port parameters such as baudrate, etc.
+This section illustrates methods for requesting NMEA output using standard Linux commands without relying on the InertialSense SDK. This provides a simple way to communicate directly with the device over a serial port, making it useful for quickly identifying device information, firmware version, and confirming basic communication functionality.   
+
+Configure the serial port parameters (i.e. baudrate, etc).
 
 ```bash
 stty -F /dev/ttyACM0 921600 raw -echo -crtscts
 ```
 
-Stop data streaming on current port to prevent receiving incorrect message.
+Stop message streaming on the current port to prevent interference with the following command response.
 
 ```bash
 cat < /dev/ttyACM0 & printf '%s\r\n' '$STPC*14' > /dev/ttyACM0
 ```
 
-Request device information.
+Request the device information.
 
 ```bash
 cat < /dev/ttyACM0 & printf '%s\r\n' '$INFO*0E' > /dev/ttyACM0
 ```
 
-Read device information and print to console.
+Request the device information and display it in the console.
 
 ```bash
 printf '%s\r\n' '$INFO*0E' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/ttyACM0
