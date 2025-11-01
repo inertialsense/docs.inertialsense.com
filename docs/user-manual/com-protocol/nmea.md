@@ -2,9 +2,9 @@
 
 # NMEA 0183 (ASCII) Protocol
 
-For simple use, the Inertial Sense device supports a human-readable NMEA communications protocol based on NMEA 0183. The NMEA protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](isb.md) in terms of message length for the same amount of data.
+For simple use, the InertialSense device supports a human-readable NMEA protocol based on NMEA 0183. The NMEA protocol is human-readable in a command-line terminal, but it is less efficient than the [binary protocol](isb.md) for the same data volume.
 
-## Communications Examples
+## Communications Example
 
 The [NMEA Communications Example Project](../SDK/CommunicationsAscii.md) demonstrates how to implement the protocol.
 
@@ -17,10 +17,10 @@ The Inertial Sense NMEA protocol follows the standard [NMEA 0183](https://en.wik
 * 1 byte – comma (`0x2C`)
 * n bytes – comma separated list of data, can include decimals and text
 * 1 byte – checksum marker, `*` (`0x2A`)
-* 2 bytes – checksum in hex format (i.e. `f5` or `0a`), 0 padded and lowercase
+* 2 bytes – checksum in hex format (i.e. `f5` or `0a`), zero-padded and lowercase
 * 2 bytes – End packet, `\r\n` (`0x0D`, `0x0A`)
 
-The packet checksum is an 8 bit integer and is calculated by calculating the exclusive OR of all bytes in between and not including the $ and * bytes. The packet checksum byte is converted to a 2 byte NMEA hex code, and left padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details.  The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
+The packet checksum is an 8-bit integer and is calculated by XORing all bytes between (but not including) the $ and * bytes. The packet checksum byte is converted to a 2-byte NMEA hex code, and left-padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details. The NMEA string checksum is automatically computed and appended to the string when using the Inertial Sense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
 ## Persistent Messages
 
@@ -57,30 +57,38 @@ The following NMEA messages can be received by the IMX.
 
 ### ASCE
 
-Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](../isb/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period. The period is the multiple of the [*data source period*](../isb/#data-source-update-rates) (i.e., a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms). "xx" is the two-character checksum. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+
+**Note:** A period value of 0 requests a single (one-shot) message and disables streaming for that message. This provides a convenient way to query an NMEA message without enabling continuous streaming.
 
 ```
 $ASCE,OPTIONS,(ID,PERIOD)*xx\r\n
 ```
 
-The following examples will enable the same NMEA message output:
+| Index | Field     | Description                                                  |
+| ----- | --------- | ------------------------------------------------------------ |
+| 1     | `OPTIONS` | Port selection. Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
+|       |           | *Start of repeated group (1...20 times)*                     |
+| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e., PPIMU, PINS1, GNGGA) excluding packet start character `$` or **2.) message ID** (eNmeaAsciiMsgId) of the NMEA message to be streamed. See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
+| 3+n*2 | `PERIOD`  | Broadcast period multiple for specified message. Zero queries one message and disables streaming. |
+|       |           | *End of repeated group (1...20 times)*                       |
+
+#### Example Messages
+
+The following example NMEA messages enable IMX data streaming output. The data period is 1, full [data source rates](binary/#data-source-update-rates), for those that do not specify the output rate.
+
+The following two examples both enable the same NMEA message output:
 
 ```
 $ASCE,0,PPIMU,1,PINS2,10,GNGGA,1*26\r\n
 $ASCE,0,2,1,5,10,7,1*39\r\n
 ```
 
-| Index | Field     | Description                                                  |
-| ----- | --------- | ------------------------------------------------------------ |
-| 1     | `OPTIONS` | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-|       |           | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e. PPIMU, PINS1, GNGGA) excluding packet start character `$` or **2.) message ID** (eNmeaAsciiMsgId) of the NMEA message to be streamed.  See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
-| 3+n*2 | `PERIOD`  | Broadcast period multiple for specified message.  Zero disables streaming. |
-|       |           | *End of repeated group (1...20 times)*                       |
+The following example will query one PINS1 message without streaming.
 
-#### Example Messages  
-
-The following examples NMEA messages enable IMX data streaming output.  The data period is 1, full [data source rates](binary/#data-source-update-rates), for those that do not specify the output rate.
+```
+$ASCE,0,PINS1,0*0D\r\n
+```
 
 | Message             | Data (Output Rate)** |
 | ------------------- | ------- |
@@ -717,7 +725,7 @@ This section illustrates common NMEA message strings for configuration.
 !!! note
     All NMEA command strings must be followed with a carriage return and new line character (`\r\n` or `0x0D`, `0x0A`).
 
-The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online NMEA checksum calculator. For example:  [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
+The NMEA string checksum is automatically computed and appended to string  when using the Inertial Sense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online NMEA checksum calculator. For example:  [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
 **Stop streams on CURRENT port**
 
@@ -797,7 +805,7 @@ $PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069
 
 ## Linux Command Line NMEA Query
 
-This section illustrates how to request NMEA output using standard Linux commands without relying on the InertialSense SDK, cltool, or EvalTool.  This provides a simple way to communicate directly with the device over a port, making it useful for quickly identifying device information, firmware version, or any available NMEA message.   
+This section illustrates how to request NMEA output using standard Linux commands without relying on the Inertial Sense SDK, cltool, or EvalTool.  This provides a simple way to communicate directly with the device over a port, making it useful for quickly identifying device information, firmware version, or any available NMEA message.   
 
 Configure the serial port parameters (i.e. baudrate, etc).
 
@@ -817,9 +825,15 @@ Request the device information.
 cat < /dev/ttyACM0 & printf '%s\r\n' '$INFO*0E' > /dev/ttyACM0
 ```
 
-Request the device information and display it in the console.
+Request the device information and exit after receiving the response.
 
 ```bash
 printf '%s\r\n' '$INFO*0E' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/ttyACM0
+```
+
+Request the $PINS1 solution output and exit after receiving the response.
+
+```bash
+printf '%s\r\n' '$ASCE,0,PINS*0D' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/ttyACM0
 ```
 
