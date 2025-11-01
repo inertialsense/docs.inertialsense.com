@@ -115,7 +115,7 @@ $ASCE,0,PINS1,0*0D\r\n
 
 ### PERS
 
-Send this command to save current *persistent messages* to flash memory for use following reboot.   This eliminates the need to re-enable messages following a reset or power cycle.  In order to disable persistent messages,  all messages must be disabled and then the 'save persistent messages' command should be sent.
+Send this command to save current *persistent messages* to flash memory for use following reboot. This eliminates the need to re-enable messages following a reset or power cycle. To disable persistent messages, all messages must be disabled and then the 'save persistent messages' command should be sent.
 
 ```
 $PERS*14\r\n
@@ -151,7 +151,7 @@ The hexadecimal equivalent is:
 
 ## NMEA Output Messages
 
-The following NMEA messages can be sent by the IMX.  The message ID (`eNmeaAsciiMsgId`) is used with the `$ASCE` message to enable message streaming. 
+The following NMEA messages can be sent by the IMX. The message ID (`eNmeaAsciiMsgId`) is used with the `$ASCE` message to enable message streaming. 
 
 | Identifier      | ID   | Description                                                  |
 | --------------- | ---- | ------------------------------------------------------------ |
@@ -177,7 +177,7 @@ The field codes used in the message descriptions are: lf = double, f = float, d 
 
 ### NMEA Output GNSS Source
 
-Following IMX power on/reset the default source for NMEA output is GPS1 if available or GPS2 if GPS1 is disabled.  This source is reported via bit SYS_STATUS_PRIMARY_GNSS_SOURCE_IS_GNSS2 (0x00000004) of DID_SYS_PARAMS.sysStatus where cleared means GNSS1 and set means GNSS2.  Users may manually set or clear this bit to control the NMEA output GNSS source.
+Following IMX power on/reset, the default source for NMEA output is GPS1 if available or GPS2 if GPS1 is disabled. This source is reported via bit SYS_STATUS_PRIMARY_GNSS_SOURCE_IS_GNSS2 (0x00000004) of DID_SYS_PARAMS.sysStatus where cleared means GNSS1 and set means GNSS2. Users may manually set or clear this bit to control the NMEA output GNSS source.
 
 ### PIMU
 
@@ -191,15 +191,16 @@ $PIMU,lf,f,f,f,f,f,f*xx\r\n
 | Index | Field      | Units   | Description                 |
 | ----- | ---------- | ------- | --------------------------- |
 | 1     | time       | sec     | Time since system power up  |
-| 3     | IMU pqr[0] | rad/sec | IMU angular rate gyro – X   |
-| 2     | IMU pqr[1] | rad/sec | IMU angular rate gyro – Y   |
+| 2     | IMU pqr[0] | rad/sec | IMU angular rate gyro – X   |
+| 3     | IMU pqr[1] | rad/sec | IMU angular rate gyro – Y   |
 | 4     | IMU pqr[2] | rad/sec | IMU angular rate gyro – Z   |
 | 5     | IMU acc[0] | m/s2    | IMU linear acceleration – X |
 | 6     | IMU acc[1] | m/s2    | IMU linear acceleration – Y |
 | 7     | IMU acc[2] | m/s2    | IMU linear acceleration – Z |
 
 ### PPIMU
-Preintegrated inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame.  Also known as coning and sculling integrals.
+
+Preintegrated inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame. Also known as coning and sculling integrals.
 
 ```
 $PPIMU,lf,f,f,f,f,f,f,f*xx\r\n
@@ -212,14 +213,14 @@ $PPIMU,lf,f,f,f,f,f,f,f*xx\r\n
 | 2     | theta[0] | rad   | IMU delta theta integral – X           |
 | 3     | theta[1] | rad   | IMU delta theta integral – Y           |
 | 4     | theta[2] | rad   | IMU delta theta integral – Z           |
-| 8     | vel[0]   | m/s   | IMU delta velocity integral – X        |
-| 9     | vel[1]   | m/s   | IMU delta velocity integral – Y        |
-| 10    | vel[2]   | m/s   | IMU delta velocity integral – Z        |
-| 14    | dt       | s     | Integration period for delta theta vel |
+| 5     | vel[0]   | m/s   | IMU delta velocity integral – X        |
+| 6     | vel[1]   | m/s   | IMU delta velocity integral – Y        |
+| 7     | vel[2]   | m/s   | IMU delta velocity integral – Z        |
+| 8     | dt       | s     | Integration period for delta theta vel |
 
 ### PRIMU
 
-Raw IMU sensor data (3-axis gyros and accelerometers) in the body frame (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of PIMU or PPIMU as they are oversampled and contain less noise. 0 to disable.
+Raw IMU sensor data (3-axis gyros and accelerometers) in the body frame (up to 1KHz). Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs. Otherwise, we recommend use of PIMU or PPIMU as they are oversampled and contain less noise. 0 to disable.
 
 ```
 $PRIMU,lf,f,f,f,f,f,f*xx\r\n
@@ -229,8 +230,8 @@ $PRIMU,lf,f,f,f,f,f,f*xx\r\n
 | Index | Field          | Units   | Description                     |
 | ----- | -------------- | ------- | ------------------------------- |
 | 1     | time           | sec     | Time since system power up      |
-| 3     | Raw IMU pqr[0] | rad/sec | Raw IMU angular rate gyro – X   |
-| 2     | Raw IMU pqr[1] | rad/sec | Raw IMU angular rate gyro – Y   |
+| 2     | Raw IMU pqr[0] | rad/sec | Raw IMU angular rate gyro – X   |
+| 3     | Raw IMU pqr[1] | rad/sec | Raw IMU angular rate gyro – Y   |
 | 4     | Raw IMU pqr[2] | rad/sec | Raw IMU angular rate gyro – Z   |
 | 5     | Raw IMU acc[0] | m/s2    | Raw IMU linear acceleration – X |
 | 6     | Raw IMU acc[1] | m/s2    | Raw IMU linear acceleration – Y |
@@ -265,6 +266,7 @@ $PINS1,lf,d,d,d,f,f,f,f,f,f,lf,lf,lf,f,f,f*xx\r\n
 | 16    | NED[2]       | m     | Offset from reference LLA – Down                             |
 
 ### PINS2
+
 INS output with quaternion attitude.
 
 ```
@@ -290,6 +292,7 @@ $PINS2,lf,d,d,d,f,f,f,f,f,f,f,lf,lf,lf*xx\r\n
 | 14    | HAE altitude | m     | Height above ellipsoid (vertical elevation)                  |
 
 ### PGPSP
+
 GPS navigation data.
 
 ```
@@ -315,8 +318,8 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 | 12    | Velocity Y   | m/s   | ECEF Y velocity                                              |
 | 13    | Velocity Z   | m/s   | ECEF Z velocity                                              |
 | 14    | sAcc         | m/s   | Speed accuracy                                               |
-| 15    | cnoMean      | dBHz  | Average of all satellite carrier to noise ratios (signal strengths) that non-zero |
-| 16    | towOffset    | s     | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
+| 15    | cnoMean      | dBHz  | Average of all satellite carrier-to-noise ratios (signal strengths) that are non-zero |
+| 16    | towOffset    | s     | Time sync offset between local time since boot up to GPS time of week in seconds. Add this to IMU and sensor time to get GPS time of week in seconds. |
 | 17    | leapS        | s     | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. |
 
 ### GGA
@@ -834,6 +837,6 @@ printf '%s\r\n' '$INFO*0E' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/t
 Request the $PINS1 solution output and exit after receiving the response.
 
 ```bash
-printf '%s\r\n' '$ASCE,0,PINS*0D' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/ttyACM0
+printf '%s\r\n' '$ASCE,0,PINS1*0D' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/ttyACM0
 ```
 
