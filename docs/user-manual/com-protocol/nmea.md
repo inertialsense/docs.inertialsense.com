@@ -837,6 +837,6 @@ printf '%s\r\n' '$INFO*0E' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/t
 Request the $PINS1 solution output and exit after receiving the response.
 
 ```bash
-printf '%s\r\n' '$ASCE,0,PINS1*0D' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/ttyACM0
+printf '%s\r\n' '$ASCE,0,PINS1,0*0D' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/ttyACM0
 ```
 
