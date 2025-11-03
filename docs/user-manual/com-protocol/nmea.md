@@ -2,9 +2,9 @@
 
 # NMEA 0183 (ASCII) Protocol
 
-For simple use, the Inertial Sense device supports a human-readable NMEA communications protocol based on NMEA 0183. The NMEA protocol is human readable from in a command line terminal but is less optimal than the [binary protocol](isb.md) in terms of message length for the same amount of data.
+For simple use, the InertialSense device supports a human-readable NMEA protocol based on NMEA 0183. The NMEA protocol is human-readable in a command-line terminal, but it is less efficient than the [binary protocol](isb.md) for the same data volume.
 
-## Communications Examples
+## Communications Example
 
 The [NMEA Communications Example Project](../SDK/CommunicationsAscii.md) demonstrates how to implement the protocol.
 
@@ -17,10 +17,10 @@ The Inertial Sense NMEA protocol follows the standard [NMEA 0183](https://en.wik
 * 1 byte – comma (`0x2C`)
 * n bytes – comma separated list of data, can include decimals and text
 * 1 byte – checksum marker, `*` (`0x2A`)
-* 2 bytes – checksum in hex format (i.e. `f5` or `0a`), 0 padded and lowercase
+* 2 bytes – checksum in hex format (i.e. `f5` or `0a`), zero-padded and lowercase
 * 2 bytes – End packet, `\r\n` (`0x0D`, `0x0A`)
 
-The packet checksum is an 8 bit integer and is calculated by calculating the exclusive OR of all bytes in between and not including the $ and * bytes. The packet checksum byte is converted to a 2 byte NMEA hex code, and left padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details.  The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
+The packet checksum is an 8-bit integer and is calculated by XORing all bytes between (but not including) the $ and * bytes. The packet checksum byte is converted to a 2-byte NMEA hex code, and left-padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) message structure for more details. The NMEA string checksum is automatically computed and appended to the string when using the Inertial Sense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online checksum calculator. For example: [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
 ## Persistent Messages
 
@@ -57,30 +57,38 @@ The following NMEA messages can be received by the IMX.
 
 ### ASCE
 
-Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](../isb/#data-source-update-rates) (i.e. a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).   “xx” is the two-character checksum.  A period of 0 will disable message streaming. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates).  Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period. The period is the multiple of the [*data source period*](../isb/#data-source-update-rates) (i.e., a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms). "xx" is the two-character checksum. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+
+**Note:** A period value of 0 requests a single (one-shot) message and disables streaming for that message. This provides a convenient way to query an NMEA message without enabling continuous streaming.
 
 ```
 $ASCE,OPTIONS,(ID,PERIOD)*xx\r\n
 ```
 
-The following examples will enable the same NMEA message output:
+| Index | Field     | Description                                                  |
+| ----- | --------- | ------------------------------------------------------------ |
+| 1     | `OPTIONS` | Port selection. Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
+|       |           | *Start of repeated group (1...20 times)*                     |
+| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e., PPIMU, PINS1, GNGGA) excluding packet start character `$` or **2.) message ID** (eNmeaAsciiMsgId) of the NMEA message to be streamed. See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
+| 3+n*2 | `PERIOD`  | Broadcast period multiple for specified message. Zero queries one message and disables streaming. |
+|       |           | *End of repeated group (1...20 times)*                       |
+
+#### Example Messages
+
+The following example NMEA messages enable IMX data streaming output. The data period is 1, full [data source rates](binary/#data-source-update-rates), for those that do not specify the output rate.
+
+The following two examples both enable the same NMEA message output:
 
 ```
 $ASCE,0,PPIMU,1,PINS2,10,GNGGA,1*26\r\n
 $ASCE,0,2,1,5,10,7,1*39\r\n
 ```
 
-| Index | Field     | Description                                                  |
-| ----- | --------- | ------------------------------------------------------------ |
-| 1     | `OPTIONS` | Port selection.  Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
-|       |           | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e. PPIMU, PINS1, GNGGA) excluding packet start character `$` or **2.) message ID** (eNmeaAsciiMsgId) of the NMEA message to be streamed.  See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
-| 3+n*2 | `PERIOD`  | Broadcast period multiple for specified message.  Zero disables streaming. |
-|       |           | *End of repeated group (1...20 times)*                       |
+The following example will query one PINS1 message without streaming.
 
-#### Example Messages  
-
-The following examples NMEA messages enable IMX data streaming output.  The data period is 1, full [data source rates](binary/#data-source-update-rates), for those that do not specify the output rate.
+```
+$ASCE,0,PINS1,0*0D\r\n
+```
 
 | Message             | Data (Output Rate)** |
 | ------------------- | ------- |
@@ -107,7 +115,7 @@ The following examples NMEA messages enable IMX data streaming output.  The data
 
 ### PERS
 
-Send this command to save current *persistent messages* to flash memory for use following reboot.   This eliminates the need to re-enable messages following a reset or power cycle.  In order to disable persistent messages,  all messages must be disabled and then the 'save persistent messages' command should be sent.
+Send this command to save current *persistent messages* to flash memory for use following reboot. This eliminates the need to re-enable messages following a reset or power cycle. To disable persistent messages, all messages must be disabled and then the 'save persistent messages' command should be sent.
 
 ```
 $PERS*14\r\n
@@ -143,7 +151,7 @@ The hexadecimal equivalent is:
 
 ## NMEA Output Messages
 
-The following NMEA messages can be sent by the IMX.  The message ID (`eNmeaAsciiMsgId`) is used with the `$ASCE` message to enable message streaming. 
+The following NMEA messages can be sent by the IMX. The message ID (`eNmeaAsciiMsgId`) is used with the `$ASCE` message to enable message streaming. 
 
 | Identifier      | ID   | Description                                                  |
 | --------------- | ---- | ------------------------------------------------------------ |
@@ -169,7 +177,7 @@ The field codes used in the message descriptions are: lf = double, f = float, d 
 
 ### NMEA Output GNSS Source
 
-Following IMX power on/reset the default source for NMEA output is GPS1 if available or GPS2 if GPS1 is disabled.  This source is reported via bit SYS_STATUS_PRIMARY_GNSS_SOURCE_IS_GNSS2 (0x00000004) of DID_SYS_PARAMS.sysStatus where cleared means GNSS1 and set means GNSS2.  Users may manually set or clear this bit to control the NMEA output GNSS source.
+Following IMX power on/reset, the default source for NMEA output is GPS1 if available or GPS2 if GPS1 is disabled. This source is reported via bit SYS_STATUS_PRIMARY_GNSS_SOURCE_IS_GNSS2 (0x00000004) of DID_SYS_PARAMS.sysStatus where cleared means GNSS1 and set means GNSS2. Users may manually set or clear this bit to control the NMEA output GNSS source.
 
 ### PIMU
 
@@ -183,15 +191,16 @@ $PIMU,lf,f,f,f,f,f,f*xx\r\n
 | Index | Field      | Units   | Description                 |
 | ----- | ---------- | ------- | --------------------------- |
 | 1     | time       | sec     | Time since system power up  |
-| 3     | IMU pqr[0] | rad/sec | IMU angular rate gyro – X   |
-| 2     | IMU pqr[1] | rad/sec | IMU angular rate gyro – Y   |
+| 2     | IMU pqr[0] | rad/sec | IMU angular rate gyro – X   |
+| 3     | IMU pqr[1] | rad/sec | IMU angular rate gyro – Y   |
 | 4     | IMU pqr[2] | rad/sec | IMU angular rate gyro – Z   |
 | 5     | IMU acc[0] | m/s2    | IMU linear acceleration – X |
 | 6     | IMU acc[1] | m/s2    | IMU linear acceleration – Y |
 | 7     | IMU acc[2] | m/s2    | IMU linear acceleration – Z |
 
 ### PPIMU
-Preintegrated inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame.  Also known as coning and sculling integrals.
+
+Preintegrated inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame. Also known as coning and sculling integrals.
 
 ```
 $PPIMU,lf,f,f,f,f,f,f,f*xx\r\n
@@ -204,14 +213,14 @@ $PPIMU,lf,f,f,f,f,f,f,f*xx\r\n
 | 2     | theta[0] | rad   | IMU delta theta integral – X           |
 | 3     | theta[1] | rad   | IMU delta theta integral – Y           |
 | 4     | theta[2] | rad   | IMU delta theta integral – Z           |
-| 8     | vel[0]   | m/s   | IMU delta velocity integral – X        |
-| 9     | vel[1]   | m/s   | IMU delta velocity integral – Y        |
-| 10    | vel[2]   | m/s   | IMU delta velocity integral – Z        |
-| 14    | dt       | s     | Integration period for delta theta vel |
+| 5     | vel[0]   | m/s   | IMU delta velocity integral – X        |
+| 6     | vel[1]   | m/s   | IMU delta velocity integral – Y        |
+| 7     | vel[2]   | m/s   | IMU delta velocity integral – Z        |
+| 8     | dt       | s     | Integration period for delta theta vel |
 
 ### PRIMU
 
-Raw IMU sensor data (3-axis gyros and accelerometers) in the body frame (up to 1KHz).  Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs.  Otherwise we recommend use of PIMU or PPIMU as they are oversampled and contain less noise. 0 to disable.
+Raw IMU sensor data (3-axis gyros and accelerometers) in the body frame (up to 1KHz). Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs. Otherwise, we recommend use of PIMU or PPIMU as they are oversampled and contain less noise. 0 to disable.
 
 ```
 $PRIMU,lf,f,f,f,f,f,f*xx\r\n
@@ -221,8 +230,8 @@ $PRIMU,lf,f,f,f,f,f,f*xx\r\n
 | Index | Field          | Units   | Description                     |
 | ----- | -------------- | ------- | ------------------------------- |
 | 1     | time           | sec     | Time since system power up      |
-| 3     | Raw IMU pqr[0] | rad/sec | Raw IMU angular rate gyro – X   |
-| 2     | Raw IMU pqr[1] | rad/sec | Raw IMU angular rate gyro – Y   |
+| 2     | Raw IMU pqr[0] | rad/sec | Raw IMU angular rate gyro – X   |
+| 3     | Raw IMU pqr[1] | rad/sec | Raw IMU angular rate gyro – Y   |
 | 4     | Raw IMU pqr[2] | rad/sec | Raw IMU angular rate gyro – Z   |
 | 5     | Raw IMU acc[0] | m/s2    | Raw IMU linear acceleration – X |
 | 6     | Raw IMU acc[1] | m/s2    | Raw IMU linear acceleration – Y |
@@ -257,6 +266,7 @@ $PINS1,lf,d,d,d,f,f,f,f,f,f,lf,lf,lf,f,f,f*xx\r\n
 | 16    | NED[2]       | m     | Offset from reference LLA – Down                             |
 
 ### PINS2
+
 INS output with quaternion attitude.
 
 ```
@@ -282,6 +292,7 @@ $PINS2,lf,d,d,d,f,f,f,f,f,f,f,lf,lf,lf*xx\r\n
 | 14    | HAE altitude | m     | Height above ellipsoid (vertical elevation)                  |
 
 ### PGPSP
+
 GPS navigation data.
 
 ```
@@ -307,8 +318,8 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 | 12    | Velocity Y   | m/s   | ECEF Y velocity                                              |
 | 13    | Velocity Z   | m/s   | ECEF Z velocity                                              |
 | 14    | sAcc         | m/s   | Speed accuracy                                               |
-| 15    | cnoMean      | dBHz  | Average of all satellite carrier to noise ratios (signal strengths) that non-zero |
-| 16    | towOffset    | s     | Time sync offset between local time since boot up to GPS time of week in seconds.  Add this to IMU and sensor time to get GPS time of week in seconds. |
+| 15    | cnoMean      | dBHz  | Average of all satellite carrier-to-noise ratios (signal strengths) that are non-zero |
+| 16    | towOffset    | s     | Time sync offset between local time since boot up to GPS time of week in seconds. Add this to IMU and sensor time to get GPS time of week in seconds. |
 | 17    | leapS        | s     | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. |
 
 ### GGA
@@ -717,7 +728,7 @@ This section illustrates common NMEA message strings for configuration.
 !!! note
     All NMEA command strings must be followed with a carriage return and new line character (`\r\n` or `0x0D`, `0x0A`).
 
-The NMEA string checksum is automatically computed and appended to string  when using the InertialSense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online NMEA checksum calculator. For example:  [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
+The NMEA string checksum is automatically computed and appended to string when using the Inertial Sense SDK [serialPortWriteAscii function](https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268) or can be generated using an online NMEA checksum calculator. For example:  [MTK NMEA checksum calculator](http://www.hhhh.org/wiml/proj/nmeaxor.html)
 
 **Stop streams on CURRENT port**
 
@@ -793,5 +804,39 @@ $PIMU,3218.763,0.0019,-0.0062,-0.0086,-1.426,-1.114,-9.509,0.0054,0.0029,-0.0070
 $GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.16,M,18.82,M,,*59
 $GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.19,M,18.82,M,,*56
 $PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069,-1.433,-1.072,-9.585*1f
+```
+
+## Linux Command Line NMEA Query
+
+This section illustrates how to request NMEA output using standard Linux commands without relying on the Inertial Sense SDK, cltool, or EvalTool.  This provides a simple way to communicate directly with the device over a port, making it useful for quickly identifying device information, firmware version, or any available NMEA message.   
+
+Configure the serial port parameters (i.e. baudrate, etc).
+
+```bash
+stty -F /dev/ttyACM0 921600 raw -echo -crtscts
+```
+
+Stop message streaming on the current port. This prevents previously streamed messages from interfering with the response to a specific request.
+
+```bash
+cat < /dev/ttyACM0 & printf '%s\r\n' '$STPC*14' > /dev/ttyACM0
+```
+
+Request the device information.
+
+```bash
+cat < /dev/ttyACM0 & printf '%s\r\n' '$INFO*0E' > /dev/ttyACM0
+```
+
+Request the device information and exit after receiving the response.
+
+```bash
+printf '%s\r\n' '$INFO*0E' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/ttyACM0
+```
+
+Request the $PINS1 solution output and exit after receiving the response.
+
+```bash
+printf '%s\r\n' '$ASCE,0,PINS1,0*0D' > /dev/ttyACM0 ; sleep 0.2 ; timeout 0.2 cat < /dev/ttyACM0
 ```
 
