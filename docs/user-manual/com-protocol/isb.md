@@ -1,6 +1,6 @@
 # Inertial Sense Binary (ISB) Protocol
 
-The Inertial Sense binary protocol provides the most efficient way to communicate with the IMX and GPX because it preserved the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [NMEA Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
+The Inertial Sense binary protocol provides the most efficient way to communicate with the IMX and GPX. It uses the native floating point and integer binary format used in computers.  Binary protocol is not human readable like [NMEA Protocol](../com-protocol/nmea.md).  Binary protocol uses [Data Set (DID)](../com-protocol/DID-descriptions.md) C structures defined in SDK/src/data_sets.h of the InertialSense SDK.  
 
 ## Endianness
 
