@@ -34,10 +34,10 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 | ![](../images/square-black.png)2   | VIN                                        | PWR  | 4V-20V supply voltage input                                  |
 | ![](../images/square-red.png)3     | +3.3V                                      | PWR  | Regulated 3.3V supply input/output.                          |
 | ![](../images/square-red.png)4     | Reserved                                   |      | Not Connected                                                |
-| ![](../images/square-brown.png)5   | G1/Rx2/RxCAN/SCL                           | I/O  | (**Internally connected to GPS2 ZED-F9P TXD)<br />GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line6 |
-| ![](../images/square-orange.png)6  | G2/Tx2/TxCAN/SDA/STROBE                    | I/O  | (**Internally connected to GPS2 ZED-F9P RXD)<br />GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
-| ![](../images/square-yellow.png)7  | G3/Tx0                                     | I/O  | (**Internally connected to GPS1 ZED-F9P RXD)<br />GPIO3<br /> Serial 0 output (TTL) |
-| ![](../images/square-green.png)8   | G4/Rx0                                     | I/O  | (**Internally connected to GPS1 ZED-F9P TXD)<br />GPIO4<br /> Serial 0 input (TTL) |
+| ![](../images/square-brown.png)5   | G1/Rx2/RxCAN/SCL                           | I/O  | **(Internally connected to GPS2 ZED-F9P TXD)**<br />GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line6 |
+| ![](../images/square-orange.png)6  | G2/Tx2/TxCAN/SDA/STROBE                    | I/O  | **(Internally connected to GPS2 ZED-F9P RXD)**<br />GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
+| ![](../images/square-yellow.png)7  | G3/Tx0                                     | I/O  | **(Internally connected to GPS1 ZED-F9P RXD)**<br />GPIO3<br /> Serial 0 output (TTL) |
+| ![](../images/square-green.png)8   | G4/Rx0                                     | I/O  | **(Internally connected to GPS1 ZED-F9P TXD)**<br />GPIO4<br /> Serial 0 input (TTL) |
 | ![](../images/square-blue.png)9    | G5/SCLK/STROBE                             | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input            |
 | ![](../images/square-purple.png)10 | G6/Rx1/MOSI                                | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI              |
 | ![](../images/square-white.png)11  | G7/Tx1/MISO                                | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO             |
