@@ -18,7 +18,7 @@
 
 | Pin  | Name                                          | I/O  | Description                                                  |
 | ---- | --------------------------------------------- | ---- | ------------------------------------------------------------ |
-| 0    | Not Connected                               |  -   | Not connected internally.  Connect to ground (GND). |
+| 0, 23-32 | Not Connected                               |  -   | Not connected internally.  Connect to ground (GND). |
 | 1    | USB_P                                         | I/O  | USB Data Positive Line                                       |
 | 2    | USB_N                                         | I/O  | USB Data Negative Line                                       |
 | 3    | VBKUP                                  | I   | GNSS backup supply voltage. (1.4V to 3.6V) enables GNSS hardware backup mode for hot or warm startup (faster GNSS lock acquisition).  MUST connect VBKUP to VCC if no backup battery is used. |
