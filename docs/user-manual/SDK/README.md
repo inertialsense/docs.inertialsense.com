@@ -17,7 +17,7 @@ The [Inertial Sense software development kit (SDK)](https://github.com/inertials
 ### Documents
 
  * [User Manual, Datasheet, and Dimensions](http://docs.inertialsense.com/)
- * [Inertial Sense ROS Instructions](https://github.com/inertialsense/inertial-sense-sdk/blob/main/ros/README.md)
+ * [Inertial Sense ROS packages](https://github.com/inertialsense/inertial-sense-sdk/tree/main/ROS)
 
 ### Downloads
 
