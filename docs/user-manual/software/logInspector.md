@@ -4,7 +4,7 @@
 Log Inspector is an open source python utility for viewing and scrubbing InertialSense data log (.dat) files.
 
 ## Getting Started
-Log Inspector can open and plot [.dat PPD log files](../../logging-plotting/data_logging/#logging-ppd-in-evaltool). The lower left hand corner file browser allows you to enter a "working directory" in the directory field. The whole directory containing the desired is selected from the directory tree.
+Log Inspector can open and plot [.dat PPD log files](../logging-plotting/data_logging.md#logging-ppd-in-evaltool). The lower left hand corner file browser allows you to enter a "working directory" in the directory field. The whole directory containing the desired is selected from the directory tree.
 Once the log is opened, the buttons in the upper left hand corner are used to graph various data sets.
 
 
@@ -77,4 +77,3 @@ This python module is responsible for creating plots.  Adding new plots is easy,
 
 ### logInspector
 A pyqt5 GUI which uses logPlotter to generate plots.
-

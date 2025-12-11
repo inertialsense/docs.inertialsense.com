@@ -26,7 +26,7 @@ Because the sampled orientations are averaged together, it is recommended to onl
 
 The zero INS attitude feature assumes there are flat rigid surface(s) attached to the IMX about which the system can be leveled.  If the working surface is not level or additional precision is desired, each orientation sampled can have an additional sample taken with ~180° yaw offset to cancel out tilt of the working surface.   
 
-If Infield Calibration is not adequate, the INS may be [leveled or aligned manually](../imu_ins_gnss_configuration/#manually-aligning-the-ins-after-mounting).     
+If Infield Calibration is not adequate, the INS may be [leveled or aligned manually](imu_ins_gnss_configuration.md#manually-aligning-the-ins-after-mounting).     
 
 ## Infield Calibration Process 
 
@@ -112,4 +112,3 @@ $ Inertial Sense.  Connected.  Press CTRL-C to terminate.  Rx 13657
                     50   state
             0x00B01000 * status
 ```
-

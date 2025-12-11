@@ -70,7 +70,7 @@ The Rugged-2.0 dip switches are used for setting the following I/O configuration
 
 \*\* CAN transceiver bypassed. 
 
-See the [Multi-Band GNSS page](../../gnss/multi_band_gnss/) for configuration information.
+See the [Multi-Band GNSS overview](../gnss/multi_band_gnss_overview.md) for configuration information.
 
 ## **To open the Rugged-2.0:**
 
@@ -108,8 +108,8 @@ See the [Multi-Band GNSS page](../../gnss/multi_band_gnss/) for configuration in
 | GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adaptor cable.     |
 | GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adaptor cable. |
 
-See the [Multi-Band GNSS page](../../gnss/multi_band_gnss/#multi-band-gnss-components) for GNSS antenna options.
+See the [Multi-Band GNSS page](../gnss/multi_band_F9P.md#multi-band-gnss-components) for GNSS antenna options.
 
 ## Using with Inertial Sense Software
 
-Please return to the [getting started](../../getting-started/getting-started.md) page to get started programming, updating firmware, viewing data, and logging. 
+Please return to the [getting started](../../getting-started/Overview.md) page to get started programming, updating firmware, viewing data, and logging. 

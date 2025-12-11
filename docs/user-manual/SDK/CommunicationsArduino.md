@@ -5,7 +5,7 @@
 This example shows how to communicate with the IMX using the Inertial Sense [Binary Communications Protocol](../com-protocol/isb.md). The example code can be found in the [Inertial Sense SDK](<https://github.com/inertialsense/InertialSenseSDK>)/ExampleProjects/Arduino.
 
 !!! important
-    [Update](../../software/evaltool/#update-firmware) the IMX to the <a href="https://github.com/inertialsense/InertialSenseSDK/releases">latest firmware</a>
+    [Update](../software/evaltool.md#update-firmware) the IMX to the <a href="https://github.com/inertialsense/InertialSenseSDK/releases">latest firmware</a>
 
 This example demonstrates how to use the Inertial Sense EVB with an Arduino Due. The Due was selected because it has two serial ports.  This way the Arduino can communicate with the IMX using one of the ports, and write the output over the Serial Monitor to the computer using the other.
 

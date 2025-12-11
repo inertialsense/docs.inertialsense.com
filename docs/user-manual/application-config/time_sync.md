@@ -137,8 +137,8 @@ The STROBE output feature generates a 1 ms pulse on pin G9, with the leading e
 
 ### Configuring Message Output
 
-By default, triggering a strobe input event will cause the IMX to produce an NMEA [PINS2](../../com-protocol/nmea/#pins2) message as well as a [PSTRB](../../com-protocol/nmea/#pstrb) message which contains the time stamp of the strobe event.
+By default, triggering a strobe input event will cause the IMX to produce an NMEA [PINS2](../com-protocol/nmea.md#pins2) message as well as a [PSTRB](../com-protocol/nmea.md#pstrb) message which contains the time stamp of the strobe event.
 
-To instead send a binary [DID_INS_2](../../com-protocol/DID-descriptions/#did_ins_2) and [DID_STROBE_IN_TIME](../../com-protocol/DID-descriptions/#did_strobe_in_time) message, set the `RMC_BITS_STROBE_IN_TIME`flag of `DID_RMC/bits`field.
+To instead send a binary [DID_INS_2](../com-protocol/DID-descriptions.md#did_ins_2) and [DID_STROBE_IN_TIME](../com-protocol/DID-descriptions.md#did_strobe_in_time) message, set the `RMC_BITS_STROBE_IN_TIME`flag of `DID_RMC/bits`field.
 
  

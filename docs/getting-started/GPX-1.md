@@ -25,8 +25,8 @@ Configure the antenna offsets.
 
 GNSS data sets can then be requested by one of several methods:
 
-1. Requesting NMEA data using the [ASCE](../../user-manual/com-protocol/nmea/#asce) command. There is a convenient tool in the lower left corner of the Data Logs tab of the EvalTool.
+1. Requesting NMEA data using the [ASCE](../user-manual/com-protocol/nmea.md#asce) command. There is a convenient tool in the lower left corner of the Data Logs tab of the EvalTool.
 
-2. Request data using the SDK commands: [SDK Function](../..//user-manual/com-protocol/isb/#getting-data)
+2. Request data using the SDK commands: [SDK Function](../user-manual/com-protocol/isb.md#getting-data)
 
 3. Use the EvalTool to modify the value of DID_GPX_RMC.bits as outlined in the [SDK](https://github.com/inertialsense/inertial-sense-sdk/blob/68e5f20b994a0df43ef57720815aa7a16035d51f/src/data_sets.h#L2055).

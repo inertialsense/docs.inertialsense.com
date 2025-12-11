@@ -15,7 +15,7 @@ The IMX can be configured for use with the Inertial Sense GPX-1 multi-band GNSS 
 | Serial Port 0 (Single GNSS only) | GPS1 - RTCM3 |
 | USB Port                         | GPS1 - RTCM3 |
 
-The following sections detail how to interface and configure the IMX for operation using the GPX-1.  See [RTK precision positioning](../rtk_positioning_overview/) and [RTK compassing](../rtk_compassing/) for RTK operation principles.  
+The following sections detail how to interface and configure the IMX for operation using the GPX-1.  See [RTK precision positioning](rtk_positioning_overview.md) and [RTK compassing](rtk_compassing.md) for RTK operation principles.  
 
 ### Typical Interface
 
