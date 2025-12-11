@@ -85,7 +85,7 @@ The Base IMX must be configured to stream base corrections to the radio so it ca
    - Change `radioPowerLevel`- Used to adjust the radio output power level. (0 = 20dbm, 1 = 27dbm, and 2 = 30dbm)
 8. Reset the EVB2 and Base radio setup is complete.
 
-For more information on `DID_EVB_FLASH_CFG` see [DID-descriptions](../../com-protocol/DID-descriptions/).
+For more information on `DID_EVB_FLASH_CFG` see [DID-descriptions](../com-protocol/DID-descriptions.md).
 
 #### [CLTool](../software/cltool.md)
 
@@ -96,7 +96,7 @@ The RTK config bit must be set manually when using the CLTool. Use the following
 - `-baud=#`
   Set the baud rate for communications output (Replace # with baud rate number). This number will vary depending on setup. For lower quality radios it maybe necessary to use a lower baud rate (ex: 57600).
 - `-flashConfig=rtkCfgBits=0x00`
-  Configure the unit to cast Base corrections. For more configuration options see [eRTKConfigBits](../../com-protocol/DID-descriptions/#rtk-configuration)
+  Configure the unit to cast Base corrections. For more configuration options see [eRTKConfigBits](../com-protocol/DID-descriptions.md#rtk-configuration)
 
 Example:
 
@@ -118,7 +118,7 @@ It is required to manually set the RTK config bits in the CLTool. Passed these t
 - `-baud=#`
   Set the baud rate for communications output (Replace # with baud rate number).
 - ``-flashConfig=rtkCfgBits=0x00`
-  Configure the unit to cast Base corrections. For more configuration options see [eRTKConfigBits](../../com-protocol/DID-descriptions/#rtk-configuration)
+  Configure the unit to cast Base corrections. For more configuration options see [eRTKConfigBits](../com-protocol/DID-descriptions.md#rtk-configuration)
 - `-base=:#`
   Create the port over which corrections will be transmitted. Choose any unused port number.
 
@@ -130,5 +130,4 @@ cltool.exe -c COM29 -baud=921600 -flashConfig=rtkCfgBits=0x10 -base=:7777
 
 !!! Important
     If the console displays the error <b>"Failed to open port at COMx"</b>, reset the device immediately after attempting to change the baud rate in the CLTool.
-
 

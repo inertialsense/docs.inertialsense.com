@@ -124,4 +124,4 @@ System input voltage monitor surface mount resistors and capacitor (R2, R3, and 
 
 ## Using with Inertial Sense Software
 
-Please return to the [getting started](../../getting-started/getting-started.md) page to get started programming, updating firmware, viewing data, and logging. 
+Please return to the [getting started](../../getting-started/Overview.md) page to get started programming, updating firmware, viewing data, and logging. 

@@ -34,7 +34,7 @@ Frequencies: GPS (L1), GLONASS (G1), Beidou (B1), and Galileo (E1).
 
 **Recommended for RTK** indicates the GNSS antenna will have better performance for applications using RTK and dual GNSS antenna (GNSS compassing).
 
-For multi-frequency GNSS antennas, see [Purchasing the ZED-F9](../multi_band_gnss/#purchasing-the-zed-f9). 
+For multi-frequency GNSS antennas, see [Purchasing the ZED-F9](multi_band_F9P.md#purchasing-the-zed-f9). 
 
 ### Enclosed GNSS Antennas
 
@@ -65,7 +65,6 @@ These non-enclosed embedded antennas have exposed PCA with no environmental prot
 | ------------------- | ---------------------------------- | ------------------------------------------------------------ |
 | GNSS Backup Battery | Seiko Instruments<br/>MS621T-FL11E | Coin, 6.8mm 3V Lithium Battery Rechargeable (Secondary) 3mAh |
 | GNSS Backup Battery | Panasonic<br/>ML-614S/FN           | Coin, 6.8mm 3V Lithium Battery Rechargeable (Secondary) 3.4mAh |
-
 
 
 

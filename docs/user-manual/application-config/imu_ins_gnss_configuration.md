@@ -20,11 +20,11 @@ The ***Hardware Frame*** and ***Sensor Frame*** are equivalent when the ***Senso
 
 ### Sensor Rotation (Hardware Frame to Sensor Frame)
 
-The *Sensor Rotation* is used to rotate the IMU and magnetometer output from the hardware frame to the [sensor frame](../../reference/coordinate_frames/#sensor-frame) by **multiples of 90°**.  This is done using the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits of the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.  The Sensor Rotation is defined in X,Y,Z rotations about the corresponding axes and applied in the order of Z,Y,X.  This rotation is recommended for gross rotations.   
+The *Sensor Rotation* is used to rotate the IMU and magnetometer output from the hardware frame to the [sensor frame](../reference/coordinate_frames.md#sensor-frame) by **multiples of 90°**.  This is done using the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits of the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.  The Sensor Rotation is defined in X,Y,Z rotations about the corresponding axes and applied in the order of Z,Y,X.  This rotation is recommended for gross rotations.   
 
 ### INS Rotation
 
-The *INS rotation* is used to convert the INS output from the [sensor frame](../../reference/coordinate_frames/#sensor-frame) to the vehicle frame.  This is useful if the sensor frame and vehicle frame are not aligned.  The actual INS rotation parameters are `DID_FLASH_CONFIG.insRotation[3]` (X, Y, Z) in radians.  The *INS rotation* values describes the rotation from the INS sensor frame to the intermediate frame in order of Z, Y, X.     
+The *INS rotation* is used to convert the INS output from the [sensor frame](../reference/coordinate_frames.md#sensor-frame) to the vehicle frame.  This is useful if the sensor frame and vehicle frame are not aligned.  The actual INS rotation parameters are `DID_FLASH_CONFIG.insRotation[3]` (X, Y, Z) in radians.  The *INS rotation* values describes the rotation from the INS sensor frame to the intermediate frame in order of Z, Y, X.     
 
 ### INS Offset
 
@@ -34,14 +34,14 @@ The *INS offset* is used to shift the location of the INS output and is applied 
 
 **NOTE for use:** 
 
-- The [Infield Calibration](../infield_calibration) process can be used instead of this process to automatically measure and align the INS with the vehicle frame for INS rotations less than 15°.
+- The [Infield Calibration](infield_calibration.md) process can be used instead of this process to automatically measure and align the INS with the vehicle frame for INS rotations less than 15°.
 - If using software release 1.8.4 or newer, we recommend using the `DID_FLASH_CONFIG.sensorConfig` to rotate the sensor frame by 90° to near level before following the steps below.
 
 The following process uses the IMX to measure and correct for the IMX mounting angle. 
 
 1. Set `DID_FLASH_CONFIG.insRotation` to zero. 
 
-2. Set the sensor on the ground at various known orientations and record the INS quaternion output (DID_INS_2).  Using the Euler output (DID_INS_1) can be used if the pitch is less than 15°.  It is recommended to use the EKF [Zero Motion Command](../zero_motion_command/#zero-motion-command) to ensure the EKF bias estimation and attitude have stabilized quickly before measuring the INS attitude.
+2. Set the sensor on the ground at various known orientations and record the INS quaternion output (DID_INS_2).  Using the Euler output (DID_INS_1) can be used if the pitch is less than 15°.  It is recommended to use the EKF [Zero Motion Command](zero_motion_command.md#zero-motion-command) to ensure the EKF bias estimation and attitude have stabilized quickly before measuring the INS attitude.
 
 3. Find the difference between the known orientations and the measured INS orientations and average these differences together.
 
@@ -49,7 +49,7 @@ The following process uses the IMX to measure and correct for the IMX mounting a
 
 ## Infield Calibration
 
-The [*Infield Calibration*](../infield_calibration) provides a method to 1.) zero IMU biases and 2.) zero INS attitude to align the INS output frame with the vehicle frame.  These steps can be run together or independently.
+The [*Infield Calibration*](infield_calibration.md) provides a method to 1.) zero IMU biases and 2.) zero INS attitude to align the INS output frame with the vehicle frame.  These steps can be run together or independently.
 
 ## GNSS Antenna Offset
 
@@ -128,4 +128,3 @@ Zero velocity updates (ZUPT) rely on GPS and/or wheel encoder data. In some case
 ## Disable Zero Angular Rate Updates
 
 Zero angular rate updates (ZARU) rely on analysis of either IMU (gyro) data or wheel encoders when available. When angular motion is very slow and no wheel encoders are available a zero angular rate may be mistakenly detected, which will lead to gyro bias estimation errors. In these cases it can be beneficial  to disable ZARU if the applications has slow rotation rates (approximately below 3 deg/s). It is not encouraged to disable ZARU if there is no rotation or faster rotation. It can be disabled using `DID_FLASH_CONFIG.sysCfgBits` or using the General Settings tab of the EvalTool.
-
