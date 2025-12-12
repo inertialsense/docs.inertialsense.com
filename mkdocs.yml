@@ -148,6 +148,7 @@ nav:
     - Time Sync/Strobe: user-manual/application-config/time_sync.md
     - Zero Motion Command: user-manual/application-config/zero_motion_command.md
     - UART: user-manual/application-config/UART.md
+    - World Magnetic Model: user-manual/application-config/world_magnetic_model.md
     #- Assisted-GPS: user-manual/application-config/assisted-gnss.md
   - SDK:
     - Overview: user-manual/SDK/README.md
@@ -169,7 +170,7 @@ nav:
     - IMU Specifications: user-manual/reference/imu_specifications.md
     - Interference: user-manual/reference/interference.md
     - Magnetometer: user-manual/reference/magnetometer.md
-    - System Status: user-manual/reference/system_status.md
+    - System Status: user-manual/reference/IMX_system_status.md
   - User Manual PDF: user-manual/reference/user_manual_pdf.md
   - FAQ: user-manual/faq.md
   - Troubleshooting: 

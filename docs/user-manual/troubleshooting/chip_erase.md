@@ -5,7 +5,7 @@ Please email [support@inertialsense.com](mailto:support@inertialsense.com) for a
 ### Steps for Chip-Erase Recovery
 
 !!! warning
-    The CHIP ERASE (Reserved (CE) pin 17) erases all flash memory including firmware, settings and calibration.  CHIP ERASE should only be used as a last resort.  This step should ONLY be used if the steps for [Stuck in Bootloader Mode](#stuck-in-bootloader-mode) fail and there is NO other method to recover communications.
+    The CHIP ERASE (Reserved (CE) pin 17) erases all flash memory including firmware, settings and calibration.  CHIP ERASE should only be used as a last resort.  This step should ONLY be used if the steps for [Stuck in Bootloader Mode](firmware.md#stuck-in-bootloader-mode) fail and there is NO other method to recover communications.
 
 !!! important
     Please notify support@inertialsense.com if this step is necessary so that we can keep track of cause of failures and provide you any necessary support.
@@ -62,4 +62,3 @@ EvalTool internal mode is used to access the EvalTool Manufacturing tab, used to
 5. Reset the unit.
 6. **Run "Built-In Test"**  - Verify the built-in test passes by pressing the "Built-In Test" button in the EvalTool INS tab.
 7. **Verify IMU output** - Place the unit on a flat level surface.  Using the EvalTool Sensor tab, verify that the gyro rates are near zero, the accelerometer X and Y axes are near zero, and accelerometer Z axis is near -9.8m/s^2 for gravity.
-

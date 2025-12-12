@@ -176,7 +176,7 @@ The Settings tab has 3 sub tabs and they are as follows:
 
 1. Software Reset - Allows the user to issue a reset to the unit. has options for all open comports and only the currently connected unit.
 2. Zero Motion - Allows the user to informs the EKF that the system is stationary on the ground and is used to aid in IMU bias estimation which can reduce drift in the INS attitude.
-3. DID_Flash_Config - Gives the user option to disable or enable different features normally found in the "Data Sets" tab.  For more information about the Flash Config see [Data sets](../../com-protocol/DID-descriptions/#data-sets-dids).
+3. DID_Flash_Config - Gives the user option to disable or enable different features normally found in the "Data Sets" tab.  For more information about the Flash Config see [Data sets](../com-protocol/DID-descriptions.md#data-sets-dids).
 
 **Settings - GPS Tab** 
 
@@ -192,4 +192,3 @@ The Settings tab has 3 sub tabs and they are as follows:
 The about tab shows version information for the EvalTool and connected device.  It also provides helpful links to online documentation and software release information.
 
 ![](images/evaltool_about_tab.png)
-

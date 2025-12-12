@@ -31,7 +31,7 @@ GNSS receivers that output NMEA ascii protocol can be used to aid the IMX EKF.
 
 ## Electrical Interface
 
-The external NMEA GNSS receiver can be connected to Serial 0, Serial 1, and Serial 2 ports (3.3V TTL UART) on the IMX.  See the [PCB Module](../../hardware/module_imx5/) hardware page for a description of the IMX pinout.  Serial 0 and 2 can be accessed on the main connector of [Rugged-1](../../hardware/rugged1/) and [Rugged-2](../../hardware/rugged2/) and all serial ports can be accessed on header H7 of the [EVB-2](../../hardware/EVB2/). 
+The external NMEA GNSS receiver can be connected to Serial 0, Serial 1, and Serial 2 ports (3.3V TTL UART) on the IMX.  See the [PCB Module](../hardware/module_imx5.md) hardware page for a description of the IMX pinout.  Serial 0 and 2 can be accessed on the main connector of [Rugged-1](../hardware/rugged1.md) and [Rugged-2](../hardware/rugged2.md) and all serial ports can be accessed on header H7 of the [EVB-2](../hardware/EVB2.md). 
 
 ## Enabling NMEA on ZED-F9P
 

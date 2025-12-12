@@ -29,7 +29,7 @@ The *persistent messages* option saves the current data stream configuration to 
 - **To save current NMEA persistent messages** - send the [$PERS](#pers) command.  
 - **To disable persistent messages** - send [$STPB](#stpb) followed by [$PERS](#pers). 
 
-[Binary persistent messages](../isb/#persistent-messages) are also available.
+[Binary persistent messages](isb.md#persistent-messages) are also available.
 
 ### Enabling Persistent Messages - EvalTool
 
@@ -57,7 +57,7 @@ The following NMEA messages can be received by the IMX.
 
 ### ASCE
 
-Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period. The period is the multiple of the [*data source period*](../isb/#data-source-update-rates) (i.e., a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms). "xx" is the two-character checksum. The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](../isb/#data-source-update-rates) (i.e., a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).  "xx" is the two-character checksum.  The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
 
 **Note:** A period value of 0 requests a single (one-shot) message and disables streaming for that message. This provides a convenient way to query an NMEA message without enabling continuous streaming.
 
@@ -111,7 +111,7 @@ $ASCE,0,PINS1,0*0D\r\n
 | $ASCE,0,14,1*3C\r\n | GSV     |
 | $ASCE,0,15,1*3D\r\n | VTG     |
 
-<sup>**</sup> These rates assume the default settings for [data source rates](binary/#data-source-update-rates).
+<sup>**</sup> These rates assume the default settings for [data source rates](isb.md#data-source-update-rates).
 
 ### PERS
 
@@ -171,9 +171,13 @@ The following NMEA messages can be sent by the IMX. The message ID (`eNmeaAsciiM
 | [PSTRB](#pstrb) | 13   | Strobe event input time.                                     |
 | [INFO](#info)   | 14   | Device information.                                          |
 | [GSV](#gsv)     | 15   | Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
-| [VTG](#VTG)     | 16   | Standard NMEA VTG track made good and speed over ground.     |
+| [VTG](#vtg)     | 16   | Standard NMEA VTG track made good and speed over ground.     |
 
 The field codes used in the message descriptions are: lf = double, f = float, d = int.
+
+### ASCB
+
+The `$ASCB` query reports the current NMEA broadcast configuration. Its payload contains the port options followed by `(ID,PERIOD)` pairs that mirror the `DID_NMEA_BCAST_PERIOD` dataset, letting you confirm which messages are enabled and at what rates.
 
 ### NMEA Output GNSS Source
 
@@ -250,8 +254,8 @@ $PINS1,lf,d,d,d,f,f,f,f,f,f,lf,lf,lf,f,f,f*xx\r\n
 | ----- | ------------ | ----- | ------------------------------------------------------------ |
 | 1     | timeOfWeek   | sec   | Seconds since Sunday morning in GMT                          |
 | 2     | GPS week     | weeks | Number of weeks since January 1st of 1980 in GMT             |
-| 3     | insStatus    |       | [INS Status Flags](../DID-descriptions/#ins-status-flags)    |
-| 4     | hdwStatus    |       | [Hardware Status Flags](../DID-descriptions/#hardware-status-flags) |
+| 3     | insStatus    |       | [INS Status Flags](DID-descriptions.md#ins-status-flags)    |
+| 4     | hdwStatus    |       | [Hardware Status Flags](DID-descriptions.md#hardware-status-flags) |
 | 5     | theta[0]     | rad   | Euler angle – roll                                           |
 | 6     | theta[1]     | rad   | Euler angle – pitch                                          |
 | 7     | theta[2]     | rad   | Euler angle – yaw                                            |
@@ -278,8 +282,8 @@ $PINS2,lf,d,d,d,f,f,f,f,f,f,f,lf,lf,lf*xx\r\n
 | ----- | ------------ | ----- | ------------------------------------------------------------ |
 | 1     | timeOfWeek   | sec   | Seconds since Sunday morning in GMT                          |
 | 2     | GPS week     | weeks | Number of weeks since January 1st of 1980 in GMT             |
-| 3     | insStatus    |       | [INS Status Flags](../DID-descriptions/#ins-status-flags)    |
-| 4     | hdwStatus    |       | [Hardware Status Flags](../DID-descriptions/#hardware-status-flags) |
+| 3     | insStatus    |       | [INS Status Flags](DID-descriptions.md#ins-status-flags)    |
+| 4     | hdwStatus    |       | [Hardware Status Flags](DID-descriptions.md#hardware-status-flags) |
 | 5     | qn2b[0]      |       | Quaternion rotation (NED to body) – W                        |
 | 6     | qn2b[1]      |       | Quaternion rotation (NED to body) – X                        |
 | 7     | qn2b[2]      |       | Quaternion rotation (NED to body) – Y                        |
@@ -306,7 +310,7 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 | ----- | ------------ | ----- | ------------------------------------------------------------ |
 | 1     | timeOfWeekMs | ms    | GPS time of week in milliseconds since Sunday morning in GMT |
 | 2     | GPS week     | weeks | GPS number of weeks since January 1st of 1980 in GMT         |
-| 3     | status       |       | (see [eGpsStatus](../DID-descriptions/#gps-status)) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
+| 3     | status       |       | (see [eGpsStatus](DID-descriptions.md#gps-status)) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
 | 4     | Latitude     | deg   | WGS84 Latitude                                               |
 | 5     | Longitude    | deg   | WGS84 Longitude                                              |
 | 6     | HAE altitude | m     | Height above WGS84 ellipsoid                                 |

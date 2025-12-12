@@ -16,7 +16,7 @@ The EvalTool/CLTool software applications provide NTRIP client functionality to 
 
 ## NTRIP RTCM3 Messages
 
-The NTRIP server must provide the necessary subset of [RTCM3 messages](../multi_band_gnss/#zed-f9-rover-messages) supported by the IMX-RTK.  The following is an example of compatible RTCM3 base output messages provided from a Trimble NTRIP RTK base station.
+The NTRIP server must provide the necessary subset of [RTCM3 messages](multi_band_F9P.md#zed-f9-rover-messages) supported by the IMX-RTK.  The following is an example of compatible RTCM3 base output messages provided from a Trimble NTRIP RTK base station.
 
 ### Required RTCM Messages for RTK Positioning
 
