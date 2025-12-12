@@ -18,8 +18,9 @@
 
 | Pin  | Name                                          | I/O  | Description                                                  |
 | ---- | --------------------------------------------- | ---- | ------------------------------------------------------------ |
-| 0, 23-29, 31,32 | Not Connected                               |  -   | Not connected internally.  Connect to ground (GND). |
+| 23-29, 31,32 | Not Connected                               |  -   | Not connected internally.  Connect to ground (GND). |
 | 30 | Not Connected | - | Not connected internally.  (For IMX-6 compatibility, this pin must be tied to 3.3V to enable IMX-6 USB operation.) |
+| 0,11,21 | GND                                           | -    | Supply ground                                          |
 | 1    | USB_P                                         | I/O  | USB Data Positive Line                                       |
 | 2    | USB_N                                         | I/O  | USB Data Negative Line                                       |
 | 3    | VBKUP                                  | I   | GNSS backup supply voltage. (1.4V to 3.6V) enables GNSS hardware backup mode for hot or warm startup (faster GNSS lock acquisition).  MUST connect VBKUP to VCC if no backup battery is used. |
@@ -30,7 +31,6 @@
 | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY             | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
-| 11,21,P | GND                                           | -    | Supply ground                                          |
 | 12   | nRESET                                        |  I   | System reset on logic low. May be left unconnected if not used. |
 | 13   | G14/SWCLK                                | I/O    | GPIO14                                       |
 | 14   | G13/DRDY/XSDA                                 |   I/O   | GPIO13<br /> SPI Data Ready<br /> Alt I2C SDA                                           |
@@ -41,11 +41,6 @@
 | 19   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
 | 20   | G15/GNSS_PPS                               | I   | Input for GNSS PPS for time synchronization pulse. |
 | 22   | VCC                                           | I   | 3.3V supply input                                |
-| 28 | QDEC0.A | I | Ground vehicle wheel sensor 0 quadrature channel A input. |
-| 29 | QDEC0.B | I | Ground vehicle wheel sensor 0 quadrature channel B input. |
-| 30 | VUSB | I | 3.0V to 3.6V required for USB operation.  Can be left floating if USB is not needed. |
-| 31 | QDEC1.A | I | Ground vehicle wheel sensor 1 quadrature channel A input. |
-| 32 | QDEC1.B | I | Ground vehicle wheel sensor 1 quadrature channel B input. |
 
 <sup>\*</sup>External transceiver required for CAN interface.
 

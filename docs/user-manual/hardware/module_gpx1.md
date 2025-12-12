@@ -20,7 +20,9 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 
 | Pin  | Name                                          | Type | Description                                                  |
 | ---- | --------------------------------------------- | ---- | ------------------------------------------------------------ |
+| 33-37 | Not Connected | - | Not connected internally.  Connect to ground (GND). |
 | 0    | GND                              |  Power  | Supply ground on center pads. |
+| 11,13,15,31 | GND                              | Power | Supply ground                                          |
 | 1    | USB_P                                         | I/O  | USB full-speed Positive Line. USB will be supported in future firmware updates.           |
 | 2    | USB_N                                         | I/O  | USB full-speed Negative Line. USB will be supported in future firmware updates.           |
 | 3    | VBKUP                                       | Power | Backup supply voltage input (1.75V to 3.6V). Future firmware updates will use voltage applied on this pin to backup GNSS ephemeris, almanac, and other operating parameters for a faster startup when VCC is applied again. This pin MUST be connected to a backup battery or VCC. |
@@ -31,7 +33,6 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY        | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
-| 11,13,15,31 | GND                               | Power | Supply ground                                          |
 | 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-14V TVS diode for ESD and surge projection (e.g. Littlefuse PESD0402-140). |
 | 14 | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
 | 16 | VCC_RF | O | Supply output for GNSS active antenna.  Connect VCC_RF through 33-120nH inductor (e.g. Murata LQW15ANR12J00D, 110mA max) to GNSS1_RF and GNSS2_RF to inject DC supply for active antenna(s).  VCC_RF is supplied from VAUX through an onboard 1A load switch and 10 ohm resistor.  Disable by setting  `GPX_SYS_CFG_BITS_DISABLE_VCC_RF` (0x00000001) in `DID_GPX_FLASH_CFG.sysCfgBits`. |
