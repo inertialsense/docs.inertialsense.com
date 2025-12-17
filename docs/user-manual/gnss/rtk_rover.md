@@ -5,10 +5,10 @@ A µINS must be configured as a Rover to receive RTK Base messages. This can be 
 1. Navigate to Settings > GPS > Rover > RTK.
 2. Change the first drop-down menu to "Positioning (GPS1)", or one of the F9P options depending on the hardware setup.
 3. Press Accept.
-4. Verify the `RTKCfgBits` was automatically set correctly to any one of the [rover modes](../../com-protocol/DID-descriptions/#rtk-configuration) listed in our binary communications protocol page.
+4. Verify the `RTKCfgBits` was automatically set correctly to any one of the [rover modes](../com-protocol/DID-descriptions.md#rtk-configuration) listed in our binary communications protocol page.
 
 #### [CLTool](../software/cltool.md)
-Use the `-flashConfig=rtkCfgBits=0x01` argument to configure the unit as rover where 0x01 can be any one of the [rover modes](../../com-protocol/DID-descriptions/#rtk-configuration) listed in our binary communications protocol page.
+Use the `-flashConfig=rtkCfgBits=0x01` argument to configure the unit as rover where 0x01 can be any one of the [rover modes](../com-protocol/DID-descriptions.md#rtk-configuration) listed in our binary communications protocol page.
 
 ## Communications Setup
 
@@ -18,7 +18,7 @@ The IMX automatically parses data that arrives at any of the ports and recognize
 
 #### [EvalTool](../software/evaltool.md)  
 
-The EVB-2 radio can be configured by pressing the "CONFIG" tactile switch until the light next to it is blue. This enables the radio and configures the radio settings.  See the [Configurations](../../hardware/EVB2/#configurations) and [EVB-2 Connections](../../hardware/EVB2/#evb-2-connections) sections of the [EVB-2](../../hardware/EVB2) documentation.
+The EVB-2 radio can be configured by pressing the "CONFIG" tactile switch until the light next to it is blue. This enables the radio and configures the radio settings.  See the [Configurations](../hardware/EVB2.md#configurations) and [EVB-2 Connections](../hardware/EVB2.md#evb-2-connections) sections of the [EVB-2](../hardware/EVB2.md) documentation.
 
 1. Under "IMX Parameters" section verify the following:
    - Check the Baud Rate for the serial port of the radio (`ser0BaudRate` or `ser1BaudRate`). This should match the Baud Rate of the radio. The Digi Xbee Pro SX module on the EVB2 runs at **115200** baud.
@@ -29,7 +29,7 @@ The EVB-2 radio can be configured by pressing the "CONFIG" tactile switch until 
    - Change `radioPowerLevel`- Used to adjust the radio output power level. (0=20dbm, 1=27dbm, and 2=30dbm)
 1. Reset the EVB2 and Rover radio setup is complete.
 
-For more information on `DID_EVB_FLASH_CFG` see [DID-descriptions](../../com-protocol/DID-descriptions/).
+For more information on `DID_EVB_FLASH_CFG` see [DID-descriptions](../com-protocol/DID-descriptions.md).
 
 <!-- #### EvalTool - Radio to Computer to Rover
 

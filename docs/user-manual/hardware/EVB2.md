@@ -209,7 +209,7 @@ Enclosure: 78.0 x 48.0 x 18.0 mm
 
 ## Using with Inertial Sense Software
 
-Please return to the [getting started](../../getting-started/getting-started.md) page to get started programming, updating firmware, viewing data, and logging.
+Please return to the [getting started](../../getting-started/Overview.md) page to get started programming, updating firmware, viewing data, and logging.
 
 ## Updating Firmware
 
@@ -238,4 +238,3 @@ The EVB-2 shipped standard with the XBee radio default frequency is 915MHz.  An 
 | ------------------------ | --------- | --------------- |
 | XBP9X-DMUS-001 (default) | 915 MHz   | 902MHz ~ 928MHz |
 | XB8X-DMUS-001 (Europe)   | 868 MHz   | 863MHz ~ 870MHz |
-

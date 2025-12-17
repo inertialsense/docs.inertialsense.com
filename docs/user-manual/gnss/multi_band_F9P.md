@@ -17,7 +17,7 @@ The IMX can be configured for use with uBlox ZED-F9P multi-band GNSS receivers. 
 | Serial Port 0 (Single GNSS only) | GPS1 - RTCM3 |
 | USB Port                         | GPS1 - RTCM3 |
 
-The following sections detail how to interface and configure the IMX for operation using the ZED-F9P.  See [RTK precision positioning](../rtk_positioning_overview/) and [RTK compassing](../rtk_compassing/) for RTK operation principles.  
+The following sections detail how to interface and configure the IMX for operation using the ZED-F9P.  See [RTK precision positioning](rtk_positioning_overview.md) and [RTK compassing](rtk_compassing.md) for RTK operation principles.  
 
 ### Rugged-3
 
@@ -95,11 +95,23 @@ To configuring a system as an RTK base, skip the RTK rover settings, and select 
 
 ### Rugged-3-IMX-5 to ZED-F9P![ZED-F9P to Rugged](images/zed_f9p_interface_rugged.png)
 
-A +3.3V or +5V supply is needed to power the ZED-F9P when using the Rugged-1 IMX.  A USB +5V supply can be used if available.  The Rugged-1 must be configured for Serial Port 1 TTL voltage.  See hardware configuration for [Rugged v1.0](../../hardware/rugged1/#ser1-ttl) or [Rugged v1.1](../../hardware/rugged1/#rugged-v11-dipswitch-config) for details.
+A +3.3V or +5V supply is needed to power the ZED-F9P when using the Rugged-1 IMX.  A USB +5V supply can be used if available.  The Rugged-1 must be configured for Serial Port 1 TTL voltage.  See hardware configuration for [Rugged v1.0](../hardware/rugged1.md#ser1-ttl) or [Rugged v1.1](../hardware/rugged1.md#rugged-v11-dipswitch-config) for details.
 
 #### Settings
 
-See the [single GNSS settings](./#single-gnss-settings).
+See the [single GNSS settings](#single-gnss-settings).
+
+## EVB-2 to ZED-F9P Interface
+
+Use the following wiring when connecting a single ZED-F9P receiver to the EVB-2. GPS1 is typically routed to serial port 1 and provides PPS to the IMX. 
+
+![ZED-F9P to EVB-2](images/zed_f9p_interface_evb2.png)
+
+## EVB-2 to Dual ZED-F9 Interface
+
+For dual-receiver RTK compassing setups, connect GPS1 and GPS2 as shown below. Verify both receivers share the same reference clock and PPS to maintain synchronization. 
+
+![Dual ZED-F9P to EVB-2](images/zed_f9p_dual_interface_evb2.png)
 
 ## RTK Base Messages
 
@@ -140,7 +152,7 @@ The ZED-F9P operating in RTK rover mode can decode the following RTCM 3.3 messag
 
 ### ZED-F9 Base Output Messages
 
-The ZED-F9P operating in RTK base mode will generate the following RTCM 3.3 output messages depending on whether the satellite constellation have been enabled.  See the [Constellation Selection](../gnss_constellations/#constellation-selection) for information on enabling and disabling satellite constellations.
+The ZED-F9P operating in RTK base mode will generate the following RTCM 3.3 output messages depending on whether the satellite constellation have been enabled.  See the [Constellation Selection](gnss_constellations.md#constellation-selection) for information on enabling and disabling satellite constellations.
 
 | Message Type | Period (sec) | Description                          |
 | ---- | ------------ | ------------------------------------ |
@@ -157,7 +169,7 @@ The ZED-F9P operating in RTK base mode will generate the following RTCM 3.3 outp
 
 ### NTRIP Messages
 
-The NTRIP server must provide the necessary subset of [RTCM3 messages](#zed-f9-rover-messages) supported by the IMX-RTK.  See the [NTRIP](../rtk_ntrip) page for an overview of NTRIP.
+The NTRIP server must provide the necessary subset of [RTCM3 messages](#zed-f9-rover-messages) supported by the IMX-RTK.  See the [NTRIP](rtk_ntrip.md) page for an overview of NTRIP.
 
 ## ZED-F9P Firmware Update
 
@@ -193,6 +205,10 @@ The following steps describe how to update the uBlox ZED-F9P firmware.  The uBlo
 
    - Power cycle the IMX. 
 
+## Purchasing the ZED-F9
+
+The following components work well when sourcing ZED-F9 receivers and matching antennas for multi-band GNSS installations. 
+
 ## Multi-Band GNSS Components
 
 The following is a list of the ZED-F9P GNSS receivers and compatible antenna(s).
@@ -210,4 +226,3 @@ The following is a list of the ZED-F9P GNSS receivers and compatible antenna(s).
 | ![](images/ADFGP.50A.07.0100C_01.png)                    | [ADFGP.50A.07.0100C](https://www.taoglas.com/product/adfgp-50a-active-gnss-dual-stacked-patch/) | Taoglas embedded multi-band GNSS antenna (GPS/QZSS L1/L2, GLONASS G1/G2/G3, Galileo E1/E5a/E5b, BeiDou B1/B2a/B2b).  50x50mm, 95.5g. |
 | ![](images/tw1829.jpg)                                   | [TW1889](https://www.tallysman.com/product/tw1889-embedded-dual-band-gnss-antenna/) | Tallysman embedded multi-band GNSS antenna (GPS/QZSS L1/L2, GLONASS G1/G2/G3, Galileo E1/E5b, BeiDou B1/B2).  48mm (dia), 37g. |
 | ![](images/tw3882E.png)                                  | [TW3887](https://www.tallysman.com/product/tw3887-embedded-dual-band-gnss-antenna/) | Tallysman multi-band GNSS antenna (GPS/QZSS-L1/L2, GLONASS-G1/G2/G3, Galileo-E1/E5a, and BeiDou-B1/B2).  60mm (dia), 70g. |
-

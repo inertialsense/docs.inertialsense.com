@@ -118,4 +118,4 @@ The EVB 1.x uses the FTDI FT232R USB to UART IC to provide a serial port over co
 
 ## Using with Inertial Sense Software
 
-Please return to the [getting started](../../getting-started/getting-started.md) page to get started programming, updating firmware, viewing data, and logging. 
+Please return to the [getting started](../../getting-started/Overview.md) page to get started programming, updating firmware, viewing data, and logging. 

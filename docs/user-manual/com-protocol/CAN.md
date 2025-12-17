@@ -6,7 +6,7 @@ The CAN interface allows the output of the the µINS, µAHRS, and µIMU to be pu
 
 To enable the CAN bus interface on the IMX, set bit `IO_CONFIG_G1G2_CAN_BUS` in `DID_FLASH_CONFIG.ioConfig`.   This bit can be set using the EvalTool >> Settings >> General >> DID_FLASH_CONFIG >> ioConfig >> `Enable CAN Bus on G1,G2` option.
 
-A CAN message is enabled by entering a non-zero value in the DID_CAN_CONFIG.*can_period_mult* field of the desired message. The *can_period_mult* field is an integer which is multiplied by the  [*Data Source Update Rate*](../binary/#data-source-update-rates) to determine the message broadcast period. Set *can_period_mult* to zero disable message broadcasting.
+A CAN message is enabled by entering a non-zero value in the DID_CAN_CONFIG.*can_period_mult* field of the desired message. The *can_period_mult* field is an integer which is multiplied by the  [*Data Source Update Rate*](isb.md#data-source-update-rates) to determine the message broadcast period. Set *can_period_mult* to zero disable message broadcasting.
 
 In the image below the CID_INS_TIME message is set to broadcast data at 10 times the data source rate.
 

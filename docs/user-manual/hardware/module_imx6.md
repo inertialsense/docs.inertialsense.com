@@ -18,7 +18,8 @@
 
 | Pin  | Name                                          | I/O  | Description                                                  |
 | ---- | --------------------------------------------- | ---- | ------------------------------------------------------------ |
-| 0    | Not Connected                               |  -   | Not connected internally.  Connect to ground (GND). |
+| 23-27 | Not Connected                               |  -   | Not connected internally.  Connect to ground (GND). |
+| 0,11,21 | GND                                           | -    | Supply ground |
 | 1    | USB_P                                         | I/O  | USB Data Positive Line                                       |
 | 2    | USB_N                                         | I/O  | USB Data Negative Line                                       |
 | 3    | VBKUP                                  | I   | GNSS backup supply voltage. (1.4V to 3.6V) enables GNSS hardware backup mode for hot or warm startup (faster GNSS lock acquisition).  MUST connect VBKUP to VCC if no backup battery is used. |
@@ -29,7 +30,6 @@
 | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY             | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
-| 11,21,P | GND                                           | -    | Supply ground                                          |
 | 12   | nRESET                                        |  I   | System reset on logic low. May be left unconnected if not used. |
 | 13   | G14/SWCLK                                | I/O    | GPIO14                                       |
 | 14   | G13/DRDY/XSDA                                 |   I/O   | GPIO13<br /> SPI Data Ready<br /> Alt I2C SDA                                           |
@@ -114,6 +114,6 @@ Open source hardware design files, libraries, and example projects for the IMX m
 
 The EVB-2 and IG-1 circuit board projects serve as reference designs that illustrate implementation of the IMX PCB module.
 
-[EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2-1)
+[EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2/EVB-2-1)
 
-[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1-1-G2)
+[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1)

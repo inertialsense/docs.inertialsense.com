@@ -8,7 +8,7 @@ The GPX-1 module supports 4concurrent constellations.
 
 ## Constellation Selection
 
-The satellite constellations can be enabled or disabled by setting the corresponding enable bits in `DID_FLASH_CONFIG.gnssSatSigConst` as defined by [eGnssSatSigConst](../../com-protocol/DID-descriptions/#did_flash_configgnsssatsigconst) in data_sets.h.  The following are commonly used and recommended configuration groups. 
+The satellite constellations can be enabled or disabled by setting the corresponding enable bits in `DID_FLASH_CONFIG.gnssSatSigConst` as defined by [eGnssSatSigConst](../com-protocol/DID-descriptions.md#did_flash_configgnsssatsigconst) in data_sets.h.  The following are commonly used and recommended configuration groups. 
 
 ```c++
 // 3 constellations is supported by uINS onboard M8 reciever.  
@@ -20,5 +20,4 @@ DID_FLASH_CONFIG.gnssSatSigConst = 0x130F	// GPS/QZSS, GLONASS, SBAS
 // 4 constellations is supported by ZED-F9 receiver and the GPX-1 (not uINS onboard M8 receiver).
 DID_FLASH_CONFIG.gnssSatSigConst = 0x13FF	// GPS/QZSS, Galileo, GLONASS, BeiDou, SBAS
 ```
-
 

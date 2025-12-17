@@ -254,6 +254,8 @@ cltool -c DEVICE_PORT -lon -lt=LOG_TYPE -lp DIRECTORY
 
 ### Log File Types
 
+### Log Type
+
 | Log Type | Description                                                  |
 | -------- | ------------------------------------------------------------ |
 | `raw`    | Binary file containing byte for byte data received over the serial ports.  All packets remain in their native form.  Used for logging InertialSense binary (ISB), NMEA, RTCM3, uBlox UBX binary and SPARTN, and any other packet formats.  ***Recommended for logging all data formats and post processing***. |
