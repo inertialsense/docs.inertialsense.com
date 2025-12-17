@@ -8,7 +8,7 @@ To use RTK, a base station, arover (receiver), and a method to send corrections 
 
 ![](images/RTKDiagram.png)
 
-See the [multi-band GNSS](../multi_band_gnss/#evb-2-to-zed-f9p-interface) section for details on using our multi-frequency ZED-F9 GNSS system.
+See the [multi-band GNSS](multi_band_F9P.md#evb-2-to-zed-f9p-interface) section for details on using our multi-frequency ZED-F9 GNSS system.
 
 
 ## **RTK Hardware Setup**
@@ -110,5 +110,4 @@ The DID_GPS1_RTK_POS_REL status can be monitored in the EvalTool GPS tab.
 
 ## RTK Base Messages
 
-The IMX RTK solution accepts both RTCM3 and uBlox raw GNSS base correction messages.  See the [RTK Base](../rtk_base) or [NTRIP](../rtk_ntrip) pages for details on using base stations.
-
+The IMX RTK solution accepts both RTCM3 and uBlox raw GNSS base correction messages.  See the [RTK Base](rtk_base.md) or [NTRIP](rtk_ntrip.md) pages for details on using base stations.

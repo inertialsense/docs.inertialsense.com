@@ -60,7 +60,7 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 !!! warning
     The pin numbering of the Rugged main connector does not match that of the connector manufacturer.  Please refer to the drawings in the Dimensions and Pinouts page for the correct pin numbering.
 
-The following table shows the Rugged-3 pinout.  Note that pin function can change based on changing  `DID_FLASH_CONFIG.platformConfig` (see [I/O Configuration](#I/O Configuration) below).
+The following table shows the Rugged-3 pinout.  Note that pin function can change based on changing  `DID_FLASH_CONFIG.platformConfig` (see [I/O Configuration](#io-configuration) below).
 
 | Rugged<br/>Pin | IMX<br/>Pin      | Name                                            | I/O           | Description                                                  |
 | -------------- | ---------------- | :---------------------------------------------- | ------------- | ------------------------------------------------------------ |
@@ -134,4 +134,4 @@ See the [Multi-Band GNSS page](../../gnss/multi_band_GPX/#multi-band-gnss-compon
 
 ## Using with Inertial Sense Software
 
-Please return to the [getting started](../../getting-started/getting-started.md) page to get started programming, updating firmware, viewing data, and logging. 
+Please return to the [getting started](../../getting-started/Overview.md) page to get started programming, updating firmware, viewing data, and logging. 

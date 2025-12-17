@@ -10,8 +10,8 @@ In normal AHRS mode (stationary with or without GPS), only the IMU gyro biases a
 To use the *Zero Motion Command*: 
 
 1. Ensure the system is stationary on the ground.  
-2. Send the *Zero Motion Command* either once or continuously while the system is stationary.  This can be done either by using the *Zero Motion* button in the EvalTool General Settings tab or by sending the [DID_SYS_CMD](../../com-protocol/DID-descriptions/#did_sys_cmd) binary message.  
-3. After sending the *Zero Motion Command*, wait for the [INS_STATUS_STATIONARY_MODE](../../com-protocol/DID-descriptions/#ins-status-flags) status bit to clear in [DID_INS_x.insStatus](../../com-protocol/DID-descriptions/#did_ins_1 ) before moving the system.  This flag takes about 2 seconds to clear following the last *Zero Motion Command*.
+2. Send the *Zero Motion Command* either once or continuously while the system is stationary.  This can be done either by using the *Zero Motion* button in the EvalTool General Settings tab or by sending the [DID_SYS_CMD](../com-protocol/DID-descriptions.md#did_sys_cmd) binary message.  
+3. After sending the *Zero Motion Command*, wait for the [INS_STATUS_STATIONARY_MODE](../com-protocol/DID-descriptions.md#ins-status-flags) status bit to clear in [DID_INS_x.insStatus](../com-protocol/DID-descriptions.md#did_ins_1) before moving the system.  This flag takes about 2 seconds to clear following the last *Zero Motion Command*.
 
 Applying this command more than one time can further improve the IMU bias estimation.
 

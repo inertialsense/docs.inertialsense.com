@@ -87,10 +87,10 @@ The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is 
 
 The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot,  eliminating the need to re-enable messages following a reset or power cycle.  
 
-- **To save persistent messages** - (to flash memory), bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field or set DID_CONFIG.system = 0x00000001 and DID_CONFIG.system = 0xFFFFFFFE.   See the [save persistent messages example](../../SDK/CommunicationsBinary/#step-7-save-persistent-messages) in the Binary Communications example project.
-- **To disable persistent messages** - a [stop all broadcasts packet](../../SDK/CommunicationsBinary/#step-4-stop-any-message-broadcasting) followed by a *save persistent messages* command.   
+- **To save persistent messages** - (to flash memory), bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field or set DID_CONFIG.system = 0x00000001 and DID_CONFIG.system = 0xFFFFFFFE.   See the [save persistent messages example](../SDK/CommunicationsBinary.md#step-7-save-persistent-messages) in the Binary Communications example project.
+- **To disable persistent messages** - a [stop all broadcasts packet](../SDK/CommunicationsBinary.md#step-4-stop-any-message-broadcasting) followed by a *save persistent messages* command.   
 
-[NMEA persistent messages](../nmea/#persistent-messages) are also available. 
+[NMEA persistent messages](nmea.md#persistent-messages) are also available. 
 
 ##### Enabling Persistent Messages - EvalTool  
 
@@ -263,7 +263,7 @@ The ***Get Data*** packet of type `PKT_TYPE_GET_DATA` is used to query specific 
 ## Stop Broadcasts Packets
 
 !!! note
-    The [NEMA $STPB](../nmea/#stpb) stop broadcasts command is recommended as the protocol version-independent method for disabling data streaming. 
+    The [NEMA $STPB](nmea.md#stpb) stop broadcasts command is recommended as the protocol version-independent method for disabling data streaming. 
 
 Two *stop all broadcasts* packets are special packet types that will disable all binary and NMEA data streams.  The following functions calls are provided in the SDK to generate the stop all broadcasts packets.  
 
@@ -299,6 +299,5 @@ The hexadecimal string for the RMC Preset enable PPD is:
 ```c++
 0xef 0x49 0x05 0x09 0x0c 0x00 0xe2 0x3c 0x35 0x01 0x90 0x00 0x00 0xc0 0x00 0x01 0x00 0x00 0xf7 0xb0
 ```
-
 
 

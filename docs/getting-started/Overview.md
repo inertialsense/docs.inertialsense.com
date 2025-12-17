@@ -25,13 +25,13 @@ Download the file named "Source code" from our [releases](https://github.com/ine
 ## 2. Connect Hardware
 Select the evaluation product from the list below to view instructions on basic connection to a computer.
 
-- [IMX-5 PCB Module](../..//user-manual/hardware/module_imx5/#application)
-- [GPX-1 PCB Module](../../user-manual/hardware/module_gpx1/#typical-application-gpx-1-imx-5)
-- [Rugged-3 Units](../../user-manual/hardware/rugged3/#connecting-your-unit)
+- [IMX-5 PCB Module](../user-manual/hardware/module_imx5.md#application)
+- [GPX-1 PCB Module](../user-manual/hardware/module_gpx1.md#typical-application-gpx-1-imx-5)
+- [Rugged-3 Units](../user-manual/hardware/rugged3.md#connecting-your-unit)
 <!-- - [Rugged-2 Units](../user-manual/hardware/rugged2.md) -->
-- [IG-1 Units](../../user-manual/hardware/IG1/#connecting-your-unit)
-- [IG-2 Units](../../user-manual/hardware/IG2/#connecting-your-unit)
-- [IK-1 Units](../../user-manual/hardware/IK1/#connecting-your-unit)
+- [IG-1 Units](../user-manual/hardware/IG1.md#connecting-your-unit)
+- [IG-2 Units](../user-manual/hardware/IG2.md#connecting-your-unit)
+- [IK-1 Units](../user-manual/hardware/IK1.md#connecting-your-unit)
 
 ## 3. Configuring Settings
 
@@ -48,4 +48,3 @@ Once a connection to the unit has been established, please follow one of the fol
 - [EvalTool](../user-manual/software/evaltool.md)
 - [CLTool](../user-manual/software/cltool.md)
 - [SDK Example Projects](../user-manual/software/SDK.md)
-
