@@ -191,6 +191,81 @@ h2#question-text {
   cursor: pointer;
 }
 
+.quiz-review {
+  margin-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 0.75rem;
+}
+
+.review-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.review-button {
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.review-button.correct {
+  border-color: #16a34a;
+  color: #166534;
+  background: #ecfdf3;
+}
+
+.review-button.incorrect {
+  border-color: #dc2626;
+  color: #991b1b;
+  background: #fef2f2;
+}
+
+.review-panel {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.75rem;
+  background: #fff;
+}
+
+.review-question {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.review-meta {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.review-options {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.review-option {
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.review-option.correct {
+  border-color: #16a34a;
+  background: #ecfdf3;
+  font-weight: 700;
+}
+
+.review-option.selected:not(.correct) {
+  border-color: #dc2626;
+  background: #fef2f2;
+}
+
 @media (max-width: 640px) {
   .quiz-shell {
     padding: 1rem;
@@ -204,7 +279,73 @@ h2#question-text {
 
 <script>
 (() => {
-  const fullQuestions = [
+  const userManualPages = [
+    { title: "IMX-6 Module", path: "user-manual/hardware/module_imx6.md", topic: "IMX-6 hardware integration" },
+    { title: "IMX-5 Module", path: "user-manual/hardware/module_imx5.md", topic: "IMX-5 hardware integration" },
+    { title: "GPX-1 Module", path: "user-manual/hardware/module_gpx1.md", topic: "GPX-1 hardware integration" },
+    { title: "Rugged-3", path: "user-manual/hardware/rugged3.md", topic: "Rugged-3 unit hardware" },
+    { title: "IG-1", path: "user-manual/hardware/IG1.md", topic: "IG-1 unit hardware" },
+    { title: "IG-2", path: "user-manual/hardware/IG2.md", topic: "IG-2 unit hardware" },
+    { title: "IK-1", path: "user-manual/hardware/IK1.md", topic: "IK-1 unit hardware" },
+    { title: "Hardware Design Files", path: "user-manual/hardware/hardware_design.md", topic: "open hardware design files" },
+    { title: "Reflow Soldering", path: "user-manual/hardware/reflow.md", topic: "reflow soldering guidance" },
+    { title: "CLTool", path: "user-manual/software/cltool.md", topic: "CLTool usage" },
+    { title: "EvalTool", path: "user-manual/software/evaltool.md", topic: "EvalTool usage" },
+    { title: "SDK Overview", path: "user-manual/software/SDK.md", topic: "SDK overview" },
+    { title: "Log Inspector", path: "user-manual/software/logInspector.md", topic: "Log Inspector usage" },
+    { title: "Com Protocol Overview", path: "user-manual/com-protocol/overview.md", topic: "communications protocol overview" },
+    { title: "DID Descriptions", path: "user-manual/com-protocol/DID-descriptions.md", topic: "data set (DID) descriptions" },
+    { title: "Inertial Sense Binary", path: "user-manual/com-protocol/isb.md", topic: "ISB binary protocol" },
+    { title: "NMEA", path: "user-manual/com-protocol/nmea.md", topic: "NMEA protocol integration" },
+    { title: "SPI", path: "user-manual/com-protocol/SPI.md", topic: "SPI protocol usage" },
+    { title: "CAN", path: "user-manual/com-protocol/CAN.md", topic: "CAN protocol usage" },
+    { title: "Multi-band GNSS Overview", path: "user-manual/gnss/multi_band_gnss_overview.md", topic: "multi-band GNSS overview" },
+    { title: "IS GPX-1 Multi-band", path: "user-manual/gnss/multi_band_GPX.md", topic: "multi-band GNSS with GPX-1" },
+    { title: "Ublox F9P Multi-band", path: "user-manual/gnss/multi_band_F9P.md", topic: "multi-band GNSS with Ublox F9P" },
+    { title: "External NMEA GNSS", path: "user-manual/gnss/external_gnss.md", topic: "external NMEA GNSS setup" },
+    { title: "GNSS Antennas", path: "user-manual/gnss/gnss_antennas.md", topic: "GNSS antennas selection" },
+    { title: "GNSS Constellations", path: "user-manual/gnss/gnss_constellations.md", topic: "GNSS constellations" },
+    { title: "RTK Positioning Overview", path: "user-manual/gnss/rtk_positioning_overview.md", topic: "RTK positioning overview" },
+    { title: "RTK Rover", path: "user-manual/gnss/rtk_rover.md", topic: "RTK rover configuration" },
+    { title: "RTK Base", path: "user-manual/gnss/rtk_base.md", topic: "RTK base configuration" },
+    { title: "RTK NTRIP", path: "user-manual/gnss/rtk_ntrip.md", topic: "RTK NTRIP configuration" },
+    { title: "Point Perfect", path: "user-manual/gnss/ublox_pointperfect.md", topic: "Ublox PointPerfect setup" },
+    { title: "SBAS", path: "user-manual/gnss/SBAS.md", topic: "SBAS information" },
+    { title: "RTK Compassing", path: "user-manual/gnss/rtk_compassing.md", topic: "RTK compassing setup" },
+    { title: "Dead Reckoning Overview", path: "user-manual/dead-reckoning/dead_reckoning.md", topic: "dead reckoning overview" },
+    { title: "Dead Reckoning Examples", path: "user-manual/dead-reckoning/dead_reckoning_examples.md", topic: "dead reckoning examples" },
+    { title: "Infield Calibration", path: "user-manual/application-config/infield_calibration.md", topic: "infield calibration" },
+    { title: "Platform Configuration", path: "user-manual/application-config/platform_configuration.md", topic: "platform configuration" },
+    { title: "IMU INS GNSS Configuration", path: "user-manual/application-config/imu_ins_gnss_configuration.md", topic: "IMU/INS/GNSS configuration" },
+    { title: "System Configuration", path: "user-manual/application-config/system_configuration.md", topic: "system configuration" },
+    { title: "Time Sync / Strobe", path: "user-manual/application-config/time_sync.md", topic: "time synchronization and strobe" },
+    { title: "Zero Motion Command", path: "user-manual/application-config/zero_motion_command.md", topic: "zero motion command" },
+    { title: "UART", path: "user-manual/application-config/UART.md", topic: "UART configuration" },
+    { title: "SDK Overview (README)", path: "user-manual/SDK/README.md", topic: "SDK overview and layout" },
+    { title: "Comm-Binary (C)", path: "user-manual/SDK/CommunicationsBinary.md", topic: "binary communications example" },
+    { title: "Comm-NMEA (C)", path: "user-manual/SDK/CommunicationsAscii.md", topic: "NMEA communications example" },
+    { title: "Comm-Arduino (C)", path: "user-manual/SDK/CommunicationsArduino.md", topic: "Arduino communications example" },
+    { title: "Firmware Update (C)", path: "user-manual/SDK/FirmwareUpdate.md", topic: "firmware update example" },
+    { title: "InertialSense Class CLTool (C++)", path: "user-manual/SDK/InertialSenseClassCLTool.md", topic: "C++ CLTool class example" },
+    { title: "Data Logging (C++)", path: "user-manual/SDK/DataLogger.md", topic: "data logging example" },
+    { title: "Data Logging Overview", path: "user-manual/logging-plotting/overview.md", topic: "logging and plotting overview" },
+    { title: "Logging", path: "user-manual/logging-plotting/data_logging.md", topic: "logging setup" },
+    { title: "Plotting", path: "user-manual/logging-plotting/data_plotting.md", topic: "plotting data" },
+    { title: "Bootloader", path: "user-manual/reference/bootloader.md", topic: "bootloader reference" },
+    { title: "Coordinate Frames", path: "user-manual/reference/coordinate_frames.md", topic: "coordinate frames reference" },
+    { title: "Definitions", path: "user-manual/reference/definitions.md", topic: "definitions reference" },
+    { title: "IMU Specifications", path: "user-manual/reference/imu_specifications.md", topic: "IMU specifications" },
+    { title: "Interference", path: "user-manual/reference/interference.md", topic: "interference reference" },
+    { title: "Magnetometer", path: "user-manual/reference/magnetometer.md", topic: "magnetometer reference" },
+    { title: "System Status", path: "user-manual/reference/system_status.md", topic: "system status reference" },
+    { title: "User Manual PDF", path: "user-manual/reference/user_manual_pdf.md", topic: "user manual PDF export" },
+    { title: "FAQ", path: "user-manual/faq.md", topic: "frequently asked questions" },
+    { title: "Troubleshooting Firmware", path: "user-manual/troubleshooting/firmware.md", topic: "troubleshooting firmware" },
+    { title: "Troubleshooting Chip Erase", path: "user-manual/troubleshooting/chip_erase.md", topic: "chip erase troubleshooting" },
+    { title: "Troubleshooting GNSS", path: "user-manual/troubleshooting/gnss.md", topic: "GNSS troubleshooting" }
+  ];
+
+  const contentQuestions = [
     { question: "Which tool is the graphical desktop program used to explore, configure, and test Inertial Sense products in real time?", correct: "EvalTool", distractors: ["CLTool", "SDK", "Log Inspector"], source: "getting-started/Overview.md" },
     { question: "According to Getting Started, which tool must be compiled from source?", correct: "CLTool", distractors: ["EvalTool", "Log Inspector", "Reflow utility"], source: "getting-started/Overview.md" },
     { question: "How do you obtain the SDK code libraries and example projects?", correct: "Download the \"Source code\" asset from the releases page", distractors: ["Install via pip with inertialsense-sdk", "Request an email package from support", "Clone the firmware repo submodule"], source: "getting-started/Overview.md" },
@@ -212,9 +353,6 @@ h2#question-text {
     { question: "When setting Rover Mode in EvalTool, what do you change the first dropdown to?", correct: "Positioning (GPS1) or the matching F9P option", distractors: ["Desired log file format", "UART port number", "Mount point for NTRIP"], source: "user-manual/gnss/rtk_rover.md" },
     { question: "Which CLTool argument configures the unit as a rover by writing flash config?", correct: "-flashConfig=rtkCfgBits=0x01", distractors: ["-roverMode=1", "-presetINS", "-setRover"], source: "user-manual/gnss/rtk_rover.md" },
     { question: "How does the IMX treat base correction data arriving at its ports?", correct: "It automatically parses data arriving at any port and recognizes base corrections", distractors: ["It only accepts corrections on USB", "It ignores corrections unless set to RTK Base mode", "It requires manual parsing via SDK API"], source: "user-manual/gnss/rtk_rover.md" },
-    { question: "What baud rate does the Digi Xbee Pro SX module on the EVB-2 use?", correct: "115200", distractors: ["57600", "921600", "230400"], source: "user-manual/gnss/rtk_rover.md" },
-    { question: "In EVB-2 rover setup, what should cbPreset be set to in DID_EVB_FLASH_CFG to enable the radio?", correct: "0x3", distractors: ["0x1", "0x7", "0x0"], source: "user-manual/gnss/rtk_rover.md" },
-    { question: "In EVB-2 rover setup, what output power does radioPowerLevel value 0 correspond to?", correct: "20 dBm", distractors: ["27 dBm", "30 dBm", "10 dBm"], source: "user-manual/gnss/rtk_rover.md" },
     { question: "When configuring the Rover NTRIP client in EvalTool, which correction formats can you select?", correct: "RTCM3 or UBLOX", distractors: ["CAN or SPI", "NMEA or AIS", "Proprietary binary only"], source: "user-manual/gnss/rtk_rover.md" },
     { question: "What is the default serial baud rate used by CLTool if -baud is not specified?", correct: "921600", distractors: ["115200", "460800", "230400"], source: "user-manual/software/cltool.md" },
     { question: "What does the -lm flag do in CLTool?", correct: "Listen mode for ISB that disables device validation and skips the stop-broadcast command on start", distractors: ["Locks magnetometer calibration", "Limits maximum INS update rate", "Logs messages to memory"], source: "user-manual/software/cltool.md" },
@@ -229,7 +367,6 @@ h2#question-text {
     { question: "What is pin 20 (G15/GNSS_PPS) used for on the IMX-6?", correct: "Input for GNSS PPS time synchronization pulse", distractors: ["3.3V power input", "USB data line", "CAN transceiver enable"], source: "user-manual/hardware/module_imx6.md" },
     { question: "What voltage is required on VUSB (pin 30) of the IMX-6 for USB operation?", correct: "3.0V to 3.6V", distractors: ["1.2V", "5.0V", "2.4V to 2.8V"], source: "user-manual/hardware/module_imx6.md" },
     { question: "Where should the recommended 100nF decoupling capacitor be placed on the IMX-6 PCB?", correct: "Between pins 21 (GND) and 22 (VCC), close to the module on the same PCB side", distractors: ["Between pins 1 and 2 near the USB lines", "Across pins 28 and 29 only", "Between VBKUP and ground with long vias"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "What packaging options are available for IMX-6 modules?", correct: "Cut tape as well as tape and reel", distractors: ["Loose bulk bags only", "Through-hole trays only", "Wafer-level tape only"], source: "user-manual/hardware/module_imx6.md" },
     { question: "Which CLTool option lists discovered device ports?", correct: "-list-devices", distractors: ["-devices", "-ports", "-scan"], source: "user-manual/software/cltool.md" },
     { question: "Which CLTool flag disables device validation so ports remain open?", correct: "-vd", distractors: ["-validateOff", "-novalidate", "-keepopen"], source: "user-manual/software/cltool.md" },
     { question: "Which option sets the serial port baud rate in CLTool?", correct: "-baud=BAUDRATE", distractors: ["-speed=BAUDRATE", "-bps=BAUDRATE", "-serialrate=BAUDRATE"], source: "user-manual/software/cltool.md" },
@@ -263,8 +400,6 @@ h2#question-text {
     { question: "What file extension is used for a firmware package file in CLTool?", correct: ".fpkg", distractors: [".hex", ".bin", ".pkg"], source: "user-manual/software/cltool.md" },
     { question: "What benefit does the firmware package method provide?", correct: "Updates multiple devices such as an IMX-GPX pair in one process", distractors: ["It removes the need for a serial port", "It disables bootloader checks", "It only updates the bootloader"], source: "user-manual/software/cltool.md" },
     { question: "What current limitation is noted for firmware package updates?", correct: "Updating the IMX firmware using a package is not yet supported", distractors: ["Packages only work on Windows", "Packages require Wi-Fi", "Packages erase user settings"], source: "user-manual/software/cltool.md" },
-    { question: "Which products are supported by the legacy single firmware file update method?", correct: "IMX-5 and earlier products such as uINS-3 and EVB-2", distractors: ["Only IMX-6", "Only GPX-1", "Only Rugged-2"], source: "user-manual/software/cltool.md" },
-    { question: "Which optional flag supplies the bootloader firmware file during legacy update?", correct: "-ub [BL_FILEPATH]", distractors: ["-boot [BL_FILEPATH]", "-bl [BL_FILEPATH]", "-bootloader [BL_FILEPATH]"], source: "user-manual/software/cltool.md" },
     { question: "Which baud rates are allowed for firmware updates according to the guide?", correct: "300000, 921600, 460800, 230400, 115200", distractors: ["9600, 19200, 38400 only", "1M only", "Any baud rate works"], source: "user-manual/software/cltool.md" },
     { question: "After building CLTool on Linux/Mac, how do you run it from the build directory?", correct: "./cltool", distractors: ["make run", "python cltool.py", "cmake --run"], source: "user-manual/software/cltool.md" },
     { question: "On Linux, which groups might you add your user to for serial port access?", correct: "dialout and plugdev", distractors: ["sudo and tty", "adm and wheel", "gpio and users"], source: "user-manual/software/cltool.md" },
@@ -277,33 +412,10 @@ h2#question-text {
     { question: "For TCP/IP base corrections, which formats can you choose in EvalTool?", correct: "ublox or RTCM3", distractors: ["NMEA or AIS", "CAN or SPI", "CSV or JSON"], source: "user-manual/gnss/rtk_rover.md" },
     { question: "In the NTRIP client setup, which field specifies the caster mount point?", correct: "Mount Point", distractors: ["Station ID", "Link Name", "Channel"], source: "user-manual/gnss/rtk_rover.md" },
     { question: "In the NTRIP client setup, which field holds the caster address and port?", correct: "Address:Port", distractors: ["Server URL only", "Hostname only", "Port only"], source: "user-manual/gnss/rtk_rover.md" },
-    { question: "How do you configure the EVB-2 radio quickly on the rover?", correct: "Press the CONFIG switch until the light is blue", distractors: ["Hold reset for 10 seconds", "Short pins 1 and 2", "Cycle power three times"], source: "user-manual/gnss/rtk_rover.md" },
-    { question: "For EVB-2 rover setup, how should radioPID and radioNID be set?", correct: "Match the values used by the base radio", distractors: ["Set both to zero", "Set random values for each device", "Set radioPID only"], source: "user-manual/gnss/rtk_rover.md" },
-    { question: "How many WiFi networks can EVB2 store when connecting to TCP/IP base?", correct: "Up to 3 networks (Wifi[0], Wifi[1], Wifi[2])", distractors: ["One network only", "Two networks", "Unlimited networks"], source: "user-manual/gnss/rtk_rover.md" },
     { question: "What should you do with IMX-6 pin 0?", correct: "Connect it to ground because it is not connected internally", distractors: ["Leave it floating for antenna detect", "Tie it to VUSB", "Use it as a GPIO output"], source: "user-manual/hardware/module_imx6.md" },
     { question: "What is IMX-6 pin 1 (USB_P)?", correct: "USB Data Positive line", distractors: ["USB Data Negative line", "Power input", "CAN transmit line"], source: "user-manual/hardware/module_imx6.md" },
     { question: "What is IMX-6 pin 2 (USB_N)?", correct: "USB Data Negative line", distractors: ["USB Data Positive line", "Reset line", "CAN receive line"], source: "user-manual/hardware/module_imx6.md" },
     { question: "What is IMX-6 pin 3 (VBKUP)?", correct: "GNSS backup supply 1.4V to 3.6V; connect to VCC if no backup battery", distractors: ["5V main supply", "Ground reference", "SPI chip select"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin hosts GPIO1 / Serial 2 input / CAN RX / I2C SCL?", correct: "Pin 4 (G1/Rx2/RxCAN/SCL)", distractors: ["Pin 5", "Pin 6", "Pin 7"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin hosts GPIO2 / Serial 2 output / CAN TX / I2C SDA / Strobe?", correct: "Pin 5 (G2/Tx2/TxCAN/SDA/STROBE)", distractors: ["Pin 4", "Pin 6", "Pin 8"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is GPIO6 / Serial 1 input / SPI MOSI?", correct: "Pin 6", distractors: ["Pin 7", "Pin 8", "Pin 9"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is GPIO7 / Serial 1 output / SPI MISO?", correct: "Pin 7", distractors: ["Pin 6", "Pin 8", "Pin 9"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is GPIO8 / SPI CS / Strobe input?", correct: "Pin 8", distractors: ["Pin 7", "Pin 9", "Pin 10"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is GPIO5 / SPI SCLK / Strobe input?", correct: "Pin 9", distractors: ["Pin 8", "Pin 10", "Pin 11"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin provides nSPI_EN / STROBE_OUT / DRDY functions along with GPIO9?", correct: "Pin 10", distractors: ["Pin 12", "Pin 15", "Pin 20"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pins are ground?", correct: "Pins 11, 21, and pad P", distractors: ["Pins 1 and 2", "Pins 20 and 22", "Pins 28 and 29"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "What is IMX-6 pin 12?", correct: "nRESET; logic low resets the system", distractors: ["SPI chip select", "I2C SDA", "USB enable"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin carries SWCLK (G14)?", correct: "Pin 13", distractors: ["Pin 14", "Pin 15", "Pin 16"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is DRDY/XSDA and can serve as alternate I2C SDA?", correct: "Pin 14", distractors: ["Pin 13", "Pin 15", "Pin 16"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is G12/SWO/XSCL and can serve as alternate I2C SCL?", correct: "Pin 15", distractors: ["Pin 14", "Pin 16", "Pin 10"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is G11/SWDIO?", correct: "Pin 16", distractors: ["Pin 13", "Pin 14", "Pin 15"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is GPIO4 / Serial 0 input (Rx0)?", correct: "Pin 18", distractors: ["Pin 19", "Pin 6", "Pin 7"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is GPIO3 / Serial 0 output (Tx0)?", correct: "Pin 19", distractors: ["Pin 18", "Pin 6", "Pin 7"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "What is IMX-6 pin 22?", correct: "VCC 3.3V supply input", distractors: ["USB 5V input", "Ground", "Backup battery input"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is QDEC0.A (wheel sensor 0 channel A input)?", correct: "Pin 28", distractors: ["Pin 29", "Pin 31", "Pin 32"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is QDEC0.B (wheel sensor 0 channel B input)?", correct: "Pin 29", distractors: ["Pin 28", "Pin 31", "Pin 32"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is QDEC1.A (wheel sensor 1 channel A input)?", correct: "Pin 31", distractors: ["Pin 32", "Pin 28", "Pin 29"], source: "user-manual/hardware/module_imx6.md" },
-    { question: "Which IMX-6 pin is QDEC1.B (wheel sensor 1 channel B input)?", correct: "Pin 32", distractors: ["Pin 31", "Pin 28", "Pin 29"], source: "user-manual/hardware/module_imx6.md" },
     { question: "Where can you find open source hardware design files and 3D models for the IMX module?", correct: "In the Inertial Sense Hardware Design repository on GitHub", distractors: ["Only on the product CD", "They are not available", "Inside the firmware package"], source: "user-manual/hardware/module_imx6.md" }
   ];
 
@@ -316,14 +428,44 @@ h2#question-text {
     return a;
   }
 
-  function prepareQuestion(base) {
+  const templates = [
+    (page) => `Which documentation page covers ${page.topic}?`,
+    (page) => `Where should you look for details on ${page.topic}?`,
+    (page) => `Which user manual page provides guidance on ${page.topic}?`,
+    (page) => `If you need information about ${page.topic}, which page would you open?`,
+    (page) => `Which page in the docs focuses on ${page.topic}?`
+  ];
+
+  function buildPageQuestions(pages) {
+    const pool = [];
+    pages.forEach((page) => {
+      const others = pages.filter((p) => p !== page).map((p) => p.title);
+      templates.forEach((template) => {
+        const options = shuffle([page.title, ...shuffle(others).slice(0, 3)]);
+        pool.push({
+          question: template(page),
+          options,
+          answer: options.indexOf(page.title),
+          source: page.path
+        });
+      });
+    });
+    return pool;
+  }
+
+  function finalizeQuestion(base) {
+    if (base.options && typeof base.answer === "number") {
+      return base;
+    }
     const options = shuffle([base.correct, ...base.distractors]);
     const answer = options.indexOf(base.correct);
     return { ...base, options, answer };
   }
 
   function pickQuestions() {
-    return shuffle([...fullQuestions]).slice(0, 25).map(prepareQuestion);
+    const generated = buildPageQuestions(userManualPages);
+    const pool = [...generated, ...contentQuestions.map(finalizeQuestion)];
+    return shuffle(pool).slice(0, 25);
   }
 
   const state = {
@@ -382,7 +524,11 @@ h2#question-text {
   function handleAnswer(selectedIdx) {
     const q = state.questions[state.index];
     const isCorrect = selectedIdx === q.answer;
-    state.answers[state.index] = isCorrect;
+    state.answers[state.index] = {
+      correct: isCorrect,
+      selected: selectedIdx,
+      question: q
+    };
     if (isCorrect) {
       state.score += 1;
     }
@@ -403,6 +549,7 @@ h2#question-text {
   }
 
   function showResults() {
+    const total = state.questions.length;
     els.question.textContent = "Quiz complete";
     els.options.innerHTML = "";
     els.feedback.textContent = "";
@@ -413,18 +560,55 @@ h2#question-text {
 
     const score = document.createElement("div");
     score.className = "quiz-score";
-    score.textContent = `Final score: ${state.score} / ${total}`;
+    const pct = Math.round((state.score / total) * 100);
+    score.textContent = `Final score: ${state.score} / ${total} (${pct}%)`;
 
     const heading = document.createElement("h3");
-    heading.textContent = "Per-question results";
+    heading.textContent = "Per-question results (tap to review)";
 
     const grid = document.createElement("div");
-    grid.className = "quiz-grid";
+    grid.className = "review-list";
 
-    state.answers.forEach((correct, idx) => {
-      const item = document.createElement("div");
-      item.className = `result-item ${correct ? "correct" : "incorrect"}`;
-      item.textContent = `Question ${idx + 1}`;
+    const reviewPanel = document.createElement("div");
+    reviewPanel.className = "review-panel";
+    reviewPanel.hidden = true;
+
+    const renderReview = (entry, idx) => {
+      reviewPanel.hidden = false;
+      reviewPanel.innerHTML = "";
+
+      const qTitle = document.createElement("div");
+      qTitle.className = "review-question";
+      qTitle.textContent = `Question ${idx + 1}: ${entry.question.question}`;
+
+      const meta = document.createElement("div");
+      meta.className = "review-meta";
+      meta.textContent = `Source: ${entry.question.source || "user manual"}`;
+
+      const opts = document.createElement("div");
+      opts.className = "review-options";
+      entry.question.options.forEach((opt, optIdx) => {
+        const optDiv = document.createElement("div");
+        optDiv.className = "review-option";
+        if (optIdx === entry.question.answer) {
+          optDiv.classList.add("correct");
+        }
+        if (optIdx === entry.selected && optIdx !== entry.question.answer) {
+          optDiv.classList.add("selected");
+        }
+        optDiv.textContent = opt;
+        opts.appendChild(optDiv);
+      });
+
+      reviewPanel.append(qTitle, meta, opts);
+    };
+
+    state.answers.forEach((entry, idx) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = `review-button ${entry.correct ? "correct" : "incorrect"}`;
+      item.textContent = `Q${idx + 1} - ${entry.correct ? "Correct" : "Incorrect"}`;
+      item.addEventListener("click", () => renderReview(entry, idx));
       grid.appendChild(item);
     });
 
@@ -434,7 +618,7 @@ h2#question-text {
     restart.textContent = "Restart quiz";
     restart.addEventListener("click", resetQuiz);
 
-    els.results.append(score, heading, grid, restart);
+    els.results.append(score, heading, grid, reviewPanel, restart);
     state.index = total;
     updateProgress();
   }
