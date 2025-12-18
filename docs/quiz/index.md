@@ -204,233 +204,133 @@ h2#question-text {
 
 <script>
 (() => {
-  const questions = [
-    {
-      question: "Which tool is the graphical desktop program used to explore, configure, and test Inertial Sense products in real time?",
-      options: ["EvalTool", "CLTool", "SDK", "Log Inspector"],
-      answer: 0,
-      source: "getting-started/Overview.md"
-    },
-    {
-      question: "According to Getting Started, which tool must be compiled from source?",
-      options: ["CLTool", "EvalTool", "Log Inspector", "Reflow utility"],
-      answer: 0,
-      source: "getting-started/Overview.md"
-    },
-    {
-      question: "How do you obtain the SDK code libraries and example projects?",
-      options: [
-        "Download the \"Source code\" asset from the releases page",
-        "Install via pip with inertialsense-sdk",
-        "Request an email package from support",
-        "Clone the firmware repo submodule"
-      ],
-      answer: 0,
-      source: "getting-started/Overview.md"
-    },
-    {
-      question: "In the RTK Rover guide, which EvalTool menu path enables Rover Mode?",
-      options: [
-        "Settings > GPS > Rover > RTK",
-        "Data Sets > INS > Rover",
-        "Diagnostics > GNSS > RTK",
-        "System > Network > RTK"
-      ],
-      answer: 0,
-      source: "user-manual/gnss/rtk_rover.md"
-    },
-    {
-      question: "When setting Rover Mode in EvalTool, what do you change the first dropdown to?",
-      options: [
-        "Positioning (GPS1) or the matching F9P option",
-        "Desired log file format",
-        "UART port number",
-        "Mount point for NTRIP"
-      ],
-      answer: 0,
-      source: "user-manual/gnss/rtk_rover.md"
-    },
-    {
-      question: "Which CLTool argument configures the unit as a rover by writing flash config?",
-      options: [
-        "-flashConfig=rtkCfgBits=0x01",
-        "-roverMode=1",
-        "-presetINS",
-        "-setRover"
-      ],
-      answer: 0,
-      source: "user-manual/gnss/rtk_rover.md"
-    },
-    {
-      question: "How does the IMX treat base correction data arriving at its ports?",
-      options: [
-        "It automatically parses data arriving at any port and recognizes base corrections",
-        "It only accepts corrections on USB",
-        "It ignores corrections unless set to RTK Base mode",
-        "It requires manual parsing via SDK API"
-      ],
-      answer: 0,
-      source: "user-manual/gnss/rtk_rover.md"
-    },
-    {
-      question: "What baud rate does the Digi Xbee Pro SX module on the EVB-2 use?",
-      options: ["115200", "57600", "921600", "230400"],
-      answer: 0,
-      source: "user-manual/gnss/rtk_rover.md"
-    },
-    {
-      question: "In EVB-2 rover setup, what should cbPreset be set to in DID_EVB_FLASH_CFG to enable the radio?",
-      options: ["0x3", "0x1", "0x7", "0x0"],
-      answer: 0,
-      source: "user-manual/gnss/rtk_rover.md"
-    },
-    {
-      question: "In EVB-2 rover setup, what output power does radioPowerLevel value 0 correspond to?",
-      options: ["20 dBm", "27 dBm", "30 dBm", "10 dBm"],
-      answer: 0,
-      source: "user-manual/gnss/rtk_rover.md"
-    },
-    {
-      question: "When configuring the Rover NTRIP client in EvalTool, which correction formats can you select?",
-      options: [
-        "RTCM3 or UBLOX",
-        "CAN or SPI",
-        "NMEA or AIS",
-        "Proprietary binary only"
-      ],
-      answer: 0,
-      source: "user-manual/gnss/rtk_rover.md"
-    },
-    {
-      question: "What is the default serial baud rate used by CLTool if -baud is not specified?",
-      options: ["921600", "115200", "460800", "230400"],
-      answer: 0,
-      source: "user-manual/software/cltool.md"
-    },
-    {
-      question: "What does the -lm flag do in CLTool?",
-      options: [
-        "Listen mode for ISB that disables device validation and skips the stop-broadcast command on start",
-        "Locks magnetometer calibration",
-        "Limits maximum INS update rate",
-        "Logs messages to memory"
-      ],
-      answer: 0,
-      source: "user-manual/software/cltool.md"
-    },
-    {
-      question: "What does the -dboc flag do in CLTool?",
-      options: [
-        "Sends a stop-broadcast command ($STPB) on close",
-        "Disables binary output conversion",
-        "Drops bandwidth on connection",
-        "Delays boot output capture"
-      ],
-      answer: 0,
-      source: "user-manual/software/cltool.md"
-    },
-    {
-      question: "If you enable logging without setting -lp, where does CLTool store log files by default?",
-      options: ["./IS_logs", "/tmp/is_logs", "~/Downloads", "logs/current"],
-      answer: 0,
-      source: "user-manual/software/cltool.md"
-    },
-    {
-      question: "Which flag forces a bootloader update regardless of version when updating firmware with CLTool?",
-      options: ["-fb", "-forceBL", "-bootforce", "-fbldr"],
-      answer: 0,
-      source: "user-manual/software/cltool.md"
-    },
-    {
-      question: "Which flag runs verification after an application firmware update in CLTool?",
-      options: ["-uv", "-verifyApp", "-va", "-checkfw"],
-      answer: 0,
-      source: "user-manual/software/cltool.md"
-    },
-    {
-      question: "Before compiling CLTool on Linux or Mac, which tool must be installed?",
-      options: ["CMake", "Node.js", "GDB", "Docker"],
-      answer: 0,
-      source: "user-manual/software/cltool.md"
-    },
-    {
-      question: "For the IMX-6 module, what should you do with VBKUP (pin 3) if no backup battery is used?",
-      options: [
-        "Connect VBKUP to VCC so the module performs a cold start on power-up",
-        "Leave VBKUP floating to save power",
-        "Tie VBKUP to ground",
-        "Connect VBKUP to GPIO5"
-      ],
-      answer: 0,
-      source: "user-manual/hardware/module_imx6.md"
-    },
-    {
-      question: "How do you enable the SPI interface on the IMX-6?",
-      options: [
-        "Hold pin 10 low during boot",
-        "Short pins 6 and 7 during boot",
-        "Send an SPI enable command over UART",
-        "Tie pin 20 high at reset"
-      ],
-      answer: 0,
-      source: "user-manual/hardware/module_imx6.md"
-    },
-    {
-      question: "What happens if the IMX-6 BOOT_MODE pin (pin 17) is driven high?",
-      options: [
-        "It reboots into ROM bootloader (DFU) mode",
-        "It enters low-power sleep",
-        "It forces GNSS PPS output",
-        "It disables USB enumeration"
-      ],
-      answer: 0,
-      source: "user-manual/hardware/module_imx6.md"
-    },
-    {
-      question: "What is pin 20 (G15/GNSS_PPS) used for on the IMX-6?",
-      options: [
-        "Input for GNSS PPS time synchronization pulse",
-        "3.3V power input",
-        "USB data line",
-        "CAN transceiver enable"
-      ],
-      answer: 0,
-      source: "user-manual/hardware/module_imx6.md"
-    },
-    {
-      question: "What voltage is required on VUSB (pin 30) of the IMX-6 for USB operation?",
-      options: ["3.0V to 3.6V", "1.2V", "5.0V", "2.4V to 2.8V"],
-      answer: 0,
-      source: "user-manual/hardware/module_imx6.md"
-    },
-    {
-      question: "Where should the recommended 100nF decoupling capacitor be placed on the IMX-6 PCB?",
-      options: [
-        "Between pins 21 (GND) and 22 (VCC), close to the module on the same PCB side",
-        "Between pins 1 and 2 near the USB lines",
-        "Across pins 28 and 29 only",
-        "Between VBKUP and ground with long vias"
-      ],
-      answer: 0,
-      source: "user-manual/hardware/module_imx6.md"
-    },
-    {
-      question: "What packaging options are available for IMX-6 modules?",
-      options: [
-        "Cut tape as well as tape and reel",
-        "Loose bulk bags only",
-        "Through-hole trays only",
-        "Wafer-level tape only"
-      ],
-      answer: 0,
-      source: "user-manual/hardware/module_imx6.md"
-    }
+  const fullQuestions = [
+    { question: "Which tool is the graphical desktop program used to explore, configure, and test Inertial Sense products in real time?", correct: "EvalTool", distractors: ["CLTool", "SDK", "Log Inspector"], source: "getting-started/Overview.md" },
+    { question: "According to Getting Started, which tool must be compiled from source?", correct: "CLTool", distractors: ["EvalTool", "Log Inspector", "Reflow utility"], source: "getting-started/Overview.md" },
+    { question: "How do you obtain the SDK code libraries and example projects?", correct: "Download the \"Source code\" asset from the releases page", distractors: ["Install via pip with inertialsense-sdk", "Request an email package from support", "Clone the firmware repo submodule"], source: "getting-started/Overview.md" },
+    { question: "In the RTK Rover guide, which EvalTool menu path enables Rover Mode?", correct: "Settings > GPS > Rover > RTK", distractors: ["Data Sets > INS > Rover", "Diagnostics > GNSS > RTK", "System > Network > RTK"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "When setting Rover Mode in EvalTool, what do you change the first dropdown to?", correct: "Positioning (GPS1) or the matching F9P option", distractors: ["Desired log file format", "UART port number", "Mount point for NTRIP"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "Which CLTool argument configures the unit as a rover by writing flash config?", correct: "-flashConfig=rtkCfgBits=0x01", distractors: ["-roverMode=1", "-presetINS", "-setRover"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "How does the IMX treat base correction data arriving at its ports?", correct: "It automatically parses data arriving at any port and recognizes base corrections", distractors: ["It only accepts corrections on USB", "It ignores corrections unless set to RTK Base mode", "It requires manual parsing via SDK API"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "What baud rate does the Digi Xbee Pro SX module on the EVB-2 use?", correct: "115200", distractors: ["57600", "921600", "230400"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "In EVB-2 rover setup, what should cbPreset be set to in DID_EVB_FLASH_CFG to enable the radio?", correct: "0x3", distractors: ["0x1", "0x7", "0x0"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "In EVB-2 rover setup, what output power does radioPowerLevel value 0 correspond to?", correct: "20 dBm", distractors: ["27 dBm", "30 dBm", "10 dBm"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "When configuring the Rover NTRIP client in EvalTool, which correction formats can you select?", correct: "RTCM3 or UBLOX", distractors: ["CAN or SPI", "NMEA or AIS", "Proprietary binary only"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "What is the default serial baud rate used by CLTool if -baud is not specified?", correct: "921600", distractors: ["115200", "460800", "230400"], source: "user-manual/software/cltool.md" },
+    { question: "What does the -lm flag do in CLTool?", correct: "Listen mode for ISB that disables device validation and skips the stop-broadcast command on start", distractors: ["Locks magnetometer calibration", "Limits maximum INS update rate", "Logs messages to memory"], source: "user-manual/software/cltool.md" },
+    { question: "What does the -dboc flag do in CLTool?", correct: "Sends a stop-broadcast command ($STPB) on close", distractors: ["Disables binary output conversion", "Drops bandwidth on connection", "Delays boot output capture"], source: "user-manual/software/cltool.md" },
+    { question: "If you enable logging without setting -lp, where does CLTool store log files by default?", correct: "./IS_logs", distractors: ["/tmp/is_logs", "~/Downloads", "logs/current"], source: "user-manual/software/cltool.md" },
+    { question: "Which flag forces a bootloader update regardless of version when updating firmware with CLTool?", correct: "-fb", distractors: ["-forceBL", "-bootforce", "-fbldr"], source: "user-manual/software/cltool.md" },
+    { question: "Which flag runs verification after an application firmware update in CLTool?", correct: "-uv", distractors: ["-verifyApp", "-va", "-checkfw"], source: "user-manual/software/cltool.md" },
+    { question: "Before compiling CLTool on Linux or Mac, which tool must be installed?", correct: "CMake", distractors: ["Node.js", "GDB", "Docker"], source: "user-manual/software/cltool.md" },
+    { question: "For the IMX-6 module, what should you do with VBKUP (pin 3) if no backup battery is used?", correct: "Connect VBKUP to VCC so the module performs a cold start on power-up", distractors: ["Leave VBKUP floating to save power", "Tie VBKUP to ground", "Connect VBKUP to GPIO5"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "How do you enable the SPI interface on the IMX-6?", correct: "Hold pin 10 low during boot", distractors: ["Short pins 6 and 7 during boot", "Send an SPI enable command over UART", "Tie pin 20 high at reset"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "What happens if the IMX-6 BOOT_MODE pin (pin 17) is driven high?", correct: "It reboots into ROM bootloader (DFU) mode", distractors: ["It enters low-power sleep", "It forces GNSS PPS output", "It disables USB enumeration"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "What is pin 20 (G15/GNSS_PPS) used for on the IMX-6?", correct: "Input for GNSS PPS time synchronization pulse", distractors: ["3.3V power input", "USB data line", "CAN transceiver enable"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "What voltage is required on VUSB (pin 30) of the IMX-6 for USB operation?", correct: "3.0V to 3.6V", distractors: ["1.2V", "5.0V", "2.4V to 2.8V"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Where should the recommended 100nF decoupling capacitor be placed on the IMX-6 PCB?", correct: "Between pins 21 (GND) and 22 (VCC), close to the module on the same PCB side", distractors: ["Between pins 1 and 2 near the USB lines", "Across pins 28 and 29 only", "Between VBKUP and ground with long vias"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "What packaging options are available for IMX-6 modules?", correct: "Cut tape as well as tape and reel", distractors: ["Loose bulk bags only", "Through-hole trays only", "Wafer-level tape only"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which CLTool option lists discovered device ports?", correct: "-list-devices", distractors: ["-devices", "-ports", "-scan"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool flag disables device validation so ports remain open?", correct: "-vd", distractors: ["-validateOff", "-novalidate", "-keepopen"], source: "user-manual/software/cltool.md" },
+    { question: "Which option sets the serial port baud rate in CLTool?", correct: "-baud=BAUDRATE", distractors: ["-speed=BAUDRATE", "-bps=BAUDRATE", "-serialrate=BAUDRATE"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool option issues a software reset?", correct: "-reset", distractors: ["-reboot", "-boot", "-softreset"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool option scrolls displayed messages to show history?", correct: "-s", distractors: ["-scroll", "-history", "-tail"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool flag enables quiet mode with no display?", correct: "-q", distractors: ["-quietmode", "-silent", "-mute"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool option displays statistics of data received?", correct: "-stats", distractors: ["-metrics", "-report", "-summary"], source: "user-manual/software/cltool.md" },
+    { question: "Which option recalibrates magnetometers with 0=multi-axis and 1=single-axis?", correct: "-magRecal[n]", distractors: ["-magCal", "-recalMag", "-magReset"], source: "user-manual/software/cltool.md" },
+    { question: "Which flag runs listen mode for NMEA without sending the stop-broadcast command on start?", correct: "-nmea", distractors: ["-nmeaListen", "-nmeaOnly", "-nmeaMode"], source: "user-manual/software/cltool.md" },
+    { question: "Which argument runs a survey-in and stores base position to refLla?", correct: "-survey=[s],[d]", distractors: ["-surveyIn", "-surveyStart", "-svy"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool option streams and allows editing one dataset?", correct: "-edit [DID#<=PERIODMULT>]", distractors: ["-streamEdit", "-editDid", "-editStream"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool option prints the list of all DID datasets?", correct: "-dids", distractors: ["-listDids", "-didlist", "-showdids"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool option saves current streams as persistent messages enabled on startup?", correct: "-persistent", distractors: ["-saveStreams", "-persistStreams", "-keepStreams"], source: "user-manual/software/cltool.md" },
+    { question: "Which preset flag enables INS data streaming in CLTool?", correct: "-presetINS", distractors: ["-presetINS1", "-insPreset", "-insStream"], source: "user-manual/software/cltool.md" },
+    { question: "Which preset flag enables IMX post processing data (PPD) streaming in CLTool?", correct: "-presetPPD", distractors: ["-ppdPreset", "-presetPPD1", "-ppdStream"], source: "user-manual/software/cltool.md" },
+    { question: "Which preset flag enables GPX post processing data streaming in CLTool?", correct: "-presetGPXPPD", distractors: ["-presetGPX", "-gpxPpd", "-ppdGPX"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool argument configures the device as an RTK Base server to send corrections?", correct: "-base=[IP]:[port]", distractors: ["-serveBase", "-baseMode", "-rtkBase"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool argument specifies where Rover corrections come from (type, protocol, address)?", correct: "-rover=[type]:[protocol]:[address]:[port]...", distractors: ["-roverMode=[type]", "-roverSource=[addr]", "-roverCfg=[param]"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool option returns values of dataset(s) using YAML input?", correct: "-get \"{DID: {field}}\"", distractors: ["-fetch", "-readDid", "-pullDid"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool option sets values of dataset(s) using YAML input?", correct: "-set \"{DID: {field: value}}\"", distractors: ["-writeDid", "-pushDid", "-updateDid"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool argument streams one or more datasets with optional period multiplier?", correct: "-did [DID#<=PERIODMULT> ...]", distractors: ["-streamDid", "-didStream", "-periodDid"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool flag enables logging?", correct: "-lon", distractors: ["-logon", "-logging", "-enablelog"], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool flag selects the log file type?", correct: "-lt=LOG_TYPE", distractors: ["-logtype=", "-type=", "-logformat="], source: "user-manual/software/cltool.md" },
+    { question: "Which CLTool option sets the path where log files are written?", correct: "-lp DIRECTORY", distractors: ["-logpath", "-outdir", "-logdir"], source: "user-manual/software/cltool.md" },
+    { question: "Which log types are valid values for -lt?", correct: "raw, dat, or csv", distractors: ["txt, bin, or xml", "json, yaml, or csv", "pcap, txt, or bin"], source: "user-manual/software/cltool.md" },
+    { question: "Which log type is the default when using CLTool logging?", correct: "dat", distractors: ["raw", "csv", "kml"], source: "user-manual/software/cltool.md" },
+    { question: "What does the raw log type capture?", correct: "Byte-for-byte data received over serial in native packet formats", distractors: ["Only decoded INS messages", "Only GNSS RTCM corrections", "Only CSV rows for IMU"], source: "user-manual/software/cltool.md" },
+    { question: "What does the dat log type contain?", correct: "InertialSense binary DID data sets grouped in serial order for post processing", distractors: ["Plain text console output", "Only NMEA sentences", "Only firmware update logs"], source: "user-manual/software/cltool.md" },
+    { question: "What does the csv log type produce?", correct: "Comma-separated values text arranged in rows and columns", distractors: ["Encrypted binary blobs", "Hex dumps of packets", "SQLite database files"], source: "user-manual/software/cltool.md" },
+    { question: "In the raw logging example, which flag sets the output directory to /media/usbdrive/data?", correct: "-lp /media/usbdrive/data", distractors: ["-out=/media/usbdrive/data", "-dir /media/usbdrive/data", "-save=/media/usbdrive/data"], source: "user-manual/software/cltool.md" },
+    { question: "What file extension is used for a firmware package file in CLTool?", correct: ".fpkg", distractors: [".hex", ".bin", ".pkg"], source: "user-manual/software/cltool.md" },
+    { question: "What benefit does the firmware package method provide?", correct: "Updates multiple devices such as an IMX-GPX pair in one process", distractors: ["It removes the need for a serial port", "It disables bootloader checks", "It only updates the bootloader"], source: "user-manual/software/cltool.md" },
+    { question: "What current limitation is noted for firmware package updates?", correct: "Updating the IMX firmware using a package is not yet supported", distractors: ["Packages only work on Windows", "Packages require Wi-Fi", "Packages erase user settings"], source: "user-manual/software/cltool.md" },
+    { question: "Which products are supported by the legacy single firmware file update method?", correct: "IMX-5 and earlier products such as uINS-3 and EVB-2", distractors: ["Only IMX-6", "Only GPX-1", "Only Rugged-2"], source: "user-manual/software/cltool.md" },
+    { question: "Which optional flag supplies the bootloader firmware file during legacy update?", correct: "-ub [BL_FILEPATH]", distractors: ["-boot [BL_FILEPATH]", "-bl [BL_FILEPATH]", "-bootloader [BL_FILEPATH]"], source: "user-manual/software/cltool.md" },
+    { question: "Which baud rates are allowed for firmware updates according to the guide?", correct: "300000, 921600, 460800, 230400, 115200", distractors: ["9600, 19200, 38400 only", "1M only", "Any baud rate works"], source: "user-manual/software/cltool.md" },
+    { question: "After building CLTool on Linux/Mac, how do you run it from the build directory?", correct: "./cltool", distractors: ["make run", "python cltool.py", "cmake --run"], source: "user-manual/software/cltool.md" },
+    { question: "On Linux, which groups might you add your user to for serial port access?", correct: "dialout and plugdev", distractors: ["sudo and tty", "adm and wheel", "gpio and users"], source: "user-manual/software/cltool.md" },
+    { question: "In Windows CMake (CL) instructions, which command builds the project from the build directory?", correct: "cmake --build .", distractors: ["make", "nmake build", "msbuild cltool.sln"], source: "user-manual/software/cltool.md" },
+    { question: "After building CLTool on Windows with CMake, from where do you run the executable?", correct: "From the Release (or Debug) directory", distractors: ["From the source root", "From Program Files", "From Documents"], source: "user-manual/software/cltool.md" },
+    { question: "Where do you set command line arguments in Visual Studio for CLTool?", correct: "Configuration Properties -> Debugging -> Command Arguments", distractors: ["Build -> Build Events", "Tools -> Options -> CMake", "Project -> Properties -> General"], source: "user-manual/software/cltool.md" },
+    { question: "What directory do you create before running cmake .. when building CLTool?", correct: "A build directory inside cltool (e.g., mkdir build)", distractors: ["A src directory", "A dist directory", "A docs directory"], source: "user-manual/software/cltool.md" },
+    { question: "When building CLTool, where do you run cmake .. from?", correct: "From inside the build directory", distractors: ["From the repository root", "From the SDK folder", "From the bin directory"], source: "user-manual/software/cltool.md" },
+    { question: "For TCP/IP base corrections in EvalTool, what Correction Input type should you select?", correct: "TCP", distractors: ["Serial", "NTRIP", "CAN"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "For TCP/IP base corrections, which formats can you choose in EvalTool?", correct: "ublox or RTCM3", distractors: ["NMEA or AIS", "CAN or SPI", "CSV or JSON"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "In the NTRIP client setup, which field specifies the caster mount point?", correct: "Mount Point", distractors: ["Station ID", "Link Name", "Channel"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "In the NTRIP client setup, which field holds the caster address and port?", correct: "Address:Port", distractors: ["Server URL only", "Hostname only", "Port only"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "How do you configure the EVB-2 radio quickly on the rover?", correct: "Press the CONFIG switch until the light is blue", distractors: ["Hold reset for 10 seconds", "Short pins 1 and 2", "Cycle power three times"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "For EVB-2 rover setup, how should radioPID and radioNID be set?", correct: "Match the values used by the base radio", distractors: ["Set both to zero", "Set random values for each device", "Set radioPID only"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "How many WiFi networks can EVB2 store when connecting to TCP/IP base?", correct: "Up to 3 networks (Wifi[0], Wifi[1], Wifi[2])", distractors: ["One network only", "Two networks", "Unlimited networks"], source: "user-manual/gnss/rtk_rover.md" },
+    { question: "What should you do with IMX-6 pin 0?", correct: "Connect it to ground because it is not connected internally", distractors: ["Leave it floating for antenna detect", "Tie it to VUSB", "Use it as a GPIO output"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "What is IMX-6 pin 1 (USB_P)?", correct: "USB Data Positive line", distractors: ["USB Data Negative line", "Power input", "CAN transmit line"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "What is IMX-6 pin 2 (USB_N)?", correct: "USB Data Negative line", distractors: ["USB Data Positive line", "Reset line", "CAN receive line"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "What is IMX-6 pin 3 (VBKUP)?", correct: "GNSS backup supply 1.4V to 3.6V; connect to VCC if no backup battery", distractors: ["5V main supply", "Ground reference", "SPI chip select"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin hosts GPIO1 / Serial 2 input / CAN RX / I2C SCL?", correct: "Pin 4 (G1/Rx2/RxCAN/SCL)", distractors: ["Pin 5", "Pin 6", "Pin 7"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin hosts GPIO2 / Serial 2 output / CAN TX / I2C SDA / Strobe?", correct: "Pin 5 (G2/Tx2/TxCAN/SDA/STROBE)", distractors: ["Pin 4", "Pin 6", "Pin 8"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is GPIO6 / Serial 1 input / SPI MOSI?", correct: "Pin 6", distractors: ["Pin 7", "Pin 8", "Pin 9"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is GPIO7 / Serial 1 output / SPI MISO?", correct: "Pin 7", distractors: ["Pin 6", "Pin 8", "Pin 9"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is GPIO8 / SPI CS / Strobe input?", correct: "Pin 8", distractors: ["Pin 7", "Pin 9", "Pin 10"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is GPIO5 / SPI SCLK / Strobe input?", correct: "Pin 9", distractors: ["Pin 8", "Pin 10", "Pin 11"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin provides nSPI_EN / STROBE_OUT / DRDY functions along with GPIO9?", correct: "Pin 10", distractors: ["Pin 12", "Pin 15", "Pin 20"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pins are ground?", correct: "Pins 11, 21, and pad P", distractors: ["Pins 1 and 2", "Pins 20 and 22", "Pins 28 and 29"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "What is IMX-6 pin 12?", correct: "nRESET; logic low resets the system", distractors: ["SPI chip select", "I2C SDA", "USB enable"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin carries SWCLK (G14)?", correct: "Pin 13", distractors: ["Pin 14", "Pin 15", "Pin 16"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is DRDY/XSDA and can serve as alternate I2C SDA?", correct: "Pin 14", distractors: ["Pin 13", "Pin 15", "Pin 16"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is G12/SWO/XSCL and can serve as alternate I2C SCL?", correct: "Pin 15", distractors: ["Pin 14", "Pin 16", "Pin 10"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is G11/SWDIO?", correct: "Pin 16", distractors: ["Pin 13", "Pin 14", "Pin 15"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is GPIO4 / Serial 0 input (Rx0)?", correct: "Pin 18", distractors: ["Pin 19", "Pin 6", "Pin 7"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is GPIO3 / Serial 0 output (Tx0)?", correct: "Pin 19", distractors: ["Pin 18", "Pin 6", "Pin 7"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "What is IMX-6 pin 22?", correct: "VCC 3.3V supply input", distractors: ["USB 5V input", "Ground", "Backup battery input"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is QDEC0.A (wheel sensor 0 channel A input)?", correct: "Pin 28", distractors: ["Pin 29", "Pin 31", "Pin 32"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is QDEC0.B (wheel sensor 0 channel B input)?", correct: "Pin 29", distractors: ["Pin 28", "Pin 31", "Pin 32"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is QDEC1.A (wheel sensor 1 channel A input)?", correct: "Pin 31", distractors: ["Pin 32", "Pin 28", "Pin 29"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Which IMX-6 pin is QDEC1.B (wheel sensor 1 channel B input)?", correct: "Pin 32", distractors: ["Pin 31", "Pin 28", "Pin 29"], source: "user-manual/hardware/module_imx6.md" },
+    { question: "Where can you find open source hardware design files and 3D models for the IMX module?", correct: "In the Inertial Sense Hardware Design repository on GitHub", distractors: ["Only on the product CD", "They are not available", "Inside the firmware package"], source: "user-manual/hardware/module_imx6.md" }
   ];
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function prepareQuestion(base) {
+    const options = shuffle([base.correct, ...base.distractors]);
+    const answer = options.indexOf(base.correct);
+    return { ...base, options, answer };
+  }
+
+  function pickQuestions() {
+    return shuffle([...fullQuestions]).slice(0, 25).map(prepareQuestion);
+  }
 
   const state = {
     index: 0,
     score: 0,
-    answers: []
+    answers: [],
+    questions: pickQuestions()
   };
 
   const els = {
@@ -443,9 +343,8 @@ h2#question-text {
     results: document.getElementById("results")
   };
 
-  const total = questions.length;
-
   function updateProgress() {
+    const total = state.questions.length;
     const current = Math.min(state.index + 1, total);
     const percent = (current / total) * 100;
     els.progressBar.style.width = `${percent}%`;
@@ -458,11 +357,12 @@ h2#question-text {
   }
 
   function renderQuestion() {
+    const total = state.questions.length;
     if (state.index >= total) {
       return showResults();
     }
 
-    const q = questions[state.index];
+    const q = state.questions[state.index];
     els.question.textContent = q.question;
     els.feedback.textContent = "";
     els.feedback.className = "quiz-feedback";
@@ -480,7 +380,7 @@ h2#question-text {
   }
 
   function handleAnswer(selectedIdx) {
-    const q = questions[state.index];
+    const q = state.questions[state.index];
     const isCorrect = selectedIdx === q.answer;
     state.answers[state.index] = isCorrect;
     if (isCorrect) {
@@ -543,6 +443,7 @@ h2#question-text {
     state.index = 0;
     state.score = 0;
     state.answers = [];
+    state.questions = pickQuestions();
     els.results.hidden = true;
     renderQuestion();
   }
