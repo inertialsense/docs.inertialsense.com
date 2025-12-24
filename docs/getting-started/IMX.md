@@ -4,9 +4,9 @@ The configuration settings found in DID_FLASH_CONFIG are used to configure the v
 
 The antenna offset should also be configured by going to the Data Sets Tab and selecting DID_FLASH_CONFIG. The values of each field can then be edited. Modify the following fields after identifying the [antenna positions](../user-manual/gnss/rtk_compassing.md#dual-antenna-locations):
 
-1. gps1AntOffset[X-Z] - Position offset of sensor frame with respect to GPS1 antenna.
+1. gps1AntOffset[X-Z] - Position of GPS1 antenna with respect to sensor frame.
 
-2. gps2AntOffset[X-Z] - Position offset of sensor frame with respect to GPS2 antenna.
+2. gps2AntOffset[X-Z] - Position of GPS2 antenna with respect to sensor frame.
 
 IMX-5 data sets can then be requested by one of several methods:
 
@@ -18,14 +18,14 @@ IMX-5 data sets can then be requested by one of several methods:
 
 
 ## Demonstration Videos
-### Rugged-3-G2 GPS Compassing Configuration Demo
+### Rugged-3-DUAL GPS Compassing Configuration Demo
 
 <center>
 <iframe width="800" height="400" src="https://www.youtube.com/embed/3pCre66Wbxw?si=-zPEm2B2ivJ5v-61" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 </center>
 
-### Rugged-3-G2 RS-485/422 Configuration Demo
+### Rugged-3-DUAL RS-485/422 Configuration Demo
 
 <center>
 <iframe width="800" height="400" src="https://www.youtube.com/embed/dG4w2MkVch4?si=awCGX5lEGiaDz7FY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
