@@ -1256,7 +1256,7 @@ Triple IMU data calibrated from DID_IMU3_UNCAL.  We recommend use of DID_IMU or 
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
 | status | uint32_t | IMU Status (eImuStatus) |
-| I | imus_t[3] | Inertial Measurement Units (IMUs) |
+| I | imus_t[5] | Inertial Measurement Units (IMUs) |
 
 
 #### DID_IMU3_UNCAL
