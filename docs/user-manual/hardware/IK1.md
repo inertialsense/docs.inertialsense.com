@@ -40,7 +40,7 @@ The IK-1 module pinout is as follows
 | 12 | 7   | 7    | G7/Tx1/MISO                                   | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO                       |
 | 13 | 8   | 8    | G8/CS/STRB                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 14 | 9   | 9    | G5/SCLK/STRB                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
-| 15 | 10 | 10   | G9/nSPI_EN/DRDY/STRB  | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
+| 15 | 10 | 10   | G9/nSPI_EN/STRB/DRDY  | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
 | 17 | 12 | 22   | nRESET                                        | I    | System reset on logic low. May be left unconnected if not used. |
 | 18 | 13 | 23   | G14/SWCLK                                     | I/O  | GPIO14                                       |
 | 19 | 14 | 24   | G13/XSDA/PPS2/DRDY                            | I/O  | GPIO13<br />Alt I2C SDA<br />GNSS2 PPS time synchronization input pulse (1Hz, 10% duty cycle)<br />SPI Data Ready |
