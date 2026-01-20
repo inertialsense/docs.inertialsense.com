@@ -64,7 +64,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 
 ### Typical Application: GPX-1 IMX-5
 
-The following schematic shows the recommended interconnection for the GPX-1 and IMX-5.
+The following schematic shows the recommended interconnection for the GPX-1 and IMX-5.  To enable GNSS PPS1 and PPS2 time synchronization input on the IMX-5 the corresponding enable bits must be set in `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.ioConfig2`.
 
 ![GPX-1 Typical Application](images/gpx1_imx5_typical_app.svg)
 
