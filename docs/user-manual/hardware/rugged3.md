@@ -62,19 +62,19 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 The following table shows the Rugged-3 pinout.  Note that pin function can change based on changing  `DID_FLASH_CONFIG.platformConfig` (see [I/O Configuration](#io-configuration) below).
 
-| Rugged<br/>Pin | IMX<br/>Pin      | Name                                            | I/O           | Description                                                  |
-| -------------- | ---------------- | :---------------------------------------------- | ------------- | ------------------------------------------------------------ |
-| 1              |                  | GND                                             | PWR           | -                                                            |
-| 2              | G9               | G9_STROBE                                       | I/O           | G9-Strobe time sync input.  (Includes 3K ohm series resistor) |
-| 3              |                  | VIN                                             | PWR           | 4V-20V supply voltage input                                  |
-| 4              |                  | USB.D+                                          | I/O           | USB Data Positive Line                                       |
-| 5              |                  | GPS_PPS                                         | O             | GPS PPS time synchronization output pulse (1Hz, 10% duty cycle) |
-| 6              |                  | USB.D-                                          | I/O           | USB Data Negative Line                                       |
-| 7              | G3<br/>G2<br/>G5 | Tx0<br/>485Tx1+<br/>SCLK                        | O<br/>O<br/>I | Serial 0 output (TTL or RS232)<br/>Serial 1 output+ (RS485/RS422)<br/>SPI clock |
-| 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx1-<br/>Tx1, MISO                   | O<br/>O<br/>O | Serial 2 output (TTL)<br/>Serial 1 output- (RS485/RS422)<br/>Serial 1 output (TTL or RS232), SPI MISO |
-| 9              | G4<br/>G1<br/>G8 | Rx0<br/>485Rx1-<br/>CS, G8_STROBE               | I<br/>I<br/>I | Serial 0 input (TTL or RS232)<br/>Serial 1 input- (RS485/RS422)<br/>SPI chip select, G8-Strobe time sync input |
-| 10             | G1<br/>G1<br/>G6 | Rx2<br/>485Rx1+<br/>Rx1, MOSI                   | I<br/>I<br/>I | Serial 2 input (TTL)<br/>Serial 1 input+ (RS485/RS422)<br/>Serial 1 input (TTL or RS232), SPI MOSI |
-| 11             | G1<br/>G1        | CANL<sup>\*</sup><br/>Rx2<sup>\*\*</sup>        | I/O<br/>I     | High level (CAN bus)<br/>Serial 2 input (TTL)<sup>\*\*</sup>              |
+| Rugged<br/>Pin | IMX<br/>Pin      | Name                                                | I/O           | Description                                                  |
+| -------------- | ---------------- | :-------------------------------------------------- | ------------- | ------------------------------------------------------------ |
+| 1              |                  | GND                                                 | PWR           | -                                                            |
+| 2              | G9               | nSPI_EN/STRB/DRDY                                   | I/O           | (Includes 3K ohm series resistor)<br />SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br />G9-Strobe time sync input or output. <br />SPI data ready |
+| 3              |                  | VIN                                                 | PWR           | 4V-20V supply voltage input                                  |
+| 4              |                  | USB.D+                                              | I/O           | USB Data Positive Line                                       |
+| 5              |                  | PPS1                                                | O             | GNSS 1 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
+| 6              |                  | USB.D-                                              | I/O           | USB Data Negative Line                                       |
+| 7              | G3<br/>G2<br/>G5 | Tx0<br/>485Tx1+<br/>SCLK                            | O<br/>O<br/>I | Serial 0 output (TTL or RS232)<br/>Serial 1 output+ (RS485/RS422)<br/>SPI clock |
+| 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx1-<br/>Tx1, MISO                       | O<br/>O<br/>O | Serial 2 output (TTL)<br/>Serial 1 output- (RS485/RS422)<br/>Serial 1 output (TTL or RS232), SPI MISO |
+| 9              | G4<br/>G1<br/>G8 | Rx0<br/>485Rx1-<br/>CS, G8_STROBE                   | I<br/>I<br/>I | Serial 0 input (TTL or RS232)<br/>Serial 1 input- (RS485/RS422)<br/>SPI chip select, G8-Strobe time sync input |
+| 10             | G1<br/>G1<br/>G6 | Rx2<br/>485Rx1+<br/>Rx1, MOSI                       | I<br/>I<br/>I | Serial 2 input (TTL)<br/>Serial 1 input+ (RS485/RS422)<br/>Serial 1 input (TTL or RS232), SPI MOSI |
+| 11             | G1<br/>G1        | CANL<sup>\*</sup><br/>Rx2<sup>\*\*</sup>            | I/O<br/>I     | High level (CAN bus)<br/>Serial 2 input (TTL)<sup>\*\*</sup> |
 | 12             | G2<br/>G2        | CANH<sup>\*</sup><br/>Tx2, G2_STROBE<sup>\*\*</sup> | I/O<br/>I/O   | Low level (CAN bus)<sup>\*</sup>. <br/>Serial 2 output (TTL)<sup>\*\*</sup>, G2-Strobe time sync input<sup>\*\*</sup> |
 
 <sup>\* The CAN bus is enabled by default on pins 11,12 (R16,R17 removed and R14,R15 loaded with 0402 zero ohm jumpers).<br/>\** To disable CAN bus and enable Serial2 TTL or STROBE on pins 11,12, remove R14,R15 and load R16,R17 with 0402 zero ohm jumpers.</sup>

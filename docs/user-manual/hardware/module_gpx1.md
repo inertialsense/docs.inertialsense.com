@@ -27,12 +27,12 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 2    | USB_N                                         | I/O  | USB full-speed Negative Line. USB will be supported in future firmware updates.           |
 | 3    | VBKUP                                       | Power | Backup supply voltage input (1.75V to 3.6V). Future firmware updates will use voltage applied on this pin to backup GNSS ephemeris, almanac, and other operating parameters for a faster startup when VCC is applied again. This pin MUST be connected to a backup battery or VCC. |
 | 4    | G1/Rx2/RxCAN/SCL                              | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line |
-| 5    | G2/Tx2/TxCAN/SDA/STROBE                        | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
+| 5    | G2/Tx2/TxCAN/SDA/STRB                        | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | 6    | G6/Rx1/MOSI                                   | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI                        |
 | 7    | G7/Tx1/MISO                                   | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO                       |
-| 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
-| 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
-| 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY        | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
+| 8    | G8/CS/STRB                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
+| 9    | G5/SCLK/STRB                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
+| 10   | G9/nSPI_EN/STRB/DRDY        | I/O  | GPIO9<br />SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br />Strobe time sync input or output. SPI data ready alternate location |
 | 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-14V TVS diode for ESD and surge projection (e.g. Littlefuse PESD0402-140). |
 | 14 | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
 | 16 | VCC_RF | O | Supply output for GNSS active antenna.  Connect VCC_RF through 33-120nH inductor (e.g. Murata LQW15ANR12J00D, 110mA max) to GNSS1_RF and GNSS2_RF to inject DC supply for active antenna(s).  VCC_RF is supplied from VAUX through an onboard 1A load switch and 10 ohm resistor.  Disable by setting  `GPX_SYS_CFG_BITS_DISABLE_VCC_RF` (0x00000001) in `DID_GPX_FLASH_CFG.sysCfgBits`. |
@@ -43,7 +43,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 24   | G13/DRDY/XSDA                                 | I/O  | GPIO13<br /> SPI Data Ready<br /> Alt I2C SDA                                           |
 | 25   | G12/XSCL                                      | I/O  | GPIO12<br /> Alt I2C SCL                                                  |
 | 26   | G11/SWDIO                                     | I/O  | GPIO11                                                             |
-| 27   | G10/BOOT_MODE                                 | I/O  | Leave unconnected. BOOT MODE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
+| 27   | G10/BOOT                                      | I/O  | Leave unconnected. BOOT mode used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
 | 28   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 29   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
 | 30   | GNSS1_PPS                                 | O    | GNSS1 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
@@ -63,6 +63,8 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 ![GPX-1 Block Diagram](images/gpx1_imx1_host_diagram.svg)
 
 ### Typical Application: GPX-1 IMX-5
+
+The following schematic shows the recommended interconnection for the GPX-1 and IMX-5.  To enable GNSS PPS1 and PPS2 time synchronization input on the IMX-5 the corresponding enable bits must be set in `DID_FLASH_CONFIG.ioConfig` and `DID_FLASH_CONFIG.ioConfig2`.
 
 ![GPX-1 Typical Application](images/gpx1_imx5_typical_app.svg)
 
