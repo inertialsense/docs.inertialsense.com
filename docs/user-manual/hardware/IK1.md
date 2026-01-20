@@ -43,7 +43,7 @@ The IK-1 module pinout is as follows
 | 15 | 10 | 10   | G9/nSPI_EN/DRDY/STRB  | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
 | 17 | 12 | 22   | nRESET                                        | I    | System reset on logic low. May be left unconnected if not used. |
 | 18 | 13 | 23   | G14/SWCLK                                     | I/O  | GPIO14                                       |
-| 19 | 14 | 24   | G13/PPS2/DRDY/XSDA                            | I/O  | GPIO13<br />SPI Data Ready<br />Alt I2C SDA<br />GNSS2 PPS time synchronization input pulse (1Hz, 10% duty cycle) |
+| 19 | 14 | 24   | G13/XSDA/PPS2/DRDY                            | I/O  | GPIO13<br />Alt I2C SDA<br />GNSS2 PPS time synchronization input pulse (1Hz, 10% duty cycle)<br />SPI Data Ready |
 | 20 | 15 | 25   | G12/XSCL                                      | I/O  | GPIO12<br /> Alt I2C SCL                                                  |
 | 21 | 16 | 26   | G11/SWDIO                                     | I/O  | GPIO11                                                             |
 | 22 | 17 | 27   | G10/BOOT                                 | I/O  | Leave unconnected. BOOT mode used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
