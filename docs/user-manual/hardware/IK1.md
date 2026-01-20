@@ -30,26 +30,26 @@ The IK-1 module pinout is as follows
 | --------------------------------------------- | ---- | ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------------------------------- |
 | 1-3 | 11,21 | 11,13,15,31 | GND | Power | Supply ground |
 | 4 | - | 20 | G20/LNA-EN | I/O | GPIO20, GPX LNA enable |
-| 5 | - | 21 | GNSS2_PPS | O | GNSS2 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
+| 5 | - | 21 | PPS2 | O | GNSS2 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 6 | 1   | 1    | USB_P                                         | I/O  | USB full-speed Positive Line. USB will be supported in future firmware updates.           |
 | 7 | 2   | 2    | USB_N                                         | I/O  | USB full-speed Negative Line. USB will be supported in future firmware updates.           |
 | 8 | 3   | 3    | VBKUP                                       | Power | Backup supply voltage input (1.75V to 3.6V). Future firmware updates will use voltage applied on this pin to backup GNSS ephemeris, almanac, and other operating parameters for a faster startup when VCC is applied again. This pin MUST be connected to a backup battery or VCC. |
 | 9 | 4   | 4    | G1/Rx2/RxCAN/SCL                              | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line |
-| 10 | 5   | 5    | G2/Tx2/TxCAN/SDA/STROBE                        | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
+| 10 | 5   | 5    | G2/Tx2/TxCAN/SDA/STRB                        | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | 11 | 6   | 6    | G6/Rx1/MOSI                                   | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI                        |
 | 12 | 7   | 7    | G7/Tx1/MISO                                   | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO                       |
-| 13 | 8   | 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
-| 14 | 9   | 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
-| 15 | 10 | 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY        | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
+| 13 | 8   | 8    | G8/CS/STRB                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
+| 14 | 9   | 9    | G5/SCLK/STRB                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
+| 15 | 10 | 10   | G9/nSPI_EN/DRDY/STRB  | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
 | 17 | 12 | 22   | nRESET                                        | I    | System reset on logic low. May be left unconnected if not used. |
 | 18 | 13 | 23   | G14/SWCLK                                     | I/O  | GPIO14                                       |
-| 19 | 14 | 24   | G13/DRDY/XSDA                                 | I/O  | GPIO13<br /> SPI Data Ready<br /> Alt I2C SDA                                           |
+| 19 | 14 | 24   | G13/PPS2/DRDY/XSDA                            | I/O  | GPIO13<br />SPI Data Ready<br />Alt I2C SDA<br />GNSS2 PPS time synchronization input pulse (1Hz, 10% duty cycle) |
 | 20 | 15 | 25   | G12/XSCL                                      | I/O  | GPIO12<br /> Alt I2C SCL                                                  |
 | 21 | 16 | 26   | G11/SWDIO                                     | I/O  | GPIO11                                                             |
-| 22 | 17 | 27   | G10/BOOT_MODE                                 | I/O  | Leave unconnected. BOOT MODE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
+| 22 | 17 | 27   | G10/BOOT                                 | I/O  | Leave unconnected. BOOT mode used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
 | 23 | 18 | 28   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 24 | 19 | 29   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
-| 25 | 20 | 30   | GNSS1_PPS                                 | O    | GNSS1 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
+| 25 | 20 | 30   | PPS1                                | O (IMX)<br />I (GPX) | GNSS1 PPS time synchronization pulse (1Hz, 10% duty cycle) |
 | 27 | 22 | 32   | VCC                                           | Power | 1.8V to 3.3V supply input.                                       |
 | 28 | - | 38 | G16/QDEC0.A | I/O | GPIO16 |
 | 29 | - | 39 | G17/QDEC0.B | I/O | GPIO17 |
