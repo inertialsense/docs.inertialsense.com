@@ -1250,20 +1250,20 @@ Static configuration for wheel transform measurements.
 
 Triple IMU data calibrated from DID_IMU3_UNCAL.  We recommend use of DID_IMU or DID_PIMU as they are oversampled and contain less noise. 
 
-`imu3_t`
+`imuX_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
 | status | uint32_t | IMU Status (eImuStatus) |
-| I | imus_t[3] | Inertial Measurement Units (IMUs) |
+| I | imus_t[5] | Inertial Measurement Units (IMUs) |
 
 
 #### DID_IMU3_UNCAL
 
 Uncalibrated triple IMU data.  We recommend use of DID_IMU or DID_PIMU as they are calibrated and oversampled and contain less noise.  Minimum data period is DID_FLASH_CONFIG.startupImuDtMs or 4, whichever is larger (250Hz max). 
 
-`imu3_t`
+`imuX_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -1552,7 +1552,7 @@ Temperature compensated and motion calibrated IMU output.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| imu3 | imu3_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
+| imu | imuX_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
 | temp | float[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
 
 
@@ -1564,7 +1564,7 @@ Temperature compensated IMU output.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| imu3 | imu3_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
+| imu | imuX_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
 | temp | float[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
 
 
@@ -1599,7 +1599,7 @@ Uncalibrated IMU output.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| imu3 | imu3_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
+| imu | imuX_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
 | temp | float[3] | (uT) Magnetometers.  Units only apply for calibrated data. |
 
 
