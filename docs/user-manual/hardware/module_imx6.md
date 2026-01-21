@@ -24,21 +24,21 @@
 | 2    | USB_N                                         | I/O  | USB Data Negative Line                                       |
 | 3    | VBKUP                                  | I   | GNSS backup supply voltage. (1.4V to 3.6V) enables GNSS hardware backup mode for hot or warm startup (faster GNSS lock acquisition).  MUST connect VBKUP to VCC if no backup battery is used. |
 | 4    | G1/Rx2/RxCAN/SCL  | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line |
-| 5    | G2/Tx2/TxCAN/SDA/STROBE | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
+| 5    | G2/Tx2/TxCAN/SDA/STRB | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | 6    | G6/Rx1/MOSI                                   | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI                        |
 | 7    | G7/Tx1/MISO                                   | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO                       |
-| 8    | G8/CS/STROBE                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
-| 9    | G5/SCLK/STROBE                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
-| 10   | G9/nSPI_EN/STROBE<br/>/STROBE_OUT/DRDY             | I/O  | GPIO9<br /> SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br /> Strobe time sync input or output. SPI data ready alternate location |
+| 8    | G8/CS/STRB                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
+| 9    | G5/SCLK/STRB                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
+| 10   | G9/nSPI_EN/STRB/DRDY             | I/O  | GPIO9<br />SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br />Strobe time sync input or output. <br />SPI data ready |
 | 12   | nRESET                                        |  I   | System reset on logic low. May be left unconnected if not used. |
 | 13   | G14/SWCLK                                | I/O    | GPIO14                                       |
-| 14   | G13/DRDY/XSDA                                 |   I/O   | GPIO13<br /> SPI Data Ready<br /> Alt I2C SDA                                           |
-| 15   | G12/SWO/XSCL                                  | I/O    | GPIO12<br /> Alt I2C SCL                                                  |
+| 14   | G13/XSDA/PPS2/DRDY                    |   I/O   | GPIO13<br />GNSS2 PPS<br />SPI Data Ready<br /> Alt I2C SDA                        |
+| 15   | G12/XSCL/SWO                              | I/O    | GPIO12<br /> Alt I2C SCL                                                  |
 | 16   | G11/SWDIO                                      | I/O    | GPIO11                                                             |
-| 17   | G10/BOOT_MODE                         | I/O    | Leave unconnected. BOOT MODE used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
+| 17   | G10/BOOT                         | I/O    | Leave unconnected. BOOT mode used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into bootloader (DFU) mode. |
 | 18   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 19   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
-| 20   | G15/GNSS_PPS                               | I   | Input for GNSS PPS for time synchronization pulse. |
+| 20   | G15/PPS1                              | I   | Input for GNSS PPS for time synchronization pulse. |
 | 22   | VCC                                           | I   | 3.3V supply input                                |
 | 28 | QDEC0.A | I | Ground vehicle wheel sensor 0 quadrature channel A input. |
 | 29 | QDEC0.B | I | Ground vehicle wheel sensor 0 quadrature channel B input. |
