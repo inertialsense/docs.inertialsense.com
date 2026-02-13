@@ -6,9 +6,7 @@ site_url: https://docs.inertialsense.com
 # repo_url: https://github.com/inertialsense/docs
 # edit_uri: blob/main/docs/   # Commented out to hide edit icon from top right corner of each page.
 
-# Google Analytics - This is going to be phased out and moved to 'theme.analytics.gtag' using 'G-' ID rather than the "UA-" ID.
-# (see https://www.mkdocs.org/about/release-notes/)
-google_analytics: ['UA-110693473-1', 'docs.inertialsense.com']
+# Google Analytics configured under theme.analytics.gtag.
 
 # Configuration
 theme:
@@ -21,8 +19,6 @@ theme:
     accent: 'red'
   favicon: 'img/favicon.png'
   logo: 'img/Logo_Circle_white.svg'
-  feature:
-    tabs: false
   features:
     - content.math  # Enables KaTeX for math rendering
 # theme_dir: docs/custom_theme
@@ -30,18 +26,18 @@ theme:
 
 plugins:
     - search
-    - with-pdf:       # https://pypi.org/project/mkdocs-with-pdf/
-        enabled_if_env: ENABLE_PDF_EXPORT
-        author: Inertial Sense, Inc.
-        output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
-        copyright: ©2022
-        cover: true
-        cover_title: User Manual
-        cover_subtitle: Autonomous Navigation Solutions
-        toc_title: Table of Contents
-        # debug_html: true
-        # show_anchors: true
-        # verbose: true
+  # - with-pdf:       # https://pypi.org/project/mkdocs-with-pdf/
+  #     enabled_if_env: ENABLE_PDF_EXPORT
+  #     author: Inertial Sense, Inc.
+  #     output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
+  #     copyright: ©2022
+  #     cover: true
+  #     cover_title: User Manual
+  #     cover_subtitle: Autonomous Navigation Solutions
+  #     toc_title: Table of Contents
+  #     # debug_html: true
+  #     # show_anchors: true
+  #     # verbose: true
     # - pdf-export:     # https://pypi.org/project/mkdocs-pdf-export-plugin/
     #     combined: true
     #     combined_output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
@@ -97,15 +93,10 @@ nav:
     - IMX-6: user-manual/hardware/module_imx6.md
     - IMX-5: user-manual/hardware/module_imx5.md
     - GPX-1: user-manual/hardware/module_gpx1.md
-    # - uINS-3: user-manual/hardware/module_uins3.md
     - Rugged-3: user-manual/hardware/rugged3.md
-    # - Rugged-2: user-manual/hardware/rugged2.md
-    # - Rugged-1: user-manual/hardware/rugged1.md
     - IG-1: user-manual/hardware/IG1.md
     - IG-2: user-manual/hardware/IG2.md
     - IK-1: user-manual/hardware/IK1.md
-    # - EVB-2: user-manual/hardware/EVB2.md
-    # - EVB-1: user-manual/hardware/EVB1.md
     - Design Files: user-manual/hardware/hardware_design.md
     - Reflow Soldering: user-manual/hardware/reflow.md
   - IS Software:
@@ -120,6 +111,14 @@ nav:
     - NMEA: user-manual/com-protocol/nmea.md
     - SPI: user-manual/com-protocol/SPI.md
     - CAN: user-manual/com-protocol/CAN.md
+  - IMX:
+    - Dead Reckoning:
+      - Overview: user-manual/imx/dead-reckoning/dead_reckoning.md
+      - Examples: user-manual/imx/dead-reckoning/dead_reckoning_examples.md
+    - IMU Shock Rejection: user-manual/imx/shock-rejection/imu_shock_rejection.md
+  - GPX:
+    - Config: user-manual/gpx/configuration.md
+    - GPX System Status: user-manual/reference/GPX_system_status.md
   - GNSS - RTK:
     - Multi-band GNSS:
       - Overview: user-manual/gnss/multi_band_gnss_overview.md
@@ -136,9 +135,6 @@ nav:
       - Point Perfect: user-manual/gnss/ublox_pointperfect.md
       - SBAS: user-manual/gnss/SBAS.md
     - RTK Compassing: user-manual/gnss/rtk_compassing.md
-  - Dead Reckoning:
-    - Overview & Installation: user-manual/dead-reckoning/dead_reckoning.md
-    - Examples: user-manual/dead-reckoning/dead_reckoning_examples.md
   - General Configuration:
     # - Pixhawk Integration: user-manual/application-config/pixhawk.md
     - Infield Calibration: user-manual/application-config/infield_calibration.md
@@ -177,6 +173,7 @@ nav:
     - Firmware: user-manual/troubleshooting/firmware.md
     - Chip Erase: user-manual/troubleshooting/chip_erase.md
     - GNSS: user-manual/troubleshooting/gnss.md
+    - IMX Bootloader: user-manual/troubleshooting/imx_bootloader.md
     
     
     

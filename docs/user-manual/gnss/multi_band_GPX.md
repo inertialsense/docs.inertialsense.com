@@ -21,12 +21,6 @@ The following sections detail how to interface and configure the IMX for operati
 
 The IMX will automatically configure the GPX-1 for communications.    
 
-<center>
-
-![](images/F9P_Compassing_Connection_Diagram.svg)
-
-</center>
-
 
 ### Rugged-4 (Coming Soon)
 

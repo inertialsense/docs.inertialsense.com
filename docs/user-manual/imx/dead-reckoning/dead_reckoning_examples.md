@@ -54,7 +54,7 @@ The IMX with dead reckoning and without wheel sensor can estimate position to wi
 
 <a href="https://inertialsense.com/"><center>
 
-![Logo](../images/IS_LOGO_BLACK_F03.svg)
+![Logo](../../images/IS_LOGO_BLACK_F03.svg)
 
 </center></a>
 
