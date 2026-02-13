@@ -17,7 +17,7 @@ See the [multi-band GNSS](multi_band_F9P.md#evb-2-to-zed-f9p-interface) section 
 
 Any of the following devices can be used as a RTK base station. All Inertial Sense base station options require a GPS antenna.
 
-- **Inertial Sense EVB 2** - Sends corrections using the onboard 915 MHz radio, the onboard WiFi module, either serial port, or USB.
+<!-- - **Inertial Sense EVB 2** - Sends corrections using the onboard 915 MHz radio, the onboard WiFi module, either serial port, or USB. -->
 
 <!-- (access point mode or over an existing network/hotspot). -->
 <!-- (up to several km line-of-sight) -->
@@ -32,13 +32,13 @@ Any of the following devices can be used as a RTK base station. All Inertial Sen
 
 The following configurations can be used for the RTK rover:
 
-- **Inertial Sense EVB 2** - Can receive corrections via the onboard 915 MHz radio, onboard WiFi module, serial ports, or USB.
-- **Inertial Sense µINS module, EVB 1 or Rugged** - Can receive corrections via either serial port or USB.
+
+- **Inertial Sense Rugged** - Can receive corrections via either serial port or USB.
 
 ### Base to Rover Communication
 
 1. **Direct Serial** - Using USB, RS232, RS422/485, or TTL to pass corrections from Base to Rover.
-2. **Radio Link** - Inertial Sense EVB 2 uses the Digi Xbee Pro SX module to send RTK corrections. Other communication methods such as Bluetooth may also work for the chosen application.
+2. **Radio Link** - For example, Digi Xbee to send RTK corrections. Other communication methods such as Bluetooth may also work for the chosen application.
 3. **NTRIP** - Transmits RTK correction data over the Internet. To receive messages with NTRIP, the user must supply a URL, port number, and mount point . Often a username and password are also required.
 4. **TCP/IP** - A protocol for communicating directly between computers. In order to receive messages using TCP/IP, an address (IP Address or DNS) must be suppled to the Base where the corrections will be transmitted.
 

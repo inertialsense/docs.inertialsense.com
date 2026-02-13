@@ -27,8 +27,7 @@ Select the evaluation product from the list below to view instructions on basic 
 
 - [IMX-5 PCB Module](../user-manual/hardware/module_imx5.md#application)
 - [GPX-1 PCB Module](../user-manual/hardware/module_gpx1.md#typical-application-gpx-1-imx-5)
-- [Rugged-3 Units](../user-manual/hardware/rugged3.md#connecting-your-unit)
-<!-- - [Rugged-2 Units](../user-manual/hardware/rugged2.md) -->
+- [Rugged-3 Units](../user-manual/hardware/rugged3.md#connecting-your-unit)<!-- - [Rugged-2 Units](../user-manual/hardware/rugged2.md) -->
 - [IG-1 Units](../user-manual/hardware/IG1.md#connecting-your-unit)
 - [IG-2 Units](../user-manual/hardware/IG2.md#connecting-your-unit)
 - [IK-1 Units](../user-manual/hardware/IK1.md#connecting-your-unit)
