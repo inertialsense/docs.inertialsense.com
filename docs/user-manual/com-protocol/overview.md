@@ -16,4 +16,4 @@ The following table compares the differences and advantages between the binary a
 | **SDK Support**       | Yes, less                                                    | Yes, more                                                    |
 | **Data Access**       | Limited to sensor and INS output.                            | Comprehensive access to all data and configuration settings. |
 | **Recommended Use**   | Rapid prototypes and simple projects.  Devices supporting NMEA. | Moderate to advanced applications.                           |
-| **Apps and Examples** | [NMEA Communications Example](../SDK/CommunicationsAscii.md) | EvalTool, CLTool, [Binary Communications Example](../SDK/CommunicationsBinary.md), [Fimrware Update Example](../SDK/FirmwareUpdate.md), [Data Logger Example](../SDK/DataLogger.md) |
+| **Apps and Examples** | [NMEA Communications Example](../software/SDK/CommunicationsAscii.md) | EvalTool, CLTool, [Binary Communications Example](../software/SDK/CommunicationsBinary.md), [Fimrware Update Example](../software/SDK/FirmwareUpdate.md), [Data Logger Example](../software/SDK/DataLogger.md) |

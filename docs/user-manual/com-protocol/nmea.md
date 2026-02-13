@@ -6,7 +6,7 @@ For simple use, the InertialSense device supports a human-readable NMEA protocol
 
 ## Communications Example
 
-The [NMEA Communications Example Project](../SDK/CommunicationsAscii.md) demonstrates how to implement the protocol.
+The [NMEA Communications Example Project](../software/SDK/CommunicationsAscii.md) demonstrates how to implement the protocol.
 
 ## Packet Structure
 

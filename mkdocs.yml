@@ -88,7 +88,7 @@ nav:
     - Overview: getting-started/Overview.md
     - IMX-5: getting-started/IMX-5.md
     - GPX-1: getting-started/GPX-1.md
-  - IS Hardware:
+  - Hardware Integration:
     #- Overview: user-manual/hardware/overview.md
     - IMX-6: user-manual/hardware/module_imx6.md
     - IMX-5: user-manual/hardware/module_imx5.md
@@ -99,11 +99,37 @@ nav:
     - IK-1: user-manual/hardware/IK1.md
     - Design Files: user-manual/hardware/hardware_design.md
     - Reflow Soldering: user-manual/hardware/reflow.md
-  - IS Software:
-    - CLTool: user-manual/software/cltool.md
+  - Software / SDK:
     - EvalTool: user-manual/software/evaltool.md
-    - SDK: user-manual/software/SDK.md
-    - Log Inspector: user-manual/software/logInspector.md
+    - CLTool: user-manual/software/cltool.md
+    - Log Inspector: user-manual/software/SDK/logInspector.md
+    - SDK Overview: user-manual/software/SDK/overview.md
+    - Example Projects:
+      - Comm-Binary (C): user-manual/software/SDK/CommunicationsBinary.md
+      - Comm-NMEA (C): user-manual/software/SDK/CommunicationsAscii.md
+      - Comm-Arduino (C): user-manual/software/SDK/CommunicationsArduino.md
+      - Firmware Update (C): user-manual/software/SDK/FirmwareUpdate.md
+      - InertialSense Class CLTool (C++): user-manual/software/SDK/InertialSenseClassCLTool.md
+      - Data Logging (C++): user-manual/software/SDK/DataLogger.md
+  - IMX:
+    - Configuration:
+      # - Pixhawk Integration: user-manual/imx/application-config/pixhawk.md
+      - Infield Calibration: user-manual/imx/application-config/infield_calibration.md
+      - Platform Config: user-manual/imx/application-config/platform_configuration.md
+      - IMU INS GNSS Config: user-manual/imx/application-config/imu_ins_gnss_configuration.md
+      - System Config: user-manual/imx/application-config/system_configuration.md
+      - Time Sync/Strobe: user-manual/imx/application-config/time_sync.md
+      - Zero Motion Command: user-manual/imx/application-config/zero_motion_command.md
+      - UART: user-manual/imx/application-config/UART.md
+      - World Magnetic Model: user-manual/imx/application-config/world_magnetic_model.md
+      #- Assisted-GPS: user-manual/imx/application-config/assisted-gnss.md
+    - Dead Reckoning:
+      - Overview: user-manual/imx/dead-reckoning/dead_reckoning.md
+      - Examples: user-manual/imx/dead-reckoning/dead_reckoning_examples.md
+    - IMU Shock Rejection: user-manual/imx/shock-rejection/imu_shock_rejection.md
+  - GPX:
+    - Configuration: user-manual/gpx/configuration.md
+    - GPX System Status: user-manual/reference/GPX_system_status.md
   - Communication Protocols:
     - Overview: user-manual/com-protocol/overview.md
     - Data Sets (DIDs): user-manual/com-protocol/DID-descriptions.md
@@ -111,14 +137,6 @@ nav:
     - NMEA: user-manual/com-protocol/nmea.md
     - SPI: user-manual/com-protocol/SPI.md
     - CAN: user-manual/com-protocol/CAN.md
-  - IMX:
-    - Dead Reckoning:
-      - Overview: user-manual/imx/dead-reckoning/dead_reckoning.md
-      - Examples: user-manual/imx/dead-reckoning/dead_reckoning_examples.md
-    - IMU Shock Rejection: user-manual/imx/shock-rejection/imu_shock_rejection.md
-  - GPX:
-    - Config: user-manual/gpx/configuration.md
-    - GPX System Status: user-manual/reference/GPX_system_status.md
   - GNSS - RTK:
     - Multi-band GNSS:
       - Overview: user-manual/gnss/multi_band_gnss_overview.md
@@ -135,26 +153,6 @@ nav:
       - Point Perfect: user-manual/gnss/ublox_pointperfect.md
       - SBAS: user-manual/gnss/SBAS.md
     - RTK Compassing: user-manual/gnss/rtk_compassing.md
-  - General Configuration:
-    # - Pixhawk Integration: user-manual/application-config/pixhawk.md
-    - Infield Calibration: user-manual/application-config/infield_calibration.md
-    - Platform Config: user-manual/application-config/platform_configuration.md
-    - IMU INS GNSS Config: user-manual/application-config/imu_ins_gnss_configuration.md
-    - System Config: user-manual/application-config/system_configuration.md
-    - Time Sync/Strobe: user-manual/application-config/time_sync.md
-    - Zero Motion Command: user-manual/application-config/zero_motion_command.md
-    - UART: user-manual/application-config/UART.md
-    - World Magnetic Model: user-manual/application-config/world_magnetic_model.md
-    #- Assisted-GPS: user-manual/application-config/assisted-gnss.md
-  - SDK:
-    - Overview: user-manual/SDK/README.md
-    - Example Projects:
-      - Comm-Binary (C): user-manual/SDK/CommunicationsBinary.md
-      - Comm-NMEA (C): user-manual/SDK/CommunicationsAscii.md
-      - Comm-Arduino (C): user-manual/SDK/CommunicationsArduino.md
-      - Firmware Update (C): user-manual/SDK/FirmwareUpdate.md
-      - InertialSense Class CLTool (C++): user-manual/SDK/InertialSenseClassCLTool.md
-      - Data Logging (C++): user-manual/SDK/DataLogger.md
   - Data Logging/Plotting:
     - Overview: user-manual/logging-plotting/overview.md 
     - Logging: user-manual/logging-plotting/data_logging.md
