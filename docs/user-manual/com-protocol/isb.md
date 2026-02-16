@@ -87,8 +87,8 @@ The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is 
 
 The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot,  eliminating the need to re-enable messages following a reset or power cycle.  
 
-- **To save persistent messages** - (to flash memory), bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field or set DID_CONFIG.system = 0x00000001 and DID_CONFIG.system = 0xFFFFFFFE.   See the [save persistent messages example](../SDK/CommunicationsBinary.md#step-7-save-persistent-messages) in the Binary Communications example project.
-- **To disable persistent messages** - a [stop all broadcasts packet](../SDK/CommunicationsBinary.md#step-4-stop-any-message-broadcasting) followed by a *save persistent messages* command.   
+- **To save persistent messages** - (to flash memory), bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field or set DID_CONFIG.system = 0x00000001 and DID_CONFIG.system = 0xFFFFFFFE.   See the [save persistent messages example](../software/SDK/CommunicationsBinary.md#step-7-save-persistent-messages) in the Binary Communications example project.
+- **To disable persistent messages** - a [stop all broadcasts packet](../software/SDK/CommunicationsBinary.md#step-4-stop-any-message-broadcasting) followed by a *save persistent messages* command.   
 
 [NMEA persistent messages](nmea.md#persistent-messages) are also available. 
 
@@ -110,7 +110,7 @@ cltool -c /dev/ttyS3 -persistent -msgINS2 -msgGPS
 
 #### Example Projects
 
-Examples on how to use the Inertial Sense SDK for binary communications are found in the [Binary Communications Example Project](../SDK/CommunicationsBinary.md) and [cltool project](../SDK/InertialSenseClassCLTool.md).  [NMEA communications](../com-protocol/nmea.md) examples are found in the [NMEA Example Project](../SDK/CommunicationsAscii.md).
+Examples on how to use the Inertial Sense SDK for binary communications are found in the [Binary Communications Example Project](../software/SDK/CommunicationsBinary.md) and [cltool project](../software/SDK/InertialSenseClassCLTool.md).  [NMEA communications](../com-protocol/nmea.md) examples are found in the [NMEA Example Project](../software/SDK/CommunicationsAscii.md).
 
 ### Parsing Data
 

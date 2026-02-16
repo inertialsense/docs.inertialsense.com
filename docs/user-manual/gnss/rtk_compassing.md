@@ -174,4 +174,4 @@ The DID_GPS1_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
 
 ## Stationary Application
 
-For RTK compassing stationary application, enabling the STATIONARY INS dynamic model (DID_FLASH_CONFIG.dynamicModel = 2) is recommended to reduce heading noise and drift.  This will reduce heading error during RTK compassing fix or loss of fix.  See [INS-GNSS Dynamic Model](../application-config/imu_ins_gnss_configuration.md#ins-gnss-dynamic-model) and [Zero Motion Command](../application-config/zero_motion_command.md) for details.  
+For RTK compassing stationary application, enabling the STATIONARY INS dynamic model (DID_FLASH_CONFIG.dynamicModel = 2) is recommended to reduce heading noise and drift.  This will reduce heading error during RTK compassing fix or loss of fix.  See [INS-GNSS Dynamic Model](../imx/application-config/imu_ins_gnss_configuration.md#ins-gnss-dynamic-model) and [Zero Motion Command](../imx/application-config/zero_motion_command.md) for details.  
