@@ -53,6 +53,6 @@ RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded 
 
 <center>
 
-![](images/F9P_Compassing_Connection_Diagram.svg)
+![](images/F9P_Positioning_Connection_Diagram.svg)
 
 </center>

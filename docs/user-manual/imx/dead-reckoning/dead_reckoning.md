@@ -63,7 +63,7 @@ From the EvalTool INS tab:
 
 Wheel encoder input is optional for dead reckoning operation. The implementation of wheel encoder input will improve dead reckoning performance. Encoders constrain drift along the axis of travel. The IMX-5 does not support direct wheel encoder input via I/O pins. To provide wheel encoder input, an external system must generate `DID_WHEEL_ENCODER` messagese that are then streamed into an IMX-5 port.
 
-DID_WHEEL_ENCODER struct is defined below. Only omega_l and omega_r are required to be populated. All other value can be left as zero. Once populated, the full struct is streamed to the IMX-5 using the [Set Data](../com-protocol/isb.md#setting-data) method from the SDK.
+DID_WHEEL_ENCODER struct is defined below. Only omega_l and omega_r are required to be populated. All other value can be left as zero. Once populated, the full struct is streamed to the IMX-5 using the [Set Data](../../com-protocol/isb.md#setting-data) method from the SDK.
 
 ```
 /** (DID_WHEEL_ENCODER) Message to communicate wheel encoder measurements to GPS-INS */
@@ -102,7 +102,7 @@ typedef struct PACKED
 
 <a href="https://inertialsense.com/"><center>
 
-![Logo](../images/IS_LOGO_BLACK_F03.svg)
+![Logo](../../images/IS_LOGO_BLACK_F03.svg)
 
 </center></a>
 

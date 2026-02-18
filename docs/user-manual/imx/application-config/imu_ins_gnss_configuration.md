@@ -14,17 +14,17 @@ In most common applications, output is translated to the vehicle frame (X to the
 
 The relationship between the Hardware Frame, Sensor Frame, and INS Output Frame are as follows.  
 
-![](../images/coordinate_frame_relationship.svg)
+![](../../images/coordinate_frame_relationship.svg)
 
 The ***Hardware Frame*** and ***Sensor Frame*** are equivalent when the ***Sensor Rotation*** in `DID_FLASH_CONFIG.sensorConfig` is zero.  The ***Hardware Frame origin*** and ***Sensor Frame origin*** are always at the same location and may differ in direction according to the ***Sensor Rotation*** in `DID_FLASH_CONFIG.sensorConfig`.  The ***Sensor Frame*** and ***INS output Frame*** are equivalent when the `DID_FLASH_CONFIG.insRotation` and `DID_FLASH_CONFIG.insOffset` are zero.  
 
 ### Sensor Rotation (Hardware Frame to Sensor Frame)
 
-The *Sensor Rotation* is used to rotate the IMU and magnetometer output from the hardware frame to the [sensor frame](../reference/coordinate_frames.md#sensor-frame) by **multiples of 90°**.  This is done using the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits of the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.  The Sensor Rotation is defined in X,Y,Z rotations about the corresponding axes and applied in the order of Z,Y,X.  This rotation is recommended for gross rotations.   
+The *Sensor Rotation* is used to rotate the IMU and magnetometer output from the hardware frame to the [sensor frame](../../reference/coordinate_frames.md#sensor-frame) by **multiples of 90°**.  This is done using the `SENSOR_CFG_SENSOR_ROTATION_MASK` bits of the `DID_FLASH_CONFIG.sensorConfig` as defined in `enum eSensorConfig`.  The Sensor Rotation is defined in X,Y,Z rotations about the corresponding axes and applied in the order of Z,Y,X.  This rotation is recommended for gross rotations.   
 
 ### INS Rotation
 
-The *INS rotation* is used to convert the INS output from the [sensor frame](../reference/coordinate_frames.md#sensor-frame) to the vehicle frame.  This is useful if the sensor frame and vehicle frame are not aligned.  The actual INS rotation parameters are `DID_FLASH_CONFIG.insRotation[3]` (X, Y, Z) in radians.  The *INS rotation* values describes the rotation from the INS sensor frame to the intermediate frame in order of Z, Y, X.     
+The *INS rotation* is used to convert the INS output from the [sensor frame](../../reference/coordinate_frames.md#sensor-frame) to the vehicle frame.  This is useful if the sensor frame and vehicle frame are not aligned.  The actual INS rotation parameters are `DID_FLASH_CONFIG.insRotation[3]` (X, Y, Z) in radians.  The *INS rotation* values describes the rotation from the INS sensor frame to the intermediate frame in order of Z, Y, X.     
 
 ### INS Offset
 
@@ -59,7 +59,7 @@ If the setup includes a significant distance (40cm or more) between the GPS ante
 
 The IMU sample period is configured by setting `DID_FLASH_CONFIG.startupImuDtMs`  in milliseconds.  This parameter determines how frequently the IMU is measured and data integrated into the `DID_PIMU` data.  `DID_FLASH_CONFIG.startupImuDtMs` also automatically sets the bandwidth of the IMU anti-aliasing filter to less than one half the Nyquist frequency (i.e. < 250 / startupImuDtMs).  
 
-![IMU Chain](../images/imu_chain.svg)
+![IMU Chain](../../images/imu_chain.svg)
 
 The preintegrated IMU (PIMU) a.k.a. Coning and Sculling (delta theta, delta velocity) integrals serve as an anti-aliased moving average of the IMU value.  The `DID_IMU`  is the derivative of the `DID_PIMU` value over a single integration period.
 
@@ -102,7 +102,7 @@ The following table lists the output and update period minimum limits for the IM
 The `DID_FLASH_CONFIG.dynamicModel` setting allows the user to adjust how the EKF behaves in different dynamic environments. All values except for 2 (STATIONARY) and 8 (AIR <4g) are experimental. The user is encouraged to attempt to use different settings to improve performance, however in most applications
 the default setting, 8: airborne <4g, will yield best performance.
 
-The STATIONARY configuration (dynamicModel = 2) can be used to configure the EKF for static applications. It is a permanent implementation of the [Zero Motion Command](../application-config/zero_motion_command.md) which will reduce EKF drift under stationary conditions.
+The STATIONARY configuration (dynamicModel = 2) can be used to configure the EKF for static applications. It is a permanent implementation of the [Zero Motion Command](zero_motion_command.md) which will reduce EKF drift under stationary conditions.
 
 ## Disable Magnetometer and Barometer Updates
 
@@ -117,7 +117,7 @@ These settings can be disabled using the General Settings tab of the EvalTool.
 
 <center>
 
-![evaltool_general_settings](../images/evaltool_general_settings2.png)
+![evaltool_general_settings](../../images/evaltool_general_settings2.png)
 
 </center>
 

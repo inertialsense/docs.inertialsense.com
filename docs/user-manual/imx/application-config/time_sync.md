@@ -49,7 +49,7 @@ The IMX has several strobe input pins which can be configured to cause the IMX t
 
 Strobe input and output (I/O) events are used for time and data synchronization.
 
-![IMX Top View](../images/module_pinout.png)
+![IMX Top View](../../images/module_pinout.png)
 
 <center>**_STROBE pins on the μIMU, μAHRS, and μINS Module - Top View_**</center>
 ### Strobe Input (Time Sync Input)
@@ -127,7 +127,7 @@ If the circuit is working correctly, it should drive the strobe output from 0V t
 
 The maximum input voltage for strobe lines (any pin on the IMX) is 3.6V.  A level shifter may be used to convert any strobe signal that is larger than 3.3V.  The following figure shows two passive level shifter circuits, a zener diode voltage clamp and a resistor voltage divider.   
 
-![img](../images/3_3v_level_shifter.png)
+![img](../../images/3_3v_level_shifter.png)
 
 These circuits are beneficial because of their simplicity.  An active, powered level shifter may also be used and necessary.
 
@@ -137,8 +137,8 @@ The STROBE output feature generates a 1 ms pulse on pin G9, with the leading e
 
 ### Configuring Message Output
 
-By default, triggering a strobe input event will cause the IMX to produce an NMEA [PINS2](../com-protocol/nmea.md#pins2) message as well as a [PSTRB](../com-protocol/nmea.md#pstrb) message which contains the time stamp of the strobe event.
+By default, triggering a strobe input event will cause the IMX to produce an NMEA [PINS2](../../com-protocol/nmea.md#pins2) message as well as a [PSTRB](../../com-protocol/nmea.md#pstrb) message which contains the time stamp of the strobe event.
 
-To instead send a binary [DID_INS_2](../com-protocol/DID-descriptions.md#did_ins_2) and [DID_STROBE_IN_TIME](../com-protocol/DID-descriptions.md#did_strobe_in_time) message, set the `RMC_BITS_STROBE_IN_TIME`flag of `DID_RMC/bits`field.
+To instead send a binary [DID_INS_2](../../com-protocol/DID-descriptions.md#did_ins_2) and [DID_STROBE_IN_TIME](../../com-protocol/DID-descriptions.md#did_strobe_in_time) message, set the `RMC_BITS_STROBE_IN_TIME`flag of `DID_RMC/bits`field.
 
  

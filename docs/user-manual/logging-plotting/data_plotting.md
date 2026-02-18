@@ -1,7 +1,7 @@
 # Plotting
 
 ## Log Inspector
-[Log Inspector](../software/logInspector.md) is a convenient way to quickly plot Inertial Sense [PPD logs](data_logging.md#post-process-data-ppd-logging-instructions) that of of the .dat format. The source code is in the SDK and can be modified and expanded.
+[Log Inspector](../software/SDK/logInspector.md) is a convenient way to quickly plot Inertial Sense [PPD logs](data_logging.md#post-process-data-ppd-logging-instructions) that of of the .dat format. The source code is in the SDK and can be modified and expanded.
 
 ## CLTool
 

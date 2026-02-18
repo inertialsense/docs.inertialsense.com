@@ -45,7 +45,7 @@ When compiling an Inertial Sense SDK example project in Visual Studio, the curre
 
 `Project properties > General > Windows SDK Version > [Currently Installed Version]`
 
-![](../images/VisualStudioWindowsSDK.png)
+![](../../images/VisualStudioWindowsSDK.png)
 
 ## SDK Example Projects Overview
 

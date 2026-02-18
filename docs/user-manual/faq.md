@@ -67,7 +67,7 @@ The IMX inertial navigation integrates the IMU data to dead reckoning position a
 
 ## Can the IMX estimate position without GPS?
 
-IMX can estimate the position for extended periods of time without GPS for ground vehicle dead reckoning applications only (see [Ground Vehicle Dead Reckoning](dead-reckoning/dead_reckoning.md)).  When in standard mode (not ground vehicle dead reckoning) GPS is required to provide initial position estimation and to aid in IMU bias estimation.  The IMX can dead reckon (estimate position without GPS) for brief periods of time.  However, the quality of dead reckoning is a function of IMU bias estimation, which improves while the GPS is aiding the INS.      
+IMX can estimate the position for extended periods of time without GPS for ground vehicle dead reckoning applications only (see [Ground Vehicle Dead Reckoning](imx/dead-reckoning/dead_reckoning.md)).  When in standard mode (not ground vehicle dead reckoning) GPS is required to provide initial position estimation and to aid in IMU bias estimation.  The IMX can dead reckon (estimate position without GPS) for brief periods of time.  However, the quality of dead reckoning is a function of IMU bias estimation, which improves while the GPS is aiding the INS.      
 
 ## How does the IMX estimate roll/pitch during airborne coordinate turns (acceleration only in the Z axis and not in the X and Y axes)?  
 

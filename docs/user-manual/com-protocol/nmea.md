@@ -6,7 +6,7 @@ For simple use, the InertialSense device supports a human-readable NMEA protocol
 
 ## Communications Example
 
-The [NMEA Communications Example Project](../SDK/CommunicationsAscii.md) demonstrates how to implement the protocol.
+The [NMEA Communications Example Project](../software/SDK/CommunicationsAscii.md) demonstrates how to implement the protocol.
 
 ## Packet Structure
 
@@ -57,7 +57,7 @@ The following NMEA messages can be received by the IMX.
 
 ### ASCE
 
-Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](../isb/#data-source-update-rates) (i.e., a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).  "xx" is the two-character checksum.  The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](binary/#data-source-update-rates). Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
+Enable NMEA message output streaming by specifying the [NMEA message identifier or ID](#nmea-output-messages) and broadcast period.  The period is the multiple of the [*data source period*](isb.md#data-source-update-rates) (i.e., a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).  "xx" is the two-character checksum.  The broadcast period for each message is configurable as a period multiple of the [*Data Source Update Rates*](isb.md#data-source-update-rates). Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.
 
 **Note:** A period value of 0 requests a single (one-shot) message and disables streaming for that message. This provides a convenient way to query an NMEA message without enabling continuous streaming.
 
@@ -75,7 +75,7 @@ $ASCE,OPTIONS,(ID,PERIOD)*xx\r\n
 
 #### Example Messages
 
-The following example NMEA messages enable IMX data streaming output. The data period is 1, full [data source rates](binary/#data-source-update-rates), for those that do not specify the output rate.
+The following example NMEA messages enable IMX data streaming output. The data period is 1, full [data source rates](isb.md#data-source-update-rates), for those that do not specify the output rate.
 
 The following two examples both enable the same NMEA message output:
 

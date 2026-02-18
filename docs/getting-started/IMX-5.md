@@ -1,6 +1,6 @@
 #IMX-5 Quick Start Guide
 ## Basic Configuration
-The configuration settings found in DID_FLASH_CONFIG are used to configure the various features of the device. These can be modified directly to the appropriate values using either the [EvalTool](../user-manual/software/evaltool.md), the [CLTool](../user-manual/software/cltool.md), or the [SDK](../user-manual/software/SDK.md). However, it is convenient initially to configure the main features by modifying the settings in the GPS and General tabs withing the Settings tab of the EvalTool. 
+The configuration settings found in DID_FLASH_CONFIG are used to configure the various features of the device. These can be modified directly to the appropriate values using either the [EvalTool](../user-manual/software/evaltool.md), the [CLTool](../user-manual/software/cltool.md), or the [SDK](../user-manual/software/SDK/overview.md). However, it is convenient initially to configure the main features by modifying the settings in the GPS and General tabs withing the Settings tab of the EvalTool. 
 
 The antenna offset should also be configured by going to the Data Sets Tab and selecting DID_FLASH_CONFIG. The values of each field can then be edited. Modify the following fields after identifying the [antenna positions](../user-manual/gnss/rtk_compassing.md#dual-antenna-locations):
 

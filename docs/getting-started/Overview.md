@@ -18,7 +18,7 @@ Download the EvalTool installer from the Inertial Sense [releases](https://githu
 The CLTool is a command line utility that can be used to read and display data, update firmware, and log data from Inertial Sense products.
 CLTool must be compiled from our source code. Follow the instructions on the [CLTool](../user-manual/software/cltool.md) page.
 
-- ### [SDK](../user-manual/software/SDK.md) (Windows, Linux)
+- ### [SDK](../user-manual/software/SDK/overview.md) (Windows, Linux)
 Software development kit to interface with Inertial Sense products.
 Download the file named "Source code" from our [releases](https://github.com/inertialsense/InertialSenseSDK/releases) page. The extracted folder contains code libraries as well as example projects.
 
@@ -46,4 +46,4 @@ Once a connection to the unit has been established, please follow one of the fol
 
 - [EvalTool](../user-manual/software/evaltool.md)
 - [CLTool](../user-manual/software/cltool.md)
-- [SDK Example Projects](../user-manual/software/SDK.md)
+- [SDK Example Projects](../user-manual/software/SDK/overview.md)
