@@ -1,0 +1,4507 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.inertialsense.com/user-manual/com-protocol/nmea/">
+      
+      <link rel="icon" href="../../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>NMEA - InertialSense</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ef5552">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../custom_theme/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nmea-0183-ascii-protocol" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="InertialSense" class="md-header__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InertialSense
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NMEA
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="InertialSense" class="md-nav__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    InertialSense
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasheets/datasheets/" class="md-nav__link">
+        Data Sheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dimensions/dimensions/" class="md-nav__link">
+        Dimensions and Pinouts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/Overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/IMX-5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/GPX-1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Hardware Integration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Hardware Integration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Hardware Integration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx6/" class="md-nav__link">
+        IMX-6
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_gpx1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/rugged3/" class="md-nav__link">
+        Rugged-3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG1/" class="md-nav__link">
+        IG-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG2/" class="md-nav__link">
+        IG-2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IK1/" class="md-nav__link">
+        IK-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/hardware_design/" class="md-nav__link">
+        Design Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/reflow/" class="md-nav__link">
+        Reflow Soldering
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Software / SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Software / SDK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Software / SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/evaltool/" class="md-nav__link">
+        EvalTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/cltool/" class="md-nav__link">
+        CLTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/logInspector/" class="md-nav__link">
+        Log Inspector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/overview/" class="md-nav__link">
+        SDK Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5">
+          Example Projects
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Projects" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Example Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsBinary/" class="md-nav__link">
+        Comm-Binary (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsAscii/" class="md-nav__link">
+        Comm-NMEA (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsArduino/" class="md-nav__link">
+        Comm-Arduino (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/FirmwareUpdate/" class="md-nav__link">
+        Firmware Update (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/InertialSenseClassCLTool/" class="md-nav__link">
+        InertialSense Class CLTool (C++)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/DataLogger/" class="md-nav__link">
+        Data Logging (C++)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          IMX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="IMX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          IMX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/infield_calibration/" class="md-nav__link">
+        Infield Calibration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/platform_configuration/" class="md-nav__link">
+        Platform Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/imu_ins_gnss_configuration/" class="md-nav__link">
+        IMU INS GNSS Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/system_configuration/" class="md-nav__link">
+        System Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/time_sync/" class="md-nav__link">
+        Time Sync/Strobe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/zero_motion_command/" class="md-nav__link">
+        Zero Motion Command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/UART/" class="md-nav__link">
+        UART
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/world_magnetic_model/" class="md-nav__link">
+        World Magnetic Model
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          Dead Reckoning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dead Reckoning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Dead Reckoning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning_examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/shock-rejection/imu_shock_rejection/" class="md-nav__link">
+        IMU Shock Rejection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          GPX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GPX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          GPX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpx/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/GPX_system_status/" class="md-nav__link">
+        GPX System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Communication Protocols
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communication Protocols" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Communication Protocols
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DID-descriptions/" class="md-nav__link">
+        Data Sets (DIDs)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isb/" class="md-nav__link">
+        Inertial Sense Binary (ISB)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          NMEA
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        NMEA
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#communications-example" class="md-nav__link">
+    Communications Example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-structure" class="md-nav__link">
+    Packet Structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistent-messages" class="md-nav__link">
+    Persistent Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="Persistent Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enabling-persistent-messages-evaltool" class="md-nav__link">
+    Enabling Persistent Messages - EvalTool
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nmea-input-messages" class="md-nav__link">
+    NMEA Input Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="NMEA Input Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asce" class="md-nav__link">
+    ASCE
+  </a>
+  
+    <nav class="md-nav" aria-label="ASCE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-messages" class="md-nav__link">
+    Example Messages
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pers" class="md-nav__link">
+    PERS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stpb" class="md-nav__link">
+    STPB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stpc" class="md-nav__link">
+    STPC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nmea-output-messages" class="md-nav__link">
+    NMEA Output Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="NMEA Output Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ascb" class="md-nav__link">
+    ASCB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nmea-output-gnss-source" class="md-nav__link">
+    NMEA Output GNSS Source
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pimu" class="md-nav__link">
+    PIMU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ppimu" class="md-nav__link">
+    PPIMU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primu" class="md-nav__link">
+    PRIMU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pins1" class="md-nav__link">
+    PINS1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pins2" class="md-nav__link">
+    PINS2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pgpsp" class="md-nav__link">
+    PGPSP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gga" class="md-nav__link">
+    GGA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gll" class="md-nav__link">
+    GLL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsa" class="md-nav__link">
+    GSA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rmc" class="md-nav__link">
+    RMC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vtg" class="md-nav__link">
+    VTG
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zda" class="md-nav__link">
+    ZDA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsv" class="md-nav__link">
+    GSV
+  </a>
+  
+    <nav class="md-nav" aria-label="GSV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gsv-output-filtering" class="md-nav__link">
+    GSV Output Filtering
+  </a>
+  
+    <nav class="md-nav" aria-label="GSV Output Filtering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filtered-gsv-nmea-message-ids" class="md-nav__link">
+    Filtered GSV NMEA Message IDs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vtg_1" class="md-nav__link">
+    VTG
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pashr" class="md-nav__link">
+    PASHR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pstrb" class="md-nav__link">
+    PSTRB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#info" class="md-nav__link">
+    INFO
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nmea-examples" class="md-nav__link">
+    NMEA Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-command-line-nmea-query" class="md-nav__link">
+    Linux Command Line NMEA Query
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SPI/" class="md-nav__link">
+        SPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CAN/" class="md-nav__link">
+        CAN
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          GNSS - RTK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GNSS - RTK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          GNSS - RTK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_1" type="checkbox" id="__nav_10_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_1">
+          Multi-band GNSS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-band GNSS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_1">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-band GNSS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_gnss_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_GPX/" class="md-nav__link">
+        IS GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_F9P/" class="md-nav__link">
+        ublox F9P
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/external_gnss/" class="md-nav__link">
+        External NMEA GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_antennas/" class="md-nav__link">
+        GNSS Antennas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_constellations/" class="md-nav__link">
+        GNSS Constellations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5">
+          RTK Positioning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="RTK Positioning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          RTK Positioning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_positioning_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_rover/" class="md-nav__link">
+        Rover Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_base/" class="md-nav__link">
+        Base Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_ntrip/" class="md-nav__link">
+        NTRIP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/ublox_pointperfect/" class="md-nav__link">
+        Point Perfect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/SBAS/" class="md-nav__link">
+        SBAS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_compassing/" class="md-nav__link">
+        RTK Compassing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          Data Logging/Plotting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Logging/Plotting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Data Logging/Plotting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_plotting/" class="md-nav__link">
+        Plotting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/bootloader/" class="md-nav__link">
+        Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/coordinate_frames/" class="md-nav__link">
+        Coordinate Frames
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/definitions/" class="md-nav__link">
+        Definitions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/imu_specifications/" class="md-nav__link">
+        IMU Specifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/interference/" class="md-nav__link">
+        Interference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/magnetometer/" class="md-nav__link">
+        Magnetometer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/IMX_system_status/" class="md-nav__link">
+        System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/user_manual_pdf/" class="md-nav__link">
+        User Manual PDF
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          Troubleshooting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Troubleshooting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          Troubleshooting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/firmware/" class="md-nav__link">
+        Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/chip_erase/" class="md-nav__link">
+        Chip Erase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/gnss/" class="md-nav__link">
+        GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/imx_bootloader/" class="md-nav__link">
+        IMX Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#communications-example" class="md-nav__link">
+    Communications Example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-structure" class="md-nav__link">
+    Packet Structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistent-messages" class="md-nav__link">
+    Persistent Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="Persistent Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enabling-persistent-messages-evaltool" class="md-nav__link">
+    Enabling Persistent Messages - EvalTool
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nmea-input-messages" class="md-nav__link">
+    NMEA Input Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="NMEA Input Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asce" class="md-nav__link">
+    ASCE
+  </a>
+  
+    <nav class="md-nav" aria-label="ASCE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-messages" class="md-nav__link">
+    Example Messages
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pers" class="md-nav__link">
+    PERS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stpb" class="md-nav__link">
+    STPB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stpc" class="md-nav__link">
+    STPC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nmea-output-messages" class="md-nav__link">
+    NMEA Output Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="NMEA Output Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ascb" class="md-nav__link">
+    ASCB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nmea-output-gnss-source" class="md-nav__link">
+    NMEA Output GNSS Source
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pimu" class="md-nav__link">
+    PIMU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ppimu" class="md-nav__link">
+    PPIMU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primu" class="md-nav__link">
+    PRIMU
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pins1" class="md-nav__link">
+    PINS1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pins2" class="md-nav__link">
+    PINS2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pgpsp" class="md-nav__link">
+    PGPSP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gga" class="md-nav__link">
+    GGA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gll" class="md-nav__link">
+    GLL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsa" class="md-nav__link">
+    GSA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rmc" class="md-nav__link">
+    RMC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vtg" class="md-nav__link">
+    VTG
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zda" class="md-nav__link">
+    ZDA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gsv" class="md-nav__link">
+    GSV
+  </a>
+  
+    <nav class="md-nav" aria-label="GSV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gsv-output-filtering" class="md-nav__link">
+    GSV Output Filtering
+  </a>
+  
+    <nav class="md-nav" aria-label="GSV Output Filtering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filtered-gsv-nmea-message-ids" class="md-nav__link">
+    Filtered GSV NMEA Message IDs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vtg_1" class="md-nav__link">
+    VTG
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pashr" class="md-nav__link">
+    PASHR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pstrb" class="md-nav__link">
+    PSTRB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#info" class="md-nav__link">
+    INFO
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nmea-examples" class="md-nav__link">
+    NMEA Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-command-line-nmea-query" class="md-nav__link">
+    Linux Command Line NMEA Query
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="nmea-0183-ascii-protocol">NMEA 0183 (ASCII) Protocol<a class="headerlink" href="#nmea-0183-ascii-protocol" title="Permanent link">&para;</a></h1>
+<p>For simple use, the InertialSense device supports a human-readable NMEA protocol based on NMEA 0183. The NMEA protocol is human-readable in a command-line terminal, but it is less efficient than the <a href="../isb/">binary protocol</a> for the same data volume.</p>
+<h2 id="communications-example">Communications Example<a class="headerlink" href="#communications-example" title="Permanent link">&para;</a></h2>
+<p>The <a href="../../software/SDK/CommunicationsAscii/">NMEA Communications Example Project</a> demonstrates how to implement the protocol.</p>
+<h2 id="packet-structure">Packet Structure<a class="headerlink" href="#packet-structure" title="Permanent link">&para;</a></h2>
+<p>The Inertial Sense NMEA protocol follows the standard <a href="https://en.wikipedia.org/wiki/NMEA_0183">NMEA 0183</a> message structure:</p>
+<ul>
+<li>1 byte – Start packet, <code>$</code> (<code>0x24</code>)</li>
+<li>n bytes – packet identifier</li>
+<li>1 byte – comma (<code>0x2C</code>)</li>
+<li>n bytes – comma separated list of data, can include decimals and text</li>
+<li>1 byte – checksum marker, <code>*</code> (<code>0x2A</code>)</li>
+<li>2 bytes – checksum in hex format (i.e. <code>f5</code> or <code>0a</code>), zero-padded and lowercase</li>
+<li>2 bytes – End packet, <code>\r\n</code> (<code>0x0D</code>, <code>0x0A</code>)</li>
+</ul>
+<p>The packet checksum is an 8-bit integer and is calculated by XORing all bytes between (but not including) the $ and * bytes. The packet checksum byte is converted to a 2-byte NMEA hex code, and left-padded with 0 if necessary to ensure that it is always 2 bytes. The checksum is always lowercase hexadecimal characters. See <a href="https://en.wikipedia.org/wiki/NMEA_0183">NMEA 0183</a> message structure for more details. The NMEA string checksum is automatically computed and appended to the string when using the Inertial Sense SDK <a href="https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268">serialPortWriteAscii function</a> or can be generated using an online checksum calculator. For example: <a href="http://www.hhhh.org/wiml/proj/nmeaxor.html">MTK NMEA checksum calculator</a></p>
+<h2 id="persistent-messages">Persistent Messages<a class="headerlink" href="#persistent-messages" title="Permanent link">&para;</a></h2>
+<p>The <em>persistent messages</em> option saves the current data stream configuration to flash memory for use following reboot, eliminating the need to re-enable messages following a reset or power cycle.  </p>
+<ul>
+<li><strong>To save current NMEA persistent messages</strong> - send the <a href="#pers">$PERS</a> command.  </li>
+<li><strong>To disable persistent messages</strong> - send <a href="#pers"><span class="arithmatex"><span class="MathJax_Preview">STPB](#stpb) followed by [</span><script type="math/tex">STPB](#stpb) followed by [</script></span>PERS</a>. </li>
+</ul>
+<p><a href="../isb/#persistent-messages">Binary persistent messages</a> are also available.</p>
+<h3 id="enabling-persistent-messages-evaltool">Enabling Persistent Messages - EvalTool<a class="headerlink" href="#enabling-persistent-messages-evaltool" title="Permanent link">&para;</a></h3>
+<p>To enable persistent NMEA messages using the EvalTool:</p>
+<ul>
+<li>Enable the desired NMEA messages in the EvalTool "Data Sets" tab. Select DID_NMEA_BCAST_PERIOD in the DID menu and set the desired NMEA messages period to a non-zero value.</li>
+<li>Press the "Save Persistent" button in the EvalTool "Data Logs" tab to store the current message configuration to flash memory.</li>
+<li>Reset the IMX and verify the messages are automatically streaming. You can use a generic serial port program like putty or the EvalTool-&gt;Data Logs-&gt;Data Log-&gt;Messages dialog to view the NMEA messages.</li>
+</ul>
+<p><strong>To disable all persistent messages using the EvalTool</strong>, click the "Stop Streaming" button and then "Save Persistent" button.   </p>
+<h2 id="nmea-input-messages">NMEA Input Messages<a class="headerlink" href="#nmea-input-messages" title="Permanent link">&para;</a></h2>
+<p>The following NMEA messages can be received by the IMX.</p>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$ASCE*14\r\n</code></td>
+<td>Query the broadcast rate of NMEA output messages.</td>
+</tr>
+<tr>
+<td><a href="#asce">ASCE</a></td>
+<td>Set the broadcast period of selected NMEA output messages.</td>
+</tr>
+<tr>
+<td><code>$INFO*0E\r\n</code></td>
+<td>Query device information.</td>
+</tr>
+<tr>
+<td><code>$SRST*06\r\n</code></td>
+<td>Software reset.</td>
+</tr>
+<tr>
+<td><a href="#pers"><code>$PERS*14\r\n</code></a></td>
+<td>Save persistent messages to flash.</td>
+</tr>
+<tr>
+<td><a href="#stpb"><code>$STPB*15\r\n</code></a></td>
+<td>Stop broadcast of all messages (NMEA and binary) on all ports.</td>
+</tr>
+<tr>
+<td><a href="#stpc"><code>$STPC*14\r\n</code></a></td>
+<td>Stop broadcast of all messages (NMEA and binary) on current port.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="asce">ASCE<a class="headerlink" href="#asce" title="Permanent link">&para;</a></h3>
+<p>Enable NMEA message output streaming by specifying the <a href="#nmea-output-messages">NMEA message identifier or ID</a> and broadcast period.  The period is the multiple of the <a href="../isb/#data-source-update-rates"><em>data source period</em></a> (i.e., a GNSS message with period multiple of 2 and data source period of 200 ms (5 Hz) will broadcast every 400 ms).  "xx" is the two-character checksum.  The broadcast period for each message is configurable as a period multiple of the <a href="../isb/#data-source-update-rates"><em>Data Source Update Rates</em></a>. Up to 20 different NMEA messages can be enabled by repeating the message ID and period sequence within an ASCE message.</p>
+<p><strong>Note:</strong> A period value of 0 requests a single (one-shot) message and disables streaming for that message. This provides a convenient way to query an NMEA message without enabling continuous streaming.</p>
+<div class="highlight"><pre><span></span><code>$ASCE,OPTIONS,(ID,PERIOD)*xx\r\n
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>OPTIONS</code></td>
+<td>Port selection. Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><em>Start of repeated group (1...20 times)</em></td>
+</tr>
+<tr>
+<td>2+n*2</td>
+<td><code>ID</code></td>
+<td>Either <strong>1.) message identifier string</strong> (i.e., PPIMU, PINS1, GNGGA) excluding packet start character <code>$</code> or <strong>2.) message ID</strong> (eNmeaAsciiMsgId) of the NMEA message to be streamed. See the message ID in the <a href="#nmea-output-messages">NMEA output messages</a> table.</td>
+</tr>
+<tr>
+<td>3+n*2</td>
+<td><code>PERIOD</code></td>
+<td>Broadcast period multiple for specified message. Zero queries one message and disables streaming.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><em>End of repeated group (1...20 times)</em></td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-messages">Example Messages<a class="headerlink" href="#example-messages" title="Permanent link">&para;</a></h4>
+<p>The following example NMEA messages enable IMX data streaming output. The data period is 1, full <a href="../isb/#data-source-update-rates">data source rates</a>, for those that do not specify the output rate.</p>
+<p>The following two examples both enable the same NMEA message output:</p>
+<div class="highlight"><pre><span></span><code>$ASCE,0,PPIMU,1,PINS2,10,GNGGA,1*26\r\n
+$ASCE,0,2,1,5,10,7,1*39\r\n
+</code></pre></div>
+
+<p>The following example will query one PINS1 message without streaming.</p>
+<div class="highlight"><pre><span></span><code>$ASCE,0,PINS1,0*0D\r\n
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Data (Output Rate)**</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$ASCE,0,6,1,7,1,8,1,10,1,14,1*04\r\n</td>
+<td>GGA, GLL, GSA, ZDA, GSV (all at 5Hz)</td>
+</tr>
+<tr>
+<td>$ASCE,0,5,2,2,1,7,1*0A\r\n</td>
+<td>PINS2 (31.25 Hz), PPIMU (62.5Hz), GGA (5Hz)</td>
+</tr>
+<tr>
+<td>$ASCE,0,0,1*09\r\n</td>
+<td>PIMU</td>
+</tr>
+<tr>
+<td>$ASCE,0,1,1*08\r\n</td>
+<td>PPIMU</td>
+</tr>
+<tr>
+<td>$ASCE,0,2,1*0B\r\n</td>
+<td>PRIMU</td>
+</tr>
+<tr>
+<td>$ASCE,0,3,1*0A\r\n</td>
+<td>PINS1</td>
+</tr>
+<tr>
+<td>$ASCE,0,4,1*0D\r\n</td>
+<td>PINS2</td>
+</tr>
+<tr>
+<td>$ASCE,0,5,1*0C\r\n</td>
+<td>PGPSP</td>
+</tr>
+<tr>
+<td>$ASCE,0,6,1*0F\r\n</td>
+<td>GGA</td>
+</tr>
+<tr>
+<td>$ASCE,0,7,1*0E\r\n</td>
+<td>GLL</td>
+</tr>
+<tr>
+<td>$ASCE,0,8,1*01\r\n</td>
+<td>GSA</td>
+</tr>
+<tr>
+<td>$ASCE,0,9,1*00\r\n</td>
+<td>RMC</td>
+</tr>
+<tr>
+<td>$ASCE,0,10,1*38\r\n</td>
+<td>ZDA</td>
+</tr>
+<tr>
+<td>$ASCE,0,11,1*39\r\n</td>
+<td>PASHR</td>
+</tr>
+<tr>
+<td>$ASCE,0,12,1*3A\r\n</td>
+<td>PSTRB</td>
+</tr>
+<tr>
+<td>$ASCE,0,13,1*3B\r\n</td>
+<td>INFO</td>
+</tr>
+<tr>
+<td>$ASCE,0,14,1*3C\r\n</td>
+<td>GSV</td>
+</tr>
+<tr>
+<td>$ASCE,0,15,1*3D\r\n</td>
+<td>VTG</td>
+</tr>
+</tbody>
+</table>
+<p><sup>**</sup> These rates assume the default settings for <a href="../isb/#data-source-update-rates">data source rates</a>.</p>
+<h3 id="pers">PERS<a class="headerlink" href="#pers" title="Permanent link">&para;</a></h3>
+<p>Send this command to save current <em>persistent messages</em> to flash memory for use following reboot. This eliminates the need to re-enable messages following a reset or power cycle. To disable persistent messages, all messages must be disabled and then the 'save persistent messages' command should be sent.</p>
+<div class="highlight"><pre><span></span><code>$PERS*14\r\n
+</code></pre></div>
+
+<h3 id="stpb">STPB<a class="headerlink" href="#stpb" title="Permanent link">&para;</a></h3>
+<p>Stop all broadcasts (both binary and NMEA) on all ports by sending the following packet:</p>
+<div class="highlight"><pre><span></span><code>$STPB*15\r\n
+</code></pre></div>
+
+<p>The hexadecimal equivalent is:</p>
+<div class="highlight"><pre><span></span><code>24 53 54 50 42 2A 31 35 0D 0A
+</code></pre></div>
+
+<h3 id="stpc">STPC<a class="headerlink" href="#stpc" title="Permanent link">&para;</a></h3>
+<p>Stop all broadcasts (both binary and NMEA) on the current port by sending the following packet:</p>
+<div class="highlight"><pre><span></span><code>$STPC*14\r\n
+</code></pre></div>
+
+<p>The hexadecimal equivalent is:</p>
+<div class="highlight"><pre><span></span><code>24 53 54 50 43 2A 31 34 0D 0A
+</code></pre></div>
+
+<h2 id="nmea-output-messages">NMEA Output Messages<a class="headerlink" href="#nmea-output-messages" title="Permanent link">&para;</a></h2>
+<p>The following NMEA messages can be sent by the IMX. The message ID (<code>eNmeaAsciiMsgId</code>) is used with the <code>$ASCE</code> message to enable message streaming. </p>
+<table>
+<thead>
+<tr>
+<th>Identifier</th>
+<th>ID</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#ascb">ASCB</a></td>
+<td></td>
+<td>Broadcast period of NMEA output messages.</td>
+</tr>
+<tr>
+<td><a href="#pimu">PIMU</a></td>
+<td>1</td>
+<td>IMU data (3-axis gyros and accelerometers) in the body frame.</td>
+</tr>
+<tr>
+<td><a href="#ppimu">PPIMU</a></td>
+<td>2</td>
+<td>Preintegrated IMU: delta theta (rad) and delta velocity (m/s).</td>
+</tr>
+<tr>
+<td><a href="#primu">PRIMU</a></td>
+<td>3</td>
+<td>Raw IMU data (3-axis gyros and accelerometers) in the body frame.</td>
+</tr>
+<tr>
+<td><a href="#pins1">PINS1</a></td>
+<td>4</td>
+<td>INS output: euler rotation w/ respect to NED, NED position from reference LLA.</td>
+</tr>
+<tr>
+<td><a href="#pins2">PINS2</a></td>
+<td>5</td>
+<td>INS output: quaternion rotation w/ respect to NED, ellipsoid altitude.</td>
+</tr>
+<tr>
+<td><a href="#pgpsp">PGPSP</a></td>
+<td>6</td>
+<td>GPS position data.</td>
+</tr>
+<tr>
+<td><a href="#gga">GGA</a></td>
+<td>7</td>
+<td>Standard NMEA GGA GPS 3D location, fix, and accuracy.</td>
+</tr>
+<tr>
+<td><a href="#gll">GLL</a></td>
+<td>8</td>
+<td>Standard NMEA GLL GPS 2D location and time.</td>
+</tr>
+<tr>
+<td><a href="#gsa">GSA</a></td>
+<td>9</td>
+<td>Standard NMEA GSA GPS DOP and active satellites.</td>
+</tr>
+<tr>
+<td><a href="#rmc">RMC</a></td>
+<td>10</td>
+<td>Standard NMEA RMC Recommended minimum specific GPS/Transit data.</td>
+</tr>
+<tr>
+<td><a href="#zda">ZDA</a></td>
+<td>11</td>
+<td>Standard NMEA ZDA UTC Time/Date message.</td>
+</tr>
+<tr>
+<td><a href="#pashr">PASHR</a></td>
+<td>12</td>
+<td>Standard NMEA PASHR (euler) message.</td>
+</tr>
+<tr>
+<td><a href="#pstrb">PSTRB</a></td>
+<td>13</td>
+<td>Strobe event input time.</td>
+</tr>
+<tr>
+<td><a href="#info">INFO</a></td>
+<td>14</td>
+<td>Device information.</td>
+</tr>
+<tr>
+<td><a href="#gsv">GSV</a></td>
+<td>15</td>
+<td>Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs).</td>
+</tr>
+<tr>
+<td><a href="#vtg">VTG</a></td>
+<td>16</td>
+<td>Standard NMEA VTG track made good and speed over ground.</td>
+</tr>
+</tbody>
+</table>
+<p>The field codes used in the message descriptions are: lf = double, f = float, d = int.</p>
+<h3 id="ascb">ASCB<a class="headerlink" href="#ascb" title="Permanent link">&para;</a></h3>
+<p>The <code>$ASCB</code> query reports the current NMEA broadcast configuration. Its payload contains the port options followed by <code>(ID,PERIOD)</code> pairs that mirror the <code>DID_NMEA_BCAST_PERIOD</code> dataset, letting you confirm which messages are enabled and at what rates.</p>
+<h3 id="nmea-output-gnss-source">NMEA Output GNSS Source<a class="headerlink" href="#nmea-output-gnss-source" title="Permanent link">&para;</a></h3>
+<p>Following IMX power on/reset, the default source for NMEA output is GPS1 if available or GPS2 if GPS1 is disabled. This source is reported via bit SYS_STATUS_PRIMARY_GNSS_SOURCE_IS_GNSS2 (0x00000004) of DID_SYS_PARAMS.sysStatus where cleared means GNSS1 and set means GNSS2. Users may manually set or clear this bit to control the NMEA output GNSS source.</p>
+<h3 id="pimu">PIMU<a class="headerlink" href="#pimu" title="Permanent link">&para;</a></h3>
+<p>IMU sensor data (3-axis gyros and accelerometers) in the body frame.</p>
+<div class="highlight"><pre><span></span><code>$PIMU,lf,f,f,f,f,f,f*xx\r\n
+       1 2 3 4 5 6 7
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>time</td>
+<td>sec</td>
+<td>Time since system power up</td>
+</tr>
+<tr>
+<td>2</td>
+<td>IMU pqr[0]</td>
+<td>rad/sec</td>
+<td>IMU angular rate gyro – X</td>
+</tr>
+<tr>
+<td>3</td>
+<td>IMU pqr[1]</td>
+<td>rad/sec</td>
+<td>IMU angular rate gyro – Y</td>
+</tr>
+<tr>
+<td>4</td>
+<td>IMU pqr[2]</td>
+<td>rad/sec</td>
+<td>IMU angular rate gyro – Z</td>
+</tr>
+<tr>
+<td>5</td>
+<td>IMU acc[0]</td>
+<td>m/s2</td>
+<td>IMU linear acceleration – X</td>
+</tr>
+<tr>
+<td>6</td>
+<td>IMU acc[1]</td>
+<td>m/s2</td>
+<td>IMU linear acceleration – Y</td>
+</tr>
+<tr>
+<td>7</td>
+<td>IMU acc[2]</td>
+<td>m/s2</td>
+<td>IMU linear acceleration – Z</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ppimu">PPIMU<a class="headerlink" href="#ppimu" title="Permanent link">&para;</a></h3>
+<p>Preintegrated inertial measurement unit (IMU) sensor data, delta theta in radians and delta velocity in m/s in the body frame. Also known as coning and sculling integrals.</p>
+<div class="highlight"><pre><span></span><code>$PPIMU,lf,f,f,f,f,f,f,f*xx\r\n
+        1 2 3 4 5 6 7 8
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>time</td>
+<td>sec</td>
+<td>Time since system power up</td>
+</tr>
+<tr>
+<td>2</td>
+<td>theta[0]</td>
+<td>rad</td>
+<td>IMU delta theta integral – X</td>
+</tr>
+<tr>
+<td>3</td>
+<td>theta[1]</td>
+<td>rad</td>
+<td>IMU delta theta integral – Y</td>
+</tr>
+<tr>
+<td>4</td>
+<td>theta[2]</td>
+<td>rad</td>
+<td>IMU delta theta integral – Z</td>
+</tr>
+<tr>
+<td>5</td>
+<td>vel[0]</td>
+<td>m/s</td>
+<td>IMU delta velocity integral – X</td>
+</tr>
+<tr>
+<td>6</td>
+<td>vel[1]</td>
+<td>m/s</td>
+<td>IMU delta velocity integral – Y</td>
+</tr>
+<tr>
+<td>7</td>
+<td>vel[2]</td>
+<td>m/s</td>
+<td>IMU delta velocity integral – Z</td>
+</tr>
+<tr>
+<td>8</td>
+<td>dt</td>
+<td>s</td>
+<td>Integration period for delta theta vel</td>
+</tr>
+</tbody>
+</table>
+<h3 id="primu">PRIMU<a class="headerlink" href="#primu" title="Permanent link">&para;</a></h3>
+<p>Raw IMU sensor data (3-axis gyros and accelerometers) in the body frame (up to 1KHz). Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs. Otherwise, we recommend use of PIMU or PPIMU as they are oversampled and contain less noise. 0 to disable.</p>
+<div class="highlight"><pre><span></span><code>$PRIMU,lf,f,f,f,f,f,f*xx\r\n
+        1 2 3 4 5 6 7
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>time</td>
+<td>sec</td>
+<td>Time since system power up</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Raw IMU pqr[0]</td>
+<td>rad/sec</td>
+<td>Raw IMU angular rate gyro – X</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Raw IMU pqr[1]</td>
+<td>rad/sec</td>
+<td>Raw IMU angular rate gyro – Y</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Raw IMU pqr[2]</td>
+<td>rad/sec</td>
+<td>Raw IMU angular rate gyro – Z</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Raw IMU acc[0]</td>
+<td>m/s2</td>
+<td>Raw IMU linear acceleration – X</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Raw IMU acc[1]</td>
+<td>m/s2</td>
+<td>Raw IMU linear acceleration – Y</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Raw IMU acc[2]</td>
+<td>m/s2</td>
+<td>Raw IMU linear acceleration – Z</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pins1">PINS1<a class="headerlink" href="#pins1" title="Permanent link">&para;</a></h3>
+<p>INS output with Euler angles and NED offset from the reference LLA.</p>
+<div class="highlight"><pre><span></span><code>$PINS1,lf,d,d,d,f,f,f,f,f,f,lf,lf,lf,f,f,f*xx\r\n
+        1 2 3 4 5 6 7 8 9 0  1  2  3 4 5 6
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>timeOfWeek</td>
+<td>sec</td>
+<td>Seconds since Sunday morning in GMT</td>
+</tr>
+<tr>
+<td>2</td>
+<td>GPS week</td>
+<td>weeks</td>
+<td>Number of weeks since January 1<sup>st</sup> of 1980 in GMT</td>
+</tr>
+<tr>
+<td>3</td>
+<td>insStatus</td>
+<td></td>
+<td><a href="../DID-descriptions/#ins-status-flags">INS Status Flags</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>hdwStatus</td>
+<td></td>
+<td><a href="../DID-descriptions/#hardware-status-flags">Hardware Status Flags</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>theta[0]</td>
+<td>rad</td>
+<td>Euler angle – roll</td>
+</tr>
+<tr>
+<td>6</td>
+<td>theta[1]</td>
+<td>rad</td>
+<td>Euler angle – pitch</td>
+</tr>
+<tr>
+<td>7</td>
+<td>theta[2]</td>
+<td>rad</td>
+<td>Euler angle – yaw</td>
+</tr>
+<tr>
+<td>8</td>
+<td>UVW[0]</td>
+<td>m/s</td>
+<td>Velocity in body frame – X</td>
+</tr>
+<tr>
+<td>9</td>
+<td>UVW[1]</td>
+<td>m/s</td>
+<td>Velocity in body frame – Y</td>
+</tr>
+<tr>
+<td>10</td>
+<td>UVW[2]</td>
+<td>m/s</td>
+<td>Velocity in body frame – Z</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Latitude</td>
+<td>deg</td>
+<td>WGS84 Latitude</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Longitude</td>
+<td>deg</td>
+<td>WGS84 Longitude</td>
+</tr>
+<tr>
+<td>13</td>
+<td>HAE Altitude</td>
+<td>m</td>
+<td>Height above ellipsoid (vertical elevation)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>NED[0]</td>
+<td>m</td>
+<td>Offset from reference LLA – North</td>
+</tr>
+<tr>
+<td>15</td>
+<td>NED[1]</td>
+<td>m</td>
+<td>Offset from reference LLA – East</td>
+</tr>
+<tr>
+<td>16</td>
+<td>NED[2]</td>
+<td>m</td>
+<td>Offset from reference LLA – Down</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pins2">PINS2<a class="headerlink" href="#pins2" title="Permanent link">&para;</a></h3>
+<p>INS output with quaternion attitude.</p>
+<div class="highlight"><pre><span></span><code>$PINS2,lf,d,d,d,f,f,f,f,f,f,f,lf,lf,lf*xx\r\n
+        1 2 3 4 5 6 7 8 9 0 1  2  3  4
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>timeOfWeek</td>
+<td>sec</td>
+<td>Seconds since Sunday morning in GMT</td>
+</tr>
+<tr>
+<td>2</td>
+<td>GPS week</td>
+<td>weeks</td>
+<td>Number of weeks since January 1<sup>st</sup> of 1980 in GMT</td>
+</tr>
+<tr>
+<td>3</td>
+<td>insStatus</td>
+<td></td>
+<td><a href="../DID-descriptions/#ins-status-flags">INS Status Flags</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>hdwStatus</td>
+<td></td>
+<td><a href="../DID-descriptions/#hardware-status-flags">Hardware Status Flags</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>qn2b[0]</td>
+<td></td>
+<td>Quaternion rotation (NED to body) – W</td>
+</tr>
+<tr>
+<td>6</td>
+<td>qn2b[1]</td>
+<td></td>
+<td>Quaternion rotation (NED to body) – X</td>
+</tr>
+<tr>
+<td>7</td>
+<td>qn2b[2]</td>
+<td></td>
+<td>Quaternion rotation (NED to body) – Y</td>
+</tr>
+<tr>
+<td>8</td>
+<td>qn2b[3]</td>
+<td></td>
+<td>Quaternion rotation (NED to body) – Z</td>
+</tr>
+<tr>
+<td>9</td>
+<td>UVW[0]</td>
+<td>m/s</td>
+<td>Velocity in body frame – X</td>
+</tr>
+<tr>
+<td>10</td>
+<td>UVW[1]</td>
+<td>m/s</td>
+<td>Velocity in body frame – Y</td>
+</tr>
+<tr>
+<td>11</td>
+<td>UVW[2]</td>
+<td>m/s</td>
+<td>Velocity in body frame – Z</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Latitude</td>
+<td>deg</td>
+<td>WGS84 Latitude</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Longitude</td>
+<td>deg</td>
+<td>WGS84 Longitude</td>
+</tr>
+<tr>
+<td>14</td>
+<td>HAE altitude</td>
+<td>m</td>
+<td>Height above ellipsoid (vertical elevation)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pgpsp">PGPSP<a class="headerlink" href="#pgpsp" title="Permanent link">&para;</a></h3>
+<p>GPS navigation data.</p>
+<div class="highlight"><pre><span></span><code>$PGPSP,d,d,d,lf,lf,lf,f,f,f,f,f,f,f,f,f,f*xx\r\n
+       1 2 3  4  5  6 7 8 9 0 1 2 3 4 5 6
+
+$PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,0.37,0.55,-0.02,0.02,-0.03,0.17,39.5,337182.4521*4d\r\n
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>timeOfWeekMs</td>
+<td>ms</td>
+<td>GPS time of week in milliseconds since Sunday morning in GMT</td>
+</tr>
+<tr>
+<td>2</td>
+<td>GPS week</td>
+<td>weeks</td>
+<td>GPS number of weeks since January 1<sup>st</sup> of 1980 in GMT</td>
+</tr>
+<tr>
+<td>3</td>
+<td>status</td>
+<td></td>
+<td>(see <a href="../DID-descriptions/#gps-status">eGpsStatus</a>) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Latitude</td>
+<td>deg</td>
+<td>WGS84 Latitude</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Longitude</td>
+<td>deg</td>
+<td>WGS84 Longitude</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HAE altitude</td>
+<td>m</td>
+<td>Height above WGS84 ellipsoid</td>
+</tr>
+<tr>
+<td>7</td>
+<td>MSL altitude</td>
+<td>m</td>
+<td>Elevation above mean sea level</td>
+</tr>
+<tr>
+<td>8</td>
+<td>pDOP</td>
+<td>m</td>
+<td>Position dilution of precision</td>
+</tr>
+<tr>
+<td>9</td>
+<td>hAcc</td>
+<td>m</td>
+<td>Horizontal accuracy</td>
+</tr>
+<tr>
+<td>10</td>
+<td>vAcc</td>
+<td>m</td>
+<td>Vertical accuracy</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Velocity X</td>
+<td>m/s</td>
+<td>ECEF X velocity</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Velocity Y</td>
+<td>m/s</td>
+<td>ECEF Y velocity</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Velocity Z</td>
+<td>m/s</td>
+<td>ECEF Z velocity</td>
+</tr>
+<tr>
+<td>14</td>
+<td>sAcc</td>
+<td>m/s</td>
+<td>Speed accuracy</td>
+</tr>
+<tr>
+<td>15</td>
+<td>cnoMean</td>
+<td>dBHz</td>
+<td>Average of all satellite carrier-to-noise ratios (signal strengths) that are non-zero</td>
+</tr>
+<tr>
+<td>16</td>
+<td>towOffset</td>
+<td>s</td>
+<td>Time sync offset between local time since boot up to GPS time of week in seconds. Add this to IMU and sensor time to get GPS time of week in seconds.</td>
+</tr>
+<tr>
+<td>17</td>
+<td>leapS</td>
+<td>s</td>
+<td>GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gga">GGA<a class="headerlink" href="#gga" title="Permanent link">&para;</a></h3>
+<p>NMEA GPS fix, 3D location and accuracy data.</p>
+<div class="highlight"><pre><span></span><code>$GPGGA,204153.200,4003.34331,N,11139.51872,W,1,25,0.93,1433.997,M,18.82,M,,*6d\r\n
+                1          2 3           4 5 6  7    8     9    0     1 2 3 4
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HHMMSS.sss</td>
+<td></td>
+<td>UTC time (fix taken at 20:41:53.200 UTC)</td>
+<td>204153.200</td>
+</tr>
+<tr>
+<td>2,3</td>
+<td>Latitude</td>
+<td>deg,min</td>
+<td>WGS84 latitude (DDmm.mmmmm,N)</td>
+<td>4003.34331,N</td>
+</tr>
+<tr>
+<td>4,5</td>
+<td>Longitude</td>
+<td>deg,min</td>
+<td>WGS84 longitude (DDDmm.mmmmm,E)</td>
+<td>11139.51872,W</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Fix quality</td>
+<td></td>
+<td>0 = invalid, 1 = GPS fix (SPS), 2 = DGPS fix, 3 = PPS fix, 4 = RTK Fix, 5 = RTK Float, 6 = estimated (dead reckoning), 7 = Manual input mode, 8 = Simulation mode</td>
+<td>1</td>
+</tr>
+<tr>
+<td>7</td>
+<td># Satellites</td>
+<td></td>
+<td>Number of satellites in use</td>
+<td>15</td>
+</tr>
+<tr>
+<td>8</td>
+<td>hDop</td>
+<td>m</td>
+<td>Horizontal dilution of precision</td>
+<td>0.9</td>
+</tr>
+<tr>
+<td>9,10</td>
+<td>MSL_altitude</td>
+<td>m</td>
+<td>Elevation above mean sea level (MSL)</td>
+<td>545.4,M</td>
+</tr>
+<tr>
+<td>11,12</td>
+<td>Undulation</td>
+<td>m</td>
+<td>Undulation of geoid.  Height of the geoid  above the WGS84 ellipsoid.</td>
+<td>46.9,M</td>
+</tr>
+<tr>
+<td>13</td>
+<td>empty</td>
+<td>s</td>
+<td>Time since last DGPS update</td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td>empty</td>
+<td></td>
+<td>DGPS station ID number</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="gll">GLL<a class="headerlink" href="#gll" title="Permanent link">&para;</a></h3>
+<p>NMEA geographic position, latitude / longitude and time.</p>
+<div class="highlight"><pre><span></span><code>$GPGLL,4916.45123,N,12311.12324,W,225444.800,A*33\r\n
+                1 2           3 4          5 6
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1,2</td>
+<td>Latitude</td>
+<td>deg,min</td>
+<td>WGS84 latitude (DDmm.mmmmm,N)</td>
+<td>4916.45123,N</td>
+</tr>
+<tr>
+<td>3,4</td>
+<td>Longitude</td>
+<td>deg,min</td>
+<td>WGS84 longitude (DDDmm.mmmmm,E)</td>
+<td>12311.12324,W</td>
+</tr>
+<tr>
+<td>5</td>
+<td>HHMMSS.sss</td>
+<td></td>
+<td>UTC time (fix taken at 22:54:44.8 UTC)</td>
+<td>225444.800</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Valid</td>
+<td></td>
+<td>Data valid (A=active, V=void)</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gsa">GSA<a class="headerlink" href="#gsa" title="Permanent link">&para;</a></h3>
+<p>NMEA GPS DOP and active satellites.</p>
+<div class="highlight"><pre><span></span><code>$GPGSA,A,3,04,05,,09,12,,,24,,,,,2.5,1.3,2.1*39\r\n
+       1 2  3  4 ...              15  16  17
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td></td>
+<td></td>
+<td>Auto selection of 2D or 3D fix (M = manual)</td>
+<td>A</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Fix quality</td>
+<td></td>
+<td>Fix quality (1 = none, 2 = 2D, 3 = 3D)</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3-14</td>
+<td>Sat ID</td>
+<td></td>
+<td>Satellite ID (PRNs)</td>
+<td>04,05,,09,12,,,24,,,,,</td>
+</tr>
+<tr>
+<td>15</td>
+<td>pDop</td>
+<td>m</td>
+<td>Dilution of precision</td>
+<td>2.5</td>
+</tr>
+<tr>
+<td>16</td>
+<td>hDop</td>
+<td>m</td>
+<td>Horizontal dilution of precision</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td>17</td>
+<td>vDop</td>
+<td>m</td>
+<td>Vertical dilution of precision</td>
+<td>2.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rmc">RMC<a class="headerlink" href="#rmc" title="Permanent link">&para;</a></h3>
+<p>NMEA GPS recommended minimum specific GPS/Transit data.</p>
+<div class="highlight"><pre><span></span><code>eg1. $GPRMC,081836,A,3751.65,S,14507.36,E,000.0,360.0,130998,011.3,E*62\r\n
+eg2. $GPRMC,225446,A,4916.45,N,12311.12,W,000.5,054.7,191194,020.3,E*68\r\n
+
+           225446       Time of fix 22:54:46 UTC
+           A            Navigation receiver warning A = OK, V = warning
+           4916.45,N    Latitude 49 deg. 16.45 min North
+           12311.12,W   Longitude 123 deg. 11.12 min West
+           000.5        Speed over ground, Knots
+           054.7        Course Made Good, True
+           191194       Date of fix  19 November 1994
+           020.3,E      Magnetic variation 20.3 deg East
+           *68          mandatory checksum
+
+eg3. $GPRMC,220516,A,5133.82,N,00042.24,W,173.8,231.8,130694,004.2,W*70\r\n
+              1    2    3    4    5     6    7    8      9     10  11 12
+
+      1   220516     Time Stamp
+      2   A          validity - A-ok, V-invalid
+      3   5133.82    current Latitude
+      4   N          North/South
+      5   00042.24   current Longitude
+      6   W          East/West
+      7   173.8      Speed in knots
+      8   231.8      True course
+      9   130694     Date Stamp
+      10  004.2      Variation
+      11  W          East/West
+      12  *70        checksum
+
+eg4. $GPRMC,hhmmss.ss,A,llll.ll,a,yyyyy.yy,a,x.x,x.x,ddmmyy,x.x,a*hh\r\n
+1    = UTC of position fix
+2    = Data status (V=navigation receiver warning)
+3    = Latitude of fix
+4    = N or S
+5    = Longitude of fix
+6    = E or W
+7    = Speed over ground in knots
+8    = Track made good in degrees True
+9    = UT date
+10   = Magnetic variation degrees (Easterly var. subtracts from true course)
+11   = E or W
+12   = Checksum
+</code></pre></div>
+
+<h3 id="vtg">VTG<a class="headerlink" href="#vtg" title="Permanent link">&para;</a></h3>
+<p>NMEA GPS track made good and speed over ground.</p>
+<div class="highlight"><pre><span></span><code>eg1. $GPVTG,140.88,T,,M,8.04,N,14.89,K,D*05\r\n
+
+0   Message ID $GPVTG
+1   Track made good (degrees true)
+2   T: track made good is relative to true north
+3   Track made good (degrees magnetic)
+4   M: track made good is relative to magnetic north
+5   Speed, in knots
+6   N: speed is measured in knots
+7   Speed over ground in kilometers/hour (kph)
+8   K: speed over ground is measured in kph
+9   Mode indicator:
+        A: Autonomous mode
+        D: Differential mode
+        E: Estimated (dead reckoning) mode
+        M: Manual Input mode
+        S: Simulator mode
+        N: Data not valid
+10  The checksum data, always begins with *
+</code></pre></div>
+
+<h3 id="zda">ZDA<a class="headerlink" href="#zda" title="Permanent link">&para;</a></h3>
+<p>NMEA GPS UTC Time and Date specification.</p>
+<div class="highlight"><pre><span></span><code>$GPZDA,213301.200,31,08,2023,00,00*41\r\n
+                1  2  3    4  5  6
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HHMMSS.sss</td>
+<td></td>
+<td>UTC Time</td>
+<td>213301.200</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Day</td>
+<td></td>
+<td>Day</td>
+<td>31</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Month</td>
+<td></td>
+<td>Month</td>
+<td>08</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Year</td>
+<td></td>
+<td>Year</td>
+<td>2023</td>
+</tr>
+<tr>
+<td>5</td>
+<td>localHrs</td>
+<td></td>
+<td>Local time zone hours</td>
+<td>00</td>
+</tr>
+<tr>
+<td>6</td>
+<td>localMin</td>
+<td></td>
+<td>Local time zone minutes</td>
+<td>00</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gsv">GSV<a class="headerlink" href="#gsv" title="Permanent link">&para;</a></h3>
+<p>NMEA GNSS satellites in view. <code>xx</code> corresponds to a constellation talker ID, shown in the table below.</p>
+<p>Contains the number of sats in view, PRN numbers, elevation, azimuth and SNR value. Each message includes up to four satellites. When there are more than 4 sats for a constellation, multiple messages are sent. The total number of messages and the message number are included in each message.</p>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$GPGSV,6,1,23,02,40,310,43,08,07,324,31,10,48,267,45,15,37,053,45*7C\r\n
+$GPGSV,6,2,23,16,12,268,35,18,69,078,41,23,74,336,40,24,15,111,37*79\r\n
+$GPGSV,6,3,23,26,02,239,31,27,35,307,38,29,12,162,37,32,14,199,39*7B\r\n
+$GPGSV,6,4,23,44,43,188,43,46,40,206,43,522,48,267,45,527,37,053,26*73\r\n
+$GPGSV,6,5,23,530,69,078,34,535,74,336,34,536,15,111,25,538,02,239,18*74\r\n
+$GPGSV,6,6,23,539,35,307,27,541,12,162,21,544,14,199,25*73\r\n
+$GAGSV,2,1,08,05,65,144,41,09,39,052,43,34,71,341,42,36,46,105,39*6A\r\n
+$GAGSV,2,2,08,517,65,144,30,521,39,052,30,546,71,341,27,548,46,105,30*64\r\n
+$GBGSV,3,1,10,11,09,141,34,14,52,047,44,27,32,313,43,28,80,263,44*64\r\n
+$GBGSV,3,2,10,33,81,039,43,41,43,230,42,43,33,148,42,58,,,44*5B\r\n
+$GBGSV,3,3,10,11,09,141,16,14,52,047,32*60\r\n
+$GQGSV,1,1,01,02,45,101,30*49\r\n
+$GLGSV,2,1,07,65,85,260,33,66,28,217,30,72,36,034,35,81,20,324,33*69\r\n
+$GLGSV,2,2,07,87,47,127,35,88,73,350,34,87,47,127,20*53\r\n
+</code></pre></div></p>
+<p>Example NMEA version 4.11:
+<div class="highlight"><pre><span></span><code>$GPGSV,4,1,14,02,40,310,43,08,07,324,31,10,48,267,45,15,37,053,45,1*67\r\n
+$GPGSV,4,2,14,16,12,268,35,18,69,078,41,23,74,336,40,24,15,111,37,1*62\r\n
+$GPGSV,4,3,14,26,02,239,31,27,35,307,38,29,12,162,37,32,14,199,39,1*60\r\n
+$GPGSV,4,4,14,44,43,188,43,46,40,206,43,1*65\r\n
+$GPGSV,3,1,09,10,48,267,45,15,37,053,26,18,69,078,34,23,74,336,34,6*68\r\n
+$GPGSV,3,2,09,24,15,111,25,26,02,239,18,27,35,307,27,29,12,162,21,6*64\r\n
+$GPGSV,3,3,09,32,14,199,25,6*58\r\n
+$GAGSV,1,1,04,05,65,144,41,09,39,052,43,34,71,341,42,36,46,105,39,7*7E\r\n
+$GAGSV,1,1,04,05,65,144,30,09,39,052,30,34,71,341,27,36,46,105,30,2*73\r\n
+$GBGSV,2,1,08,11,09,141,34,14,52,047,44,27,32,313,43,28,80,263,44,1*71\r\n
+$GBGSV,2,2,08,33,81,039,43,41,43,230,42,43,33,148,42,58,,,44,1*4E\r\n
+$GBGSV,1,1,02,11,09,141,16,14,52,047,32,B*0D\r\n
+$GQGSV,1,1,01,02,45,101,30,1*54\r\n
+$GLGSV,2,1,06,65,85,260,33,66,28,217,30,72,36,034,35,81,20,324,33,1*75\r\n
+$GLGSV,2,2,06,87,47,127,35,88,73,350,34,1*75\r\n
+$GLGSV,1,1,01,87,47,127,20,3*41\r\n
+</code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>Talker ID</th>
+<th>Constellation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GP</td>
+<td>GPS</td>
+</tr>
+<tr>
+<td>GQ</td>
+<td>QZSS</td>
+</tr>
+<tr>
+<td>GA</td>
+<td>Galileo</td>
+</tr>
+<tr>
+<td>GL</td>
+<td>Glonass</td>
+</tr>
+<tr>
+<td>GB</td>
+<td>BeiDou</td>
+</tr>
+<tr>
+<td>GN</td>
+<td>Combination of active constellations</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>numMsgs</td>
+<td></td>
+<td>Total number of messages for this constellation and epoch</td>
+</tr>
+<tr>
+<td>2</td>
+<td>msgNum</td>
+<td></td>
+<td>Message number</td>
+</tr>
+<tr>
+<td>3</td>
+<td>numSats</td>
+<td></td>
+<td>Total number of known satellites for the talker ID and signal ID</td>
+</tr>
+<tr>
+<td>4+(n*5)</td>
+<td>prn</td>
+<td></td>
+<td>Satellite PRN number</td>
+</tr>
+<tr>
+<td>5+(n*5)</td>
+<td>elev</td>
+<td>deg</td>
+<td>Elevation (0-90)</td>
+</tr>
+<tr>
+<td>6+(n*5)</td>
+<td>azim</td>
+<td>deg</td>
+<td>Azimuth (000 to 359)</td>
+</tr>
+<tr>
+<td>7+(n*5)</td>
+<td>snr</td>
+<td>dB</td>
+<td>SNR (00-99, empty when not tracking)</td>
+</tr>
+<tr>
+<td>variable</td>
+<td>system ID</td>
+<td></td>
+<td>GNSS system ID (distinguishes frequency band).  This field is only output if the NMEA version is 4.11.</td>
+</tr>
+</tbody>
+</table>
+<p>Where n is 0-3, for the four satellites supported by this message. </p>
+<h4 id="gsv-output-filtering">GSV Output Filtering<a class="headerlink" href="#gsv-output-filtering" title="Permanent link">&para;</a></h4>
+<p>Verbosity and size of the GSV NMEA message can be reduced to only select constellation and frequencies by using a <a href="#filtered-gsv-nmea-message-ids">Filtered GSV NMEA Message IDs</a> instead of the standard GSV message ID <code>GPGSV</code> or <code>15</code> (<code>NMEA_MSG_ID_GNGSV</code>), either ASCII or integer.  Note that the GSV output filter can only hide or mask information for satellites currently enabled in the <code>DID_FLASH_CONFIG.gnssSatSigConst</code> satellite system constellation.  Usage:</p>
+<div class="highlight"><pre><span></span><code><span class="n">$ASCE</span><span class="p">,[</span><span class="n">options</span><span class="p">],[</span><span class="n">Message</span><span class="w"> </span><span class="n">ID</span><span class="p">]</span><span class="o">*</span><span class="p">[</span><span class="n">checksum</span><span class="p">]</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span><span class="w"></span>
+</code></pre></div>
+
+<p>For example, using message ID <code>GPGSV_1</code> or <code>3857</code> (<code>NMEA_MSG_ID_GPGSV_1</code>) will output only the GPS L1 frequency and prevent all other frequency and constellation satellite information from being displayed.</p>
+<div class="highlight"><pre><span></span><code>$ASCE,0,GPGSV_1,2*01\r\n
+$ASCE,0,3857,2*33\r\n
+</code></pre></div>
+
+<h5 id="filtered-gsv-nmea-message-ids">Filtered GSV NMEA Message IDs<a class="headerlink" href="#filtered-gsv-nmea-message-ids" title="Permanent link">&para;</a></h5>
+<p>The following extended GSV NMEA message IDs are defined in data_sets.h.</p>
+<table>
+<thead>
+<tr>
+<th>All Constellations</th>
+<th>Message ID ASCII</th>
+<th>Message ID Int</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_0</td>
+<td>GNGSV_0</td>
+<td>3840</td>
+<td>Clear all constellations and frequencies</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_1</td>
+<td>GNGSV_1</td>
+<td>3841</td>
+<td>Enable all constellations band1</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_2</td>
+<td>GNGSV_2</td>
+<td>3842</td>
+<td>Enable all constellations band2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_2_1</td>
+<td>GNGSV_2_1</td>
+<td>3843</td>
+<td>Enable all constellations band1, band2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_3</td>
+<td>GNGSV_3</td>
+<td>3844</td>
+<td>Enable all constellations band3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_3_1</td>
+<td>GNGSV_3_1</td>
+<td>3845</td>
+<td>Enable all constellations band1, band3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_3_2</td>
+<td>GNGSV_3_2</td>
+<td>3846</td>
+<td>Enable all constellations band2, band3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_3_2_1</td>
+<td>GNGSV_3_2_1</td>
+<td>3847</td>
+<td>Enable all constellations band1, band2, band3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_5</td>
+<td>GNGSV_5</td>
+<td>3848</td>
+<td>Enable all constellations band5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_5_1</td>
+<td>GNGSV_5_1</td>
+<td>3849</td>
+<td>Enable all constellations band1, band5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_5_2</td>
+<td>GNGSV_5_2</td>
+<td>3850</td>
+<td>Enable all constellations band2, band5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_5_2_1</td>
+<td>GNGSV_5_2_1</td>
+<td>3851</td>
+<td>Enable all constellations band1, band2, band5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_5_3</td>
+<td>GNGSV_5_3</td>
+<td>3852</td>
+<td>Enable all constellations band3, band5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_5_3_1</td>
+<td>GNGSV_5_3_1</td>
+<td>3853</td>
+<td>Enable all constellations band1, band3, band5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_5_3_2</td>
+<td>GNGSV_5_3_2</td>
+<td>3854</td>
+<td>Enable all constellations band2, band3, band5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GNGSV_5_3_2_1</td>
+<td>GNGSV_5_3_2_1</td>
+<td>3855</td>
+<td>Enable all constellations band1, band2, band3, band5</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>GPGSV - GPS</th>
+<th>Message ID ASCII</th>
+<th>Message ID Int</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NMEA_MSG_ID_GPGSV_0</td>
+<td>GPGSV_0</td>
+<td>3856</td>
+<td>Disable all GPS frequencies</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GPGSV_1</td>
+<td>GPGSV_1</td>
+<td>3857</td>
+<td>Enable GPS L1</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GPGSV_2</td>
+<td>GPGSV_2</td>
+<td>3858</td>
+<td>Enable GPS L2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GPGSV_2_1</td>
+<td>GPGSV_2_1</td>
+<td>3859</td>
+<td>Enable GPS L1, L2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GPGSV_5</td>
+<td>GPGSV_5</td>
+<td>3864</td>
+<td>Enable GPS L5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GPGSV_5_1</td>
+<td>GPGSV_5_1</td>
+<td>3865</td>
+<td>Enable GPS L1, L5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GPGSV_5_2</td>
+<td>GPGSV_5_2</td>
+<td>3866</td>
+<td>Enable GPS L2, L5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GPGSV_5_2_1</td>
+<td>GPGSV_5_2_1</td>
+<td>3867</td>
+<td>Enable GPS L1, L2, L5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GPGSV</td>
+<td>GPGSV</td>
+<td>3871</td>
+<td>Enable all GPS frequencies</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>GAGSV - Galileo</th>
+<th>Message ID ASCII</th>
+<th>Message ID Int</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NMEA_MSG_ID_GAGSV_0</td>
+<td>GAGSV_0</td>
+<td>3888</td>
+<td>Disable all Galileo frequencies</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GAGSV_1</td>
+<td>GAGSV_1</td>
+<td>3889</td>
+<td>Enable Galileo E1</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GAGSV_5</td>
+<td>GAGSV_5</td>
+<td>3896</td>
+<td>Enable Galileo E5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GAGSV_5_1</td>
+<td>GAGSV_5_1</td>
+<td>3897</td>
+<td>Enable Galileo E1, E5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GAGSV</td>
+<td>GAGSV</td>
+<td>3903</td>
+<td>Enable all Galileo frequencies</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>GBGSV - Beido</th>
+<th>Message ID ASCII</th>
+<th>Message ID Int</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NMEA_MSG_ID_GBGSV_0</td>
+<td>GBGSV_0</td>
+<td>3904</td>
+<td>Disable all Beidou frequencies</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GBGSV_1</td>
+<td>GBGSV_1</td>
+<td>3905</td>
+<td>Enable Beidou B1</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GBGSV_2</td>
+<td>GBGSV_2</td>
+<td>3906</td>
+<td>Enable Beidou B2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GBGSV_2_1</td>
+<td>GBGSV_2_1</td>
+<td>3907</td>
+<td>Enable Beidou B1, B2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GBGSV_3</td>
+<td>GBGSV_3</td>
+<td>3908</td>
+<td>Enable Beidou B3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GBGSV_3_1</td>
+<td>GBGSV_3_1</td>
+<td>3909</td>
+<td>Enable Beidou B1, B3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GBGSV_3_2</td>
+<td>GBGSV_3_2</td>
+<td>3910</td>
+<td>Enable Beidou B2, B3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GBGSV_3_2_1</td>
+<td>GBGSV_3_2_1</td>
+<td>3911</td>
+<td>Enable Beidou B1, B2, B3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GBGSV</td>
+<td>GBGSV</td>
+<td>3919</td>
+<td>Enable all Beidou frequencies</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>GQGSV - QZSS</th>
+<th>Message ID ASCII</th>
+<th>Message ID Int</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NMEA_MSG_ID_GQGSV_0</td>
+<td>GQGSV_0</td>
+<td>3920</td>
+<td>Disable all QZSS frequencies</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GQGSV_1</td>
+<td>GQGSV_1</td>
+<td>3921</td>
+<td>Enable QZSS L1</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GQGSV_2</td>
+<td>GQGSV_2</td>
+<td>3922</td>
+<td>Enable QZSS L2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GQGSV_2_1</td>
+<td>GQGSV_2_1</td>
+<td>3923</td>
+<td>Enable QZSS L1, L2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GQGSV_5</td>
+<td>GQGSV_5</td>
+<td>3928</td>
+<td>Enable QZSS L5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GQGSV_5_1</td>
+<td>GQGSV_5_1</td>
+<td>3929</td>
+<td>Enable QZSS L1, L5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GQGSV_5_2</td>
+<td>GQGSV_5_2</td>
+<td>3930</td>
+<td>Enable QZSS L2, L5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GQGSV_5_2_1</td>
+<td>GQGSV_5_2_1</td>
+<td>3931</td>
+<td>Enable QZSS L1, L2, L5</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GQGSV</td>
+<td>GQGSV</td>
+<td>3935</td>
+<td>Enable all QZSS frequencies</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>GLGSV - Glonass</th>
+<th>Message ID ASCII</th>
+<th>Message ID Int</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NMEA_MSG_ID_GLGSV_0</td>
+<td>GLGSV_0</td>
+<td>3936</td>
+<td>Disable all Glonass frequencies</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GLGSV_1</td>
+<td>GLGSV_1</td>
+<td>3937</td>
+<td>Enable Glonass L1</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GLGSV_2</td>
+<td>GLGSV_2</td>
+<td>3938</td>
+<td>Enable Glonass L2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GLGSV_2_1</td>
+<td>GLGSV_2_1</td>
+<td>3939</td>
+<td>Enable Glonass L1, L2</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GLGSV_3</td>
+<td>GLGSV_3</td>
+<td>3940</td>
+<td>Enable Glonass L3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GLGSV_3_1</td>
+<td>GLGSV_3_1</td>
+<td>3941</td>
+<td>Enable Glonass L1, L3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GLGSV_3_2</td>
+<td>GLGSV_3_2</td>
+<td>3942</td>
+<td>Enable Glonass L2, L3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GLGSV_3_2_1</td>
+<td>GLGSV_3_2_1</td>
+<td>3943</td>
+<td>Enable Glonass L1, L2, L3</td>
+</tr>
+<tr>
+<td>NMEA_MSG_ID_GLGSV</td>
+<td>GLGSV</td>
+<td>3951</td>
+<td>Enable all Glonass frequencies</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vtg_1">VTG<a class="headerlink" href="#vtg_1" title="Permanent link">&para;</a></h3>
+<p>NMEA GPS track made good and speed over ground.</p>
+<p><div class="highlight"><pre><span></span><code>$GPVTG,140.88,T,,M,8.04,N,14.89,K,D*05\r\n
+            1 2 3 4   5 6     7 8 9
+</code></pre></div>
+| Index | Field  | Units | Description                                        | Example |
+|-------|--------|-------|----------------------------------------------------|---------|
+| 1     | track true | deg   | Ground track heading (true north)                  | 140.88  |
+| 2     | T      |       | Ground track heading is relative to true north     | T       |
+| 3     | track mag | deg   | Ground track heading (magnetic north)              |         |
+| 4     | M      |       | Ground track heading is relative to magnetic north (track mag = track true + magVarCorrection) | M       |
+| 5     | speed Kn  | knots | Speed                                              | 8.04    |
+| 6     | N      |       | Speed is measured in knots                         | N       |
+| 7     | speed Km  | kph   | Speed over ground in kilometers/hour               | 14.89   |
+| 8     | K      |       | Speed over ground is measured in kph               | K       |
+| 9     | mode ind   |       | Mode indicator:                                    | D       |
+|       |        |       |   A: Autonomous mode                               |         |
+|       |        |       |   D: Differential mode                             |         |
+|       |        |       |   E: Estimated (dead reckoning) mode               |         |
+|       |        |       |   M: Manual Input mode                             |         |
+|       |        |       |   S: Simulator mode                                |         |
+|       |        |       |   N: Data not valid                                |         |</p>
+<h3 id="pashr">PASHR<a class="headerlink" href="#pashr" title="Permanent link">&para;</a></h3>
+<p>NMEA GPS DOP and active satellites.</p>
+<div class="highlight"><pre><span></span><code>$PASHR,001924.600,95.81,T,+0.60,+1.05,+0.00,0.038,0.035,0.526,0,0*08\r\n
+          1         2   3   4      5    6    7      8     9  10 11  
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Time</td>
+<td></td>
+<td>UTC Time</td>
+<td>001924.600</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Heading</td>
+<td></td>
+<td>Heading value in decimal degrees</td>
+<td>95.81</td>
+</tr>
+<tr>
+<td>3</td>
+<td>True Heading</td>
+<td></td>
+<td>T displayed if heading is relative to true north.</td>
+<td>T</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Roll</td>
+<td>m</td>
+<td>Roll in decimal degrees.</td>
+<td>+0.60</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Pitch</td>
+<td>m</td>
+<td>Pitch in decimal degrees.</td>
+<td>+1.05</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Heave</td>
+<td>m</td>
+<td>Instantaneous heave in meters.</td>
+<td>+0.00</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Roll Accuracy</td>
+<td></td>
+<td>Roll standard deviation in decimal degrees.</td>
+<td>+0.038</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Pitch Accuracy</td>
+<td></td>
+<td>Pitch standard deviation in decimal degrees.</td>
+<td>0.035</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Heading Accuracy</td>
+<td></td>
+<td>Heading standard deviation in decimal degrees.</td>
+<td>0.526</td>
+</tr>
+<tr>
+<td>10</td>
+<td>GPS Status</td>
+<td></td>
+<td>GPS Status</td>
+<td>0</td>
+</tr>
+<tr>
+<td>11</td>
+<td>INS Status</td>
+<td></td>
+<td>INS Status</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pstrb">PSTRB<a class="headerlink" href="#pstrb" title="Permanent link">&para;</a></h3>
+<p>Strobe input time.  This message is sent when an assert event occurs on a strobe input pin.</p>
+<div class="highlight"><pre><span></span><code>$PSTRB,d,d,d,d*xx\r\n
+       1 2 3 4
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>GPS week</td>
+<td>weeks</td>
+<td>Number of weeks since January 1<sup>st</sup> of 1980 in GMT</td>
+</tr>
+<tr>
+<td>2</td>
+<td>timeMsOfWeek</td>
+<td>ms</td>
+<td>Milliseconds since Sunday morning in GMT</td>
+</tr>
+<tr>
+<td>3</td>
+<td>pin</td>
+<td></td>
+<td>Strobe event input pin number</td>
+</tr>
+<tr>
+<td>4</td>
+<td>count</td>
+<td></td>
+<td>Strobe event serial index number</td>
+</tr>
+</tbody>
+</table>
+<h3 id="info">INFO<a class="headerlink" href="#info" title="Permanent link">&para;</a></h3>
+<p>Device version information.  Query this message by sending <code>$INFO*0E\r\n</code>.</p>
+<div class="highlight"><pre><span></span><code>$INFO,d,d.d.d.d,d.d.d.d,d,d.d.d.d,d,s,YYYY-MM-DD,hh:mm:ss.ms,s*xx\r\n
+      1 2       3       4 5       6 7 8          9           10
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Field</th>
+<th>Units</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Serial number</td>
+<td></td>
+<td>Manufacturer serial number</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Hardware version</td>
+<td></td>
+<td>Hardware version</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Firmware version</td>
+<td></td>
+<td>Firmware version</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Build number</td>
+<td></td>
+<td>Firmware build number</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Protocol version</td>
+<td></td>
+<td>Communications protocol version</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Repo revision</td>
+<td></td>
+<td>Repository revision number</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Manufacturer</td>
+<td></td>
+<td>Manufacturer name</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Build date</td>
+<td></td>
+<td>Build date: <br/>[1] = year, [2] = month, [3] = day</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Build time</td>
+<td></td>
+<td>Build date: [0] = hour, [1] = minute, <br/>[2] = second, [3] = millisecond</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Add Info</td>
+<td></td>
+<td>Additional information</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Hardware</td>
+<td></td>
+<td>Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Reserved</td>
+<td></td>
+<td>Reserved for internal purpose.</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Build type</td>
+<td></td>
+<td>Build type: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=debug</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nmea-examples">NMEA Examples<a class="headerlink" href="#nmea-examples" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the command strings below are altered, their checksum must be recalculated.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All NMEA command strings must be followed with a carriage return and new line character (<code>\r\n</code> or <code>0x0D</code>, <code>0x0A</code>).</p>
+</div>
+<p>The NMEA string checksum is automatically computed and appended to string when using the Inertial Sense SDK <a href="https://github.com/inertialsense/InertialSenseSDK/blob/main/src/serialPort.c#L219-L268">serialPortWriteAscii function</a> or can be generated using an online NMEA checksum calculator. For example:  <a href="http://www.hhhh.org/wiml/proj/nmeaxor.html">MTK NMEA checksum calculator</a></p>
+<p><strong>Stop streams on CURRENT port</strong></p>
+<div class="highlight"><pre><span></span><code>$STPB*15                                     
+</code></pre></div>
+
+<p><strong>Stop all streams on ALL ports</strong></p>
+<div class="highlight"><pre><span></span><code>$STPC*14
+</code></pre></div>
+
+<p><strong>Query device version information</strong></p>
+<div class="highlight"><pre><span></span><code>$INFO*0E
+</code></pre></div>
+
+<p>Response:</p>
+<div class="highlight"><pre><span></span><code>$INFO,30612,3.1.2.0,1.7.0.0,3522,1.2.74.7,6275,Inertial Sense Inc,0018-10-16,23:20:38.41,INL2*58
+</code></pre></div>
+
+<p><strong>Stream INS1 @5Hz on port 0</strong></p>
+<div class="highlight"><pre><span></span><code>$ASCE,1,3,1*0B
+</code></pre></div>
+
+<p><strong>Stream INS1 @400ms on current port</strong></p>
+<div class="highlight"><pre><span></span><code>$ASCE,0,3,2*09
+</code></pre></div>
+
+<p>Response:</p>
+<div class="highlight"><pre><span></span><code>$PINS1,244272.398,2021,427888998,805306448,0.0468,-0.3830,-0.0909,0.232,-0.083,-0.089,40.05574940,-111.65861580,1438.451,-1.678,-5.086,-9.697*11
+$PINS1,244272.498,2021,427888998,805306448,0.0469,-0.3830,-0.0902,0.232,-0.081,-0.089,40.05575000,-111.65861550,1438.451,-1.611,-5.060,-9.697*18
+$PINS1,244272.598,2021,427888998,805306448,0.0469,-0.3830,-0.0902,0.232,-0.081,-0.089,40.05575022,-111.65861562,1438.449,-1.587,-5.070,-9.695*1e
+</code></pre></div>
+
+<p><strong>Stream INS1 @600ms on serial port 1</strong></p>
+<div class="highlight"><pre><span></span><code>$ASCE,2,3,3*0A
+</code></pre></div>
+
+<p>Response:</p>
+<div class="highlight"><pre><span></span><code>$PINS1,256270.627,2021,427888998,1073741912,0.1153,-0.1473,-0.1628,0.001,0.001,0.003,40.05569486,-111.65864500,1416.218,-7.738,-7.570,12.536*3d
+$PINS1,256270.647,2021,427888998,1073741912,0.1153,-0.1473,-0.1632,0.001,0.001,0.003,40.05569486,-111.65864500,1416.219,-7.738,-7.570,12.535*32
+$PINS1,256270.667,2021,427888998,1073741912,0.1153,-0.1473,-0.1631,0.001,0.001,0.003,40.05569486,-111.65864500,1416.220,-7.738,-7.570,12.534*38
+</code></pre></div>
+
+<p><strong>Stream PIMU @400ms and GGA @5Hz on current port</strong></p>
+<div class="highlight"><pre><span></span><code>$ASCE,0,6,1,0,2*0D
+</code></pre></div>
+
+<p>Response:</p>
+<div class="highlight"><pre><span></span><code>$PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069,-1.433,-1.072,-9.585*1f
+$GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.16,M,18.82,M,,*59
+$GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.19,M,18.82,M,,*56
+$PIMU,3218.763,0.0019,-0.0062,-0.0086,-1.426,-1.114,-9.509,0.0054,0.0029,-0.0070,-1.431,-1.085,-9.579*13
+$GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.16,M,18.82,M,,*59
+$GPGGA,231841,4003.3425,N,11139.5188,W,1,29,0.89,1434.19,M,18.82,M,,*56
+$PIMU,3218.543,0.0017,-0.0059,-0.0077,-1.417,-1.106,-9.524,0.0047,0.0031,-0.0069,-1.433,-1.072,-9.585*1f
+</code></pre></div>
+
+<h2 id="linux-command-line-nmea-query">Linux Command Line NMEA Query<a class="headerlink" href="#linux-command-line-nmea-query" title="Permanent link">&para;</a></h2>
+<p>This section illustrates how to request NMEA output using standard Linux commands without relying on the Inertial Sense SDK, cltool, or EvalTool.  This provides a simple way to communicate directly with the device over a port, making it useful for quickly identifying device information, firmware version, or any available NMEA message.   </p>
+<p>Configure the serial port parameters (i.e. baudrate, etc).</p>
+<div class="highlight"><pre><span></span><code>stty -F /dev/ttyACM0 <span class="m">921600</span> raw -echo -crtscts
+</code></pre></div>
+
+<p>Stop message streaming on the current port. This prevents previously streamed messages from interfering with the response to a specific request.</p>
+<div class="highlight"><pre><span></span><code>cat &lt; /dev/ttyACM0 <span class="p">&amp;</span> <span class="nb">printf</span> <span class="s1">&#39;%s\r\n&#39;</span> <span class="s1">&#39;$STPC*14&#39;</span> &gt; /dev/ttyACM0
+</code></pre></div>
+
+<p>Request the device information.</p>
+<div class="highlight"><pre><span></span><code>cat &lt; /dev/ttyACM0 <span class="p">&amp;</span> <span class="nb">printf</span> <span class="s1">&#39;%s\r\n&#39;</span> <span class="s1">&#39;$INFO*0E&#39;</span> &gt; /dev/ttyACM0
+</code></pre></div>
+
+<p>Request the device information and exit after receiving the response.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">printf</span> <span class="s1">&#39;%s\r\n&#39;</span> <span class="s1">&#39;$INFO*0E&#39;</span> &gt; /dev/ttyACM0 <span class="p">;</span> sleep <span class="m">0</span>.2 <span class="p">;</span> timeout <span class="m">0</span>.2 cat &lt; /dev/ttyACM0
+</code></pre></div>
+
+<p>Request the $PINS1 solution output and exit after receiving the response.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">printf</span> <span class="s1">&#39;%s\r\n&#39;</span> <span class="s1">&#39;$ASCE,0,PINS1,0*0D&#39;</span> &gt; /dev/ttyACM0 <span class="p">;</span> sleep <span class="m">0</span>.2 <span class="p">;</span> timeout <span class="m">0</span>.2 cat &lt; /dev/ttyACM0
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../isb/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Inertial Sense Binary (ISB)" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Inertial Sense Binary (ISB)
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../SPI/" class="md-footer__link md-footer__link--next" aria-label="Next: SPI" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              SPI
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.math"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+        <script src="https://js.hs-scripts.com/3481185.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+    
+  </body>
+</html>
