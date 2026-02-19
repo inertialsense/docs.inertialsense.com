@@ -26,7 +26,10 @@ A ground plane width of 8 to 12 cm is typically large enough for most applicatio
 
 [electronics.stackexchange.com: How big a ground plane does a GPS antenna need?](https://electronics.stackexchange.com/questions/150849/how-big-a-ground-plane-does-a-gps-antenna-need/247725) 
 
-## Recommended GNSS Components
+
+<!-- All of these are L1 only>
+
+<!-- ## Recommended GNSS Components
 
 The following components are optional components that may be used with the μINS, μAHRS, and μIMU.  
 
@@ -68,4 +71,4 @@ These non-enclosed embedded antennas have exposed PCA with no environmental prot
 
 
 
-
+ -->

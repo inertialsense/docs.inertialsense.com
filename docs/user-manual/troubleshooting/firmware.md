@@ -30,7 +30,7 @@ Note: Following chip erase:
 Update firmware using standard procedure including app and bootloader firmware images. 
 Upload IMU calibration.
 
-## "GPX-1 and IMX-6 Bricked" System Recovery
+## "GPX and IMX Bricked" System Recovery
 
 Assert boot mode pin high (3.3V) while booting (power cycle or reset) to put the device into bootloader mode.  Inertial Sense customer support is required to facilitate bootloader communications with this device.
 

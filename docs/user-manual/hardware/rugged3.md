@@ -128,7 +128,9 @@ Use platform config RUG-2.1 with this hardware version.
 | GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adaptor cable.     |
 | GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adaptor cable. |
 
-See the [Multi-Band GNSS page](../gnss/multi_band_F9P.md#multi-band-gnss-components) for GNSS antenna options.
+See the [Multi-Band GNSS page](../../gnss/multi_band_F9P/#multi-band-gnss-components) for GNSS antenna options for an L1/L2 receiver (Rugged-3).
+
+See the [Multi-Band GNSS page](../../gnss/multi_band_GPX/#multi-band-gnss-components) for GNSS antenna options for an L1/L5 receiver (GPX-1).
 
 ## Using with Inertial Sense Software
 

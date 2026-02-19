@@ -19,9 +19,9 @@ The configuration settings found in DID_GPX_FLASH_CONFIG are used to configure t
 Configure the antenna offsets.
  When a GPX is not paired with an IMX the antenna offsets must be defined. In this scenario simply measure the the distance between Antenna 1 and Antenna 2 and enter it as the value of gps1AntOffset[0]. All other offset values should then be set to zero. This can be done easily in the EvalTool by going to the Data Sets Tab and selecting DID_GPX_FLASH_CONFIG. The values of each field can then be entered.
 
-1. gps1AntOffset[X-Z] - Position offset of sensor frame with respect to GPS1 antenna.
+1. gps1AntOffset[X-Z] - Position of GPS1 antenna with respect to sensor frame.
 
-2. gps2AntOffset[X-Z] - Position offset of sensor frame with respect to GPS2 antenna.
+2. gps2AntOffset[X-Z] - Position of GPS2 antenna with respect to sensor frame.
 
 GNSS data sets can then be requested by one of several methods:
 
