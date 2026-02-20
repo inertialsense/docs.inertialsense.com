@@ -506,7 +506,6 @@ RTK options - requires little endian CPU.
 | navsys | int32_t | navigation systems |
 | elmin | float | elevation mask angle (rad) |
 | snrmin | int32_t | Min snr to consider satellite for rtk |
-<<<<<<< HEAD
 | snrrange | int32_t | snr range from the highest snr satellite to consider (overrides snrmin if non-zero) |
 | modear | int32_t | AR mode (0:off,1:continuous,2:instantaneous,3:fix and hold,4:ppp-ar) |
 | glomodear | int32_t | GLONASS AR mode (0:off,1:on,2:auto cal,3:ext cal) |
@@ -550,50 +549,6 @@ RTK options - requires little endian CPU.
 | reset_baseline_error | float | max averaging epochs |
 | max_ubx_error | float | output single by dgps/float/fix/ppp outage |
 | ru | double[3] | velocity constraint in compassing mode {var before fix, var after fix} (m^2/s^2)  |
-=======
-| snrrange | int32_t | AR mode (0:off,1:continuous,2:instantaneous,3:fix and hold,4:ppp-ar) |
-| modear | int32_t | GLONASS AR mode (0:off,1:on,2:auto cal,3:ext cal) |
-| glomodear | int32_t | GPS AR mode (0:off,1:on) |
-| gpsmodear | int32_t | SBAS AR mode (0:off,1:on) |
-| sbsmodear | int32_t | BeiDou AR mode (0:off,1:on) |
-| bdsmodear | int32_t | AR filtering to reject bad sats (0:off,1:on) |
-| arfilter | int32_t | obs outage count to reset bias |
-| maxout | int32_t | reject count to reset bias |
-| maxrej | int32_t | min lock count to fix ambiguity |
-| minlock | int32_t | min sats to fix integer ambiguities |
-| minfixsats | int32_t | min sats to hold integer ambiguities |
-| minholdsats | int32_t | min sats to drop sats in AR |
-| mindropsats | int32_t | use stdev estimates from receiver to adjust measurement variances |
-| rcvstds | int32_t | min fix count to hold ambiguity |
-| minfix | int32_t | max iteration to resolve ambiguity |
-| armaxiter | int32_t | dynamics model (0:none,1:velociy,2:accel) |
-| dynamics | int32_t | interpolate reference obs (for post mission) |
-| intpref | int32_t | rover position for fixed mode |
-| rovpos | int32_t | base position for relative mode |
-| refpos | int32_t | code/phase error ratio |
-| eratio | float[] | measurement error factor |
-| err | float[7] | initial-state std [0]bias,[1]iono [2]trop |
-| std | float[3] | process-noise std [0]bias,[1]iono [2]trop [3]acch [4]accv [5] pos |
-| prn | float[6] | satellite clock stability (sec/sec) |
-| sclkstab | double | AR validation threshold |
-| thresar | float[8] | elevation mask of AR for rising satellite (rad) |
-| elmaskar | float | elevation mask to hold ambiguity (rad) |
-| elmaskhold | float | slip threshold of geometry-free phase (m) |
-| thresslip | float | variance for fix-and-hold pseudo measurements (cycle^2) |
-| thresdop | float | gain used for GLO and SBAS sats to adjust ambiguity |
-| varholdamb | float | max difference of time (sec) |
-| gainholdamb | float | reset sat biases after this long trying to get fix if not acquired |
-| maxtdiff | float | reject threshold of innovation for phase [0] and code [1] (m) |
-| fix_reset_base_msgs | int | reject thresholds of NIS for phase [0] and code [1] |
-| maxinno | float[2] | reject threshold of gdop |
-| maxnis_lo | float[2] | baseline length constraint {const,sigma before fix, sigma after fix} (m) |
-| maxnis_hi | float[2] | maximum error wrt ubx position (triggers reset if more than this far) (m) |
-| maxgdop | double | rover position for fixed mode {x,y,z} (ecef) (m) |
-| baseline | float[3] | base position for relative mode {x,y,z} (ecef) (m) |
-| max_baseline_error | float | max averaging epochs |
-| reset_baseline_error | float | output single by dgps/float/fix/ppp outage |
-| max_ubx_error | float | velocity constraint in compassing mode {var before fix, var after fix} (m^2/s^2)  |
->>>>>>> origin/2.7.0-rc
 
 
 ### GPX
@@ -1244,7 +1199,6 @@ GPS2 PPS time synchronization.
 
 | Field | Type | Description |
 |-------|------|-------------|
-<<<<<<< HEAD
 | towOffset | double | (s)    Week seconds offset from MCU to GPS time. |
 | towGps | double | (s)    Week seconds for next timepulse (from start of GPS week) |
 | timeMcu | double | (s)    Local MCU week seconds |
@@ -1256,8 +1210,6 @@ GPS2 PPS time synchronization.
 | plsCount | uint8_t | Counter of GPS PPS via GPIO, not interrupt. |
 | lastSyncTimeMs | uint32_t | (ms) Local timestamp of last valid PPS sync. |
 | sinceLastSyncTimeMs | uint32_t | (ms) Time since last valid PPS sync. |
-=======
->>>>>>> origin/2.7.0-rc
 
 
 #### DID_GPX_BIT
@@ -1336,13 +1288,8 @@ Multiple IMU data calibrated from DID_IMUS_UNCAL.  We recommend use of DID_IMU o
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-<<<<<<< HEAD
 | status | uint32_t | IMUs Status (eImusStatus) |
 | I | imui_t[5] | Inertial Measurement Units (IMUs) |
-=======
-| status | uint32_t | IMU3 Status (eImu3Status) |
-| I | imus_t[3] | Inertial Measurement Units (IMUs) |
->>>>>>> origin/2.7.0-rc
 
 
 #### DID_IMUS_UNCAL
@@ -1354,13 +1301,8 @@ Uncalibrated multiple IMU data.  We recommend use of DID_IMU or DID_PIMU as they
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-<<<<<<< HEAD
 | status | uint32_t | IMUs Status (eImusStatus) |
 | I | imui_t[5] | Inertial Measurement Units (IMUs) |
-=======
-| status | uint32_t | IMU3 Status (eImu3Status) |
-| I | imus_t[3] | Inertial Measurement Units (IMUs) |
->>>>>>> origin/2.7.0-rc
 
 
 #### DID_IMU_MAG
@@ -1566,11 +1508,8 @@ INL2 EKF 6x6 covariance matrices packed in arrays containing their elements on m
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeek | double | GPS time of week (since Sunday morning) in seconds |
-<<<<<<< HEAD
 | covPoseLD | float[21] | Packed 6x6 lower-diagonal covariance matrix (21 values, row-major) for EKF pose errors: Attitude (roll,pitch,yaw) error (body frame, rad²), Position (x,y,z) error (ECEF frame, m²) |
 | covTwistLD | float[21] | Packed 6x6 lower-diagonal covariance matrix (21 values, row-major) for EKF twist errors: Velocity (x,y,z) error (ECEF frame, (m/s)^2), Angular rate (p,q,r) error (body frame, (rad/s)^2) |
-=======
->>>>>>> origin/2.7.0-rc
 
 
 #### DID_RTOS_INFO
@@ -1811,13 +1750,17 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_GYR_FS_1000 | 0x00000002 |
 | SENSOR_CFG_GYR_FS_2000 | 0x00000003 |
 | SENSOR_CFG_GYR_FS_4000 | 0x00000004 |
+| SENSOR_CFG_GYR_FS_MAX | 0x00000007 |
 | SENSOR_CFG_GYR_FS_MASK | 0x00000007 |
 | SENSOR_CFG_GYR_FS_OFFSET |  (int)0 |
 | SENSOR_CFG_ACC_FS_2G | 0x00000000 |
 | SENSOR_CFG_ACC_FS_4G | 0x00000001 |
 | SENSOR_CFG_ACC_FS_8G | 0x00000002 |
 | SENSOR_CFG_ACC_FS_16G | 0x00000003 |
-| SENSOR_CFG_ACC_FS_MASK | 0x00000030 |
+| SENSOR_CFG_ACC_FS_32G | 0x00000004 |
+| SENSOR_CFG_ACC_FS_80G | 0x00000005 |
+| SENSOR_CFG_ACC_FS_MAX | 0x00000007 |
+| SENSOR_CFG_ACC_FS_MASK | 0x00000070 |
 | SENSOR_CFG_ACC_FS_OFFSET |  (int)4 |
 | SENSOR_CFG_GYR_DLPF_250HZ | 0x00000000 |
 | SENSOR_CFG_GYR_DLPF_184HZ | 0x00000001 |
