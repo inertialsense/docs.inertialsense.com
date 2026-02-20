@@ -579,7 +579,6 @@ GPX device information
 | buildSecond | uint8_t | Build time second |
 | buildMillisecond | uint8_t | Build time millisecond |
 | addInfo | char[24] | Additional info |
-| firmwareMD5Hash | uint32_t[4] | Firmware MD5 hash |
 
 
 #### DID_GPX_FLASH_CFG
@@ -1050,7 +1049,6 @@ Device information
 | buildSecond | uint8_t | Build time second |
 | buildMillisecond | uint8_t | Build time millisecond |
 | addInfo | char[24] | Additional info |
-| firmwareMD5Hash | uint32_t[4] | Firmware MD5 hash |
 
 
 #### DID_DIAGNOSTIC_MESSAGE
@@ -1103,7 +1101,6 @@ EVB device information
 | buildSecond | uint8_t | Build time second |
 | buildMillisecond | uint8_t | Build time millisecond |
 | addInfo | char[24] | Additional info |
-| firmwareMD5Hash | uint32_t[4] | Firmware MD5 hash |
 
 
 #### DID_EVB_RTOS_INFO
