@@ -508,8 +508,7 @@ RTK options - requires little endian CPU.
 | snrmin | int32_t | Min snr to consider satellite for rtk |
 | snrrange | int32_t | AR mode (0:off,1:continuous,2:instantaneous,3:fix and hold,4:ppp-ar) |
 | modear | int32_t | GLONASS AR mode (0:off,1:on,2:auto cal,3:ext cal) |
-| glomodear | int32_t | GPS AR mode (0:off,1:on) |
-| gpsmodear | int32_t | SBAS AR mode (0:off,1:on) |
+| glomodear | int32_t | SBAS AR mode (0:off,1:on) |
 | sbsmodear | int32_t | BeiDou AR mode (0:off,1:on) |
 | bdsmodear | int32_t | AR filtering to reject bad sats (0:off,1:on) |
 | arfilter | int32_t | obs outage count to reset bias |
