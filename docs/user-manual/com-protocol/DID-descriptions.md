@@ -509,7 +509,6 @@ RTK options - requires little endian CPU.
 | snrrange | int32_t | snr range from the highest snr satellite to consider (overrides snrmin if non-zero) |
 | modear | int32_t | AR mode (0:off,1:continuous,2:instantaneous,3:fix and hold,4:ppp-ar) |
 | glomodear | int32_t | GLONASS AR mode (0:off,1:on,2:auto cal,3:ext cal) |
-| gpsmodear | int32_t | GPS AR mode (0:off,1:on) |
 | sbsmodear | int32_t | SBAS AR mode (0:off,1:on) |
 | bdsmodear | int32_t | BeiDou AR mode (0:off,1:on) |
 | arfilter | int32_t | AR filtering to reject bad sats (0:off,1:on) |
@@ -1265,6 +1264,31 @@ GPX RTOs info
 | task | rtos_task_t[] | Tasks |
 
 
+#### DID_GPX_SYS_FAULT
+
+System fault information. This is broadcast automatically every 10s if a critical fault is detected. 
+
+`system_fault_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| upTime | uint32_t | Time (uptime in milli-seconds) |
+| status | uint32_t | System fault status (see eSysFaultStatus) |
+| fileNum | uint32_t | Line number of fault |
+| lineNum | uint32_t | File number at fault |
+| haltReason | uint32_t | Zephyr halt reason |
+| lr | uint32_t | link register value at time of fault.  |
+| pc | uint32_t | Program Counter value at time of fault |
+| psr | uint32_t | Program Status Register value at time of fault |
+| taskALastFeed | uint32_t | Miliseconds since task A last ran |
+| taskBLastFeed | uint32_t | Miliseconds since task B last ran |
+| wdtLastFeed | uint32_t | Miliseconds since WDT last fed |
+| var0 | uint32_t | Multi purpose register 0 |
+| var1 | uint32_t | Multi purpose register 1  |
+| var2 | uint32_t | Multi purpose register 2 |
+| var3 | uint32_t | Multi purpose register 3 |
+
+
 #### DID_GROUND_VEHICLE
 
 Static configuration for wheel transform measurements. 
@@ -1663,14 +1687,21 @@ System fault information. This is broadcast automatically every 10s if a critica
 
 | Field | Type | Description |
 |-------|------|-------------|
+| upTime | uint32_t | Time (uptime in milli-seconds) |
 | status | uint32_t | System fault status (see eSysFaultStatus) |
-| g1Task | uint32_t | Fault Type at HardFault |
-| g2FileNum | uint32_t | Multipurpose register - Line number of fault |
-| g3LineNum | uint32_t | Multipurpose register - File number at fault |
-| g4 | uint32_t | Multipurpose register - at time of fault.  |
-| g5Lr | uint32_t | Multipurpose register - link register value at time of fault.  |
+| fileNum | uint32_t | Line number of fault |
+| lineNum | uint32_t | File number at fault |
+| haltReason | uint32_t | Zephyr halt reason |
+| lr | uint32_t | link register value at time of fault.  |
 | pc | uint32_t | Program Counter value at time of fault |
 | psr | uint32_t | Program Status Register value at time of fault |
+| taskALastFeed | uint32_t | Miliseconds since task A last ran |
+| taskBLastFeed | uint32_t | Miliseconds since task B last ran |
+| wdtLastFeed | uint32_t | Miliseconds since WDT last fed |
+| var0 | uint32_t | Multi purpose register 0 |
+| var1 | uint32_t | Multi purpose register 1  |
+| var2 | uint32_t | Multi purpose register 2 |
+| var3 | uint32_t | Multi purpose register 3 |
 
 
 #### DID_SYS_PARAMS
