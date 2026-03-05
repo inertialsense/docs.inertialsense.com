@@ -1,0 +1,3026 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.inertialsense.com/user-manual/com-protocol/CAN/">
+      
+      <link rel="icon" href="../../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>CAN - InertialSense</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ef5552">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../custom_theme/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#can-protocol" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="InertialSense" class="md-header__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InertialSense
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CAN
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="InertialSense" class="md-nav__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    InertialSense
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasheets/datasheets/" class="md-nav__link">
+        Data Sheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dimensions/dimensions/" class="md-nav__link">
+        Dimensions and Pinouts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/Overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/IMX-5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/GPX-1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Hardware Integration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Hardware Integration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Hardware Integration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx6/" class="md-nav__link">
+        IMX-6
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_gpx1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/rugged3/" class="md-nav__link">
+        Rugged-3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG1/" class="md-nav__link">
+        IG-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG2/" class="md-nav__link">
+        IG-2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IK1/" class="md-nav__link">
+        IK-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/hardware_design/" class="md-nav__link">
+        Design Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/reflow/" class="md-nav__link">
+        Reflow Soldering
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Software / SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Software / SDK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Software / SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/evaltool/" class="md-nav__link">
+        EvalTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/cltool/" class="md-nav__link">
+        CLTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/logInspector/" class="md-nav__link">
+        Log Inspector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/overview/" class="md-nav__link">
+        SDK Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5">
+          Example Projects
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Projects" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Example Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsBinary/" class="md-nav__link">
+        Comm-Binary (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsAscii/" class="md-nav__link">
+        Comm-NMEA (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsArduino/" class="md-nav__link">
+        Comm-Arduino (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/FirmwareUpdate/" class="md-nav__link">
+        Firmware Update (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/InertialSenseClassCLTool/" class="md-nav__link">
+        InertialSense Class CLTool (C++)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/DataLogger/" class="md-nav__link">
+        Data Logging (C++)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          IMX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="IMX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          IMX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/infield_calibration/" class="md-nav__link">
+        Infield Calibration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/platform_configuration/" class="md-nav__link">
+        Platform Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/imu_ins_gnss_configuration/" class="md-nav__link">
+        IMU INS GNSS Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/system_configuration/" class="md-nav__link">
+        System Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/time_sync/" class="md-nav__link">
+        Time Sync/Strobe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/zero_motion_command/" class="md-nav__link">
+        Zero Motion Command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/UART/" class="md-nav__link">
+        UART
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/world_magnetic_model/" class="md-nav__link">
+        World Magnetic Model
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          Dead Reckoning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dead Reckoning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Dead Reckoning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning_examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/shock-rejection/imu_shock_rejection/" class="md-nav__link">
+        IMU Shock Rejection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          GPX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GPX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          GPX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpx/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/GPX_system_status/" class="md-nav__link">
+        GPX System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Communication Protocols
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communication Protocols" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Communication Protocols
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DID-descriptions/" class="md-nav__link">
+        Data Sets (DIDs)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isb/" class="md-nav__link">
+        Inertial Sense Binary (ISB)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nmea/" class="md-nav__link">
+        NMEA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SPI/" class="md-nav__link">
+        SPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          CAN
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        CAN
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#enable-can" class="md-nav__link">
+    Enable CAN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware" class="md-nav__link">
+    Hardware
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#can-data-sets-cids" class="md-nav__link">
+    CAN Data Sets (CIDs)
+  </a>
+  
+    <nav class="md-nav" aria-label="CAN Data Sets (CIDs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_time" class="md-nav__link">
+    CID_INS_TIME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_status" class="md-nav__link">
+    CID_INS_STATUS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_euler" class="md-nav__link">
+    CID_INS_EULER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_quatn2b" class="md-nav__link">
+    CID_INS_QUATN2B
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_quate2b" class="md-nav__link">
+    CID_INS_QUATE2B
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_uvw" class="md-nav__link">
+    CID_INS_UVW
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_ve" class="md-nav__link">
+    CID_INS_VE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_lat" class="md-nav__link">
+    CID_INS_LAT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_lon" class="md-nav__link">
+    CID_INS_LON
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_alt" class="md-nav__link">
+    CID_INS_ALT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_north_east" class="md-nav__link">
+    CID_INS_NORTH_EAST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_down" class="md-nav__link">
+    CID_INS_DOWN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_ecef_x" class="md-nav__link">
+    CID_INS_ECEF_X
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_ecef_y" class="md-nav__link">
+    CID_INS_ECEF_Y
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_ecef_z" class="md-nav__link">
+    CID_INS_ECEF_Z
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_msl" class="md-nav__link">
+    CID_INS_MSL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_preint_px" class="md-nav__link">
+    CID_PREINT_PX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_preint_qy" class="md-nav__link">
+    CID_PREINT_QY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_preint_rz" class="md-nav__link">
+    CID_PREINT_RZ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_dual_px" class="md-nav__link">
+    CID_DUAL_PX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_dual_qy" class="md-nav__link">
+    CID_DUAL_QY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_dual_rz" class="md-nav__link">
+    CID_DUAL_RZ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_gps1_pos" class="md-nav__link">
+    CID_GPS1_POS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_gps1_rtk_pos_rel" class="md-nav__link">
+    CID_GPS1_RTK_POS_REL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_gps2_rtk_cmp_rel" class="md-nav__link">
+    CID_GPS2_RTK_CMP_REL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_roll_rollrate" class="md-nav__link">
+    CID_ROLL_ROLLRATE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          GNSS - RTK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GNSS - RTK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          GNSS - RTK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_1" type="checkbox" id="__nav_10_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_1">
+          Multi-band GNSS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-band GNSS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_1">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-band GNSS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_gnss_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_GPX/" class="md-nav__link">
+        IS GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_F9P/" class="md-nav__link">
+        ublox F9P
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/external_gnss/" class="md-nav__link">
+        External NMEA GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_antennas/" class="md-nav__link">
+        GNSS Antennas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_constellations/" class="md-nav__link">
+        GNSS Constellations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5">
+          RTK Positioning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="RTK Positioning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          RTK Positioning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_positioning_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_rover/" class="md-nav__link">
+        Rover Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_base/" class="md-nav__link">
+        Base Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_ntrip/" class="md-nav__link">
+        NTRIP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/ublox_pointperfect/" class="md-nav__link">
+        Point Perfect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/SBAS/" class="md-nav__link">
+        SBAS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_compassing/" class="md-nav__link">
+        RTK Compassing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          Data Logging/Plotting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Logging/Plotting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Data Logging/Plotting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_plotting/" class="md-nav__link">
+        Plotting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/bootloader/" class="md-nav__link">
+        Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/coordinate_frames/" class="md-nav__link">
+        Coordinate Frames
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/definitions/" class="md-nav__link">
+        Definitions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/imu_specifications/" class="md-nav__link">
+        IMU Specifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/interference/" class="md-nav__link">
+        Interference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/magnetometer/" class="md-nav__link">
+        Magnetometer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/IMX_system_status/" class="md-nav__link">
+        System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/user_manual_pdf/" class="md-nav__link">
+        User Manual PDF
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          Troubleshooting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Troubleshooting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          Troubleshooting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/firmware/" class="md-nav__link">
+        Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/chip_erase/" class="md-nav__link">
+        Chip Erase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/gnss/" class="md-nav__link">
+        GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/imx_bootloader/" class="md-nav__link">
+        IMX Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#enable-can" class="md-nav__link">
+    Enable CAN
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware" class="md-nav__link">
+    Hardware
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#can-data-sets-cids" class="md-nav__link">
+    CAN Data Sets (CIDs)
+  </a>
+  
+    <nav class="md-nav" aria-label="CAN Data Sets (CIDs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_time" class="md-nav__link">
+    CID_INS_TIME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_status" class="md-nav__link">
+    CID_INS_STATUS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_euler" class="md-nav__link">
+    CID_INS_EULER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_quatn2b" class="md-nav__link">
+    CID_INS_QUATN2B
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_quate2b" class="md-nav__link">
+    CID_INS_QUATE2B
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_uvw" class="md-nav__link">
+    CID_INS_UVW
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_ve" class="md-nav__link">
+    CID_INS_VE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_lat" class="md-nav__link">
+    CID_INS_LAT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_lon" class="md-nav__link">
+    CID_INS_LON
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_alt" class="md-nav__link">
+    CID_INS_ALT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_north_east" class="md-nav__link">
+    CID_INS_NORTH_EAST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_down" class="md-nav__link">
+    CID_INS_DOWN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_ecef_x" class="md-nav__link">
+    CID_INS_ECEF_X
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_ecef_y" class="md-nav__link">
+    CID_INS_ECEF_Y
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_ecef_z" class="md-nav__link">
+    CID_INS_ECEF_Z
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_ins_msl" class="md-nav__link">
+    CID_INS_MSL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_preint_px" class="md-nav__link">
+    CID_PREINT_PX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_preint_qy" class="md-nav__link">
+    CID_PREINT_QY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_preint_rz" class="md-nav__link">
+    CID_PREINT_RZ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_dual_px" class="md-nav__link">
+    CID_DUAL_PX
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_dual_qy" class="md-nav__link">
+    CID_DUAL_QY
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_dual_rz" class="md-nav__link">
+    CID_DUAL_RZ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_gps1_pos" class="md-nav__link">
+    CID_GPS1_POS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_gps1_rtk_pos_rel" class="md-nav__link">
+    CID_GPS1_RTK_POS_REL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_gps2_rtk_cmp_rel" class="md-nav__link">
+    CID_GPS2_RTK_CMP_REL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cid_roll_rollrate" class="md-nav__link">
+    CID_ROLL_ROLLRATE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="can-protocol">CAN Protocol<a class="headerlink" href="#can-protocol" title="Permanent link">&para;</a></h1>
+<p>The CAN interface allows the output of the the µINS, µAHRS, and µIMU to be published on a CAN bus. The Inertial Sense CAN implementation is based on CAN2.0b specification and follows a specific structure and format which is outlined below. All of the CAN configuration is done using the data set DID_CAN_CONFIG.</p>
+<h2 id="enable-can">Enable CAN<a class="headerlink" href="#enable-can" title="Permanent link">&para;</a></h2>
+<p>To enable the CAN bus interface on the IMX, set bit <code>IO_CONFIG_G1G2_CAN_BUS</code> in <code>DID_FLASH_CONFIG.ioConfig</code>.   This bit can be set using the EvalTool &gt;&gt; Settings &gt;&gt; General &gt;&gt; DID_FLASH_CONFIG &gt;&gt; ioConfig &gt;&gt; <code>Enable CAN Bus on G1,G2</code> option.</p>
+<p>A CAN message is enabled by entering a non-zero value in the DID_CAN_CONFIG.<em>can_period_mult</em> field of the desired message. The <em>can_period_mult</em> field is an integer which is multiplied by the  <a href="../isb/#data-source-update-rates"><em>Data Source Update Rate</em></a> to determine the message broadcast period. Set <em>can_period_mult</em> to zero disable message broadcasting.</p>
+<p>In the image below the CID_INS_TIME message is set to broadcast data at 10 times the data source rate.</p>
+<p><img alt="image-20191114164046742" src="../../images/CanConfig.png" /></p>
+<p>The baud rate is configurable by setting the field DID_CAN_CONFIG.can_baudrate_kbps. The following standard baud rates are supported:</p>
+<ul>
+<li>20 kbps</li>
+<li>33 kbps</li>
+<li>50 kbps</li>
+<li>83 kbps</li>
+<li>100 kbps</li>
+<li>125 kbps</li>
+<li>200 kbps</li>
+<li>250 kbps</li>
+<li>500 kbps</li>
+<li>1000 kbps</li>
+</ul>
+<p>The message ID for each message can be entered into the can_transmit_address field corresponding to the desired message. </p>
+<p>*Note: Any message ID greater than 0x7FF will be transmitted in the extended ID format.</p>
+<p>The values set in any field of DID_CAN_CONFIG are saved to flash when a 'Save Persistent' command is received by the module. For example, this can be done in the EvalTool by clicking the Save Persistent button in the Data Logs tab. When the module is turned on, all the fields will be repopulated with the saved values.</p>
+<p>All messages are disabled when a Stop Streaming message is received by the module. However, the values in each field will be repopulated to the values present when a 'Save Persistent' command was last received.</p>
+<h2 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">&para;</a></h2>
+<p>Inertial Sense module exposes the RxCAN and TxCAN pins. The selection and implementation of a CAN transceiver is left to the user. </p>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G1</td>
+<td>RxCAN</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>TxCAN</td>
+</tr>
+</tbody>
+</table>
+<p>The Inertial Sense evaluation boards and Rugged unit have a built in transceiver.</p>
+<h2 id="can-data-sets-cids">CAN Data Sets (CIDs)<a class="headerlink" href="#can-data-sets-cids" title="Permanent link">&para;</a></h2>
+<p>The CAN Data Sets, in the form of C structures, define the format of the output data. The data sets are defined in SDK\src\data_sets_canbus.h of the InertialSense SDK. The CID data is selected data from the standard Inertial Sense DIDs. The data types generally have been changed and scaled to fit the CAN2.0 8 byte payload restrictions.</p>
+<h4 id="cid_ins_time">CID_INS_TIME<a class="headerlink" href="#cid_ins_time" title="Permanent link">&para;</a></h4>
+<p>INS time output</p>
+<p><code>is_can_time</code></p>
+<p>GMT information</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>week</td>
+<td>uint32_t</td>
+<td>GPS number of weeks since January 6<sup>th</sup>, 1980</td>
+</tr>
+<tr>
+<td>timeOfWeek</td>
+<td>float</td>
+<td>GPS time of week (since Sunday morning) in seconds</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_status">CID_INS_STATUS<a class="headerlink" href="#cid_ins_status" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ins_status</code></p>
+<p>INS status flags</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>insStatus</td>
+<td>uint32_t</td>
+<td>INS status flags (see eInsStatusFlags)</td>
+</tr>
+<tr>
+<td>hdwStatus</td>
+<td>uint32_t</td>
+<td>Hardware status flags (see eHdwStatusFlags)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_euler">CID_INS_EULER<a class="headerlink" href="#cid_ins_euler" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ins_euler</code></p>
+<p>Euler angles: roll, pitch, yaw in radians with respect to NED (scaled by 10000)</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theta1</td>
+<td>int16_t</td>
+<td>Roll (4 decimal places precision)</td>
+</tr>
+<tr>
+<td>theta2</td>
+<td>int16_t</td>
+<td>Pitch (4 decimal places precision)</td>
+</tr>
+<tr>
+<td>theta3</td>
+<td>int16_t</td>
+<td>Yaw (4 decimal places precision)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_quatn2b">CID_INS_QUATN2B<a class="headerlink" href="#cid_ins_quatn2b" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ins_quatn2b</code></p>
+<p>Quaternion body rotation with respect to NED: W, X, Y, Z (scaled by 10000)</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>qn2b1</td>
+<td>int16_t</td>
+<td>W (4 decimal places precision)</td>
+</tr>
+<tr>
+<td>qn2b2</td>
+<td>int16_t</td>
+<td>X (4 decimal places precision)</td>
+</tr>
+<tr>
+<td>qn2b3</td>
+<td>int16_t</td>
+<td>Y (4 decimal places precision)</td>
+</tr>
+<tr>
+<td>qn2b4</td>
+<td>int16_t</td>
+<td>Z (4 decimal places precision)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_quate2b">CID_INS_QUATE2B<a class="headerlink" href="#cid_ins_quate2b" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ins_quate2b</code></p>
+<p>Quaternion body rotation with respect to ECEF: W, X, Y, Z (scaled by 10000)</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>qe2b1</td>
+<td>int16_t</td>
+<td>W (4 decimal places precision)</td>
+</tr>
+<tr>
+<td>qe2b2</td>
+<td>int16_t</td>
+<td>X (4 decimal places precision)</td>
+</tr>
+<tr>
+<td>qe2b3</td>
+<td>int16_t</td>
+<td>Y (4 decimal places precision)</td>
+</tr>
+<tr>
+<td>qe2b4</td>
+<td>int16_t</td>
+<td>Z (4 decimal places precision)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_uvw">CID_INS_UVW<a class="headerlink" href="#cid_ins_uvw" title="Permanent link">&para;</a></h4>
+<p><code>is_can_uvw</code></p>
+<p>Velocity U, V, W in body frame in meters per second (scaled by 100). </p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uvw1</td>
+<td>int16_t</td>
+<td>U (2 decimal places precision)</td>
+</tr>
+<tr>
+<td>uvw2</td>
+<td>int16_t</td>
+<td>V (2 decimal places precision)</td>
+</tr>
+<tr>
+<td>uvw3</td>
+<td>int16_t</td>
+<td>W (2 decimal places precision)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_ve">CID_INS_VE<a class="headerlink" href="#cid_ins_ve" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ve</code></p>
+<p>Velocity in ECEF (earth-centered earth-fixed) frame in meters per second  (scaled by 100).</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ve1</td>
+<td>int16_t</td>
+<td>ve1 (2 decimal places precision)</td>
+</tr>
+<tr>
+<td>ve2</td>
+<td>int16_t</td>
+<td>ve2 (2 decimal places precision)</td>
+</tr>
+<tr>
+<td>ve3</td>
+<td>int16_t</td>
+<td>ve3 (2 decimal places precision)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_lat">CID_INS_LAT<a class="headerlink" href="#cid_ins_lat" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ins_lat</code></p>
+<p>WGS84 latitude.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lat</td>
+<td>double</td>
+<td>Latitude (degrees) (more than 8 decimal places precision)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_lon">CID_INS_LON<a class="headerlink" href="#cid_ins_lon" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ins_lon</code></p>
+<p>WGS84 longitude.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lon</td>
+<td>double</td>
+<td>Longitude (degrees) (more than 8 decimal places precision)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_alt">CID_INS_ALT<a class="headerlink" href="#cid_ins_alt" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ins_alt</code></p>
+<p>WGS84 height above ellipsoid and GPS status flags</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>alt</td>
+<td>float</td>
+<td>Altitude (meters) (more than 8 decimal places precision)</td>
+</tr>
+<tr>
+<td>status</td>
+<td>uint32_t</td>
+<td>(see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_north_east">CID_INS_NORTH_EAST<a class="headerlink" href="#cid_ins_north_east" title="Permanent link">&para;</a></h4>
+<p><code>is_can_north_east</code></p>
+<p>Offset from reference latitude, longitude, and altitude to current latitude, longitude, and altitude.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float</td>
+<td>ned1</td>
+<td>North (meters)</td>
+</tr>
+<tr>
+<td>float</td>
+<td>ned2</td>
+<td>East (meters)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_down">CID_INS_DOWN<a class="headerlink" href="#cid_ins_down" title="Permanent link">&para;</a></h4>
+<p><code>is_can_down</code></p>
+<p>Down offset from reference LLA  and INS status flags</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float</td>
+<td>ned3</td>
+<td>Down (meters)</td>
+</tr>
+<tr>
+<td>float</td>
+<td>insStatus</td>
+<td>INS status flags</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_ecef_x">CID_INS_ECEF_X<a class="headerlink" href="#cid_ins_ecef_x" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ecef_x</code></p>
+<p>X Position in ECEF (earth-centered earth-fixed) frame.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ecef1</td>
+<td>double</td>
+<td>X (meters)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_ecef_y">CID_INS_ECEF_Y<a class="headerlink" href="#cid_ins_ecef_y" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ecef_y</code></p>
+<p>Y Position in ECEF (earth-centered earth-fixed) frame.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ecef2</td>
+<td>double</td>
+<td>Y (meters)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_ecef_z">CID_INS_ECEF_Z<a class="headerlink" href="#cid_ins_ecef_z" title="Permanent link">&para;</a></h4>
+<p><code>is_can_ecef_z</code></p>
+<p>Z Position in ECEF (earth-centered earth-fixed) frame.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ecef2</td>
+<td>double</td>
+<td>Z (meters)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_ins_msl">CID_INS_MSL<a class="headerlink" href="#cid_ins_msl" title="Permanent link">&para;</a></h4>
+<p><code>ins_can_msl</code></p>
+<p>Height above Mean Sea Level </p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>msl</td>
+<td>float</td>
+<td>MSL (meters)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_preint_px">CID_PREINT_PX<a class="headerlink" href="#cid_preint_px" title="Permanent link">&para;</a></h4>
+<p><code>is_can_preint_imu_px</code></p>
+<p>Preintegrated IMU values delta theta and delta velocity (X axis), and Integral period in body/IMU frame of accelerometer 0.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theta0</td>
+<td>int16_t</td>
+<td>Delta theta (rad, scaled by 1000, 3 decimal places precision)</td>
+</tr>
+<tr>
+<td>vel0</td>
+<td>int16_t</td>
+<td>Delta velocity (m/s, scaled by 100, 2 decimal places precision)</td>
+</tr>
+<tr>
+<td>dt</td>
+<td>uints16_t</td>
+<td>Integral Period (meters, scaled by 1000)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_preint_qy">CID_PREINT_QY<a class="headerlink" href="#cid_preint_qy" title="Permanent link">&para;</a></h4>
+<p><code>is_can_preint_imu_qy</code></p>
+<p>Preintegrated IMU values delta theta and delta velocity (Y axis), and Integral period in body/IMU frame of accelerometer 0.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theta1</td>
+<td>int16_t</td>
+<td>Delta theta (rad, scaled by 1000, 3 decimal places precision)</td>
+</tr>
+<tr>
+<td>vel1</td>
+<td>int16_t</td>
+<td>Delta velocity (m/s, scaled by 100, 2 decimal places precision)</td>
+</tr>
+<tr>
+<td>dt</td>
+<td>uints16_t</td>
+<td>Integral Period (meters, scaled by 1000)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_preint_rz">CID_PREINT_RZ<a class="headerlink" href="#cid_preint_rz" title="Permanent link">&para;</a></h4>
+<p><code>is_can_preint_imu_rz</code></p>
+<p>Preintegrated IMU values delta theta and delta velocity (Z axis), and Integral period in body/IMU frame of accelerometer 0.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theta2</td>
+<td>int16_t</td>
+<td>Delta theta (rad, scaled by 1000, 3 decimal places precision)</td>
+</tr>
+<tr>
+<td>vel2</td>
+<td>int16_t</td>
+<td>Delta velocity (m/s, scaled by 100, 2 decimal places precision)</td>
+</tr>
+<tr>
+<td>dt</td>
+<td>uints16_t</td>
+<td>Integral Period (meters, scaled by 1000)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_dual_px">CID_DUAL_PX<a class="headerlink" href="#cid_dual_px" title="Permanent link">&para;</a></h4>
+<p><code>is_can_dual_imu_px</code></p>
+<p>Dual IMU gyro and accelerometer values from accelerometer 0</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theta0</td>
+<td>int16_t</td>
+<td>Theta (rad/s, scaled by 1000, 3 decimal places precision)</td>
+</tr>
+<tr>
+<td>vel0</td>
+<td>int16_t</td>
+<td>Acceleration (m/s<sup>2</sup>, scaled by 100, 2 decimal places precision)</td>
+</tr>
+<tr>
+<td>status</td>
+<td>uints32_t</td>
+<td>IMU status (see eImuStatus)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_dual_qy">CID_DUAL_QY<a class="headerlink" href="#cid_dual_qy" title="Permanent link">&para;</a></h4>
+<p><code>is_can_dual_imu_qy</code></p>
+<p>Dual IMU gyro and accelerometer values from accelerometer 0</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theta1</td>
+<td>int16_t</td>
+<td>Theta (rad/s, scaled by 1000, 3 decimal places precision)</td>
+</tr>
+<tr>
+<td>vel1</td>
+<td>int16_t</td>
+<td>Acceleration (m/s<sup>2</sup>, scaled by 100, 2 decimal places precision)</td>
+</tr>
+<tr>
+<td>status</td>
+<td>uints32_t</td>
+<td>IMU status (see eImuStatus)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_dual_rz">CID_DUAL_RZ<a class="headerlink" href="#cid_dual_rz" title="Permanent link">&para;</a></h4>
+<p><code>is_can_dual_imu_rz</code></p>
+<p>Dual IMU gyro and accelerometer values from accelerometer 0 </p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theta2</td>
+<td>int16_t</td>
+<td>Theta (rad/s, scaled by 1000, 3 decimal places precision)</td>
+</tr>
+<tr>
+<td>vel2</td>
+<td>int16_t</td>
+<td>Acceleration (m/s<sup>2</sup>, scaled by 100, 2 decimal places precision)</td>
+</tr>
+<tr>
+<td>status</td>
+<td>uints32_t</td>
+<td>IMU status (see eImuStatus)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_gps1_pos">CID_GPS1_POS<a class="headerlink" href="#cid_gps1_pos" title="Permanent link">&para;</a></h4>
+<p><code>is_can_gps_pos_status</code></p>
+<p>GPS CNO Mean and GPS status flags</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>status</td>
+<td>uint32_t</td>
+<td>(see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags</td>
+</tr>
+<tr>
+<td>cnoMean</td>
+<td>uint32_t</td>
+<td>(dBHz) Average of all satellite carrier to noise ratios (signal strengths) that are non-zero</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_gps1_rtk_pos_rel">CID_GPS1_RTK_POS_REL<a class="headerlink" href="#cid_gps1_rtk_pos_rel" title="Permanent link">&para;</a></h4>
+<p><code>is_can_gps_rtk_rel</code></p>
+<p>RTK-GPS positioning performance metrics</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>arRatio</td>
+<td>uint8_t</td>
+<td>Ambiguity resolution ratio factor for validation</td>
+</tr>
+<tr>
+<td>differentialAge</td>
+<td>uint8_t</td>
+<td>Age of differential (seconds)</td>
+</tr>
+<tr>
+<td>distanceToBase</td>
+<td>float</td>
+<td>Distance to Base (m)</td>
+</tr>
+<tr>
+<td>headingToBase</td>
+<td>int16_t</td>
+<td>Angle from north to vectorToBase in local tangent plane. (rad, scaled by 1000)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_gps2_rtk_cmp_rel">CID_GPS2_RTK_CMP_REL<a class="headerlink" href="#cid_gps2_rtk_cmp_rel" title="Permanent link">&para;</a></h4>
+<p><code>is_can_gps_rtk_rel</code></p>
+<p>RTK-GPS compassing performance metrics</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>arRatio</td>
+<td>uint8_t</td>
+<td>Ambiguity resolution ratio factor for validation</td>
+</tr>
+<tr>
+<td>differentialAge</td>
+<td>uint8_t</td>
+<td>Age of differential (seconds)</td>
+</tr>
+<tr>
+<td>distanceToBase</td>
+<td>float</td>
+<td>Distance to Base (m)</td>
+</tr>
+<tr>
+<td>headingToBase</td>
+<td>int16_t</td>
+<td>Angle from north to vectorToBase in local tangent plane. (rad, scaled by 1000)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cid_roll_rollrate">CID_ROLL_ROLLRATE<a class="headerlink" href="#cid_roll_rollrate" title="Permanent link">&para;</a></h4>
+<p><code>is_can_roll_rollRate</code></p>
+<p>Combination or INS roll estimation and preintegrated IMU of both accelerometers</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>insRoll</td>
+<td>int16_t</td>
+<td>INS Roll (scaled by 10000, 4 decimal places precision)</td>
+</tr>
+<tr>
+<td>pImu1</td>
+<td>int16_t</td>
+<td>Delta theta (rad, scaled by 1000, 3 decimal places precision)</td>
+</tr>
+<tr>
+<td>pImu2</td>
+<td>int16_t</td>
+<td>Delta theta (rad, scaled by 1000, 3 decimal places precision)</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../SPI/" class="md-footer__link md-footer__link--prev" aria-label="Previous: SPI" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              SPI
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../gnss/multi_band_gnss_overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Overview
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.math"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+        <script src="https://js.hs-scripts.com/3481185.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+    
+  </body>
+</html>

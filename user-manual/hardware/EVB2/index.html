@@ -1,0 +1,2571 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.inertialsense.com/user-manual/hardware/EVB2/">
+      
+      <link rel="icon" href="../../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Hardware Integration: EVB-2 - InertialSense</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ef5552">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../custom_theme/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hardware-integration-evb-2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="InertialSense" class="md-header__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InertialSense
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hardware Integration: EVB-2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="InertialSense" class="md-nav__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    InertialSense
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasheets/datasheets/" class="md-nav__link">
+        Data Sheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dimensions/dimensions/" class="md-nav__link">
+        Dimensions and Pinouts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/Overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/IMX-5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/GPX-1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Hardware Integration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Hardware Integration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Hardware Integration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module_imx6/" class="md-nav__link">
+        IMX-6
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module_imx5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module_gpx1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rugged3/" class="md-nav__link">
+        Rugged-3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IG1/" class="md-nav__link">
+        IG-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IG2/" class="md-nav__link">
+        IG-2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IK1/" class="md-nav__link">
+        IK-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware_design/" class="md-nav__link">
+        Design Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reflow/" class="md-nav__link">
+        Reflow Soldering
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Software / SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Software / SDK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Software / SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/evaltool/" class="md-nav__link">
+        EvalTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/cltool/" class="md-nav__link">
+        CLTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/logInspector/" class="md-nav__link">
+        Log Inspector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/overview/" class="md-nav__link">
+        SDK Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5">
+          Example Projects
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Projects" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Example Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsBinary/" class="md-nav__link">
+        Comm-Binary (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsAscii/" class="md-nav__link">
+        Comm-NMEA (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsArduino/" class="md-nav__link">
+        Comm-Arduino (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/FirmwareUpdate/" class="md-nav__link">
+        Firmware Update (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/InertialSenseClassCLTool/" class="md-nav__link">
+        InertialSense Class CLTool (C++)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/DataLogger/" class="md-nav__link">
+        Data Logging (C++)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          IMX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="IMX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          IMX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/infield_calibration/" class="md-nav__link">
+        Infield Calibration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/platform_configuration/" class="md-nav__link">
+        Platform Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/imu_ins_gnss_configuration/" class="md-nav__link">
+        IMU INS GNSS Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/system_configuration/" class="md-nav__link">
+        System Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/time_sync/" class="md-nav__link">
+        Time Sync/Strobe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/zero_motion_command/" class="md-nav__link">
+        Zero Motion Command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/UART/" class="md-nav__link">
+        UART
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/world_magnetic_model/" class="md-nav__link">
+        World Magnetic Model
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          Dead Reckoning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dead Reckoning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Dead Reckoning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning_examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/shock-rejection/imu_shock_rejection/" class="md-nav__link">
+        IMU Shock Rejection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          GPX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GPX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          GPX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpx/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/GPX_system_status/" class="md-nav__link">
+        GPX System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Communication Protocols
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communication Protocols" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Communication Protocols
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/DID-descriptions/" class="md-nav__link">
+        Data Sets (DIDs)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/isb/" class="md-nav__link">
+        Inertial Sense Binary (ISB)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/nmea/" class="md-nav__link">
+        NMEA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/SPI/" class="md-nav__link">
+        SPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/CAN/" class="md-nav__link">
+        CAN
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          GNSS - RTK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GNSS - RTK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          GNSS - RTK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_1" type="checkbox" id="__nav_10_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_1">
+          Multi-band GNSS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-band GNSS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_1">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-band GNSS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_gnss_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_GPX/" class="md-nav__link">
+        IS GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_F9P/" class="md-nav__link">
+        ublox F9P
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/external_gnss/" class="md-nav__link">
+        External NMEA GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_antennas/" class="md-nav__link">
+        GNSS Antennas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_constellations/" class="md-nav__link">
+        GNSS Constellations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5">
+          RTK Positioning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="RTK Positioning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          RTK Positioning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_positioning_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_rover/" class="md-nav__link">
+        Rover Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_base/" class="md-nav__link">
+        Base Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_ntrip/" class="md-nav__link">
+        NTRIP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/ublox_pointperfect/" class="md-nav__link">
+        Point Perfect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/SBAS/" class="md-nav__link">
+        SBAS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_compassing/" class="md-nav__link">
+        RTK Compassing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          Data Logging/Plotting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Logging/Plotting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Data Logging/Plotting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_plotting/" class="md-nav__link">
+        Plotting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/bootloader/" class="md-nav__link">
+        Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/coordinate_frames/" class="md-nav__link">
+        Coordinate Frames
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/definitions/" class="md-nav__link">
+        Definitions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/imu_specifications/" class="md-nav__link">
+        IMU Specifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/interference/" class="md-nav__link">
+        Interference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/magnetometer/" class="md-nav__link">
+        Magnetometer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/IMX_system_status/" class="md-nav__link">
+        System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/user_manual_pdf/" class="md-nav__link">
+        User Manual PDF
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          Troubleshooting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Troubleshooting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          Troubleshooting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/firmware/" class="md-nav__link">
+        Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/chip_erase/" class="md-nav__link">
+        Chip Erase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/gnss/" class="md-nav__link">
+        GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/imx_bootloader/" class="md-nav__link">
+        IMX Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configurations" class="md-nav__link">
+    Configurations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evb-2-connections" class="md-nav__link">
+    EVB-2 Connections
+  </a>
+  
+    <nav class="md-nav" aria-label="EVB-2 Connections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb" class="md-nav__link">
+    USB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gps-antennas" class="md-nav__link">
+    GPS Antenna(s)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xbee-antenna" class="md-nav__link">
+    XBee Antenna
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wi-fi-antenna" class="md-nav__link">
+    Wi-Fi Antenna
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#header-pinouts" class="md-nav__link">
+    Header Pinouts
+  </a>
+  
+    <nav class="md-nav" aria-label="Header Pinouts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h1-power" class="md-nav__link">
+    H1 (Power)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h2-can" class="md-nav__link">
+    H2 (CAN)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h3-rs-232rs-485" class="md-nav__link">
+    H3 (RS-232/RS-485)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h4-external-radio" class="md-nav__link">
+    H4 (External Radio)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h7-imx-connections" class="md-nav__link">
+    H7 (IMX Connections)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h8-same70-connections" class="md-nav__link">
+    H8 (SAME70 Connections)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#imx-connections" class="md-nav__link">
+    IMX Connections
+  </a>
+  
+    <nav class="md-nav" aria-label="IMX Connections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can-bus" class="md-nav__link">
+    CAN Bus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spi" class="md-nav__link">
+    SPI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serial-2" class="md-nav__link">
+    Serial 2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mechanical-dimensions" class="md-nav__link">
+    Mechanical Dimensions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-with-inertial-sense-software" class="md-nav__link">
+    Using with Inertial Sense Software
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-firmware" class="md-nav__link">
+    Updating Firmware
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evb-2-design-files" class="md-nav__link">
+    EVB-2 Design Files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-parts" class="md-nav__link">
+    Related Parts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xbee-radio-frequencies" class="md-nav__link">
+    XBee Radio Frequencies
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="hardware-integration-evb-2">Hardware Integration: EVB-2<a class="headerlink" href="#hardware-integration-evb-2" title="Permanent link">&para;</a></h1>
+<p><center></p>
+<p><img alt="EVB-2" src="../../images/evb-2.jpg" /></p>
+<p></center></p>
+<p>The Inertial Sense EVB-2 is a development board which contains the Inertial Sense µINS, µAHRS, or µIMU module. The EVB-2 builds on the foundation established by the EVB-1, but adds new features including:</p>
+<ul>
+<li>915MHz XBee radio for RTK (real-time-kinematics)</li>
+<li>Wi-Fi and Bluetooth Low energy (BLE) for remote data viewing and logging operation</li>
+<li>Onboard logging to micro SD card.</li>
+<li>Dual antenna ports for GPS compassing</li>
+<li>Companion Microchip SAME70 processor that serves as a communication bridge between the µINS, µAHRS, or µIMU and all other interfaces.</li>
+</ul>
+<h2 id="configurations">Configurations<a class="headerlink" href="#configurations" title="Permanent link">&para;</a></h2>
+<p>The EVB-2 can be configured to preform a multitude of operations. Below are diagrams of connectivity and configuration options available. The configuration can be changed by pressing the tactile switch labeled "CONFIG" on the EVB-2 until the Config LED shows the desired mode.</p>
+<table>
+<thead>
+<tr>
+<th align="center">CBPreset</th>
+<th align="center">Config LED</th>
+<th align="left">Mode</th>
+<th>ON</th>
+<th>OFF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">2</td>
+<td align="center"><img alt="" src="../../images/circle-green.png" /></td>
+<td align="left"><strong>Default</strong></td>
+<td>RS232</td>
+<td>WiFi/BLE Module, XBee</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center"><img alt="" src="../../images/circle-blue.png" /></td>
+<td align="left"><strong>XBee</strong></td>
+<td>RS232, XBee</td>
+<td>WiFi/BLE Module</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center"><img alt="" src="../../images/circle-purple.png" /></td>
+<td align="left"><strong>WiFi/BLE</strong></td>
+<td>Wi-Fi/BLE Module,<br/>RS422/485</td>
+<td>XBee</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center"><img alt="" src="../../images/circle-cyan.png" /></td>
+<td align="left"><strong>SPI<sup>*</sup></strong></td>
+<td>SPI<sup>*</sup></td>
+<td>Wi-Fi/BLE Module, XBee</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center"><img alt="" src="../../images/circle-yellow.png" /></td>
+<td align="left"><strong>USB/232</strong></td>
+<td>RS232, XBee</td>
+<td>EVB2 to IMX Connection</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center"><img alt="" src="../../images/circle-white.png" /></td>
+<td align="left"><strong>USB/422/485</strong></td>
+<td>RS422/485</td>
+<td>EVB2 to IMX Connection</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center"><img alt="" src="../../images/circle-black.png" /></td>
+<td align="left"><strong>Off</strong></td>
+<td></td>
+<td>EVB2 to IMX Connection<br/>WiFi/BLE Module, XBee</td>
+</tr>
+</tbody>
+</table>
+<p><sup>*</sup>A reset is required following selection of this CBPreset to enable SPI on the IMX, in order to assert the IMX pin 10 (G9/nSPI_EN) during bootup.</p>
+<div class="tabbed-set" data-tabs="1:7"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1"><img alt="" src="../../images/circle-green.png" /> Default</label><div class="tabbed-content">
+<p><img alt="evb2blockdiagram" src="../images/evb2-preset-2.svg" /></p>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2"><img alt="" src="../../images/circle-blue.png" /> XBee</label><div class="tabbed-content">
+<p><img alt="evb2blockdiagram" src="../images/evb2-preset-3.svg" /></p>
+</div>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3"><img alt="" src="../../images/circle-purple.png" /> WiFi/BLE</label><div class="tabbed-content">
+<p><img alt="evb2blockdiagram" src="../images/evb2-preset-4.svg" /></p>
+</div>
+<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4"><img alt="" src="../../images/circle-cyan.png" /> SPI</label><div class="tabbed-content">
+<p><img alt="evb2blockdiagram" src="../images/evb2-preset-5.svg" /></p>
+</div>
+<input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><label for="__tabbed_1_5"><img alt="" src="../../images/circle-yellow.png" /> USB/232</label><div class="tabbed-content">
+<p><img alt="evb2blockdiagram" src="../images/evb2-preset-6.svg" /></p>
+</div>
+<input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><label for="__tabbed_1_6"><img alt="" src="../../images/circle-white.png" /> USB/422/485</label><div class="tabbed-content">
+<p><img alt="evb2blockdiagram" src="../images/evb2-preset-7.svg" /></p>
+</div>
+<input id="__tabbed_1_7" name="__tabbed_1" type="radio" /><label for="__tabbed_1_7"><img alt="" src="../../images/circle-black.png" /> Off</label><div class="tabbed-content">
+<p><img alt="evb2blockdiagram" src="../images/evb2-preset-1.svg" /></p>
+</div>
+</div>
+<p>In the USB hub modes (6-7), the following communications bridge/forwarding exists:</p>
+<p><code>DID_EVB_FLASH_CFG.uinsComPort</code> &lt;-&gt; All ports except XBee, WiFi, and XRadio
+<code>DID_EVB_FLASH_CFG.uinsAuxPort</code> &lt;-&gt; XBee, WiFi, and XRadio. XBee and WiFi only enabled when <code>DID_EVB_FLASH_CFG.cbPreset == EVB2_CB_PRESET_RS232_XBEE</code></p>
+<p><code>EVB2_PORT_UINS0</code> is the default value for both of these.</p>
+<p>Bit <code>EVB2_PORT_OPTIONS_RADIO_RTK_FILTER</code> of <code>DID_EVB_FLASH_CFG.portOptions</code> only allows RTK corrections to pass through the <code>uinsAuxPort</code>, reducing the wireless communications burden to only essential RTK base connections. This bit is enabled by default.</p>
+<h2 id="evb-2-connections">EVB-2 Connections<a class="headerlink" href="#evb-2-connections" title="Permanent link">&para;</a></h2>
+<h3 id="usb">USB<a class="headerlink" href="#usb" title="Permanent link">&para;</a></h3>
+<p>The most commonly used user interface available on the EVB-2 is the <code>EVB USB</code> port. Connecting to the <code>EVB USB</code> port will provide power to the device as well communications with the onboard SAME70 processor.  After connecting to a PC the EVB2 will appear as a virtual COM port and can be configured to communicate with every other communication bus on the board. This USB port should be used when updating the EVB-2 firmware or bootloader.</p>
+<p>The EVB-2 also has a second USB port, <code>IMX USB</code>.  This USB port also supplies power, but it connects directly to the µINS, µAHRS, or µIMU onboard the EVB-2. This USB port should be used when updating the µINS, µAHRS, or µIMU firmware or bootloader.</p>
+<h3 id="gps-antennas">GPS Antenna(s)<a class="headerlink" href="#gps-antennas" title="Permanent link">&para;</a></h3>
+<p>If using GPS with the module, connect an appropriate antenna to <code>GPS1 (J7)</code>. If using the board for GPS compassing, connect a second antenna to <code>GPS2 (J5)</code>. More information on GPS antennas is available on the <a href="../../gnss/gnss_antennas/">GNSS Antennas</a> page. </p>
+<h3 id="xbee-antenna">XBee Antenna<a class="headerlink" href="#xbee-antenna" title="Permanent link">&para;</a></h3>
+<p>If using the onboard XBee radio, ensure that the XBee radio U.FL connector (U10) is connected to the EVB-2 U.FL connector (J8). Connect an appropriate antenna to the EVB-2 RP-SMA connector (J5). </p>
+<p>To communicate with another XBee radio the PID and NID need to match on both radios. The PID and NID can be set using <code>DID_EVB_FLASH_CFG.radioPID</code> and <code>DID_EVB_FLASH_CFG.radioNID</code>. After setting the PID and NID, the EVB-2 needs to be reset so the radio can be configured. The XBee LED will flash Yellow then Green if the configuration is successful. A red LED signifies a failed radio configuration.</p>
+<h3 id="wi-fi-antenna">Wi-Fi Antenna<a class="headerlink" href="#wi-fi-antenna" title="Permanent link">&para;</a></h3>
+<p>The XBee radio can be used along with the Wi-Fi module. In this case, a Wi-Fi antenna must be provided and connected to the U.FL port on the Wi-Fi module (U8). </p>
+<p>To use Wi-Fi alone, connect the U.FL connector on the Wi-Fi module (U8) to the EVB-2 U.FL connector (J8), and connect the Wi-Fi antenna to the XBee RP-SMA connector (J5). </p>
+<h3 id="header-pinouts">Header Pinouts<a class="headerlink" href="#header-pinouts" title="Permanent link">&para;</a></h3>
+<p>Use JST-PH series connectors for EVB 2.x header H1. Maximum current is 2A per pin.<br />
+Use JST-GH series connectors for all other EVB 2.x headers. Maximum current is 1A per pin.</p>
+<h4 id="h1-power"><strong>H1 (Power)</strong><a class="headerlink" href="#h1-power" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../images/square-red.png" /> 1</td>
+<td>VIN</td>
+<td>-</td>
+<td>4.5–17V supply voltage</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 2</td>
+<td>GND</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h4 id="h2-can"><strong>H2 (CAN)</strong><a class="headerlink" href="#h2-can" title="Permanent link">&para;</a></h4>
+<p>To enable IMX CAN interface on H2, the U5 transceiver IC (TCAN334) must be loaded and the R27 jumper removed.  To enable EVB CAN interface on H2, the U13 transceiver IC (TCAN334) must be loaded and the R51 jumper removed. </p>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 1</td>
+<td>GND</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-red.png" /> 2</td>
+<td>3.3V</td>
+<td>-</td>
+<td>3.3V supply</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-brown.png" /> 3</td>
+<td>CANL</td>
+<td>I/O</td>
+<td>Low level CAN bus line.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-orange.png" /> 4</td>
+<td>CANH</td>
+<td>I/O</td>
+<td>High level CAN bus line.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="h3-rs-232rs-485"><strong>H3 (RS-232/RS-485)</strong><a class="headerlink" href="#h3-rs-232rs-485" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 1</td>
+<td>GND</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-brown.png" /> 2</td>
+<td>232Tx-/485Tx-</td>
+<td>O</td>
+<td>Serial output (RS232 transmit-, RS485 transmit-)</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-orange.png" /> 3</td>
+<td>485Tx+</td>
+<td>O</td>
+<td>Serial output (RS485 transmit+)</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-yellow.png" /> 4</td>
+<td>485Rx-</td>
+<td>I</td>
+<td>Serial input (RS485 receive-)</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-green.png" /> 5</td>
+<td>232Rx/485Rx+</td>
+<td>I</td>
+<td>Serial input (RS232 receive, RS485 receive+)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="h4-external-radio"><strong>H4 (External Radio)</strong><a class="headerlink" href="#h4-external-radio" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 1</td>
+<td>GND</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 2</td>
+<td>GND</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 3</td>
+<td>GND</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-red.png" /> 4</td>
+<td>3.3V</td>
+<td>-</td>
+<td>Separate radio 3.3V supply. Regulator can supply up to 3.5A.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-red.png" /> 5</td>
+<td>3.3V</td>
+<td>-</td>
+<td>" "</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-red.png" /> 6</td>
+<td>3.3V</td>
+<td>-</td>
+<td>" "</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-brown.png" /> 7</td>
+<td>RxD</td>
+<td>I</td>
+<td>Serial input from radio transmit pin (TTL) PD25.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-orange.png" /> 8</td>
+<td>TxD</td>
+<td>O</td>
+<td>Serial output to radio receive pin (TTL) PD26.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-yellow.png" /> 9</td>
+<td><span style="text-decoration: overline">RST</span></td>
+<td>O</td>
+<td>Reset pin</td>
+</tr>
+</tbody>
+</table>
+<h4 id="h7-imx-connections"><strong>H7 (IMX Connections)</strong><a class="headerlink" href="#h7-imx-connections" title="Permanent link">&para;</a></h4>
+<p>Pins on H7 (IMX) are shared with the EVB-2 processor.  To prevent conflict when using H7, set EVB-2 CBPreset to 6 or 7 (USB hub mode) to prevent the EVB-2 processor from asserting any I/O on the H7.</p>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Name</th>
+<th>Type</th>
+<th>Default Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 1</td>
+<td>GND</td>
+<td>-</td>
+<td></td>
+<td>-</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 2</td>
+<td>GND</td>
+<td>-</td>
+<td></td>
+<td>-</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-red.png" /> 3</td>
+<td>3.3V</td>
+<td>-</td>
+<td></td>
+<td>3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-red.png" /> 4</td>
+<td>DATA-RDY</td>
+<td>I/O</td>
+<td>I</td>
+<td>Indicates data is read to be read from IMX.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-brown.png" /> 5</td>
+<td>G1/Rx2<sup>*</sup>/RxCAN<sup>*</sup></td>
+<td>I/O</td>
+<td>I</td>
+<td>GPIO1. Serial 2 input (TTL). Serial input pin from CAN transceiver.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-orange.png" /> 6</td>
+<td>G2/Tx2<sup>*</sup>/TxCAN<sup>*</sup>/STROBE</td>
+<td>I/O</td>
+<td>O</td>
+<td>GPIO2. Serial 2 output (TTL). Serial output pin to CAN transceiver. Strobe time sync input.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-yellow.png" /> 7</td>
+<td>G3/Tx0</td>
+<td>I/O</td>
+<td>O</td>
+<td>GPIO3. Serial 0 output (TTL)<br/>(tied to IMX-Ser0 Rx)</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-green.png" /> 8</td>
+<td>G4/Rx0</td>
+<td>I/O</td>
+<td>I</td>
+<td>GPIO4. Serial 0 input (TTL)<br/>(tied to IMX-Ser0 Tx)</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-blue.png" /> 9</td>
+<td>G5/SCLK/STROBE</td>
+<td>I/O</td>
+<td>I</td>
+<td>GPIO5. SPI SCLK. Strobe time sync input.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-purple.png" /> 10</td>
+<td>G6/Rx1/MOSI</td>
+<td>I/O</td>
+<td>I</td>
+<td>GPIO6. Serial 1 input (TTL). SPI MOSI<br/>(tied to IMX-Ser1 Tx)</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-white.png" /> 11</td>
+<td>G7/Tx1/MISO</td>
+<td>I/O</td>
+<td>O</td>
+<td>GPIO7. Serial 1 output (TTL). SPI MISO<br/>(tied to IMX-Ser1 Rx)</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-grey.png" /> 12</td>
+<td>G8/CS/STROBE</td>
+<td>I/O</td>
+<td>O</td>
+<td>GPIO8. SPI CS. Strobe time sync input.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-brown.png" /> 13</td>
+<td>G9/nSPI_EN/STROBE<br/>/STROBE_OUT</td>
+<td>I/O</td>
+<td>I</td>
+<td>GPIO9. Hold LOW during boot to enable SPI on G5-G8. Strobe time sync input or output.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-orange.png" /> 14</td>
+<td>GPS_PPS</td>
+<td>O</td>
+<td>O</td>
+<td>GPS PPS time synchronization output pulse (1Hz, 10% duty cycle)</td>
+</tr>
+</tbody>
+</table>
+<p><sup>*</sup>Available on IMX-3.2 and later.</p>
+<h4 id="h8-same70-connections"><strong>H8 (SAME70 Connections)</strong><a class="headerlink" href="#h8-same70-connections" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Name</th>
+<th>Type</th>
+<th>Default Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 1</td>
+<td>GND</td>
+<td>-</td>
+<td></td>
+<td>-</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-black.png" /> 2</td>
+<td>GND</td>
+<td>-</td>
+<td></td>
+<td>-</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-red.png" /> 3</td>
+<td>3.3V</td>
+<td>-</td>
+<td></td>
+<td>3.3V supply. Output if H1 is supplied. Otherwise can be 3.3V input.</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-red.png" /> 4</td>
+<td>3.3V</td>
+<td>-</td>
+<td></td>
+<td>" "</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-brown.png" /> 5</td>
+<td>M1/TXD1</td>
+<td>O</td>
+<td>O</td>
+<td>GPIO1, USART 1 Output (TTL/SPI), Inverted Serial 1 Output (TTL)</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-orange.png" /> 6</td>
+<td>M2/RXD1</td>
+<td>I</td>
+<td>I</td>
+<td>GPIO2, USART 1 Input (TTL/SPI), Inverted Serial 1 Input (TTL)</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-yellow.png" /> 7</td>
+<td>M3/SCK1/QDA</td>
+<td>I/O</td>
+<td></td>
+<td>GPIO3, USART 1 Clock (SPI), Quadrature Encoder Input A</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-green.png" /> 8</td>
+<td>M4/CS1/QDB</td>
+<td>I/O</td>
+<td></td>
+<td>GPIO4, USART 1 Chip Select (SPI), Quadrature Encoder Input B</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-blue.png" /> 9</td>
+<td>M5/DA0/AD4</td>
+<td>I/O</td>
+<td></td>
+<td>GPIO5, DAC 0, ADC 4</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-purple.png" /> 10</td>
+<td>M6/DA1/AD5</td>
+<td>I/O</td>
+<td></td>
+<td>GPIO6, DAC 1, ADC 5</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-white.png" /> 11</td>
+<td>M7/AD10</td>
+<td>I/O</td>
+<td></td>
+<td>GPIO7, ADC 10</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-grey.png" /> 12</td>
+<td>M8/AD4</td>
+<td>I/O</td>
+<td></td>
+<td>GPIO8, ADC 4</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-brown.png" /> 13</td>
+<td>M9/AD1</td>
+<td>I/O</td>
+<td></td>
+<td>GPIO9, ADC 1</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/square-orange.png" /> 14</td>
+<td>M10/AD2</td>
+<td>I/O</td>
+<td></td>
+<td>GPIO10, ADC 2</td>
+</tr>
+</tbody>
+</table>
+<p>PWM and timer interrupt functions have been excluded from this table. Please see the MCU pin definition spreadsheet for more info.</p>
+<h2 id="imx-connections">IMX Connections<a class="headerlink" href="#imx-connections" title="Permanent link">&para;</a></h2>
+<p>The EVB-2 ATSAME70 (E70) processor interfaces with the IMX over UART (serial 0 and 1) and SPI (serial 1).</p>
+<h3 id="can-bus">CAN Bus<a class="headerlink" href="#can-bus" title="Permanent link">&para;</a></h3>
+<p>To use IMX CAN bus interface on the EVB-2, U5 (TCAN334 transceiver) should be loaded and R27 should not be loaded.</p>
+<p><img alt="IMX CAN on EVB-2" src="../images/evb2_uins_can.png" /></p>
+<h3 id="spi">SPI<a class="headerlink" href="#spi" title="Permanent link">&para;</a></h3>
+<p>The EVB-2 must be put into CBPreset mode 6 (CONFIG led color cyan) followed by a system reset to enable SPI mode interface with the IMX.  The EVB-2 (E70) project source code is available in the SDK for reference. </p>
+<h3 id="serial-2">Serial 2<a class="headerlink" href="#serial-2" title="Permanent link">&para;</a></h3>
+<p>To use serial 2, the IMX CAN transciever (U5) and R27 must be depopulated to avoid contention on the data lines.</p>
+<h2 id="mechanical-dimensions">Mechanical Dimensions<a class="headerlink" href="#mechanical-dimensions" title="Permanent link">&para;</a></h2>
+<p><img alt="EVB-2 Dimensions" src="../images/Dimensions-and-Layer-Stack-Up.svg" /></p>
+<p>PCB w/ SMA connectors: 70.0 x 45.0 x 12.0 mm</p>
+<p>Enclosure: 78.0 x 48.0 x 18.0 mm</p>
+<h2 id="using-with-inertial-sense-software">Using with Inertial Sense Software<a class="headerlink" href="#using-with-inertial-sense-software" title="Permanent link">&para;</a></h2>
+<p>Please return to the <a href="../../../getting-started/Overview/">getting started</a> page to get started programming, updating firmware, viewing data, and logging.</p>
+<h2 id="updating-firmware">Updating Firmware<a class="headerlink" href="#updating-firmware" title="Permanent link">&para;</a></h2>
+<p>The EVB-2 and IMX firmware can be updated using the EVB-USB connector and only the IMX firmware when using the IMX-USB connector.</p>
+<h2 id="evb-2-design-files">EVB-2 Design Files<a class="headerlink" href="#evb-2-design-files" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="../../images/oshw.png" /></p>
+<p>The <a href="https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2">EVB-2 PCB assembly design files</a> are available as open source hardware on GitHub.</p>
+<p>In particular, full schematics for the board can be found <a href="https://github.com/inertialsense/IS-hdw/blob/main/Products/EVB-2/EVB-2-1/Schematic/EVB-2-1-2_Schematic%20Prints.PDF">here</a>.</p>
+<h2 id="related-parts">Related Parts<a class="headerlink" href="#related-parts" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Manufacturer</th>
+<th>Manufacturer #</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H7, H8</td>
+<td>JST</td>
+<td>GHR-14V-S</td>
+<td>14 pin connector 1.25mm pitch for IMX and SAME70 connection.</td>
+</tr>
+<tr>
+<td>H1</td>
+<td>JST</td>
+<td>PHR-2</td>
+<td>2 pin connectors 2.00mm pitch for input power.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="xbee-radio-frequencies">XBee Radio Frequencies<a class="headerlink" href="#xbee-radio-frequencies" title="Permanent link">&para;</a></h2>
+<p>The EVB-2 shipped standard with the XBee radio default frequency is 915MHz.  An alternate frequency can be achieve by using the European version of the XBee Pro SX module.    </p>
+<table>
+<thead>
+<tr>
+<th>XBee Pro SX Part#</th>
+<th>Frequency</th>
+<th>Frequency Band</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XBP9X-DMUS-001 (default)</td>
+<td>915 MHz</td>
+<td>902MHz ~ 928MHz</td>
+</tr>
+<tr>
+<td>XB8X-DMUS-001 (Europe)</td>
+<td>868 MHz</td>
+<td>863MHz ~ 870MHz</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.math"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+        <script src="https://js.hs-scripts.com/3481185.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+    
+  </body>
+</html>

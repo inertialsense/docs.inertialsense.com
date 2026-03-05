@@ -1,0 +1,2391 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.inertialsense.com/user-manual/software/cltool/">
+      
+      <link rel="icon" href="../../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>CLTool - InertialSense</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ef5552">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../custom_theme/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cltool" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="InertialSense" class="md-header__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InertialSense
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CLTool
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="InertialSense" class="md-nav__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    InertialSense
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasheets/datasheets/" class="md-nav__link">
+        Data Sheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dimensions/dimensions/" class="md-nav__link">
+        Dimensions and Pinouts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/Overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/IMX-5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/GPX-1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Hardware Integration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Hardware Integration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Hardware Integration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx6/" class="md-nav__link">
+        IMX-6
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_gpx1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/rugged3/" class="md-nav__link">
+        Rugged-3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG1/" class="md-nav__link">
+        IG-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG2/" class="md-nav__link">
+        IG-2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IK1/" class="md-nav__link">
+        IK-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/hardware_design/" class="md-nav__link">
+        Design Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/reflow/" class="md-nav__link">
+        Reflow Soldering
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Software / SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Software / SDK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Software / SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../evaltool/" class="md-nav__link">
+        EvalTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          CLTool
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        CLTool
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#help-menu" class="md-nav__link">
+    Help Menu
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-run-linuxmac" class="md-nav__link">
+    Compile &amp; Run (Linux/Mac)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-run-windows-cmake-cl" class="md-nav__link">
+    Compile &amp; Run (Windows CMake CL)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-run-windows-cmake-visual-studio" class="md-nav__link">
+    Compile &amp; Run (Windows CMake Visual Studio)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-firmware-with-cltool" class="md-nav__link">
+    Updating Firmware with CLTool
+  </a>
+  
+    <nav class="md-nav" aria-label="Updating Firmware with CLTool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-using-firmware-package" class="md-nav__link">
+    Updating using Firmware Package
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updating-using-single-firmware-file-legacy-mode" class="md-nav__link">
+    Updating using Single Firmware File (Legacy Mode)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-with-cltool" class="md-nav__link">
+    Logging with CLTool
+  </a>
+  
+    <nav class="md-nav" aria-label="Logging with CLTool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-file-types" class="md-nav__link">
+    Log File Types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-type" class="md-nav__link">
+    Log Type
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-options" class="md-nav__link">
+    Command Line Options
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-options-in-ms-visual-studio" class="md-nav__link">
+    Command Line Options in MS Visual Studio
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDK/logInspector/" class="md-nav__link">
+        Log Inspector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDK/overview/" class="md-nav__link">
+        SDK Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5">
+          Example Projects
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Projects" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Example Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDK/CommunicationsBinary/" class="md-nav__link">
+        Comm-Binary (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDK/CommunicationsAscii/" class="md-nav__link">
+        Comm-NMEA (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDK/CommunicationsArduino/" class="md-nav__link">
+        Comm-Arduino (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDK/FirmwareUpdate/" class="md-nav__link">
+        Firmware Update (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDK/InertialSenseClassCLTool/" class="md-nav__link">
+        InertialSense Class CLTool (C++)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SDK/DataLogger/" class="md-nav__link">
+        Data Logging (C++)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          IMX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="IMX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          IMX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/infield_calibration/" class="md-nav__link">
+        Infield Calibration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/platform_configuration/" class="md-nav__link">
+        Platform Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/imu_ins_gnss_configuration/" class="md-nav__link">
+        IMU INS GNSS Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/system_configuration/" class="md-nav__link">
+        System Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/time_sync/" class="md-nav__link">
+        Time Sync/Strobe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/zero_motion_command/" class="md-nav__link">
+        Zero Motion Command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/UART/" class="md-nav__link">
+        UART
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/world_magnetic_model/" class="md-nav__link">
+        World Magnetic Model
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          Dead Reckoning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dead Reckoning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Dead Reckoning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning_examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/shock-rejection/imu_shock_rejection/" class="md-nav__link">
+        IMU Shock Rejection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          GPX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GPX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          GPX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpx/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/GPX_system_status/" class="md-nav__link">
+        GPX System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Communication Protocols
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communication Protocols" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Communication Protocols
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/DID-descriptions/" class="md-nav__link">
+        Data Sets (DIDs)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/isb/" class="md-nav__link">
+        Inertial Sense Binary (ISB)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/nmea/" class="md-nav__link">
+        NMEA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/SPI/" class="md-nav__link">
+        SPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/CAN/" class="md-nav__link">
+        CAN
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          GNSS - RTK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GNSS - RTK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          GNSS - RTK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_1" type="checkbox" id="__nav_10_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_1">
+          Multi-band GNSS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-band GNSS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_1">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-band GNSS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_gnss_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_GPX/" class="md-nav__link">
+        IS GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_F9P/" class="md-nav__link">
+        ublox F9P
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/external_gnss/" class="md-nav__link">
+        External NMEA GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_antennas/" class="md-nav__link">
+        GNSS Antennas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_constellations/" class="md-nav__link">
+        GNSS Constellations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5">
+          RTK Positioning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="RTK Positioning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          RTK Positioning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_positioning_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_rover/" class="md-nav__link">
+        Rover Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_base/" class="md-nav__link">
+        Base Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_ntrip/" class="md-nav__link">
+        NTRIP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/ublox_pointperfect/" class="md-nav__link">
+        Point Perfect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/SBAS/" class="md-nav__link">
+        SBAS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_compassing/" class="md-nav__link">
+        RTK Compassing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          Data Logging/Plotting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Logging/Plotting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Data Logging/Plotting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_plotting/" class="md-nav__link">
+        Plotting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/bootloader/" class="md-nav__link">
+        Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/coordinate_frames/" class="md-nav__link">
+        Coordinate Frames
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/definitions/" class="md-nav__link">
+        Definitions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/imu_specifications/" class="md-nav__link">
+        IMU Specifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/interference/" class="md-nav__link">
+        Interference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/magnetometer/" class="md-nav__link">
+        Magnetometer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/IMX_system_status/" class="md-nav__link">
+        System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/user_manual_pdf/" class="md-nav__link">
+        User Manual PDF
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          Troubleshooting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Troubleshooting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          Troubleshooting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/firmware/" class="md-nav__link">
+        Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/chip_erase/" class="md-nav__link">
+        Chip Erase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/gnss/" class="md-nav__link">
+        GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/imx_bootloader/" class="md-nav__link">
+        IMX Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#help-menu" class="md-nav__link">
+    Help Menu
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-run-linuxmac" class="md-nav__link">
+    Compile &amp; Run (Linux/Mac)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-run-windows-cmake-cl" class="md-nav__link">
+    Compile &amp; Run (Windows CMake CL)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-run-windows-cmake-visual-studio" class="md-nav__link">
+    Compile &amp; Run (Windows CMake Visual Studio)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-firmware-with-cltool" class="md-nav__link">
+    Updating Firmware with CLTool
+  </a>
+  
+    <nav class="md-nav" aria-label="Updating Firmware with CLTool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-using-firmware-package" class="md-nav__link">
+    Updating using Firmware Package
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updating-using-single-firmware-file-legacy-mode" class="md-nav__link">
+    Updating using Single Firmware File (Legacy Mode)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-with-cltool" class="md-nav__link">
+    Logging with CLTool
+  </a>
+  
+    <nav class="md-nav" aria-label="Logging with CLTool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-file-types" class="md-nav__link">
+    Log File Types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-type" class="md-nav__link">
+    Log Type
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-options" class="md-nav__link">
+    Command Line Options
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-options-in-ms-visual-studio" class="md-nav__link">
+    Command Line Options in MS Visual Studio
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="cltool">CLTool<a class="headerlink" href="#cltool" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The Inertial Sense CLTool is a command line utility that can be used to read and display data, update firmware, and log data from Inertial Sense products. Additionally, CLTool serves as example source code that demonstrates integration of the Inertial Sense SDK into your own source code. The CLTool can be compiled in Linux, Mac, Windows and embedded platforms.</p>
+<h2 id="help-menu">Help Menu<a class="headerlink" href="#help-menu" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Command line utility for communicating, logging, and updating firmware with Inertial Sense product line.</span>
+
+EXAMPLES
+    cltool -c /dev/ttyS2 -did DID_INS_1 DID_GPS1_POS DID_PIMU      <span class="c1"># stream DID messages</span>
+    cltool -c /dev/ttyS2 -did <span class="m">4</span> <span class="m">13</span> <span class="m">3</span>                <span class="c1"># stream same as line above</span>
+    cltool -c /dev/ttyS2 -did <span class="nv">3</span><span class="o">=</span><span class="m">5</span>                   <span class="c1"># stream DID_PIMU at startupNavDtMs x 5</span>
+    cltool -c /dev/ttyS2 -presetPPD                 <span class="c1"># stream post processing data (PPD) with INS2</span>
+    cltool -c /dev/ttyS2 -presetPPD -lon -lts<span class="o">=</span><span class="m">1</span>     <span class="c1"># stream PPD + INS2 data, logging, dir timestamp</span>
+    cltool -c /dev/ttyS2 -edit DID_FLASH_CONFIG     <span class="c1"># edit DID_FLASH_CONFIG message</span>
+    cltool -c /dev/ttyS2 -baud<span class="o">=</span><span class="m">115200</span> -did <span class="m">5</span> <span class="nv">13</span><span class="o">=</span><span class="m">10</span>  <span class="c1"># stream at 115200 bps, GPS streamed at 10x startupGPSDtMs</span>
+    cltool -c * -baud<span class="o">=</span><span class="m">921600</span>                        <span class="c1"># 921600 bps baudrate on all serial ports</span>
+    cltool -rp logs/20170117_222549                 <span class="c1"># replay log files from a folder</span>
+    cltool -c /dev/ttyS2 -rover<span class="o">=</span>RTCM3:192.168.1.100:7777:mount:user:password         <span class="c1"># Connect to RTK NTRIP base</span>
+    cltool -c /dev/ttyS2 -get <span class="m">1</span>,4,13,DID_GPS1_POS                                    <span class="c1"># Return specific DIDs</span>
+    cltool -c /dev/ttyS2 -get <span class="s2">&quot;{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}&quot;</span>   <span class="c1"># Return portion of two DIDs</span>
+    cltool -c /dev/ttyS2 -set <span class="s2">&quot;{DID_FLASH_CONFIG: {gps1AntOffset[1]: 0.8}}&quot;</span>          <span class="c1"># Set one value in DID array</span>
+    cltool -c /dev/ttyS2 -set <span class="s2">&quot;{DID_FLASH_CONFIG: {gps1AntOffset: [0.8, 0.0, 1.2]}}&quot;</span> <span class="c1"># Set values in DID</span>
+
+EXAMPLES <span class="o">(</span>Firmware Update<span class="o">)</span>
+    cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
+    cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv
+
+OPTIONS <span class="o">(</span>General<span class="o">)</span>
+    -baud<span class="o">=</span>BAUDRATE  Set serial port baudrate.  Options: <span class="m">115200</span>, <span class="m">230400</span>, <span class="m">460800</span>, <span class="m">921600</span> <span class="o">(</span>default<span class="o">)</span>
+    -c DEVICE_PORT  Select serial port. Set DEVICE_PORT to <span class="s2">&quot;*&quot;</span> <span class="k">for</span> all ports or <span class="s2">&quot;*4&quot;</span> <span class="k">for</span> only first four.
+    -dboc           Send stop-broadcast <span class="nb">command</span> <span class="sb">`</span><span class="nv">$STPB</span><span class="sb">`</span> on close.
+    -h --help       Display this <span class="nb">help</span> menu.
+    -list-devices   Discovers and prints a list of discovered Inertial Sense devices and connected ports.
+    -lm             Listen mode <span class="k">for</span> ISB. Disables device verification <span class="o">(</span>-vd<span class="o">)</span> and does not send stop-broadcast <span class="nb">command</span> on start.
+    -magRecal<span class="o">[</span>n<span class="o">]</span>    Recalibrate magnetometers: <span class="nv">0</span><span class="o">=</span>multi-axis, <span class="nv">1</span><span class="o">=</span>single-axis
+    -nmea<span class="o">=[</span>s<span class="o">]</span>       Send NMEA message s with added checksum footer. Display rx messages. <span class="o">(</span><span class="sb">`</span>-nmea<span class="o">=</span>ASCE,0,GxGGA,1<span class="sb">`</span><span class="o">)</span>
+    -nmea           Listen mode <span class="k">for</span> NMEA message without sending stop-broadcast <span class="nb">command</span> <span class="sb">`</span><span class="nv">$STPB</span><span class="sb">`</span> at start.
+    -q              Quiet mode, no display.
+    -raw-out        Outputs all data <span class="k">in</span> a human-readable raw format <span class="o">(</span>used <span class="k">for</span> debugging/learning the ISB protocol<span class="o">)</span>.
+    -reset          Issue software reset.
+    -s              Scroll displayed messages to show history.
+    -stats          Display statistics of data received.
+    -survey<span class="o">=[</span>s<span class="o">]</span>,<span class="o">[</span>d<span class="o">]</span> Survey-in and store base position to refLla: <span class="nv">s</span><span class="o">=[</span><span class="nv">2</span><span class="o">=</span>3D, <span class="nv">3</span><span class="o">=</span>float, <span class="nv">4</span><span class="o">=</span>fix<span class="o">]</span>, <span class="nv">d</span><span class="o">=</span>durationSec
+    -sysCmd<span class="o">=[</span>c<span class="o">]</span>     Send DID_SYS_CMD c <span class="o">(</span>see eSystemCommand<span class="o">)</span> <span class="nb">command</span> <span class="k">then</span> <span class="nb">exit</span> the program.
+    -vd             Disable device validation.  Use to keep port<span class="o">(</span>s<span class="o">)</span> open even <span class="k">if</span> device response is not received.
+    -verbose<span class="o">[=</span>n<span class="o">]</span>    Enable verbose event logging. Use optional <span class="s1">&#39;=n&#39;</span> to specify log level between <span class="m">0</span> <span class="o">(</span>errors only<span class="o">)</span> and <span class="m">99</span> <span class="o">(</span>all events<span class="o">)</span>
+    -v              Print version information.
+
+OPTIONS <span class="o">(</span>Special<span class="o">)</span>
+    -factoryReset   Reset IMX flash config to factory defaults.
+    -romBootloader  Reboot into ROM bootloader mode.  Requires power cycle and reloading bootloader and firmware.
+
+OPTIONS <span class="o">(</span>Event<span class="o">)</span>
+    -evf<span class="o">=[</span>t<span class="o">]</span>,<span class="o">[</span>po<span class="o">]</span>,<span class="o">[</span>pr<span class="o">]</span>,<span class="o">[</span>id<span class="o">]</span>    Sets which DID_EVENT<span class="s1">&#39;s can be broadcast for debug purposes.</span>
+<span class="s1">         target:        t=[0=device, 1=device&#39;</span>s GNSS1 port, <span class="nv">2</span><span class="o">=</span>device<span class="s1">&#39;s GNSS2 port],</span>
+<span class="s1">         portMask:      po=[0x80=currentPort, 0x08=USB port, 0x04=UART2, 0x02=UART1, 0x01=UART)],</span>
+<span class="s1">         priorityLevel: pr=[Priority ID&#39;</span>s to be enabled. See:eEventPriority <span class="k">for</span> protocol EV_ID values<span class="o">]</span>.
+             It is recommended to have a minimum level of <span class="m">1</span> at all <span class="nb">times</span> to allow broadcast of critical errors.
+         msgTypeIdMask: <span class="nv">id</span><span class="o">=[</span>Protocol ID<span class="err">&#39;</span>s to be enabled. Mask together protocol EV_ID value <span class="o">(</span>0x01 <span class="s">&lt;&lt; EV_ID).</span>
+<span class="s">             See:eEventProtocol for protocol EV_ID</span> values<span class="o">]</span>. It is recommended to mask <span class="o">(</span>0x01 <span class="s">&lt;&lt; EVE</span>NT_MSG_TYPE_ID_ASCII<span class="o">)</span>
+             at all <span class="nb">times</span> to allow broadcast of critical errors.
+
+OPTIONS <span class="o">(</span>Firmware Update<span class="o">)</span>
+    -ufpkg FILEPATH Update firmware using firmware package file <span class="o">(</span>.fpkg<span class="o">)</span> at FILEPATH.
+    -uf FILEPATH    Update app firmware using .hex file FILEPATH.  Add -baud<span class="o">=</span><span class="m">115200</span> <span class="k">for</span> systems w/ baud limits.
+    -ub FILEPATH    Update bootloader using .bin file FILEPATH <span class="k">if</span> version is old. Must be used with option -uf.
+    -fb             Force bootloader update regardless of the version.
+    -uv             Run verification after application firmware update.
+
+OPTIONS <span class="o">(</span>Messages<span class="o">)</span>
+    -get &lt;DID1&gt;,&lt;DID2&gt;,...                   Return values of dataset<span class="o">(</span>s<span class="o">)</span>. DID may be a name or number.
+    -get <span class="s2">&quot;{&lt;DID&gt;: {&lt;FIELD1&gt;,&lt;FIELD2&gt;,...}}&quot;</span>  Return values of dataset<span class="o">(</span>s<span class="o">)</span>. DID may be a name or number. YAML input format.
+                                             Examples: -get <span class="m">1</span>,4,12,DID_GPS1_POS
+                                                       -get <span class="s2">&quot;{DID_INS_1,DID_GPS1_POS}&quot;</span>
+                                                       -get <span class="s2">&quot;{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}&quot;</span>
+    -set <span class="s2">&quot;{&lt;DID&gt;: {&lt;FIELD1&gt;: &lt;VALUE&gt;, ...}}&quot;</span> Set values of dataset<span class="o">(</span>s<span class="o">)</span>. DID may be a number or name. YAML input format.
+                                             Examples: -set <span class="s2">&quot;{DID_FLASH_CONFIG: {gps1AntOffset: [0.8, 0.0, 1.2]}}&quot;</span>
+                                                       -set <span class="s2">&quot;{DID_FLASH_CONFIG: {gps1AntOffset[2]: 1.2}}&quot;</span>
+                                                       -set <span class="s2">&quot;{12: {ioConfig: 0x1a2b012c, ser2BaudRate: 921600}}&quot;</span>
+    -did <span class="o">[</span>DID#&lt;<span class="o">=</span>PERIODMULT&gt; DID#&lt;<span class="o">=</span>PERIODMULT&gt; ...<span class="o">]</span>  Stream <span class="m">1</span> or more datasets and display w/ compact view.
+    -edit <span class="o">[</span>DID#&lt;<span class="o">=</span>PERIODMULT&gt;<span class="o">]</span>                       Stream and edit <span class="m">1</span> dataset.
+          Each DID# can be the DID number or name and appended with &lt;<span class="o">=</span>PERIODMULT&gt; to decrease message frequency. 
+          Message <span class="nv">period</span> <span class="o">=</span> <span class="nb">source</span> period x PERIODMULT. PERIODMULT is <span class="m">1</span> <span class="k">if</span> not specified.
+          Common DIDs: DID_INS_1, DID_INS_2, DID_INS_4, DID_PIMU, DID_IMU, DID_GPS1_POS,
+          DID_GPS2_RTK_CMP_REL, DID_BAROMETER, DID_MAGNETOMETER, DID_FLASH_CONFIG <span class="o">(</span>see data_sets.h <span class="k">for</span> <span class="nb">complete</span> list<span class="o">)</span>
+    -dids           Print list of all DID datasets
+    -persistent     Save current streams as persistent messages enabled on startup
+    -presetPPD      Send RMC preset to <span class="nb">enable</span> IMX post processing data <span class="o">(</span>PPD<span class="o">)</span> stream
+    -presetINS      Send RMC preset to <span class="nb">enable</span> INS data stream
+    -presetGPXPPD   Send RMC preset to <span class="nb">enable</span> GPX post processing data <span class="o">(</span>PPD<span class="o">)</span> stream
+
+OPTIONS <span class="o">(</span>Logging to file, disabled by default<span class="o">)</span>
+    -lon            Enable logging
+    -lt<span class="o">=</span>TYPE        Log type: raw <span class="o">(</span>default<span class="o">)</span>, dat, sdat, kml or csv
+    -lp PATH        Log data to path <span class="o">(</span>default: ./IS_logs<span class="o">)</span>
+    -lmb<span class="o">=</span>MB         File culling: Log drive usage limit <span class="k">in</span> MB. <span class="o">(</span>default: <span class="m">0</span><span class="o">)</span>. <span class="sb">`</span>-lmb<span class="o">=</span><span class="m">0</span> -lms<span class="o">=</span><span class="m">0</span><span class="sb">`</span> disables file culling.
+    -lms<span class="o">=</span>PERCENT    File culling: Log drive space limit <span class="k">in</span> percent of total drive, <span class="m">0</span>.0 to <span class="m">1</span>.0. <span class="o">(</span>default: <span class="m">0</span>.5<span class="o">)</span>
+    -lmf<span class="o">=</span>BYTES      Log max file size <span class="k">in</span> bytes <span class="o">(</span>default: <span class="m">5242880</span><span class="o">)</span>
+    -lts<span class="o">=</span><span class="m">0</span>          Log sub folder, <span class="m">0</span> or blank <span class="k">for</span> none, <span class="m">1</span> <span class="k">for</span> timestamp, <span class="k">else</span> use as is
+    -r              Replay data log from default path
+    -rp PATH        Replay data log from PATH
+    -rs<span class="o">=</span>SPEED       Replay data log at x SPEED. <span class="nv">SPEED</span><span class="o">=</span><span class="m">0</span> runs as fast as possible.
+
+OPTIONS <span class="o">(</span>READ flash config<span class="o">)</span> - DEPRECATED, use <span class="sb">`</span>-get<span class="sb">`</span> instead
+    -imxFlashCfg                                <span class="c1"># List all &quot;keys&quot; and &quot;values&quot; in IMX</span>
+    -gpxFlashCfg                                <span class="c1"># List all &quot;keys&quot; and &quot;values&quot; in GPX</span>
+    <span class="s2">&quot;-imxFlashCfg=[key]|[key]|[key]&quot;</span>            <span class="c1"># List specific IMX values</span>
+    <span class="s2">&quot;-gpxFlashCfg=[key]|[key]|[key]&quot;</span>            <span class="c1"># List specific GPX values</span>
+
+OPTIONS <span class="o">(</span>WRITE flash config<span class="o">)</span> - DEPRECATED, use <span class="sb">`</span>-set<span class="sb">`</span> instead
+    <span class="s2">&quot;-imxFlashCfg=[key]=[value]|[key]=[value]&quot;</span>  <span class="c1"># Set key / value pairs in IMX flash config. </span>
+    <span class="s2">&quot;-gpxFlashCfg=[key]=[value]|[key]=[value]&quot;</span>  <span class="c1"># Set key / value pairs in GPX flash config. </span>
+                                                <span class="c1"># Surround with &quot;quotes&quot; when using pipe operator.</span>
+EXAMPLES
+    cltool -c /dev/ttyS2 -imxFlashCfg  <span class="c1"># Read from device and print all keys and values</span>
+    cltool -c /dev/ttyS2 <span class="s2">&quot;-imxFlashCfg=insOffset[1]=1.2|ser2BaudRate=115200&quot;</span>  <span class="c1"># Set multiple values</span>
+
+OPTIONS <span class="o">(</span>RTK Rover / Base<span class="o">)</span>
+    -rover<span class="o">=[</span>type<span class="o">]</span>:<span class="o">[</span>IP or URL<span class="o">]</span>:<span class="o">[</span>port<span class="o">]</span>:<span class="o">[</span>mountpoint<span class="o">]</span>:<span class="o">[</span>username<span class="o">]</span>:<span class="o">[</span>password<span class="o">]</span>
+        As a rover <span class="o">(</span>client<span class="o">)</span>, receive RTK corrections.  Examples:
+            -rover<span class="o">=</span>TCP:RTCM3:192.168.1.100:7777:mountpoint:username:password   <span class="o">(</span>NTRIP<span class="o">)</span>
+            -rover<span class="o">=</span>TCP:RTCM3:192.168.1.100:7777
+            -rover<span class="o">=</span>TCP:UBLOX:192.168.1.100:7777
+            -rover<span class="o">=</span>SERIAL:RTCM3:/dev/ttyS2:57600        <span class="o">(</span>port, baud rate<span class="o">)</span>
+    -base<span class="o">=[</span>IP<span class="o">]</span>:<span class="o">[</span>port<span class="o">]</span>   As a Base <span class="o">(</span>sever<span class="o">)</span>, send RTK corrections.  Examples:
+            -base<span class="o">=</span>TCP::7777                             <span class="o">(</span>IP is optional<span class="o">)</span>
+            -base<span class="o">=</span>TCP:192.168.1.43:7777
+            -base<span class="o">=</span>SERIAL:/dev/ttyS2:921600
+</code></pre></div>
+
+<h2 id="compile-run-linuxmac">Compile &amp; Run (Linux/Mac)<a class="headerlink" href="#compile-run-linuxmac" title="Permanent link">&para;</a></h2>
+<ol>
+<li>You must have cmake installed on your machine. To do this, download the cmake application at <a href="https://cmake.org/download/">https://cmake.org/download/</a>. Then, using the command line, you will need to install cmake with either of the following commands depending on your platform:
+    <div class="highlight"><pre><span></span><code>Mac:
+sudo <span class="s2">&quot;/Applications/CMake.app/Contents.bin/cmake-gui&quot;</span> --install
+
+Linux:
+sudo apt-get install cmake
+</code></pre></div></li>
+<li>
+<p>Create build directory
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span> cltool
+mkdir build
+</code></pre></div></p>
+</li>
+<li>
+<p>Run cmake from within build directory
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span> build
+cmake ..
+</code></pre></div></p>
+</li>
+<li>
+<p>Compile using make
+   <div class="highlight"><pre><span></span><code>make
+</code></pre></div></p>
+</li>
+<li>
+<p>If necessary, add current user to the "dialout" group in order to read and write to the USB serial communication ports:
+   <div class="highlight"><pre><span></span><code>sudo usermod -a -G dialout <span class="nv">$USER</span>
+sudo usermod -a -G plugdev <span class="nv">$USER</span>
+<span class="o">(</span>reboot computer<span class="o">)</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Run executable
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span> build
+./cltool
+</code></pre></div></p>
+</li>
+</ol>
+<h2 id="compile-run-windows-cmake-cl">Compile &amp; Run (Windows CMake CL)<a class="headerlink" href="#compile-run-windows-cmake-cl" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Install CMake for Windows</p>
+</li>
+<li>
+<p>Create build directory
+    ```bash
+    cd cltool
+    mkdir build</p>
+</li>
+<li>
+<p>Run cmake from within build directory
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span> build
+cmake ..
+</code></pre></div></p>
+</li>
+<li>
+<p>Compile
+   <div class="highlight"><pre><span></span><code>cmake --build .
+</code></pre></div></p>
+</li>
+<li>Run executable
+   <div class="highlight"><pre><span></span><code><span class="nb">cd</span> Release <span class="o">(</span>or Debug depending on CMake configuration you selected<span class="o">)</span>
+cltool.exe
+</code></pre></div></li>
+</ol>
+<h2 id="compile-run-windows-cmake-visual-studio">Compile &amp; Run (Windows CMake Visual Studio)<a class="headerlink" href="#compile-run-windows-cmake-visual-studio" title="Permanent link">&para;</a></h2>
+<p>Windows Visual Studio supports CMake projects. Follow the instructions provided by Microsoft:
+<a href="https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170">https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170</a></p>
+<h2 id="updating-firmware-with-cltool">Updating Firmware with CLTool<a class="headerlink" href="#updating-firmware-with-cltool" title="Permanent link">&para;</a></h2>
+<h3 id="updating-using-firmware-package">Updating using Firmware Package<a class="headerlink" href="#updating-using-firmware-package" title="Permanent link">&para;</a></h3>
+<p>Updating firmware using a firmware package file provides a simple method to update multiple devices in one process.  This include the ability to update an IMX-GPX module pair in one step.  The cltool only needs know the file path of the firmware package file and the serial port of the device to be updated.  The file extension for a firmware package is <code>.fpkg</code>.</p>
+<p><strong>NOTE:</strong> Updating the IMX firmware using a firmware package currently not supported and will become available in a future update.</p>
+<div class="highlight"><pre><span></span><code>cltool -c DEVICE_PORT -ufpkg FILEPATH
+</code></pre></div>
+
+<p>The following is a specific example of using a firmware package file:</p>
+<div class="highlight"><pre><span></span><code>cltool -c /dev/ttyACM0 -ufpkg IS-firmware_2.0.3_2024-03-18_213925.fpkg
+</code></pre></div>
+
+<h3 id="updating-using-single-firmware-file-legacy-mode">Updating using Single Firmware File (Legacy Mode)<a class="headerlink" href="#updating-using-single-firmware-file-legacy-mode" title="Permanent link">&para;</a></h3>
+<p>The CLTool can be used to update device firmware with the following options.  This is the legacy firmware update methods that works only with the IMX-5 and earlier products (uINS-3, EVB-2, etc.).</p>
+<div class="highlight"><pre><span></span><code>cltool -c DEVICE_PORT -uf <span class="o">[</span>FW_FILEPATH<span class="o">]</span> -ub <span class="o">[</span>BL_FILEPATH<span class="o">]</span> -uv
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-c DEVICE_PORT</code></td>
+<td>Specifies the device serial or USB port (i.e. <code>/dev/ttyACM0</code>).</td>
+</tr>
+<tr>
+<td><code>-uf [FW_FILEPATH]</code></td>
+<td>Specifies the application firmware file path.</td>
+</tr>
+<tr>
+<td><code>-ub [BL_FILEPATH]</code></td>
+<td>(Optional) Specified the bootloader firmware file.  The bootloader is only updated if the version of the file provided is newer than the bootloader version currently on the device.</td>
+</tr>
+<tr>
+<td><code>-uv</code></td>
+<td>(Optional) Run verification after application firmware update.</td>
+</tr>
+</tbody>
+</table>
+<p>The following is a specific example:</p>
+<div class="highlight"><pre><span></span><code>cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv   
+</code></pre></div>
+
+<p>Note: The firmware can only be updated at the following baud rates: 300000, 921600, 460800, 230400, 115200</p>
+<h2 id="logging-with-cltool">Logging with CLTool<a class="headerlink" href="#logging-with-cltool" title="Permanent link">&para;</a></h2>
+<p>The CLTool can be used to log data to file with the following options: </p>
+<div class="highlight"><pre><span></span><code>cltool -c DEVICE_PORT -lon -lt<span class="o">=</span>LOG_TYPE -lp DIRECTORY
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-lon</code></td>
+<td>Enable logging.</td>
+</tr>
+<tr>
+<td><code>-lt=LOG_TYPE</code></td>
+<td>Specifies the  <a href="#log-type">log file type</a> to be written.  LOG_TYPE can be <code>raw</code>, <code>dat</code>, or <code>csv</code>.</td>
+</tr>
+<tr>
+<td><code>-lp DIRECTORY</code></td>
+<td>(Optional) Specifies the path where log files will be written.  When not specified, the default location will be the current working directory.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="log-file-types">Log File Types<a class="headerlink" href="#log-file-types" title="Permanent link">&para;</a></h3>
+<h3 id="log-type">Log Type<a class="headerlink" href="#log-type" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Log Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>raw</code></td>
+<td>Binary file containing byte for byte data received over the serial ports.  All packets remain in their native form.  Used for logging InertialSense binary (ISB), NMEA, RTCM3, uBlox UBX binary and SPARTN, and any other packet formats.  <strong><em>Recommended for logging all data formats and post processing</em></strong>.</td>
+</tr>
+<tr>
+<td><code>dat</code></td>
+<td>Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups containing data in serial order as they appear over the serial port.  Default file format.  <strong><em>Recommended for post processing.</em></strong></td>
+</tr>
+<tr>
+<td><code>csv</code></td>
+<td>Comma-Separated Values - Plain text file that uses specific structuring to arrange tabular data. Its basic format involves separating each data field (or cell in a table) with a comma and each record (or row) is on a new line. This simple format allows for ease in data import and export between programs that handle tabular data, such as databases and spreadsheets.</td>
+</tr>
+</tbody>
+</table>
+<p>The following is an example of enabling the logger with type raw and specifying the output directory:
+<div class="highlight"><pre><span></span><code>./cltool -c /dev/ttyACM0 -lon -lt<span class="o">=</span>raw -lp /media/usbdrive/data
+</code></pre></div></p>
+<h2 id="command-line-options">Command Line Options<a class="headerlink" href="#command-line-options" title="Permanent link">&para;</a></h2>
+<p>Navigate to the directory <code>/cpp/SDK/cltool/build</code> and run the CLTool with the help option, "<code>-h</code>"</p>
+<div class="highlight"><pre><span></span><code>./cltool -h
+</code></pre></div>
+
+<p>to display the command line options</p>
+<h2 id="command-line-options-in-ms-visual-studio">Command Line Options in MS Visual Studio<a class="headerlink" href="#command-line-options-in-ms-visual-studio" title="Permanent link">&para;</a></h2>
+<p>When using MS Visual Studio IDE, command line arguments can be supplied by right clicking the project in the solution explorer and then selecting <strong>Configuration Properties -&gt; Debugging -&gt; Command Arguments</strong> (see image below).</p>
+<p><img alt="CMD_options in VS" src="../images/2.7.png" /></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../evaltool/" class="md-footer__link md-footer__link--prev" aria-label="Previous: EvalTool" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              EvalTool
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../SDK/logInspector/" class="md-footer__link md-footer__link--next" aria-label="Next: Log Inspector" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Log Inspector
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.math"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+        <script src="https://js.hs-scripts.com/3481185.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+    
+  </body>
+</html>

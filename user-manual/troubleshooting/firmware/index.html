@@ -1,0 +1,2233 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.inertialsense.com/user-manual/troubleshooting/firmware/">
+      
+      <link rel="icon" href="../../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Firmware - InertialSense</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ef5552">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../custom_theme/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#firmware-troubleshooting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="InertialSense" class="md-header__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InertialSense
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Firmware
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="InertialSense" class="md-nav__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    InertialSense
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasheets/datasheets/" class="md-nav__link">
+        Data Sheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dimensions/dimensions/" class="md-nav__link">
+        Dimensions and Pinouts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/Overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/IMX-5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/GPX-1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Hardware Integration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Hardware Integration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Hardware Integration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx6/" class="md-nav__link">
+        IMX-6
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_gpx1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/rugged3/" class="md-nav__link">
+        Rugged-3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG1/" class="md-nav__link">
+        IG-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG2/" class="md-nav__link">
+        IG-2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IK1/" class="md-nav__link">
+        IK-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/hardware_design/" class="md-nav__link">
+        Design Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/reflow/" class="md-nav__link">
+        Reflow Soldering
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Software / SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Software / SDK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Software / SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/evaltool/" class="md-nav__link">
+        EvalTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/cltool/" class="md-nav__link">
+        CLTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/logInspector/" class="md-nav__link">
+        Log Inspector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/overview/" class="md-nav__link">
+        SDK Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5">
+          Example Projects
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Projects" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Example Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsBinary/" class="md-nav__link">
+        Comm-Binary (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsAscii/" class="md-nav__link">
+        Comm-NMEA (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsArduino/" class="md-nav__link">
+        Comm-Arduino (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/FirmwareUpdate/" class="md-nav__link">
+        Firmware Update (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/InertialSenseClassCLTool/" class="md-nav__link">
+        InertialSense Class CLTool (C++)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/DataLogger/" class="md-nav__link">
+        Data Logging (C++)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          IMX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="IMX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          IMX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/infield_calibration/" class="md-nav__link">
+        Infield Calibration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/platform_configuration/" class="md-nav__link">
+        Platform Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/imu_ins_gnss_configuration/" class="md-nav__link">
+        IMU INS GNSS Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/system_configuration/" class="md-nav__link">
+        System Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/time_sync/" class="md-nav__link">
+        Time Sync/Strobe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/zero_motion_command/" class="md-nav__link">
+        Zero Motion Command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/UART/" class="md-nav__link">
+        UART
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/world_magnetic_model/" class="md-nav__link">
+        World Magnetic Model
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          Dead Reckoning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dead Reckoning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Dead Reckoning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning_examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/shock-rejection/imu_shock_rejection/" class="md-nav__link">
+        IMU Shock Rejection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          GPX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GPX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          GPX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpx/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/GPX_system_status/" class="md-nav__link">
+        GPX System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Communication Protocols
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communication Protocols" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Communication Protocols
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/DID-descriptions/" class="md-nav__link">
+        Data Sets (DIDs)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/isb/" class="md-nav__link">
+        Inertial Sense Binary (ISB)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/nmea/" class="md-nav__link">
+        NMEA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/SPI/" class="md-nav__link">
+        SPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/CAN/" class="md-nav__link">
+        CAN
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          GNSS - RTK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GNSS - RTK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          GNSS - RTK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_1" type="checkbox" id="__nav_10_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_1">
+          Multi-band GNSS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-band GNSS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_1">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-band GNSS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_gnss_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_GPX/" class="md-nav__link">
+        IS GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/multi_band_F9P/" class="md-nav__link">
+        ublox F9P
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/external_gnss/" class="md-nav__link">
+        External NMEA GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_antennas/" class="md-nav__link">
+        GNSS Antennas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/gnss_constellations/" class="md-nav__link">
+        GNSS Constellations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5">
+          RTK Positioning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="RTK Positioning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          RTK Positioning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_positioning_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_rover/" class="md-nav__link">
+        Rover Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_base/" class="md-nav__link">
+        Base Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_ntrip/" class="md-nav__link">
+        NTRIP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/ublox_pointperfect/" class="md-nav__link">
+        Point Perfect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/SBAS/" class="md-nav__link">
+        SBAS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gnss/rtk_compassing/" class="md-nav__link">
+        RTK Compassing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          Data Logging/Plotting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Logging/Plotting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Data Logging/Plotting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_plotting/" class="md-nav__link">
+        Plotting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/bootloader/" class="md-nav__link">
+        Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/coordinate_frames/" class="md-nav__link">
+        Coordinate Frames
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/definitions/" class="md-nav__link">
+        Definitions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/imu_specifications/" class="md-nav__link">
+        IMU Specifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/interference/" class="md-nav__link">
+        Interference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/magnetometer/" class="md-nav__link">
+        Magnetometer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/IMX_system_status/" class="md-nav__link">
+        System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/user_manual_pdf/" class="md-nav__link">
+        User Manual PDF
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          Troubleshooting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Troubleshooting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          Troubleshooting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Firmware
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Firmware
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-doesnt-look-right" class="md-nav__link">
+    Data doesn't look right
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootloader-not-responding" class="md-nav__link">
+    Bootloader Not Responding
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootloader-update-fails-first-time" class="md-nav__link">
+    Bootloader Update fails first time
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-in-ahrs-mode-despite-gps-messages-being-received" class="md-nav__link">
+    System in AHRS mode despite GPS messages being received
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#imx-5-bricked-system-recovery" class="md-nav__link">
+    "IMX-5 Bricked" System Recovery
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpx-and-imx-bricked-system-recovery" class="md-nav__link">
+    "GPX and IMX Bricked" System Recovery
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uins-bricked-system-recovery" class="md-nav__link">
+    "uINS Bricked" System Recovery
+  </a>
+  
+    <nav class="md-nav" aria-label=""uINS Bricked" System Recovery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stuck-in-bootloader-mode" class="md-nav__link">
+    Stuck in Bootloader Mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recovery-for-firmware-v1210" class="md-nav__link">
+    Recovery for Firmware v1.2.1.0
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-with-evaltool" class="md-nav__link">
+    Troubleshooting with EvalTool
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting with EvalTool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#units-not-connecting" class="md-nav__link">
+    Units Not Connecting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downgrading-uins-to-18x-firmware" class="md-nav__link">
+    Downgrading uINS to 1.8.x Firmware
+  </a>
+  
+    <nav class="md-nav" aria-label="Downgrading uINS to 1.8.x Firmware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chip-erase-downgrade" class="md-nav__link">
+    Chip Erase Downgrade
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#176-bug-rtk-base-gps-raw-work-around" class="md-nav__link">
+    1.7.6 Bug RTK Base GPS Raw work around
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chip_erase/" class="md-nav__link">
+        Chip Erase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/" class="md-nav__link">
+        GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx_bootloader/" class="md-nav__link">
+        IMX Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-doesnt-look-right" class="md-nav__link">
+    Data doesn't look right
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootloader-not-responding" class="md-nav__link">
+    Bootloader Not Responding
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootloader-update-fails-first-time" class="md-nav__link">
+    Bootloader Update fails first time
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-in-ahrs-mode-despite-gps-messages-being-received" class="md-nav__link">
+    System in AHRS mode despite GPS messages being received
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#imx-5-bricked-system-recovery" class="md-nav__link">
+    "IMX-5 Bricked" System Recovery
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpx-and-imx-bricked-system-recovery" class="md-nav__link">
+    "GPX and IMX Bricked" System Recovery
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uins-bricked-system-recovery" class="md-nav__link">
+    "uINS Bricked" System Recovery
+  </a>
+  
+    <nav class="md-nav" aria-label=""uINS Bricked" System Recovery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stuck-in-bootloader-mode" class="md-nav__link">
+    Stuck in Bootloader Mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recovery-for-firmware-v1210" class="md-nav__link">
+    Recovery for Firmware v1.2.1.0
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-with-evaltool" class="md-nav__link">
+    Troubleshooting with EvalTool
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting with EvalTool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#units-not-connecting" class="md-nav__link">
+    Units Not Connecting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downgrading-uins-to-18x-firmware" class="md-nav__link">
+    Downgrading uINS to 1.8.x Firmware
+  </a>
+  
+    <nav class="md-nav" aria-label="Downgrading uINS to 1.8.x Firmware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chip-erase-downgrade" class="md-nav__link">
+    Chip Erase Downgrade
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#176-bug-rtk-base-gps-raw-work-around" class="md-nav__link">
+    1.7.6 Bug RTK Base GPS Raw work around
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="firmware-troubleshooting">Firmware Troubleshooting<a class="headerlink" href="#firmware-troubleshooting" title="Permanent link">&para;</a></h1>
+<p>Please email <a href="mailto:support@inertialsense.com">support@inertialsense.com</a> for assistance or to provide feedback on this user guide.</p>
+<h2 id="data-doesnt-look-right">Data doesn't look right<a class="headerlink" href="#data-doesnt-look-right" title="Permanent link">&para;</a></h2>
+<p>If the EvalTool or SDK are from a different release from the firmware on the unit, there may be communication protocol related issues. It's best to keep both the software and firmware in sync with each other. The EvalTool should flag a protocol mismatch in the settings tab.</p>
+<h2 id="bootloader-not-responding">Bootloader Not Responding<a class="headerlink" href="#bootloader-not-responding" title="Permanent link">&para;</a></h2>
+<p>Check the following:</p>
+<ul>
+<li>The input supply is at 3.3V and clean without noise.</li>
+<li>The serial connection is grounded (no floating grounds).</li>
+<li>The serial wires between the uINS module and the next active device (buffer, converter, or processor) are not longer than 1 meter when bootloading firmware.</li>
+<li>Reset or power cycle the IMX and promptly run the firmware update within 30 seconds of reset.  A known issue in the IMX-5 bootloader version v6g and prior versions that disables all UARTS if no handshake is received within 50 second following startup.  Resetting the IMX will re-enable UARTs for 50 seconds.</li>
+</ul>
+<h2 id="bootloader-update-fails-first-time">Bootloader Update fails first time<a class="headerlink" href="#bootloader-update-fails-first-time" title="Permanent link">&para;</a></h2>
+<p>If updating the bootloader firmware and using the USB direct connection on the IMX module (pins 1 and 2) or the EVB-2 (EVB USB connector), the serial port number will change when the device switches from application mode to Bootloader Update mode.  This is expected and requires reselecting the new serial port and running the Bootloader Update process a second time. </p>
+<h2 id="system-in-ahrs-mode-despite-gps-messages-being-received">System in AHRS mode despite GPS messages being received<a class="headerlink" href="#system-in-ahrs-mode-despite-gps-messages-being-received" title="Permanent link">&para;</a></h2>
+<p>If attempting to enter NAV mode but the system reports AHRS despite GPS data beig received, then assure your units are not set to Rover RTK mode. This will override your ability to lock in GPS Nav mode.</p>
+<h2 id="imx-5-bricked-system-recovery">"IMX-5 Bricked" System Recovery<a class="headerlink" href="#imx-5-bricked-system-recovery" title="Permanent link">&para;</a></h2>
+<p>Assert chip erase pin high (3.3V) while booting (power cycle or reset) to erase all flash memory and place IMX into ROM bootloader (DFU) mode.  </p>
+<p>Note: the IMX bootloader will timeout and disable all UARTS (not USB) after 30 seconds if the sync handshake is not received.  This will render the IMX unresponsive over UART.  To prevent this, do not interrupt the standard firmware update process.  To recover the IMX, reset the IMX and then re-apply the firmware update within 30 seconds of reset.  <a href="https://docs.inertialsense.com/user-manual/reference/bootloader/#known-issues">https://docs.inertialsense.com/user-manual/reference/bootloader/#known-issues</a></p>
+<p>Note: Following chip erase:
+Update firmware using standard procedure including app and bootloader firmware images. 
+Upload IMU calibration.</p>
+<h2 id="gpx-and-imx-bricked-system-recovery">"GPX and IMX Bricked" System Recovery<a class="headerlink" href="#gpx-and-imx-bricked-system-recovery" title="Permanent link">&para;</a></h2>
+<p>Assert boot mode pin high (3.3V) while booting (power cycle or reset) to put the device into bootloader mode.  Inertial Sense customer support is required to facilitate bootloader communications with this device.</p>
+<h2 id="uins-bricked-system-recovery">"uINS Bricked" System Recovery<a class="headerlink" href="#uins-bricked-system-recovery" title="Permanent link">&para;</a></h2>
+<p>There are different reasons a system may appear unresponsive and not communicate.  The following sections describe how to recover a system from these states.  </p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>The ONLY indicator that the bootloader is running is the fading cyan module LED.  NO communications will appear in the EvalTool or CLTool.  <strong>Attempt to update the firmware before performing a <a href="../chip_erase/">chip erase</a>.</strong></p>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Hardware v3.1.3 and firmware IS_uINS-3_v1.2.1.0_b287_2017-09-17_103826.hex and older will not communicate and require following these instructions to be recovered. Do NOT use the <a href="../chip_erase/">chip erase</a> procedure for this scenario.</p>
+</div>
+<h3 id="stuck-in-bootloader-mode">Stuck in Bootloader Mode<a class="headerlink" href="#stuck-in-bootloader-mode" title="Permanent link">&para;</a></h3>
+<p>In some cases, the bootloader may fail to completely update firmware.  This is indicated by the fading cyan status LED on the IMX module.  This can happen if older bootloader firmware is on the uINS and firmware version 1.7.1 is uploaded.  If this happens, the system will appear to be unresponsive in the EvalTool.  The following process can be used to recover the system to a working state:</p>
+<p>If the <strong>bootloader is running</strong>, identified with the fading cyan color LED on the uINS module, following these steps:</p>
+<ol>
+<li><strong>Ensure uINS Firmware is Running</strong> - <em>(This step is not necessary if the uINS firmware is running and the EvalTool is communicating with the uINS)</em>.  Select the device serial port and update the firmware using <a href="https://github.com/inertialsense/InertialSenseSDK/releases/tag/1.6.4">1.6.4</a> or earlier.  If the bootloader is running, version information will not appear in the EvalTool.  The following bootloader update step will not work unless the EvalTool is communicating with the uINS firmware.</li>
+<li><strong>Update the Bootloader</strong> - Use the EvalTool "Update Bootloader" button in the Settings tab to upload the latest <a href="https://github.com/inertialsense/InertialSenseSDK/releases/tag/bootloader">bootloader firmware</a>.  If it has a fading cyan color on the uINS module, the bootloader is running and ready for new firmware to be loaded. <strong>The bootloader can only be updated using serial0 or the native USB connection.</strong></li>
+<li><strong>Update the Firmware</strong> - Use the EvalTool "Update Firmware" button to upload the <a href="https://github.com/inertialsense/InertialSenseSDK/releases">latest uINS firmware</a>.</li>
+</ol>
+<p>If neither the bootloader or the uINS firmware are running, identified with the solid or no LED status on the uINS module, please <a href="mailto:support@inertialsense.com">contacts us</a>.</p>
+<h3 id="recovery-for-firmware-v1210">Recovery for Firmware v1.2.1.0<a class="headerlink" href="#recovery-for-firmware-v1210" title="Permanent link">&para;</a></h3>
+<p>Hardware v3.1.3 and newer and firmware IS_uINS-3_v1.2.1.0_b287_2017-09-17_103826.hex and older result in a system that runs but will not communicate properly.  This older firmware was not designed for the newer hardware and consequently runs the processor at a slower speed, which alters all of the predefined baud rates to non-standard irregular baud rates.  A symptom of this problem is the LED flashing to indicate the processor activity and the module never communicates properly. </p>
+<p>The following steps are provided to recover communications with the system. </p>
+<ol>
+<li>Install and run the <a href="https://github.com/inertialsense/InertialSenseSDK/releases/download/1.1.3/EvalTool.Installer.r1.1.3.2018-06-08.221942.exe">hotfix release 1.1.3 EvalTool</a>.  </li>
+<li>Select the special baud rate <strong>560,000</strong> in the EvalTool and open the serial port.</li>
+<li>Update the firmware using any version <strong>newer than</strong> IS_uINS-3_v1.2.1.0_b287_2017-09-17_103826.hex.</li>
+</ol>
+<p>The latest EvalTool, CLTool, SDK, and firmware can be used once the firmware has been updated on the module.</p>
+<h2 id="troubleshooting-with-evaltool">Troubleshooting with EvalTool<a class="headerlink" href="#troubleshooting-with-evaltool" title="Permanent link">&para;</a></h2>
+<h3 id="units-not-connecting">Units Not Connecting<a class="headerlink" href="#units-not-connecting" title="Permanent link">&para;</a></h3>
+<p>In the case that your units do not connect properly to the EvalTool, verify:</p>
+<ol>
+<li>The baud rate is the same that you previously had when the Com Ports last opened correctly.</li>
+<li>The LED on the unit is not showing solid white, flashing white, or solid red. These mean a failure occured in loading the bootloader (see User Guide for full LED descriptions).</li>
+<li>If you are using a USB3.0 connection, the com port might take longer to show up than with USB2.0</li>
+<li>Check your computer's Device Manager to see if your unit shows up there. If it doesn't show up, you may have an FTDI driver issue.<ol>
+<li>If you suspect you don't have the FTDI driver installed on your Windows computer, use the following links to download the driver:
+    - Executable for the FTDI USB driver:
+      - <a href="https://ftdichip.com/wp-content/uploads/2023/09/CDM-v2.12.36.4-WHQL-Certified.zip">https://ftdichip.com/wp-content/uploads/2023/09/CDM-v2.12.36.4-WHQL-Certified.zip</a>
+    - Drives without executable.
+      - <a href="http://www.ftdichip.com/Drivers/D2XX.htm">http://www.ftdichip.com/Drivers/D2XX.htm</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="downgrading-uins-to-18x-firmware">Downgrading uINS to 1.8.x Firmware<a class="headerlink" href="#downgrading-uins-to-18x-firmware" title="Permanent link">&para;</a></h2>
+<p>The following steps can be used to downgrade the uINS firmware to version 1.8.x (or older):</p>
+<ol>
+<li>
+<p>Ensure the uINS is running 1.9.x (or newer) firmware. </p>
+</li>
+<li>
+<p>Send the system commands <code>SYS_CMD_MANF_UNLOCK</code> and <code>SYS_CMD_MANF_DOWNGRADE_CALIBRATION</code> to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool, cltool, or SDK .</p>
+<ol>
+<li>
+<p><strong>EvalTool</strong> (version 1.9.1 or later): Use the firmware "<strong>Downgrade</strong>" button (EvalTool -&gt; Settings -&gt; General -&gt; Factory -&gt; Downgrade).  </p>
+</li>
+<li>
+<p><strong>cltool</strong> (version 1.10 or later): Use option <code>-sysCmd=1357924682</code> to send the downgrade command:</p>
+<div class="highlight"><pre><span></span><code>./cltool -c /dev/ttyACM0 -sysCmd=1357924682
+</code></pre></div>
+
+<p><strong>cltool alternate method</strong>: use option <code>-edit 7</code> to edit the DID_SYS_CMD and send the downgrade command: </p>
+<div class="highlight"><pre><span></span><code>./cltool -c /dev/ttyACM0 -edit 7
+</code></pre></div>
+
+<p>Use <code>w</code> and <code>s</code> to move the cursor up or down (arrow keys do not work) and enter to submit the new value.  The <code>invCommand</code> value is the bitwise inverse of the command and is required to validate the command.  The <code>command</code> value will change to zero when the IMX accepts the <code>command</code> and <code>invCommand</code> values.</p>
+<p>Send manufacture unlock command:</p>
+<div class="highlight"><pre><span></span><code>command = 1122334455
+invCommand = 3172632840
+</code></pre></div>
+
+<p>Send downgrade command:</p>
+<div class="highlight"><pre><span></span><code>command = 1357924682
+invCommand = 2937042613
+</code></pre></div>
+
+</li>
+</ol>
+</li>
+<li>
+<p>Verify the uINS has reboot into bootloader update mode.  The host serial port will disappear and reappear.  The uINS will NOT support normal DID binary or NMEA communications in this mode, but will be ready to update the bootloader.</p>
+</li>
+<li>
+<p>Update the bootloader and firmware using the 1.8.x EvalTool, cltool, or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. </p>
+</li>
+</ol>
+<h3 id="chip-erase-downgrade">Chip Erase Downgrade<a class="headerlink" href="#chip-erase-downgrade" title="Permanent link">&para;</a></h3>
+<p>The above process using the <code>SYS_CMD_MANF_DOWNGRADE_CALIBRATION</code> command is recommended as it prevents the need to reload the IMU calibration onto the uINS.  However,  an alternative method to downgrade uINS to 1.8.x firmware is as follows: </p>
+<ol>
+<li>Chip erase the uINS.</li>
+<li>Load v5b (or older) bootloader and 1.8.x (or older) firmware using the 1.8.x EvalTool, cltool, or SDK. </li>
+<li>Restore the IMU calibration.</li>
+</ol>
+<h2 id="176-bug-rtk-base-gps-raw-work-around">1.7.6 Bug RTK Base GPS Raw work around<a class="headerlink" href="#176-bug-rtk-base-gps-raw-work-around" title="Permanent link">&para;</a></h2>
+<p>If you are having base raw errors on your Rover, in the bottom right of the Evaltool, or a climbing Diffrential Age, in Data Sets DID_GPS1_RTK_REL, you maybe having this bug. Try this workaround.</p>
+<ol>
+<li>Go-to settings tab, open the Base serial COM port.</li>
+<li>Go-to Data Logs tab, under RCM Presets dropdown select PPD.</li>
+<li><strong>NOTE:</strong> You must leave the comport open on the Base.</li>
+<li>Check your Rover to see if its still getting raw errors messages.</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../../faq/" class="md-footer__link md-footer__link--prev" aria-label="Previous: FAQ" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              FAQ
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../chip_erase/" class="md-footer__link md-footer__link--next" aria-label="Next: Chip Erase" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Chip Erase
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.math"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+        <script src="https://js.hs-scripts.com/3481185.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+    
+  </body>
+</html>

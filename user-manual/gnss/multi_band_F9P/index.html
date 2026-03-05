@@ -1,0 +1,2721 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.inertialsense.com/user-manual/gnss/multi_band_F9P/">
+      
+      <link rel="icon" href="../../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>ublox F9P - InertialSense</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ef5552">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../custom_theme/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rugged-3" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="InertialSense" class="md-header__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InertialSense
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ublox F9P
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="InertialSense" class="md-nav__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    InertialSense
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasheets/datasheets/" class="md-nav__link">
+        Data Sheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dimensions/dimensions/" class="md-nav__link">
+        Dimensions and Pinouts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/Overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/IMX-5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/GPX-1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Hardware Integration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Hardware Integration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Hardware Integration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx6/" class="md-nav__link">
+        IMX-6
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_imx5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/module_gpx1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/rugged3/" class="md-nav__link">
+        Rugged-3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG1/" class="md-nav__link">
+        IG-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IG2/" class="md-nav__link">
+        IG-2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/IK1/" class="md-nav__link">
+        IK-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/hardware_design/" class="md-nav__link">
+        Design Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/reflow/" class="md-nav__link">
+        Reflow Soldering
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Software / SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Software / SDK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Software / SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/evaltool/" class="md-nav__link">
+        EvalTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/cltool/" class="md-nav__link">
+        CLTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/logInspector/" class="md-nav__link">
+        Log Inspector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/overview/" class="md-nav__link">
+        SDK Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5">
+          Example Projects
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Projects" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Example Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsBinary/" class="md-nav__link">
+        Comm-Binary (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsAscii/" class="md-nav__link">
+        Comm-NMEA (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/CommunicationsArduino/" class="md-nav__link">
+        Comm-Arduino (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/FirmwareUpdate/" class="md-nav__link">
+        Firmware Update (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/InertialSenseClassCLTool/" class="md-nav__link">
+        InertialSense Class CLTool (C++)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software/SDK/DataLogger/" class="md-nav__link">
+        Data Logging (C++)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          IMX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="IMX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          IMX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/infield_calibration/" class="md-nav__link">
+        Infield Calibration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/platform_configuration/" class="md-nav__link">
+        Platform Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/imu_ins_gnss_configuration/" class="md-nav__link">
+        IMU INS GNSS Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/system_configuration/" class="md-nav__link">
+        System Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/time_sync/" class="md-nav__link">
+        Time Sync/Strobe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/zero_motion_command/" class="md-nav__link">
+        Zero Motion Command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/UART/" class="md-nav__link">
+        UART
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/application-config/world_magnetic_model/" class="md-nav__link">
+        World Magnetic Model
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          Dead Reckoning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dead Reckoning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Dead Reckoning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/dead-reckoning/dead_reckoning_examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../imx/shock-rejection/imu_shock_rejection/" class="md-nav__link">
+        IMU Shock Rejection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          GPX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GPX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          GPX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gpx/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/GPX_system_status/" class="md-nav__link">
+        GPX System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Communication Protocols
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communication Protocols" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Communication Protocols
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/DID-descriptions/" class="md-nav__link">
+        Data Sets (DIDs)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/isb/" class="md-nav__link">
+        Inertial Sense Binary (ISB)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/nmea/" class="md-nav__link">
+        NMEA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/SPI/" class="md-nav__link">
+        SPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../com-protocol/CAN/" class="md-nav__link">
+        CAN
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          GNSS - RTK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GNSS - RTK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          GNSS - RTK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_1" type="checkbox" id="__nav_10_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_1">
+          Multi-band GNSS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-band GNSS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_1">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-band GNSS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi_band_gnss_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi_band_GPX/" class="md-nav__link">
+        IS GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ublox F9P
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        ublox F9P
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rugged-3" class="md-nav__link">
+    Rugged-3
+  </a>
+  
+    <nav class="md-nav" aria-label="Rugged-3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-gnss-settings" class="md-nav__link">
+    Single GNSS Settings
+  </a>
+  
+    <nav class="md-nav" aria-label="Single GNSS Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gps-ports" class="md-nav__link">
+    GPS Ports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtk-rover" class="md-nav__link">
+    RTK Rover
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtk-base" class="md-nav__link">
+    RTK Base
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dual-gnss-settings" class="md-nav__link">
+    Dual GNSS Settings
+  </a>
+  
+    <nav class="md-nav" aria-label="Dual GNSS Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gps-ports_1" class="md-nav__link">
+    GPS Ports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtk-rover_1" class="md-nav__link">
+    RTK Rover
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtk-base_1" class="md-nav__link">
+    RTK Base
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rugged-3-imx-5-to-zed-f9p" class="md-nav__link">
+    Rugged-3-IMX-5 to ZED-F9P
+  </a>
+  
+    <nav class="md-nav" aria-label="Rugged-3-IMX-5 to ZED-F9P">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#settings" class="md-nav__link">
+    Settings
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evb-2-to-zed-f9p-interface" class="md-nav__link">
+    EVB-2 to ZED-F9P Interface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evb-2-to-dual-zed-f9-interface" class="md-nav__link">
+    EVB-2 to Dual ZED-F9 Interface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rtk-base-messages" class="md-nav__link">
+    RTK Base Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="RTK Base Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zed-f9-rover-messages" class="md-nav__link">
+    ZED-F9 Rover Messages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zed-f9-base-output-messages" class="md-nav__link">
+    ZED-F9 Base Output Messages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ntrip-messages" class="md-nav__link">
+    NTRIP Messages
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zed-f9p-firmware-update" class="md-nav__link">
+    ZED-F9P Firmware Update
+  </a>
+  
+    <nav class="md-nav" aria-label="ZED-F9P Firmware Update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gps-firmware-version" class="md-nav__link">
+    GPS Firmware Version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firmware-update" class="md-nav__link">
+    Firmware Update
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#purchasing-the-zed-f9" class="md-nav__link">
+    Purchasing the ZED-F9
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-band-gnss-components" class="md-nav__link">
+    Multi-Band GNSS Components
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external_gnss/" class="md-nav__link">
+        External NMEA GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss_antennas/" class="md-nav__link">
+        GNSS Antennas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss_constellations/" class="md-nav__link">
+        GNSS Constellations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5">
+          RTK Positioning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="RTK Positioning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          RTK Positioning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rtk_positioning_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rtk_rover/" class="md-nav__link">
+        Rover Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rtk_base/" class="md-nav__link">
+        Base Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rtk_ntrip/" class="md-nav__link">
+        NTRIP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ublox_pointperfect/" class="md-nav__link">
+        Point Perfect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SBAS/" class="md-nav__link">
+        SBAS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rtk_compassing/" class="md-nav__link">
+        RTK Compassing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          Data Logging/Plotting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Logging/Plotting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Data Logging/Plotting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging-plotting/data_plotting/" class="md-nav__link">
+        Plotting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/bootloader/" class="md-nav__link">
+        Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/coordinate_frames/" class="md-nav__link">
+        Coordinate Frames
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/definitions/" class="md-nav__link">
+        Definitions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/imu_specifications/" class="md-nav__link">
+        IMU Specifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/interference/" class="md-nav__link">
+        Interference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/magnetometer/" class="md-nav__link">
+        Magnetometer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/IMX_system_status/" class="md-nav__link">
+        System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/user_manual_pdf/" class="md-nav__link">
+        User Manual PDF
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_15" type="checkbox" id="__nav_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15">
+          Troubleshooting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Troubleshooting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_15">
+          <span class="md-nav__icon md-icon"></span>
+          Troubleshooting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/firmware/" class="md-nav__link">
+        Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/chip_erase/" class="md-nav__link">
+        Chip Erase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/gnss/" class="md-nav__link">
+        GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/imx_bootloader/" class="md-nav__link">
+        IMX Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rugged-3" class="md-nav__link">
+    Rugged-3
+  </a>
+  
+    <nav class="md-nav" aria-label="Rugged-3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-gnss-settings" class="md-nav__link">
+    Single GNSS Settings
+  </a>
+  
+    <nav class="md-nav" aria-label="Single GNSS Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gps-ports" class="md-nav__link">
+    GPS Ports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtk-rover" class="md-nav__link">
+    RTK Rover
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtk-base" class="md-nav__link">
+    RTK Base
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dual-gnss-settings" class="md-nav__link">
+    Dual GNSS Settings
+  </a>
+  
+    <nav class="md-nav" aria-label="Dual GNSS Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gps-ports_1" class="md-nav__link">
+    GPS Ports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtk-rover_1" class="md-nav__link">
+    RTK Rover
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtk-base_1" class="md-nav__link">
+    RTK Base
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rugged-3-imx-5-to-zed-f9p" class="md-nav__link">
+    Rugged-3-IMX-5 to ZED-F9P
+  </a>
+  
+    <nav class="md-nav" aria-label="Rugged-3-IMX-5 to ZED-F9P">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#settings" class="md-nav__link">
+    Settings
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evb-2-to-zed-f9p-interface" class="md-nav__link">
+    EVB-2 to ZED-F9P Interface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evb-2-to-dual-zed-f9-interface" class="md-nav__link">
+    EVB-2 to Dual ZED-F9 Interface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rtk-base-messages" class="md-nav__link">
+    RTK Base Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="RTK Base Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zed-f9-rover-messages" class="md-nav__link">
+    ZED-F9 Rover Messages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zed-f9-base-output-messages" class="md-nav__link">
+    ZED-F9 Base Output Messages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ntrip-messages" class="md-nav__link">
+    NTRIP Messages
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zed-f9p-firmware-update" class="md-nav__link">
+    ZED-F9P Firmware Update
+  </a>
+  
+    <nav class="md-nav" aria-label="ZED-F9P Firmware Update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gps-firmware-version" class="md-nav__link">
+    GPS Firmware Version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firmware-update" class="md-nav__link">
+    Firmware Update
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#purchasing-the-zed-f9" class="md-nav__link">
+    Purchasing the ZED-F9
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-band-gnss-components" class="md-nav__link">
+    Multi-Band GNSS Components
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>ublox F9P</h1>
+
+<p>The IMX can be configured for use with uBlox ZED-F9P multi-band GNSS receivers.  This can be done using either the EvalTool GPS Setting tab or the IMX <code>DID_FLASH_CONFIG.ioConfig</code> and <code>DID_FLASH_CONFIG.RTKCfgBits</code> fields.    </p>
+<table>
+<thead>
+<tr>
+<th>GPS Ports</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPS Source</td>
+<td>serial 0, serial 1, or serial 2</td>
+</tr>
+<tr>
+<td>GPS Type</td>
+<td>ublox F9P</td>
+</tr>
+<tr>
+<td>GPS1 Timepulse</td>
+<td><em>Disable</em> or IMX pin connected to ZED-F9P PPS</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>RTK Rover</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPS RTK Mode</td>
+<td>F9P Position or F9P Compass</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>RTK Base</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Serial Port 0 (Single GNSS only)</td>
+<td>GPS1 - RTCM3</td>
+</tr>
+<tr>
+<td>USB Port</td>
+<td>GPS1 - RTCM3</td>
+</tr>
+</tbody>
+</table>
+<p>The following sections detail how to interface and configure the IMX for operation using the ZED-F9P.  See <a href="../rtk_positioning_overview/">RTK precision positioning</a> and <a href="../rtk_compassing/">RTK compassing</a> for RTK operation principles.  </p>
+<h3 id="rugged-3">Rugged-3<a class="headerlink" href="#rugged-3" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../../images/rugged2.png" /></p>
+<p>The Rugged-3 INS contains the either single or dual ZED-F9P onboard supporting RTK positioning and compassing.  GPS 1 and GPS 2 are connected to serial ports 1 and 0 respectively on the IMX.</p>
+<h4 id="single-gnss-settings">Single GNSS Settings<a class="headerlink" href="#single-gnss-settings" title="Permanent link">&para;</a></h4>
+<p>Use the following IMX settings with the Rugged-3-G1 (single GNSS receiver).  These settings can be applied either using the EvalTool GPS Settings tab or the IMX <code>DID_FLASH_CONFIG.ioConfig</code> and <code>DID_FLASH_CONFIG.RTKCfgBits</code> fields.</p>
+<h5 id="gps-ports">GPS Ports<a class="headerlink" href="#gps-ports" title="Permanent link">&para;</a></h5>
+<p>Set the GPS1 source to <strong>Serial 1</strong> and type to <strong>ublox F9P</strong>. </p>
+<p><img alt="" src="../images/evaltool_gps_f9p_ports_rugged2.png" /></p>
+<table>
+<thead>
+<tr>
+<th>DID_FLASH_CONFIG</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ioConfig (firmware &gt;=1.8.5)</td>
+<td>0x0244a040</td>
+</tr>
+</tbody>
+</table>
+<h5 id="rtk-rover">RTK Rover<a class="headerlink" href="#rtk-rover" title="Permanent link">&para;</a></h5>
+<p>Enable RTK rover mode by selecting <strong>F9P Precision Position</strong>.</p>
+<p><img alt="" src="../images/evaltool_gps_f9p_rover.png" /></p>
+<table>
+<thead>
+<tr>
+<th>DID_FLASH_CONFIG</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTKCfgBits</td>
+<td>0x00000002</td>
+</tr>
+</tbody>
+</table>
+<h5 id="rtk-base">RTK Base<a class="headerlink" href="#rtk-base" title="Permanent link">&para;</a></h5>
+<p>To configuring a system as an RTK base, disable the RTK Rover by setting the GPS1 and GPS2 RTK Mode to <strong>OFF</strong>, and select the appropriate correction output port on the IMX. </p>
+<p><img alt="" src="../images/evaltool_gps_dual_f9p_base.png" /></p>
+<table>
+<thead>
+<tr>
+<th>DID_FLASH_CONFIG</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTKCfgBits</td>
+<td>0x00000900</td>
+</tr>
+</tbody>
+</table>
+<h4 id="dual-gnss-settings">Dual GNSS Settings<a class="headerlink" href="#dual-gnss-settings" title="Permanent link">&para;</a></h4>
+<p>Use the following IMX settings with the Rugged-3-G2 (dual GNSS receivers).  These settings can be applied either using the EvalTool GPS Settings tab or the IMX <code>DID_FLASH_CONFIG.ioConfig</code> and <code>DID_FLASH_CONFIG.RTKCfgBits</code> fields.</p>
+<h5 id="gps-ports_1">GPS Ports<a class="headerlink" href="#gps-ports_1" title="Permanent link">&para;</a></h5>
+<p>Set GPS 1 and 2 to source <strong>Serial 1</strong> and <strong>Serial 0</strong>.  the serial port that the ZED-F9P is connected to and type to <strong>ublox F9P</strong>. </p>
+<p><img alt="" src="../images/evaltool_gps_dual_f9p_ports_rugged2.png" /></p>
+<table>
+<thead>
+<tr>
+<th>DID_FLASH_CONFIG</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ioConfig (firmware &gt;=1.8.5)</td>
+<td>0x025ca040</td>
+</tr>
+</tbody>
+</table>
+<h5 id="rtk-rover_1">RTK Rover<a class="headerlink" href="#rtk-rover_1" title="Permanent link">&para;</a></h5>
+<p>Enable RTK rover mode by selecting <strong>Precision Position External</strong>.  <strong>GPS1</strong> is designated for <strong>Precision Position External</strong> and <strong>GPS2</strong> for <strong>F9P Compass settings</strong>.  Either or both can be enabled at the same time.  </p>
+<p><img alt="" src="../images/evaltool_gps_dual_f9p_rover.png" /></p>
+<table>
+<thead>
+<tr>
+<th>DID_FLASH_CONFIG</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTKCfgBits</td>
+<td>0x00000006</td>
+</tr>
+</tbody>
+</table>
+<h5 id="rtk-base_1">RTK Base<a class="headerlink" href="#rtk-base_1" title="Permanent link">&para;</a></h5>
+<p>To configuring a system as an RTK base, skip the RTK rover settings, and select the appropriate correction output port on the IMX.  Notice that IMX serial port 0 and 1 may be unavailable and occupied by the dual ZED-F9P receivers.</p>
+<p><img alt="" src="../images/evaltool_gps_dual_f9p_base.png" /></p>
+<table>
+<thead>
+<tr>
+<th>DID_FLASH_CONFIG</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTKCfgBits</td>
+<td>0x00000900</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rugged-3-imx-5-to-zed-f9p">Rugged-3-IMX-5 to ZED-F9P<img alt="ZED-F9P to Rugged" src="../images/zed_f9p_interface_rugged.png" /><a class="headerlink" href="#rugged-3-imx-5-to-zed-f9p" title="Permanent link">&para;</a></h3>
+<p>A +3.3V or +5V supply is needed to power the ZED-F9P when using the Rugged-1 IMX.  A USB +5V supply can be used if available.  The Rugged-1 must be configured for Serial Port 1 TTL voltage.  See hardware configuration for <a href="../../hardware/rugged1/#ser1-ttl">Rugged v1.0</a> or <a href="../../hardware/rugged1/#rugged-v11-dipswitch-config">Rugged v1.1</a> for details.</p>
+<h4 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">&para;</a></h4>
+<p>See the <a href="#single-gnss-settings">single GNSS settings</a>.</p>
+<h2 id="evb-2-to-zed-f9p-interface">EVB-2 to ZED-F9P Interface<a class="headerlink" href="#evb-2-to-zed-f9p-interface" title="Permanent link">&para;</a></h2>
+<p>Use the following wiring when connecting a single ZED-F9P receiver to the EVB-2. GPS1 is typically routed to serial port 1 and provides PPS to the IMX. </p>
+<p><img alt="ZED-F9P to EVB-2" src="../images/zed_f9p_interface_evb2.png" /></p>
+<h2 id="evb-2-to-dual-zed-f9-interface">EVB-2 to Dual ZED-F9 Interface<a class="headerlink" href="#evb-2-to-dual-zed-f9-interface" title="Permanent link">&para;</a></h2>
+<p>For dual-receiver RTK compassing setups, connect GPS1 and GPS2 as shown below. Verify both receivers share the same reference clock and PPS to maintain synchronization. </p>
+<p><img alt="Dual ZED-F9P to EVB-2" src="../images/zed_f9p_dual_interface_evb2.png" /></p>
+<h2 id="rtk-base-messages">RTK Base Messages<a class="headerlink" href="#rtk-base-messages" title="Permanent link">&para;</a></h2>
+<p>In RTK mode, the ZED-F9P requires RTCM version 3 messages supporting DGNSS according to RTCM 10403.3.</p>
+<h3 id="zed-f9-rover-messages">ZED-F9 Rover Messages<a class="headerlink" href="#zed-f9-rover-messages" title="Permanent link">&para;</a></h3>
+<p>The ZED-F9P operating in RTK rover mode can decode the following RTCM 3.3 messages. </p>
+<table>
+<thead>
+<tr>
+<th>Message type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTCM 1001</td>
+<td>L1-only GPS RTK observables</td>
+</tr>
+<tr>
+<td>RTCM 1002</td>
+<td>Extended L1-only GPS RTK observables</td>
+</tr>
+<tr>
+<td>RTCM 1003</td>
+<td>L1/L2 GPS RTK observables</td>
+</tr>
+<tr>
+<td>RTCM 1004</td>
+<td>Extended L1/L2 GPS RTK observables</td>
+</tr>
+<tr>
+<td>RTCM 1005</td>
+<td>Stationary RTK reference station ARP</td>
+</tr>
+<tr>
+<td>RTCM 1006</td>
+<td>Stationary RTK reference station ARP with antenna height</td>
+</tr>
+<tr>
+<td>RTCM 1007</td>
+<td>Antenna descriptor</td>
+</tr>
+<tr>
+<td>RTCM 1009</td>
+<td>L1-only GLONASS RTK observables</td>
+</tr>
+<tr>
+<td>RTCM 1010</td>
+<td>Extended L1-only GLONASS RTK observables</td>
+</tr>
+<tr>
+<td>RTCM 1011</td>
+<td>L1/L2 GLONASS RTK observables</td>
+</tr>
+<tr>
+<td>RTCM 1012</td>
+<td>Extended L1/L2 GLONASS RTK observables</td>
+</tr>
+<tr>
+<td>RTCM 1033</td>
+<td>Receiver and antenna description</td>
+</tr>
+<tr>
+<td>RTCM 1074</td>
+<td>GPS MSM4</td>
+</tr>
+<tr>
+<td>RTCM 1075</td>
+<td>GPS MSM5</td>
+</tr>
+<tr>
+<td>RTCM 1077</td>
+<td>GPS MSM7</td>
+</tr>
+<tr>
+<td>RTCM 1084</td>
+<td>GLONASS MSM4</td>
+</tr>
+<tr>
+<td>RTCM 1085</td>
+<td>GLONASS MSM5</td>
+</tr>
+<tr>
+<td>RTCM 1087</td>
+<td>GLONASS MSM7</td>
+</tr>
+<tr>
+<td>RTCM 1094</td>
+<td>Galileo MSM4</td>
+</tr>
+<tr>
+<td>RTCM 1095</td>
+<td>Galileo MSM5</td>
+</tr>
+<tr>
+<td>RTCM 1097</td>
+<td>Galileo MSM7</td>
+</tr>
+<tr>
+<td>RTCM 1124</td>
+<td>BeiDou MSM4</td>
+</tr>
+<tr>
+<td>RTCM 1125</td>
+<td>BeiDou MSM5</td>
+</tr>
+<tr>
+<td>RTCM 1127</td>
+<td>BeiDou MSM7</td>
+</tr>
+<tr>
+<td>RTCM 1230</td>
+<td>GLONASS code-phase biases</td>
+</tr>
+<tr>
+<td>RTCM 4072.0</td>
+<td>Reference station PVT (u-blox proprietary RTCM Message)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="zed-f9-base-output-messages">ZED-F9 Base Output Messages<a class="headerlink" href="#zed-f9-base-output-messages" title="Permanent link">&para;</a></h3>
+<p>The ZED-F9P operating in RTK base mode will generate the following RTCM 3.3 output messages depending on whether the satellite constellation have been enabled.  See the <a href="../gnss_constellations/#constellation-selection">Constellation Selection</a> for information on enabling and disabling satellite constellations.</p>
+<table>
+<thead>
+<tr>
+<th>Message Type</th>
+<th>Period (sec)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTCM 1005</td>
+<td>2</td>
+<td>Stationary RTK reference station ARP</td>
+</tr>
+<tr>
+<td>RTCM 1074</td>
+<td>0.4</td>
+<td>GPS MSM4</td>
+</tr>
+<tr>
+<td>RTCM 1077</td>
+<td>0.4</td>
+<td>GPS MSM7</td>
+</tr>
+<tr>
+<td>RTCM 1084</td>
+<td>0.4</td>
+<td>GLONASS MSM4</td>
+</tr>
+<tr>
+<td>RTCM 1087</td>
+<td>0.4</td>
+<td>GLONASS MSM7</td>
+</tr>
+<tr>
+<td>RTCM 1094</td>
+<td>0.4</td>
+<td>Galileo MSM4</td>
+</tr>
+<tr>
+<td>RTCM 1097</td>
+<td>0.4</td>
+<td>Galileo MSM7</td>
+</tr>
+<tr>
+<td>RTCM 1124</td>
+<td>0.4</td>
+<td>BeiDou MSM4</td>
+</tr>
+<tr>
+<td>RTCM 1127</td>
+<td>0.4</td>
+<td>BeiDou MSM7</td>
+</tr>
+<tr>
+<td>RTCM 1230</td>
+<td>2</td>
+<td>GLONASS code-phase biases</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ntrip-messages">NTRIP Messages<a class="headerlink" href="#ntrip-messages" title="Permanent link">&para;</a></h3>
+<p>The NTRIP server must provide the necessary subset of <a href="#zed-f9-rover-messages">RTCM3 messages</a> supported by the IMX-RTK.  See the <a href="../rtk_ntrip/">NTRIP</a> page for an overview of NTRIP.</p>
+<h2 id="zed-f9p-firmware-update">ZED-F9P Firmware Update<a class="headerlink" href="#zed-f9p-firmware-update" title="Permanent link">&para;</a></h2>
+<p>The following section describes how to view the current GPS firmware version and how to update the firmware on the uBlox ZED-F9P GNSS receiver through the IMX. </p>
+<h3 id="gps-firmware-version">GPS Firmware Version<a class="headerlink" href="#gps-firmware-version" title="Permanent link">&para;</a></h3>
+<p>The current GPS firmware version can be read through the <code>DID_GPS1_VERSION</code> and <code>DID_GPS2_VERSION</code> messages.  </p>
+<p><img alt="GPS Version" src="../images/gps_version.png" /></p>
+<h3 id="firmware-update">Firmware Update<a class="headerlink" href="#firmware-update" title="Permanent link">&para;</a></h3>
+<p>The following steps describe how to update the uBlox ZED-F9P firmware.  The uBlox U-Center application software and firmware binary can be downloaded from the uBlox <a href="https://www.u-blox.com/en/product/zed-f9p-module">ZED-F9P documentation and resources webpage</a>. </p>
+<ol>
+<li>
+<p><strong>Enable IMX Serial Bypass</strong> - Send the system command (<code>DID_SYS_CMD</code>)  <code>SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS1</code> or <code>SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS2</code> to enable serial bypass on the IMX.  This will create a direct connection between the current IMX serial port and the GPS.  This is done in the EvalTool using the Factory Options dialog in the Settings -&gt; General tab.<br/><center><img alt="EvalTool factory options" src="../images/gnss_serial_bypass.png" /></center><br/></p>
+</li>
+<li>
+<p><strong>Update Using U-Center</strong> - With the IMX serial bypass enabled, the uBlox U-Center software can connect directly to the ZED-F9P GPS.  Use the following steps in the ublox U-Center app:  </p>
+<ul>
+<li>Open the serial port with baudrate 921600.  </li>
+</ul>
+<ul>
+<li>Select Tool -&gt; Firmware Update and specify the uBlox F9P firmware file (i.e. <code>UBX_F9_100_HPG132...bin</code>).  </li>
+</ul>
+<ul>
+<li>Enable "Use this baudrate for update" as 921600.</li>
+</ul>
+<ul>
+<li>Disable "Enter safeboot before update".</li>
+</ul>
+<ul>
+<li>Enable "Send training sequence".</li>
+</ul>
+<ul>
+<li>
+<p>Start the firmware update by pressing the small green "GO" circle in the bottom left corner of the Firmware Update Utility dialog.<center></p>
+<p><img alt="" src="../images/ucenter_firmware_update.png" /> </center></p>
+</li>
+</ul>
+<ul>
+<li>Power cycle the IMX. </li>
+</ul>
+</li>
+</ol>
+<h2 id="purchasing-the-zed-f9">Purchasing the ZED-F9<a class="headerlink" href="#purchasing-the-zed-f9" title="Permanent link">&para;</a></h2>
+<p>The following components work well when sourcing ZED-F9 receivers and matching antennas for multi-band GNSS installations. </p>
+<h2 id="multi-band-gnss-components">Multi-Band GNSS Components<a class="headerlink" href="#multi-band-gnss-components" title="Permanent link">&para;</a></h2>
+<p>The following is a list of the ZED-F9P GNSS receivers and compatible antenna(s).</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Supplier#</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="ZED-F9P" src="../images/zed-f9p.png" /></td>
+<td><a href="https://www.u-blox.com/en/product/zed-f9p-module">ZED-F9P-01B</a></td>
+<td>ublox ZED-F9P high precision GNSS SMT module.  GNSS bands: L2OF, L2C, E1B/C, B2I, E5b, L1C/A, L1OF, B1I.  Concurrent GNSS: BeiDou, Galileo, GLONASS, GPS / QZSS.  RTK 1cm horizontal accuracy.</td>
+</tr>
+<tr>
+<td><img alt="SparkFun GPS-16481" src="../images/16481-sparkfun_zed-f9p.jpg" /></td>
+<td><a href="https://www.sparkfun.com/products/16481">GPS-16481</a></td>
+<td>SparkFun GPS-RTK-SMA breakout board with ZED-F9P GNSS module.</td>
+</tr>
+<tr>
+<td><img alt="ANN-MB-00" src="../images/ann-mb-00.jpg" /></td>
+<td>SparkFun:<br/><a href="https://www.sparkfun.com/products/15192">ANN-MB-00</a><br/><br/>ublox:<br/><a href="https://www.u-blox.com/en/product/ann-mb-series">ANN-MB-00</a></td>
+<td>ublox Multi‑frequency GNSS antenna (L1, L2/E5b/B2I) active magnet mount.  Supports GPS, GLONASS, Galileo, and BeiDou.  5m SMA cable.  Designed for ZED-F9P.</td>
+</tr>
+<tr>
+<td><img alt="" src="../images/AA.200.151111.png" /></td>
+<td><a href="https://www.taoglas.com/product/active-multiband-gnss-mag-mount-antenna/">AA.200.151111</a></td>
+<td>Taoglas multi‑band GNSS antenna (GPS/QZSS-L1/L2, GLONASS-G1/G2/G3, Galileo-E1/E5a, and BeiDou-B1/B2) active magnet mount.  Supports GPS, GLONASS, Galileo, and BeiDou.  1.5m SMA cable.  63.2 x 67.2 mm.</td>
+</tr>
+<tr>
+<td><img alt="" src="../images/QHA.50.A.301111.png" /></td>
+<td><a href="https://www.taoglas.com/product/qha-50-a-301111-colosseum-passive-quad-helix/">QHA.50.A.301111</a></td>
+<td>Taoglas multi-band GNSS antenna  (GPS/QZSS-L1/L2, GPS/QZSS/IRNSS-L5, QZSS-L6, Galileo-E1/E5a/E5b/E6, GLONASS-G1/G2/G3, BeiDou-B1/B2a/B2b/B3).  permanent mount. IP67 rated waterproof. 3m RG-174 SMA cable.  94mm (dia).</td>
+</tr>
+<tr>
+<td><img alt="" src="../images/tw8000.jpg" /></td>
+<td><a href="https://www.tallysman.com/product/tw8889-dual-band-gnss-antenna/">TW8889</a></td>
+<td>Tallysman multi‑band GNSS antenna (GPS/QZSS-L1/L2, GLONASS-G1/G2/G3, Galileo-E1/E5a, and BeiDou-B1/B2) active magnet mount.  Supports GPS, GLONASS, Galileo, and BeiDou.  3m SMA cable.  47mm (dia), 52g.</td>
+</tr>
+<tr>
+<td><img alt="" src="../images/tal-33-7882-00-3000.jpg" /></td>
+<td><a href="https://www.tallysman.com/product/tw7882-dual-band-gnss-antenna/">TW7882</a></td>
+<td>Tallysman multi‑band GNSS antenna (GPS/QZSS-L1/L2, GLONASS-G1/G2/G3, Galileo-E1/E5a, and BeiDou-B1/B2) active magnet mount.  Supports GPS, GLONASS, Galileo, and BeiDou.  3m SMA cable.  69mm (dia), 180g.</td>
+</tr>
+<tr>
+<td><img alt="" src="../images/hc-wide4cm.png" /></td>
+<td><a href="https://www.tallysman.com/product/hc882-dual-band-helical-antenna-l-band/">HC882</a></td>
+<td>Tallysman multi‑band helical GNSS antenna (GPS/QZSS-L1/L2, GLONASS-G1/G2/G3, Galileo-E1/E5a, and BeiDou-B1/B2) active magnet mount.  Supports GPS, GLONASS, Galileo, and BeiDou.  SMA.  44.2mm (dia), 42g.</td>
+</tr>
+<tr>
+<td><img alt="" src="../images/ADFGP.50A.07.0100C_01.png" /></td>
+<td><a href="https://www.taoglas.com/product/adfgp-50a-active-gnss-dual-stacked-patch/">ADFGP.50A.07.0100C</a></td>
+<td>Taoglas embedded multi-band GNSS antenna (GPS/QZSS L1/L2, GLONASS G1/G2/G3, Galileo E1/E5a/E5b, BeiDou B1/B2a/B2b).  50x50mm, 95.5g.</td>
+</tr>
+<tr>
+<td><img alt="" src="../images/tw1829.jpg" /></td>
+<td><a href="https://www.tallysman.com/product/tw1889-embedded-dual-band-gnss-antenna/">TW1889</a></td>
+<td>Tallysman embedded multi-band GNSS antenna (GPS/QZSS L1/L2, GLONASS G1/G2/G3, Galileo E1/E5b, BeiDou B1/B2).  48mm (dia), 37g.</td>
+</tr>
+<tr>
+<td><img alt="" src="../images/tw3882E.png" /></td>
+<td><a href="https://www.tallysman.com/product/tw3887-embedded-dual-band-gnss-antenna/">TW3887</a></td>
+<td>Tallysman multi-band GNSS antenna (GPS/QZSS-L1/L2, GLONASS-G1/G2/G3, Galileo-E1/E5a, and BeiDou-B1/B2).  60mm (dia), 70g.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../multi_band_GPX/" class="md-footer__link md-footer__link--prev" aria-label="Previous: IS GPX-1" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              IS GPX-1
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../external_gnss/" class="md-footer__link md-footer__link--next" aria-label="Next: External NMEA GNSS" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              External NMEA GNSS
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.math"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+        <script src="https://js.hs-scripts.com/3481185.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+    
+  </body>
+</html>
