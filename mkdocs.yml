@@ -26,18 +26,18 @@ theme:
 
 plugins:
     - search
-  # - with-pdf:       # https://pypi.org/project/mkdocs-with-pdf/
-  #     enabled_if_env: ENABLE_PDF_EXPORT
-  #     author: Inertial Sense, Inc.
-  #     output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
-  #     copyright: ©2022
-  #     cover: true
-  #     cover_title: User Manual
-  #     cover_subtitle: Autonomous Navigation Solutions
-  #     toc_title: Table of Contents
-  #     # debug_html: true
-  #     # show_anchors: true
-  #     # verbose: true
+    - with-pdf:       # https://pypi.org/project/mkdocs-with-pdf/
+        enabled_if_env: ENABLE_PDF_EXPORT
+        author: Inertial Sense, Inc.
+        output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
+        copyright: ©2022
+        cover: true
+        cover_title: User Manual
+        cover_subtitle: Autonomous Navigation Solutions
+        toc_title: Table of Contents
+        # debug_html: true
+        # show_anchors: true
+        # verbose: true
     # - pdf-export:     # https://pypi.org/project/mkdocs-pdf-export-plugin/
     #     combined: true
     #     combined_output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
