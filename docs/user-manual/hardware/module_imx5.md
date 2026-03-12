@@ -1,5 +1,8 @@
 # Hardware Integration: IMX-5 Module
 
+!!! warning
+    The IMX-5 series of products is approaching its End of Life. [Full Notification](http://docs.inertialsense.com/datasheets/IMX-5_EOL_Notice_v3_1.pdf).
+
 <center>
 
 ![IMX-5](../images/IMX_5.0_800w.jpg)
