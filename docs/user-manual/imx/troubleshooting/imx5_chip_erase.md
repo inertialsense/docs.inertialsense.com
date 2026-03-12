@@ -1,4 +1,4 @@
-# Chip Erase
+# IMX-5 Chip Erase
 
 Please email [support@inertialsense.com](mailto:support@inertialsense.com) for assistance or to provide feedback on this user guide.
 
@@ -14,13 +14,13 @@ Please email [support@inertialsense.com](mailto:support@inertialsense.com) for a
 
 On the IMX-5, CHIP ERASE is enabled if +3.3V (available on pin 22) is applied to the chip erase (CE) pin 17 during boot up from power cycle or reset.   
 
-![Module Chip Erase Pin](../images/module_chip_erase.png)
+![Module Chip Erase Pin](../../images/module_chip_erase.png)
 
 <center>**Connect +3.3V to pin 17 (CE) while power cycling the IMX to chip erase IMX.**</center>
 
 #### EVB-2 Chip Erase Pads
 
-![EVB-2 Chip Erase Pads](../images/evb2_chip_erase.png)
+![EVB-2 Chip Erase Pads](../../images/evb2_chip_erase.png)
 
 <center>**Short R25 pads together to chip erase uINS.
     <br>Short R53 pads together to chip erase EVB-2.**</center>
@@ -28,9 +28,9 @@ On the IMX-5, CHIP ERASE is enabled if +3.3V (available on pin 22) is applied to
 
 The chip erase pads on the Rugged-3 are a set of 0402 SMT pads with the label "ERASE".  Shorting these pads together will apply +3.3V to the IMX chip erase pin 17.  The power must be cycled while shorting these pads in order to apply chip erase to the IMX-5.
 
-![Rugged-3 Chip Erase Pads](../images/rug3_chip_erase_cad.jpg)
+![Rugged-3 Chip Erase Pads](../../images/rug3_chip_erase_cad.jpg)
 
-![](../images/rug_chip_erase.jpg)
+![](../../images/rug_chip_erase.jpg)
 
 <center>**Short "ERASE" pads together and reset to chip erase.**</center>
 

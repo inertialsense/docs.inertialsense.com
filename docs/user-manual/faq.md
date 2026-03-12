@@ -8,19 +8,6 @@ IEEE-STD-952-1997 defines IRBS as the minima on the Allan Variance curve. The fo
 
 ![RUG-3-IMX-5 Gyro Allan Variance](images/rug-3-imx-5-allan-variance-gyro.png)
 
-## Why the name change from *uINS* to *IMX*?
-
-The name **IMX** means inertial measurement device with extensible capabilities.  IMX is a derivative of the acronym **IMU**.  Our flagship product was named the **uINS** which means miniature Inertial Navigation System (INS).  This name has helped others to recognize the inertial navigation functionality.  However, we felt that a more generic name would better cover all of the various functionality and capabilities contained in the **IMX**, namely: 
-
-- Tactical grade Inertial Measurement Unit (IMU)
-- Barometer and magnetometer sensors
-- Vertical Reference Unit (VRU)
-- Attitude Heading Reference System (AHRS)
-- GNSS aided Inertial Navigation System (GNSS-INS or GPS-INS)
-- RTK-GNSS aided INS
-- Dual-GNSS (GPS compassing) aided INS
-- Ground vehicle Dead Reckoning system
-
 ## What is Inertial Navigation?
 
 Inertial navigation is a technique of estimating position, velocity, and orientation (roll, pitch, heading) by integrating IMU inertial motion data from gyros and accelerometers to continuously calculate the dead reckoning position.  The inertial sensors are supplemented with other sensors such as GPS, altimeter, and magnetometer.  Inertial navigation is commonly used on moving vehicles such as mobile robots, ships, aircraft, submarines, guided missiles, and spacecraft.   
