@@ -1,5 +1,8 @@
 # Hardware Integration: IG-2 (IMX5 + GPX1)
 
+!!! warning
+    The IMX-5 series of products is approaching its End of Life. [Full Notification](http://docs.inertialsense.com/datasheets/IMX-5_EOL_Notice_v3_1.pdf).
+
 <center>
 
 ![IG-2](../images/ig-2.0.png)

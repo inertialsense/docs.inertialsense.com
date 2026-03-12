@@ -1,4 +1,6 @@
 # Hardware Integration: RUG-3-IMX-5 (Rugged-3)
+!!! warning
+    The IMX-5 series of products is approaching its End of Life. [Full Notification](http://docs.inertialsense.com/datasheets/IMX-5_EOL_Notice_v3_1.pdf).
 
 <center>
 

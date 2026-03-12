@@ -1,5 +1,8 @@
 # Hardware Integration: IK-1 (IMX5 or GPX1)
 
+!!! warning
+    The IMX-5 series of products is approaching its End of Life. [Full Notification](http://docs.inertialsense.com/datasheets/IMX-5_EOL_Notice_v3_1.pdf).
+
 <center>
 
 ![IG-1](../images/ik-1.png)
