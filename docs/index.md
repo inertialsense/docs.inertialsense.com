@@ -1,4 +1,4 @@
-**Software Release 2.7.1 - 4 Mar 2026**
+**Software Release 2.7.1 - 13 Mar 2026**
 <!-- [UPDATE_RELEASE_VERSION_HERE] Update this version info at time of release. -->
 
 *Older (non-current) versions of the User Manual can be found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
