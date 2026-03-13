@@ -52,9 +52,9 @@ For more information on `DID_EVB_FLASH_CFG` see [DID-descriptions](../com-protoc
 Enter the following arguments when running the CLTool executable: 
 
 - `-c #`
-  Open the COM port of the µINS. Windows users will use the name of the COM port, e.g. COM7. Linux users must enter the path to the correct COM port, e.g. /dev/ttyUSB0.
+  Open the COM port of the IMX. Windows users will use the name of the COM port, e.g. COM7. Linux users must enter the path to the correct COM port, e.g. /dev/ttyUSB0.
 - `-baud=#`
-  Set the baud rate at which the µINS will receive corrections (Replace # with baud rate number). This number will vary depending on setup. For lower quality radios use of lower baud rates maybe necessary. (ex: 57600).
+  Set the baud rate at which the IMX will receive corrections (Replace # with baud rate number). This number will vary depending on setup. For lower quality radios use of lower baud rates maybe necessary. (ex: 57600).
 
 - `-rover=`
   Specify where format/corrections will come from.
