@@ -20,7 +20,7 @@ The IMX (GPS-INS) can interface with external multi-band (multi-frequency) GNSS 
 | -------------- | ------------------------------------------------------------ |
 | GPS Source     | Serial port of the GNSS (serial 0 or 1)                      |
 | GPS Type       | GNSS model or protocol (ublox M8, ublox F9, Septentrio, Inertial Sense, or NMEA)         |
-| GPS RTK        | *Position* for GPX-1 L1/L5 RTK precision positioning<br/>*Compass* for GPX-1 L1/L5 RTK Dual GNSS heading<br/>*F9 Position* for ZED-F9P mult-frequency RTK precision positioning<br/>*F9 Compass* for ZED-F9P multi-frequency Dual GNSS heading |
+| GPS RTK        | *Position* for GPX-1 L1/L5 RTK precision positioning<br/>*Compass* for GPX-1 L1/L5 RTK Dual GNSS heading<br/>*F9 Position* for ZED-F9P multi-frequency RTK precision positioning<br/>*F9 Compass* for ZED-F9P multi-frequency Dual GNSS heading |
 | GPS1 Timepulse | Source of the GNSS PPS time synchronization, uBlox GPS type only. |
 
 Refer to the Hardware section of this manual for serial port pinout information. 
@@ -39,7 +39,7 @@ These error sources combine to define the achievable accuracy of the baseline ve
 
 #### Single GNSS RTK Positioning w/ LiDAR
 
-RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to the GPX-1 for RTK positioning.  The RTK precision position is used in the IMX EKF solution. The IMX can be configured to output NMEA messages such as GPGGA or GPRMC on any serial port.
+RTK base messages (RTCM3) supplied to any of the IMX serial ports are forwarded to the GPX-1 for RTK positioning.  The RTK precision position is used in the IMX EKF solution. The IMX can be configured to output NMEA messages such as GPGGA or GPRMC on any serial port.
 
 <center>
 
@@ -49,7 +49,7 @@ RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded 
 
 #### Dual GNSS RTK Positioning and RTK Compassing
 
-RTK base messages (RTMC3) supplied to any of the IMX serial ports are forwarded to GPS1 for RTK positioning.  RTK moving base messages from GPS1 are forwarded to GPS2 for RTK compassing.  The RTK precision position from GPS 1 and the RTK compassing heading from GPS2 are used in the IMX EKF solution.
+RTK base messages (RTCM3) supplied to any of the IMX serial ports are forwarded to GPS1 for RTK positioning.  RTK moving base messages from GPS1 are forwarded to GPS2 for RTK compassing.  The RTK precision position from GPS 1 and the RTK compassing heading from GPS2 are used in the IMX EKF solution.
 
 <center>
 

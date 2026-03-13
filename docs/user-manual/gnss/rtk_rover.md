@@ -1,5 +1,5 @@
 ## System Configuration
-A µINS must be configured as a Rover to receive RTK Base messages. This can be done through the EvalTool or the CLTool by enabling "Rover Mode".
+The IMX must be configured as a Rover to receive RTK Base messages. This can be done through the EvalTool or the CLTool by enabling "Rover Mode".
 
 #### [EvalTool](../software/evaltool.md)
 1. Navigate to Settings > GPS > Rover > RTK.
@@ -52,14 +52,14 @@ For more information on `DID_EVB_FLASH_CFG` see [DID-descriptions](../com-protoc
 Enter the following arguments when running the CLTool executable: 
 
 - `-c #`
-  Open the COM port of the µINS. Windows users will use the name of the COM port, e.g. COM7. Linux users must enter the path to the correct COM port, e.g. /dev/ttyUSB0.
+  Open the COM port of the IMX. Windows users will use the name of the COM port, e.g. COM7. Linux users must enter the path to the correct COM port, e.g. /dev/ttyUSB0.
 - `-baud=#`
-  Set the baud rate at which the µINS will receive corrections (Replace # with baud rate number). This number will vary depending on setup. For lower quality radios use of lower baud rates maybe necessary. (ex: 57600).
+  Set the baud rate at which the IMX will receive corrections (Replace # with baud rate number). This number will vary depending on setup. For lower quality radios use of lower baud rates maybe necessary. (ex: 57600).
 
 - `-rover=`
   Specify where format/corrections will come from.
   - `SERIAL:`
-    The serial port where the radio is connected. The computer will receive corrections through this port and pass them to the µINS.
+    The serial port where the radio is connected. The computer will receive corrections through this port and pass them to the IMX.
   - `RTCM3:`
     Standard data format for RTK corrections.
 
@@ -78,7 +78,7 @@ For the Rover to receive messages from an NTRIP Caster, it must be connected to 
 
 #### [EvalTool](../software/evaltool.md)
 
-Follow the proceeding steps in order to set up the Rover to receive messages through NTRIP:
+Follow these steps to set up the Rover to receive messages through NTRIP:
 
 1. Navigate to Settings > RTK > Rover Mode.
 2. Change the first drop-down menu to "RTK - GPS1" 
@@ -98,7 +98,7 @@ Follow the proceeding steps in order to set up the Rover to receive messages thr
 
 #### [CLTool](../software/cltool.md)
 
-With the Rover µINS connected to the computer, use the -rover argument when running the CLTool executable:
+With the Rover IMX connected to the computer, use the -rover argument when running the CLTool executable:
 
 - `-rover=TCP:`
   Set the type to "TCP".
@@ -140,7 +140,7 @@ Follow these steps:
 
 #### [CLTool](../software/cltool.md)
 
-With the µINS Rover connected to the computer, enter the -rover argument when running the CLTool executable:
+With the IMX Rover connected to the computer, enter the -rover argument when running the CLTool executable:
 
 - `-rover=TCP:`
   Set the type to "TCP".

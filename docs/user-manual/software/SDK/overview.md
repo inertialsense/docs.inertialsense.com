@@ -2,7 +2,7 @@
 
 ### Overview
 
-The Inertial Sense open source software development kit (SDK) provides quick integration for communication with the Inertial Sense product line, including the µIMU, µAHRS, and µINS. It includes data logger, math libraries, and serial port interface for Linux and Windows environments.
+The Inertial Sense open source software development kit (SDK) provides quick integration for communication with the Inertial Sense product line, including the IMX. It includes data logger, math libraries, and serial port interface for Linux and Windows environments.
 
 ## C vs. C++ Implementation
 
@@ -51,9 +51,9 @@ When compiling an Inertial Sense SDK example project in Visual Studio, the curre
 
 | Example Project                                         | Language | Description                                                  |
 | ------------------------------------------------------- | -------- | ------------------------------------------------------------ |
-| [NMEA Communications](../SDK/CommunicationsAscii.md)   | C        | How to use SDK for NMEA NMEA communications.                |
+| [NMEA Communications](../SDK/CommunicationsAscii.md)   | C        | How to use SDK for NMEA communications.                |
 | [Binary Communications](../SDK/CommunicationsBinary.md) | C        | How to use SDK for binary communications.                    |
-| [Fimrware Update](../SDK/FirmwareUpdate.md)             | C        | How to use bootloader for embedded firmware update.          |
+| [Firmware Update](../SDK/FirmwareUpdate.md)             | C        | How to use bootloader for embedded firmware update.          |
 | [Data Logger](../SDK/DataLogger.md)                     | C++      | How to use SDK data logging.                                 |
 | [CLTool](../SDK/InertialSenseClassCLTool.md)            | C++      | Open source project illustrating how to use the InertialSense C++ class.  It combines all SDK capabilities including serial communications, data logging to file, and embedded firmware update. |
 

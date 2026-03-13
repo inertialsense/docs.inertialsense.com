@@ -1,7 +1,7 @@
 # Hardware Integration: EVB-1
 
 <center>![evb-1-600x600](../images/evb-1-400x400.jpg)</center>
-The Inertial Sense EVB1.x is a development board which contains the Inertial Sense µINS, µAHRS, or µIMU module. The EVB1.x functions as a breakout and communications board with the following features:
+The Inertial Sense EVB1.x is a development board which contains the Inertial Sense IMX module. The EVB1.x functions as a breakout and communications board with the following features:
 
 - Access to all communications pins on the module
 - USB connection, either directly to the module or through an on-board FTDI chip
@@ -114,7 +114,7 @@ how a standard DB9 connector is wired to this port.
 
 ## USB Driver
 
-The EVB 1.x uses the FTDI FT232R USB to UART IC to provide a serial port over connection over USB.  Depending on the operating system, it may be necessary to download and install the [FTDI device driver](http://www.ftdichip.com/Drivers/D2XX.htm) for the FT232R to register properly as a serial port.
+The EVB 1.x uses the FTDI FT232R USB to UART IC to provide a serial port connection over USB.  Depending on the operating system, it may be necessary to download and install the [FTDI device driver](http://www.ftdichip.com/Drivers/D2XX.htm) for the FT232R to register properly as a serial port.
 
 ## Using with Inertial Sense Software
 

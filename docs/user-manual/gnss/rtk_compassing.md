@@ -14,7 +14,7 @@ The generalized heading accuracy for both the single-band (L1) and the [dual GNS
 
 ![Dual GNSS heading accuracy vs baseline](images/dual_f9p_heading_accuracy_vs_baseline.png) 
 
-### Recommenced Minimum Baseline
+### Recommended Minimum Baseline
 
 The recommended minimum baseline (distance between dual GNSS antennas) is ***0.3 meters*** for single-band (L1) GNSS compassing and ***0.25 meters*** for multi-band ZED-F9 GNSS compassing.  The solution can operate at shorter baseline distances but is less robust and more susceptible to getting caught in a local minimum which may not converge to the correct heading.
 
@@ -31,7 +31,7 @@ The recommended minimum baseline (distance between dual GNSS antennas) is ***0.3
 
 ![Rugged](../images/uINS_rugged_thumb.jpg)
 
-On the Rugged IMX, the MMCX port ***A*** is for ***GPS1*** and MMXC port ***B*** is ***GPS2***.  These port labels are changed to ***1*** and ***2*** on newer Rugged units.
+On the Rugged IMX, the MMCX port ***A*** is for ***GPS1*** and MMCX port ***B*** is ***GPS2***.  These port labels are changed to ***1*** and ***2*** on newer Rugged units.
 
 ## Dual Antenna Locations
 

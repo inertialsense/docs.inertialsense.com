@@ -1,4 +1,6 @@
 # Hardware Integration: RUG-3-IMX-5 (Rugged-3)
+!!! warning
+    The IMX-5 series of products is approaching its End of Life. [Full Notification](http://docs.inertialsense.com/datasheets/IMX-5_EOL_Notice_v3_1.pdf).
 
 <center>
 
@@ -125,12 +127,12 @@ Use platform config RUG-2.1 with this hardware version.
 | Part                    | Manufacturer        | Manufacturer #       | Description                                   |
 | ----------------------- | ------------------- | -------------------- | --------------------------------------------- |
 | Main Connector          | Harwin              | G125-FC11205L0-0150L | 1.25MM F/F 12POS 26AWG 150MM                  |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adaptor cable.     |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adaptor cable. |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adapter cable.     |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adapter cable. |
 
-See the [Multi-Band GNSS page](../../gnss/multi_band_F9P/#multi-band-gnss-components) for GNSS antenna options for an L1/L2 receiver (Rugged-3).
+See the [Multi-Band GNSS page](../gnss/multi_band_F9P.md#multi-band-gnss-components) for GNSS antenna options for an L1/L2 receiver (Rugged-3).
 
-See the [Multi-Band GNSS page](../../gnss/multi_band_GPX/#multi-band-gnss-components) for GNSS antenna options for an L1/L5 receiver (GPX-1).
+See the [Multi-Band GNSS page](../gnss/multi_band_GPX.md#multi-band-gnss-components) for GNSS antenna options for an L1/L5 receiver (GPX-1).
 
 ## Using with Inertial Sense Software
 

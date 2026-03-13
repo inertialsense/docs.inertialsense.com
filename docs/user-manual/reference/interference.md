@@ -10,7 +10,7 @@ Common sources for noise and interference are digital lines, USB 3.x, noisy powe
 
 ## Detecting Interference
 
-To detect if interference is being coupled into the Inertial Sense sensor module, it can be compared with a stock EVB demo unit to compare noise figures. This is done by using the following steps. If both steps pass, there is no noise being coupled into the module. Optionally connect multiple sensor modules can be connected to the EvalTool in parallel to compare noise.
+To detect if interference is being coupled into the Inertial Sense sensor module, it can be compared with a stock EVB demo unit to compare noise figures. This is done by using the following steps. If both steps pass, there is no noise being coupled into the module. Optionally, multiple sensor modules can be connected to the EvalTool in parallel to compare noise.
 
 1. **Evaluate the IMU sensor** - Make sure the unit is stationary (on a table or non-moving surface) and not seeing any vibrations. Watch the standard deviation columns labeled "σ" in the Sensors tab of the EvalTool. This shows the noise level over the past 5 seconds, which means the device needs to be completely stable for 5 seconds to be accurate. Compare this figure between the integrated sensor module and EVB demo unit.
 2. **Evaluate GPS sensitivity** – In clear view of the sky, monitor the satellite signal strength through the `DID_GPS_NAV.cnoMax` and `DID_GPS_NAV.cnoMean` fields in the EvalTool "Data Sets" tab or in the EvalTool "GPS" tab. See that the strongest (largest) CNO values are roughly the same between the integrated sensor module and the EVB demo unit.
@@ -25,7 +25,7 @@ The best solution is to stop the EMI (emitted) or conducted noise at its source.
 ![](../images/gps_antenna_ground_plane2.jpg)
 
 - **Shielding around the Inertial Sense module** - This can further prevent EMI from being absorbed by potentially GPS sensitive circuitry on the module.
-- **Digital signals** - Making sure best practices for electrical current return paths for both common mode and differential mode signals can be key for this.  Customers have seen GPS interference caused by USB 3.x and have have resolved the issues using shielding and [inline USB filters](https://www.amazon.com/AudioQuest-Jitterbug-USB-Filter/dp/B00YTA78FW/ref=sr_1_5?ie=UTF8&qid=1525737258&sr=8-5&keywords=usb+filter).
+- **Digital signals** - Making sure best practices for electrical current return paths for both common mode and differential mode signals can be key for this.  Customers have seen GPS interference caused by USB 3.x and have resolved the issues using shielding and [inline USB filters](https://www.amazon.com/AudioQuest-Jitterbug-USB-Filter/dp/B00YTA78FW/ref=sr_1_5?ie=UTF8&qid=1525737258&sr=8-5&keywords=usb+filter).
 - **Power supply filtering** - This may be necessary on systems with significant digital noise.  LC filters or similar filters can be added inline between the power supply and the IMX supply input (Vcc).  Common switching mode/buck voltage regulators should be fine for use with the IMX module and not require additional filtering.  
 
 Please contact us at [support@inertialsense.com](mailto:support@inertialsense.com) if further support is needed.

@@ -17,7 +17,7 @@ The Hardware Frame is labeled "X" and "Y" on the hardware indicating the directi
 
 ![IMX hardware frame](../images/RUG-3.0-G2_hw_frame.png)
 
-The IMX follows the right right rule for XYZ axis relative direction and angular rotation.
+The IMX follows the right-hand rule for XYZ axis relative direction and angular rotation.
 
 ![coordinate_frames](../images/coordinate_frames.png)
 
@@ -66,7 +66,7 @@ The following example converts body velocity `DID_INS_2.uvw` to NED velocity `ve
 quatRot( vel_ned, DID_INS_2.qn2b, DID_INS_2.uvw );
 ```
 
-The following computes ground track heading based on `DID_INS_2.uvw` body velocity in the local tagent plane.
+The following computes ground track heading based on `DID_INS_2.uvw` body velocity in the local tangent plane.
 
 ``` C++
 #include "SDK/src/ISPose.h"
@@ -92,7 +92,7 @@ sub_Vec3_Vec3( accMinusGravity, DID_IMU.I[0].acc, gravityBody );
 This example converts ECEF velocity `vel_ecef` to NED velocity `vel_ned`.
 
 ```c++
-#include "SDC/src/ISPose.h"
+#include "SDK/src/ISPose.h"
 quat_ecef2ned( lla[0], lla[1], qe2n );
 quatConj( qn2e, qe2n );
 quatRot( vel_ned, qn2e, vel_ecef );

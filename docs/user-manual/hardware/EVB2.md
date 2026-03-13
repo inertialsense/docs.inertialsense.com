@@ -6,13 +6,13 @@
 
 </center>
 
-The Inertial Sense EVB-2 is a development board which contains the Inertial Sense µINS, µAHRS, or µIMU module. The EVB-2 builds on the foundation established by the EVB-1, but adds new features including:
+The Inertial Sense EVB-2 is a development board which contains the Inertial Sense IMX module. The EVB-2 builds on the foundation established by the EVB-1, but adds new features including:
 
 - 915MHz XBee radio for RTK (real-time-kinematics)
 - Wi-Fi and Bluetooth Low energy (BLE) for remote data viewing and logging operation
 - Onboard logging to micro SD card.
 - Dual antenna ports for GPS compassing
-- Companion Microchip SAME70 processor that serves as a communication bridge between the µINS, µAHRS, or µIMU and all other interfaces.
+- Companion Microchip SAME70 processor that serves as a communication bridge between the IMX and all other interfaces.
 
 ## Configurations
 
@@ -73,7 +73,7 @@ Bit ```EVB2_PORT_OPTIONS_RADIO_RTK_FILTER``` of ```DID_EVB_FLASH_CFG.portOptions
 
 The most commonly used user interface available on the EVB-2 is the `EVB USB` port. Connecting to the `EVB USB` port will provide power to the device as well communications with the onboard SAME70 processor.  After connecting to a PC the EVB2 will appear as a virtual COM port and can be configured to communicate with every other communication bus on the board. This USB port should be used when updating the EVB-2 firmware or bootloader.
 
-The EVB-2 also has a second USB port, `IMX USB`.  This USB port also supplies power, but it connects directly to the µINS, µAHRS, or µIMU onboard the EVB-2. This USB port should be used when updating the µINS, µAHRS, or µIMU firmware or bootloader.
+The EVB-2 also has a second USB port, `IMX USB`.  This USB port also supplies power, but it connects directly to the IMX onboard the EVB-2. This USB port should be used when updating the IMX firmware or bootloader.
 
 ### GPS Antenna(s)
 

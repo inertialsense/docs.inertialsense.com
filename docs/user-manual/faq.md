@@ -40,11 +40,11 @@ The **AHRS** sensor has all the capabilities of the IMU plus data on roll, pitch
 
 **I need geographic positional data. Which sensor contains a GPS?**
 
-If the AHRS doesn’t get you what you need, packaging this with one or more GPS sensors will give you the geographic positional data you need. Like the AHRS, your sensor or should provide some sort of “sensor fusion” by combining all the data from each of these sensors to give a more accurate and holistic view of your rover’s state.
+If the AHRS doesn't get you what you need, packaging this with one or more GPS sensors will give you the geographic positional data you need. Like the AHRS, your sensor should provide some sort of "sensor fusion" by combining all the data from each of these sensors to give a more accurate and holistic view of your rover's state.
 
 **What do I need to get started?**
 
-We recommend beginning with some sort of Development Kit. Ours comes with all of the necessary components to simplify testing and integration: the sensor you selected, the needed cable and antennas for connectivity, the firmware & software, and 3-5 hrs of complementary engineering support from a team of Inertial Sense engineers. 
+We recommend beginning with some sort of Development Kit. Ours comes with all of the necessary components to simplify testing and integration: the sensor you selected, the needed cable and antennas for connectivity, the firmware & software, and 3-5 hrs of complimentary engineering support from a team of Inertial Sense engineers.
 
 Additionally, Inertial Sense provides customers with a custom datalogger, called the EvalTool. An easy to use data logging software to test and troubleshoot your new sensor is **essential** to your sensor integration experience.
 

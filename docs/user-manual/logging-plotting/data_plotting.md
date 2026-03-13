@@ -1,7 +1,7 @@
 # Plotting
 
 ## Log Inspector
-[Log Inspector](../software/SDK/logInspector.md) is a convenient way to quickly plot Inertial Sense [PPD logs](data_logging.md#post-process-data-ppd-logging-instructions) that of of the .dat format. The source code is in the SDK and can be modified and expanded.
+[Log Inspector](../software/SDK/logInspector.md) is a convenient way to quickly plot Inertial Sense [PPD logs](data_logging.md#post-process-data-ppd-logging-instructions) that are of the .dat format. The source code is in the SDK and can be modified and expanded.
 
 ## CLTool
 
@@ -15,7 +15,7 @@ The following example replays data at 1x speed from the specified directory.
 cltool -rp IS_logs/20180801_222310
 ```
 
-The following example will replay data as fast a possible in quiet mode (without printing to the screen).  This is useful to quickly reprocess the data.
+The following example will replay data as fast as possible in quiet mode (without printing to the screen).  This is useful to quickly reprocess the data.
 
 ```
 cltool -rp IS_logs/20180801_222310 -rs=0 -q

@@ -8,7 +8,7 @@ The serial ports use different peripherals so the actual baud rates of the ports
 
 Due to UART limitations, the ***actual baud rate*** that the hardware is capable of generating differs from the target or desired baud rate.  This difference is more pronounced at higher baud rates (>921600 bps).  The following table outlines these differences.      
 
-| Target Baud Rate (bps) | IMX-5 <br/>Actual Baud Rate (bps) | uINS-3 <br/>Actual Baud Rate (bps) |
+| Target Baud Rate (bps) | IMX-5 <br/>Actual Baud Rate (bps) | IMX-3 <br/>Actual Baud Rate (bps) |
 | ---------------------- | --------------------------------- | ---------------------------------- |
 | 19,200                 | 19,198                            | 19,191                             |
 | 38,400                 | 38,406                            | 38,422                             |
@@ -40,7 +40,7 @@ Divisor = floor( (160e6 + ((Target Baud Rate)/2)) / (Target Baud Rate) )
 Actual Baud Rate = floor( 160e6 / Divisor )
 ```
 
-### uINS-3 UART Baud Rate Equation
+### IMX-3 UART Baud Rate Equation
 
 The actual baud rate that the IMX-5 hardware is capable of generating is described in the following equations.
 

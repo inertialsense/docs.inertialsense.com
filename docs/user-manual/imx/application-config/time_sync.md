@@ -51,7 +51,7 @@ Strobe input and output (I/O) events are used for time and data synchronization.
 
 ![IMX Top View](../../images/module_pinout.png)
 
-<center>**_STROBE pins on the μIMU, μAHRS, and μINS Module - Top View_**</center>
+<center>**_STROBE pins on the IMX Module - Top View_**</center>
 ### Strobe Input (Time Sync Input)
 
 Strobe inputs are used to timestamp digital events observed on any of the pins labeled STROBE, e.g. camera shutter signals.  A STROBE input event occurs when the logic level of any STROBE pin is toggled.  The transition direction can be set so that the STROBE event triggers on a rising edge, or a falling edge.  An internal 100K pull-up or pull-down resistor is enabled, depending on the assertion direction.  External pull-up or pull-down resistors are not necessary.  

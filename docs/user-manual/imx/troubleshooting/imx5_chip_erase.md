@@ -22,7 +22,7 @@ On the IMX-5, CHIP ERASE is enabled if +3.3V (available on pin 22) is applied to
 
 ![EVB-2 Chip Erase Pads](../../images/evb2_chip_erase.png)
 
-<center>**Short R25 pads together to chip erase uINS.
+<center>**Short R25 pads together to chip erase IMX.
     <br>Short R53 pads together to chip erase EVB-2.**</center>
 #### Rugged Chip Erase Pads
 
@@ -41,7 +41,7 @@ The chip erase pads on the Rugged-3 are a set of 0402 SMT pads with the label "E
 3. **Chip Erase IMX** - Assert Chip Erase (Reserved (CE) pin 17) on the IMX longer than 100ms by connecting to +3.3V.  +3.3V is available on pin 2 of all EVB headers.  **Warning!!!** - CHIP ERASE erases all flash memory (including firmware, settings, and calibration) and should only be used as a last resort. This step should ONLY be used if there is NO other method to recover communications.  
 4. **Reset the system**
 5. [**Enable EvalTool Internal Mode**](#enable-evaltool-internal-mode) - This exposes the "Manufacturing" tab used to upload calibration data.
-6. **Restore the application and bootloader firmware** - Use the "Update Firmware" button in the EvalTool Settings tab to load the [bootloader firmware]( https://github.com/inertialsense/InertialSenseSDK/releases/tag/bootloader ) and [IMX firmware](https://github.com/inertialsense/InertialSenseSDK/releases). 
+6. **Restore the application and bootloader firmware** - Use the "Update Firmware" button in the EvalTool Settings tab to load the [bootloader firmware](https://github.com/inertialsense/InertialSenseSDK/releases/tag/bootloader) and [IMX firmware](https://github.com/inertialsense/InertialSenseSDK/releases). 
 
 #### Enable EvalTool Internal Mode
 
@@ -53,7 +53,7 @@ EvalTool internal mode is used to access the EvalTool Manufacturing tab, used to
 
 #### Restore Sensor Calibration
 
-[Contact InertialSense](mailto:support@inertialsense.com) and provide your unit serial number to request the sensor calibration that corresponds with your unit.  Use the EvalTool to upload the senor calibration onto your unit.  
+[Contact InertialSense](mailto:support@inertialsense.com) and provide your unit serial number to request the sensor calibration that corresponds with your unit.  Use the EvalTool to upload the sensor calibration onto your unit.
 
 1. Ensure the EvalTool is in [Internal Mode](#enable-evaltool-internal-mode) which provides access the Manufacturing tab.
 2. Ensure unit is communicating with EvalTool.

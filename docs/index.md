@@ -22,7 +22,7 @@ The **IMX**™ family of sensors are 10-DOF sensor modules consisting of a tacti
 
 The **RUGGED** series of products include a rugged aluminum enclosure, RS232, RS485, and CAN bus to the IMX.  
 
-The **RUGGEED RTK** series include a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. 
+The **RUGGED RTK** series include a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. 
 
 The **RUGGED DUAL** series include two multi-frequency GNSS receivers with RTK precision position and/or dual GNSS heading/compass.
 
