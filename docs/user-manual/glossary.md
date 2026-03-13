@@ -94,6 +94,14 @@ Vehicle location expressed as:
 * Longitude
 * Altitude
 
+This geodetic representation is often called **LLA**.
+
+Position can also be expressed in Earth-fixed Cartesian (ECEF) coordinates:
+
+```
+p_ecef = [X, Y, Z]
+```
+
 or in local coordinates:
 
 ```
@@ -110,6 +118,12 @@ In the navigation frame:
 
 ```
 v = [v_N, v_E, v_D]
+```
+
+Velocity can also be expressed in Earth-fixed Cartesian (ECEF) coordinates:
+
+```
+v_ecef = [v_X, v_Y, v_Z]
 ```
 
 ---
@@ -171,6 +185,27 @@ Earth-Centered Earth-Fixed coordinate system.
 Origin:
 
 Earth's center of mass.
+
+Coordinates are represented as:
+
+```
+[X, Y, Z]
+```
+
+in meters, fixed to Earth.
+
+---
+
+### LLA (Latitude, Longitude, Altitude)
+
+Geodetic position representation on the Earth reference ellipsoid.
+
+Common units:
+
+* latitude/longitude in degrees
+* altitude in meters
+
+LLA is often used as an alternative to ECEF coordinates depending on the application.
 
 ---
 
@@ -752,4 +787,5 @@ Industrialized versions of Inertial Sense modules.
 | EKF     | Extended Kalman Filter                |
 | NED     | North-East-Down                       |
 | ECEF    | Earth-Centered Earth-Fixed            |
+| LLA     | Latitude, Longitude, Altitude         |
 
