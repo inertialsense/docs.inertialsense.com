@@ -22,7 +22,7 @@ Any of the following devices can be used as a RTK base station. All Inertial Sen
 <!-- (access point mode or over an existing network/hotspot). -->
 <!-- (up to several km line-of-sight) -->
 
-- **Inertial Sense µINS module, EVB 1 or Rugged** - Sends corrections on either serial port or USB that can then be forwarded to a rover using a communication method of choice.
+- **Inertial Sense IMX module, EVB-1, or Rugged** - Sends corrections on either serial port or USB that can then be forwarded to a rover using a communication method of choice.
 
 - **3rd Party Base Station** - e.g. Emlid Reach Receiver.  
 
@@ -46,7 +46,7 @@ The following configurations can be used for the RTK rover:
 
 ### **Using the EvalTool**
 
-1. Connect the µINS Rover to a computer with the EvalTool running. Open the comport for the unit in the Settings > Serial Ports.
+1. Connect the IMX Rover to a computer with the EvalTool running. Open the comport for the unit in the Settings > Serial Ports.
 2. Navigate to Settings > RTK.
 3. Under the Status section, RTK functionality can be verified in 3 ways:
    - Status field will show Single. Over the course of several minutes this status will change to Float then Fix.
@@ -57,7 +57,7 @@ The following configurations can be used for the RTK rover:
 
 ### **Using the CLTool**
 
-1. Connect the µINS Rover to a computer with the CLTool running.
+1. Connect the IMX Rover to a computer with the CLTool running.
 2. Include the argument -msgPresetPPD in the CLTool command.
 3. Observe the DID_GPS_RTK_NAV message, Status: 0x******** (Single) over the course of several minutes this will change to (Float) then (Fix).
 

@@ -29,7 +29,7 @@
 </object>
 
 
-## uINS-3
+## IMX (uINS-3)
 
 [Download Datasheet](http://docs.inertialsense.com/datasheets/uIMU_uAHRS_uINS-3_Datasheet.pdf)
 

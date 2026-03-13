@@ -1,7 +1,7 @@
 # Binary Communications Example Project
 
 This [IS Communications Example](https://github.com/inertialsense/inertial-sense-sdk/tree/main/ExampleProjects/ISComm) project demonstrates binary communications with the<br>
-<a href="https://inertialsense.com/products">Inertial Sense Products</a> (IMX, uAHRS, and uIMU) using the Inertial Sense SDK.
+<a href="https://inertialsense.com/products">Inertial Sense Products</a> (IMX) using the Inertial Sense SDK.
 
 ## Files
 

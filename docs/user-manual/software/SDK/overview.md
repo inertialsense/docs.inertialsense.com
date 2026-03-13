@@ -2,7 +2,7 @@
 
 ### Overview
 
-The Inertial Sense open source software development kit (SDK) provides quick integration for communication with the Inertial Sense product line, including the µIMU, µAHRS, and µINS. It includes data logger, math libraries, and serial port interface for Linux and Windows environments.
+The Inertial Sense open source software development kit (SDK) provides quick integration for communication with the Inertial Sense product line, including the IMX. It includes data logger, math libraries, and serial port interface for Linux and Windows environments.
 
 ## C vs. C++ Implementation
 

@@ -1,5 +1,5 @@
 ## System Configuration
-A µINS must be configured as a Rover to receive RTK Base messages. This can be done through the EvalTool or the CLTool by enabling "Rover Mode".
+The IMX must be configured as a Rover to receive RTK Base messages. This can be done through the EvalTool or the CLTool by enabling "Rover Mode".
 
 #### [EvalTool](../software/evaltool.md)
 1. Navigate to Settings > GPS > Rover > RTK.
@@ -59,7 +59,7 @@ Enter the following arguments when running the CLTool executable:
 - `-rover=`
   Specify where format/corrections will come from.
   - `SERIAL:`
-    The serial port where the radio is connected. The computer will receive corrections through this port and pass them to the µINS.
+    The serial port where the radio is connected. The computer will receive corrections through this port and pass them to the IMX.
   - `RTCM3:`
     Standard data format for RTK corrections.
 
@@ -98,7 +98,7 @@ Follow the following steps in order to set up the Rover to receive messages thro
 
 #### [CLTool](../software/cltool.md)
 
-With the Rover µINS connected to the computer, use the -rover argument when running the CLTool executable:
+With the Rover IMX connected to the computer, use the -rover argument when running the CLTool executable:
 
 - `-rover=TCP:`
   Set the type to "TCP".
@@ -140,7 +140,7 @@ Follow these steps:
 
 #### [CLTool](../software/cltool.md)
 
-With the µINS Rover connected to the computer, enter the -rover argument when running the CLTool executable:
+With the IMX Rover connected to the computer, enter the -rover argument when running the CLTool executable:
 
 - `-rover=TCP:`
   Set the type to "TCP".

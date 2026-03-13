@@ -22,7 +22,7 @@ On the IMX-5, CHIP ERASE is enabled if +3.3V (available on pin 22) is applied to
 
 ![EVB-2 Chip Erase Pads](../images/evb2_chip_erase.png)
 
-<center>**Short R25 pads together to chip erase uINS.
+<center>**Short R25 pads together to chip erase IMX.
     <br>Short R53 pads together to chip erase EVB-2.**</center>
 #### Rugged Chip Erase Pads
 

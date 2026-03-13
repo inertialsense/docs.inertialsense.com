@@ -6,7 +6,7 @@
 
 </center>
 
-The Inertial Sense Rugged-2.0 is a ruggedized carrier board and case for the Inertial Sense µINS, µAHRS, or µIMU module. The Rugged-2.0 has similar functions compared to the EVB-1, but in a more compact form factor with the following added features:
+The Inertial Sense Rugged-2.0 is a ruggedized carrier board and case for the Inertial Sense IMX module. The Rugged-2.0 has similar functions compared to the EVB-1, but in a more compact form factor with the following added features:
 
 - Onboard multi-band GNSS receiver(s) 
 - Dual antenna ports for GPS compassing
@@ -40,7 +40,7 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 | 11   | G1/CANL<sup>1</sup>/Rx2<sup>1</sup>        | I/O  | High level (CAN bus). Serial 2 input (TTL).                  |
 | 12   | G2/CANH<sup>1</sup>/Tx2<sup>1</sup>/STROBE | I/O  | Low level (CAN bus). Serial 2 output (TTL). Strobe time sync input. |
 
-<sup>1</sup>Only available with uINS-3.2 and later.
+<sup>1</sup>Only available with IMX-3.2 and later.
 
 ## I/O Configuration
 

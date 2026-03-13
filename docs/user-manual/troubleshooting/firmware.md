@@ -10,7 +10,7 @@ Check the following:
 
 - The input supply is at 3.3V and clean without noise.
 - The serial connection is grounded (no floating grounds).
-- The serial wires between the uINS module and the next active device (buffer, converter, or processor) are not longer than 1 meter when bootloading firmware.
+- The serial wires between the IMX module and the next active device (buffer, converter, or processor) are not longer than 1 meter when bootloading firmware.
 - Reset or power cycle the IMX and promptly run the firmware update within 30 seconds of reset.  A known issue in the IMX-5 bootloader version v6g and prior versions that disables all UARTS if no handshake is received within 50 second following startup.  Resetting the IMX will re-enable UARTs for 50 seconds.
 
 ## Bootloader Update fails first time
@@ -34,7 +34,7 @@ Upload IMU calibration.
 
 Assert boot mode pin high (3.3V) while booting (power cycle or reset) to put the device into bootloader mode.  Inertial Sense customer support is required to facilitate bootloader communications with this device.
 
-## "uINS Bricked" System Recovery
+## "IMX (uINS) Bricked" System Recovery
 There are different reasons a system may appear unresponsive and not communicate.  The following sections describe how to recover a system from these states.  
 
 !!! attention
@@ -45,15 +45,15 @@ There are different reasons a system may appear unresponsive and not communicate
 
 ### Stuck in Bootloader Mode
 
-In some cases, the bootloader may fail to completely update firmware.  This is indicated by the fading cyan status LED on the IMX module.  This can happen if older bootloader firmware is on the uINS and firmware version 1.7.1 is uploaded.  If this happens, the system will appear to be unresponsive in the EvalTool.  The following process can be used to recover the system to a working state:
+In some cases, the bootloader may fail to completely update firmware.  This is indicated by the fading cyan status LED on the IMX module.  This can happen if older bootloader firmware is on the IMX and firmware version 1.7.1 is uploaded.  If this happens, the system will appear to be unresponsive in the EvalTool.  The following process can be used to recover the system to a working state:
 
-If the **bootloader is running**, identified with the fading cyan color LED on the uINS module, following these steps:
+If the **bootloader is running**, identified with the fading cyan color LED on the IMX module, following these steps:
 
-1. **Ensure uINS Firmware is Running** - *(This step is not necessary if the uINS firmware is running and the EvalTool is communicating with the uINS)*.  Select the device serial port and update the firmware using [1.6.4](https://github.com/inertialsense/InertialSenseSDK/releases/tag/1.6.4) or earlier.  If the bootloader is running, version information will not appear in the EvalTool.  The following bootloader update step will not work unless the EvalTool is communicating with the uINS firmware.
-2. **Update the Bootloader** - Use the EvalTool "Update Bootloader" button in the Settings tab to upload the latest [bootloader firmware](https://github.com/inertialsense/InertialSenseSDK/releases/tag/bootloader).  If it has a fading cyan color on the uINS module, the bootloader is running and ready for new firmware to be loaded. **The bootloader can only be updated using serial0 or the native USB connection.**
-3. **Update the Firmware** - Use the EvalTool "Update Firmware" button to upload the [latest uINS firmware](https://github.com/inertialsense/InertialSenseSDK/releases).
+1. **Ensure IMX Firmware is Running** - *(This step is not necessary if the IMX firmware is running and the EvalTool is communicating with the IMX)*.  Select the device serial port and update the firmware using [1.6.4](https://github.com/inertialsense/InertialSenseSDK/releases/tag/1.6.4) or earlier.  If the bootloader is running, version information will not appear in the EvalTool.  The following bootloader update step will not work unless the EvalTool is communicating with the IMX firmware.
+2. **Update the Bootloader** - Use the EvalTool "Update Bootloader" button in the Settings tab to upload the latest [bootloader firmware](https://github.com/inertialsense/InertialSenseSDK/releases/tag/bootloader).  If it has a fading cyan color on the IMX module, the bootloader is running and ready for new firmware to be loaded. **The bootloader can only be updated using serial0 or the native USB connection.**
+3. **Update the Firmware** - Use the EvalTool "Update Firmware" button to upload the [latest IMX firmware](https://github.com/inertialsense/InertialSenseSDK/releases).
 
-If neither the bootloader or the uINS firmware are running, identified with the solid or no LED status on the uINS module, please [contact us](mailto:support@inertialsense.com).
+If neither the bootloader or the IMX firmware are running, identified with the solid or no LED status on the IMX module, please [contact us](mailto:support@inertialsense.com).
 
 ### Recovery for Firmware v1.2.1.0
 
@@ -83,13 +83,13 @@ In the case that your units do not connect properly to the EvalTool, verify:
       - Drives without executable.
         - http://www.ftdichip.com/Drivers/D2XX.htm
 
-## Downgrading uINS to 1.8.x Firmware
+## Downgrading IMX to 1.8.x Firmware
 
-The following steps can be used to downgrade the uINS firmware to version 1.8.x (or older):
+The following steps can be used to downgrade the IMX firmware to version 1.8.x (or older):
 
-1. Ensure the uINS is running 1.9.x (or newer) firmware. 
+1. Ensure the IMX is running 1.9.x (or newer) firmware. 
 
-2. Send the system commands `SYS_CMD_MANF_UNLOCK` and `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the uINS to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool, cltool, or SDK .
+2. Send the system commands `SYS_CMD_MANF_UNLOCK` and `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` to the IMX to downgrade the IMU calibration and put the system into bootloader update mode.  This can be done using the EvalTool, cltool, or SDK .
 
    1. **EvalTool** (version 1.9.1 or later): Use the firmware "**Downgrade**" button (EvalTool -> Settings -> General -> Factory -> Downgrade).  
 
@@ -122,15 +122,15 @@ The following steps can be used to downgrade the uINS firmware to version 1.8.x 
       ```
       
 
-3. Verify the uINS has reboot into bootloader update mode.  The host serial port will disappear and reappear.  The uINS will NOT support normal DID binary or NMEA communications in this mode, but will be ready to update the bootloader.
+3. Verify the IMX has rebooted into bootloader update mode.  The host serial port will disappear and reappear.  The IMX will NOT support normal DID binary or NMEA communications in this mode, but will be ready to update the bootloader.
 
 4. Update the bootloader and firmware using the 1.8.x EvalTool, cltool, or SDK.  Be sure to use the bootloader v5d (or older) with the 1.8.x firmware. 
 
 ### Chip Erase Downgrade
 
-The above process using the `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` command is recommended as it prevents the need to reload the IMU calibration onto the uINS.  However,  an alternative method to downgrade uINS to 1.8.x firmware is as follows: 
+The above process using the `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` command is recommended as it prevents the need to reload the IMU calibration onto the IMX.  However,  an alternative method to downgrade IMX to 1.8.x firmware is as follows: 
 
-1. Chip erase the uINS.
+1. Chip erase the IMX.
 2. Load v5b (or older) bootloader and 1.8.x (or older) firmware using the 1.8.x EvalTool, cltool, or SDK. 
 3. Restore the IMU calibration.
 

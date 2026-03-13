@@ -1,7 +1,7 @@
 # Hardware Integration: EVB-1
 
 <center>![evb-1-600x600](../images/evb-1-400x400.jpg)</center>
-The Inertial Sense EVB1.x is a development board which contains the Inertial Sense µINS, µAHRS, or µIMU module. The EVB1.x functions as a breakout and communications board with the following features:
+The Inertial Sense EVB1.x is a development board which contains the Inertial Sense IMX module. The EVB1.x functions as a breakout and communications board with the following features:
 
 - Access to all communications pins on the module
 - USB connection, either directly to the module or through an on-board FTDI chip

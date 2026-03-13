@@ -6,7 +6,7 @@
 
 </center>
 
-The Inertial Sense Rugged-1 is a ruggedized carrier board and case for the Inertial Sense µINS, µAHRS, or µIMU module. The Rugged-1 has similar functions compared to the EVB-1, but in a more compact form factor with the following added features:
+The Inertial Sense Rugged-1 is a ruggedized carrier board and case for the Inertial Sense IMX module. The Rugged-1 has similar functions compared to the EVB-1, but in a more compact form factor with the following added features:
 
 - Dual antenna ports for GPS compassing
 - Integrated CAN transceiver
@@ -45,7 +45,7 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 <sup>3</sup>Serial 0 is configured with SMT jumpers for TTL, RS232 (default), or RS485/RS422.
 
-<sup>4</sup>Only available with uINS-3.2 and later.
+<sup>4</sup>Only available with IMX-3.2 and later.
 
 ## Jumpers
 

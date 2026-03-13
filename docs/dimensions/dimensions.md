@@ -45,9 +45,9 @@
 
 ------
 
-## µINS-3 Series
+## IMX (uINS-3) Series
 
-### µINS-3 (Module)
+### IMX (uINS-3) Module
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-uINS-3.2_Dimensions_and_Pinout.pdf)
 
