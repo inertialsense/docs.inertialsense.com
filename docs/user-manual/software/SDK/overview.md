@@ -53,7 +53,7 @@ When compiling an Inertial Sense SDK example project in Visual Studio, the curre
 | ------------------------------------------------------- | -------- | ------------------------------------------------------------ |
 | [NMEA Communications](../SDK/CommunicationsAscii.md)   | C        | How to use SDK for NMEA communications.                |
 | [Binary Communications](../SDK/CommunicationsBinary.md) | C        | How to use SDK for binary communications.                    |
-| [Fimrware Update](../SDK/FirmwareUpdate.md)             | C        | How to use bootloader for embedded firmware update.          |
+| [Firmware Update](../SDK/FirmwareUpdate.md)             | C        | How to use bootloader for embedded firmware update.          |
 | [Data Logger](../SDK/DataLogger.md)                     | C++      | How to use SDK data logging.                                 |
 | [CLTool](../SDK/InertialSenseClassCLTool.md)            | C++      | Open source project illustrating how to use the InertialSense C++ class.  It combines all SDK capabilities including serial communications, data logging to file, and embedded firmware update. |
 
