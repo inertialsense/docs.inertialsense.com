@@ -114,7 +114,7 @@ how a standard DB9 connector is wired to this port.
 
 ## USB Driver
 
-The EVB 1.x uses the FTDI FT232R USB to UART IC to provide a serial port over connection over USB.  Depending on the operating system, it may be necessary to download and install the [FTDI device driver](http://www.ftdichip.com/Drivers/D2XX.htm) for the FT232R to register properly as a serial port.
+The EVB 1.x uses the FTDI FT232R USB to UART IC to provide a serial port connection over USB.  Depending on the operating system, it may be necessary to download and install the [FTDI device driver](http://www.ftdichip.com/Drivers/D2XX.htm) for the FT232R to register properly as a serial port.
 
 ## Using with Inertial Sense Software
 

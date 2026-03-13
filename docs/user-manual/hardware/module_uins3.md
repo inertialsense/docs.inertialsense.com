@@ -58,7 +58,7 @@ The following are recommended components for the typical application. Equivalent
 
 | Designator | Manufacturer | Manufacturer # | Description                        |
 | ---------- | ------------ | -------------- | ---------------------------------- |
-| BAT1       | Panasonic    | ML-614S/FN     | BATTERY LITHIMU 3V RECHARGABLE SMD |
+| BAT1       | Panasonic    | ML-614S/FN     | BATTERY LITHIUM 3V RECHARGEABLE SMD |
 | D1         | Panasonic    | DB2J31400L     | DIODE SCHOTTKY 30V 0.03A SMINI2    |
 | R1         |              |                | RES 1.00K OHM 1/16W 1%             |
 | C1         |              |                | CAP CER .10UF 50V X7R 10%          |
@@ -78,7 +78,7 @@ The IMX, uAHRS, and uIMU are designed as surface mount components that can be ha
 
 ## Hardware Design
 
-### Recommend PCB Footprint and Layout
+### Recommended PCB Footprint and Layout
 
 A single ceramic 100nF decoupling capacitor should be placed in close proximity between the Vcc and GND pins. It is recommended that this capacitor be on the same side of the PCB as the μINS and that there not be any vias between the capacitor and the Vcc and GND pins. The default forward direction is indicated in the PCB footprint figure and on the μINS silkscreen as the X axis. The forward direction is reconfigurable in software as necessary.
 

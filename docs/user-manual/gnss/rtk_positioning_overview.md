@@ -4,7 +4,7 @@
 
 Real Time Kinematic (RTK) is a precision satellite positioning technique which utilizes a base station to transmit position corrections to a receiver. The Inertial Sense RTK solution provides centimeter level position accuracy.
 
-To use RTK, a base station, arover (receiver), and a method to send corrections from the base to the rover are required.
+To use RTK, a base station, a rover (receiver), and a method to send corrections from the base to the rover are required.
 
 ![](images/RTKDiagram.png)
 
@@ -40,7 +40,7 @@ The following configurations can be used for the RTK rover:
 1. **Direct Serial** - Using USB, RS232, RS422/485, or TTL to pass corrections from Base to Rover.
 2. **Radio Link** - For example, Digi Xbee to send RTK corrections. Other communication methods such as Bluetooth may also work for the chosen application.
 3. **NTRIP** - Transmits RTK correction data over the Internet. To receive messages with NTRIP, the user must supply a URL, port number, and mount point . Often a username and password are also required.
-4. **TCP/IP** - A protocol for communicating directly between computers. In order to receive messages using TCP/IP, an address (IP Address or DNS) must be suppled to the Base where the corrections will be transmitted.
+4. **TCP/IP** - A protocol for communicating directly between computers. In order to receive messages using TCP/IP, an address (IP Address or DNS) must be supplied to the Base where the corrections will be transmitted.
 
 ## **How to Know RTK is Working**
 
@@ -84,7 +84,7 @@ INS_STATUS_NAV_FIX_STATUS(DID_INS_1.insStatus) == GPS_NAV_FIX_POSITIONING_RTK_FI
 DID_GPS1_POS.status & GPS_STATUS_FLAGS_GPS1_RTK_POSITION_VALID
 ```
 
-RTK precision positioning fix is indicated is indicated when the RTK-Pos radio button turns purple in the EvalTool INS tab.
+RTK precision positioning fix is indicated when the RTK-Pos radio button turns purple in the EvalTool INS tab.
 
 <center>
 

@@ -81,7 +81,7 @@ The IG-2 module and IG-2 header H1 have the same pinout assignment for pins 1-14
 
 ## Hardware Design
 
-### Recommend PCB Footprint and Layout
+### Recommended PCB Footprint and Layout
 
 The default forward direction is indicated in the PCB footprint figure and on the silkscreen as the X axis. The forward direction is reconfigurable in software as necessary.
 

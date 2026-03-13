@@ -17,7 +17,7 @@ For the purposes of basic evaluation, the easiest interface available on the rug
 
 ### GPS Antenna Ports
 
-If using GPS with the module, connect an appropriate antenna to MMCX port ***1***. If the module is used for RTK compassing, connect a second antenna to MMCX port ***2***.  MMCX port ***1*** is for ***GPS1*** and MMXC port ***2*** is ***GPS2***.  These port were labeled ***A*** and ***B*** on older Rugged-1 units.
+If using GPS with the module, connect an appropriate antenna to MMCX port ***1***. If the module is used for RTK compassing, connect a second antenna to MMCX port ***2***.  MMCX port ***1*** is for ***GPS1*** and MMCX port ***2*** is ***GPS2***.  These ports were labeled ***A*** and ***B*** on older Rugged-1 units.
 
 ## Pinout
 
@@ -119,8 +119,8 @@ System input voltage monitor surface mount resistors and capacitor (R2, R3, and 
 | Part                    | Manufacturer        | Manufacturer #       | Description                                   |
 | ----------------------- | ------------------- | -------------------- | --------------------------------------------- |
 | Main Connector          | Harwin              | G125-FC11205L0-0150L | 1.25MM F/F 12POS 26AWG 150MM                  |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adaptor cable.     |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adaptor cable. |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adapter cable.     |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adapter cable. |
 
 ## Using with Inertial Sense Software
 

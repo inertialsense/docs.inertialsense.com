@@ -18,7 +18,7 @@ For the purposes of basic evaluation, the easiest interface available on the rug
 
 ### GPS Antenna Ports
 
-If using GPS with the module, connect an appropriate antenna to MMCX port ***1***. If the module is used for RTK compassing, connect a second antenna to MMCX port ***2***.  MMCX port ***1*** is for ***GPS1*** and MMXC port ***2*** is ***GPS2***.  
+If using GPS with the module, connect an appropriate antenna to MMCX port ***1***. If the module is used for RTK compassing, connect a second antenna to MMCX port ***2***.  MMCX port ***1*** is for ***GPS1*** and MMCX port ***2*** is ***GPS2***.  
 
 ## Pinout
 
@@ -80,10 +80,10 @@ See the [Multi-Band GNSS overview](../gnss/multi_band_gnss_overview.md) for conf
 
 2. Remove the 3 5/16" screws from the bottom of the Rugged-2.0.
 
-3. Gently separate the top and bottom halves from each other pealing them apart opening from the side with the green connector. 
+3. Gently separate the top and bottom halves from each other, peeling them apart opening from the side with the green connector.
 
    - The two halves maybe somewhat adhered due to the thermal pad used in the device. Consistent gentle pressure will separate them.
-   - As the device starts to open, do not open the unit past 90 degrees. *If flexed to often and beyond 90 degrees the ribbon will break causing the unit to be damaged beyond repair.* 
+   - As the device starts to open, do not open the unit past 90 degrees. *If flexed too often and beyond 90 degrees the ribbon will break causing the unit to be damaged beyond repair.*
 
 4. Remove Kapton tape from the DIP Switch. (Save the tape!)
 
@@ -105,8 +105,8 @@ See the [Multi-Band GNSS overview](../gnss/multi_band_gnss_overview.md) for conf
 | Part                    | Manufacturer        | Manufacturer #       | Description                                   |
 | ----------------------- | ------------------- | -------------------- | --------------------------------------------- |
 | Main Connector          | Harwin              | G125-FC11205L0-0150L | 1.25MM F/F 12POS 26AWG 150MM                  |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adaptor cable.     |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adaptor cable. |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adapter cable.     |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adapter cable. |
 
 See the [Multi-Band GNSS page](../gnss/multi_band_F9P.md#multi-band-gnss-components) for GNSS antenna options.
 

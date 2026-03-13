@@ -53,7 +53,7 @@ EvalTool internal mode is used to access the EvalTool Manufacturing tab, used to
 
 #### Restore Sensor Calibration
 
-[Contact InertialSense](mailto:support@inertialsense.com) and provide your unit serial number to request the sensor calibration that corresponds with your unit.  Use the EvalTool to upload the senor calibration onto your unit.  
+[Contact InertialSense](mailto:support@inertialsense.com) and provide your unit serial number to request the sensor calibration that corresponds with your unit.  Use the EvalTool to upload the sensor calibration onto your unit.
 
 1. Ensure the EvalTool is in [Internal Mode](#enable-evaltool-internal-mode) which provides access the Manufacturing tab.
 2. Ensure unit is communicating with EvalTool.

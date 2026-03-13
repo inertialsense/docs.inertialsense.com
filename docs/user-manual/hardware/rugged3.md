@@ -127,8 +127,8 @@ Use platform config RUG-2.1 with this hardware version.
 | Part                    | Manufacturer        | Manufacturer #       | Description                                   |
 | ----------------------- | ------------------- | -------------------- | --------------------------------------------- |
 | Main Connector          | Harwin              | G125-FC11205L0-0150L | 1.25MM F/F 12POS 26AWG 150MM                  |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adaptor cable.     |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adaptor cable. |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adapter cable.     |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adapter cable. |
 
 See the [Multi-Band GNSS page](../../gnss/multi_band_F9P/#multi-band-gnss-components) for GNSS antenna options for an L1/L2 receiver (Rugged-3).
 

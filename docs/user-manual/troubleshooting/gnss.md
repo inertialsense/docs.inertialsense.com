@@ -23,15 +23,15 @@ The ground planes should be adequately sized. Larger ground planes help but are 
 **ITEM TO TEST:** Try doubling the ground plane below the antenna. A simple sheet of metal placed below the antenna is fine. This is also not likely the root cause but worth testing.
 
 ## Antenna Cable Ground Loops
-In come cases the GNSS antenna cable can form an electrical loop and cause interfere.
+In some cases the GNSS antenna cable can form an electrical loop and cause interference.
 
 **ITEM TO TEST:** Try to ensure cables never loop back or are bundled. If possible shorten cables to smallest required length. Monitor GPS CNO before and after.
 
 ## Local Interference
-In some cases we have seen object in close proximity to the GNSS antennas act as a multi-path surface, reflect GNSS signals onto the GNSS antennas. Ensure no objects are near the antennas above the plane of the antennas.
+In some cases we have seen objects in close proximity to the GNSS antennas act as a multi-path surface, reflecting GNSS signals onto the GNSS antennas. Ensure no objects are near the antennas above the plane of the antennas.
 
 ## Antenna Orientation
-A more accurate heading can be achieved if the GNSS antennas have the same antenna orientation (point the same way). You should consider rotating one or both GNSS antennas so the coax cable exit in the same direction on each antennas.
+A more accurate heading can be achieved if the GNSS antennas have the same antenna orientation (point the same way). You should consider rotating one or both GNSS antennas so the coax cables exit in the same direction on each antenna.
 
 |                           Mismatch                           |                            Match                             |                            Match                             |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |

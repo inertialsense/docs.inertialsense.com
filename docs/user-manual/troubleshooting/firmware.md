@@ -19,7 +19,7 @@ If updating the bootloader firmware and using the USB direct connection on the I
 
 ## System in AHRS mode despite GPS messages being received
 
-If attempting to enter NAV mode but the system reports AHRS despite GPS data beig received, then assure your units are not set to Rover RTK mode. This will override your ability to lock in GPS Nav mode.
+If attempting to enter NAV mode but the system reports AHRS despite GPS data being received, then assure your units are not set to Rover RTK mode. This will override your ability to lock in GPS Nav mode.
 
 ## "IMX-5 Bricked" System Recovery
 Assert chip erase pin high (3.3V) while booting (power cycle or reset) to erase all flash memory and place IMX into ROM bootloader (DFU) mode.  
@@ -53,7 +53,7 @@ If the **bootloader is running**, identified with the fading cyan color LED on t
 2. **Update the Bootloader** - Use the EvalTool "Update Bootloader" button in the Settings tab to upload the latest [bootloader firmware](https://github.com/inertialsense/InertialSenseSDK/releases/tag/bootloader).  If it has a fading cyan color on the uINS module, the bootloader is running and ready for new firmware to be loaded. **The bootloader can only be updated using serial0 or the native USB connection.**
 3. **Update the Firmware** - Use the EvalTool "Update Firmware" button to upload the [latest uINS firmware](https://github.com/inertialsense/InertialSenseSDK/releases).
 
-If neither the bootloader or the uINS firmware are running, identified with the solid or no LED status on the uINS module, please [contacts us](mailto:support@inertialsense.com).
+If neither the bootloader or the uINS firmware are running, identified with the solid or no LED status on the uINS module, please [contact us](mailto:support@inertialsense.com).
 
 ### Recovery for Firmware v1.2.1.0
 
@@ -74,7 +74,7 @@ The latest EvalTool, CLTool, SDK, and firmware can be used once the firmware has
 In the case that your units do not connect properly to the EvalTool, verify:
 
 1. The baud rate is the same that you previously had when the Com Ports last opened correctly.
-2. The LED on the unit is not showing solid white, flashing white, or solid red. These mean a failure occured in loading the bootloader (see User Guide for full LED descriptions).
+2. The LED on the unit is not showing solid white, flashing white, or solid red. These mean a failure occurred in loading the bootloader (see User Guide for full LED descriptions).
 3. If you are using a USB3.0 connection, the com port might take longer to show up than with USB2.0
 4. Check your computer's Device Manager to see if your unit shows up there. If it doesn't show up, you may have an FTDI driver issue.
    1. If you suspect you don't have the FTDI driver installed on your Windows computer, use the following links to download the driver:

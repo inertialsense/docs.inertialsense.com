@@ -1,9 +1,9 @@
 # Data Logging/Plotting
-Inertial Sense provides data a logging capability in the EvalTool, CLTool, and SDK (C++) that can record data in binary, comma separated (.CSV), and KML file formats.  This logging capability is useful for storing, replaying, and analyzing data.
+Inertial Sense provides a data logging capability in the EvalTool, CLTool, and SDK (C++) that can record data in binary, comma separated (.CSV), and KML file formats.  This logging capability is useful for storing, replaying, and analyzing data.
 
 ## Data Log Types
 
-### Comma Seperated Values (`*.csv`)
+### Comma Separated Values (`*.csv`)
 
 The comma separated value (.csv) file format can be imported into many software packages, including Excel, Matlab, and Python.
 
@@ -26,7 +26,7 @@ KML is a file format used to display geographic data in an Earth browser such as
 </tr>
 <tr>
     <td><b>Advantages</b></td>
-    <td>Allows logging of all data/packet formats.  Preserves all data in the original form as communicated over serial port. Can be logged by writting serial port data to file, no parsing needed.</td>
+    <td>Allows logging of all data/packet formats.  Preserves all data in the original form as communicated over serial port. Can be logged by writing serial port data to file, no parsing needed.</td>
     <td>Optimized for real-time data logging.</td>
 </tr>
 <tr>
@@ -49,7 +49,7 @@ This section outlines the Inertial Sense binary data log types known as raw data
 ### File
 
 The data log file name has the format _LOG_SNXXXXX_YYYYMMDD_HHMMSS_CNT.dat_ which contains the device
-serial number, date, time, and log file count. The serial data log file formats is  `.dat`. This log consist of files containing series of data Chunks.
+serial number, date, time, and log file count. The serial data log file format is `.dat`. This log consists of files containing a series of data Chunks.
 
 ![DataLogFile](../images/DataLogFile.png)
 
