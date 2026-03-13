@@ -1,7 +1,7 @@
 ## **RTK Base Configuration**
 
 !!! Note
-		 If using an **NTRIP** service or **3rd Party Base Station** instead of your own base station, please skip this page and see the [**NTRIP**](../rtk_ntrip) page or reference the setup instructions for the 3rd Party Base Station.  **NTRIP services** do not require additional setup.
+		 If using an **NTRIP** service or **3rd Party Base Station** instead of your own base station, please skip this page and see the [**NTRIP**](rtk_ntrip.md) page or reference the setup instructions for the 3rd Party Base Station.  **NTRIP services** do not require additional setup.
 
 An essential part of an RTK system is the Base Station which supplies correction messages from a known, surveyed location to the RTK Rover. The µINS Rover supports receiving RTCM3 and UBLOX correction messages.
 

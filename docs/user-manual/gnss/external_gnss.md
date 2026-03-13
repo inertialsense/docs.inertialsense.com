@@ -37,7 +37,7 @@ The external NMEA GNSS receiver can be connected to Serial 0, Serial 1, and Seri
 
 The recommended protocol with the IMX and ZED-F9P receiver is the uBlox binary protocol.  However, the ZED-F9 can operate using NMEA protocol if necessary.  The following steps can be used to enable NMEA protocol output on the ublox ZED-F9P receiver. 
 
-1. Enable NMEA output using the [u-blox u-center]( https://www.u-blox.com/en/product/u-center ) application.  
+1. Enable NMEA output using the [u-blox u-center](https://www.u-blox.com/en/product/u-center) application.  
    - **Set the configuration**: (ublox u-center menu -> View -> Configuration View) change the following.  You must press the "Send" button to apply each change.
      - **PRT (Ports)** - Set Baudrate to match the GPS port baudrate (i.e. ser1BaudRate 921600)
      - **PRT (Ports)** - Enable NMEA on the connected port/UART
