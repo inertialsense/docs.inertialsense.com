@@ -98,7 +98,7 @@ The following outlines differences in the IG-1.x hardware versions.
 
 ## Hardware Design
 
-### Recommend PCB Footprint and Layout
+### Recommended PCB Footprint and Layout
 
 The default forward direction is indicated in the PCB footprint figure and on the silkscreen as the X axis. The forward direction is reconfigurable in software as necessary.
 

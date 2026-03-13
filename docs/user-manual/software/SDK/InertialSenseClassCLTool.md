@@ -33,7 +33,7 @@ InertialSense inertialSenseInterface(cltool_dataCallback);
 
 ### Step 2: Open serial port
 
-Open the serial by specifying the com port number, buadrate, and  and The serial port used for communications
+Open the serial port by specifying the com port number, baud rate, and the serial port used for communications
 
 ```C++
 if (!inertialSenseInterface.Open(g_commandLineOptions.comPort.c_str(),

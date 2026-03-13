@@ -60,7 +60,7 @@ The following are recommended components for the typical application. Equivalent
 
 | Designator | Manufacturer | Manufacturer # | Description                        |
 | ---------- | ------------ | -------------- | ---------------------------------- |
-| BAT1       | Panasonic    | ML-614S/FN     | BATTERY LITHIMU 3V RECHARGABLE SMD |
+| BAT1       | Panasonic    | ML-614S/FN     | BATTERY LITHIUM 3V RECHARGEABLE SMD |
 | D1         | Panasonic    | DB2J31400L     | DIODE SCHOTTKY 30V 0.03A SMINI2    |
 | R1         |              |                | RES 1.00K OHM 1/16W 1%             |
 | C1         |              |                | CAP CER .10UF 50V X7R 10%          |
@@ -78,7 +78,7 @@ The IMX-6 can be reflow soldered. Reflow information can be found in the [Reflow
 
 ### Tape Packaging
 
-The IMX-6 modules are available in **cut tape** as well as **tape and reel** packaging.  The follow image shows the feed direction and illustrates the orientation of the IMX-6 module on the tape:
+The IMX-6 modules are available in **cut tape** as well as **tape and reel** packaging.  The following image shows the feed direction and illustrates the orientation of the IMX-6 module on the tape:
 
 ![IMX-6 Tape](images/IMX_Tape.png)
 The feed direction to the pick and place pick-up is shown by the orientation of the IMX-6 pin 1 location. With pin 1 location on the bottom of the tape, the feed direction into the pick and place pick-up is from the reel (located to the right of the figure) towards the left.
@@ -94,7 +94,7 @@ The GPS-1 modules are delivered in quantities of 100 pieces on a reel. -->
 
 ## Hardware Design
 
-### Recommend PCB Footprint and Layout
+### Recommended PCB Footprint and Layout
 
 A single ceramic 100nF decoupling capacitor should be placed between and in close proximity to the IMX pins 21 and 22 (GND and Vcc).  It is recommended that this capacitor be on the same side of the PCB as the IMX and that there not be any vias between the capacitor and the Vcc and GND pins. The default forward direction is indicated in the PCB footprint figure and on the IMX shield as the X axis. The forward direction is reconfigurable in software as necessary.
 

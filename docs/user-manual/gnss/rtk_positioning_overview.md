@@ -4,7 +4,7 @@
 
 Real Time Kinematic (RTK) is a precision satellite positioning technique which utilizes a base station to transmit position corrections to a receiver. The Inertial Sense RTK solution provides centimeter level position accuracy.
 
-To use RTK, a base station, arover (receiver), and a method to send corrections from the base to the rover are required.
+To use RTK, a base station, a rover (receiver), and a method to send corrections from the base to the rover are required.
 
 ![](images/RTKDiagram.png)
 
@@ -22,7 +22,7 @@ Any of the following devices can be used as a RTK base station. All Inertial Sen
 <!-- (access point mode or over an existing network/hotspot). -->
 <!-- (up to several km line-of-sight) -->
 
-- **Inertial Sense µINS module, EVB 1 or Rugged** - Sends corrections on either serial port or USB that can then be forwarded to a rover using a communication method of choice.
+- **Inertial Sense IMX module, EVB-1, or Rugged** - Sends corrections on either serial port or USB that can then be forwarded to a rover using a communication method of choice.
 
 - **3rd Party Base Station** - e.g. Emlid Reach Receiver.  
 
@@ -40,13 +40,13 @@ The following configurations can be used for the RTK rover:
 1. **Direct Serial** - Using USB, RS232, RS422/485, or TTL to pass corrections from Base to Rover.
 2. **Radio Link** - For example, Digi Xbee to send RTK corrections. Other communication methods such as Bluetooth may also work for the chosen application.
 3. **NTRIP** - Transmits RTK correction data over the Internet. To receive messages with NTRIP, the user must supply a URL, port number, and mount point . Often a username and password are also required.
-4. **TCP/IP** - A protocol for communicating directly between computers. In order to receive messages using TCP/IP, an address (IP Address or DNS) must be suppled to the Base where the corrections will be transmitted.
+4. **TCP/IP** - A protocol for communicating directly between computers. In order to receive messages using TCP/IP, an address (IP Address or DNS) must be supplied to the Base where the corrections will be transmitted.
 
 ## **How to Know RTK is Working**
 
 ### **Using the EvalTool**
 
-1. Connect the µINS Rover to a computer with the EvalTool running. Open the comport for the unit in the Settings > Serial Ports.
+1. Connect the IMX Rover to a computer with the EvalTool running. Open the comport for the unit in the Settings > Serial Ports.
 2. Navigate to Settings > RTK.
 3. Under the Status section, RTK functionality can be verified in 3 ways:
    - Status field will show Single. Over the course of several minutes this status will change to Float then Fix.
@@ -57,7 +57,7 @@ The following configurations can be used for the RTK rover:
 
 ### **Using the CLTool**
 
-1. Connect the µINS Rover to a computer with the CLTool running.
+1. Connect the IMX Rover to a computer with the CLTool running.
 2. Include the argument -msgPresetPPD in the CLTool command.
 3. Observe the DID_GPS_RTK_NAV message, Status: 0x******** (Single) over the course of several minutes this will change to (Float) then (Fix).
 
@@ -84,7 +84,7 @@ INS_STATUS_NAV_FIX_STATUS(DID_INS_1.insStatus) == GPS_NAV_FIX_POSITIONING_RTK_FI
 DID_GPS1_POS.status & GPS_STATUS_FLAGS_GPS1_RTK_POSITION_VALID
 ```
 
-RTK precision positioning fix is indicated is indicated when the RTK-Pos radio button turns purple in the EvalTool INS tab.
+RTK precision positioning fix is indicated when the RTK-Pos radio button turns purple in the EvalTool INS tab.
 
 <center>
 

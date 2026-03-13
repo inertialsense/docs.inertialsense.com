@@ -31,7 +31,7 @@ A ground plane width of 8 to 12 cm is typically large enough for most applicatio
 
 <!-- ## Recommended GNSS Components
 
-The following components are optional components that may be used with the μINS, μAHRS, and μIMU.  
+The following components are optional components that may be used with the IMX.  
 
 Frequencies: GPS (L1), GLONASS (G1), Beidou (B1), and Galileo (E1).
 

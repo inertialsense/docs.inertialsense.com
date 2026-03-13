@@ -6,7 +6,7 @@
 
 </center>
 
-The Inertial Sense Rugged-1 is a ruggedized carrier board and case for the Inertial Sense µINS, µAHRS, or µIMU module. The Rugged-1 has similar functions compared to the EVB-1, but in a more compact form factor with the following added features:
+The Inertial Sense Rugged-1 is a ruggedized carrier board and case for the Inertial Sense IMX module. The Rugged-1 has similar functions compared to the EVB-1, but in a more compact form factor with the following added features:
 
 - Dual antenna ports for GPS compassing
 - Integrated CAN transceiver
@@ -17,7 +17,7 @@ For the purposes of basic evaluation, the easiest interface available on the rug
 
 ### GPS Antenna Ports
 
-If using GPS with the module, connect an appropriate antenna to MMCX port ***1***. If the module is used for RTK compassing, connect a second antenna to MMCX port ***2***.  MMCX port ***1*** is for ***GPS1*** and MMXC port ***2*** is ***GPS2***.  These port were labeled ***A*** and ***B*** on older Rugged-1 units.
+If using GPS with the module, connect an appropriate antenna to MMCX port ***1***. If the module is used for RTK compassing, connect a second antenna to MMCX port ***2***.  MMCX port ***1*** is for ***GPS1*** and MMCX port ***2*** is ***GPS2***.  These ports were labeled ***A*** and ***B*** on older Rugged-1 units.
 
 ## Pinout
 
@@ -45,7 +45,7 @@ If using GPS with the module, connect an appropriate antenna to MMCX port ***1**
 
 <sup>3</sup>Serial 0 is configured with SMT jumpers for TTL, RS232 (default), or RS485/RS422.
 
-<sup>4</sup>Only available with uINS-3.2 and later.
+<sup>4</sup>Only available with IMX-3.2 and later.
 
 ## Jumpers
 
@@ -119,8 +119,8 @@ System input voltage monitor surface mount resistors and capacitor (R2, R3, and 
 | Part                    | Manufacturer        | Manufacturer #       | Description                                   |
 | ----------------------- | ------------------- | -------------------- | --------------------------------------------- |
 | Main Connector          | Harwin              | G125-FC11205L0-0150L | 1.25MM F/F 12POS 26AWG 150MM                  |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adaptor cable.     |
-| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adaptor cable. |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adapter cable.     |
+| GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adapter cable. |
 
 ## Using with Inertial Sense Software
 

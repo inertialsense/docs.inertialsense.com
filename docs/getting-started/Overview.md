@@ -4,7 +4,7 @@
 ![IMX-5](images/rugged_thumb_mmcx1.png)
 
 
-The Inertial Sense Development platform was designed to provide a method of rapid evalution and integration. The following steps will provide a simple method to begin basic integration.
+The Inertial Sense Development platform was designed to provide a method of rapid evaluation and integration. The following steps will provide a simple method to begin basic integration.
 
 ## 1. Install Software
 

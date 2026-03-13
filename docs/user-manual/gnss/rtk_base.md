@@ -1,9 +1,9 @@
 ## **RTK Base Configuration**
 
 !!! Note
-		 If using an **NTRIP** service or **3rd Party Base Station** instead of your own base station, please skip this page and see the [**NTRIP**](../rtk_ntrip) page or reference the setup instructions for the 3rd Party Base Station.  **NTRIP services** do not require additional setup.
+		 If using an **NTRIP** service or **3rd Party Base Station** instead of your own base station, please skip this page and see the [**NTRIP**](rtk_ntrip.md) page or reference the setup instructions for the 3rd Party Base Station.  **NTRIP services** do not require additional setup.
 
-An essential part of an RTK system is the Base Station which supplies correction messages from a known, surveyed location to the RTK Rover. The µINS Rover supports receiving RTCM3 and UBLOX correction messages.
+An essential part of an RTK system is the Base Station which supplies correction messages from a known, surveyed location to the RTK Rover. The IMX Rover supports receiving RTCM3 and UBLOX correction messages.
 
 
 ![](images/RTKDiagram_Base_Station.png)
@@ -11,7 +11,7 @@ An essential part of an RTK system is the Base Station which supplies correction
 ## **Surveying In Base Position**
 
 !!! Important
-​Accuracy of the base position directly effects the rover absolute position accuracy. It is critical that the base position be surveyed in for rover absolute position accuracy.
+​Accuracy of the base position directly affects the rover absolute position accuracy. It is critical that the base position be surveyed in for rover absolute position accuracy.
 
 The base survey cannot happen at the same time as base correction output messages are enabled.  If a survey is started the base correction output will automatically be disabled.
 
@@ -69,14 +69,14 @@ The Base IMX must be configured to stream base corrections to the radio so it ca
 
 #### [EvalTool](../software/evaltool.md) 
 
-1. Open the COM port for the µINS under Settings > Serial Ports.
+1. Open the COM port for the IMX under Settings > Serial Ports.
 2. Navigate to Settings > RTK > Base Mode.
 3. Under "Correction Output", find the fields for serial ports 0, 1, or USB. Select the serial port from which the corrections will be transmitted. This port must also be connected to the radio. Choose one of the options listed below. Leave the unused serial port off.
    - "GPS1 - RTCM3": *Output standard RTCM3 messages.*
    - "GPS1 - uBlox": *Output uBlox messages. This will provide more accuracy but requires significantly more bandwidth.*
 4. Change the "Data Rate(ms)" field. This determines how many milliseconds pass between message outputs (e.g. Data Rate(ms) = 1,000 means one message/second). It is usually best to match the startupGPSDtMs value found in DID_FLASH_CONFIG.
-5. In the "Position" section, a the Base Station position is required so that it can transmit accurate corrections. Please refer to [Surveying In Base Position](#surveying-in-base-position) if the base station location is unknown.
-6. Click Apply, and reset the µINS. The unit will now start up in Base Station mode. Verify the base station is working by looking in the section labeled "Status". It will display the serial port of the radio and the message type. 
+5. In the "Position" section, the Base Station position is required so that it can transmit accurate corrections. Please refer to [Surveying In Base Position](#surveying-in-base-position) if the base station location is unknown.
+6. Click Apply, and reset the IMX. The unit will now start up in Base Station mode. Verify the base station is working by looking in the section labeled "Status". It will display the serial port of the radio and the message type. 
    e.g. "SER1:UBX"
 7. Navigate to Data Sets > `DID_EVB_FLASH_CFG`
    - Change `cbPreset` - This should be set to `0x3` to enable the Digi Xbee Pro SX module. 
@@ -92,9 +92,9 @@ For more information on `DID_EVB_FLASH_CFG` see [DID-descriptions](../com-protoc
 The RTK config bit must be set manually when using the CLTool. Use the following command line arguments when executing the CLTool from a prompt/terminal. 
 
 - `-c #`
-  Open the COM port of the µINS. Windows users will use the name of the COM port, e.g. COM7. Linux users must enter the path to the correct COM port, e.g. /dev/ttyUSB0.
+  Open the COM port of the IMX. Windows users will use the name of the COM port, e.g. COM7. Linux users must enter the path to the correct COM port, e.g. /dev/ttyUSB0.
 - `-baud=#`
-  Set the baud rate for communications output (Replace # with baud rate number). This number will vary depending on setup. For lower quality radios it maybe necessary to use a lower baud rate (ex: 57600).
+  Set the baud rate for communications output (Replace # with baud rate number). This number will vary depending on setup. For lower quality radios it may be necessary to use a lower baud rate (ex: 57600).
 - `-flashConfig=rtkCfgBits=0x00`
   Configure the unit to cast Base corrections. For more configuration options see [eRTKConfigBits](../com-protocol/DID-descriptions.md#rtk-configuration)
 
@@ -105,16 +105,16 @@ cltool.exe -c COM29 -baud=57600 -flashConfig=rtkCfgBits=0x80
 ```
 
 !!! warning
-    If the Base Station is not communicating properly, it maybe necessary to verify that the baud rate is set to match that of the radios used. This rate varies depending on radio type.
+    If the Base Station is not communicating properly, it may be necessary to verify that the baud rate is set to match that of the radios used. This rate varies depending on radio type.
 
 ### **TCP/IP Setup**
 
 #### **[CLTool](../software/cltool.md)**
 
-It is required to manually set the RTK config bits in the CLTool. Passed these to the CLTool when run from the command prompt/terminal. 
+It is required to manually set the RTK config bits in the CLTool. Pass these to the CLTool when run from the command prompt/terminal. 
 
 - `-c #`
-  Open the COM port of the µINS. Windows users will use the name of the COM port, e.g. COM7. Linux users must enter the path to the correct COM port, e.g. /dev/ttyUSB0.
+  Open the COM port of the IMX. Windows users will use the name of the COM port, e.g. COM7. Linux users must enter the path to the correct COM port, e.g. /dev/ttyUSB0.
 - `-baud=#`
   Set the baud rate for communications output (Replace # with baud rate number).
 - ``-flashConfig=rtkCfgBits=0x00`

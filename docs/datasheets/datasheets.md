@@ -27,12 +27,3 @@
 <object data="https://docs.inertialsense.com/datasheets/GPX-1_GNSS_Datasheet.pdf" type="application/pdf" width="700px" height="905px" >
     <embed src="https://docs.inertialsense.com/datasheets/GPX-1_GNSS_Datasheet.pdf" type="application/pdf" />
 </object>
-
-
-## uINS-3
-
-[Download Datasheet](http://docs.inertialsense.com/datasheets/uIMU_uAHRS_uINS-3_Datasheet.pdf)
-
-<object data="https://docs.inertialsense.com/datasheets/uIMU_uAHRS_uINS-3_Datasheet.pdf" type="application/pdf" width="700px" height="905px" >
-    <embed src="https://docs.inertialsense.com/datasheets/uIMU_uAHRS_uINS-3_Datasheet.pdf" type="application/pdf" />
-</object>

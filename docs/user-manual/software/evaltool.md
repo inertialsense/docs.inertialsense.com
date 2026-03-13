@@ -2,7 +2,7 @@
 
 ## Overview
 
-The EvalTool (Evaluation Tool) is a desktop GUI application that allows you to explore and test functionality of the Inertial Sense products in real-time. It has scrolling plots, 3D model representation, table views of all data, data logger, and firmware updating interface for the IMX, uAHRS, or uIMU. The EvalTool can simultaneously interface with multiple Inertial Sense devices.
+The EvalTool (Evaluation Tool) is a desktop GUI application that allows you to explore and test functionality of the Inertial Sense products in real-time. It has scrolling plots, 3D model representation, table views of all data, data logger, and firmware updating interface for the IMX. The EvalTool can simultaneously interface with multiple Inertial Sense devices.
 
 <center>
 <iframe width="800" height="450" src="https://www.youtube.com/embed/31Sv49VBa9Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -83,7 +83,7 @@ The Info Bar can be seen from any tab and shows basic connection information for
 
 ![](images/evaltool_ins_tab.png)
 
-1. Attitude Plot and Table - shows the Roll, Pitch, and Yaw values of the selected unit. Hover the cursor of the radio buttons to see more descriptions. 
+1. Attitude Plot and Table - shows the Roll, Pitch, and Yaw values of the selected unit. Hover the cursor over the radio buttons to see more descriptions. 
 1. Velocity Plot and Table - U,V,W velocities.
 1. LLA Plot and Table - Tabular values and plot of Latitude, Longitude, and Altitude.
 1. Simulation - Real-time, simulated image of the INS orientation.
@@ -152,7 +152,7 @@ This area allow users to enable streaming of various DIDs.
    | Comma separated (.csv) | Plain text file that uses specific structuring to arrange tabular data. Its basic format involves separating each data field (or cell in a table) with a comma and each record (or row) is on a new line. This simple format allows for ease in data import and export between programs that handle tabular data, such as databases and spreadsheets. |
 
    
-4. Summary Window - Shows the log directly path, the elapsed time the data log has been running, the total size of the log file, and a list currently recording DIDs with corresponding dt (time between measurements).
+4. Summary Window - Shows the log directory path, the elapsed time the data log has been running, the total size of the log file, and a list of currently recording DIDs with corresponding dt (time between measurements).
 5. File Conversion Utility - Enables you to convert the data log file type in a specified directory.  (e.g. .dat to .csv)
 
 ### Settings Tab
@@ -165,7 +165,7 @@ The Settings tab has 3 sub tabs and they are as follows:
 
 1. Open All - Opens all of the ports shown.
 2. Close All - Closes all of the ports shown.
-3. Find Devices - Determines which peripherals into your computer are Inertial Sense units, and opens those ports while closing the others.
+3. Find Devices - Determines which peripherals connected to your computer are Inertial Sense units, and opens those ports while closing the others.
 4. Baud Rate - The rate at which data will be communicated over your data channel.
 6. Update Firmware - Allows you to update your unit's firmware when an update is released from Inertial Sense.
 7. Port Status - Shows a list of all connected comports and basic information for each of them. Clicking the check box opens the port. 
@@ -174,8 +174,8 @@ The Settings tab has 3 sub tabs and they are as follows:
 
 ![](images/evaltool_settings_general_tab.png)
 
-1. Software Reset - Allows the user to issue a reset to the unit. has options for all open comports and only the currently connected unit.
-2. Zero Motion - Allows the user to informs the EKF that the system is stationary on the ground and is used to aid in IMU bias estimation which can reduce drift in the INS attitude.
+1. Software Reset - Allows the user to issue a reset to the unit. Has options for all open comports and only the currently connected unit.
+2. Zero Motion - Allows the user to inform the EKF that the system is stationary on the ground and is used to aid in IMU bias estimation which can reduce drift in the INS attitude.
 3. DID_Flash_Config - Gives the user option to disable or enable different features normally found in the "Data Sets" tab.  For more information about the Flash Config see [Data sets](../com-protocol/DID-descriptions.md#data-sets-dids).
 
 **Settings - GPS Tab** 
