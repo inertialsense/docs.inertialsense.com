@@ -170,6 +170,7 @@ nav:
     - Interference: user-manual/reference/interference.md
   - User Manual PDF: user-manual/reference/user_manual_pdf.md
   - FAQ: user-manual/faq.md
+  - Glossary: user-manual/glossary.md
   - Troubleshooting: 
     - Firmware: user-manual/troubleshooting/firmware.md
     - GNSS: user-manual/troubleshooting/gnss.md
