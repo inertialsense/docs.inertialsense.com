@@ -78,7 +78,7 @@ For the Rover to receive messages from an NTRIP Caster, it must be connected to 
 
 #### [EvalTool](../software/evaltool.md)
 
-Follow the following steps in order to set up the Rover to receive messages through NTRIP:
+Follow these steps to set up the Rover to receive messages through NTRIP:
 
 1. Navigate to Settings > RTK > Rover Mode.
 2. Change the first drop-down menu to "RTK - GPS1" 
