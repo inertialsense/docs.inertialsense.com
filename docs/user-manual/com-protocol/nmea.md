@@ -93,7 +93,7 @@ $ASCE,0,PINS1,0*0D\r\n
 | Message             | Data (Output Rate)** |
 | ------------------- | ------- |
 | $ASCE,0,6,1,7,1,8,1,10,1,14,1*04\r\n | GGA, GLL, GSA, ZDA, GSV (all at 5Hz) |
-| $ASCE,0,5,2,2,1,7,1*0A\r\n | PINS2 (31.25 Hz), PPIMU (62.5Hz), GGA (5Hz) |
+| $ASCE,0,5,2,2,1,7,1*0A\r\n | PINS2 (35.71Hz), PPIMU (71.43Hz), GGA (5Hz) |
 | $ASCE,0,0,1*09\r\n  | PIMU    |
 | $ASCE,0,1,1*08\r\n  | PPIMU   |
 | $ASCE,0,2,1*0B\r\n  | PRIMU   |
