@@ -130,7 +130,7 @@ The EVB-2 demonstrates SPI interface with the IMX.  The EVB-2 ATSAM-E70 (E70) pr
 If every other character from a packet is lost it might be that the CS line is being toggled after every byte.
 
 
-The uINS-3.1 uses a USART SPI peripherial which requires a minimum delay of one t<sub>bit</sub> (t<sub>bit</sub> being the nominal time required to transmit a bit) spacing between characters sent. Reading bytes one by one may cause signifacnt time delays when streaming data. Depending on the ammount of data streaming, the uINS mable to keep up and the buffer could be overflow. Single message requests should work properly, but streaming probably will not work well. If the master hardware can't handle the delay, the uINS 3.2 hardware should be used.
+The IMX-3.1 uses a USART SPI peripherial which requires a minimum delay of one t<sub>bit</sub> (t<sub>bit</sub> being the nominal time required to transmit a bit) spacing between characters sent. Reading bytes one by one may cause signifacnt time delays when streaming data. Depending on the ammount of data streaming, the IMX may not be able to keep up and the buffer could overflow. Single message requests should work properly, but streaming probably will not work well. If the master hardware can't handle the delay, the IMX-3.2 hardware should be used.
 
 
 

@@ -36,7 +36,7 @@ rotation about one axis.
 in standard INS output messages (`DID_INS_1`, `DID_INS_2`, `DID_INS_3`, and `DID_INS_4`).
 2. `DID_MAG_CAL.progress` is 100.
 
-Recalibration progress is indicated as a percentage (0-100%) is indicated can be observed from variable
+Recalibration progress, indicated as a percentage (0-100%), can be observed in the variable
 `DID_MAG_CAL.progress`. The recalibration process can be canceled and the prior calibration restored anytime by setting `DID_MAG_CAL.enMagRecal` = `MAG_RECAL_MODE_ABORT` (101).
 
 The “Mag used” indicator in the EvalTool INS tab will be green when magnetometer data is being fused into the solution, black when not being fused into the solution, and red during recalibrating.
@@ -66,7 +66,7 @@ DID_FLASH_CONFIG.sysCfgBits &= ~SYS_CFG_BITS_AUTO_MAG_RECAL;
 To mitigate the need for recalibration (completely replace calibration data), continuous calibration improves the magnetometer calibration slowly over time. Continuous calibration always runs in the background.
 
 ## Magnetometer Calibration Settings
-The magnetometer calibration algorithm can produce higher quality calibrations when data more data is collected across multiple axes of rotation. However, there are use cases where data collection beyond a single axis is impractical if not impossible. To address this issue there is a setting in the flash to configure the data requirement threshold for magnetometer calibration. The available settings include:
+The magnetometer calibration algorithm can produce higher quality calibrations when more data is collected across multiple axes of rotation. However, there are use cases where data collection beyond a single axis is impractical if not impossible. To address this issue there is a setting in the flash to configure the data requirement threshold for magnetometer calibration. The available settings include:
 
 * Single Axis Calibration – This setting requires a full rotation in the yaw axis (relative to earth) to
   determine the calibration. Additional data that is collected via motion on other axes is used but not

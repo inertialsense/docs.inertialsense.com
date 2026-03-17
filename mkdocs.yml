@@ -26,18 +26,18 @@ theme:
 
 plugins:
     - search
-  # - with-pdf:       # https://pypi.org/project/mkdocs-with-pdf/
-  #     enabled_if_env: ENABLE_PDF_EXPORT
-  #     author: Inertial Sense, Inc.
-  #     output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
-  #     copyright: ©2022
-  #     cover: true
-  #     cover_title: User Manual
-  #     cover_subtitle: Autonomous Navigation Solutions
-  #     toc_title: Table of Contents
-  #     # debug_html: true
-  #     # show_anchors: true
-  #     # verbose: true
+    - with-pdf:       # https://pypi.org/project/mkdocs-with-pdf/
+        enabled_if_env: ENABLE_PDF_EXPORT
+        author: Inertial Sense, Inc.
+        output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
+        copyright: ©2022
+        cover: true
+        cover_title: User Manual
+        cover_subtitle: Autonomous Navigation Solutions
+        toc_title: Table of Contents
+        # debug_html: true
+        # show_anchors: true
+        # verbose: true
     # - pdf-export:     # https://pypi.org/project/mkdocs-pdf-export-plugin/
     #     combined: true
     #     combined_output_path: user-manual/reference/user_manual_pdf/InertialSenseDocs.pdf
@@ -123,10 +123,16 @@ nav:
       - UART: user-manual/imx/application-config/UART.md
       - World Magnetic Model: user-manual/imx/application-config/world_magnetic_model.md
       #- Assisted-GPS: user-manual/imx/application-config/assisted-gnss.md
+    - System Status: user-manual/reference/IMX_system_status.md
+    - Magnetometer: user-manual/reference/magnetometer.md
     - Dead Reckoning:
       - Overview: user-manual/imx/dead-reckoning/dead_reckoning.md
       - Examples: user-manual/imx/dead-reckoning/dead_reckoning_examples.md
     - IMU Shock Rejection: user-manual/imx/shock-rejection/imu_shock_rejection.md
+    - IMX-5 Bootloader: user-manual/reference/bootloader.md
+    - Troubleshooting: 
+      - IMX-5 Chip Erase: user-manual/imx/troubleshooting/imx5_chip_erase.md
+      - IMX-5 Bootloader: user-manual/imx/troubleshooting/imx5_bootloader.md
   - GPX:
     - Configuration: user-manual/gpx/configuration.md
     - GPX System Status: user-manual/reference/GPX_system_status.md
@@ -158,20 +164,16 @@ nav:
     - Logging: user-manual/logging-plotting/data_logging.md
     - Plotting: user-manual/logging-plotting/data_plotting.md
   - Reference:
-    - Bootloader: user-manual/reference/bootloader.md
     - Coordinate Frames: user-manual/reference/coordinate_frames.md
     - Definitions: user-manual/reference/definitions.md
     - IMU Specifications: user-manual/reference/imu_specifications.md
     - Interference: user-manual/reference/interference.md
-    - Magnetometer: user-manual/reference/magnetometer.md
-    - System Status: user-manual/reference/IMX_system_status.md
   - User Manual PDF: user-manual/reference/user_manual_pdf.md
   - FAQ: user-manual/faq.md
+  - Glossary: user-manual/glossary.md
   - Troubleshooting: 
     - Firmware: user-manual/troubleshooting/firmware.md
-    - Chip Erase: user-manual/troubleshooting/chip_erase.md
     - GNSS: user-manual/troubleshooting/gnss.md
-    - IMX Bootloader: user-manual/troubleshooting/imx_bootloader.md
     
     
     

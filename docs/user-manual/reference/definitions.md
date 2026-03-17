@@ -20,7 +20,7 @@ The initial bias will be different for each power up of the IMU due to signal pr
 
 ## IMU Bias Stability (In-Run Bias)
 
-Describes the amount of bias change during any one run-time following poweron.  This change is caused by temperature, time, and mechanical stress.  The INS navigation filter estimates the IMU biases in order to improve the state estimate.  The IMU bias stability directly impacts the accuracy of the INS output.   
+Describes the amount of bias change during any one run-time following power-on.  This change is caused by temperature, time, and mechanical stress.  The INS navigation filter estimates the IMU biases in order to improve the state estimate.  The IMU bias stability directly impacts the accuracy of the INS output.   
 
 ## Random Walk
 

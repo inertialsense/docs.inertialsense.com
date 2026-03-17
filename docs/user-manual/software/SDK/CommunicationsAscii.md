@@ -1,7 +1,7 @@
 # ASCII Communications Example Project
 
 This [IS Communications Example](https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects/Ascii) project demonstrates binary communications with the<br>
-<a href="https://inertialsense.com/products">Inertial Sense Products</a> (IMX, uAHRS, and uIMU) using the Inertial Sense SDK. See the<br>
+<a href="https://inertialsense.com/products">Inertial Sense Products</a> (IMX) using the Inertial Sense SDK. See the<br>
 [ASCII protocol](../../com-protocol/nmea.md) section for details on the ASCII packet structures.
 
 ## Files

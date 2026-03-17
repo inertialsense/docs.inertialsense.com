@@ -1,5 +1,8 @@
 # Hardware Integration: IG-2 (IMX5 + GPX1)
 
+!!! warning
+    The IMX-5 series of products is approaching its End of Life. [Full Notification](http://docs.inertialsense.com/datasheets/IMX-5_EOL_Notice_v3_1.pdf).
+
 <center>
 
 ![IG-2](../images/ig-2.0.png)
@@ -78,7 +81,7 @@ The IG-2 module and IG-2 header H1 have the same pinout assignment for pins 1-14
 
 ## Hardware Design
 
-### Recommend PCB Footprint and Layout
+### Recommended PCB Footprint and Layout
 
 The default forward direction is indicated in the PCB footprint figure and on the silkscreen as the X axis. The forward direction is reconfigurable in software as necessary.
 

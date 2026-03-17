@@ -8,19 +8,6 @@ IEEE-STD-952-1997 defines IRBS as the minima on the Allan Variance curve. The fo
 
 ![RUG-3-IMX-5 Gyro Allan Variance](images/rug-3-imx-5-allan-variance-gyro.png)
 
-## Why the name change from *uINS* to *IMX*?
-
-The name **IMX** means inertial measurement device with extensible capabilities.  IMX is a derivative of the acronym **IMU**.  Our flagship product was named the **uINS** which means miniature Inertial Navigation System (INS).  This name has helped others to recognize the inertial navigation functionality.  However, we felt that a more generic name would better cover all of the various functionality and capabilities contained in the **IMX**, namely: 
-
-- Tactical grade Inertial Measurement Unit (IMU)
-- Barometer and magnetometer sensors
-- Vertical Reference Unit (VRU)
-- Attitude Heading Reference System (AHRS)
-- GNSS aided Inertial Navigation System (GNSS-INS or GPS-INS)
-- RTK-GNSS aided INS
-- Dual-GNSS (GPS compassing) aided INS
-- Ground vehicle Dead Reckoning system
-
 ## What is Inertial Navigation?
 
 Inertial navigation is a technique of estimating position, velocity, and orientation (roll, pitch, heading) by integrating IMU inertial motion data from gyros and accelerometers to continuously calculate the dead reckoning position.  The inertial sensors are supplemented with other sensors such as GPS, altimeter, and magnetometer.  Inertial navigation is commonly used on moving vehicles such as mobile robots, ships, aircraft, submarines, guided missiles, and spacecraft.   
@@ -53,11 +40,11 @@ The **AHRS** sensor has all the capabilities of the IMU plus data on roll, pitch
 
 **I need geographic positional data. Which sensor contains a GPS?**
 
-If the AHRS doesn’t get you what you need, packaging this with one or more GPS sensors will give you the geographic positional data you need. Like the AHRS, your sensor or should provide some sort of “sensor fusion” by combining all the data from each of these sensors to give a more accurate and holistic view of your rover’s state.
+If the AHRS doesn't get you what you need, packaging this with one or more GPS sensors will give you the geographic positional data you need. Like the AHRS, your sensor should provide some sort of "sensor fusion" by combining all the data from each of these sensors to give a more accurate and holistic view of your rover's state.
 
 **What do I need to get started?**
 
-We recommend beginning with some sort of Development Kit. Ours comes with all of the necessary components to simplify testing and integration: the sensor you selected, the needed cable and antennas for connectivity, the firmware & software, and 3-5 hrs of complementary engineering support from a team of Inertial Sense engineers. 
+We recommend beginning with some sort of Development Kit. Ours comes with all of the necessary components to simplify testing and integration: the sensor you selected, the needed cable and antennas for connectivity, the firmware & software, and 3-5 hrs of complimentary engineering support from a team of Inertial Sense engineers.
 
 Additionally, Inertial Sense provides customers with a custom datalogger, called the EvalTool. An easy to use data logging software to test and troubleshoot your new sensor is **essential** to your sensor integration experience.
 
