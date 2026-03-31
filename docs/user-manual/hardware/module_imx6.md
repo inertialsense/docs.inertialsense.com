@@ -22,8 +22,8 @@
 | 0,11,21 | GND                                           | -    | Supply ground |
 | 1    | USB_P                                         | I/O  | USB Data Positive Line                                       |
 | 2    | USB_N                                         | I/O  | USB Data Negative Line                                       |
-| 3    | VBKUP                                  | I   | GNSS backup supply voltage. (1.4V to 3.6V) enables GNSS hardware backup mode for hot or warm startup (faster GNSS lock acquisition).  MUST connect VBKUP to VCC if no backup battery is used. |
-| 4    | G1/Rx2/RxCAN/SCL  | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line |
+| 3    | VBKUP                                  | I   | Battery backup feature (reserved for future use, not currently supported) enabling deep-sleep and warm/hot start operation. Connect VBKUP to a 1.4V–3.6V backup battery. If no backup battery is used, VBKUP **must** be connected to VCC. |
+| 4       | G1/Rx2/RxCAN/SCL  | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line |
 | 5    | G2/Tx2/TxCAN/SDA/STRB | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | 6    | G6/Rx1/MOSI                                   | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI                        |
 | 7    | G7/Tx1/MISO                                   | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO                       |
@@ -50,28 +50,30 @@
 
 ## Application
 
-### Serial Interface
+### UART Interface
 
-The following schematic demonstrates a typical setup for the IMX-6 module. A rechargeable lithium backup battery enables the GNSS to perform a warm or hot start. If no backup battery is connected, VBKUP (pin 3) should be connected to VCC and the module will perform a cold start on power up. If the system processor is not capable of updating the IMX firmware, it is recommended to add a header to an alternate IMX serial port for firmware updates via an external computer. The reset line is not necessary for typical use.
+The following schematic demonstrates a typical setup for the IMX-6 module.  If the system processor is not capable of updating the IMX firmware, it is recommended to add a header to an alternate IMX serial port for firmware updates via an external computer. The reset line is not necessary for typical use.
 
-![](../images/interface_serial.svg)
+![](../images/interface_uart_imx6.svg)
 
-The following are recommended components for the typical application. Equivalent or better components may be used.
+### USB Interface
 
-| Designator | Manufacturer | Manufacturer # | Description                        |
-| ---------- | ------------ | -------------- | ---------------------------------- |
-| BAT1       | Panasonic    | ML-614S/FN     | BATTERY LITHIUM 3V RECHARGEABLE SMD |
-| D1         | Panasonic    | DB2J31400L     | DIODE SCHOTTKY 30V 0.03A SMINI2    |
-| R1         |              |                | RES 1.00K OHM 1/16W 1%             |
-| C1         |              |                | CAP CER .10UF 50V X7R 10%          |
+To use the USB interface, VUSB (pin 30) must be connected to +3.3V. 
 
 ### SPI Interface
 
 The SPI interface is enabled by holding the pin 10 low during boot up.
 
-![](../images/interface_spi.svg)
+![](../images/interface_spi_imx6.svg)
+
+### GNSS Interface
+
+The following is an example of how to interface the IMX with a GNSS receiver. 
+
+![](C:\Users\WaltJohnson\imx\docs\docs\user-manual\hardware\images\gpx1_imx6_typical_app.svg)
 
 ## Manufacturing
+
 ### Soldering
 
 The IMX-6 can be reflow soldered. Reflow information can be found in the [Reflow Information](reflow.md) page of this manual.
