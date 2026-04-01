@@ -54,7 +54,7 @@
 
 The following schematic demonstrates a typical setup for the IMX-6 module.  If the system processor is not capable of updating the IMX firmware, it is recommended to add a header to an alternate IMX serial port for firmware updates via an external computer. The reset line is not necessary for typical use.
 
-![](../images/interface_uart_imx6.svg)
+![IMX UART Interface](../images/interface_uart_imx6.svg)
 
 ### USB Interface
 
@@ -64,13 +64,13 @@ To use the USB interface, VUSB (pin 30) must be connected to +3.3V.
 
 The SPI interface is enabled by holding the pin 10 low during boot up.
 
-![](../images/interface_spi_imx6.svg)
+![IMX SPI Interface](../images/interface_spi_imx6.svg)
 
 ### GNSS Interface
 
 The following is an example of how to interface the IMX with a GNSS receiver. 
 
-![](C:\Users\WaltJohnson\imx\docs\docs\user-manual\hardware\images\gpx1_imx6_typical_app.svg)
+![IMX GNSS Interface](../hardware/images/gpx1_imx6_typical_app.svg)
 
 ## Manufacturing
 
@@ -114,8 +114,6 @@ Open source hardware design files, libraries, and example projects for the IMX m
 
 ### Reference Design Projects
 
-The EVB-2 and IG-1 circuit board projects serve as reference designs that illustrate implementation of the IMX PCB module.
+The IG-2.1 circuit board project serves as reference designs that illustrate implementation of the IMX PCB module.
 
-[EVB-2 evaluation board](https://github.com/inertialsense/IS-hdw/tree/main/Products/EVB-2/EVB-2-1)
-
-[IG-1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-1)
+[IG-2.1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-2/IG-2-1)
