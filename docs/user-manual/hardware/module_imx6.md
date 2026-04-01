@@ -22,7 +22,7 @@
 | 0,11,21 | GND                                           | -    | Supply ground |
 | 1    | USB_P                                         | I/O  | USB Data Positive Line                                       |
 | 2    | USB_N                                         | I/O  | USB Data Negative Line                                       |
-| 3    | VBKUP                                  | I   | Battery backup feature (reserved for future use, not currently supported) enabling deep-sleep and warm/hot start operation. Connect VBKUP to a 1.4V–3.6V backup battery. If no backup battery is used, VBKUP **must** be connected to VCC. |
+| 3    | VBKUP                                  | I   | Optional battery backup feature (reserved for future use, not currently supported) intended to enable deep-sleep and warm/hot start operation in future firmware. For future use, VBKUP may be connected to a 1.4V–3.6V backup battery. If no backup battery is used, VBKUP **must** be connected (tied) to VCC. |
 | 4       | G1/Rx2/RxCAN/SCL  | I/O  | GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line |
 | 5    | G2/Tx2/TxCAN/SDA/STRB | I/O  | GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | 6    | G6/Rx1/MOSI                                   | I/O  | GPIO6<br /> Serial 1 input (TTL)<br /> SPI MOSI                        |
