@@ -114,6 +114,6 @@ Open source hardware design files, libraries, and example projects for the IMX m
 
 ### Reference Design Projects
 
-The IG-2.1 circuit board project serves as reference designs that illustrate implementation of the IMX PCB module.
+The IG-2.1 circuit board project serves as a reference design that illustrates implementation of the IMX PCB module.
 
 [IG-2.1 module](https://github.com/inertialsense/IS-hdw/tree/main/Products/IG-2/IG-2-1)
