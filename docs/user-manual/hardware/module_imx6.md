@@ -58,7 +58,7 @@ The following schematic demonstrates a typical setup for the IMX-6 module.  If t
 
 ### USB Interface
 
-To use the USB interface, VUSB (pin 30) must be connected to +3.3V. 
+To use the USB interface, VUSB (pin 30) must be supplied with 3.0 V to 3.6 V (typically +3.3 V). If USB functionality is not required, VUSB may be left floating. 
 
 ### SPI Interface
 
