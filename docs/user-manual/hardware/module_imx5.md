@@ -53,7 +53,7 @@
 
 The following schematic demonstrates a typical setup for the IMX-5 module.  If the system processor is not capable of updating the IMX firmware, it is recommended to add a header to an alternate IMX serial port for firmware updates via an external computer. The reset line is not necessary for typical use.
 
-![](../images/interface_uart.svg)
+![IMX-5 UART interface](../images/interface_uart.svg)
 
 ### SPI Interface
 
