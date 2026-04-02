@@ -33,10 +33,10 @@
 | 7    | G7/Tx1/MISO                                   | I/O  | GPIO7<br /> Serial 1 output (TTL)<br /> SPI MISO                       |
 | 8    | G8/CS/STRB                                  | I/O  | GPIO8<br /> SPI CS<br /> Strobe time sync input                       |
 | 9    | G5/SCLK/STRB                                | I/O  | GPIO5<br /> SPI SCLK<br /> Strobe time sync input                     |
-| 10   | G9/nSPI_EN/STRB/DRDY             | I/O  | GPIO9<br />SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br />Strobe time sync input or output. <br />SPI data ready alternate location |
+| 10   | G9/nSPI_EN/STRB/DRDY             | I/O  | GPIO9<br />SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br />Strobe time sync input or output. <br />SPI DRDY alternate pin (active-high: data available when high) |
 | 12   | nRESET                                        |  I   | System reset on logic low. May be left unconnected if not used. |
 | 13   | G14/SWCLK                                | I/O    | GPIO14                                       |
-| 14   | G13/XSDA/PPS2/DRDY                    |   I/O   | GPIO13<br />GNSS2 PPS<br />SPI Data Ready<br /> Alt I2C SDA                        |
+| 14   | G13/XSDA/PPS2/DRDY                    |   I/O   | GPIO13<br />GNSS2 PPS<br />SPI data available when high<br /> Alt I2C SDA                        |
 | 15   | G12/XSCL/SWO                              | I/O    | GPIO12<br /> Alt I2C SCL                                                  |
 | 16   | G11/SWDIO                                      | I/O    | GPIO11                                                             |
 | 17   | G10/BOOT                         | I/O    | Leave unconnected. BOOT mode used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
