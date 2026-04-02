@@ -1,6 +1,6 @@
 # SPI Protocol
 
-The SPI interface provides an alternative method of communications with the IMX-5. The SPI protocol uses much of the same structure and format as the serial communication binary protocol which is outlined in the [Binary Protocol](../com-protocol/SPI.md) section of the users manual.
+The SPI interface provides an alternative method of communications with the IMX-5.  The SPI protocol supports all of the same protocol as the UART and USB interfaces with the exception that it uses a master/slave interface where the IMX is the slave and the master is required to clock data in and out of the IMX.  When no more data is available, zeros are transmitted and the data ready (DRDY) pin goes low indicating the output buffer is empty.
 
 ## Enable SPI
 
