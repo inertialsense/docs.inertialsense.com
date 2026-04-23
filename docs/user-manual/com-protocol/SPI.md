@@ -1,6 +1,6 @@
 # SPI Protocol
 
-The SPI interface provides an alternate method of communication with IMX and GPX modules. It supports the same protocols as the UART and USB interfaces, but operates in a master/slave configuration where the module is the slave. The master is responsible for clocking data in and out. When no more data is available, the module transmits zeros and the Data Ready (DR) pin goes low to indicate the output buffer is empty.
+The SPI interface provides an alternate communication path for IMX and GPX modules, supporting the same protocols as the UART and USB interfaces. It operates in a master/slave configuration with the module as the slave; the master clocks data in and out. When the output buffer is empty, the module transmits zeros and the Data Ready (DR) pin goes low. Two read strategies are available: **fixed-size polling**, which reads a fixed block at a regular interval regardless of DR state, and **Data Ready gated**, which drives reads from the DR pin and packet framing. Fixed-size polling is simpler to implement; the DR-gated approach is more efficient and supports higher data rates.
 
 ## Enable SPI
 
@@ -76,7 +76,7 @@ The SPI interface supports data rates up to **3 Mbps**. Using the Data Ready pin
 
 ### Reading Data
 
-There are two strategies for reading data:
+There are two strategies for reading data: **fixed-size polling**, where a fixed block is read at a regular interval regardless of DR state, and **Data Ready gated**, where reads are driven by the DR pin and packet framing. Fixed-size polling is simpler to implement; the DR-gated approach is more efficient.
 
 **A. Fixed-size polling** — Read a fixed block at a regular interval, sized to reliably drain the buffer. For example, read 512 bytes every 4 ms.
 
