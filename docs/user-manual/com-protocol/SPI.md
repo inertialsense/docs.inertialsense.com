@@ -1,42 +1,40 @@
 # SPI Protocol
 
-The SPI interface provides an alternative method of communications with the IMX-5. The SPI protocol uses much of the same structure and format as the serial communication binary protocol which is outlined in the [Binary Protocol](../com-protocol/SPI.md) section of the users manual.
+The SPI interface provides an alternate method of communication with IMX and GPX modules. It supports the same protocols as the UART and USB interfaces, but operates in a master/slave configuration where the module is the slave. The master is responsible for clocking data in and out. When no more data is available, the module transmits zeros and the Data Ready (DR) pin goes low to indicate the output buffer is empty.
 
 ## Enable SPI
 
-To Enable SPI, hold pin G9 (nSPI_EN) low at startup.
+To enable SPI, hold pin G9 (nSPI_EN) low at startup.
 
-Note: When external GPS PPS timepulse signal is enabled on G9, the module will ignore the nSPI_EN signal and SPI mode will be disabled regardless of G9 pin state.
+> **Note:** When an external GPS PPS timepulse signal is enabled on G9, the module will ignore the nSPI_EN signal and SPI mode will be disabled regardless of the G9 pin state.
 
 ## Hardware
 
-Inertial Sense SPI interface uses 5 lines to interface with other devices.
+The Inertial Sense SPI interface uses 5 lines:
 
 | Line | Function                      |
 | ---- | ----------------------------- |
-| CS   | SPI Chip Select               |
-| SCLK | SPI Clock Synchronization Pin |
-| MISO | SPI Master In Slave Out       |
-| MOSI | SPI Master Out Slave In       |
-| DR   | SPI Data Ready Pin (optional) |
+| CS   | Chip Select                   |
+| SCLK | Clock Synchronization         |
+| MISO | Master In Slave Out           |
+| MOSI | Master Out Slave In           |
+| DR   | Data Ready (optional)         |
 
 ### Hardware Configuration
 
-The IMX and GPX modules operate as a SPI slave device using **SPI Mode 3**:
+The IMX and GPX modules operate as an SPI slave device using **SPI Mode 3**:
 
-| SPI Settings        |                         |
-| ------------------- | ----------------------- |
-| SPI Mode            | 3                       |
-| CPOL (Clock Polarity) | 1                |
-| CPHA (Clock Phase)  | 1               |
-| Clock Polarity in Idle State | Logic high    |
-| Clock Phase Used to Sample and/or Shift Data | Data sampled on the rising edge and shifted out on the falling edge. |
-| Chip Select         | Active low             |
-| Data Ready          | Active high            |
+| Setting                       | Value                                                            |
+| ----------------------------- | ---------------------------------------------------------------- |
+| SPI Mode                      | 3                                                                |
+| CPOL (Clock Polarity)         | 1 (idle high)                                                    |
+| CPHA (Clock Phase)            | 1 (sample on rising edge, shift on falling edge)                 |
+| Chip Select                   | Active low                                                       |
+| Data Ready                    | Active high                                                      |
 
-###  Data Transfer
+### Data Transfer
 
-To ensure correct behavior of the receiver in SPI Slave mode, the master device sending the frame must ensure a minimum delay of one t<sub>bit</sub> (t<sub>bit</sub> being the nominal time required to transmit a bit) between each character transmission. Inertial Sense devices do not require a falling edge of the [Chip Select (CS)] to initiate a character reception but only a low level. However, this low level must be present on the [Chip Select (CS)] at least one t<sub>bit</sub> before the first serial clock cycle corresponding to the MSB bit. <sup>(1)</sup>
+To ensure correct behavior in SPI slave mode, the master must provide a minimum delay of one t<sub>bit</sub> between each byte transmission, where t<sub>bit</sub> is the nominal time to transmit one bit. The module does not require a falling edge on CS to begin receiving — only a sustained low level. However, CS must be asserted at least one t<sub>bit</sub> before the first clock cycle corresponding to the MSB. <sup>(1)</sup>
 
 ![SPI_Data_Transfer](../images/SPI_Data_Transfer.png)
 
@@ -56,32 +54,31 @@ To ensure correct behavior of the receiver in SPI Slave mode, the master device 
    tick:0,}
 } -->
 
-When reading the IMX and there is no data ready it will send zeros for the data.
+When no data is ready, the module transmits zeros.
 
-Keeping CS low should not cause any issues. However, if the clocking between the master and slave processors gets out of sync there is nothing to get them back into sync. Ground bounce or noise during a transition could cause the IMX to see two clock edges when there should have only been one (due to an ESD or a fast transient event). Raising and lowering the CS line resets the shift register will resynchronize the clocks.
+Keeping CS continuously asserted is generally safe. However, if the master and slave clocks fall out of sync — due to noise, ground bounce, or a fast transient causing a spurious clock edge — there is no automatic recovery mechanism. Toggling CS (deasserting then reasserting) resets the shift register and resynchronizes the clocks.
 
-### Data Ready Pin Option
+### Data Ready Pin
 
-There is a data ready pin option. This signal will be raised when data becomes ready.Also this line will go inactive a byte or two before the end of the packet gets sent. There is not a "not in a data packet" character to send. It is strictly done by data ready pin and parsing.
+The DR pin goes high when data is available and goes inactive one or two bytes before the end of the packet is clocked out. There is no dedicated end-of-packet character; framing relies on the DR pin and packet parsing.
 
 ![SPI_Hello](../images/SPI_Hello.png)
 
- Depending on when this happens there can be 1-4 bytes of zeros that will come out before the packet starts. 
+Depending on timing, 1–4 bytes of zeros may precede the start of a packet.
 
 ![SPI_Pad](../images/SPI_Zero_Pad.png)
 
-If the chip select line is lowered during a data packet, the byte being transmitted (or that would be transmitted) can be lost. It is recommended to only lower the chip select when outside of a data packet and the data ready pin is inactive.
+If CS is deasserted during a packet transmission, the byte being clocked out may be lost. It is recommended to deassert CS only when outside of a data packet and the DR pin is inactive.
 
-The internal SPI buffer is 4096 bytes. If there is a buffer overflow, the buffer gets dropped. This is indicated by a data ready pin that is high without data being there. When an overflow happens, it clears the buffer, so the system could be in the middle of a packet and the IMX would just send zeros. If a request is sent to the IMX or the IMX sends a packet periodically it will resolve the situation.
+The internal SPI buffer is 4096 bytes. On overflow, the entire buffer is dropped — the module may be mid-packet and will transmit zeros until new data arrives. A buffer overflow is indicated by DR going high with no valid data present. Sending a request to the module or waiting for a periodic packet will restore normal operation.
 
-The SPI interface supports up to 3 Mbs data rate. (5 Mbs works if the data ready pin is used to receive the data - see B below.)
-
-
+The SPI interface supports data rates up to **3 Mbps**. Using the Data Ready pin to gate reads (Strategy B below) allows operation up to **5 Mbps**.
 
 ### Reading Data
-There are two strategies that can be used to read the data:
 
-A. Read a fixed data size out every set time interval. More data will be read than the uINx will produce on a regular interval, for instance, reading 512 bytes every 4 ms.
+There are two strategies for reading data:
+
+**A. Fixed-size polling** — Read a fixed block at a regular interval, sized to reliably drain the buffer. For example, read 512 bytes every 4 ms.
 
 ![SPI_Read_A](../images/Read_SPI_A.png)
 <!-- Wavedrom figure compatible with v1.8.0 https://github.com/wavedrom/wavedrom.github.io/releases/tag/v1.8.0
@@ -94,9 +91,10 @@ A. Read a fixed data size out every set time interval. More data will be read th
 	head:{text:'SPI - Read n Bytes x milliseconds',
    }
 } -->
-Packet will be 0x00 padded if bytes read exceeds packet size.
 
-B. Read while the data ready pin is active **or** we are inside a data packet. One anomaly is the data ready pin will drop a byte or two before the end gets clocked out, hence needing to watch for the end of the packet.
+The read buffer is zero-padded if the requested byte count exceeds the available data.
+
+**B. Data Ready gated** — Read while the DR pin is active, or while inside a data packet. Because DR goes inactive a byte or two before the packet ends, the master must continue reading until the end-of-packet marker is found.
 
 ![SPI_Read_B](../images/Read_SPI_B.png)
 <!-- Wavedrom figure compatible with v1.8.0 https://github.com/wavedrom/wavedrom.github.io/releases/tag/v1.8.0
@@ -110,30 +108,17 @@ B. Read while the data ready pin is active **or** we are inside a data packet. O
 	head:{text:'SPI Data Ready Pin',
    }
 } -->
-### Pseudo Code for reading data:
 
-1. Check data ready pin. If pin is low, delay and check pin again.
-1. Lower CS line and read a block of data. Read sizes are arbitrary, but it tends to work better if the read count is long enough to contain most data packets.
-1. After read completes, check data ready pin. If it is high, read more data. DO NOT raise the CS line while the data ready pin is high, it will cause data loss. If data ready is low, raise CS line. On a busy system (and depending on baud rate) this would need to happen along with the data read as the data ready pin might not go low in between packets.
-1. Parse data looking for start of packet (0xFF) discarding data until found. Once found start saving the data.
-1. Save and parse data looking for end of packet (0xFE). Once found send packet off for use. If a start of packet character is seen while looking for the end, discard previous data and start the packet saving over.
+### Pseudocode for Reading Data
+
+1. Check the DR pin. If low, wait and check again.
+2. Assert CS and read a block of data. Block size is arbitrary but should be large enough to contain most packets.
+3. After the read, check DR again. If high, read more data without deasserting CS — raising CS while DR is high will cause data loss. If DR is low, deassert CS. On busy systems or at high data rates, DR may not go low between packets; in that case, keep CS asserted and continue reading.
+4. Parse the incoming data for the start-of-packet byte (0xFF), discarding all preceding bytes.
+5. Continue reading and parsing until the end-of-packet byte (0xFE) is found, then dispatch the complete packet. If another start-of-packet byte is encountered before the end is found, discard the partial packet and restart.
 
 ![SPI_NMEA](../images/SPI_NMEA.png)
 
-
-
-## EVB-2 SPI Dev Kit
-
-The EVB-2 demonstrates SPI interface with the IMX.  The EVB-2 ATSAM-E70 (E70) processor provides the example SPI interface with the IMX.  The EVB-2 must be put into CBPreset mode 6 (CONFIG led color cyan) followed by a system reset to enable SPI mode.  The EVB-2 (E70) project source code is available in the SDK for reference. 
-
 ## Troubleshooting
-If every other character from a packet is lost it might be that the CS line is being toggled after every byte.
 
-
-The IMX-3.1 uses a USART SPI peripherial which requires a minimum delay of one t<sub>bit</sub> (t<sub>bit</sub> being the nominal time required to transmit a bit) spacing between characters sent. Reading bytes one by one may cause signifacnt time delays when streaming data. Depending on the ammount of data streaming, the IMX may not be able to keep up and the buffer could overflow. Single message requests should work properly, but streaming probably will not work well. If the master hardware can't handle the delay, the IMX-3.2 hardware should be used.
-
-
-
-## Resources
-
-(1) *SAM E70/S70/V70/V71 Family*. Microchip Technology Inc., https://ww1.microchip.com/downloads/en/DeviceDoc/SAM-E70-S70-V70-V71-Family-Data-Sheet-DS60001527E.pdf
+**Every other byte is lost** — The CS line may be toggling after each byte. CS should remain asserted for the duration of a transaction.
