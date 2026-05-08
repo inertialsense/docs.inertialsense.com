@@ -38,8 +38,8 @@ On the Rugged IMX, the MMCX port ***A*** is for ***GPS1*** and MMCX port ***B***
 The location for both GPS antennae must be correctly specified by the user in the DID_FLASH_CONFIG variables within 1 cm accuracy:
 
 ```
-DID_FLASH_CONFIG.gps1AntOffset[X,Y,Z]
-DID_FLASH_CONFIG.gps2AntOffset[X,Y,Z]
+DID_FLASH_CONFIG.gnss1AntOffset[X,Y,Z]
+DID_FLASH_CONFIG.gnss2AntOffset[X,Y,Z]
 ```
 
 These values describe the distance of each GPS antenna from the IMX [Sensor Frame](../reference/coordinate_frames.md#sensor-frame) origin in the direction of the Sensor Frame axes.  The [Sensor Frame](../reference/coordinate_frames.md#sensor-frame) is defined using DID_FLASH_CONFIG.sensorConfig.
@@ -59,13 +59,13 @@ The following are examples that illustrate what the GPS antenna offsets should b
 </center>
 
 ```
-DID_FLASH_CONFIG.gps1AntOffset[0] =  0.0
-DID_FLASH_CONFIG.gps2AntOffset[1] = -0.3	(negative direction of Y axis)
-DID_FLASH_CONFIG.gps2AntOffset[2] =  0.0
+DID_FLASH_CONFIG.gnss1AntOffset[0] =  0.0
+DID_FLASH_CONFIG.gnss2AntOffset[1] = -0.3	(negative direction of Y axis)
+DID_FLASH_CONFIG.gnss2AntOffset[2] =  0.0
 
-DID_FLASH_CONFIG.gps2AntOffset[0] =  0.0
-DID_FLASH_CONFIG.gps2AntOffset[1] =  0.3
-DID_FLASH_CONFIG.gps2AntOffset[2] =  0.0
+DID_FLASH_CONFIG.gnss2AntOffset[0] =  0.0
+DID_FLASH_CONFIG.gnss2AntOffset[1] =  0.3
+DID_FLASH_CONFIG.gnss2AntOffset[2] =  0.0
 ```
 
 #### Automobile
@@ -77,13 +77,13 @@ DID_FLASH_CONFIG.gps2AntOffset[2] =  0.0
 </center>
 
 ```
-DID_FLASH_CONFIG.gps1AntOffsetX = -0.5	(negative direction of X axis)
-DID_FLASH_CONFIG.gps1AntOffsetY =  0.5
-DID_FLASH_CONFIG.gps1AntOffsetZ = -0.5	(negative direction of Z axis, above IMX)
+DID_FLASH_CONFIG.gnss1AntOffsetX = -0.5	(negative direction of X axis)
+DID_FLASH_CONFIG.gnss1AntOffsetY =  0.5
+DID_FLASH_CONFIG.gnss1AntOffsetZ = -0.5	(negative direction of Z axis, above IMX)
 
-DID_FLASH_CONFIG.gps2AntOffsetX = -1.5	(negative direction of X axis)
-DID_FLASH_CONFIG.gps2AntOffsetY =  0.5
-DID_FLASH_CONFIG.gps2AntOffsetZ = -0.5  (negative direction of Z axis, above IMX)
+DID_FLASH_CONFIG.gnss2AntOffsetX = -1.5	(negative direction of X axis)
+DID_FLASH_CONFIG.gnss2AntOffsetY =  0.5
+DID_FLASH_CONFIG.gnss2AntOffsetZ = -0.5  (negative direction of Z axis, above IMX)
 ```
 
 ### GPS Antenna Ports
@@ -102,26 +102,26 @@ The following table explains how ports A and B on the Rugged IMX map to GPS ante
 Refer to the [Dual Antenna Locations](#dual-antenna-locations) section for a description of the GPS antenna offset. 
 
 ```
-DID_FLASH_CONFIG.gps1AntOffsetX = ?
-DID_FLASH_CONFIG.gps1AntOffsetY = ?
-DID_FLASH_CONFIG.gps1AntOffsetZ = ?
+DID_FLASH_CONFIG.gnss1AntOffsetX = ?
+DID_FLASH_CONFIG.gnss1AntOffsetY = ?
+DID_FLASH_CONFIG.gnss1AntOffsetZ = ?
 
-DID_FLASH_CONFIG.gps2AntOffsetX = ?
-DID_FLASH_CONFIG.gps2AntOffsetY = ?
-DID_FLASH_CONFIG.gps2AntOffsetZ = ?
+DID_FLASH_CONFIG.gnss2AntOffsetX = ?
+DID_FLASH_CONFIG.gnss2AntOffsetY = ?
+DID_FLASH_CONFIG.gnss2AntOffsetZ = ?
 ```
 
-**Using EvalTool** - select `Data Sets -> DID_FLASH_CONFIG` and set `gps1AntOffset[X,Y,Z]` and `gps2AntOffset[X,Y,Z]` with the GPS antenna offsets. 
+**Using EvalTool** - select `Data Sets -> DID_FLASH_CONFIG` and set `gnss1AntOffset[X,Y,Z]` and `gnss2AntOffset[X,Y,Z]` with the GPS antenna offsets. 
 
 **Using CLTool** - run the CLTool using the following options replacing the `[OFFSET]`  with the GPS antenna offsets.
 
 ```
--flashconfig=gps1AntOffsetX=[OFFSET] 
--flashconfig=gps1AntOffsetY=[OFFSET] 
--flashconfig=gps1AntOffsetZ=[OFFSET]
--flashconfig=gps2AntOffsetX=[OFFSET] 
--flashconfig=gps2AntOffsetY=[OFFSET] 
--flashconfig=gps2AntOffsetZ=[OFFSET] 
+-flashconfig=gnss1AntOffsetX=[OFFSET] 
+-flashconfig=gnss1AntOffsetY=[OFFSET] 
+-flashconfig=gnss1AntOffsetZ=[OFFSET]
+-flashconfig=gnss2AntOffsetX=[OFFSET] 
+-flashconfig=gnss2AntOffsetY=[OFFSET] 
+-flashconfig=gnss2AntOffsetZ=[OFFSET] 
 ```
 
 ### Step 2 - Enable GPS Dual Antenna 
@@ -144,7 +144,7 @@ The RTK compassing fix status can be identified using the valid bit in the INS a
 
 ```c++
 DID_INS_1.insStatus & INS_STATUS_RTK_COMPASSING_VALID			    // INS status - RTK heading is valid and aiding INS heading.
-DID_GPS1_POS.status & GPS_STATUS_FLAGS_GPS2_RTK_COMPASS_VALID		// GPS status - RTK heading is valid and available in DID_GPS2_RTK_CMP_REL.
+DID_GNSS1_POS.status & GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_VALID		// GPS status - RTK heading is valid and available in DID_GNSS2_RTK_CMP_REL.
 ```
 
 RTK compassing fix is indicated when the RTK-Cmp radio button turns purple in the EvalTool INS tab.
@@ -160,11 +160,11 @@ RTK compassing fix is indicated when the RTK-Cmp radio button turns purple in th
 The ambiguity resolution ratio, `arRatio`, is a metric that indicates progress of the solution that ranges from 0 to 999.  Typically values above 3 indicate RTK fix progress.  The base to rover heading accuracy indicates how much error is in the base to rover heading (RTK compassing heading). 
 
 ```c++
-DID_GPS1_RTK_CMP_REL.arRatio						// Ambiguity resolution ratio
-DID_GPS1_RTK_CMP_REL.baseToRoverHeadingAcc			// (rad) RTK compassing accuracy
+DID_GNSS1_RTK_CMP_REL.arRatio						// Ambiguity resolution ratio
+DID_GNSS1_RTK_CMP_REL.baseToRoverHeadingAcc			// (rad) RTK compassing accuracy
 ```
 
-The DID_GPS1_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
+The DID_GNSS1_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
 
 <center>
 

@@ -15,7 +15,7 @@ Knowledge about the vehicle's kinematic constraints is applied to reduce drift a
     Heavy vibrations can degrade the IMX measurements and dead reckoning solution.   
 
 1. Mount the IMX and GNSS antenna at fixed locations on the vehicle.  
-2. Set the GPS antenna offsets relative to the IMX origin in meters.  EvalTool > Data Sets > DID_FLASH_CONFIG > gps1AntOffsetX/Y/Z.
+2. Set the GPS antenna offsets relative to the IMX origin in meters.  EvalTool > Data Sets > DID_FLASH_CONFIG > gnss1AntOffsetX/Y/Z.
 
 ### Enabling
 

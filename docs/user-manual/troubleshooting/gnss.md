@@ -6,7 +6,7 @@ Separation between GNSS antennas (or baseline distance) impacts the accuracy and
 **ITEM TO TEST:** Try increasing the antenna baseline to 0.5m or greater during initial testing.
 
 ## Satellite CNO Strength, RFI and EMI
-What is the satellite CNO (signal strength) level? The mean CNO would ideally be above 38-40. Anything lower could indicate the presence of RF interference (RFI) or electromagnetic interference (EMI). You can see this in the EvalTool GPS tab or the DID_GPS1_POS message.
+What is the satellite CNO (signal strength) level? The mean CNO would ideally be above 38-40. Anything lower could indicate the presence of RF interference (RFI) or electromagnetic interference (EMI). You can see this in the EvalTool GNSS tab or the DID_GNSS1_POS message.
 
 ![Dual GPS EvalTool](../images/DualGNSS_EvalTool.png)
 

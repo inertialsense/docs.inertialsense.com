@@ -186,17 +186,17 @@ System sensor information
 
 ### GPS / GNSS
 
-#### DID_GPS1_POS
+#### DID_GNSS1_POS
 
-GPS 1 position data.  This comes from DID_GPS1_RCVR_POS or DID_GPS1_RTK_POS, depending on whichever is more accurate. 
+GPS 1 position data.  This comes from DID_GNSS1_RCVR_POS or DID_GNSS1_RTK_POS, depending on whichever is more accurate. 
 
-`gps_pos_t`
+`gnss_pos_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | week | uint32_t | GPS number of weeks since January 6th, 1980 |
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| status | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 | ecef | double[3] | Position in ECEF {x,y,z} (m) |
 | lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
 | hMSL | float | Height above mean sea level (MSL) in meters |
@@ -208,20 +208,20 @@ GPS 1 position data.  This comes from DID_GPS1_RCVR_POS or DID_GPS1_RTK_POS, dep
 | leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
 | satsUsed | uint8_t | Number of satellites used |
 | cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
-| status2 | uint8_t | (see eGpsStatus2) GPS status2: [0x0X] Spoofing/Jamming status, [0xX0] Unused |
+| status2 | uint8_t | (see eGnssStatus2) GPS status2: [0x0X] Spoofing/Jamming status, [0xX0] Unused |
 
 
-#### DID_GPS1_RCVR_POS
+#### DID_GNSS1_RCVR_POS
 
 GPS 1 position data from GNSS receiver. 
 
-`gps_pos_t`
+`gnss_pos_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | week | uint32_t | GPS number of weeks since January 6th, 1980 |
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| status | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 | ecef | double[3] | Position in ECEF {x,y,z} (m) |
 | lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
 | hMSL | float | Height above mean sea level (MSL) in meters |
@@ -233,20 +233,20 @@ GPS 1 position data from GNSS receiver.
 | leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
 | satsUsed | uint8_t | Number of satellites used |
 | cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
-| status2 | uint8_t | (see eGpsStatus2) GPS status2: [0x0X] Spoofing/Jamming status, [0xX0] Unused |
+| status2 | uint8_t | (see eGnssStatus2) GPS status2: [0x0X] Spoofing/Jamming status, [0xX0] Unused |
 
 
-#### DID_GPS1_RTK_POS
+#### DID_GNSS1_RTK_POS
 
 GPS RTK position data 
 
-`gps_pos_t`
+`gnss_pos_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | week | uint32_t | GPS number of weeks since January 6th, 1980 |
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| status | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 | ecef | double[3] | Position in ECEF {x,y,z} (m) |
 | lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
 | hMSL | float | Height above mean sea level (MSL) in meters |
@@ -258,14 +258,14 @@ GPS RTK position data
 | leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
 | satsUsed | uint8_t | Number of satellites used |
 | cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
-| status2 | uint8_t | (see eGpsStatus2) GPS status2: [0x0X] Spoofing/Jamming status, [0xX0] Unused |
+| status2 | uint8_t | (see eGnssStatus2) GPS status2: [0x0X] Spoofing/Jamming status, [0xX0] Unused |
 
 
-#### DID_GPS1_RTK_POS_MISC
+#### DID_GNSS1_RTK_POS_MISC
 
 RTK precision position related data. 
 
-`gps_rtk_misc_t`
+`gnss_rtk_misc_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -306,11 +306,11 @@ RTK precision position related data.
 | timeToFirstFixMs | uint32_t | Time to first RTK fix. |
 
 
-#### DID_GPS1_RTK_POS_REL
+#### DID_GNSS1_RTK_POS_REL
 
 RTK precision position base to rover relative info. 
 
-`gps_rtk_rel_t`
+`gnss_rtk_rel_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -321,60 +321,60 @@ RTK precision position base to rover relative info.
 | baseToRoverDistance | float | Distance from base to rover (m) |
 | baseToRoverHeading | float | Angle from north to baseToRoverVector in local tangent plane. (rad) |
 | baseToRoverHeadingAcc | float | Accuracy of baseToRoverHeading. (rad) |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| status | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
 
-#### DID_GPS1_SAT
+#### DID_GNSS1_SAT
 
 GPS 1 GNSS satellite information: sat identifiers, carrier to noise ratio, elevation and azimuth angles, pseudo range residual. 
 
-`gps_sat_t`
+`gnss_sat_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSats | uint32_t | Number of satellites in the sky |
-| sat | gps_sat_sv_t[50] | Satellite information list |
+| sat | gnss_sat_sv_t[50] | Satellite information list |
 
 
-#### DID_GPS1_VEL
+#### DID_GNSS1_VEL
 
 GPS 1 velocity data 
 
-`gps_vel_t`
+`gnss_vel_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| vel | float[3] | GPS Velocity.  Velocity is in ECEF {vx,vy,vz} (m/s) if status bit GPS_STATUS_FLAGS_GPS_NMEA_DATA (0x00008000) is NOT set.  Velocity is in local tangent plane with no vertical velocity {vNorth, vEast, 0} (m/s) if status bit GPS_STATUS_FLAGS_GPS_NMEA_DATA (0x00008000) is set. |
+| vel | float[3] | GPS Velocity.  Velocity is in ECEF {vx,vy,vz} (m/s) if status bit GNSS_STATUS_FLAGS_GNSS_NMEA_DATA (0x00008000) is NOT set.  Velocity is in local tangent plane with no vertical velocity {vNorth, vEast, 0} (m/s) if status bit GNSS_STATUS_FLAGS_GNSS_NMEA_DATA (0x00008000) is set. |
 | sAcc | float | Speed accuracy in meters / second |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| status | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
 
-#### DID_GPS1_VERSION
+#### DID_GNSS1_VERSION
 
 GPS 1 version info 
 
-`gps_version_t`
+`gnss_version_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | swVersion | uint8_t[30] | Software version |
 | hwVersion | uint8_t[10] | Hardware version |
-| extension | gps_extension_ver_t[6] | Extension 30 bytes array description  |
+| extension | gnss_extension_ver_t[6] | Extension 30 bytes array description  |
 
 
-#### DID_GPS2_POS
+#### DID_GNSS2_POS
 
 GPS 2 position data 
 
-`gps_pos_t`
+`gnss_pos_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | week | uint32_t | GPS number of weeks since January 6th, 1980 |
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| status | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 | ecef | double[3] | Position in ECEF {x,y,z} (m) |
 | lla | double[3] | Position - WGS84 latitude, longitude, height above ellipsoid (not MSL) (degrees, m) |
 | hMSL | float | Height above mean sea level (MSL) in meters |
@@ -386,14 +386,14 @@ GPS 2 position data
 | leapS | uint8_t | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. (18 seconds as of December 31, 2016) |
 | satsUsed | uint8_t | Number of satellites used |
 | cnoMeanSigma | uint8_t | Standard deviation of cnoMean over past 5 seconds (dBHz x10) |
-| status2 | uint8_t | (see eGpsStatus2) GPS status2: [0x0X] Spoofing/Jamming status, [0xX0] Unused |
+| status2 | uint8_t | (see eGnssStatus2) GPS status2: [0x0X] Spoofing/Jamming status, [0xX0] Unused |
 
 
-#### DID_GPS2_RTK_CMP_MISC
+#### DID_GNSS2_RTK_CMP_MISC
 
 RTK Dual GNSS RTK compassing related data. 
 
-`gps_rtk_misc_t`
+`gnss_rtk_misc_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -434,11 +434,11 @@ RTK Dual GNSS RTK compassing related data.
 | timeToFirstFixMs | uint32_t | Time to first RTK fix. |
 
 
-#### DID_GPS2_RTK_CMP_REL
+#### DID_GNSS2_RTK_CMP_REL
 
 Dual GNSS RTK compassing / moving base to rover (GPS 1 to GPS 2) relative info. 
 
-`gps_rtk_rel_t`
+`gnss_rtk_rel_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -449,54 +449,54 @@ Dual GNSS RTK compassing / moving base to rover (GPS 1 to GPS 2) relative info.
 | baseToRoverDistance | float | Distance from base to rover (m) |
 | baseToRoverHeading | float | Angle from north to baseToRoverVector in local tangent plane. (rad) |
 | baseToRoverHeadingAcc | float | Accuracy of baseToRoverHeading. (rad) |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| status | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
 
-#### DID_GPS2_SAT
+#### DID_GNSS2_SAT
 
 GPS 2 GNSS satellite information: sat identifiers, carrier to noise ratio, elevation and azimuth angles, pseudo range residual. 
 
-`gps_sat_t`
+`gnss_sat_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSats | uint32_t | Number of satellites in the sky |
-| sat | gps_sat_sv_t[50] | Satellite information list |
+| sat | gnss_sat_sv_t[50] | Satellite information list |
 
 
-#### DID_GPS2_VEL
+#### DID_GNSS2_VEL
 
 GPS 2 velocity data 
 
-`gps_vel_t`
+`gnss_vel_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| vel | float[3] | GPS Velocity.  Velocity is in ECEF {vx,vy,vz} (m/s) if status bit GPS_STATUS_FLAGS_GPS_NMEA_DATA (0x00008000) is NOT set.  Velocity is in local tangent plane with no vertical velocity {vNorth, vEast, 0} (m/s) if status bit GPS_STATUS_FLAGS_GPS_NMEA_DATA (0x00008000) is set. |
+| vel | float[3] | GPS Velocity.  Velocity is in ECEF {vx,vy,vz} (m/s) if status bit GNSS_STATUS_FLAGS_GNSS_NMEA_DATA (0x00008000) is NOT set.  Velocity is in local tangent plane with no vertical velocity {vNorth, vEast, 0} (m/s) if status bit GNSS_STATUS_FLAGS_GNSS_NMEA_DATA (0x00008000) is set. |
 | sAcc | float | Speed accuracy in meters / second |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| status | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
 
-#### DID_GPS2_VERSION
+#### DID_GNSS2_VERSION
 
 GPS 2 version info 
 
-`gps_version_t`
+`gnss_version_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | swVersion | uint8_t[30] | Software version |
 | hwVersion | uint8_t[10] | Hardware version |
-| extension | gps_extension_ver_t[6] | Extension 30 bytes array description  |
+| extension | gnss_extension_ver_t[6] | Extension 30 bytes array description  |
 
 
-#### DID_GPS_RTK_OPT
+#### DID_GNSS_RTK_OPT
 
 RTK options - requires little endian CPU. 
 
-`gps_rtk_opt_t`
+`gnss_rtk_opt_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -595,9 +595,9 @@ GPX flash configuration
 | ser0BaudRate | uint32_t | Serial port 0 baud rate in bits per second |
 | ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
 | ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
-| startupGPSDtMs | uint32_t | GPS measurement (system input data) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
-| gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
-| gps2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 2 antenna. |
+| startupGnssDtMs | uint32_t | GPS measurement (system input data) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
+| gnss1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
+| gnss2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 2 antenna. |
 | gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
 | dynamicModel | uint8_t | Dynamic platform model (see eDynamicModel).  Options are: 0=PORTABLE, 1=FIXED POSITION, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
 | debug | uint8_t | Debug |
@@ -647,47 +647,47 @@ GPX status
 
 ### Raw GPS Data
 
-Raw GPS data is contained in the `DID_GPS1_RAW`, `DID_GPS2_RAW`, and `DID_GPS_BASE_RAW` messages of type `gps_raw_t`.  The actual raw data is contained in the union member `gps_raw_t.data` and should be interpreted based on the value of `gps_raw_t.dataType` (i.e. as observation, ephemeris, SBAS, or base station position).
+Raw GPS data is contained in the `DID_GNSS1_RAW`, `DID_GNSS2_RAW`, and `DID_GNSS_BASE_RAW` messages of type `gnss_raw_t`.  The actual raw data is contained in the union member `gnss_raw_t.data` and should be interpreted based on the value of `gnss_raw_t.dataType` (i.e. as observation, ephemeris, SBAS, or base station position).
 
-#### DID_GPS1_RAW
+#### DID_GNSS1_RAW
 
 GPS raw data for rover (observation, ephemeris, etc.) - requires little endian CPU. The contents of data can vary for this message and are determined by dataType field. RTK positioning or RTK compassing must be enabled to stream this message. 
 
-`gps_raw_t`
+`gnss_raw_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| receiverIndex | uint8_t | Receiver index (1=RECEIVER_INDEX_GPS1, 2=RECEIVER_INDEX_EXTERNAL_BASE, or 3=RECEIVER_INDEX_GPS2) |
+| receiverIndex | uint8_t | Receiver index (1=RECEIVER_INDEX_GNSS1, 2=RECEIVER_INDEX_EXTERNAL_BASE, or 3=RECEIVER_INDEX_GNSS2) |
 | dataType | uint8_t | Type of data (eRawDataType: 1=observations, 2=ephemeris, 3=glonassEphemeris, 4=SBAS, 5=baseAntenna, 6=IonosphereModel) |
 | obsCount | uint8_t | Number of observations in data (obsd_t) when dataType==1 (raw_data_type_observation). |
 | reserved | uint8_t | Reserved |
 | data | uGpsRawData | Interpret based on dataType (see eRawDataType) |
 
 
-#### DID_GPS2_RAW
+#### DID_GNSS2_RAW
 
 GPS raw data for rover (observation, ephemeris, etc.) - requires little endian CPU. The contents of data can vary for this message and are determined by dataType field. RTK positioning or RTK compassing must be enabled to stream this message. 
 
-`gps_raw_t`
+`gnss_raw_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| receiverIndex | uint8_t | Receiver index (1=RECEIVER_INDEX_GPS1, 2=RECEIVER_INDEX_EXTERNAL_BASE, or 3=RECEIVER_INDEX_GPS2) |
+| receiverIndex | uint8_t | Receiver index (1=RECEIVER_INDEX_GNSS1, 2=RECEIVER_INDEX_EXTERNAL_BASE, or 3=RECEIVER_INDEX_GNSS2) |
 | dataType | uint8_t | Type of data (eRawDataType: 1=observations, 2=ephemeris, 3=glonassEphemeris, 4=SBAS, 5=baseAntenna, 6=IonosphereModel) |
 | obsCount | uint8_t | Number of observations in data (obsd_t) when dataType==1 (raw_data_type_observation). |
 | reserved | uint8_t | Reserved |
 | data | uGpsRawData | Interpret based on dataType (see eRawDataType) |
 
 
-#### DID_GPS_BASE_RAW
+#### DID_GNSS_BASE_RAW
 
 GPS raw data for base station (observation, ephemeris, etc.) - requires little endian CPU. The contents of data can vary for this message and are determined by dataType field. RTK positioning or RTK compassing must be enabled to stream this message. 
 
-`gps_raw_t`
+`gnss_raw_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
-| receiverIndex | uint8_t | Receiver index (1=RECEIVER_INDEX_GPS1, 2=RECEIVER_INDEX_EXTERNAL_BASE, or 3=RECEIVER_INDEX_GPS2) |
+| receiverIndex | uint8_t | Receiver index (1=RECEIVER_INDEX_GNSS1, 2=RECEIVER_INDEX_EXTERNAL_BASE, or 3=RECEIVER_INDEX_GNSS2) |
 | dataType | uint8_t | Type of data (eRawDataType: 1=observations, 2=ephemeris, 3=glonassEphemeris, 4=SBAS, 5=baseAntenna, 6=IonosphereModel) |
 | obsCount | uint8_t | Number of observations in data (obsd_t) when dataType==1 (raw_data_type_observation). |
 | reserved | uint8_t | Reserved |
@@ -812,7 +812,7 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 
 #### Satellite information
 
-`gps_sat_sv_t`
+`gnss_sat_sv_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -853,7 +853,7 @@ Flash memory configuration
 | ser1BaudRate | uint32_t | Serial port 1 baud rate in bits per second |
 | insRotation | float[3] | Rotation in radians about the X,Y,Z axes from Sensor Frame to Intermediate Output Frame.  Order applied: Z,Y,X. |
 | insOffset | float[3] | X,Y,Z offset in meters from Intermediate Output Frame to INS Output Frame. |
-| gps1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
+| gnss1AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame to GPS 1 antenna. |
 | dynamicModel | uint8_t | INS dynamic platform model (see eDynamicModel).  Options are: 0=PORTABLE, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
 | debug | uint8_t | Debug |
 | gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
@@ -865,13 +865,13 @@ Flash memory configuration
 | lastLlaUpdateDistance | float | Distance between current and last LLA that triggers an update of lastLla  |
 | ioConfig | uint32_t | Hardware interface configuration bits (see eIoConfig). |
 | platformConfig | uint32_t | Hardware platform specifying the IMX carrier board type (i.e. RUG, EVB, IG) and configuration bits (see ePlatformConfig).  The platform type is used to simplify the GPS and I/O configuration process.  Bit PLATFORM_CFG_UPDATE_IO_CONFIG is excluded from the flashConfig checksum and from determining whether to upload. |
-| gps2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame origin to GPS 2 antenna. |
+| gnss2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame origin to GPS 2 antenna. |
 | zeroVelRotation | float[3] | Euler (roll, pitch, yaw) rotation in radians from INS Sensor Frame to Intermediate ZeroVelocity Frame.  Order applied: heading, pitch, roll. |
 | zeroVelOffset | float[3] | X,Y,Z offset in meters from Intermediate ZeroVelocity Frame to Zero Velocity Frame. |
 | gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
 | magDeclination | float | Earth magnetic field (magnetic north) declination (heading offset from true north) in radians |
 | gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
-| startupGPSDtMs | uint32_t | GPS measurement (system input) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
+| startupGnssDtMs | uint32_t | GPS measurement (system input) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
 | RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
 | sensorConfig | uint32_t | Sensor config to specify the full-scale sensing ranges and output rotation for the IMU and magnetometer (see eSensorConfig) |
 | gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
@@ -1143,24 +1143,24 @@ EVB-2 RTOS information.
 | res8 | uint8_t | see eEventMsgTypeID |
 
 
-#### DID_GPS1_SIG
+#### DID_GNSS1_SIG
 
 GPS 1 GNSS signal information. 
 
-`gps_sig_t`
+`gnss_sig_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSigs | uint32_t | Number of satellite signals in the following satelliate signal list |
-| sig | gps_sig_sv_t[100] | Satellite signal list |
+| sig | gnss_sig_sv_t[100] | Satellite signal list |
 
 
-#### DID_GPS1_TIMEPULSE
+#### DID_GNSS1_TIMEPULSE
 
 GPS1 PPS time synchronization. 
 
-`gps_timepulse_t`
+`gnss_timepulse_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -1177,24 +1177,24 @@ GPS1 PPS time synchronization.
 | sinceLastSyncTimeMs | uint32_t | (ms) Time since last valid PPS sync. |
 
 
-#### DID_GPS2_SIG
+#### DID_GNSS2_SIG
 
 GPS 2 GNSS signal information. 
 
-`gps_sig_t`
+`gnss_sig_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSigs | uint32_t | Number of satellite signals in the following satelliate signal list |
-| sig | gps_sig_sv_t[100] | Satellite signal list |
+| sig | gnss_sig_sv_t[100] | Satellite signal list |
 
 
-#### DID_GPS2_TIMEPULSE
+#### DID_GNSS2_TIMEPULSE
 
 GPS2 PPS time synchronization. 
 
-`gps_timepulse_t`
+`gnss_timepulse_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -1936,7 +1936,7 @@ System status and configuration is made available through various enumeration an
 | GPX_HDW_STATUS_BIT_MASK | 0x03000000 |
 | GPX_HDW_STATUS_BIT_OFFSET | 24 |
 | GPX_HDW_STATUS_ERR_TEMPERATURE | 0x04000000 |
-| GPX_HDW_STATUS_GPS_PPS_TIMESYNC | 0x08000000 |
+| GPX_HDW_STATUS_GNSS_PPS_TIMESYNC | 0x08000000 |
 | GPX_HDW_STATUS_RESET_CAUSE_MASK | 0x70000000 |
 | GPX_HDW_STATUS_RESET_CAUSE_BACKUP_MODE | 0x10000000 |
 | GPX_HDW_STATUS_RESET_CAUSE_SOFT | 0x20000000 |
@@ -2132,56 +2132,56 @@ System status and configuration is made available through various enumeration an
 
 | Field | Value |
 |-------|------|
-| GPS_NAV_FIX_NONE | 0x00000000 |
-| GPS_NAV_FIX_POSITIONING_3D | 0x00000001 |
-| GPS_NAV_FIX_POSITIONING_RTK_FLOAT | 0x00000002 |
-| GPS_NAV_FIX_POSITIONING_RTK_FIX | 0x00000003 |
+| GNSS_NAV_FIX_NONE | 0x00000000 |
+| GNSS_NAV_FIX_POSITIONING_3D | 0x00000001 |
+| GNSS_NAV_FIX_POSITIONING_RTK_FLOAT | 0x00000002 |
+| GNSS_NAV_FIX_POSITIONING_RTK_FIX | 0x00000003 |
 
 
 #### GPS Status
 
-(eGpsStatus)  
+(eGnssStatus)  
 
 | Field | Value |
 |-------|------|
-| GPS_STATUS_NUM_SATS_USED_MASK | 0x000000FF |
-| GPS_STATUS_FIX_NONE | 0x00000000 |
-| GPS_STATUS_FIX_DEAD_RECKONING_ONLY | 0x00000100 |
-| GPS_STATUS_FIX_2D | 0x00000200 |
-| GPS_STATUS_FIX_3D | 0x00000300 |
-| GPS_STATUS_FIX_GPS_PLUS_DEAD_RECK | 0x00000400 |
-| GPS_STATUS_FIX_TIME_ONLY | 0x00000500 |
-| GPS_STATUS_FIX_REF_LLA | 0x00000600 |
-| GPS_STATUS_FIX_UNUSED2 | 0x00000700 |
-| GPS_STATUS_FIX_DGPS | 0x00000800 |
-| GPS_STATUS_FIX_SBAS | 0x00000900 |
-| GPS_STATUS_FIX_RTK_SINGLE | 0x00000A00 |
-| GPS_STATUS_FIX_RTK_FLOAT | 0x00000B00 |
-| GPS_STATUS_FIX_RTK_FIX | 0x00000C00 |
-| GPS_STATUS_FIX_MASK | 0x00001F00 |
-| GPS_STATUS_FIX_BIT_OFFSET |  (int)8 |
-| GPS_STATUS_FLAGS_FIX_OK | 0x00010000 |
-| GPS_STATUS_FLAGS_DGPS_USED | 0x00020000 |
-| GPS_STATUS_FLAGS_RTK_FIX_AND_HOLD | 0x00040000 |
-| GPS_STATUS_FLAGS_UNUSED_1 | 0x00080000 |
-| GPS_STATUS_FLAGS_GPS1_RTK_POSITION_ENABLED | 0x00100000 |
-| GPS_STATUS_FLAGS_STATIC_MODE | 0x00200000 |
-| GPS_STATUS_FLAGS_GPS2_RTK_COMPASS_ENABLED | 0x00400000 |
-| GPS_STATUS_FLAGS_GPS1_RTK_RAW_GPS_DATA_ERROR | 0x00800000 |
-| GPS_STATUS_FLAGS_GPS1_RTK_BASE_DATA_MISSING | 0x01000000 |
-| GPS_STATUS_FLAGS_GPS1_RTK_BASE_POSITION_MOVING | 0x02000000 |
-| GPS_STATUS_FLAGS_GPS1_RTK_BASE_POSITION_INVALID | 0x03000000 |
-| GPS_STATUS_FLAGS_GPS1_RTK_BASE_POSITION_MASK | 0x03000000 |
-| GPS_STATUS_FLAGS_GPS1_RTK_POSITION_VALID | 0x04000000 |
-| GPS_STATUS_FLAGS_GPS2_RTK_COMPASS_VALID | 0x08000000 |
-| GPS_STATUS_FLAGS_GPS2_RTK_COMPASS_BASELINE_BAD | 0x00002000 |
-| GPS_STATUS_FLAGS_GPS_NMEA_DATA | 0x00008000 |
-| GPS_STATUS_FLAGS_GPS_PPS_TIMESYNC | 0x10000000 |
-| GPS_STATUS_FLAGS_MASK | 0x1FFFE000 |
-| GPS_STATUS_FLAGS_BIT_OFFSET |  (int)16 |
-| GPS_STATUS_FLAGS_UNUSED_2 | 0x20000000 |
-| GPS_STATUS_FLAGS_UNUSED_3 | 0x40000000 |
-| GPS_STATUS_FLAGS_UNUSED_4 | 0x80000000 |
+| GNSS_STATUS_NUM_SATS_USED_MASK | 0x000000FF |
+| GNSS_STATUS_FIX_NONE | 0x00000000 |
+| GNSS_STATUS_FIX_DEAD_RECKONING_ONLY | 0x00000100 |
+| GNSS_STATUS_FIX_2D | 0x00000200 |
+| GNSS_STATUS_FIX_3D | 0x00000300 |
+| GNSS_STATUS_FIX_GPS_PLUS_DEAD_RECK | 0x00000400 |
+| GNSS_STATUS_FIX_TIME_ONLY | 0x00000500 |
+| GNSS_STATUS_FIX_REF_LLA | 0x00000600 |
+| GNSS_STATUS_FIX_UNUSED2 | 0x00000700 |
+| GNSS_STATUS_FIX_DGPS | 0x00000800 |
+| GNSS_STATUS_FIX_SBAS | 0x00000900 |
+| GNSS_STATUS_FIX_RTK_SINGLE | 0x00000A00 |
+| GNSS_STATUS_FIX_RTK_FLOAT | 0x00000B00 |
+| GNSS_STATUS_FIX_RTK_FIX | 0x00000C00 |
+| GNSS_STATUS_FIX_MASK | 0x00001F00 |
+| GNSS_STATUS_FIX_BIT_OFFSET |  (int)8 |
+| GNSS_STATUS_FLAGS_FIX_OK | 0x00010000 |
+| GNSS_STATUS_FLAGS_DGPS_USED | 0x00020000 |
+| GNSS_STATUS_FLAGS_RTK_FIX_AND_HOLD | 0x00040000 |
+| GNSS_STATUS_FLAGS_UNUSED_1 | 0x00080000 |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_POSITION_ENABLED | 0x00100000 |
+| GNSS_STATUS_FLAGS_STATIC_MODE | 0x00200000 |
+| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_ENABLED | 0x00400000 |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_RAW_GPS_DATA_ERROR | 0x00800000 |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_DATA_MISSING | 0x01000000 |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_POSITION_MOVING | 0x02000000 |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_POSITION_INVALID | 0x03000000 |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_POSITION_MASK | 0x03000000 |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_POSITION_VALID | 0x04000000 |
+| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_VALID | 0x08000000 |
+| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_BASELINE_BAD | 0x00002000 |
+| GNSS_STATUS_FLAGS_GNSS_NMEA_DATA | 0x00008000 |
+| GNSS_STATUS_FLAGS_GNSS_PPS_TIMESYNC | 0x10000000 |
+| GNSS_STATUS_FLAGS_MASK | 0x1FFFE000 |
+| GNSS_STATUS_FLAGS_BIT_OFFSET |  (int)16 |
+| GNSS_STATUS_FLAGS_UNUSED_2 | 0x20000000 |
+| GNSS_STATUS_FLAGS_UNUSED_3 | 0x40000000 |
+| GNSS_STATUS_FLAGS_UNUSED_4 | 0x80000000 |
 
 
 #### Hardware Status Flags
@@ -2196,9 +2196,9 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_IMU_FAULT_REJECT_GYR | 0x00000004 |
 | HDW_STATUS_IMU_FAULT_REJECT_ACC | 0x00000008 |
 | HDW_STATUS_IMU_FAULT_REJECT_MASK | 0x0000000C |
-| HDW_STATUS_GPS_SATELLITE_RX_VALID | 0x00000010 |
+| HDW_STATUS_GNSS_SATELLITE_RX_VALID | 0x00000010 |
 | HDW_STATUS_STROBE_IN_EVENT | 0x00000020 |
-| HDW_STATUS_GPS_TIME_OF_WEEK_VALID | 0x00000040 |
+| HDW_STATUS_GNSS_TIME_OF_WEEK_VALID | 0x00000040 |
 | HDW_STATUS_REFERENCE_IMU_RX | 0x00000080 |
 | HDW_STATUS_SATURATION_GYR | 0x00000100 |
 | HDW_STATUS_SATURATION_ACC | 0x00000200 |
@@ -2207,13 +2207,13 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_SATURATION_MASK | 0x00000F00 |
 | HDW_STATUS_SATURATION_OFFSET | 8 |
 | HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00001000 |
-| HDW_STATUS_ERR_GPS_PPS_NOISE | 0x00002000 |
+| HDW_STATUS_ERR_GNSS_PPS_NOISE | 0x00002000 |
 | HDW_STATUS_MAG_RECAL_COMPLETE | 0x00004000 |
 | HDW_STATUS_FLASH_WRITE_PENDING | 0x00008000 |
 | HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
 | HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
-| HDW_STATUS_ERR_NO_GPS_PPS | 0x00040000 |
-| HDW_STATUS_GPS_PPS_TIMESYNC | 0x00080000 |
+| HDW_STATUS_ERR_NO_GNSS_PPS | 0x00040000 |
+| HDW_STATUS_GNSS_PPS_TIMESYNC | 0x00080000 |
 | HDW_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x00F00000 |
 | HDW_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 20 |
 | HDW_STATUS_BIT_RUNNING | 0x01000000 |
@@ -2282,14 +2282,14 @@ System status and configuration is made available through various enumeration an
 | INS_STATUS_VEL_ALIGN_FINE | 0x00000020 |
 | INS_STATUS_POS_ALIGN_FINE | 0x00000040 |
 | INS_STATUS_ALIGN_FINE_MASK | 0x00000070 |
-| INS_STATUS_GPS_AIDING_HEADING | 0x00000080 |
-| INS_STATUS_GPS_AIDING_POS | 0x00000100 |
-| INS_STATUS_GPS_UPDATE_IN_SOLUTION | 0x00000200 |
+| INS_STATUS_GNSS_AIDING_HEADING | 0x00000080 |
+| INS_STATUS_GNSS_AIDING_POS | 0x00000100 |
+| INS_STATUS_GNSS_UPDATE_IN_SOLUTION | 0x00000200 |
 | INS_STATUS_EKF_USING_REFERENCE_IMU | 0x00000400 |
 | INS_STATUS_MAG_AIDING_HEADING | 0x00000800 |
 | INS_STATUS_NAV_MODE | 0x00001000 |
 | INS_STATUS_STATIONARY_MODE | 0x00002000 |
-| INS_STATUS_GPS_AIDING_VEL | 0x00004000 |
+| INS_STATUS_GNSS_AIDING_VEL | 0x00004000 |
 | INS_STATUS_KINEMATIC_CAL_GOOD | 0x00008000 |
 | INS_STATUS_SOLUTION_MASK | 0x000F0000 |
 | INS_STATUS_SOLUTION_OFFSET | 16 |
@@ -2306,15 +2306,15 @@ System status and configuration is made available through various enumeration an
 | INS_STATUS_RTK_COMPASSING_MASK | (INS_STATUS_RTK_COMPASSING_BASELINE_UNSET\|INS_STATUS_RTK_COMPASSING_BASELINE_BAD\) |
 | INS_STATUS_MAG_RECALIBRATING | 0x00400000 |
 | INS_STATUS_MAG_INTERFERENCE_OR_BAD_CAL_OR_NO_CAL | 0x00800000 |
-| INS_STATUS_GPS_NAV_FIX_MASK | 0x03000000 |
-| INS_STATUS_GPS_NAV_FIX_OFFSET | 24 |
+| INS_STATUS_GNSS_NAV_FIX_MASK | 0x03000000 |
+| INS_STATUS_GNSS_NAV_FIX_OFFSET | 24 |
 | INS_STATUS_RTK_COMPASSING_VALID | 0x04000000 |
-| INS_STATUS_RTK_RAW_GPS_DATA_ERROR | 0x08000000 |
+| INS_STATUS_RTK_RAW_GNSS_DATA_ERROR | 0x08000000 |
 | INS_STATUS_RTK_ERR_BASE_DATA_MISSING | 0x10000000 |
 | INS_STATUS_RTK_ERR_BASE_POSITION_MOVING | 0x20000000 |
 | INS_STATUS_RTK_ERR_BASE_POSITION_INVALID | 0x30000000 |
 | INS_STATUS_RTK_ERR_BASE_MASK | 0x30000000 |
-| INS_STATUS_RTK_ERROR_MASK | (INS_STATUS_RTK_RAW_GPS_DATA_ERROR\|INS_STATUS_RTK_ERR_BASE_MASK\) |
+| INS_STATUS_RTK_ERROR_MASK | (INS_STATUS_RTK_RAW_GNSS_DATA_ERROR\|INS_STATUS_RTK_ERR_BASE_MASK\) |
 | INS_STATUS_RTOS_TASK_PERIOD_OVERRUN | 0x40000000 |
 | INS_STATUS_GENERAL_FAULT | 0x80000000 |
 
