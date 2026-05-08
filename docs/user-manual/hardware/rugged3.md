@@ -21,7 +21,7 @@ The **RUG-3-IMX-5-Dual** includes two multi-frequency GNSS receivers with RTK pr
 ## Features
 
 - **Tactical Grade IMU**
-  - **Gyro: 1.5 °/hr Bias Instability, 0.16 °/√hr ARW**
+  - **Gyro: 1.7 °/hr Bias Instability, 0.16 °/√hr ARW**
   - **Accel: 19 µg Bias Instability, 0.02 m/s/√hr VRW**
 * **INS, AHRS**
   - **Dynamic: 0.04° Roll/Pitch, 0.13° Heading**
