@@ -130,7 +130,7 @@ Barometric pressure sensor data
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| bar | float | Barometric pressure in kilopascals |
+| bar | float | Barometric pressure in kilopascals (kPa) |
 | mslBar | float | MSL altitude from barometric pressure sensor in meters |
 | barTemp | float | Temperature of barometric pressure sensor in Celsius |
 | humidity | float | Relative humidity as a percent (%rH). Range is 0% - 100% |
@@ -145,7 +145,7 @@ Magnetometer sensor output
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| mag | float[3] | Magnetometers |
+| mag | float[3] | Magnetometers (uT) |
 
 
 #### DID_MAG_CAL
@@ -601,9 +601,9 @@ GPX flash configuration
 | gnssSatSigConst | uint16_t | Satellite system constellation used in GNSS solution.  (see eGnssSatSigConst) 0x0003=GPS, 0x000C=QZSS, 0x0030=Galileo, 0x00C0=Beidou, 0x0300=GLONASS, 0x1000=SBAS |
 | dynamicModel | uint8_t | Dynamic platform model (see eDynamicModel).  Options are: 0=PORTABLE, 1=FIXED POSITION, 2=STATIONARY, 3=PEDESTRIAN, 4=GROUND VEHICLE, 5=SEA, 6=AIRBORNE_1G, 7=AIRBORNE_2G, 8=AIRBORNE_4G, 9=WRIST.  Used to balance noise and performance characteristics of the system.  The dynamics selected here must be at least as fast as your system or you experience accuracy error.  This is tied to the GPS position estimation model and intend in the future to be incorporated into the INS position model. |
 | debug | uint8_t | Debug |
-| gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
-| gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
-| gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
+| gnssTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
+| gnssTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
+| gnssMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
 | RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
 | gnssCn0Minimum | uint8_t | (dBHz) GNSS CN0 absolute minimum threshold for signals.  Used to filter signals in RTK solution. |
 | gnssCn0DynMinOffset | uint8_t | (dBHz) GNSS CN0 dynamic minimum threshold offset below max CN0 across all satellites. Used to filter signals used in RTK solution. To disable, set gnssCn0DynMinOffset to zero and increase gnssCn0Minimum. |
@@ -661,7 +661,7 @@ GPS raw data for rover (observation, ephemeris, etc.) - requires little endian C
 | dataType | uint8_t | Type of data (eRawDataType: 1=observations, 2=ephemeris, 3=glonassEphemeris, 4=SBAS, 5=baseAntenna, 6=IonosphereModel) |
 | obsCount | uint8_t | Number of observations in data (obsd_t) when dataType==1 (raw_data_type_observation). |
 | reserved | uint8_t | Reserved |
-| data | uGpsRawData | Interpret based on dataType (see eRawDataType) |
+| data | uGnssRawData | Interpret based on dataType (see eRawDataType) |
 
 
 #### DID_GNSS2_RAW
@@ -676,7 +676,7 @@ GPS raw data for rover (observation, ephemeris, etc.) - requires little endian C
 | dataType | uint8_t | Type of data (eRawDataType: 1=observations, 2=ephemeris, 3=glonassEphemeris, 4=SBAS, 5=baseAntenna, 6=IonosphereModel) |
 | obsCount | uint8_t | Number of observations in data (obsd_t) when dataType==1 (raw_data_type_observation). |
 | reserved | uint8_t | Reserved |
-| data | uGpsRawData | Interpret based on dataType (see eRawDataType) |
+| data | uGnssRawData | Interpret based on dataType (see eRawDataType) |
 
 
 #### DID_GNSS_BASE_RAW
@@ -691,12 +691,12 @@ GPS raw data for base station (observation, ephemeris, etc.) - requires little e
 | dataType | uint8_t | Type of data (eRawDataType: 1=observations, 2=ephemeris, 3=glonassEphemeris, 4=SBAS, 5=baseAntenna, 6=IonosphereModel) |
 | obsCount | uint8_t | Number of observations in data (obsd_t) when dataType==1 (raw_data_type_observation). |
 | reserved | uint8_t | Reserved |
-| data | uGpsRawData | Interpret based on dataType (see eRawDataType) |
+| data | uGnssRawData | Interpret based on dataType (see eRawDataType) |
 
 
 #### Raw GPS Data Buffer Union
 
-`uGpsRawData`
+`uGnssRawData`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -868,13 +868,13 @@ Flash memory configuration
 | gnss2AntOffset | float[3] | X,Y,Z offset in meters in Sensor Frame origin to GPS 2 antenna. |
 | zeroVelRotation | float[3] | Euler (roll, pitch, yaw) rotation in radians from INS Sensor Frame to Intermediate ZeroVelocity Frame.  Order applied: heading, pitch, roll. |
 | zeroVelOffset | float[3] | X,Y,Z offset in meters from Intermediate ZeroVelocity Frame to Zero Velocity Frame. |
-| gpsTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
+| gnssTimeUserDelay | float | (sec) User defined delay for GPS time.  This parameter can be used to account for GPS antenna cable delay.  |
 | magDeclination | float | Earth magnetic field (magnetic north) declination (heading offset from true north) in radians |
-| gpsTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
+| gnssTimeSyncPeriodMs | uint32_t | Time between GPS time synchronization pulses in milliseconds.  Requires reboot to take effect. |
 | startupGnssDtMs | uint32_t | GPS measurement (system input) update period in milliseconds set on startup. 200ms minimum (5Hz max). |
 | RTKCfgBits | uint32_t | RTK configuration bits (see eRTKConfigBits). |
 | sensorConfig | uint32_t | Sensor config to specify the full-scale sensing ranges and output rotation for the IMU and magnetometer (see eSensorConfig) |
-| gpsMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
+| gnssMinimumElevation | float | Minimum elevation of a satellite above the horizon to be used in the solution (radians). Low elevation satellites may provide degraded accuracy, due to the long signal path through the atmosphere. |
 | ser2BaudRate | uint32_t | Serial port 2 baud rate in bits per second |
 | wheelConfig | wheel_config_t | Wheel encoder: euler angles describing the rotation from imu to left wheel |
 | magInterferenceThreshold | float | Magnetometer interference sensitivity threshold. Typical range is 2-10 (3 default) and 1000 to disable mag interference detection. |
@@ -1158,7 +1158,7 @@ GPS 1 GNSS signal information.
 
 #### DID_GNSS1_TIMEPULSE
 
-GPS1 PPS time synchronization. 
+GNSS1 PPS time synchronization. 
 
 `gnss_timepulse_t`
 
@@ -1192,7 +1192,7 @@ GPS 2 GNSS signal information.
 
 #### DID_GNSS2_TIMEPULSE
 
-GPS2 PPS time synchronization. 
+GNSS2 PPS time synchronization. 
 
 `gnss_timepulse_t`
 
@@ -1303,6 +1303,19 @@ Static configuration for wheel transform measurements.
 | wheelConfig | wheel_config_t | Wheel transform, track width, and wheel radius. |
 
 
+#### DID_IMUS
+
+Multiple inertial measurement units data down-sampled from IMU rate (DID_FLASH_CONFIG.startupImuDtMs (1KHz)) to navigation update rate (DID_FLASH_CONFIG.startupNavDtMs) as an anti-aliasing filter to reduce noise and preserve accuracy.  Minimum data period is DID_FLASH_CONFIG.startupNavDtMs (1KHz max).  Enabled by using RMC preset "Allan Variance IMUs".  Enabling this message adds processing overhead to sensor RTOS task. 
+
+`imus_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
+| status | uint32_t | IMUs Status (eImusStatus) |
+| I | imui_t[1] | Inertial Measurement Units (IMUs) |
+
+
 #### DID_IMUS_RAW
 
 Multiple IMU data calibrated from DID_IMUS_UNCAL.  We recommend use of DID_IMU or DID_PIMU as they are oversampled and contain less noise. 
@@ -1313,7 +1326,7 @@ Multiple IMU data calibrated from DID_IMUS_UNCAL.  We recommend use of DID_IMU o
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
 | status | uint32_t | IMUs Status (eImusStatus) |
-| I | imui_t[5] | Inertial Measurement Units (IMUs) |
+| I | imui_t[1] | Inertial Measurement Units (IMUs) |
 
 
 #### DID_IMUS_UNCAL
@@ -1326,7 +1339,7 @@ Uncalibrated multiple IMU data.  We recommend use of DID_IMU or DID_PIMU as they
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
 | status | uint32_t | IMUs Status (eImusStatus) |
-| I | imui_t[5] | Inertial Measurement Units (IMUs) |
+| I | imui_t[1] | Inertial Measurement Units (IMUs) |
 
 
 #### DID_IMU_MAG
@@ -1352,7 +1365,7 @@ Measure and correct IMU calibration error.  Estimate INS rotation to align INS w
 | state | uint32_t | Used to set and monitor the state of the infield calibration system. (see eInfieldCalState) |
 | status | uint32_t | Infield calibration status. (see eInfieldCalStatus) |
 | sampleTimeMs | uint32_t | Number of samples used in IMU average. sampleTimeMs = 0 means "imu" member contains the IMU bias from flash.  |
-| imu | imui_t[5] | Dual purpose variable.  1.) This is the averaged IMU sample when sampleTimeMs != 0.  2.) This is a mirror of the motion calibration IMU bias from flash when sampleTimeMs = 0. |
+| imu | imui_t[1] | Dual purpose variable.  1.) This is the averaged IMU sample when sampleTimeMs != 0.  2.) This is a mirror of the motion calibration IMU bias from flash when sampleTimeMs = 0. |
 | calData | infield_cal_vaxis_t[3] | Collected data used to solve for the bias error and INS rotation.  Vertical axis: 0 = X, 1 = Y, 2 = Z  |
 
 
@@ -1505,7 +1518,7 @@ Reference or truth magnetometer used for manufacturing calibration and testing
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| mag | float[3] | Magnetometers |
+| mag | float[3] | Magnetometers (uT) |
 
 
 #### DID_REFERENCE_PIMU
@@ -1599,7 +1612,7 @@ Temperature compensated and motion calibrated IMU output.
 | Field | Type | Description |
 |-------|------|-------------|
 | imus | imus_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
-| temp | float[5] | (uT) Magnetometers.  Units only apply for calibrated data. |
+| temp | float[1] | (uT) Magnetometers.  Units only apply for calibrated data. |
 
 
 #### DID_SENSORS_TCAL
@@ -1611,7 +1624,7 @@ Temperature compensated IMU output.
 | Field | Type | Description |
 |-------|------|-------------|
 | imus | imus_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
-| temp | float[5] | (uT) Magnetometers.  Units only apply for calibrated data. |
+| temp | float[1] | (uT) Magnetometers.  Units only apply for calibrated data. |
 
 
 #### DID_SENSORS_TC_BIAS
@@ -1646,7 +1659,7 @@ Uncalibrated IMU output.
 | Field | Type | Description |
 |-------|------|-------------|
 | imus | imus_t | (°C) Temperature of IMU.  Units only apply for calibrated data. |
-| temp | float[5] | (uT) Magnetometers.  Units only apply for calibrated data. |
+| temp | float[1] | (uT) Magnetometers.  Units only apply for calibrated data. |
 
 
 #### DID_STROBE_IN_TIME
@@ -1865,8 +1878,8 @@ System status and configuration is made available through various enumeration an
 | SYS_CFG_BITS_MAG_ENABLE_WMM_DECLINATION | 0x00000800 |
 | SYS_CFG_BITS_DISABLE_MAGNETOMETER_FUSION | 0x00001000 |
 | SYS_CFG_BITS_DISABLE_BAROMETER_FUSION | 0x00002000 |
-| SYS_CFG_BITS_DISABLE_GPS1_FUSION | 0x00004000 |
-| SYS_CFG_BITS_DISABLE_GPS2_FUSION | 0x00008000 |
+| SYS_CFG_BITS_DISABLE_GNSS1_FUSION | 0x00004000 |
+| SYS_CFG_BITS_DISABLE_GNSS2_FUSION | 0x00008000 |
 | SYS_CFG_BITS_DISABLE_AUTO_ZERO_VELOCITY_UPDATES | 0x00010000 |
 | SYS_CFG_BITS_DISABLE_AUTO_ZERO_ANGULAR_RATE_UPDATES | 0x00020000 |
 | SYS_CFG_BITS_DISABLE_INS_EKF | 0x00040000 |
@@ -1922,13 +1935,14 @@ System status and configuration is made available through various enumeration an
 | GPX_HDW_STATUS_FLASH_WRITE_PENDING | 0x00008000 |
 | GPX_HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
 | GPX_HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
-| GPX_HDW_STATUS_ERR_NO_GPS1_PPS | 0x00040000 |
-| GPX_HDW_STATUS_ERR_NO_GPS2_PPS | 0x00080000 |
+| GPX_HDW_STATUS_ERR_COM_MASK | 0x00030000 |
+| GPX_HDW_STATUS_ERR_NO_GNSS1_PPS | 0x00040000 |
+| GPX_HDW_STATUS_ERR_NO_GNSS2_PPS | 0x00080000 |
 | GPX_HDW_STATUS_ERR_PPS_MASK | 0x000C0000 |
-| GPX_HDW_STATUS_ERR_LOW_CNO_GPS1 | 0x00100000 |
-| GPX_HDW_STATUS_ERR_LOW_CNO_GPS2 | 0x00200000 |
-| GPX_HDW_STATUS_ERR_CNO_GPS1_IR | 0x00400000 |
-| GPX_HDW_STATUS_ERR_CNO_GPS2_IR | 0x00800000 |
+| GPX_HDW_STATUS_ERR_LOW_CNO_GNSS1 | 0x00100000 |
+| GPX_HDW_STATUS_ERR_LOW_CNO_GNSS2 | 0x00200000 |
+| GPX_HDW_STATUS_ERR_CNO_GNSS1_IR | 0x00400000 |
+| GPX_HDW_STATUS_ERR_CNO_GNSS2_IR | 0x00800000 |
 | GPX_HDW_STATUS_ERR_CNO_MASK | 0x00F00000 |
 | GPX_HDW_STATUS_BIT_RUNNING | 0x01000000 |
 | GPX_HDW_STATUS_BIT_PASSED | 0x02000000 |
@@ -1957,30 +1971,30 @@ System status and configuration is made available through various enumeration an
 | RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\) |
 | RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) |
 | RTK_CFG_BITS_ROVER_MODE_MASK | 0x0000000F |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER0 | 0x00000010 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER1 | 0x00000020 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER2 | 0x00000040 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_USB | 0x00000080 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER0 | 0x00000100 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER1 | 0x00000200 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER2 | 0x00000400 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_USB | 0x00000800 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER0 | 0x00001000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER1 | 0x00002000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER2 | 0x00004000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_USB | 0x00008000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER0 | 0x00010000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER1 | 0x00020000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER2 | 0x00040000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_USB | 0x00080000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER0 | 0x00000010 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER1 | 0x00000020 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER2 | 0x00000040 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_USB | 0x00000080 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER0 | 0x00000100 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER1 | 0x00000200 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER2 | 0x00000400 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_USB | 0x00000800 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER0 | 0x00001000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER1 | 0x00002000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER2 | 0x00004000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_USB | 0x00008000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER0 | 0x00010000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER1 | 0x00020000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER2 | 0x00040000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_USB | 0x00080000 |
 | RTK_CFG_BITS_BASE_POS_MOVING | 0x00100000 |
 | RTK_CFG_BITS_RESERVED1 | 0x00200000 |
 | RTK_CFG_BITS_RTK_BASE_IS_IDENTICAL_TO_ROVER | 0x00400000 |
 | RTK_CFG_BITS_GPS_PORT_PASS_THROUGH | 0x00800000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_CUR_PORT | 0x01000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_CUR_PORT | 0x02000000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT | 0x01000000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT | 0x02000000 |
 | RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CLEAR_CUR_PORT | 0x04000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_CUR_PORT\) |
+| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT\) |
 | RTK_CFG_BITS_BASE_UBLOX_MASK | (RTK_CFG_BITS_BASE_GNSS1_UBLOX_MASK\|RTK_CFG_BITS_BASE_GNSS2_UBLOX_MASK\) |
 | RTK_CFG_BITS_BASE_RTCM3_MASK | (RTK_CFG_BITS_BASE_GNSS1_RTCM3_MASK\|RTK_CFG_BITS_BASE_GNSS2_RTCM3_MASK\) |
 | RTK_CFG_BITS_BASE_MODE | (RTK_CFG_BITS_BASE_UBLOX_MASK\|RTK_CFG_BITS_BASE_RTCM3_MASK\) |
@@ -2040,16 +2054,16 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_REF_POINT_STATIONARY | 6 |
 | SYS_CMD_REF_POINT_MOVING | 7 |
 | SYS_CMD_RESET_RTOS_STATS | 8 |
-| SYS_CMD_ENABLE_GPS_LOW_LEVEL_CONFIG | 10 |
+| SYS_CMD_ENABLE_GNSS_LOW_LEVEL_CONFIG | 10 |
 | SYS_CMD_DISABLE_SERIAL_PORT_BRIDGE | 11 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS1 | 12 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GPS2 | 13 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GNSS1 | 12 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GNSS2 | 13 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER0 | 14 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER1 | 15 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER2 | 16 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER0_TO_GPS1 | 17 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GPS1 | 18 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GPS2 | 19 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER0_TO_GNSS1 | 17 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GNSS1 | 18 |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GNSS2 | 19 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_USB | 20 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER0 | 21 |
 | SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER1 | 22 |
@@ -2075,10 +2089,12 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_GNSS_RCVR_SOFT_RESET | 61 |
 | SYS_CMD_GNSS_RCVR_HARD_RESET | 62 |
 | SYS_CMD_RESET_EKF_STATES | 70 |
+| SYS_CMD_CLEAR_ERROR_STATUS | 71 |
 | SYS_CMD_SAVE_FLASH | 97 |
-| SYS_CMD_SAVE_GPS_ASSIST_TO_FLASH_RESET | 98 |
+| SYS_CMD_SAVE_GNSS_ASSIST_TO_FLASH_RESET | 98 |
 | SYS_CMD_SOFTWARE_RESET | 99 |
 | SYS_CMD_MANF_UNLOCK | 1122334455 |
+| SYS_CMD_MANF_ERASE_CALIBRATION_MOTION | 1357924678 |
 | SYS_CMD_MANF_ERASE_CALIBRATION | 1357924679 |
 | SYS_CMD_MANF_FACTORY_RESET | 1357924680 |
 | SYS_CMD_MANF_CHIP_ERASE | 1357924681 |
@@ -2128,7 +2144,7 @@ System status and configuration is made available through various enumeration an
 
 #### GPS Navigation Fix Type
 
-(eGpsNavFixStatus)  
+(eGnssNavFixStatus)  
 
 | Field | Value |
 |-------|------|
@@ -2204,6 +2220,7 @@ System status and configuration is made available through various enumeration an
 | HDW_STATUS_SATURATION_ACC | 0x00000200 |
 | HDW_STATUS_SATURATION_MAG | 0x00000400 |
 | HDW_STATUS_SATURATION_BARO | 0x00000800 |
+| HDW_STATUS_IMU_SATURATION_MASK | (int)(HDW_STATUS_SATURATION_GYR\|HDW_STATUS_SATURATION_ACC\) |
 | HDW_STATUS_SATURATION_MASK | 0x00000F00 |
 | HDW_STATUS_SATURATION_OFFSET | 8 |
 | HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00001000 |
@@ -2253,7 +2270,9 @@ System status and configuration is made available through various enumeration an
 | IMU_STATUS_ACC_Y_OK | 0x00000010 |
 | IMU_STATUS_ACC_Z_OK | 0x00000020 |
 | IMU_STATUS_IMU_OK_BITSIZE | 6 |
-| IMU_STATUS_IMU_OK_MASK | 0x0000003F |
+| IMU_STATUS_IMU_OK_MASK | IMU_STATUS_GYR_X_OK\|IMU_STATUS_GYR_Y_OK\|IMU_STATUS_GYR_Z_OK\|IMU_STATUS_ACC_X_OK\|IMU_STATUS_ACC_Y_OK\|IMU_STATUS_ACC_Z_OK |
+| IMU_STATUS_GYR_OK_MASK | IMU_STATUS_GYR_X_OK\|IMU_STATUS_GYR_Y_OK\|IMU_STATUS_GYR_Z_OK |
+| IMU_STATUS_ACC_OK_MASK | IMU_STATUS_ACC_X_OK\|IMU_STATUS_ACC_Y_OK\|IMU_STATUS_ACC_Z_OK |
 | IMU_STATUS_SHOCK_PRESENT | 0x00000040 |
 | IMU_STATUS_MAG_UPDATE | 0x00000100 |
 | IMU_STATUS_REFERENCE_IMU_PRESENT | 0x00000200 |
@@ -2347,30 +2366,30 @@ System status and configuration is made available through various enumeration an
 | RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\) |
 | RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) |
 | RTK_CFG_BITS_ROVER_MODE_MASK | 0x0000000F |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER0 | 0x00000010 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER1 | 0x00000020 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_SER2 | 0x00000040 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_UBLOX_USB | 0x00000080 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER0 | 0x00000100 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER1 | 0x00000200 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_SER2 | 0x00000400 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_USB | 0x00000800 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER0 | 0x00001000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER1 | 0x00002000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_SER2 | 0x00004000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_UBLOX_USB | 0x00008000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER0 | 0x00010000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER1 | 0x00020000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_SER2 | 0x00040000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_USB | 0x00080000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER0 | 0x00000010 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER1 | 0x00000020 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER2 | 0x00000040 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_USB | 0x00000080 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER0 | 0x00000100 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER1 | 0x00000200 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER2 | 0x00000400 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_USB | 0x00000800 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER0 | 0x00001000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER1 | 0x00002000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER2 | 0x00004000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_USB | 0x00008000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER0 | 0x00010000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER1 | 0x00020000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER2 | 0x00040000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_USB | 0x00080000 |
 | RTK_CFG_BITS_BASE_POS_MOVING | 0x00100000 |
 | RTK_CFG_BITS_RESERVED1 | 0x00200000 |
 | RTK_CFG_BITS_RTK_BASE_IS_IDENTICAL_TO_ROVER | 0x00400000 |
 | RTK_CFG_BITS_GPS_PORT_PASS_THROUGH | 0x00800000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_CUR_PORT | 0x01000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_CUR_PORT | 0x02000000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT | 0x01000000 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT | 0x02000000 |
 | RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CLEAR_CUR_PORT | 0x04000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GPS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GPS2_RTCM3_CUR_PORT\) |
+| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT\) |
 | RTK_CFG_BITS_BASE_UBLOX_MASK | (RTK_CFG_BITS_BASE_GNSS1_UBLOX_MASK\|RTK_CFG_BITS_BASE_GNSS2_UBLOX_MASK\) |
 | RTK_CFG_BITS_BASE_RTCM3_MASK | (RTK_CFG_BITS_BASE_GNSS1_RTCM3_MASK\|RTK_CFG_BITS_BASE_GNSS2_RTCM3_MASK\) |
 | RTK_CFG_BITS_BASE_MODE | (RTK_CFG_BITS_BASE_UBLOX_MASK\|RTK_CFG_BITS_BASE_RTCM3_MASK\) |
@@ -2422,8 +2441,8 @@ System status and configuration is made available through various enumeration an
 | SYS_CFG_BITS_MAG_ENABLE_WMM_DECLINATION | 0x00000800 |
 | SYS_CFG_BITS_DISABLE_MAGNETOMETER_FUSION | 0x00001000 |
 | SYS_CFG_BITS_DISABLE_BAROMETER_FUSION | 0x00002000 |
-| SYS_CFG_BITS_DISABLE_GPS1_FUSION | 0x00004000 |
-| SYS_CFG_BITS_DISABLE_GPS2_FUSION | 0x00008000 |
+| SYS_CFG_BITS_DISABLE_GNSS1_FUSION | 0x00004000 |
+| SYS_CFG_BITS_DISABLE_GNSS2_FUSION | 0x00008000 |
 | SYS_CFG_BITS_DISABLE_AUTO_ZERO_VELOCITY_UPDATES | 0x00010000 |
 | SYS_CFG_BITS_DISABLE_AUTO_ZERO_ANGULAR_RATE_UPDATES | 0x00020000 |
 | SYS_CFG_BITS_DISABLE_INS_EKF | 0x00040000 |
