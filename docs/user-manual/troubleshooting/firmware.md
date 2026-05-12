@@ -136,7 +136,7 @@ The above process using the `SYS_CMD_MANF_DOWNGRADE_CALIBRATION` command is reco
 
 ## 1.7.6 Bug RTK Base GPS Raw work around
 
-If you are having base raw errors on your Rover, in the bottom right of the Evaltool, or a climbing Diffrential Age, in Data Sets DID_GPS1_RTK_REL, you maybe having this bug. Try this workaround.
+If you are having base raw errors on your Rover, in the bottom right of the Evaltool, or a climbing Diffrential Age, in Data Sets DID_GNSS1_RTK_REL, you maybe having this bug. Try this workaround.
 
 1. Go-to settings tab, open the Base serial COM port.
 2. Go-to Data Logs tab, under RCM Presets dropdown select PPD.

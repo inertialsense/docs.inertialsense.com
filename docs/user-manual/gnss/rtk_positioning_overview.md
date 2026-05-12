@@ -78,10 +78,10 @@ The RTK precision positioning fix status can be identified using the valid bit i
 
 ```c++
 // INS status
-INS_STATUS_NAV_FIX_STATUS(DID_INS_1.insStatus) == GPS_NAV_FIX_POSITIONING_RTK_FIX
+INS_STATUS_NAV_FIX_STATUS(DID_INS_1.insStatus) == GNSS_NAV_FIX_POSITIONING_RTK_FIX
 
 // GPS status
-DID_GPS1_POS.status & GPS_STATUS_FLAGS_GPS1_RTK_POSITION_VALID
+DID_GNSS1_POS.status & GNSS_STATUS_FLAGS_GNSS1_RTK_POSITION_VALID
 ```
 
 RTK precision positioning fix is indicated when the RTK-Pos radio button turns purple in the EvalTool INS tab.
@@ -97,10 +97,10 @@ RTK precision positioning fix is indicated when the RTK-Pos radio button turns p
 The ambiguity resolution ratio, `arRatio`, is a metric that indicates progress of the solution that ranges from 0 to 999.  Typically values above 3 indicate RTK fix progress.   
 
 ```c++
-DID_GPS1_RTK_POS_REL.arRatio						// Ambiguity resolution ratio
+DID_GNSS1_RTK_POS_REL.arRatio						// Ambiguity resolution ratio
 ```
 
-The DID_GPS1_RTK_POS_REL status can be monitored in the EvalTool GPS tab.
+The DID_GNSS1_RTK_POS_REL status can be monitored in the EvalTool GPS tab.
 
 <center>
 

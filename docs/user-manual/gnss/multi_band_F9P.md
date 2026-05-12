@@ -177,7 +177,7 @@ The following section describes how to view the current GPS firmware version and
 
 ### GPS Firmware Version
 
-The current GPS firmware version can be read through the `DID_GPS1_VERSION` and `DID_GPS2_VERSION` messages.  
+The current GPS firmware version can be read through the `DID_GNSS1_VERSION` and `DID_GNSS2_VERSION` messages.  
 
 ![GPS Version](./images/gps_version.png)
 

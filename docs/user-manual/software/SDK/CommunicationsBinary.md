@@ -95,7 +95,7 @@ This [IS Communications Example](https://github.com/inertialsense/inertial-sense
 	}
 
 	// Ask for GPS message at period of 200ms (200ms source period x 1).  Size and offset can be left at 0 unless you want to just pull a specific field from a data set.
-	messageSize = is_comm_get_data_to_buf(buffer, bufferSize, comm, DID_GPS1_POS, 0, 0, 1);
+	messageSize = is_comm_get_data_to_buf(buffer, bufferSize, comm, DID_GNSS1_POS, 0, 0, 1);
 	if (messageSize != serialPortWrite(serialPort, comm->buf.start, messageSize))
 	{
 		printf("Failed to encode and write get GPS message\r\n");
@@ -149,8 +149,8 @@ This [IS Communications Example](https://github.com/inertialsense/inertial-sense
 					handleIns2Message((ins_2_t*)comm.pkt.data.ptr);
 					break;
 
-				case DID_GPS1_POS:
-					handleGpsMessage((gps_pos_t*)comm.pkt.data.ptr);
+				case DID_GNSS1_POS:
+					handleGpsMessage((gnss_pos_t*)comm.pkt.data.ptr);
 					break;
 
 				case _DID_PIMU:

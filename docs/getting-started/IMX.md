@@ -4,9 +4,9 @@ The configuration settings found in DID_FLASH_CONFIG are used to configure the v
 
 The antenna offset should also be configured by going to the Data Sets Tab and selecting DID_FLASH_CONFIG. The values of each field can then be edited. Modify the following fields after identifying the [antenna positions](../user-manual/gnss/rtk_compassing.md#dual-antenna-locations):
 
-1. gps1AntOffset[X-Z] - Position of GPS1 antenna with respect to sensor frame.
+1. gnss1AntOffset[X-Z] - Position of GPS1 antenna with respect to sensor frame.
 
-2. gps2AntOffset[X-Z] - Position of GPS2 antenna with respect to sensor frame.
+2. gnss2AntOffset[X-Z] - Position of GPS2 antenna with respect to sensor frame.
 
 IMX-5 data sets can then be requested by one of several methods:
 

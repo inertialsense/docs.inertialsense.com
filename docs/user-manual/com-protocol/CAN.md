@@ -163,7 +163,7 @@ WGS84 height above ellipsoid and GPS status flags
 | Field  | Type     | Description                                                  |
 | ------ | -------- | ------------------------------------------------------------ |
 | alt    | float    | Altitude (meters) (more than 8 decimal places precision)     |
-| status | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
+| status | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
 
 #### CID_INS_NORTH_EAST
 
@@ -307,12 +307,12 @@ GPS CNO Mean and GPS status flags
 
 | Type    | Field    | Description                                                  |
 | ------- | -------- | ------------------------------------------------------------ |
-| status  | uint32_t | (see eGpsStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
+| status  | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
 | cnoMean | uint32_t | (dBHz) Average of all satellite carrier to noise ratios (signal strengths) that are non-zero |
 
 #### CID_GPS1_RTK_POS_REL
 
-`is_can_gps_rtk_rel`
+`is_can_gnss_rtk_rel`
 
 RTK-GPS positioning performance metrics
 
@@ -325,7 +325,7 @@ RTK-GPS positioning performance metrics
 
 #### CID_GPS2_RTK_CMP_REL
 
-`is_can_gps_rtk_rel`
+`is_can_gnss_rtk_rel`
 
 RTK-GPS compassing performance metrics
 

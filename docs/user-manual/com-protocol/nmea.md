@@ -310,7 +310,7 @@ $PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,
 | ----- | ------------ | ----- | ------------------------------------------------------------ |
 | 1     | timeOfWeekMs | ms    | GPS time of week in milliseconds since Sunday morning in GMT |
 | 2     | GPS week     | weeks | GPS number of weeks since January 1st of 1980 in GMT         |
-| 3     | status       |       | (see [eGpsStatus](DID-descriptions.md#gps-status)) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
+| 3     | status       |       | (see [eGnssStatus](DID-descriptions.md#gps-status)) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
 | 4     | Latitude     | deg   | WGS84 Latitude                                               |
 | 5     | Longitude    | deg   | WGS84 Longitude                                              |
 | 6     | HAE altitude | m     | Height above WGS84 ellipsoid                                 |

@@ -2,7 +2,7 @@
 
 ## INS & GPS Timestamps
 
-The IMX output messages are timestamped using GPS time-base because this time is known immediately following GPS signal reception.  Conversion from GPS time to UTC time requires knowledge of the number of leap seconds (GPS-UTC) offset.  This value is received periodically (every 12.5 minutes) and is available in the `DID_GPS1_POS` and `DID_GPS1_RTK_POS` (gps_pos_t) messages.  GPS leap seconds is 18 seconds as of December 31, 2016 and [will change in the future](https://en.wikipedia.org/wiki/Leap_second).  
+The IMX output messages are timestamped using GPS time-base because this time is known immediately following GPS signal reception.  Conversion from GPS time to UTC time requires knowledge of the number of leap seconds (GPS-UTC) offset.  This value is received periodically (every 12.5 minutes) and is available in the `DID_GNSS1_POS` and `DID_GNSS1_RTK_POS` (gnss_pos_t) messages.  GPS leap seconds is 18 seconds as of December 31, 2016 and [will change in the future](https://en.wikipedia.org/wiki/Leap_second).  
 
 The original designers of GPS chose to express time and date as an integer week number (starting with the first full week in January 1980) and a time of week (often abbreviated to TOW) expressed in seconds. Working with time/date in this form is easier for digital systems than the more "conventional" year/month/day, hour/minute/second representation. Most GNSS receivers use this representation internally and converting to a more "conventional form" externally. 
 

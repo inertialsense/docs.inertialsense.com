@@ -9,20 +9,20 @@ The Inertial Sense CLTool is a command line utility that can be used to read and
 # Command line utility for communicating, logging, and updating firmware with Inertial Sense product line.
 
 EXAMPLES
-    cltool -c /dev/ttyS2 -did DID_INS_1 DID_GPS1_POS DID_PIMU      # stream DID messages
+    cltool -c /dev/ttyS2 -did DID_INS_1 DID_GNSS1_POS DID_PIMU      # stream DID messages
     cltool -c /dev/ttyS2 -did 4 13 3                # stream same as line above
     cltool -c /dev/ttyS2 -did 3=5                   # stream DID_PIMU at startupNavDtMs x 5
     cltool -c /dev/ttyS2 -presetPPD                 # stream post processing data (PPD) with INS2
     cltool -c /dev/ttyS2 -presetPPD -lon -lts=1     # stream PPD + INS2 data, logging, dir timestamp
     cltool -c /dev/ttyS2 -edit DID_FLASH_CONFIG     # edit DID_FLASH_CONFIG message
-    cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGPSDtMs
+    cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGnssDtMs
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
     cltool -rp logs/20170117_222549                 # replay log files from a folder
     cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password         # Connect to RTK NTRIP base
-    cltool -c /dev/ttyS2 -get 1,4,13,DID_GPS1_POS                                    # Return specific DIDs
+    cltool -c /dev/ttyS2 -get 1,4,13,DID_GNSS1_POS                                    # Return specific DIDs
     cltool -c /dev/ttyS2 -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"   # Return portion of two DIDs
-    cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gps1AntOffset[1]: 0.8}}"          # Set one value in DID array
-    cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gps1AntOffset: [0.8, 0.0, 1.2]}}" # Set values in DID
+    cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gnss1AntOffset[1]: 0.8}}"          # Set one value in DID array
+    cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gnss1AntOffset: [0.8, 0.0, 1.2]}}" # Set values in DID
 
 EXAMPLES (Firmware Update)
     cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
@@ -73,19 +73,19 @@ OPTIONS (Firmware Update)
 OPTIONS (Messages)
     -get <DID1>,<DID2>,...                   Return values of dataset(s). DID may be a name or number.
     -get "{<DID>: {<FIELD1>,<FIELD2>,...}}"  Return values of dataset(s). DID may be a name or number. YAML input format.
-                                             Examples: -get 1,4,12,DID_GPS1_POS
-                                                       -get "{DID_INS_1,DID_GPS1_POS}"
+                                             Examples: -get 1,4,12,DID_GNSS1_POS
+                                                       -get "{DID_INS_1,DID_GNSS1_POS}"
                                                        -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"
     -set "{<DID>: {<FIELD1>: <VALUE>, ...}}" Set values of dataset(s). DID may be a number or name. YAML input format.
-                                             Examples: -set "{DID_FLASH_CONFIG: {gps1AntOffset: [0.8, 0.0, 1.2]}}"
-                                                       -set "{DID_FLASH_CONFIG: {gps1AntOffset[2]: 1.2}}"
+                                             Examples: -set "{DID_FLASH_CONFIG: {gnss1AntOffset: [0.8, 0.0, 1.2]}}"
+                                                       -set "{DID_FLASH_CONFIG: {gnss1AntOffset[2]: 1.2}}"
                                                        -set "{12: {ioConfig: 0x1a2b012c, ser2BaudRate: 921600}}"
     -did [DID#<=PERIODMULT> DID#<=PERIODMULT> ...]  Stream 1 or more datasets and display w/ compact view.
     -edit [DID#<=PERIODMULT>]                       Stream and edit 1 dataset.
           Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency. 
           Message period = source period x PERIODMULT. PERIODMULT is 1 if not specified.
-          Common DIDs: DID_INS_1, DID_INS_2, DID_INS_4, DID_PIMU, DID_IMU, DID_GPS1_POS,
-          DID_GPS2_RTK_CMP_REL, DID_BAROMETER, DID_MAGNETOMETER, DID_FLASH_CONFIG (see data_sets.h for complete list)
+          Common DIDs: DID_INS_1, DID_INS_2, DID_INS_4, DID_PIMU, DID_IMU, DID_GNSS1_POS,
+          DID_GNSS2_RTK_CMP_REL, DID_BAROMETER, DID_MAGNETOMETER, DID_FLASH_CONFIG (see data_sets.h for complete list)
     -dids           Print list of all DID datasets
     -persistent     Save current streams as persistent messages enabled on startup
     -presetPPD      Send RMC preset to enable IMX post processing data (PPD) stream

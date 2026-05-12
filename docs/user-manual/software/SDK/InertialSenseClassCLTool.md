@@ -97,7 +97,7 @@ static void cltool_dataCallback(InertialSense* i, p_data_t* data, int pHandle)
 	break;
 	case DID_IMU: d.dualImu; break;
 	case DID_PIMU: d.dThetaVel; break;
-	case DID_GPS1_POS: d.gpsPos; break;
+	case DID_GNSS1_POS: d.gpsPos; break;
 	case DID_MAGNETOMETER: d.mag; break;
 	case DID_BAROMETER: d.baro; break;
 	case DID_SYS_SENSORS: d.sysSensors; break;
