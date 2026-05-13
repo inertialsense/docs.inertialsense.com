@@ -707,21 +707,22 @@ $INFO,d,d.d.d.d,d.d.d.d,d,d.d.d.d,d,s,YYYY-MM-DD,hh:mm:ss.ms,s*xx\r\n
       1 2       3       4 5       6 7 8          9           10
 ```
 
-| Index | Field            | Units | Description                                                  |
-| ----- | ---------------- | ----- | ------------------------------------------------------------ |
-| 1     | Serial number    |       | Manufacturer serial number                                   |
-| 2     | Hardware version |       | Hardware version                                             |
-| 3     | Firmware version |       | Firmware version                                             |
-| 4     | Build number     |       | Firmware build number                                        |
-| 5     | Protocol version |       | Communications protocol version                              |
-| 6     | Repo revision    |       | Repository revision number                                   |
-| 7     | Manufacturer     |       | Manufacturer name                                            |
-| 8     | Build date       |       | Build date: <br/>[1] = year, [2] = month, [3] = day          |
-| 9     | Build time       |       | Build date: [0] = hour, [1] = minute, <br/>[2] = second, [3] = millisecond |
-| 10    | Add Info         |       | Additional information                                       |
-| 11    | Hardware         |       | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX                        |
-| 12    | Reserved         |       | Reserved for internal purpose.                               |
-| 13    | Build type       |       | Build type: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=debug |
+| Index | Field            | Units | Description                                                                                        |
+| ----- | ---------------- | ----- | -------------------------------------------------------------------------------------------------- |
+| 1     | Serial number    |       | Manufacturer serial number                                                                         |
+| 2     | Hardware version |       | Hardware version                                                                                   |
+| 3     | Firmware version |       | Firmware version                                                                                   |
+| 4     | Build number     |       | Firmware build number                                                                              |
+| 5     | Protocol version |       | Communications protocol version                                                                    |
+| 6     | Repo revision    |       | Repository revision number                                                                         |
+| 7     | Manufacturer     |       | Manufacturer name                                                                                  |
+| 8     | Build date       |       | Build date: <br/>[1] = year, [2] = month, [3] = day                                                |
+| 9     | Build time       |       | Build date: [0] = hour, [1] = minute, <br/>[2] = second, [3] = millisecond                         |
+| 10    | Add Info         |       | Additional information                                                                             |
+| 11    | Hardware         |       | Hardware: 1=uINS, 2=EVB, 3=IMX, 4=GPX                                                              |
+| 12    | hdwRunState      |       | Device Run State : Bootloader, App, etc                                                            |
+| 13    | Build type       |       | Build type: 0=production, 'c'=release candidate, 'b'=beta, 'a'=alpha, 'd'=develop, 's'=snapshot    |
+| 14    | Build flags      |       | Build flags: 0x1=debug, 0x2=dirty                                                                  |
 
 ## NMEA Examples
 
