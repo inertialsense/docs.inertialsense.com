@@ -145,7 +145,7 @@ Magnetometer sensor output
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| mag | float[3] | Magnetometers (uT) |
+| mag | float[3] | Magnetometers in microtesla (uT) |
 
 
 #### DID_MAG_CAL
@@ -560,7 +560,8 @@ GPX device information
 
 | Field | Type | Description |
 |-------|------|-------------|
-| reserved | uint16_t | Reserved bits |
+| reserved | uint8_t | Reserved bits |
+| buildFlags | uint8_t | Build flags: 0x1=debug mode, 0x2=dirty (see eBuildFlags) |
 | hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
 | hdwRunState | uint8_t | Device Run State : Bootloader, App, etc |
 | serialNumber | uint32_t | Serial number |
@@ -570,7 +571,7 @@ GPX device information
 | protocolVer | uint8_t[4] | Communications protocol version |
 | repoRevision | uint32_t | Repository revision number |
 | manufacturer | char[24] | Manufacturer name |
-| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=developer/debug) |
+| buildType | uint8_t | Build type (0=production, 'c'=release candidate, 'b'=beta, 'a'=alpha, 'd'=developer, 's'=snapshot, '^'=dirty) |
 | buildYear | uint8_t | Build date year - 2000 |
 | buildMonth | uint8_t | Build date month |
 | buildDay | uint8_t | Build date day |
@@ -1030,7 +1031,8 @@ Device information
 
 | Field | Type | Description |
 |-------|------|-------------|
-| reserved | uint16_t | Reserved bits |
+| reserved | uint8_t | Reserved bits |
+| buildFlags | uint8_t | Build flags: 0x1=debug mode, 0x2=dirty (see eBuildFlags) |
 | hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
 | hdwRunState | uint8_t | Device Run State : Bootloader, App, etc |
 | serialNumber | uint32_t | Serial number |
@@ -1040,7 +1042,7 @@ Device information
 | protocolVer | uint8_t[4] | Communications protocol version |
 | repoRevision | uint32_t | Repository revision number |
 | manufacturer | char[24] | Manufacturer name |
-| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=developer/debug) |
+| buildType | uint8_t | Build type (0=production, 'c'=release candidate, 'b'=beta, 'a'=alpha, 'd'=developer, 's'=snapshot, '^'=dirty) |
 | buildYear | uint8_t | Build date year - 2000 |
 | buildMonth | uint8_t | Build date month |
 | buildDay | uint8_t | Build date day |
@@ -1082,7 +1084,8 @@ EVB device information
 
 | Field | Type | Description |
 |-------|------|-------------|
-| reserved | uint16_t | Reserved bits |
+| reserved | uint8_t | Reserved bits |
+| buildFlags | uint8_t | Build flags: 0x1=debug mode, 0x2=dirty (see eBuildFlags) |
 | hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
 | hdwRunState | uint8_t | Device Run State : Bootloader, App, etc |
 | serialNumber | uint32_t | Serial number |
@@ -1092,7 +1095,7 @@ EVB device information
 | protocolVer | uint8_t[4] | Communications protocol version |
 | repoRevision | uint32_t | Repository revision number |
 | manufacturer | char[24] | Manufacturer name |
-| buildType | uint8_t | Build type (Release: 'a'=ALPHA, 'b'=BETA, 'c'=RELEASE CANDIDATE, 'r'=PRODUCTION RELEASE, 'd'=developer/debug) |
+| buildType | uint8_t | Build type (0=production, 'c'=release candidate, 'b'=beta, 'a'=alpha, 'd'=developer, 's'=snapshot, '^'=dirty) |
 | buildYear | uint8_t | Build date year - 2000 |
 | buildMonth | uint8_t | Build date month |
 | buildDay | uint8_t | Build date day |
@@ -1518,7 +1521,7 @@ Reference or truth magnetometer used for manufacturing calibration and testing
 | Field | Type | Description |
 |-------|------|-------------|
 | time | double | Time since boot up in seconds.  Convert to GPS time of week by adding gps.towOffset |
-| mag | float[3] | Magnetometers (uT) |
+| mag | float[3] | Magnetometers in microtesla (uT) |
 
 
 #### DID_REFERENCE_PIMU
@@ -2104,6 +2107,7 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_FAULT_TEST_TRIG_MALLOC | 57005 |
 | SYS_CMD_FAULT_TEST_TRIG_HARD_FAULT | 57006 |
 | SYS_CMD_FAULT_TEST_TRIG_WATCHDOG | 57007 |
+| SYS_CMD_FAULT_TEST_TRIG_FLASH_TORN_WRITE | 57008 |
 
 
 #### DID_SYS_PARAMS.genFaultCode
@@ -2140,6 +2144,7 @@ System status and configuration is made available through various enumeration an
 | GFC_GNSS_RECEIVER_TIME | 0x04000000 |
 | GFC_GNSS_GENERAL_FAULT | 0x08000000 |
 | GFC_EKF_INPUT_INVALID_IMU | 0x10000000 |
+| GFC_GNSS_RTOS_ERROR | 0x20000000 |
 | GFC_GPX_STATUS_COMMON_MASK | GFC_GNSS1_INIT\|GFC_GNSS2_INIT\|GFC_GNSS_TX_LIMITED\|GFC_GNSS_RX_OVERRUN\|GFC_GNSS_CRITICAL_FAULT\|GFC_GNSS_RECEIVER_TIME\|GFC_GNSS_GENERAL_FAULT |
 
 
