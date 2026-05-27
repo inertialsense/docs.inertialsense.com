@@ -14,7 +14,7 @@
 ## IMX (IMU, AHRS, and GPS-INS)
 <center>
 
-![](user-manual/images/IMX_5.0_800w.jpg)
+![](user-manual/images/IMX_6.0_800w.jpg)
 
 </center>
 
@@ -42,7 +42,7 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 | Dynamic Roll/Pitch                  | 0.04°         | 0.03°         |
 | Dynamic Heading                     | 0.13°         | 0.09°         |
 
-* Up to 1 KHz IMU Output Data Rate
+* Up to 1 KHz IMU and 500 Hz INS Output Data Rate
 * Small Form Factor: 15.6 x 12.5 x 2.9 mm
 * Light Weight: 0.9 g
 * Low power consumption: <120mW
