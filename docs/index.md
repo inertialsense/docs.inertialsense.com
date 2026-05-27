@@ -1,4 +1,4 @@
-**Software Release 3.0.0 - 22 May 2026**
+**Software Release 3.0.0 - 26 May 2026**
 <!-- [UPDATE_RELEASE_VERSION_HERE] Update this version info at time of release. -->
 
 *Older (non-current) versions of the User Manual can be found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
