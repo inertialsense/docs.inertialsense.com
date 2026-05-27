@@ -1,0 +1,2412 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.inertialsense.com/user-manual/glossary/">
+      
+      <link rel="icon" href="../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Glossary - InertialSense</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ef5552">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../custom_theme/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#inertial-sense-navigation-glossary" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="InertialSense" class="md-header__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InertialSense
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Glossary
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="InertialSense" class="md-nav__button md-logo" aria-label="InertialSense" data-md-component="logo">
+      
+  <img src="../../img/Logo_Circle_white.svg" alt="logo">
+
+    </a>
+    InertialSense
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../datasheets/datasheets/" class="md-nav__link">
+        Data Sheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dimensions/dimensions/" class="md-nav__link">
+        Dimensions and Pinouts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/Overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/IMX-5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/GPX-1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Hardware Integration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Hardware Integration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Hardware Integration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/module_imx6/" class="md-nav__link">
+        IMX-6
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/module_imx5/" class="md-nav__link">
+        IMX-5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/module_gpx1/" class="md-nav__link">
+        GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/rugged3/" class="md-nav__link">
+        Rugged-3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/IG1/" class="md-nav__link">
+        IG-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/IG2/" class="md-nav__link">
+        IG-2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/IK1/" class="md-nav__link">
+        IK-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/hardware_design/" class="md-nav__link">
+        Design Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/reflow/" class="md-nav__link">
+        Reflow Soldering
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Software / SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Software / SDK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Software / SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/evaltool/" class="md-nav__link">
+        EvalTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/cltool/" class="md-nav__link">
+        CLTool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/SDK/logInspector/" class="md-nav__link">
+        Log Inspector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/SDK/overview/" class="md-nav__link">
+        SDK Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5">
+          Example Projects
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Projects" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Example Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/SDK/CommunicationsBinary/" class="md-nav__link">
+        Comm-Binary (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/SDK/CommunicationsAscii/" class="md-nav__link">
+        Comm-NMEA (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/SDK/CommunicationsArduino/" class="md-nav__link">
+        Comm-Arduino (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/SDK/FirmwareUpdate/" class="md-nav__link">
+        Firmware Update (C)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/SDK/InertialSenseClassCLTool/" class="md-nav__link">
+        InertialSense Class CLTool (C++)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/SDK/DataLogger/" class="md-nav__link">
+        Data Logging (C++)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          IMX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="IMX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          IMX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/application-config/infield_calibration/" class="md-nav__link">
+        Infield Calibration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/application-config/platform_configuration/" class="md-nav__link">
+        Platform Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/application-config/imu_ins_gnss_configuration/" class="md-nav__link">
+        IMU INS GNSS Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/application-config/system_configuration/" class="md-nav__link">
+        System Config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/application-config/time_sync/" class="md-nav__link">
+        Time Sync/Strobe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/application-config/zero_motion_command/" class="md-nav__link">
+        Zero Motion Command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/application-config/UART/" class="md-nav__link">
+        UART
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/application-config/world_magnetic_model/" class="md-nav__link">
+        World Magnetic Model
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/IMX_system_status/" class="md-nav__link">
+        System Status
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/magnetometer/" class="md-nav__link">
+        Magnetometer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_4" type="checkbox" id="__nav_7_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_4">
+          Dead Reckoning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dead Reckoning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_4">
+          <span class="md-nav__icon md-icon"></span>
+          Dead Reckoning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/dead-reckoning/dead_reckoning/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/dead-reckoning/dead_reckoning_examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/shock-rejection/imu_shock_rejection/" class="md-nav__link">
+        IMU Shock Rejection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/bootloader/" class="md-nav__link">
+        IMX-5 Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_7" type="checkbox" id="__nav_7_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_7">
+          Troubleshooting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Troubleshooting" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_7">
+          <span class="md-nav__icon md-icon"></span>
+          Troubleshooting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/troubleshooting/imx5_chip_erase/" class="md-nav__link">
+        IMX-5 Chip Erase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imx/troubleshooting/imx5_bootloader/" class="md-nav__link">
+        IMX-5 Bootloader
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          GPX
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GPX" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          GPX
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpx/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/GPX_system_status/" class="md-nav__link">
+        GPX System Status
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Communication Protocols
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communication Protocols" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Communication Protocols
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../com-protocol/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../com-protocol/DID-descriptions/" class="md-nav__link">
+        Data Sets (DIDs)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../com-protocol/isb/" class="md-nav__link">
+        Inertial Sense Binary (ISB)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../com-protocol/nmea/" class="md-nav__link">
+        NMEA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../com-protocol/SPI/" class="md-nav__link">
+        SPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../com-protocol/CAN/" class="md-nav__link">
+        CAN
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          GNSS - RTK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GNSS - RTK" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          GNSS - RTK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_1" type="checkbox" id="__nav_10_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_1">
+          Multi-band GNSS
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-band GNSS" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_1">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-band GNSS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/multi_band_gnss_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/multi_band_GPX/" class="md-nav__link">
+        IS GPX-1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/multi_band_F9P/" class="md-nav__link">
+        ublox F9P
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/external_gnss/" class="md-nav__link">
+        External NMEA GNSS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/gnss_antennas/" class="md-nav__link">
+        GNSS Antennas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/gnss_constellations/" class="md-nav__link">
+        GNSS Constellations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5">
+          RTK Positioning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="RTK Positioning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          RTK Positioning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/rtk_positioning_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/rtk_rover/" class="md-nav__link">
+        Rover Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/rtk_base/" class="md-nav__link">
+        Base Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/rtk_ntrip/" class="md-nav__link">
+        NTRIP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/ublox_pointperfect/" class="md-nav__link">
+        Point Perfect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/SBAS/" class="md-nav__link">
+        SBAS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnss/rtk_compassing/" class="md-nav__link">
+        RTK Compassing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          Data Logging/Plotting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Logging/Plotting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Data Logging/Plotting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging-plotting/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging-plotting/data_logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging-plotting/data_plotting/" class="md-nav__link">
+        Plotting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/coordinate_frames/" class="md-nav__link">
+        Coordinate Frames
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/definitions/" class="md-nav__link">
+        Definitions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/imu_specifications/" class="md-nav__link">
+        IMU Specifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/interference/" class="md-nav__link">
+        Interference
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/user_manual_pdf/" class="md-nav__link">
+        User Manual PDF
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Glossary
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_16" type="checkbox" id="__nav_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_16">
+          Troubleshooting
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Troubleshooting" data-md-level="1">
+        <label class="md-nav__title" for="__nav_16">
+          <span class="md-nav__icon md-icon"></span>
+          Troubleshooting
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/firmware/" class="md-nav__link">
+        Firmware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/gnss/" class="md-nav__link">
+        GNSS
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="inertial-sense-navigation-glossary">Inertial Sense Navigation Glossary<a class="headerlink" href="#inertial-sense-navigation-glossary" title="Permanent link">&para;</a></h1>
+<p>This glossary defines terminology used in inertial navigation, GNSS positioning, and Inertial Sense navigation systems.</p>
+<hr />
+<h1 id="navigation-systems">Navigation Systems<a class="headerlink" href="#navigation-systems" title="Permanent link">&para;</a></h1>
+<h3 id="imu-inertial-measurement-unit">IMU (Inertial Measurement Unit)<a class="headerlink" href="#imu-inertial-measurement-unit" title="Permanent link">&para;</a></h3>
+<p>A sensor device containing:</p>
+<ul>
+<li>gyroscopes</li>
+<li>accelerometers</li>
+</ul>
+<p>It measures <strong>angular velocity</strong> and <strong>linear acceleration</strong>, which are used to estimate motion and orientation.</p>
+<hr />
+<h3 id="ahrs-attitude-and-heading-reference-system">AHRS (Attitude and Heading Reference System)<a class="headerlink" href="#ahrs-attitude-and-heading-reference-system" title="Permanent link">&para;</a></h3>
+<p>A system that estimates <strong>orientation</strong> using IMU and magnetometer data.</p>
+<p>Outputs typically include:</p>
+<ul>
+<li>roll</li>
+<li>pitch</li>
+<li>heading</li>
+</ul>
+<hr />
+<h3 id="ins-inertial-navigation-system">INS (Inertial Navigation System)<a class="headerlink" href="#ins-inertial-navigation-system" title="Permanent link">&para;</a></h3>
+<p>A navigation system that computes:</p>
+<ul>
+<li>position</li>
+<li>velocity</li>
+<li>orientation</li>
+</ul>
+<p>by integrating IMU measurements over time.</p>
+<hr />
+<h3 id="strapdown-ins">Strapdown INS<a class="headerlink" href="#strapdown-ins" title="Permanent link">&para;</a></h3>
+<p>A modern INS architecture where the IMU is rigidly attached to the vehicle and navigation equations are solved in software.</p>
+<p>This contrasts with older <strong>gimbaled INS systems</strong>.</p>
+<hr />
+<h3 id="gnss-global-navigation-satellite-system">GNSS (Global Navigation Satellite System)<a class="headerlink" href="#gnss-global-navigation-satellite-system" title="Permanent link">&para;</a></h3>
+<p>Satellite navigation systems providing global positioning and timing.</p>
+<p>Examples include:</p>
+<ul>
+<li>GPS</li>
+<li>GLONASS</li>
+<li>Galileo</li>
+<li>BeiDou</li>
+</ul>
+<hr />
+<h3 id="gnss-ins-integration">GNSS-INS Integration<a class="headerlink" href="#gnss-ins-integration" title="Permanent link">&para;</a></h3>
+<p>Combining GNSS and inertial measurements to provide:</p>
+<ul>
+<li>robust positioning</li>
+<li>high-rate navigation</li>
+<li>improved reliability</li>
+</ul>
+<hr />
+<h3 id="dead-reckoning">Dead Reckoning<a class="headerlink" href="#dead-reckoning" title="Permanent link">&para;</a></h3>
+<p>Position estimation obtained by integrating velocity and heading over time without external measurements.</p>
+<hr />
+<h3 id="sensor-fusion">Sensor Fusion<a class="headerlink" href="#sensor-fusion" title="Permanent link">&para;</a></h3>
+<p>The process of combining measurements from multiple sensors to estimate system state more accurately.</p>
+<hr />
+<h1 id="navigation-state-variables">Navigation State Variables<a class="headerlink" href="#navigation-state-variables" title="Permanent link">&para;</a></h1>
+<h3 id="position">Position<a class="headerlink" href="#position" title="Permanent link">&para;</a></h3>
+<p>Vehicle location expressed as:</p>
+<ul>
+<li>Latitude</li>
+<li>Longitude</li>
+<li>Altitude</li>
+</ul>
+<p>This geodetic representation is often called <strong>LLA</strong>.</p>
+<p>Position can also be expressed in Earth-fixed Cartesian (ECEF) coordinates:</p>
+<div class="highlight"><pre><span></span><code>p_ecef = [X, Y, Z]
+</code></pre></div>
+
+<p>or in local coordinates:</p>
+<div class="highlight"><pre><span></span><code>p = [North, East, Down]
+</code></pre></div>
+
+<hr />
+<h3 id="velocity">Velocity<a class="headerlink" href="#velocity" title="Permanent link">&para;</a></h3>
+<p>Rate of change of position.</p>
+<p>In the navigation frame:</p>
+<div class="highlight"><pre><span></span><code>v = [v_N, v_E, v_D]
+</code></pre></div>
+
+<p>Velocity can also be expressed in Earth-fixed Cartesian (ECEF) coordinates:</p>
+<div class="highlight"><pre><span></span><code>v_ecef = [v_X, v_Y, v_Z]
+</code></pre></div>
+
+<hr />
+<h3 id="attitude">Attitude<a class="headerlink" href="#attitude" title="Permanent link">&para;</a></h3>
+<p>The orientation of a vehicle relative to a reference frame.</p>
+<p>Representations include:</p>
+<ul>
+<li>Euler angles</li>
+<li>quaternions</li>
+<li>direction cosine matrices</li>
+</ul>
+<hr />
+<h1 id="coordinate-frames">Coordinate Frames<a class="headerlink" href="#coordinate-frames" title="Permanent link">&para;</a></h1>
+<h3 id="body-frame">Body Frame<a class="headerlink" href="#body-frame" title="Permanent link">&para;</a></h3>
+<p>Coordinate frame fixed to the IMU.</p>
+<p>Typical convention:</p>
+<div class="highlight"><pre><span></span><code>X → Forward
+Y → Right
+Z → Down
+</code></pre></div>
+
+<hr />
+<h3 id="navigation-frame">Navigation Frame<a class="headerlink" href="#navigation-frame" title="Permanent link">&para;</a></h3>
+<p>A local Earth-referenced coordinate frame used for navigation.</p>
+<p>Common choice:</p>
+<p><strong>NED (North-East-Down)</strong></p>
+<hr />
+<h3 id="ned-frame">NED Frame<a class="headerlink" href="#ned-frame" title="Permanent link">&para;</a></h3>
+<p>Local tangent plane coordinate system:</p>
+<div class="highlight"><pre><span></span><code>X → North
+Y → East
+Z → Down
+</code></pre></div>
+
+<hr />
+<h3 id="ecef-frame">ECEF Frame<a class="headerlink" href="#ecef-frame" title="Permanent link">&para;</a></h3>
+<p>Earth-Centered Earth-Fixed coordinate system.</p>
+<p>Origin:</p>
+<p>Earth's center of mass.</p>
+<p>Coordinates are represented as:</p>
+<div class="highlight"><pre><span></span><code>[X, Y, Z]
+</code></pre></div>
+
+<p>in meters, fixed to Earth.</p>
+<hr />
+<h3 id="lla-latitude-longitude-altitude">LLA (Latitude, Longitude, Altitude)<a class="headerlink" href="#lla-latitude-longitude-altitude" title="Permanent link">&para;</a></h3>
+<p>Geodetic position representation on the Earth reference ellipsoid.</p>
+<p>Common units:</p>
+<ul>
+<li>latitude/longitude in degrees</li>
+<li>altitude in meters</li>
+</ul>
+<p>LLA is often used as an alternative to ECEF coordinates depending on the application.</p>
+<hr />
+<h3 id="eci-frame">ECI Frame<a class="headerlink" href="#eci-frame" title="Permanent link">&para;</a></h3>
+<p>Earth-Centered Inertial coordinate frame that does not rotate with Earth.</p>
+<p>Used primarily in orbital mechanics.</p>
+<hr />
+<h3 id="sensor-frame">Sensor Frame<a class="headerlink" href="#sensor-frame" title="Permanent link">&para;</a></h3>
+<p>Coordinate frame defined by the axes of the IMU sensors.</p>
+<hr />
+<h3 id="vehicle-frame">Vehicle Frame<a class="headerlink" href="#vehicle-frame" title="Permanent link">&para;</a></h3>
+<p>Coordinate frame aligned with the vehicle body.</p>
+<hr />
+<h1 id="attitude-representations">Attitude Representations<a class="headerlink" href="#attitude-representations" title="Permanent link">&para;</a></h1>
+<h3 id="euler-angles">Euler Angles<a class="headerlink" href="#euler-angles" title="Permanent link">&para;</a></h3>
+<p>Orientation defined by three sequential rotations:</p>
+<div class="highlight"><pre><span></span><code>Roll  (φ)
+Pitch (θ)
+Yaw   (ψ)
+</code></pre></div>
+
+<p>Limitations:</p>
+<ul>
+<li>gimbal lock near ±90° pitch</li>
+</ul>
+<hr />
+<h3 id="quaternion">Quaternion<a class="headerlink" href="#quaternion" title="Permanent link">&para;</a></h3>
+<p>A four-element representation of orientation:</p>
+<div class="highlight"><pre><span></span><code>q = [q_w, q_x, q_y, q_z]
+</code></pre></div>
+
+<p>Advantages:</p>
+<ul>
+<li>no singularities</li>
+<li>efficient for filtering</li>
+</ul>
+<hr />
+<h3 id="direction-cosine-matrix-dcm">Direction Cosine Matrix (DCM)<a class="headerlink" href="#direction-cosine-matrix-dcm" title="Permanent link">&para;</a></h3>
+<p>3×3 rotation matrix that converts vectors between coordinate frames.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code>C_bn
+</code></pre></div>
+
+<p>Transforms body frame vectors into navigation frame.</p>
+<hr />
+<h1 id="strapdown-navigation-equations">Strapdown Navigation Equations<a class="headerlink" href="#strapdown-navigation-equations" title="Permanent link">&para;</a></h1>
+<h3 id="attitude-propagation">Attitude Propagation<a class="headerlink" href="#attitude-propagation" title="Permanent link">&para;</a></h3>
+<p>Orientation updated using gyro measurements:</p>
+<div class="highlight"><pre><span></span><code>q̇ = ½ Ω(ω) q
+</code></pre></div>
+
+<p>where</p>
+<div class="highlight"><pre><span></span><code>ω = angular rate vector
+Ω = quaternion rate matrix
+</code></pre></div>
+
+<hr />
+<h3 id="velocity-equation">Velocity Equation<a class="headerlink" href="#velocity-equation" title="Permanent link">&para;</a></h3>
+<p>Velocity evolves as:</p>
+<div class="highlight"><pre><span></span><code>v̇ = C_bn f_b + g_n - (2Ω_ie + Ω_en)v
+</code></pre></div>
+
+<p>where:</p>
+<ul>
+<li><code>f_b</code> = specific force</li>
+<li><code>g_n</code> = gravity vector</li>
+<li><code>Ω_ie</code> = Earth rotation rate</li>
+<li><code>Ω_en</code> = transport rate</li>
+</ul>
+<hr />
+<h3 id="position-equation">Position Equation<a class="headerlink" href="#position-equation" title="Permanent link">&para;</a></h3>
+<p>Position updated by integrating velocity:</p>
+<div class="highlight"><pre><span></span><code>ṗ = v
+</code></pre></div>
+
+<hr />
+<h1 id="imu-measurement-terms">IMU Measurement Terms<a class="headerlink" href="#imu-measurement-terms" title="Permanent link">&para;</a></h1>
+<h3 id="angular-rate">Angular Rate<a class="headerlink" href="#angular-rate" title="Permanent link">&para;</a></h3>
+<p>Rotation rate measured by gyroscopes.</p>
+<p>Units:</p>
+<div class="highlight"><pre><span></span><code>deg/s
+rad/s
+</code></pre></div>
+
+<hr />
+<h3 id="specific-force">Specific Force<a class="headerlink" href="#specific-force" title="Permanent link">&para;</a></h3>
+<p>Acceleration measured by accelerometers excluding gravity.</p>
+<hr />
+<h3 id="linear-acceleration">Linear Acceleration<a class="headerlink" href="#linear-acceleration" title="Permanent link">&para;</a></h3>
+<p>True acceleration of the body.</p>
+<hr />
+<h3 id="magnetic-field">Magnetic Field<a class="headerlink" href="#magnetic-field" title="Permanent link">&para;</a></h3>
+<p>Earth magnetic field measured by magnetometers for heading estimation.</p>
+<hr />
+<h3 id="barometric-pressure">Barometric Pressure<a class="headerlink" href="#barometric-pressure" title="Permanent link">&para;</a></h3>
+<p>Atmospheric pressure measurement used for altitude estimation.</p>
+<hr />
+<h1 id="sensor-error-models">Sensor Error Models<a class="headerlink" href="#sensor-error-models" title="Permanent link">&para;</a></h1>
+<h3 id="bias">Bias<a class="headerlink" href="#bias" title="Permanent link">&para;</a></h3>
+<p>Constant offset in sensor output.</p>
+<div class="highlight"><pre><span></span><code>measurement = truth + bias
+</code></pre></div>
+
+<hr />
+<h3 id="bias-instability">Bias Instability<a class="headerlink" href="#bias-instability" title="Permanent link">&para;</a></h3>
+<p>Slow variation of sensor bias over time.</p>
+<p>Often characterized using Allan variance.</p>
+<hr />
+<h3 id="angular-random-walk-arw">Angular Random Walk (ARW)<a class="headerlink" href="#angular-random-walk-arw" title="Permanent link">&para;</a></h3>
+<p>Gyroscope white noise causing attitude error growth.</p>
+<p>Units:</p>
+<div class="highlight"><pre><span></span><code>° / √hr
+</code></pre></div>
+
+<p>Error growth:</p>
+<div class="highlight"><pre><span></span><code>σ_angle = ARW √t
+</code></pre></div>
+
+<hr />
+<h3 id="velocity-random-walk-vrw">Velocity Random Walk (VRW)<a class="headerlink" href="#velocity-random-walk-vrw" title="Permanent link">&para;</a></h3>
+<p>Accelerometer white noise causing velocity error growth.</p>
+<p>Units:</p>
+<div class="highlight"><pre><span></span><code>m/s / √hr
+</code></pre></div>
+
+<hr />
+<h3 id="scale-factor-error">Scale Factor Error<a class="headerlink" href="#scale-factor-error" title="Permanent link">&para;</a></h3>
+<p>Error in sensor gain.</p>
+<div class="highlight"><pre><span></span><code>measurement = (1 + scale_factor_error) * truth
+</code></pre></div>
+
+<hr />
+<h3 id="misalignment-error">Misalignment Error<a class="headerlink" href="#misalignment-error" title="Permanent link">&para;</a></h3>
+<p>Small angular errors between sensor axes and the reference coordinate frame.</p>
+<hr />
+<h3 id="cross-axis-sensitivity">Cross-Axis Sensitivity<a class="headerlink" href="#cross-axis-sensitivity" title="Permanent link">&para;</a></h3>
+<p>Sensor response to motion on another axis.</p>
+<hr />
+<h1 id="allan-variance-terms">Allan Variance Terms<a class="headerlink" href="#allan-variance-terms" title="Permanent link">&para;</a></h1>
+<h3 id="allan-variance">Allan Variance<a class="headerlink" href="#allan-variance" title="Permanent link">&para;</a></h3>
+<p>A time-domain method used to analyze sensor noise processes.</p>
+<hr />
+<h3 id="allan-deviation">Allan Deviation<a class="headerlink" href="#allan-deviation" title="Permanent link">&para;</a></h3>
+<p>Square root of Allan variance.</p>
+<p>Used to identify noise characteristics.</p>
+<hr />
+<h3 id="bias-instability-allan">Bias Instability (Allan)<a class="headerlink" href="#bias-instability-allan" title="Permanent link">&para;</a></h3>
+<p>Estimated from the minimum of the Allan deviation curve.</p>
+<p>Conversion:</p>
+<div class="highlight"><pre><span></span><code>bias_instability = Allan_min / 0.664
+</code></pre></div>
+
+<hr />
+<h3 id="rate-random-walk">Rate Random Walk<a class="headerlink" href="#rate-random-walk" title="Permanent link">&para;</a></h3>
+<p>Low-frequency gyro noise process.</p>
+<hr />
+<h3 id="quantization-noise">Quantization Noise<a class="headerlink" href="#quantization-noise" title="Permanent link">&para;</a></h3>
+<p>Noise introduced by digital resolution limits.</p>
+<hr />
+<h1 id="gnss-terminology">GNSS Terminology<a class="headerlink" href="#gnss-terminology" title="Permanent link">&para;</a></h1>
+<h3 id="pseudorange">Pseudorange<a class="headerlink" href="#pseudorange" title="Permanent link">&para;</a></h3>
+<p>Measured distance between receiver and satellite based on signal travel time.</p>
+<hr />
+<h3 id="carrier-phase">Carrier Phase<a class="headerlink" href="#carrier-phase" title="Permanent link">&para;</a></h3>
+<p>High precision measurement of GNSS signal phase.</p>
+<p>Used for centimeter-level positioning.</p>
+<hr />
+<h3 id="rtk-real-time-kinematic">RTK (Real-Time Kinematic)<a class="headerlink" href="#rtk-real-time-kinematic" title="Permanent link">&para;</a></h3>
+<p>Carrier-phase GNSS positioning using base station corrections.</p>
+<p>Accuracy:</p>
+<div class="highlight"><pre><span></span><code>1–2 cm
+</code></pre></div>
+
+<hr />
+<h3 id="base-station">Base Station<a class="headerlink" href="#base-station" title="Permanent link">&para;</a></h3>
+<p>Stationary GNSS receiver that provides correction data.</p>
+<hr />
+<h3 id="rover">Rover<a class="headerlink" href="#rover" title="Permanent link">&para;</a></h3>
+<p>GNSS receiver whose position is being estimated.</p>
+<hr />
+<h3 id="differential-gnss-dgnss">Differential GNSS (DGNSS)<a class="headerlink" href="#differential-gnss-dgnss" title="Permanent link">&para;</a></h3>
+<p>Positioning method using corrections from a reference station.</p>
+<hr />
+<h3 id="satellite-ephemeris">Satellite Ephemeris<a class="headerlink" href="#satellite-ephemeris" title="Permanent link">&para;</a></h3>
+<p>Precise orbital data describing satellite position.</p>
+<hr />
+<h3 id="dilution-of-precision-dop">Dilution of Precision (DOP)<a class="headerlink" href="#dilution-of-precision-dop" title="Permanent link">&para;</a></h3>
+<p>Measure of satellite geometry quality.</p>
+<p>Types include:</p>
+<ul>
+<li>GDOP</li>
+<li>PDOP</li>
+<li>HDOP</li>
+<li>VDOP</li>
+</ul>
+<hr />
+<h1 id="gnss-measurement-models">GNSS Measurement Models<a class="headerlink" href="#gnss-measurement-models" title="Permanent link">&para;</a></h1>
+<h3 id="pseudorange-equation">Pseudorange Equation<a class="headerlink" href="#pseudorange-equation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ρ = r + c(dt - dT) + I + T + ε
+</code></pre></div>
+
+<p>where:</p>
+<ul>
+<li><code>r</code> = geometric range</li>
+<li><code>dt</code> = receiver clock bias</li>
+<li><code>dT</code> = satellite clock bias</li>
+<li><code>I</code> = ionospheric delay</li>
+<li><code>T</code> = tropospheric delay</li>
+<li><code>ε</code> = measurement noise</li>
+</ul>
+<hr />
+<h3 id="carrier-phase-measurement">Carrier Phase Measurement<a class="headerlink" href="#carrier-phase-measurement" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Φ = r + c(dt - dT) + λN + ε
+</code></pre></div>
+
+<p>where:</p>
+<ul>
+<li><code>λ</code> = carrier wavelength</li>
+<li><code>N</code> = integer ambiguity</li>
+</ul>
+<hr />
+<h1 id="kalman-filtering">Kalman Filtering<a class="headerlink" href="#kalman-filtering" title="Permanent link">&para;</a></h1>
+<h3 id="kalman-filter">Kalman Filter<a class="headerlink" href="#kalman-filter" title="Permanent link">&para;</a></h3>
+<p>An optimal recursive estimator used to estimate system state.</p>
+<hr />
+<h3 id="extended-kalman-filter-ekf">Extended Kalman Filter (EKF)<a class="headerlink" href="#extended-kalman-filter-ekf" title="Permanent link">&para;</a></h3>
+<p>A nonlinear version of the Kalman filter commonly used in navigation.</p>
+<hr />
+<h3 id="state-vector">State Vector<a class="headerlink" href="#state-vector" title="Permanent link">&para;</a></h3>
+<p>Vector of estimated system variables.</p>
+<p>Example INS state:</p>
+<div class="highlight"><pre><span></span><code>x = [position, velocity, attitude, biases]
+</code></pre></div>
+
+<hr />
+<h3 id="process-model">Process Model<a class="headerlink" href="#process-model" title="Permanent link">&para;</a></h3>
+<p>Mathematical model predicting how system state evolves.</p>
+<hr />
+<h3 id="measurement-model">Measurement Model<a class="headerlink" href="#measurement-model" title="Permanent link">&para;</a></h3>
+<p>Relates sensor measurements to system state.</p>
+<hr />
+<h3 id="covariance-matrix">Covariance Matrix<a class="headerlink" href="#covariance-matrix" title="Permanent link">&para;</a></h3>
+<p>Represents uncertainty in the state estimate.</p>
+<hr />
+<h3 id="innovation">Innovation<a class="headerlink" href="#innovation" title="Permanent link">&para;</a></h3>
+<p>Difference between predicted and measured observation.</p>
+<div class="highlight"><pre><span></span><code>innovation = measurement − prediction
+</code></pre></div>
+
+<hr />
+<h3 id="observability">Observability<a class="headerlink" href="#observability" title="Permanent link">&para;</a></h3>
+<p>Ability to estimate a state variable from available measurements.</p>
+<hr />
+<h1 id="insgnss-integration">INS/GNSS Integration<a class="headerlink" href="#insgnss-integration" title="Permanent link">&para;</a></h1>
+<h3 id="loosely-coupled-integration">Loosely Coupled Integration<a class="headerlink" href="#loosely-coupled-integration" title="Permanent link">&para;</a></h3>
+<p>INS and GNSS are integrated at the <strong>position/velocity level</strong>.</p>
+<hr />
+<h3 id="tightly-coupled-integration">Tightly Coupled Integration<a class="headerlink" href="#tightly-coupled-integration" title="Permanent link">&para;</a></h3>
+<p>GNSS measurements integrated at the <strong>pseudorange level</strong>.</p>
+<p>Allows operation with fewer satellites.</p>
+<hr />
+<h3 id="deep-coupling">Deep Coupling<a class="headerlink" href="#deep-coupling" title="Permanent link">&para;</a></h3>
+<p>GNSS tracking loops assisted directly by INS measurements.</p>
+<hr />
+<h3 id="lever-arm">Lever Arm<a class="headerlink" href="#lever-arm" title="Permanent link">&para;</a></h3>
+<p>Offset between IMU and GNSS antenna.</p>
+<div class="highlight"><pre><span></span><code>r_lever = position_GNSS − position_IMU
+</code></pre></div>
+
+<hr />
+<h3 id="time-synchronization">Time Synchronization<a class="headerlink" href="#time-synchronization" title="Permanent link">&para;</a></h3>
+<p>Alignment of timestamps between sensors.</p>
+<hr />
+<h1 id="navigation-performance-metrics">Navigation Performance Metrics<a class="headerlink" href="#navigation-performance-metrics" title="Permanent link">&para;</a></h1>
+<h3 id="cep-circular-error-probable">CEP (Circular Error Probable)<a class="headerlink" href="#cep-circular-error-probable" title="Permanent link">&para;</a></h3>
+<p>Radius containing 50% of position errors.</p>
+<hr />
+<h3 id="rms-error">RMS Error<a class="headerlink" href="#rms-error" title="Permanent link">&para;</a></h3>
+<p>Root-mean-square error of measurements.</p>
+<hr />
+<h3 id="drift-rate">Drift Rate<a class="headerlink" href="#drift-rate" title="Permanent link">&para;</a></h3>
+<p>Rate at which inertial navigation error grows without external aiding.</p>
+<hr />
+<h1 id="inertial-sense-protocol">Inertial Sense Protocol<a class="headerlink" href="#inertial-sense-protocol" title="Permanent link">&para;</a></h1>
+<h3 id="did-data-identifier">DID (Data Identifier)<a class="headerlink" href="#did-data-identifier" title="Permanent link">&para;</a></h3>
+<p>Numeric identifier defining a data structure in the Inertial Sense binary protocol.</p>
+<p>Examples include:</p>
+<div class="highlight"><pre><span></span><code>DID_INS_1
+DID_IMU
+DID_GPS
+</code></pre></div>
+
+<hr />
+<h3 id="data-set">Data Set<a class="headerlink" href="#data-set" title="Permanent link">&para;</a></h3>
+<p>Binary structure containing navigation or configuration data.</p>
+<hr />
+<h3 id="isb-inertial-sense-binary">ISB (Inertial Sense Binary)<a class="headerlink" href="#isb-inertial-sense-binary" title="Permanent link">&para;</a></h3>
+<p>Binary communication protocol used by Inertial Sense devices.</p>
+<hr />
+<h3 id="nmea">NMEA<a class="headerlink" href="#nmea" title="Permanent link">&para;</a></h3>
+<p>ASCII protocol used for GNSS data output.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code>$GPGGA
+</code></pre></div>
+
+<hr />
+<h1 id="software-tools">Software Tools<a class="headerlink" href="#software-tools" title="Permanent link">&para;</a></h1>
+<h3 id="sdk">SDK<a class="headerlink" href="#sdk" title="Permanent link">&para;</a></h3>
+<p>Software development kit used to integrate Inertial Sense devices.</p>
+<hr />
+<h3 id="evaltool">EvalTool<a class="headerlink" href="#evaltool" title="Permanent link">&para;</a></h3>
+<p>Graphical interface used to visualize and configure devices.</p>
+<hr />
+<h3 id="cltool">CLTool<a class="headerlink" href="#cltool" title="Permanent link">&para;</a></h3>
+<p>Command-line tool used to communicate with devices.</p>
+<hr />
+<h1 id="hardware-products">Hardware Products<a class="headerlink" href="#hardware-products" title="Permanent link">&para;</a></h1>
+<h3 id="imx">IMX<a class="headerlink" href="#imx" title="Permanent link">&para;</a></h3>
+<p>Inertial Sense navigation module containing:</p>
+<ul>
+<li>IMU</li>
+<li>magnetometer</li>
+<li>barometer</li>
+<li>navigation processor</li>
+</ul>
+<hr />
+<h3 id="gpx">GPX<a class="headerlink" href="#gpx" title="Permanent link">&para;</a></h3>
+<p>Multi-band GNSS receiver used with IMX modules.</p>
+<hr />
+<h3 id="rugged-systems">Rugged Systems<a class="headerlink" href="#rugged-systems" title="Permanent link">&para;</a></h3>
+<p>Industrialized versions of Inertial Sense modules.</p>
+<hr />
+<h1 id="common-abbreviations">Common Abbreviations<a class="headerlink" href="#common-abbreviations" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Acronym</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IMU</td>
+<td>Inertial Measurement Unit</td>
+</tr>
+<tr>
+<td>INS</td>
+<td>Inertial Navigation System</td>
+</tr>
+<tr>
+<td>GNSS</td>
+<td>Global Navigation Satellite System</td>
+</tr>
+<tr>
+<td>AHRS</td>
+<td>Attitude and Heading Reference System</td>
+</tr>
+<tr>
+<td>ARW</td>
+<td>Angular Random Walk</td>
+</tr>
+<tr>
+<td>VRW</td>
+<td>Velocity Random Walk</td>
+</tr>
+<tr>
+<td>RTK</td>
+<td>Real-Time Kinematic</td>
+</tr>
+<tr>
+<td>EKF</td>
+<td>Extended Kalman Filter</td>
+</tr>
+<tr>
+<td>NED</td>
+<td>North-East-Down</td>
+</tr>
+<tr>
+<td>ECEF</td>
+<td>Earth-Centered Earth-Fixed</td>
+</tr>
+<tr>
+<td>LLA</td>
+<td>Latitude, Longitude, Altitude</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../faq/" class="md-footer__link md-footer__link--prev" aria-label="Previous: FAQ" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              FAQ
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../troubleshooting/firmware/" class="md-footer__link md-footer__link--next" aria-label="Next: Firmware" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Firmware
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.math"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+        <script src="https://js.hs-scripts.com/3481185.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+    
+  </body>
+</html>
