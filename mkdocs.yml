@@ -112,16 +112,17 @@ nav:
       - InertialSense Class CLTool (C++): user-manual/software/SDK/InertialSenseClassCLTool.md
       - Data Logging (C++): user-manual/software/SDK/DataLogger.md
   - IMX:
+    - Allan Variance: user-manual/imx/performance/allan_deviation.md
     - Configuration:
       # - Pixhawk Integration: user-manual/imx/application-config/pixhawk.md
+      - IMU INS GNSS Config: user-manual/imx/application-config/imu_ins_gnss_configuration.md
       - Infield Calibration: user-manual/imx/application-config/infield_calibration.md
       - Platform Config: user-manual/imx/application-config/platform_configuration.md
-      - IMU INS GNSS Config: user-manual/imx/application-config/imu_ins_gnss_configuration.md
       - System Config: user-manual/imx/application-config/system_configuration.md
       - Time Sync/Strobe: user-manual/imx/application-config/time_sync.md
-      - Zero Motion Command: user-manual/imx/application-config/zero_motion_command.md
       - UART: user-manual/imx/application-config/UART.md
       - World Magnetic Model: user-manual/imx/application-config/world_magnetic_model.md
+      - Zero Motion Command: user-manual/imx/application-config/zero_motion_command.md
       #- Assisted-GPS: user-manual/imx/application-config/assisted-gnss.md
     - System Status: user-manual/reference/IMX_system_status.md
     - Magnetometer: user-manual/reference/magnetometer.md
