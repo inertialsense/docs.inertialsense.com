@@ -35,7 +35,7 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
  
 |                                     | IMX-5         | IMX-6         |
 | ----------------------------------- | --------------| ------------- |
-| Gyro Bias Instability               | 1.8 °/hr      | 1.5 °/hr      |
+| Gyro Bias Instability               | 2.0 °/hr      | 1.5 °/hr      |
 | Gyro ARW                            | 0.23 °/√hr    | 0.10 °/√hr    |
 | Accel Bias Instability              | 27 µg         | 2.8 µg        |
 | Accel VRW                           | 0.020 m/s/√hr | 0.013 m/s/√hr |
