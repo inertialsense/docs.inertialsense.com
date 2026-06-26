@@ -1,4 +1,4 @@
-# Allan Deviation (ADEV)
+# Allan Variance / Allan Deviation (AVAR/ADEV)
 
 Allan Deviation (ADEV), the square root of Allan Variance (AVAR), is the industry-standard statistical method for characterizing inertial sensor noise as a function of averaging time. Unlike a single RMS noise specification, Allan Deviation separates the various stochastic error processes present in MEMS gyroscopes and accelerometers, allowing white noise, bias instability, random walk, and long-term drift to be independently quantified.
 

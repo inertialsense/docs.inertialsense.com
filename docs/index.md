@@ -41,7 +41,7 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 | Accel VRW                           | 0.020 m/s/√hr | 0.013 m/s/√hr |
 | Dynamic Roll/Pitch                  | 0.04°         | 0.03°         |
 | Dynamic Heading                     | 0.13°         | 0.09°         |
-According to IEEE Std 952-1997
+Performance specifications per IEEE-STD-952-1997.
 
 * Up to 1 KHz IMU and 500 Hz INS Output Data Rate
 * Small Form Factor: 15.6 x 12.5 x 2.9 mm
