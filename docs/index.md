@@ -35,12 +35,13 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
  
 |                                     | IMX-5         | IMX-6         |
 | ----------------------------------- | --------------| ------------- |
-| Gyro Bias Instability               | 1.7 °/hr      | 1.3 °/hr      |
-| Gyro ARW                            | 0.16 °/√hr    | 0.11 °/√hr    |
-| Accel Bias Instability              | 19 µg         | 3 µg          |
-| Accel ARW                           | 0.02 m/s/√hr  | 0.012 m/s/√hr |
+| Gyro Bias Instability               | 2.0 °/hr      | 1.5 °/hr      |
+| Gyro ARW                            | 0.23 °/√hr    | 0.10 °/√hr    |
+| Accel Bias Instability              | 27 µg         | 2.8 µg        |
+| Accel VRW                           | 0.020 m/s/√hr | 0.013 m/s/√hr |
 | Dynamic Roll/Pitch                  | 0.04°         | 0.03°         |
 | Dynamic Heading                     | 0.13°         | 0.09°         |
+Performance specifications per IEEE-STD-952-1997.
 
 * Up to 1 KHz IMU and 500 Hz INS Output Data Rate
 * Small Form Factor: 15.6 x 12.5 x 2.9 mm
