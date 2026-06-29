@@ -112,7 +112,7 @@ nav:
       - InertialSense Class CLTool (C++): user-manual/software/SDK/InertialSenseClassCLTool.md
       - Data Logging (C++): user-manual/software/SDK/DataLogger.md
   - IMX:
-    - Allan Variance: user-manual/imx/performance/allan_deviation.md
+    - Allan Deviation: user-manual/imx/performance/allan_deviation.md
     - Configuration:
       # - Pixhawk Integration: user-manual/imx/application-config/pixhawk.md
       - IMU INS GNSS Config: user-manual/imx/application-config/imu_ins_gnss_configuration.md

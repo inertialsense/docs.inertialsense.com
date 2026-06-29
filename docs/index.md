@@ -32,7 +32,7 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 * **Tactical-Grade IMU**
 * **Reflow-Compatible PCB Module**
 * **Performance Specifications**
- 
+
 |                                     | IMX-5         | IMX-6         |
 | ----------------------------------- | --------------| ------------- |
 | Gyro Bias Instability               | 2.0 °/hr      | 1.5 °/hr      |
@@ -61,7 +61,7 @@ Performance specifications per IEEE-STD-952-1997.
 |                                     | IMX Module | Rugged        |
 | ----------------------------------- | ---------- | ------------- |
 | USB                                 | Yes        | Yes           |
-| TTL/UART                            | Yes        | Yes           |
+| UART                                | Yes        | Yes           |
 | RS232/RS422/RS485                   | No         | Yes           |
 | CAN                                 | Yes        | Yes           |
 | SPI                                 | Yes        | Yes           |
@@ -82,8 +82,8 @@ Performance specifications per IEEE-STD-952-1997.
 
 <center>
 
-![dime](indeximages/dime.png)
-  
+![dime](indeximages/imx6_dime.png)
+
 </center>
 <br>
 <br>
@@ -101,7 +101,7 @@ Phone 801-610-6771<br>
 Email support@inertialsense.com<br>
 Website: InertialSense.com<br>
 
-© 2014-2025 Inertial Sense
+© 2014-2026 Inertial Sense
 
 Inertial Sense®, Inertial Sense logo and combinations thereof are registered trademarks or trademarks of Inertial Sense, Inc. Other terms and product names may be trademarks of others.
 
