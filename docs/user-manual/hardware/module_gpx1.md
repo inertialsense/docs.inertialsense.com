@@ -110,7 +110,7 @@ The GPX-1 can be reflow soldered. Reflow information can be found in the [Reflow
 
 ### Tape Packaging
 
-The GPX-5 modules are available in **cut tape** as well as **tape and reel** packaging.  The follow image shows the feed direction and illustrates the orientation of the GPX-1 module on the tape:
+The GPX-1 modules are available in **cut tape** as well as **tape and reel** packaging.  The following image shows the feed direction and illustrates the orientation of the GPX-1 module on the tape:
 
 ![GPX-1 Tape](images/GPX_Tape.png)
 The feed direction to the pick and place pick-up is shown by the orientation of the GPX-1 pin 1 location. With pin 1 location on the bottom of the tape, the feed direction into the pick and place pick-up is from the reel (located to the right of the figure) towards the left.

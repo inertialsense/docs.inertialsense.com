@@ -2,7 +2,7 @@
 
 <center>
 
-![RUG-4](../images/rug-4.0-G2_white.png)
+![RUG-4](../images/rug-4-g2_white.png)
 
 </center>
 
@@ -79,7 +79,7 @@ The following table shows the Rugged-4 pinout.  Note that pin function can chang
 
 <sup>\* The CAN bus is enabled by default on pins 11,12 (R16,R17 removed and R14,R15 loaded with 0402 zero ohm jumpers).<br/>\** To disable CAN bus and enable Serial2 TTL or STROBE on pins 11,12, remove R14,R15 and load R16,R17 with 0402 zero ohm jumpers.</sup>
 
-![Rugged-3 Pin 11,12 SMT Jumpers](images/rug3_can_ser2_jumpers.png)
+![Rugged-4 Pin 11,12 SMT Jumpers](images/rug3_can_ser2_jumpers.png)
 
 ## I/O Configuration
 

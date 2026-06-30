@@ -5,7 +5,7 @@
 
 <center>
 
-![IG-1](../images/ik-1.png)
+![IK-1](../images/ik-1.png)
 
 </center>
 
@@ -19,13 +19,13 @@ The Inertial Sense IK-1 is a breakout evaluation board for either the IMX-5 or G
 
 ## Connecting Your Unit
 
-For the purposes of basic evaluation, the easiest interface available on the IK-1 is by using a micro-USB cable. A cable included in the evaluation kit. The cable provides power and communications with the installed module via USB virtual communications port.
+For the purposes of basic evaluation, the easiest interface available on the IK-1 is by using a micro-USB cable. A cable is included in the evaluation kit. The cable provides power and communications with the installed module via USB virtual communications port.
 
 ## Pinout
 
 **Module Pinout**
 
-![IG2 Module Pinout](images/ik1_pinout.svg)
+![IK-1 Module Pinout](images/ik1_pinout.svg)
 
 The IK-1 module pinout is as follows
 
@@ -59,7 +59,7 @@ The IK-1 module pinout is as follows
 | 30 | - | 40 | VAUX | Power | Input supplies for the USB and VCC_RF (GNSS antenna supply).  Connect to +3.3V (3.0V to 3.6V) to supply USB and VCC_RF.  Can be left floating if USB or VCC_RF are not needed.  |
 | 31 | - | 41 | G18/QDEC1.A | I/O | GPIO18 |
 | 32 | - | 42 | G19/QDEC1.B | I/O | GPIO19 |
-| U.FL1 | - | 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-14V TVS diode for ESD and surge projection (e.g. Littlefuse PESD0402-140). |
+| U.FL1 | - | 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-14V TVS diode for ESD and surge protection (e.g. Littlefuse PESD0402-140). |
 | U.FL2 | - | 14 | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
 
 ## Schematic

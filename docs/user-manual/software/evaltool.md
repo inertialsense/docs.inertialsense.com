@@ -29,7 +29,7 @@ With a device connected to your computer:
 
 In order to log data from your INS device, follow the steps listed below:
 
-1. Connected your device to the EvalTool and open the port.
+1. Connect your device to the EvalTool and open the port.
 2. Go to the **Data Logs** tab.
 3. Enable the data that you would like collected in the **Data Streams** area:
    1. Select one of the **RMC Preset** menu options.  This automatically enables standard messages commonly used for logging.  **PPD** (Post Processed Data) is the recommended default.

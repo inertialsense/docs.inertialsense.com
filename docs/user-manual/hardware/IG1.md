@@ -17,7 +17,7 @@ The Inertial Sense IG-1 is a PCB module with IMX-5 and dual ublox ZED-F9P multi-
 
 ## Connecting Your Unit
 
-For the purposes of basic evaluation, the easiest interface available on the IG-1 is by using a micro-USB cable. A cable included in the evaluation kit. The cable provides power and communications with the installed module via USB virtual communications port.
+For the purposes of basic evaluation, the easiest interface available on the IG-1 is by using a micro-USB cable. A cable is included in the evaluation kit. The cable provides power and communications with the installed module via USB virtual communications port.
 
 ## Pinout
 
@@ -37,7 +37,7 @@ The module and header H1 have the same pinout assignment for pins 1-14.  All pin
 | ![](../images/square-black.png)2   | VIN                                        | PWR  | 4V-20V supply voltage input                                  |
 | ![](../images/square-red.png)3     | +3.3V                                      | PWR  | Regulated 3.3V supply input/output.                          |
 | ![](../images/square-red.png)4     | Reserved                                   |      | Not Connected                                                |
-| ![](../images/square-brown.png)5   | G1/Rx2/RxCAN/SCL                           | I/O  | **(Internally connected to GPS2 ZED-F9P TXD)**<br />GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line6 |
+| ![](../images/square-brown.png)5   | G1/Rx2/RxCAN/SCL                           | I/O  | **(Internally connected to GPS2 ZED-F9P TXD)**<br />GPIO1 <br />Serial 2 input (TTL) <br />Serial input pin from CAN transceiver<sup>\*</sup> <br />I2C SCL line |
 | ![](../images/square-orange.png)6  | G2/Tx2/TxCAN/SDA/STROBE                    | I/O  | **(Internally connected to GPS2 ZED-F9P RXD)**<br />GPIO2 <br />Serial 2 output (TTL)<br /> Serial output pin to CAN transceiver<sup>\*</sup><br /> I2C SDA line<br />Strobe time sync input |
 | ![](../images/square-yellow.png)7  | G3/Tx0                                     | I/O  | **(Internally connected to GPS1 ZED-F9P RXD)**<br />GPIO3<br /> Serial 0 output (TTL) |
 | ![](../images/square-green.png)8   | G4/Rx0                                     | I/O  | **(Internally connected to GPS1 ZED-F9P TXD)**<br />GPIO4<br /> Serial 0 input (TTL) |
@@ -80,7 +80,7 @@ The following outlines differences in the IG-1.x hardware versions.
 
 **IG-1.1**
 
-- GPS1 PPS line connected to IMX TIMEPUSE G15 (pin 20).
+- GPS1 PPS line connected to IMX TIMEPULSE G15 (pin 20).
 - IG-1 pins 26-36 are connected to ground.
 
 **IG-1.0**

@@ -24,7 +24,7 @@ The *Sensor Rotation* is used to rotate the IMU and magnetometer output from the
 
 ### INS Rotation
 
-The *INS rotation* is used to convert the INS output from the [sensor frame](../../reference/coordinate_frames.md#sensor-frame) to the vehicle frame.  This is useful if the sensor frame and vehicle frame are not aligned.  The actual INS rotation parameters are `DID_FLASH_CONFIG.insRotation[3]` (X, Y, Z) in radians.  The *INS rotation* values describes the rotation from the INS sensor frame to the intermediate frame in order of Z, Y, X.     
+The *INS rotation* is used to convert the INS output from the [sensor frame](../../reference/coordinate_frames.md#sensor-frame) to the vehicle frame.  This is useful if the sensor frame and vehicle frame are not aligned.  The actual INS rotation parameters are `DID_FLASH_CONFIG.insRotation[3]` (X, Y, Z) in radians.  The *INS rotation* values describe the rotation from the INS sensor frame to the intermediate frame in order of Z, Y, X.     
 
 ### INS Offset
 
