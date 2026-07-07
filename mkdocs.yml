@@ -114,6 +114,7 @@ nav:
       - Data Logging (C++): user-manual/software/SDK/DataLogger.md
   - IMX:
     - Allan Deviation: user-manual/imx/performance/allan_deviation.md
+    - GNSS Aiding: user-manual/imx/gnss-aiding.md
     - Configuration:
       # - Pixhawk Integration: user-manual/imx/application-config/pixhawk.md
       - IMU INS GNSS Config: user-manual/imx/application-config/imu_ins_gnss_configuration.md
