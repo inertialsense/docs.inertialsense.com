@@ -24,7 +24,7 @@ This is the same mechanism the [GPX-1](../hardware/module_gpx1.md) uses internal
 
 ## Required GNSS DID Messages
 
-The following DID messages are needed to properly aid the INS, matching the same set the GPX-1 provides to the IMX-5.  Full field definitions for each DID are available in the [DID Descriptions](../../com-protocol/DID-descriptions.md) reference.
+The following DID messages are needed to properly aid the INS, matching the same set the GPX-1 provides to the IMX-5.  Full field definitions for each DID are available in the [DID Descriptions](../com-protocol/DID-descriptions.md) reference.
 
 ### GNSS1 (required)
 
