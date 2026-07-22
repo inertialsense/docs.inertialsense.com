@@ -2,7 +2,15 @@
 
 <!-- ## IMX Series -->
 
-### IMX (Module)
+### IMX-6 (Module)
+
+[Download PDF](https://docs.inertialsense.com/dimensions/IS-IMX-6.0_Dimensions_and_Pinout_IMX-6.pdf)
+
+<object data="https://docs.inertialsense.com/dimensions/IS-IMX-6.0_Dimensions_and_Pinout_IMX-6.pdf" type="application/pdf" width="700px" height="1150px" >
+    <embed src="https://docs.inertialsense.com/dimensions/IS-IMX-6.0_Dimensions_and_Pinout_IMX-6.pdf" type="application/pdf" />
+</object>
+
+### IMX-5 (Module)
 
 [Download PDF](https://docs.inertialsense.com/dimensions/IS-IMX-5.0_Dimensions_and_Pinout_IMX-5.pdf)
 
