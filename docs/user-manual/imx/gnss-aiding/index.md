@@ -17,4 +17,4 @@ The IMX INS/EKF can be aided by one or more externally connected GNSS receivers.
 If the setup includes a significant distance (40cm or more) between the GNSS antenna and the IMX central unit, enter a non-zero value for the GNSS antenna lever arm, `DID_FLASH_CONFIG.gnss1AntOffset` (or `DID_FLASH_CONFIG.gnss2AntOffset`) X,Y,Z offset in meters from the [Sensor Frame](../application-config/imu_ins_configuration.md#coordinate-frame-relationship) origin to the GNSS antenna.  The Sensor Frame origin and Hardware Frame origin are always at the same location but may differ in direction according to the Sensor Rotation.
 
 ## INS-GNSS Dynamic Model
-The DID_FLASH_CONFIG.dynamicModel setting allows the user to adjust how the EKF and GNSS receivers behaves in different dynamic environments. This parameter is applied to the GNSS receiver(s) engine as well as the INS EKF.
+The `DID_FLASH_CONFIG.dynamicModel` setting allows the user to adjust how the EKF and GNSS receivers behave in different dynamic environments. This parameter is applied to the GNSS receiver(s) engine as well as the INS EKF.
