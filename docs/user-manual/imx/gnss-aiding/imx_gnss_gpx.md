@@ -30,7 +30,7 @@ The IMX will automatically configure the GPX-1 for communications.
 
 The Rugged-4 INS contains the GPX-1 onboard supporting RTK positioning and compassing.  GPS 1 and GPS 2 are connected to serial port 0 on the IMX-5.
 
-The following is a list of the ZED-F9P GNSS receivers and compatible antenna(s).
+The following is a list of compatible antenna options for GPX-1 (L1/L5) installations.
 
 | Item                                                    | Supplier#                                                    | Description                                                  |
 | ------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
