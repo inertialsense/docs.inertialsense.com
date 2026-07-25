@@ -1,4 +1,4 @@
-# IMU INS GNSS Configuration
+# IMU INS Configuration
 
 ## Translation
 
@@ -51,10 +51,6 @@ The following process uses the IMX to measure and correct for the IMX mounting a
 
 The [*Infield Calibration*](infield_calibration.md) provides a method to 1.) zero IMU biases and 2.) zero INS attitude to align the INS output frame with the vehicle frame.  These steps can be run together or independently.
 
-## GNSS Antenna Offset
-
-If the setup includes a significant distance (40cm or more) between the GPS antenna and the IMX central unit, enter a non-zero value for the GPS lever arm, `DID_FLASH_CONFIG.gnss1AntOffset` (or  `DID_FLASH_CONFIG.gpsAnt2Offset`) X,Y,Z offset in meters from Sensor Frame origin to GPS antenna.  The Sensor Frame origin and Hardware Frame origin are always at the same location but may differ in direction according to the Sensor Rotation.
-
 ## IMU Sample and Navigation Periods
 
 The IMU sample period is configured by setting `DID_FLASH_CONFIG.startupImuDtMs`  in milliseconds.  This parameter determines how frequently the IMU is measured and data integrated into the `DID_PIMU` data.  `DID_FLASH_CONFIG.startupImuDtMs` also automatically sets the bandwidth of the IMU anti-aliasing filter to less than one half the Nyquist frequency (i.e. < 250 / startupImuDtMs).  
@@ -99,8 +95,7 @@ The following table lists the output and update period minimum limits for the IM
 | VRS (GPS and <br/>magnetometer disabled) | 4 ms (250 Hz) / 8 ms                              | 2 ms (500 Hz) / 4 ms                                      |
 
 ## INS-GNSS Dynamic Model
-The `DID_FLASH_CONFIG.dynamicModel` setting allows the user to adjust how the EKF behaves in different dynamic environments. All values except for 2 (STATIONARY) and 8 (AIR <4g) are experimental. The user is encouraged to attempt to use different settings to improve performance, however in most applications
-the default setting, 8: airborne <4g, will yield best performance.
+The `DID_FLASH_CONFIG.dynamicModel` setting allows the user to adjust how the EKF behaves in different dynamic environments. All values except for 2 (STATIONARY) and 8 (AIR <4g) are experimental. The user is encouraged to attempt to use different settings to improve performance, however in most applications the default setting, 8: airborne <4g, will yield best performance. This parameter is applied to the GNSS receiver(s) engine as well as the INS EKF.
 
 The STATIONARY configuration (dynamicModel = 2) can be used to configure the EKF for static applications. It is a permanent implementation of the [Zero Motion Command](zero_motion_command.md) which will reduce EKF drift under stationary conditions.
 

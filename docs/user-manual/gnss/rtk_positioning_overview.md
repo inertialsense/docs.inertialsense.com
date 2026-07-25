@@ -8,7 +8,7 @@ To use RTK, a base station, a rover (receiver), and a method to send corrections
 
 ![](images/RTKDiagram.png)
 
-See the [multi-band GNSS](multi_band_F9P.md#evb-2-to-zed-f9p-interface) section for details on using our multi-frequency ZED-F9 GNSS system.
+See the [multi-band GNSS](../imx/gnss-aiding/imx_gnss_ublox.md#evb-2-to-zed-interface) section for details on using our multi-frequency ZED-F9 GNSS system.
 
 
 ## **RTK Hardware Setup**

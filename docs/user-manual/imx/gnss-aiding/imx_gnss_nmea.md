@@ -1,12 +1,14 @@
-GNSS receivers that output NMEA ascii protocol can be used to aid the IMX EKF.
+# NMEA GNSS Aiding IMX
+
+GNSS receivers that output NMEA ascii protocol can be used to aid the IMX INS.
 
 ## Configure IMX for NMEA GNSS Input
 
 1. Set serial port baudrate, matching DID_FLASH_CONFIG.serXBaudRate.
 
-2. Configure GPS1 using EvalTool GPS Setting tab or the DID_FLASH_CONFIG.ioConfig. 
+2. Configure GNSS1 using EvalTool GNSS Setting tab or the DID_FLASH_CONFIG.ioConfig. 
 
-   ![EvalTool GPS NMEA](images/evaltool_gps_nmea.png)
+   ![EvalTool GPS NMEA](../../gnss/images/evaltool_gps_nmea.png)
 
    | DID_FLASH_CONFIG            | Value      |
    | --------------------------- | ---------- |
@@ -23,7 +25,7 @@ GNSS receivers that output NMEA ascii protocol can be used to aid the IMX EKF.
 
 4. If RTK positioning is supported by the NMEA receiver, Enable RTK rover mode by selecting **Precision Position External**.  This will run the INS kalman filter in high accuracy mode and forward any RTK base station corrections to the external GNSS receiver. 
 
-   ![](images/evaltool_gps_f9p_rover.png)
+   ![](../../gnss/images/evaltool_gps_f9p_rover.png)
 
    | DID_FLASH_CONFIG | Value      |
    | ---------------- | ---------- |
@@ -31,11 +33,11 @@ GNSS receivers that output NMEA ascii protocol can be used to aid the IMX EKF.
 
 ## Electrical Interface
 
-The external NMEA GNSS receiver can be connected to Serial 0, Serial 1, and Serial 2 ports (3.3V TTL UART) on the IMX.  See the [PCB Module](../hardware/module_imx5.md) hardware page for a description of the IMX pinout.  Serial 0 and 2 can be accessed on the main connector of [Rugged-1](../hardware/rugged1.md) and [Rugged-2](../hardware/rugged2.md) and all serial ports can be accessed on header H7 of the [EVB-2](../hardware/EVB2.md). 
+The external NMEA GNSS receiver can be connected to Serial 0, Serial 1, and Serial 2 ports (3.3V TTL UART) on the IMX.  See the [PCB Module](../../hardware/module_imx5.md) hardware page for a description of the IMX pinout.  Serial 0 and 2 can be accessed on the main connector of [Rugged-1](../../hardware/rugged1.md) and [Rugged-2](../../hardware/rugged2.md) and all serial ports can be accessed on header H7 of the [EVB-2](../../hardware/EVB2.md). 
 
 ## Enabling NMEA on ZED-F9P
 
-The recommended protocol with the IMX and ZED-F9P receiver is the uBlox binary protocol.  However, the ZED-F9 can operate using NMEA protocol if necessary.  The following steps can be used to enable NMEA protocol output on the ublox ZED-F9P receiver. 
+The recommended protocol with the IMX and ZED-F9P receiver is the uBlox binary protocol.  However, the ZED-F9P can operate using NMEA protocol if necessary.  The following steps can be used to enable NMEA protocol output on the ublox ZED-F9P receiver. 
 
 1. Enable NMEA output using the [u-blox u-center](https://www.u-blox.com/en/product/u-center) application.  
    - **Set the configuration**: (ublox u-center menu -> View -> Configuration View) change the following.  You must press the "Send" button to apply each change.

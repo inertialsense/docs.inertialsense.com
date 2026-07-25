@@ -21,6 +21,7 @@ theme:
   logo: 'img/Logo_Circle_white.svg'
   features:
     - content.math  # Enables KaTeX for math rendering
+    - navigation.indexes    
 # theme_dir: docs/custom_theme
 # copycode: true
 
@@ -114,10 +115,17 @@ nav:
       - Data Logging (C++): user-manual/software/SDK/DataLogger.md
   - IMX:
     - Allan Deviation: user-manual/imx/performance/allan_deviation.md
-    - GNSS Aiding: user-manual/imx/gnss-aiding.md
+    - External Aiding: user-manual/imx/external-aiding.md
+    - GNSS Aiding:
+      - user-manual/imx/gnss-aiding/index.md
+      - ISB: user-manual/imx/gnss-aiding/imx_gnss_isb.md
+      - GPX-1: user-manual/imx/gnss-aiding/imx_gnss_gpx.md
+      - NMEA: user-manual/imx/gnss-aiding/imx_gnss_nmea.md
+      - Septentrio: user-manual/imx/gnss-aiding/imx_gnss_septentrio.md
+      - u-blox: user-manual/imx/gnss-aiding/imx_gnss_ublox.md
     - Configuration:
       # - Pixhawk Integration: user-manual/imx/application-config/pixhawk.md
-      - IMU INS GNSS Config: user-manual/imx/application-config/imu_ins_gnss_configuration.md
+      - IMU INS Config: user-manual/imx/application-config/imu_ins_configuration.md
       - Infield Calibration: user-manual/imx/application-config/infield_calibration.md
       - Platform Config: user-manual/imx/application-config/platform_configuration.md
       - System Config: user-manual/imx/application-config/system_configuration.md
@@ -147,11 +155,7 @@ nav:
     - SPI: user-manual/com-protocol/SPI.md
     - CAN: user-manual/com-protocol/CAN.md
   - GNSS - RTK:
-    - Multi-band GNSS:
-      - Overview: user-manual/gnss/multi_band_gnss_overview.md
-      - IS GPX-1: user-manual/gnss/multi_band_GPX.md
-      - ublox F9P: user-manual/gnss/multi_band_F9P.md
-    - External NMEA GNSS: user-manual/gnss/external_gnss.md
+    - Multi-band GNSS: user-manual/gnss/multi_band_gnss_overview.md
     - GNSS Antennas: user-manual/gnss/gnss_antennas.md
     - GNSS Constellations: user-manual/gnss/gnss_constellations.md
     - RTK Positioning:
