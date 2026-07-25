@@ -24,7 +24,7 @@ The following sections detail how to interface and configure the IMX for operati
 
 ![](../../images/rugged2.png)
 
-The Rugged-3 INS contains the either single or dual ZED onboard supporting RTK positioning and compassing.  GNSS1 and GNSS2 are connected to serial ports 1 and 0 respectively on the IMX.
+The Rugged-3 INS contains either a single or dual ZED receiver onboard, supporting RTK positioning and compassing.  GNSS1 and GNSS2 are connected to serial ports 1 and 0 respectively on the IMX.
 
 #### Single GNSS Settings
 
