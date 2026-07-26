@@ -61,7 +61,7 @@ From the EvalTool INS tab:
 
 ### Wheel Encoder Input (Optional)
 
-Wheel encoder input is optional for dead reckoning operation. The implementation of wheel encoder input will improve dead reckoning performance. Encoders constrain drift along the axis of travel. The IMX-5 does not support direct wheel encoder input via I/O pins. To provide wheel encoder input, an external system must generate `DID_WHEEL_ENCODER` messagese that are then streamed into an IMX-5 port.
+Wheel encoder input is optional for dead reckoning operation. The implementation of wheel encoder input will improve dead reckoning performance. Encoders constrain drift along the axis of travel. A quadrature wheel encoder can be connected directly to the IMX-5's G5/G8 I/O pins (`IO_CONFIG_G5G8_QDEC_INPUT` in `DID_FLASH_CONFIG.ioConfig`). Alternatively, an external system can generate `DID_WHEEL_ENCODER` messages that are then streamed into an IMX-5 port.
 
 DID_WHEEL_ENCODER struct is defined below. Only omega_l and omega_r are required to be populated. All other value can be left as zero. Once populated, the full struct is streamed to the IMX-5 using the [Set Data](../../com-protocol/isb.md#setting-data) method from the SDK.
 
@@ -92,6 +92,12 @@ typedef struct PACKED
 
     /** (Do not use, internal development only) Right wheel revolution count */
     uint32_t wrap_count_r;
+
+    /** (rad^2/s^2) Wheel encoder velocity noise variance */
+    float var_wheel_omega;
+
+    /** (rad^2) Wheel encoder angle noise variance */
+    float var_wheel_theta;
 
 } wheel_encoder_t;
 ```

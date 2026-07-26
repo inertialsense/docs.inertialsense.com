@@ -126,15 +126,15 @@ DID_FLASH_CONFIG.gnss2AntOffsetZ = ?
 
 ### Step 2 - Enable GPS Dual Antenna 
 
-Set the `RTK_CFG_BITS_COMPASSING (0x00000008)` bit of RTKCfgBits.
+Set the `RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING (0x00000004)` bit of RTKCfgBits.
 
 ```c++
-DID_FLASH_CONFIG.RTKCfgBits |= RTK_CFG_BITS_COMPASSING		// |= 0x00000008
+DID_FLASH_CONFIG.RTKCfgBits |= RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING		// |= 0x00000004
 ```
 
 **Using EvalTool** - go to `Settings -> RTK -> Rover Mode`, set the dropdown menu to `GPS Compassing`, and press the `Apply` button. 
 
-**Using CLTool** - run the CLTool using the  `-flashconfig=RTKCfgBits=0x8` option to enable GPS Dual Antenna.
+**Using CLTool** - run the CLTool using the  `-flashconfig=RTKCfgBits=0x4` option to enable GPS Dual Antenna.
 
 ## RTK Compassing Fix Status
 
@@ -160,11 +160,11 @@ RTK compassing fix is indicated when the RTK-Cmp radio button turns purple in th
 The ambiguity resolution ratio, `arRatio`, is a metric that indicates progress of the solution that ranges from 0 to 999.  Typically values above 3 indicate RTK fix progress.  The base to rover heading accuracy indicates how much error is in the base to rover heading (RTK compassing heading). 
 
 ```c++
-DID_GNSS1_RTK_CMP_REL.arRatio						// Ambiguity resolution ratio
-DID_GNSS1_RTK_CMP_REL.baseToRoverHeadingAcc			// (rad) RTK compassing accuracy
+DID_GNSS2_RTK_CMP_REL.arRatio						// Ambiguity resolution ratio
+DID_GNSS2_RTK_CMP_REL.baseToRoverHeadingAcc			// (rad) RTK compassing accuracy
 ```
 
-The DID_GNSS1_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
+The DID_GNSS2_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
 
 <center>
 

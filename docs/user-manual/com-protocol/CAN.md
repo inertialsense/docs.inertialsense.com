@@ -12,7 +12,7 @@ In the image below the CID_INS_TIME message is set to broadcast data at 10 times
 
 ![image-20191114164046742](../images/CanConfig.png)
 
-The baud rate is configurable by setting the field DID_CAN_CONFIG.can_baudrate_kbps. The following standard baud rates are supported:
+The baud rate is configurable by setting the field DID_CAN_CONFIG.can_setting. The following standard baud rates are supported:
 
 - 20 kbps
 - 33 kbps
@@ -59,7 +59,7 @@ GMT information
 | Field      | Type     | Description                                        |
 | ---------- | -------- | -------------------------------------------------- |
 | week       | uint32_t | GPS number of weeks since January 6th, 1980        |
-| timeOfWeek | float    | GPS time of week (since Sunday morning) in seconds |
+| timeOfWeekMs | float    | GPS time of week (since Sunday morning) in milliseconds |
 
 #### CID_INS_STATUS
 
@@ -219,7 +219,7 @@ Z Position in ECEF (earth-centered earth-fixed) frame.
 
 #### CID_INS_MSL
 
-`ins_can_msl`
+`is_can_msl`
 
 Height above Mean Sea Level 
 
@@ -237,7 +237,7 @@ Preintegrated IMU values delta theta and delta velocity (X axis), and Integral p
 | ------ | --------- | ------------------------------------------------------------ |
 | theta0 | int16_t   | Delta theta (rad, scaled by 1000, 3 decimal places precision) |
 | vel0   | int16_t   | Delta velocity (m/s, scaled by 100, 2 decimal places precision) |
-| dt     | uints16_t | Integral Period (meters, scaled by 1000)                     |
+| dt     | uint16_t | Integral Period (seconds, scaled by 1000)                     |
 
 #### CID_PREINT_QY
 
@@ -249,7 +249,7 @@ Preintegrated IMU values delta theta and delta velocity (Y axis), and Integral p
 | ------ | --------- | ------------------------------------------------------------ |
 | theta1 | int16_t   | Delta theta (rad, scaled by 1000, 3 decimal places precision) |
 | vel1   | int16_t   | Delta velocity (m/s, scaled by 100, 2 decimal places precision) |
-| dt     | uints16_t | Integral Period (meters, scaled by 1000)                     |
+| dt     | uint16_t | Integral Period (seconds, scaled by 1000)                     |
 
 #### CID_PREINT_RZ
 
@@ -261,7 +261,7 @@ Preintegrated IMU values delta theta and delta velocity (Z axis), and Integral p
 | ------ | --------- | ------------------------------------------------------------ |
 | theta2 | int16_t   | Delta theta (rad, scaled by 1000, 3 decimal places precision) |
 | vel2   | int16_t   | Delta velocity (m/s, scaled by 100, 2 decimal places precision) |
-| dt     | uints16_t | Integral Period (meters, scaled by 1000)                     |
+| dt     | uint16_t | Integral Period (seconds, scaled by 1000)                     |
 
 #### CID_DUAL_PX
 
@@ -273,7 +273,7 @@ Dual IMU gyro and accelerometer values from accelerometer 0
 | ------ | --------- | ------------------------------------------------------------ |
 | theta0 | int16_t   | Theta (rad/s, scaled by 1000, 3 decimal places precision)    |
 | vel0   | int16_t   | Acceleration (m/s<sup>2</sup>, scaled by 100, 2 decimal places precision) |
-| status | uints32_t | IMU status (see eImuStatus)                                  |
+| status | uint32_t | IMU status (see eImuStatus)                                  |
 
 #### CID_DUAL_QY
 
@@ -285,7 +285,7 @@ Dual IMU gyro and accelerometer values from accelerometer 0
 | ------ | --------- | ------------------------------------------------------------ |
 | theta1 | int16_t   | Theta (rad/s, scaled by 1000, 3 decimal places precision)    |
 | vel1   | int16_t   | Acceleration (m/s<sup>2</sup>, scaled by 100, 2 decimal places precision) |
-| status | uints32_t | IMU status (see eImuStatus)                                  |
+| status | uint32_t | IMU status (see eImuStatus)                                  |
 
 #### CID_DUAL_RZ
 
@@ -297,11 +297,11 @@ Dual IMU gyro and accelerometer values from accelerometer 0
 | ------ | --------- | ------------------------------------------------------------ |
 | theta2 | int16_t   | Theta (rad/s, scaled by 1000, 3 decimal places precision)    |
 | vel2   | int16_t   | Acceleration (m/s<sup>2</sup>, scaled by 100, 2 decimal places precision) |
-| status | uints32_t | IMU status (see eImuStatus)                                  |
+| status | uint32_t | IMU status (see eImuStatus)                                  |
 
-#### CID_GPS1_POS
+#### CID_GNSS1_POS
 
-`is_can_gps_pos_status`
+`is_can_gnss_pos_status`
 
 GPS CNO Mean and GPS status flags
 
@@ -310,7 +310,7 @@ GPS CNO Mean and GPS status flags
 | status  | uint32_t | (see eGnssStatus) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
 | cnoMean | uint32_t | (dBHz) Average of all satellite carrier to noise ratios (signal strengths) that are non-zero |
 
-#### CID_GPS1_RTK_POS_REL
+#### CID_GNSS1_RTK_POS_REL
 
 `is_can_gnss_rtk_rel`
 
@@ -323,7 +323,7 @@ RTK-GPS positioning performance metrics
 | distanceToBase  | float   | Distance to Base (m)                                         |
 | headingToBase   | int16_t | Angle from north to vectorToBase in local tangent plane. (rad, scaled by 1000) |
 
-#### CID_GPS2_RTK_CMP_REL
+#### CID_GNSS2_RTK_CMP_REL
 
 `is_can_gnss_rtk_rel`
 

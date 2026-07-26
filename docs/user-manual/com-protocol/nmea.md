@@ -661,7 +661,7 @@ $GPVTG,140.88,T,,M,8.04,N,14.89,K,D*05\r\n
 
 ### PASHR
 
-NMEA GPS DOP and active satellites.
+NMEA heading, roll, pitch, and heave attitude message.
 
 ```
 $PASHR,001924.600,95.81,T,+0.60,+1.05,+0.00,0.038,0.035,0.526,0,0*08\r\n
