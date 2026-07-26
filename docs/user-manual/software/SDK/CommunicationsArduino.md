@@ -2,10 +2,10 @@
 
 ## Interfacing with the IMX over serial
 
-This example shows how to communicate with the IMX using the Inertial Sense [Binary Communications Protocol](../../com-protocol/isb.md). The example code can be found in the [Inertial Sense SDK Arduino project](https://github.com/inertialsense/InertialSenseSDK/tree/main/ExampleProjects/Arduino).
+This example shows how to communicate with the IMX using the Inertial Sense [Binary Communications Protocol](../../com-protocol/isb.md). The example code can be found in the [Inertial Sense SDK Arduino project](https://github.com/inertialsense/inertial-sense-sdk/tree/main/ExampleProjects/Arduino).
 
 !!! important
-    [Update](../evaltool.md#update-firmware) the IMX to the <a href="https://github.com/inertialsense/InertialSenseSDK/releases">latest firmware</a>
+    [Update](../evaltool.md#update-firmware) the IMX to the <a href="https://github.com/inertialsense/inertial-sense-sdk/releases">latest firmware</a>
 
 This example demonstrates how to use the Inertial Sense EVB with an Arduino Due. The Due was selected because it has two serial ports.  This way the Arduino can communicate with the IMX using one of the ports, and write the output over the Serial Monitor to the computer using the other.
 
@@ -19,7 +19,7 @@ This example demonstrates how to use the Inertial Sense EVB with an Arduino Due.
 
 ![Arduino_wiring](images/arduino_uINS.png)
 
-After downloading the [Inertial Sense SDK](https://github.com/inertialsense/InertialSenseSDK), navigate to ExampleProjects/Arduino/ReadIS. Use the ImportSdkFiles.bat (Windows) or ImportSdkFiles.sh (Linux) to copy the required files from the SDK into src/ISsdk directory. The resulting file structure for the ReadIS Arduino sketch should look like the following:
+After downloading the [Inertial Sense SDK](https://github.com/inertialsense/inertial-sense-sdk), navigate to ExampleProjects/Arduino/ReadIS. Use the ImportSdkFiles.bat (Windows) or ImportSdkFiles.sh (Linux) to copy the required files from the SDK into the src/ISsdk directory. The resulting file structure for the ReadIS Arduino sketch should look like the following:
 
 ```
 |-ReadIS
@@ -33,13 +33,20 @@ After downloading the [Inertial Sense SDK](https://github.com/inertialsense/Iner
       | - ISComm.c
       | - ISComm.h
       | - ISConstants.h
+      | - rtk_defines.h
+      | - core
+        | - types.h
+    | - hw-libs
+      | - printf
+        | - printf.c
+        | - printf.h
 ```
 
 ??? note "What is an ino file?"
     An `.ino` file is the arduino extension for a sketch.  It is actually C++ code.
 
 !!! note
-    Note that there are two `.c` files in the tree.  You'll need to make sure that these files are compiled by the toolchain, otherwise `xxxx is not defined` errors can occur.
+    Note that there are `.c` files in the tree.  You'll need to make sure that these files are compiled by the toolchain, otherwise `xxxx is not defined` errors can occur.
 
 ## SDK Implementation
 
@@ -86,15 +93,17 @@ void setup()
     Serial.println("initializing");
 
     // Initialize comm interface - call this before doing any comm functions
-    is_comm_init(&comm, s_buffer, sizeof(s_buffer));
+    is_comm_init(&comm, s_buffer, sizeof(s_buffer), NULL); // TODO: Use callbacks
+    is_comm_enable_protocol(&comm, _PTYPE_INERTIAL_SENSE_DATA);
+    is_comm_enable_protocol(&comm, _PTYPE_NMEA);
 
     // Stop all the broadcasts on the device
-    int messageSize = is_comm_stop_broadcasts_all_ports(&comm);
+    int messageSize = is_comm_write_to_buf(s_buffer, sizeof(s_buffer), &comm, PKT_TYPE_STOP_BROADCASTS_ALL_PORTS, 0, 0, 0, NULL);
     Serial1.write(comm.rxBuf.start, messageSize); // Transmit the message to the inertialsense device
 
     // Ask for ins_1 message 20 times per second.  Ask for the whole thing, so
     // set 0's for the offset and size
-    messageSize = is_comm_get_data_to_buf(buffer, bufferSize, &comm, DID_INS_1, sizeof(ins_1_t), 0, 1000);
+    messageSize = is_comm_get_data_to_buf(s_buffer, sizeof(s_buffer), &comm, DID_INS_1, sizeof(ins_1_t), 0, 1000);
     Serial1.write(comm.rxBuf.start, messageSize); // Transmit the message to the inertialsense device
 }
 ```
@@ -130,12 +139,12 @@ void loop()
         switch (message_type)
         {
         case _PTYPE_INERTIAL_SENSE_DATA:
-            switch (comm.dataHdr.id)
+            switch (comm.rxPkt.dataHdr.id)
             {
             case DID_NULL:
                 break;
             case DID_INS_1:
-                handleINSMessage((ins_1_t *)(comm.pkt.data.ptr));
+                handleINSMessage((ins_1_t *)(comm.rxPkt.data.ptr));
                 break;
             default:
                 Serial.print("Got an unexpected message DID: ");

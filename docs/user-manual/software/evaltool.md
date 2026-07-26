@@ -75,7 +75,7 @@ The Info Bar can be seen from any tab and shows basic connection information for
 1. Click **Start**.
 1. Wait for the progress to reach 100% and click **Done**.
 
-*Note: The firmware can only be updated at the following baud rates: 300000, 921600, 460800, 230400, 115200.
+*Note: The firmware can only be updated at the following baud rates: 3000000, 921600, 460800, 230400, 115200.
 
 ## Tab Descriptions
 

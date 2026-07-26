@@ -26,7 +26,9 @@ The `is_comm_set_data()` function will encode a message used to set data or conf
 void setInsOutputRotation()
 {
     float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-    is_comm_set_data(portWrite, 0, comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
+    uint8_t buf[200];
+    int len = is_comm_set_data_to_buf(buf, sizeof(buf), comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
+    if (len > 0) portWrite(0, buf, len);
 }
 ```
 ### Getting Data
@@ -39,7 +41,9 @@ The `is_comm_get_data()` function will encode a PKT_TYPE_GET_DATA message that e
 
 ```c++
 // Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
-is_comm_get_data(portWrite, 0, comm, DID_INS_1, 0, 0, 10);
+uint8_t buf[200];
+int len = is_comm_get_data_to_buf(buf, sizeof(buf), comm, DID_INS_1, 0, 0, 10);
+if (len > 0) portWrite(0, buf, len);
 ```
 
 #### Data Source Update Rates
@@ -78,7 +82,9 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
     // Remember configuration following reboot for automatic data streaming.
 	rmc.options = RMC_OPTIONS_PERSISTENT;
 
-	is_comm_set_data(portWrite, 0, comm, DID_RMC, 0, 0, &rmc);
+	uint8_t buf[200];
+	int len = is_comm_set_data_to_buf(buf, sizeof(buf), comm, DID_RMC, sizeof(rmc_t), 0, &rmc);
+	if (len > 0) portWrite(0, buf, len);
 ```
 
 The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is required to apply the change).  Independently, the DID_INS_x broadcast period multiple can be used to set the output data rate down to 1ms.
@@ -270,7 +276,9 @@ Two *stop all broadcasts* packets are special packet types that will disable all
 ### All Ports
 
 ```c++
-is_comm_stop_broadcasts_all_ports(portWrite, 0, &comm);
+uint8_t buf[200];
+int len = is_comm_write_to_buf(buf, sizeof(buf), comm, PKT_TYPE_STOP_BROADCASTS_ALL_PORTS, 0, 0, 0, NULL);
+if (len > 0) portWrite(0, buf, len);
 ```
 The hexadecimal string to stop all broadcasts on all ports is: 
 
@@ -281,7 +289,9 @@ The hexadecimal string to stop all broadcasts on all ports is:
 ### Current Port Only
 
 ```c++
-is_comm_stop_broadcasts_current_port(portWrite, 0, &comm);
+uint8_t buf[200];
+int len = is_comm_write_to_buf(buf, sizeof(buf), comm, PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT, 0, 0, 0, NULL);
+if (len > 0) portWrite(0, buf, len);
 ```
 
 The hexadecimal string to stop all broadcasts on the current port is:  
