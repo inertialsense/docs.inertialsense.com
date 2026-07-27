@@ -108,9 +108,9 @@ The Rugged 4 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS48
 | GPS antenna SMA adapter | Crystek Corporation | CCSMX-FBM-RG178-6    | 6" MMCX to SMA GPS antenna adapter cable.     |
 | GPS antenna SMA adapter | Crystek Corporation | CCSMX1-FBM-RG178-6   | 6" R/A MMCX to SMA GPS antenna adapter cable. |
 
-See the [Multi-Band GNSS page](../gnss/multi_band_F9P.md#multi-band-gnss-components) for GNSS antenna options for an L1/L2 receiver (Rugged-4).
+See the [Multi-Band GNSS page](../imx/gnss-aiding/imx_gnss_ublox.md#multi-band-gnss-components) for GNSS antenna options for an L1/L2 receiver (Rugged-4).
 
-See the [Multi-Band GNSS page](../gnss/multi_band_GPX.md#multi-band-gnss-components) for GNSS antenna options for an L1/L5 receiver (GPX-1).
+See the [Multi-Band GNSS page](../imx/gnss-aiding/imx_gnss_gpx.md#multi-band-gnss-components) for GNSS antenna options for an L1/L5 receiver (GPX-1).
 
 ## Using with Inertial Sense Software
 

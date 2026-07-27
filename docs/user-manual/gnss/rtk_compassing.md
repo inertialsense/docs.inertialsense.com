@@ -4,7 +4,7 @@
 
 RTK Compassing (Dual GNSS) is a system that determines heading by use of two GNSS receivers and antennas.  It replaces the need for magnetometers which can be problematic in the presence of ferrous materials (e.g. steel) and EMI generating circuits (e.g. electric motors and drivers).  
 
-See the [multi-band dual GNSS](multi_band_F9P.md#evb-2-to-dual-zed-f9-interface) section for details on using our multi-frequency dual ZED-F9 GNSS system.
+See the [multi-band dual GNSS](../imx/gnss-aiding/imx_gnss_ublox.md#evb-2-to-dual-zed-interface) section for details on using our multi-frequency dual ZED-F9 GNSS system.
 
 ## Heading Accuracy
 
@@ -174,4 +174,4 @@ The DID_GNSS1_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
 
 ## Stationary Application
 
-For RTK compassing stationary application, enabling the STATIONARY INS dynamic model (DID_FLASH_CONFIG.dynamicModel = 2) is recommended to reduce heading noise and drift.  This will reduce heading error during RTK compassing fix or loss of fix.  See [INS-GNSS Dynamic Model](../imx/application-config/imu_ins_gnss_configuration.md#ins-gnss-dynamic-model) and [Zero Motion Command](../imx/application-config/zero_motion_command.md) for details.  
+For RTK compassing stationary application, enabling the STATIONARY INS dynamic model (DID_FLASH_CONFIG.dynamicModel = 2) is recommended to reduce heading noise and drift.  This will reduce heading error during RTK compassing fix or loss of fix.  See [INS-GNSS Dynamic Model](../imx/application-config/imu_ins_configuration.md#ins-gnss-dynamic-model) and [Zero Motion Command](../imx/application-config/zero_motion_command.md) for details.  

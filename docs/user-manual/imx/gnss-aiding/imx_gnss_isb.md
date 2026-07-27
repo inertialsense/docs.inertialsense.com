@@ -1,14 +1,14 @@
-# GNSS Aiding INS Using Inertial Sense Binary (ISB)
+# Inertial Sense Binary (ISB) Aiding IMX
 
 The IMX INS/EKF can be aided directly with GNSS position and velocity data supplied as Inertial Sense Binary (ISB) messages from an external device, such as another Inertial Sense product, a companion computer, or a custom host generating GNSS solutions.  Because the data arrives already formatted as native IMX Data Identifiers (DIDs), the IMX does not need to parse a third-party GNSS receiver protocol (uBlox, NMEA, Septentrio, etc.) — it simply accepts and fuses the incoming DID messages into the EKF.
 
 ISB GNSS aiding data can be supplied over any of the IMX serial ports (Serial 0, Serial 1, or Serial 2).  The `DID_FLASH_CONFIG.ioConfig` GNSS1 and/or GNSS2 source fields must be set to the corresponding serial port so the IMX knows which port to use for GNSS1 and GNSS2.
 
-This is the same mechanism the [GPX-1](../hardware/module_gpx1.md) uses internally to supply GNSS1 and GNSS2 data to the IMX-5.  When `DID_FLASH_CONFIG.ioConfig` GNSS type is set to **GPX**, the IMX-5 requests this exact set of GNSS DID messages from the GPX-1 over ISB.  Setting the GNSS type to **ISB** allows any external source capable of generating these same DID messages to aid the INS in the same way.
+This is the same mechanism the [GPX-1](../../hardware/module_gpx1.md) uses internally to supply GNSS1 and GNSS2 data to the IMX-5.  When `DID_FLASH_CONFIG.ioConfig` GNSS type is set to **GPX**, the IMX-5 requests this exact set of GNSS DID messages from the GPX-1 over ISB.  Setting the GNSS type to **ISB** allows any external source capable of generating these same DID messages to aid the INS in the same way.
 
 ## Configure the IMX for ISB GNSS Input
 
-1. Connect the external ISB GNSS source to Serial 0, Serial 1, or Serial 2 (3.3V TTL UART) on the IMX.  See the [PCB Module](../hardware/module_imx5.md) hardware page for pinout.
+1. Connect the external ISB GNSS source to Serial 0, Serial 1, or Serial 2 (3.3V TTL UART) on the IMX.  See the [PCB Module](../../hardware/module_imx5.md) hardware page for pinout.
 2. Set the serial port baudrate to match `DID_FLASH_CONFIG.serXBaudRate` for the port used.
 3. Configure GNSS1 (and GNSS2, if using dual antenna heading) using the EvalTool GPS Setting tab or `DID_FLASH_CONFIG.ioConfig`:
 
@@ -24,7 +24,7 @@ This is the same mechanism the [GPX-1](../hardware/module_gpx1.md) uses internal
 
 ## Required GNSS DID Messages
 
-The following DID messages are needed to properly aid the INS, matching the same set the GPX-1 provides to the IMX-5.  Full field definitions for each DID are available in the [DID Descriptions](../com-protocol/DID-descriptions.md) reference.
+The following DID messages are needed to properly aid the INS, matching the same set the GPX-1 provides to the IMX-5.  Full field definitions for each DID are available in the [DID Descriptions](../../com-protocol/DID-descriptions.md) reference.
 
 ### GNSS1 (required)
 
