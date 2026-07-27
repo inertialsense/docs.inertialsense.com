@@ -17,7 +17,7 @@ To update the firmware on the F9P, follow these steps:
 
 1. Open the Inertial Sense EvalTool
 2. Navigate to the Data Sets tab. Select `DID_SYS_CMD` from the sidebar (see the image below)
-3. Set `command` to `11` and `invCommand` to `-12` to enable passthrough to GNSS1 (set `12` and `-13` for GNSS2)
+3. Set `command` to `12` and `invCommand` to `-13` to enable passthrough to GNSS1 (set `13` and `-14` for GNSS2)
 4. Close the serial port (Settings tab)
 5. Open the device in uBlox u-center (we currently use u-center 22.07)
 6. Update the firmware in u-center per u-blox instructions. Baudrate should be set to 921600.

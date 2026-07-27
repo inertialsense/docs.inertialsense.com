@@ -5,7 +5,7 @@ Please email [support@inertialsense.com](mailto:support@inertialsense.com) for a
 ### Steps for Chip-Erase Recovery
 
 !!! warning
-    The CHIP ERASE (Reserved (CE) pin 17) erases all flash memory including firmware, settings and calibration.  CHIP ERASE should only be used as a last resort.  This step should ONLY be used if the steps for [Stuck in Bootloader Mode](firmware.md#stuck-in-bootloader-mode) fail and there is NO other method to recover communications.
+    The CHIP ERASE (Reserved (CE) pin 17) erases all flash memory including firmware, settings and calibration.  CHIP ERASE should only be used as a last resort.  This step should ONLY be used if the steps for [Stuck in Bootloader Mode](../../troubleshooting/firmware.md#stuck-in-bootloader-mode) fail and there is NO other method to recover communications.
 
 !!! important
     Please notify support@inertialsense.com if this step is necessary so that we can keep track of cause of failures and provide you any necessary support.

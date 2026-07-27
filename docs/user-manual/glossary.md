@@ -699,7 +699,7 @@ Examples include:
 ```
 DID_INS_1
 DID_IMU
-DID_GPS
+DID_GNSS1_POS
 ```
 
 ---

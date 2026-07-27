@@ -1,6 +1,6 @@
 # ASCII Communications Example Project
 
-This [IS Communications Example](https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects/Ascii) project demonstrates binary communications with the<br>
+This [ISAsciiExample](https://github.com/inertialsense/inertial-sense-sdk/tree/main/ExampleProjects/Ascii) project demonstrates ASCII communications with the<br>
 <a href="https://inertialsense.com/products">Inertial Sense Products</a> (IMX) using the Inertial Sense SDK. See the<br>
 [ASCII protocol](../../com-protocol/nmea.md) section for details on the ASCII packet structures.
 
@@ -8,7 +8,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 
 #### Project Files
 
-* [ISAsciiExample.c](https://github.com/inertialsense/InertialSenseSDK/tree/release/ExampleProjects/Ascii/ISAsciiExample.c)
+* [ISAsciiExample.cpp](https://github.com/inertialsense/inertial-sense-sdk/blob/main/ExampleProjects/Ascii/ISAsciiExample.cpp)
 
 #### SDK Files
 
@@ -28,8 +28,8 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 
 ```C++
 // Change these include paths to the correct paths for the project
-#include "../../src/ISComm.h"
 #include "../../src/serialPortPlatform.h"
+#include "../../src/ISComm.h"
 ```
 
 ### Step 2: Initialize and open serial port
@@ -55,7 +55,7 @@ This [IS Communications Example](https://github.com/inertialsense/InertialSenseS
 
 ```c++
 // Stop all broadcasts on the device on all ports.  We don't want binary message coming through while we are doing ASCII
-if (!serialPortWriteAscii(&serialPort, "STPB", 4))
+if (!portWriteAscii(&serialPort, "STPB", 4))
 {
 	printf("Failed to encode stop broadcasts message\r\n");
 }
@@ -65,42 +65,43 @@ if (!serialPortWriteAscii(&serialPort, "STPB", 4))
 ```C++
    	// ASCII protocol is based on NMEA protocol https://en.wikipedia.org/wiki/NMEA_0183
 	// turn on the INS message at a period of 100 milliseconds (10 hz)
-	// serialPortWriteAscii takes care of the leading $ character, checksum and ending \r\n newline
+	// portWriteAscii takes care of the leading $ character, checksum and ending \r\n newline
 	// ASCE message enables ASCII broadcasts
 	// ASCE fields: 1:options, ID0, Period0, ID1, Period1, ........ ID19, Period19
 	// IDs:
-	// NMEA_MSG_ID_PIMU      = 0,
-    // NMEA_MSG_ID_PPIMU     = 1,
-    // NMEA_MSG_ID_PRIMU     = 2,
-    // NMEA_MSG_ID_PINS1     = 3,
-    // NMEA_MSG_ID_PINS2     = 4,
-    // NMEA_MSG_ID_PGPSP     = 5,
-    // NMEA_MSG_ID_GNGGA     = 6,
-    // NMEA_MSG_ID_GNGLL     = 7,
-    // NMEA_MSG_ID_GNGSA     = 8,
-    // NMEA_MSG_ID_GNRMC     = 9,
-    // NMEA_MSG_ID_GNZDA     = 10,
-    // NMEA_MSG_ID_PASHR     = 11, 
-    // NMEA_MSG_ID_PSTRB     = 12,
-    // NMEA_MSG_ID_INFO      = 13,
-    // NMEA_MSG_ID_GNGSV     = 14,
-    // NMEA_MSG_ID_GNVTG     = 15,
-    // NMEA_MSG_ID_INTEL     = 16,
+	// NMEA_MSG_ID_INVALID   = 0,
+	// NMEA_MSG_ID_PIMU      = 1,
+    // NMEA_MSG_ID_PPIMU     = 2,
+    // NMEA_MSG_ID_PRIMU     = 3,
+    // NMEA_MSG_ID_PINS1     = 4,
+    // NMEA_MSG_ID_PINS2     = 5,
+    // NMEA_MSG_ID_PGPSP     = 6,
+    // NMEA_MSG_ID_GNGGA     = 7,
+    // NMEA_MSG_ID_GNGLL     = 8,
+    // NMEA_MSG_ID_GNGSA     = 9,
+    // NMEA_MSG_ID_GNRMC     = 10,
+    // NMEA_MSG_ID_GNZDA     = 11,
+    // NMEA_MSG_ID_PASHR     = 12, 
+    // NMEA_MSG_ID_PSTRB     = 13,
+    // NMEA_MSG_ID_INFO      = 14,
+    // NMEA_MSG_ID_GNGSV     = 15,
+    // NMEA_MSG_ID_GNVTG     = 16,
+    // NMEA_MSG_ID_INTEL     = 17,
 
 	// options can be 0 for current serial port, 1 for serial 0, 2 for serial 1 or 3 for both serial ports
 	// Instead of a 0 for a message, it can be left blank (,,) to not modify the period for that message
 	// please see the user manual for additional updates and notes
 
     // Get PINS1 @ 5Hz on the connected serial port, leave all other broadcasts the same, and save persistent messages.
-	const char* asciiMessage = "ASCE,0,3,1";
+	const char* asciiMessage = "ASCE,0,4,1";
 
     // Get PINS1 @ 1Hz and PGPSP @ 1Hz on the connected serial port, leave all other broadcasts the same
-	// const char* asciiMessage = "ASCE,0,5,5";
+	// const char* asciiMessage = "ASCE,0,6,5";
 
 	// Get PIMU @ 50Hz, GGA @ 5Hz, serial0 and serial1 ports, set all other periods to 0
-    //  const char* asciiMessage = "ASCE,3,6,1";
+    //  const char* asciiMessage = "ASCE,3,7,1";
 
-    if (!serialPortWriteAscii(&serialPort, asciiMessage, (int)strnlen(asciiMessage, 128)))
+    if (!portWriteAscii(&serialPort, asciiMessage, (int)strnlen(asciiMessage, 128)))
 	{
 		printf("Failed to encode ASCII get INS message\r\n");
 	}
@@ -111,7 +112,7 @@ if (!serialPortWriteAscii(&serialPort, "STPB", 4))
 (OPTIONAL) This remembers the current communications and automatically streams data following reboot.
 
 ```c++
-if (!serialPortWriteAscii(&serialPort, "PERS", 4))
+if (!portWriteAscii(&serialPort, "PERS", 4))
 {
     printf("Failed to encode ASCII save persistent message\r\n");
 }
@@ -119,7 +120,6 @@ if (!serialPortWriteAscii(&serialPort, "PERS", 4))
 ### Step 6: Handle received data
 
 ```C++
-	// STEP 4: Handle received data
 	unsigned char* asciiData;
 	unsigned char asciiLine[512];
 

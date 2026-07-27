@@ -236,7 +236,7 @@ The following is a specific example:
 cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv	
 ```
 
-Note: The firmware can only be updated at the following baud rates: 300000, 921600, 460800, 230400, 115200
+Note: The firmware can only be updated at the following baud rates: 3000000, 921600, 460800, 230400, 115200
 
 ## Logging with CLTool
 

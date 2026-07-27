@@ -27,7 +27,7 @@ The source of heading aiding can be identified by the following flags:
 This section lists the commonly used status flags. A complete listing of status flags is available in data_sets.h.
 
 #### INS Status Flags (insStatus)
-The INS status flags, **insStatus**, are found in the DID_INS1, DID_INS2, DID_INS3, and DID_SYS_PARAMS messages. Bitmasks for the **insStatus** flags are defined in _eInsStatusFlags_ in data_sets.h.
+The INS status flags, **insStatus**, are found in the DID_INS_1, DID_INS_2, DID_INS_3, and DID_SYS_PARAMS messages. Bitmasks for the **insStatus** flags are defined in _eInsStatusFlags_ in data_sets.h.
 
 | Flag                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 |----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -43,10 +43,10 @@ The INS status flags, **insStatus**, are found in the DID_INS1, DID_INS2, DID_IN
 | INS_STATUS_MAG_AIDING_HEADING | INS heading is being corrected by magnetometer.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | INS_STATUS_NAV_MODE              | AHRS = 0 (no position or velocity), NAV = 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | INS_STATUS_MAG_RECALIBRATING     | Magnetometer is recalibrating.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| INS_STATUS_MAG_INTERFERENCE_OR_BAD_CAL | Magnetometer is experiencing interference or calibration is bad.  Attention may be required to remove interference (move the device) or recalibrate the magnetometer.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| INS_STATUS_MAG_INTERFERENCE_OR_BAD_CAL_OR_NO_CAL | Magnetometer is experiencing interference or calibration is bad.  Attention may be required to remove interference (move the device) or recalibrate the magnetometer.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | INS_STATUS_SOLUTION_MASK         | 0=INS_STATUS_SOLUTION_OFF – The INS is not running  <br>**1=INS_STATUS_SOLUTION_ALIGNING** – The INS is aligning on startup <br>**3=INS_STATUS_SOLUTION_NAV** – The INS is in NAV mode and the state estimate is good.   <br>**4=INS_STATUS_SOLUTION_NAV_HIGH_VARIANCE** – The INS is in NAV mode and the state estimate is experiencing high variance. This may be caused by excessive noise on one or more sensors, such as vibration, magnetic interference, poor GPS sky visibility and/or GPS multipath errors. See DID_INL2_VARIANCE.   <br>**5=INS_STATUS_SOLUTION_AHRS** – INS is in AHRS mode and the solution is good. There is no valid position correction data from GPS or other aiding sensor. Only the attitude states are estimated.   <br>**6=INS_STATUS_SOLUTION_AHRS_HIGH_VARIANCE** – INS is in AHRS mode and the state estimate has high variance. See DID_INL2_VARIANCE.  <br>**7=INS_STATUS_SOLUTION_VRS** - System is in VRS mode (no earth relative heading) and roll and pitch are good. <br>**8=INS_STATUS_SOLUTION_VRS_HIGH_VARIANCE** System is in VRS mode (no earth relative heading) but roll and pitch uncertainty has exceeded the threshold. |
 | INS_STATUS_RTK_COMPASSING_MASK | **0x00100000=INS_STATUS_RTK_COMPASSING_BASELINE_UNSET** - GPS compassing antenna offsets are not set in flashCfg.<br/>**0x00200000=INS_STATUS_RTK_COMPASSING_BASELINE_BAD** - GPS antenna baseline specified in flashCfg and measured by GPS do not match. |
-| INS_STATUS_GNSS_NAV_FIX_MASK | GPS navigation fix type (see eGpsNavFixStatus) |
+| INS_STATUS_GNSS_NAV_FIX_MASK | GPS navigation fix type (see eGnssNavFixStatus) |
 | INS_STATUS_RTK_COMPASSING_VALID | RTK compassing heading is accurate.  (RTK fix and hold status) |
 | INS_STATUS_RTK_ERROR_MASK | See eInsStatusFlags in data_sets.h. |
 
@@ -56,7 +56,7 @@ The hardware status flags, **hdwStatus**, are found in the `DID_INS1`, `DID_INS2
 
 | **Field**                 | **Description**                          |
 | ------------------------- | ---------------------------------------- |
-| HDW_STATUS_MOTION_MASK | Accelerometers and Gyros are operational |
+| HDW_STATUS_MOTION_MASK | Unit is moving and NOT stationary |
 |HDW_STATUS_GNSS_SATELLITE_RX_VALID | Antenna is connected to the GPS receiver and signal is valid. Unset indicates weak signal or no output from 1 or more enabled GPS receivers |
 | HDW_STATUS_STROBE_IN_EVENT | Event occurred on strobe input pin |
 | HDW_STATUS_GNSS_TIME_OF_WEEK_VALID | GPS time of week is valid and reported.  Otherwise the timeOfWeek is local system time. |
@@ -70,8 +70,10 @@ The hardware status flags, **hdwStatus**, are found in the `DID_INS1`, `DID_INS2
 | HDW_STATUS_GNSS_PPS_TIMESYNC | Time synchronized by GPS PPS |
 |  | (BIT) Built-in self-test mask |
 | HDW_STATUS_ERR_TEMPERATURE | Outside of operational range |
-| HDW_STATUS_FAULT_BOD_RESET | Low Power Reset |
-| HDW_STATUS_FAULT_POR_RESET | Software or Triggered Reset |
+| HDW_STATUS_RESET_CAUSE_BACKUP_MODE | Reset from backup mode (low-power state w/ CPU off) |
+| HDW_STATUS_RESET_CAUSE_WATCHDOG_FAULT | Reset from watchdog fault |
+| HDW_STATUS_RESET_CAUSE_SOFT | Reset from software |
+| HDW_STATUS_RESET_CAUSE_HDW | Reset from hardware (NRST pin low) |
 
 ## Built-in Test (BIT)
 Built-in test (BIT) is enabled by setting `DID_BIT.command` to any of the following values. 
@@ -91,11 +93,11 @@ flags are defined in `eHdwBitStatusFlags` in data_sets.h.
 | **Field** | **Description** |
 |----- | ----- |
 | HDW_BIT_PASSED_ALL | All HBIT are passed |
-| HDW_BIT_PASSED_AHRS | All Self Tests passed without GPS signal |
+| HDW_BIT_PASSED_NO_GNSS | All Self Tests passed without GPS signal |
 | HDW_BIT_FAILED_MASK | One of the built-in tests failed |
-| HDW_BIT_FAULT_GPS_NO_COM | No GPS Signal |
-| HDW_BIT_FAULT_GPS_POOR_CNO | Poor GPS signal. Check Antenna |
-| HDW_BIT_FAULT_GPS_ACCURACY | Poor GPS Accuracy or Low number of satellites |
+| HDW_BIT_FAULT_GNSS_NO_COM | No GPS Signal |
+| HDW_BIT_FAULT_GNSS_POOR_CNO | Poor GPS signal. Check Antenna |
+| HDW_BIT_FAULT_GNSS_POOR_ACCURACY | Poor GPS Accuracy or Low number of satellites |
 
 ### calBitStatus – Calibration BIT Flags
 Calibration BIT flags are contained in **calBitStatus**, found in the `DID_BIT` message. Bitmasks for the **calBitStatus**
@@ -115,7 +117,7 @@ This section illustrates tests used for system health monitoring in common appli
 
 2. **Sensor Test (Must be Stationary)**
 
-   These tests are ideal for manufacturing and periodic in-field testing. Initiate by setting `DID_BIT.state = 2`.
+   These tests are ideal for manufacturing and periodic in-field testing. Initiate by setting `DID_BIT.command = 2`.
 
 | **Test** | **Description** |
 | ----- | ----- |
@@ -124,26 +126,26 @@ This section illustrates tests used for system health monitoring in common appli
 
 3. **GPS Hardware Test**
 
-  Initiate by setting `DID_BIT.state = 2`.
+  Initiate by setting `DID_BIT.command = 2`.
 
 | **Test** | **Description** |
 | ----- | ----- |
-| hdwBitStatus & HDW_BIT_FAULT_GPS_NO_COM | No GPS serial communications. |
-| hdwBitStatus & HDW_BIT_FAULT_GPS_POOR_CNO | Poor GPS signal strength.  Check antenna. |
+| hdwBitStatus & HDW_BIT_FAULT_GNSS_NO_COM | No GPS serial communications. |
+| hdwBitStatus & HDW_BIT_FAULT_GNSS_POOR_CNO | Poor GPS signal strength.  Check antenna. |
 
 4. **GPS Lock Test**
 
 | **Test** | **Description** |
 | ----- | ----- |
-| hdwStatus & INS_STATUS_USING_GPS_IN_SOLUTION | GPS is being fused into INS solution |
+| insStatus & INS_STATUS_GNSS_AIDING_POS | GPS is being fused into INS solution |
 
 5. **INS Output Valid**
 
 | **Test** | **Description** |
 | ----- | ----- |
-| insStatus & INS_STATUS_ATT_ALIGN_GOOD | Attitude estimates are valid |
-| insStatus & INS_STATUS_VEL_ALIGN_GOOD | Velocity estimates are valid |
-| insStatus & INS_STATUS_POS_ALIGN_GOOD | Position estimates are valid |
+| insStatus & INS_STATUS_HDG_ALIGN_FINE | Attitude estimates are valid |
+| insStatus & INS_STATUS_VEL_ALIGN_FINE | Velocity estimates are valid |
+| insStatus & INS_STATUS_POS_ALIGN_FINE | Position estimates are valid |
 
 6. **System Temperature**
 
@@ -151,4 +153,4 @@ This section illustrates tests used for system health monitoring in common appli
 
 7. **Communications Errors**
 
-   HDW_STATUS_COM_PARSE_ERROR_COUNT(DID_SYS_SENSORS.hStatus) is the number of parsed packet errors encountered.
+   HDW_STATUS_COM_PARSE_ERROR_COUNT(DID_SYS_PARAMS.hdwStatus) is the number of parsed packet errors encountered.

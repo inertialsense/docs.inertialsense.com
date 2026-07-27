@@ -62,7 +62,7 @@ build/IS_logs/LOG_SN30664_20180323_112822_0001.dat
 
 1. Create build directory
    ``` bash
-   cd InertialSenseSDK/ExampleProjects/Logger
+   cd InertialSenseSDK/ExampleProjects/InertialSense_logger
    mkdir build
    ```
 2. Run cmake from within build directory
@@ -89,7 +89,7 @@ build/IS_logs/LOG_SN30664_20180323_112822_0001.dat
 
 1. Create build directory
    ``` bash
-   cd InertialSenseSDK/ExampleProjects/Logger
+   cd InertialSenseSDK/ExampleProjects/InertialSense_logger
    mkdir build
    ```
 2. Run cmake from within build directory

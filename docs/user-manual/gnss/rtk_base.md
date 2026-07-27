@@ -15,7 +15,7 @@ An essential part of an RTK system is the Base Station which supplies correction
 
 The base survey cannot happen at the same time as base correction output messages are enabled.  If a survey is started the base correction output will automatically be disabled.
 
-The base position is stored in `DID_FLASH_CONFIG.reflla` and transmitted to the rover during RTK operation. The following steps outline how to survey in the base position.
+The base position is stored in `DID_FLASH_CONFIG.refLla` and transmitted to the rover during RTK operation. The following steps outline how to survey in the base position.
 
 1. **Mount base station in fixed location** - The location should not change during or following a survey.
 
@@ -41,13 +41,13 @@ The base position is stored in `DID_FLASH_CONFIG.reflla` and transmitted to the 
 4. Press the Start button. 
 
 !!! Note
-        The current estimate of the survey is listed in the Position area above the Survey In section. If the survey completes successfully the results stored in flash memory (`DID_FLASH_CONFIG.reflla`) which will only change if the survey is re-run.
+        The current estimate of the survey is listed in the Position area above the Survey In section. If the survey completes successfully the results stored in flash memory (`DID_FLASH_CONFIG.refLla`) which will only change if the survey is re-run.
 
 #### **Using DID_SURVEY_IN**
 
-1. The location of the base can be manually entered using (`DID_FLASH_CONFIG.RefLLA`) if location is known.
+1. The location of the base can be manually entered using (`DID_FLASH_CONFIG.refLla`) if location is known.
 
-2. Set `DID_SURVEY_IN.maxDurationSec` - Maximum time in milliseconds the survey will run. This is ignored if it is set to 0.
+2. Set `DID_SURVEY_IN.maxDurationSec` - Maximum time in seconds the survey will run. This is ignored if it is set to 0.
 
 3. Set `DID_SURVEY_IN.minAccuracy` - Minimum horizontal accuracy in meters for survey to complete before maxDuration. This is ignored if it is set to 0.
 

@@ -22,13 +22,13 @@ The following keywords are found in the CLTool soure code identify the steps for
 
 ### Step 1: Instantiate InertialSense class
 
-Include the InertialSense header file. Create InertialSense object.
+Include the InertialSense header file. Create InertialSense object, passing in the port factories (empty here to use the defaults) and device factories to use.
 
 ```C++
 #include "InertialSense.h"
 
-// [C++ COMM INSTRUCTION] 1.) Create InertialSense object, passing in data callback function pointer.
-InertialSense inertialSenseInterface(cltool_dataCallback);
+// [C++ COMM INSTRUCTION] 1.) Create InertialSense object, passing in the port and device factories to use.
+InertialSense inertialSenseInterface({}, {&CltoolDeviceFactory::getInstance()});
 ```
 
 ### Step 2: Open serial port
@@ -71,10 +71,10 @@ while (!g_inertialSenseDisplay.ControlCWasPressed())
 
 ### Step 5: Handle received data
 
-New data is available in the data callback function.
+New data is delivered through a virtual method on the `ISDevice`-derived device class (`CltoolDevice`) that CLTool registers with its device factory, rather than a free-standing callback function.
 
 ``` C++
-static void cltool_dataCallback(InertialSense* i, p_data_t* data, int pHandle)
+int CltoolDevice::onIsbDataHandler(p_data_t *data, port_handle_t port)
 {
 	// Print data to terminal
 	g_inertialSenseDisplay.ProcessData(data);
@@ -102,6 +102,8 @@ static void cltool_dataCallback(InertialSense* i, p_data_t* data, int pHandle)
 	case DID_BAROMETER: d.baro; break;
 	case DID_SYS_SENSORS: d.sysSensors; break;
 	}
+
+	return 0;
 }
 ```
 

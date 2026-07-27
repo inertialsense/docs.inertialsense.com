@@ -13,7 +13,7 @@ Common sources for noise and interference are digital lines, USB 3.x, noisy powe
 To detect if interference is being coupled into the Inertial Sense sensor module, it can be compared with a stock EVB demo unit to compare noise figures. This is done by using the following steps. If both steps pass, there is no noise being coupled into the module. Optionally, multiple sensor modules can be connected to the EvalTool in parallel to compare noise.
 
 1. **Evaluate the IMU sensor** - Make sure the unit is stationary (on a table or non-moving surface) and not seeing any vibrations. Watch the standard deviation columns labeled "σ" in the Sensors tab of the EvalTool. This shows the noise level over the past 5 seconds, which means the device needs to be completely stable for 5 seconds to be accurate. Compare this figure between the integrated sensor module and EVB demo unit.
-2. **Evaluate GPS sensitivity** – In clear view of the sky, monitor the satellite signal strength through the `DID_GPS_NAV.cnoMax` and `DID_GPS_NAV.cnoMean` fields in the EvalTool "Data Sets" tab or in the EvalTool "GPS" tab. See that the strongest (largest) CNO values are roughly the same between the integrated sensor module and the EVB demo unit.
+2. **Evaluate GPS sensitivity** – In clear view of the sky, monitor the satellite signal strength through the `DID_GNSS1_POS.cnoMean` field in the EvalTool "Data Sets" tab or in the EvalTool "GPS" tab. See that the CNO values are roughly the same between the integrated sensor module and the EVB demo unit.
 
 ## Interference Mitigation
 

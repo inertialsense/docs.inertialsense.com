@@ -26,7 +26,9 @@ The `is_comm_set_data()` function will encode a message used to set data or conf
 void setInsOutputRotation()
 {
     float rotation[3] = { 90.0f*C_DEG2RAD_F, 0.0f, 0.0f };
-    is_comm_set_data(portWrite, 0, comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
+    uint8_t buf[200];
+    int len = is_comm_set_data_to_buf(buf, sizeof(buf), comm, DID_FLASH_CONFIG, sizeof(float) * 3, offsetof(nvm_flash_cfg_t, insRotation), rotation);
+    if (len > 0) portWrite(0, buf, len);
 }
 ```
 ### Getting Data
@@ -39,7 +41,9 @@ The `is_comm_get_data()` function will encode a PKT_TYPE_GET_DATA message that e
 
 ```c++
 // Ask for INS message w/ update 40ms period (4ms source period x 10).  Set data rate to zero to disable broadcast and pull a single packet.
-is_comm_get_data(portWrite, 0, comm, DID_INS_1, 0, 0, 10);
+uint8_t buf[200];
+int len = is_comm_get_data_to_buf(buf, sizeof(buf), comm, DID_INS_1, 0, 0, 10);
+if (len > 0) portWrite(0, buf, len);
 ```
 
 #### Data Source Update Rates
@@ -49,8 +53,8 @@ is_comm_get_data(portWrite, 0, comm, DID_INS_1, 0, 0, 10);
 | DID_INS_[1-4]                                          | (7ms default) Configured with DID_FLASH_CONFIG.startupNavDtMs |
 | DID_IMU, <br/>DID_PIMU<sup>*</sup>                     | (14ms default) Configured with DID_FLASH_CONFIG.startupImuDtMs |
 | DID_BAROMETER                                          | ~20ms                                                        |
-| DID_MAGNETOMETER_[1-2]                                 | ~20ms                                                        |
-| DID_GPS[1-2]_[X] <br/>(Any DID beginning with DID_GPS) | (200ms default) Configured with DID_FLASH_CONFIG. startupGnssDtMs |
+| DID_MAGNETOMETER                                       | ~20ms                                                        |
+| DID_GNSS[1-2]_[X] <br/>(Any DID beginning with DID_GNSS) | (200ms default) Configured with DID_FLASH_CONFIG. startupGnssDtMs |
 | All other DIDs                                         | 1ms                                                          |
 
 <sup>*DID_PIMU integration period (dt) and output data rate are the same as DID_FLASH_CONFIG.startupNavDtMs and cannot be output at any other rate.  If a different output data rate is desired, DID_IMU which is derived from DID_PIMU can be used instead.</sup>
@@ -62,23 +66,25 @@ The RMC is used to enable message broadcasting and provides updates from onboard
 | RMC Message                                   |
 | --------------------------------------------- |
 | RMC_BITS_INS[1-4]                             |
-| RMC_BITS_DUAL_IMU, RMC_BITS_PIMU |
+| RMC_BITS_IMU, RMC_BITS_PIMU |
 | RMC_BITS_BAROMETER                            |
-| RMC_BITS_MAGNETOMETER[1-2]                    |
-| RMC_BITS_GPS[1-2]_NAV                         |
-| RMC_BITS_GPS_RTK_NAV, RMC_BITS_GPS_RTK_MISC   |
+| RMC_BITS_MAGNETOMETER                         |
+| RMC_BITS_GNSS1_POS, RMC_BITS_GNSS2_POS        |
+| RMC_BITS_GNSS1_RTK_POS, RMC_BITS_GNSS1_RTK_POS_MISC |
 | RMC_BITS_STROBE_IN_TIME                       |
 
 The following is an example of how to use the RMC.  The `rmc.options` field controls whether RMC commands are applied to other serial ports.   `rmc.options = 0` will apply the command to the current serial port.
 
 ```c++
 	rmc_t rmc;
-    // Enable broadcasts of DID_INS_1 and DID_GPS_NAV
-	rmc.bits = RMC_BITS_INS1 | RMC_BITS_GPS1_POS;       
+    // Enable broadcasts of DID_INS_1 and DID_GNSS1_POS
+	rmc.bits = RMC_BITS_INS1 | RMC_BITS_GNSS1_POS;       
     // Remember configuration following reboot for automatic data streaming.
 	rmc.options = RMC_OPTIONS_PERSISTENT;
 
-	is_comm_set_data(portWrite, 0, comm, DID_RMC, 0, 0, &rmc);
+	uint8_t buf[200];
+	int len = is_comm_set_data_to_buf(buf, sizeof(buf), comm, DID_RMC, sizeof(rmc_t), 0, &rmc);
+	if (len > 0) portWrite(0, buf, len);
 ```
 
 The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is required to apply the change).  Independently, the DID_INS_x broadcast period multiple can be used to set the output data rate down to 1ms.
@@ -87,7 +93,7 @@ The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is 
 
 The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot,  eliminating the need to re-enable messages following a reset or power cycle.  
 
-- **To save persistent messages** - (to flash memory), bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field or set DID_CONFIG.system = 0x00000001 and DID_CONFIG.system = 0xFFFFFFFE.   See the [save persistent messages example](../software/SDK/CommunicationsBinary.md#step-7-save-persistent-messages) in the Binary Communications example project.
+- **To save persistent messages** - (to flash memory), bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field or set `DID_SYS_CMD.command = 1` and `DID_SYS_CMD.invCommand = 0xFFFFFFFE`.   See the [save persistent messages example](../software/SDK/CommunicationsBinary.md#step-7-save-persistent-messages) in the Binary Communications example project.
 - **To disable persistent messages** - a [stop all broadcasts packet](../software/SDK/CommunicationsBinary.md#step-4-stop-any-message-broadcasting) followed by a *save persistent messages* command.   
 
 [NMEA persistent messages](nmea.md#persistent-messages) are also available. 
@@ -270,7 +276,9 @@ Two *stop all broadcasts* packets are special packet types that will disable all
 ### All Ports
 
 ```c++
-is_comm_stop_broadcasts_all_ports(portWrite, 0, &comm);
+uint8_t buf[200];
+int len = is_comm_write_to_buf(buf, sizeof(buf), comm, PKT_TYPE_STOP_BROADCASTS_ALL_PORTS, 0, 0, 0, NULL);
+if (len > 0) portWrite(0, buf, len);
 ```
 The hexadecimal string to stop all broadcasts on all ports is: 
 
@@ -281,7 +289,9 @@ The hexadecimal string to stop all broadcasts on all ports is:
 ### Current Port Only
 
 ```c++
-is_comm_stop_broadcasts_current_port(portWrite, 0, &comm);
+uint8_t buf[200];
+int len = is_comm_write_to_buf(buf, sizeof(buf), comm, PKT_TYPE_STOP_BROADCASTS_CURRENT_PORT, 0, 0, 0, NULL);
+if (len > 0) portWrite(0, buf, len);
 ```
 
 The hexadecimal string to stop all broadcasts on the current port is:  

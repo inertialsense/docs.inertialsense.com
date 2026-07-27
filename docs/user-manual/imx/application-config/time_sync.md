@@ -71,7 +71,7 @@ To use a pin as a Strobe Input pin, the I/O must be configured as a strobe input
 
 | Bit Name                             | Bit Value  | Description                    |
 | ------------------------------------ | ---------- | ------------------------------ |
-| IO_CONFIG_STROBE_TRIGGER_LOW         | 0x00000000 | Trigger strobe on falling edge |
+| *(IO_CONFIG_STROBE_TRIGGER_HIGH unset)* | 0x00000000 | Trigger strobe on falling edge |
 | IO_CONFIG_STROBE_TRIGGER_HIGH        | 0x00000001 | Trigger strobe on rising edge  |
 
 Pushbutton “B” on the EVB asserts a logic low to G9 (pin 10) of the IMX and can be used to test the STROBE input functionality.

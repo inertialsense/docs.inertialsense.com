@@ -15,17 +15,17 @@ Magnetometer fusion into the INS and AHRS filter can be disabled by setting bit 
 Occasionally the magnetometer will require a complete recalibration, replacing the old calibration with an entirely new calibration. This is accomplished either through external or automatic initiated recalibration. Use of the different modes is generally governed by the particular use case for the end customer and is intended to allow for the most flexibility in an integrated product design.
 
 ### External Recalibration
-External magnetometer recalibration allows the most flexibility in determining when an end user will need to recalibrate the system. This control over the timing of the recalibration is critical for many use cases and allows product designers to implement their desired workflows for customers. Further there are use cases where automatic recalibration is not possible because the quality of the magnetometer calibration is not observable. Such use cases would include AHRS operation, extended periods without motion or no GNSS fix. External magnetometer recalibration, as the name suggests is triggered by an external command from the application managing the IMX hardware. The IMX provides a set of status messages indicating the quality of the magnetometer calibration and leaves the timing and implementation of a recalibration up to the product designer. Specifically, `INS_STATUS_MAG_INTERFERENCE_OR_BAD_CAL` is an indication of the quality of the magnetometer calibration (see [system status flags](IMX_system_status.md#status-flags) for details).
+External magnetometer recalibration allows the most flexibility in determining when an end user will need to recalibrate the system. This control over the timing of the recalibration is critical for many use cases and allows product designers to implement their desired workflows for customers. Further there are use cases where automatic recalibration is not possible because the quality of the magnetometer calibration is not observable. Such use cases would include AHRS operation, extended periods without motion or no GNSS fix. External magnetometer recalibration, as the name suggests is triggered by an external command from the application managing the IMX hardware. The IMX provides a set of status messages indicating the quality of the magnetometer calibration and leaves the timing and implementation of a recalibration up to the product designer. Specifically, `INS_STATUS_MAG_INTERFERENCE_OR_BAD_CAL_OR_NO_CAL` is an indication of the quality of the magnetometer calibration (see [system status flags](IMX_system_status.md#status-flags) for details).
 
 During the calibration process, the system should be clear of steel, iron, magnets, or other ferrous materials (i.e. steel desks, tables, building structures). The IMX should be attached to the system in which it is operating and rotated together during the calibration process. The following is the
 
 
 **Force magnetometer recalibration procedure:**
 
-1. Set `DID_MAG_CAL.recalCmd` to either:
-	* `MAG_CAL_STATE_MULTI_AXIS` (0) for Multi-Axis which is more accurate and requires 360⁰
+1. Set `DID_MAG_CAL.state` to either:
+	* `MAG_CAL_STATE_MULTI_AXIS` (1) for Multi-Axis which is more accurate and requires 360⁰
 rotation about two different axes.
-	* `MAG_CAL_STATE_SINGLE_AXIS` (1) for Single-Axis which is less accurate and requires 360⁰
+	* `MAG_CAL_STATE_SINGLE_AXIS` (2) for Single-Axis which is less accurate and requires 360⁰
 rotation about one axis.
 2. Rotate the system accordingly.
 
@@ -37,7 +37,7 @@ in standard INS output messages (`DID_INS_1`, `DID_INS_2`, `DID_INS_3`, and `DID
 2. `DID_MAG_CAL.progress` is 100.
 
 Recalibration progress, indicated as a percentage (0-100%), can be observed in the variable
-`DID_MAG_CAL.progress`. The recalibration process can be canceled and the prior calibration restored anytime by setting `DID_MAG_CAL.enMagRecal` = `MAG_RECAL_MODE_ABORT` (101).
+`DID_MAG_CAL.progress`. The recalibration process can be canceled and the prior calibration restored anytime by setting `DID_MAG_CAL.state` = `MAG_CAL_STATE_ABORT` (101).
 
 The “Mag used” indicator in the EvalTool INS tab will be green when magnetometer data is being fused into the solution, black when not being fused into the solution, and red during recalibrating.
 
@@ -45,9 +45,9 @@ Example code:
 
 ```C++
 #include "com_manager.h"
-// Set DID_MAG_CAL.enMagRecal = 0 for multi-axis recalibration
-int32_t value = MAG_RECAL_MODE_MULTI_AXIS;
-sendDataComManager(0, DID_MAG_CAL, &value, 4, offsetof(mag_cal_t, enMagRecal));
+// Set DID_MAG_CAL.state = 1 for multi-axis recalibration
+int32_t value = MAG_CAL_STATE_MULTI_AXIS;
+sendDataComManager(0, DID_MAG_CAL, &value, 4, offsetof(mag_cal_t, state));
 // Enable broadcast of DID_MAG_CAL.progress every 100ms to observe the percent complete
 sendDataComManager(0, DID_MAG_CAL, 0, sizeof(mag_cal_t), 100);
 ```
