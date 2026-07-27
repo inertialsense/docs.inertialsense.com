@@ -4,7 +4,7 @@ See the [Binary Protocol](../../com-protocol/isb.md) page for descriptions of ea
 
 ## Serial Port Baud Rates
 
-UART standard baud rates available on the IMX are: 921600, 460800, 230400, 115200, 57600, 38400, 19200, 9600.  When operating within the standard baud rate range (<= 921600 bps), only these specific baud rates can be used.  Non-standard high speed baud rates (>921600) listed in the following section allow for arbitary custom baud rates.
+UART standard baud rates available on the IMX are: 921600, 460800, 230400, 115200, 57600, 38400, 19200, 9600.  When operating within the standard baud rate range (<= 921600 bps), only these specific baud rates can be used.  Non-standard high speed baud rates (>921600) listed in the following section allow for arbitrary custom baud rates.
 
 ### High Speed Baud Rates
 
