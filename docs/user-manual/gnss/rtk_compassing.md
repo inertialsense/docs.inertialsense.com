@@ -143,8 +143,8 @@ DID_FLASH_CONFIG.RTKCfgBits |= RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING		// |= 0x0
 The RTK compassing fix status can be identified using the valid bit in the INS and GPS status flags.
 
 ```c++
-DID_INS_1.insStatus & INS_STATUS_RTK_COMPASSING_VALID			    // INS status - RTK heading is valid and aiding INS heading.
-DID_GNSS1_POS.status & GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_VALID		// GPS status - RTK heading is valid and available in DID_GNSS2_RTK_CMP_REL.
+DID_INS_1.insStatus & INS_STATUS_RTK_COMPASSING_VALID                   // INS status - RTK heading is valid and aiding INS heading.
+DID_GNSS1_POS.status & GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_VALID        // GPS status - RTK heading is valid and available in DID_GNSS2_RTK_CMP_REL.
 ```
 
 RTK compassing fix is indicated when the RTK-Cmp radio button turns purple in the EvalTool INS tab.
@@ -160,8 +160,8 @@ RTK compassing fix is indicated when the RTK-Cmp radio button turns purple in th
 The ambiguity resolution ratio, `arRatio`, is a metric that indicates progress of the solution that ranges from 0 to 999.  Typically values above 3 indicate RTK fix progress.  The base to rover heading accuracy indicates how much error is in the base to rover heading (RTK compassing heading). 
 
 ```c++
-DID_GNSS2_RTK_CMP_REL.arRatio						// Ambiguity resolution ratio
-DID_GNSS2_RTK_CMP_REL.baseToRoverHeadingAcc			// (rad) RTK compassing accuracy
+DID_GNSS2_RTK_CMP_REL.arRatio                   // Ambiguity resolution ratio
+DID_GNSS2_RTK_CMP_REL.rtkHeadingAcc             // (rad) RTK compassing accuracy
 ```
 
 The DID_GNSS2_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
