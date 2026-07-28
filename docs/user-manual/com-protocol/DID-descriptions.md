@@ -317,8 +317,8 @@ GNSS RTK position data
 | arRatio | float | Ambiguity resolution ratio factor for validation (unitless; higher indicates greater confidence the fixed integer ambiguity is correct) |
 | baseToRoverVector | float[3] | Vector from base to rover {x,y,z} in ECEF, in meters. If compassing is enabled, this is instead the 3-vector from antenna 2 (GNSS2) to antenna 1 (GNSS1) |
 | baseToRoverDistance | float | Distance from base to rover (baseline length), in meters |
-| rtkHeading | float | Angle from north to baseToRoverVector in the local tangent plane, in radians |
-| rtkHeadingAcc | float | Accuracy (standard deviation) of baseToRoverHeading, in radians |
+| baseToRoverHeading | float | Angle from north to baseToRoverVector in the local tangent plane, in radians |
+| baseToRoverHeadingAcc | float | Accuracy (standard deviation) of baseToRoverHeading, in radians |
 | status | uint32_t | GNSS status (see eGnssStatus): [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
 
@@ -440,7 +440,7 @@ Dual GNSS RTK compassing / moving base to rover (GNSS 1 to GNSS 2) relative info
 | baseToRoverVector | float[3] | Vector from base to rover {x,y,z} in ECEF, in meters. If compassing is enabled, this is instead the 3-vector from antenna 2 (GNSS2) to antenna 1 (GNSS1) |
 | baseToRoverDistance | float | Distance from base to rover (baseline length), in meters |
 | rtkHeading | float | Angle from north to baseToRoverVector in the local tangent plane, in radians |
-| rtkHeadingAcc | float | Accuracy (standard deviation) of baseToRoverHeading, in radians |
+| baseToRoverHeadingAcc | float | Accuracy (standard deviation) of baseToRoverHeading, in radians |
 | status | uint32_t | GNSS status (see eGnssStatus): [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
 
 

@@ -161,7 +161,7 @@ The ambiguity resolution ratio, `arRatio`, is a metric that indicates progress o
 
 ```c++
 DID_GNSS2_RTK_CMP_REL.arRatio                   // Ambiguity resolution ratio
-DID_GNSS2_RTK_CMP_REL.rtkHeadingAcc             // (rad) RTK compassing accuracy
+DID_GNSS2_RTK_CMP_REL.baseToRoverHeadingAcc             // (rad) RTK compassing accuracy
 ```
 
 The DID_GNSS2_RTK_CMP_REL status can be monitored in the EvalTool GPS tab.
