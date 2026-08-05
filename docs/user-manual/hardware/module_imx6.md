@@ -42,7 +42,7 @@
 | 22   | VCC                                           | I   | 3.3V supply input                                |
 | 28 | QDEC0.A | I | Ground vehicle wheel sensor 0 quadrature channel A input. Has an internal pull-up/pull-down resistor and can be left floating if not used. |
 | 29 | QDEC0.B | I | Ground vehicle wheel sensor 0 quadrature channel B input. Has an internal pull-up/pull-down resistor and can be left floating if not used. |
-| 30 | VUSB | I | 3.0V to 3.6V required for USB operation.  Can be left floating if USB is not needed. |
+| 30 | VUSB | I | 3.0V to 3.6V required for USB operation.  Can be left floating if USB is not needed. Do not connect to ground. |
 | 31 | QDEC1.A | I | Ground vehicle wheel sensor 1 quadrature channel A input. Has an internal pull-up/pull-down resistor and can be left floating if not used. |
 | 32 | QDEC1.B | I | Ground vehicle wheel sensor 1 quadrature channel B input. Has an internal pull-up/pull-down resistor and can be left floating if not used. |
 
