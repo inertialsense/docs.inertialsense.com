@@ -6,15 +6,13 @@
 
 </center>
 
-The **RUG-4** series adds a rugged aluminum enclosure and RS232, RS485, and CAN bus to the IMX-6. 
+The **RUG-4-G0** series adds a rugged aluminum enclosure and RS232, RS485, and CAN bus to the IMX-6. 
 
-The **RUG-4-RTK** includes a multi-frequency GNSS receiver with RTK precision position enabling INS sensor fusion for roll, pitch, heading, velocity, and position. 
+The **RUG-4-GPX, RUG-4-X20, RUG-4-G5P3, and RUG-4-G5P8** expand on the RUG-4-G0 to include multi-frequency GNSS receiver(s) enabling INS sensor fusion for roll, pitch, heading, velocity, and position. The multi-frequency GNSS receivers are also RTK precision position and dual GNSS heading/compass capable. 
 
-The **RUG-4-Dual** includes two multi-frequency GNSS receivers with RTK precision position and dual GNSS heading/compass. 
-
-- Integrated CAN transceiver, RS232, RS485, TTL serial, USB, and SPI interfaces.
+<!-- - Integrated CAN transceiver, RS232, RS485, TTL serial, USB, and SPI interfaces.
 - Dual onboard multi-band GNSS receiver(s).
-- Dual antenna ports for GPS compassing.
+- Dual antenna ports for GPS compassing. -->
 
 ## Features
 
@@ -33,6 +31,10 @@ The **RUG-4-Dual** includes two multi-frequency GNSS receivers with RTK precisio
 - UART x3, RS232, RS485, CAN, and SPI interfaces
 - Integrated CAN and RS232 / RS485 transceivers
 - Voltage regulation for 3.1V - 23V input
+
+## RUG-4 Comparison Table
+
+[Comparison Table](http://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf)
 
 ## Applications
 
