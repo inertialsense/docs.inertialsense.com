@@ -34,6 +34,8 @@ The **RUG-4-GPX, RUG-4-X20, RUG-4-G5P3, and RUG-4-G5P8** expand on the RUG-4-G0 
 
 ## RUG-4 Comparison Table
 
+Each variant of the GNSS enabled RUG-4 modules has different specifications and capabilities. More information can be found here:
+
 [Comparison Table](http://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf)
 
 ## Applications
