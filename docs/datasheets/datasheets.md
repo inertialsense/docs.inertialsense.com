@@ -8,16 +8,8 @@
     <embed src="https://docs.inertialsense.com/datasheets/IMX-6_IMU_AHRS_GNSS-INS_Datasheet.pdf" type="application/pdf" />
 </object>
 
-## RUG-4 GNSS Variant Comparison
 
-[Download Comparison Table](http://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf)
-
-<object data="http://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf" type="application/pdf" width="700px" height="905px" >
-    <embed src="http://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf" type="application/pdf" />
-</object>
-
-
-## IMX-5 (IMU, AHRS, GNSS-INS) - Legacy Product
+## IMX-5 (IMU, AHRS, GNSS-INS) - Pending End of Life
 
 [End of Life Notification](http://docs.inertialsense.com/datasheets/IMX-5_EOL_Notice_v3_1.pdf)
 
