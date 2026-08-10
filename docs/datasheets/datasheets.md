@@ -2,7 +2,7 @@
 
 ## IMX-6 (IMU, AHRS, GNSS-INS)
 
-[Download Datasheet](http://docs.inertialsense.com/datasheets/IMX-6_IMU_AHRS_GNSS-INS_Datasheet.pdf)
+[Download Datasheet](https://docs.inertialsense.com/datasheets/IMX-6_IMU_AHRS_GNSS-INS_Datasheet.pdf)
 
 <object data="https://docs.inertialsense.com/datasheets/IMX-6_IMU_AHRS_GNSS-INS_Datasheet.pdf" type="application/pdf" width="700px" height="905px" >
     <embed src="https://docs.inertialsense.com/datasheets/IMX-6_IMU_AHRS_GNSS-INS_Datasheet.pdf" type="application/pdf" />
@@ -10,12 +10,11 @@
 
 ## RUG-4 GNSS Variant Comparison
 
-[Download Comparison Table](http://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf)
+[Download Comparison Table](https://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf)
 
-<object data="http://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf" type="application/pdf" width="700px" height="905px" >
-    <embed src="http://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf" type="application/pdf" />
+<object data="https://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf" type="application/pdf" width="700px" height="905px" >
+    <embed src="https://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf" type="application/pdf" />
 </object>
-
 
 ## IMX-5 (IMU, AHRS, GNSS-INS) - Legacy Product
 
@@ -26,7 +25,6 @@
 <object data="https://docs.inertialsense.com/datasheets/IMX-5_IMU_AHRS_GNSS-INS_Datasheet.pdf" type="application/pdf" width="700px" height="905px" >
     <embed src="https://docs.inertialsense.com/datasheets/IMX-5_IMU_AHRS_GNSS-INS_Datasheet.pdf" type="application/pdf" />
 </object>
-
 
 ## GPX-1 (Multi-Band L1/L5 Dual GNSS Receiver)
 
