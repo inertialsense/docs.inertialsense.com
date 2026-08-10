@@ -1,0 +1,16 @@
+{signal: [
+  {name: 'SCK', wave: '1..lhlhlhlhlhlhlhlh.', period: 0.5 },
+  {name: 'MOSI', wave: '222222222.', data: " MSB 6 5 4 3 2 1 LSB"},
+  {name: 'MISO', wave: '22..2.2.2.2.2.2.2...', data: " MSB 6 5 4 3 2 1 LSB", period: 0.5},
+  {name: 'CS', wave: 'h0.................1', period: 0.5},
+  {name: 'DR', wave: 'lh..........................l...........', period: 0.25}
+],
+ config: {hscale: 2},
+head:{
+   text:'SPI Transfer Format',
+   tick:0,
+ },
+ foot:{
+   text:'Figure 100'
+ },
+}
