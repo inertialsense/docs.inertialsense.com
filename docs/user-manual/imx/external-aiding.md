@@ -39,7 +39,7 @@ enum eExtAidingFrame
 typedef struct PACKED
 {
     uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
-    uint32_t   status;       // Frame of measurement, 1=ECEF, 2=NED, 3=Body (see eExtAidingFrame)
+    uint32_t   status;       // Status bitfield; set (status & EXT_AIDING_FRAME_MASK) to frame: 1=ECEF, 2=NED, 3=Body (see eExtAidingFrame)
     double     pos[3];       // position {x,y,z} (m)
     float      offset[3];    // point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m)
     float      var[3];       // observation variance, per axis, in NED (m^2). Must be non-zero or the observation is discarded.
@@ -50,7 +50,7 @@ typedef struct PACKED
 typedef struct PACKED
 {
     uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
-    uint32_t   status;       // Frame of measurement, 1=ECEF, 2=NED, 3=Body (see eExtAidingFrame)
+    uint32_t   status;       // Status bitfield; set (status & EXT_AIDING_FRAME_MASK) to frame: 1=ECEF, 2=NED, 3=Body (see eExtAidingFrame)
     float      vel[3];       // velocity {vx,vy,vz} (m/s)
     float      offset[3];    // point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m)
     float      var[3];       // observation variance, per axis, in NED (m^2/s^2). Must be non-zero or the observation is discarded.
@@ -58,7 +58,7 @@ typedef struct PACKED
 ```
 
 - **`timeOfWeekMs`** — GPS time of week the observation was taken. Used by the EKF to align the observation against its own delayed-state history. If the observation is more than 200 ms old relative to the IMX's current IMU time, its timestamp is clamped and the fix loses some of its benefit — keep aiding latency well under this.
-- **`status`** — the coordinate frame the measurement was taken in (see `eExtAidingFrame`). `pos`/`vel` are expected in ECEF and `var` is always expressed in NED regardless of `status`.
+- **`status`** — the coordinate frame the measurement was taken in (see `eExtAidingFrame`). Only `vel` honors this: `EXT_AIDING_FRAME_NED` is used as-is, any other value is treated as ECEF and rotated into NED. `pos` is always treated as ECEF regardless of `status`. `var` is always expressed in NED regardless of `status`. `EXT_AIDING_FRAME_BODY` is not currently implemented for either message.
 - **`offset`** — the lever arm from the IMU origin to the point of measurement (e.g. the antenna phase center of an external GNSS receiver), expressed in the IMU/body frame. Set to `[0,0,0]` if the source measures at the IMU origin.
 - **`var`** — per-axis observation variance in NED; report your source's actual uncertainty, since this is what the EKF weights the observation by and what its outlier (NIS) gate checks the innovation against. In dynamic environments, inflate it to also cover the error that `timeOfWeekMs` timestamp uncertainty induces from vehicle motion — for a position observation this is timestamp uncertainty × speed, and for a velocity observation it's timestamp uncertainty × acceleration — not just the sensor's own noise.
 
