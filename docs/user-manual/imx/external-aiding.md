@@ -80,7 +80,7 @@ typedef struct PACKED
     uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
     uint32_t   status;       // Speed type, 1=3D magnitude, 2=horizontal magnitude (see eExtAidingSpeedType)
     float      speed;        // speed (m/s)
-    float      var;          // observation variance (m^2/s^2). Must be non-zero or the observation is discarded.
+    float      var;          // observation variance (m^2/s^2). Must be positive or the observation is discarded.
     float      offset[3];    // point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m)
 } ext_aiding_speed_t;
 ```
