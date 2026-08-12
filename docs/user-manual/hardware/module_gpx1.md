@@ -36,6 +36,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VAUX is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-14V TVS diode for ESD and surge projection (e.g. Littlefuse PESD0402-140). |
 | 14 | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
 | 16 | VCC_RF | O | Supply output for GNSS active antenna.  Connect VCC_RF through 33-120nH inductor (e.g. Murata LQW15ANR12J00D, 110mA max) to GNSS1_RF and GNSS2_RF to inject DC supply for active antenna(s).  VCC_RF is supplied from VAUX through an onboard 1A load switch and 10 ohm resistor.  Disable by setting  `GPX_SYS_CFG_BITS_DISABLE_VCC_RF` (0x00000001) in `DID_GPX_FLASH_CFG.sysCfgBits`. |
+| 17-19 | Not Connected | - | Not connected internally.  Connect to ground (GND). |
 | 20 | G20/LNA-EN | I/O | GPIO20 |
 | 21 | GNSS2_PPS | O | GNSS2 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 22   | nRESET                                        | I    | System reset on logic low. May be left unconnected if not used. |
@@ -50,7 +51,7 @@ The GPX-1 module footprint and pinout similar that of the IMX-5 such that the co
 | 32   | VCC                                           | Power | 1.8V to 3.3V supply input.                                       |
 | 38 | G16/QDEC0.A | I/O | GPIO16 |
 | 39 | G17/QDEC0.B | I/O | GPIO17 |
-| 40 | VAUX | Power | Input supplies for the USB and VCC_RF (GNSS antenna supply).  Connect to +3.3V (3.0V to 3.6V) to supply USB and VCC_RF.  Can be left floating if USB or VCC_RF are not needed.  |
+| 40 | VAUX | Power | Input supplies for the USB and VCC_RF (GNSS antenna supply).  Connect to +3.3V (3.0V to 3.6V) to supply USB and VCC_RF.  Can be left floating if USB or VCC_RF are not needed and must not be connected to ground.  |
 | 41 | G18/QDEC1.A | I/O | GPIO18 |
 | 42 | G19/QDEC1.B | I/O | GPIO19 |
 

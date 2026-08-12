@@ -52,7 +52,7 @@ The IK-1 module pinout is as follows
 | 22 | 17 | 27   | G10/BOOT                                 | I/O  | Leave unconnected. BOOT mode used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
 | 23 | 18 | 28   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 24 | 19 | 29   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
-| 25 | 20 | 30   | PPS1                                | O (IMX)<br />I (GPX) | GNSS1 PPS time synchronization pulse (1Hz, 10% duty cycle) |
+| 25 | 20 | 30   | PPS1                                | O (GPX)<br />I (IMX) | GNSS1 PPS time synchronization pulse (1Hz, 10% duty cycle) |
 | 27 | 22 | 32   | VCC                                           | Power | 1.8V to 3.3V supply input.                                       |
 | 28 | - | 38 | G16/QDEC0.A | I/O | GPIO16 |
 | 29 | - | 39 | G17/QDEC0.B | I/O | GPIO17 |
