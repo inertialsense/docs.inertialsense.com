@@ -55,7 +55,7 @@ typedef struct PACKED
 - **`timeOfWeekMs`** — GPS time of week the observation was taken. Used by the EKF to align the observation against its own delayed-state history. If the observation is more than 200 ms old relative to the IMX's current IMU time, its timestamp is clamped and the fix loses some of its benefit — keep aiding latency well under this.
 - **`status`** — the coordinate frame the measurement was taken in (see `eExtAidingFrame`). `pos`/`vel` are expected in ECEF and `var` is always expressed in NED regardless of `status`.
 - **`offset`** — the lever arm from the IMU origin to the point of measurement (e.g. the antenna phase center of an external GNSS receiver), expressed in the IMU/body frame. Set to `[0,0,0]` if the source measures at the IMU origin.
-- **`var`** — per-axis observation variance in NED. This is what the EKF weights the observation by, and what its outlier (NIS) gate checks the innovation against — report your source's actual uncertainty rather than an optimistic value.
+- **`var`** — per-axis observation variance in NED; report your source's actual uncertainty, since this is what the EKF weights the observation by and what its outlier (NIS) gate checks the innovation against. In dynamic environments, inflate it to also cover the error that `timeOfWeekMs` timestamp uncertainty induces from vehicle motion — for a position observation this is timestamp uncertainty × speed, and for a velocity observation it's timestamp uncertainty × acceleration — not just the sensor's own noise.
 
 ## Sending Data to the IMX
 
