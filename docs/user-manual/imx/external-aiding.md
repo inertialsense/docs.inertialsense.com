@@ -14,7 +14,7 @@ Seven data sets are available:
 | `DID_EXT_AIDING_DIR_SPEED`    | `ext_aiding_dir_speed_t`   | Directional speed (e.g. airspeed)     | Yes |
 | `DID_EXT_AIDING_HEADING`      | `ext_aiding_heading_t`     | Heading (true, magnetic, or course)   | Yes |
 | `DID_EXT_AIDING_ATTITUDE`     | `ext_aiding_attitude_t`    | Full attitude (euler or quaternion)   | Yes |
-| `DID_EXT_AIDING_IMU`          | `ext_aiding_imu_t`         | Gyro/accel                            | No — see [below](#did_ext_aiding_imu) |
+| `DID_EXT_IMU`                 | `imu_t`                    | Gyro/accel                            | No — see [below](#did_ext_imu) |
 
 All seven are independent — supply whichever ones match the sensors you have. Each carries its own GPS time of week and a discard-on-invalid observation variance (or, for attitude, a full covariance matrix).
 
@@ -154,25 +154,32 @@ typedef struct PACKED
 } ext_aiding_attitude_t;
 ```
 
-## DID_EXT_AIDING_IMU
+## DID_EXT_IMU
 
-`DID_EXT_AIDING_IMU` carries a raw gyro/accel sample from an external IMU. Unlike the other six types, **it is not currently fused by the EKF** — the DID exists so an external IMU can be streamed to and logged by the IMX (e.g. for offline analysis or a future consistency-check/blended time-update path), but it has no effect on the navigation solution today.
+`DID_EXT_IMU` carries a raw gyro/accel sample from an external IMU. It reuses the SDK's existing `imu_t` — the same struct as `DID_IMU`/`DID_IMU_RAW`/`DID_REFERENCE_IMU` — rather than a bespoke type. Unlike the other six types, **it is not currently fused by the EKF** — the DID exists so an external IMU can be streamed to and logged by the IMX (e.g. for offline analysis or a future consistency-check/blended time-update path), but it has no effect on the navigation solution today.
 
 ```c
-/** (DID_EXT_AIDING_IMU) External IMU (gyro/accel) input. Not currently fused by the INS/EKF. */
+/** (DID_IMU, DID_IMU_RAW, DID_REFERENCE_IMU, DID_EXT_IMU) Single combined Inertial Measurement
+ *  Unit (IMU) sample, in body/sensor frame. */
 typedef struct PACKED
 {
-    uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
-    uint32_t   status;       // reserved, set to 0
-    float      pqr[3];       // angular rate, IMU/body frame {p,q,r} (rad/s)
-    float      acc[3];       // linear acceleration, IMU/body frame {x,y,z} (m/s^2)
-    float      pqrVar[3];    // gyro noise variance, per axis ((rad/s)^2)
-    float      accVar[3];    // accelerometer noise variance, per axis ((m/s^2)^2)
-} ext_aiding_imu_t;
+    double      time;    // Time since boot up in seconds. Convert to GPS time of week by adding gps.towOffset
+    uint32_t    status;  // IMU status flags (eImuStatus)
+    imui_t      I;       // Combined IMU sample: angular rate and acceleration
+} imu_t;
+
+/** Single IMU sample: angular rate and acceleration, in the sensor/body frame. */
+typedef struct PACKED
+{
+    float       pqr[3];  // Gyroscope P, Q, R (angular rate about body X, Y, Z) in radians/second
+    float       acc[3];  // Acceleration X, Y, Z in meters/second^2, in body frame
+} imui_t;
 ```
 
+Because `DID_EXT_IMU` reuses `imu_t` as-is, its `time` field is seconds since boot (matching `DID_IMU`'s convention), not the GPS time-of-week-in-milliseconds convention the other six external aiding types use — convert using the same `gps.towOffset` relationship other IMU DIDs use if you need GPS time.
+
 !!! note
-    `DID_EXT_AIDING_IMU` also has no relay/logging RMC bit (unlike the six fused types below), so it can't be relayed to another port for logging the way the others can — poll or stream it directly from the port it's written to.
+    `DID_EXT_IMU` also has no relay/logging RMC bit (unlike the six fused types below), so it can't be relayed to another port for logging the way the others can — poll or stream it directly from the port it's written to.
 
 ## Sending Data to the IMX
 
@@ -207,10 +214,10 @@ Whatever external aiding observations the IMX receives — from a host or from a
 | `RMC_BITS_EXT_AIDING_HEADING`    | `DID_EXT_AIDING_HEADING` |
 | `RMC_BITS_EXT_AIDING_ATTITUDE`   | `DID_EXT_AIDING_ATTITUDE` |
 
-`DID_EXT_AIDING_IMU` has no RMC bit and is not relayed (see [above](#did_ext_aiding_imu)). All six bits above are included in the IMX PPD presets by default. All seven DIDs appear in the EvalTool's **Data Sets** and **Logger** tabs.
+`DID_EXT_IMU` has no RMC bit and is not relayed (see [above](#did_ext_imu)). All six bits above are included in the IMX PPD presets by default. All seven DIDs appear in the EvalTool's **Data Sets** and **Logger** tabs.
 
 !!! note
-    Enabling these bits on the IMX only controls whether received observations are relayed back out for logging — it has no effect on whether the EKF consumes them. The EKF always fuses whatever valid external aiding data it receives on any port (except `DID_EXT_AIDING_IMU`, which it doesn't consume at all today).
+    Enabling these bits on the IMX only controls whether received observations are relayed back out for logging — it has no effect on whether the EKF consumes them. The EKF always fuses whatever valid external aiding data it receives on any port (except `DID_EXT_IMU`, which it doesn't consume at all today).
 
 ## Using a GPX-1 as an External Aiding Source
 
@@ -238,7 +245,7 @@ Behavior:
 - (IMX/SDK) SN-8317, SN-8318 — `DID_EXT_AIDING_POS`/`DID_EXT_AIDING_VEL` added.
 - (GPX-1) SN-8472 — GPX-1 restates its GNSS1 solution as external aiding observations.
 - (IMX/EvalTool) SN-8317 — external aiding relay/logging support.
-- (IMX/SDK) SN-8318 — `DID_EXT_AIDING_SPEED`/`DID_EXT_AIDING_DIR_SPEED`/`DID_EXT_AIDING_HEADING`/`DID_EXT_AIDING_ATTITUDE`/`DID_EXT_AIDING_IMU` added.
+- (IMX/SDK) SN-8318 — `DID_EXT_AIDING_SPEED`/`DID_EXT_AIDING_DIR_SPEED`/`DID_EXT_AIDING_HEADING`/`DID_EXT_AIDING_ATTITUDE`/`DID_EXT_IMU` added.
 
 <a href="https://inertialsense.com/"><center>
 
