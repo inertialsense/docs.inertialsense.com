@@ -194,7 +194,7 @@ cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_VEL: {status: 1, timeOfWeekMs: <tow
 
 cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_SPEED: {status: 1, timeOfWeekMs: <tow>, speed: <s>, offset: [0,0,0], var: 0.25}}"
 
-cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_DIR_SPEED: {timeOfWeekMs: <tow>, speed: <s>, offset: [0,0,0], direction: [1,0,0], var: 0.25}}"
+cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_DIR_SPEED: {status: 0, timeOfWeekMs: <tow>, speed: <s>, offset: [0,0,0], direction: [1,0,0], var: 0.25}}"
 
 cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_HEADING: {status: 1, timeOfWeekMs: <tow>, heading: <rad>, var: 0.01}}"
 
