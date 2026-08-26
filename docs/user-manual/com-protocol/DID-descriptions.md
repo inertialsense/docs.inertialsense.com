@@ -1015,7 +1015,7 @@ EVB configuration.
 | command | uint8_t | BIT input command (see eBitCommand).  Ignored when zero. |
 | lastCommand | uint8_t | BIT last input command (see eBitCommand) |
 | state | uint8_t | BIT current state (see eBitState) |
-| reserved | uint8_t | Unused |
+| reserved | uint8_t | Bi-directional scratch variable used by the IMU fault-rejection self-test (BIT_TEST_MODE_IMU_FAULT_REJECTION); not otherwise reserved |
 | hdwBitStatus | uint32_t | Hardware BIT status (see eHdwBitStatusFlags) |
 | calBitStatus | uint32_t | Calibration BIT status (see eCalBitStatusFlags) |
 | tcPqrBias | float | (rad/s) Gyro bias residual from temperature calibration |
@@ -1031,6 +1031,7 @@ EVB configuration.
 | testMode | uint8_t | Self-test/fault-simulation mode (see eBitTestMode) |
 | testVar | uint8_t | Self-test mode bi-directional variable used with testMode |
 | detectedHardwareId | uint16_t | Detected hardware type (see "Product Hardware ID"), used to ensure correct firmware is used |
+| imuFaultMask | uint8_t | Bitmask of IMUs that failed to initialize or are not responding (bit n = IMU index n). See HDW_BIT_FAULT_IMU_NOT_RESPONDING. |
 
 
 #### DID_CANFD_CONFIG
