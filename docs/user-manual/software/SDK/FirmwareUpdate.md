@@ -16,8 +16,8 @@ This [ISBootloaderExample](https://github.com/inertialsense/inertial-sense-sdk/t
 * [ISBootloaderBase.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISBootloaderBase.h)
 * [ISBootloaderThread.cpp](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISBootloaderThread.cpp)
 * [ISBootloaderThread.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISBootloaderThread.h)
-* [ISSerialPort.cpp](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISSerialPort.cpp)
-* [ISSerialPort.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISSerialPort.h)
+* [PortFactory.cpp](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/PortFactory.cpp)
+* [PortFactory.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/PortFactory.h)
 * [ISComm.c](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.c)
 * [ISComm.h](https://github.com/inertialsense/inertial-sense-sdk/blob/main/src/ISComm.h)
 
@@ -32,7 +32,7 @@ This [ISBootloaderExample](https://github.com/inertialsense/inertial-sense-sdk/t
 #include "../../src/serialPortPlatform.h"
 #include "../../src/ISBootloaderThread.h"
 #include "../../src/ISBootloaderBase.h"
-#include "../../src/ISSerialPort.h"
+#include "../../src/PortFactory.h"
 
 using namespace ISBootloader;
 ```
@@ -74,7 +74,7 @@ Rather than targeting one specific port directly, the example enumerates every c
 ```C++
 	// Enumerate all connected serial ports
 	std::vector<std::string> portStrings;
-	cISSerialPort::GetComPorts(portStrings);
+	SerialPortFactory::getComPorts(portStrings);
 
 	// Assign the same file to every device-type slot; the bootloader identifies
 	// the connected device and only applies the file to the matching slot(s).
@@ -107,7 +107,7 @@ Rather than targeting one specific port directly, the example enumerates every c
 
 ```C++
 	std::vector<std::string> all_ports;
-	cISSerialPort::GetComPorts(all_ports);
+	SerialPortFactory::getComPorts(all_ports);
 
 	cISBootloaderThread::update(
 		all_ports,
