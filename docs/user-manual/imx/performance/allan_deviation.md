@@ -15,10 +15,10 @@ The Allan Deviation plots below were generated from static IMU data collected un
 
 | Parameter                                |             Value |
 | ---------------------------------------- | ----------------: |
-| Gyro Bias Instability                    |      **1.5 °/hr** |
+| Gyro Bias Instability                    |     **0.95 °/hr** |
 | Gyro Angle Random Walk (ARW)             |    **0.10 °/√hr** |
-| Accelerometer Bias Instability           |        **2.8 µg** |
-| Accelerometer Velocity Random Walk (VRW) | **0.013 m/s/√hr** |
+| Accelerometer Bias Instability           |        **4.0 µg** |
+| Accelerometer Velocity Random Walk (VRW) | **0.011 m/s/√hr** |
 
 Bias Instability values are reported using the IEEE Std 952-1997 convention and are computed as the minimum Allan Deviation divided by **0.664**, yielding the bias instability coefficient attributable to flicker (1/f) noise. This value is sometimes loosely referred to as the 1σ bias instability, though strictly speaking it is a power-spectral-density-derived coefficient rather than a standard deviation of a Gaussian process.
 
@@ -43,7 +43,7 @@ The gyroscope Allan Deviation plot is used to characterize both short-term angul
 * **Bias Instability** represents the minimum achievable bias uncertainty resulting primarily from flicker (1/f) noise.
 * Positive-slope regions identify lower-frequency stochastic processes such as rate random walk and rate ramp.
 
-The IMX-6 gyroscope exhibits an Angle Random Walk of **0.10 °/√hr** and a Bias Instability of **1.5 °/hr**, providing excellent short-term stability while maintaining exceptionally low long-term drift.
+The IMX-6 gyroscope exhibits an Angle Random Walk of **0.10 °/√hr** and a Bias Instability of **0.95 °/hr**, providing excellent short-term stability while maintaining exceptionally low long-term drift.
 
 ![IMX-6 Gyroscope Allan Deviation](images/imx6_gyro_adev.png)
 
@@ -55,6 +55,6 @@ The accelerometer Allan Deviation plot characterizes both short-term acceleratio
 * **Bias Instability** represents the minimum achievable accelerometer bias uncertainty.
 * Positive-slope regions indicate long-term stochastic drift mechanisms that become significant over extended averaging periods.
 
-The IMX-6 accelerometer exhibits a Velocity Random Walk of **0.013 m/s/√hr** and a Bias Instability of **2.8 µg**, providing excellent performance for precision inertial navigation and long-duration dead reckoning.
+The IMX-6 accelerometer exhibits a Velocity Random Walk of **0.011 m/s/√hr** and a Bias Instability of **4.0 µg**, providing excellent performance for precision inertial navigation and long-duration dead reckoning.
 
 ![IMX-6 Accelerometer Allan Deviation](images/imx6_accel_adev.png)

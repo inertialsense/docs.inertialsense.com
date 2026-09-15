@@ -1,4 +1,4 @@
-**Software Release 3.0.1 - 22 June 2026**
+**Software Release 3.1.0 - 16 September 2026**
 <!-- [UPDATE_RELEASE_VERSION_HERE] Update this version info at time of release. -->
 
 *Older (non-current) versions of the User Manual can be found on GitHub under the specific [*release tags*](https://github.com/inertialsense/docs.inertialsense.com/tags).*
@@ -35,10 +35,10 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 
 |                                     | IMX-5         | IMX-6         |
 | ----------------------------------- | --------------| ------------- |
-| Gyro Bias Instability               | 2.0 °/hr      | 1.5 °/hr      |
+| Gyro Bias Instability               | 2.0 °/hr      | 0.95 °/hr     |
 | Gyro ARW                            | 0.23 °/√hr    | 0.10 °/√hr    |
-| Accel Bias Instability              | 27 µg         | 2.8 µg        |
-| Accel VRW                           | 0.020 m/s/√hr | 0.013 m/s/√hr |
+| Accel Bias Instability              | 27 µg         | 4.0 µg        |
+| Accel VRW                           | 0.020 m/s/√hr | 0.011 m/s/√hr |
 | Dynamic Roll/Pitch                  | 0.04°         | 0.03°         |
 | Dynamic Heading                     | 0.13°         | 0.09°         |
 Performance specifications per IEEE-STD-952-1997.
