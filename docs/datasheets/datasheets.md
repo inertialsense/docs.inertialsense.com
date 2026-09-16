@@ -8,6 +8,8 @@
     <embed src="https://docs.inertialsense.com/datasheets/IMX-6_IMU_AHRS_GNSS-INS_Datasheet.pdf" type="application/pdf" />
 </object>
 
+[IMX-6.0 Datasheet](https://docs.inertialsense.com/datasheets/IMX-6.0_IMU_AHRS_GNSS-INS_Datasheet.pdf)
+
 ## RUG-4 GNSS Variant Comparison
 
 [Download Comparison Table](https://docs.inertialsense.com/datasheets/RUG-4_GNSS_Receiver_Comparison.pdf)
