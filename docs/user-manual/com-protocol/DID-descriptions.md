@@ -1241,7 +1241,7 @@ sizes the task[] array and is not itself a task ID.
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | Frame of measurement, 1=ECEF, 2=NED (see eExtAidingFrame) |
+| status | uint32_t | Frame/status of measurement; use 1=ECEF (see eExtAidingFrame). Position is currently processed as ECEF even if another frame is specified. |
 | pos | double[3] | position {x,y,z} (m) |
 | offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
 | var | float[3] | observation variance, per axis, in NED (m^2).  Must be non-zero or the observation is discarded. |
@@ -1939,7 +1939,6 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_ACC_FS_8G | 0x00000002 |
 | SENSOR_CFG_ACC_FS_16G | 0x00000003 |
 | SENSOR_CFG_ACC_FS_32G | 0x00000004 |
-| SENSOR_CFG_ACC_FS_80G | 0x00000005 |
 | SENSOR_CFG_ACC_FS_MAX | 0x00000007 |
 | SENSOR_CFG_ACC_FS_MASK | 0x00000070 |
 | SENSOR_CFG_ACC_FS_OFFSET |  (int)4 |
@@ -1987,7 +1986,6 @@ System status and configuration is made available through various enumeration an
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_90 |  (int)21 |
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_180 |  (int)22 |
 | SENSOR_CFG_SENSOR_ROTATION_0_N90_N90 |  (int)23 |
-| SENSOR_CFG_MAG_ODR_100_HZ | 0x00200000 |
 | SENSOR_CFG_DISABLE_MAGNETOMETER | 0x00400000 |
 | SENSOR_CFG_DISABLE_BAROMETER | 0x00800000 |
 | SENSOR_CFG_IMU_FAULT_DETECT_MASK | 0xFF000000 |
@@ -2152,7 +2150,6 @@ System status and configuration is made available through various enumeration an
 | GPX_STATUS_COM2_RX_TRAFFIC_DETECTED | 0x00000040 |
 | GPX_STATUS_USB_RX_TRAFFIC_DETECTED | 0x00000080 |
 | GPX_STATUS_UPDATE_CONFIRMED | 0x00000100 |
-| GPX_STATUS_GENERAL_FAULT_MASK | 0xFFFF0000 |
 | GPX_STATUS_GENERAL_FAULT_MASK | 0xFFDF0000 |
 | GPX_STATUS_FAULT_RTK_QUEUE_LIMITED | 0x00010000 |
 | GPX_STATUS_FAULT_GNSS_RCVR_TIME | 0x00100000 |
@@ -2423,9 +2420,6 @@ System status and configuration is made available through various enumeration an
 | IMU_STATUS_SHOCK_PRESENT | 0x00000040 |
 | IMU_STATUS_MAG_UPDATE | 0x00000100 |
 | IMU_STATUS_REFERENCE_IMU_PRESENT | 0x00000200 |
-| IMU_STATUS_RESERVED2 | 0x00000400 |
-| IMU_STATUS_SATURATION_HISTORY | 0x00000100 |
-| IMU_STATUS_SAMPLE_RATE_FAULT_HISTORY | 0x00000200 |
 | IMU_STATUS_GYR_FAULT_REJECT | 0x01000000 |
 | IMU_STATUS_ACC_FAULT_REJECT | 0x02000000 |
 | IMU_STATUS_SATURATION_GYR | 0x40000000 |
