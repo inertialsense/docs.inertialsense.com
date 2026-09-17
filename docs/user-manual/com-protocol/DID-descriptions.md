@@ -312,14 +312,15 @@ GNSS RTK position data
 
 | Field | Type | Description |
 |-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning), in milliseconds |
-| differentialAge | float | Age of differential corrections, in seconds |
+| timeOfWeekMs | uint32_t | (ms) GPS time of week (since Sunday morning) |
+| differentialAge | float | (s) Age of differential corrections |
 | arRatio | float | Ambiguity resolution ratio factor for validation (unitless; higher indicates greater confidence the fixed integer ambiguity is correct) |
-| baseToRoverVector | float[3] | Vector from base to rover {x,y,z} in ECEF, in meters. If compassing is enabled, this is instead the 3-vector from antenna 2 (GNSS2) to antenna 1 (GNSS1) |
-| baseToRoverDistance | float | Distance from base to rover (baseline length), in meters |
-| baseToRoverHeading | float | Angle from north to baseToRoverVector in the local tangent plane, in radians |
-| baseToRoverHeadingAcc | float | Accuracy (standard deviation) of baseToRoverHeading, in radians |
+| baseToRoverVector | float[3] | (m) Vector from base to rover GNSS antennas {x,y,z} in ECEF.  DID_GNSS1_RTK_POS_REL: RTK base station (base) to GNSS1 (rover).  DID_GNSS2_RTK_CMP_REL (compassing): GNSS1 (base) to GNSS2 (rover) |
+| baseToRoverDistance | float | (m) Distance from base to rover GNSS antennas (baseline length) |
+| baseToRoverHeading | float | (rad) Heading of baseToRoverVector in the local tangent (NED) plane.  Compassing mode: GNSS1 (base) to GNSS2 (rover) |
+| baseToRoverHeadingAcc | float | (rad) Accuracy (standard deviation) of baseToRoverHeading |
 | status | uint32_t | GNSS status (see eGnssStatus): [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| covEcefPacked | float[6] | RTK solution covariance in ECEF packed as [Pxx, Pyy, Pzz, Pxy, Pyz, Pzx], in meters^2 |
 
 
 #### DID_GNSS1_SAT
@@ -330,7 +331,7 @@ GNSS RTK position data
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSats | uint32_t | Number of satellites in the sky (valid entries in the sat[] list below) |
-| sat | gnss_sat_sv_t[50] | Per-satellite tracking information list |
+| sat | gnss_sat_sv_t[80] | Per-satellite tracking information list |
 
 
 #### DID_GNSS1_VEL
@@ -434,14 +435,15 @@ Dual GNSS RTK compassing / moving base to rover (GNSS 1 to GNSS 2) relative info
 
 | Field | Type | Description |
 |-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning), in milliseconds |
-| differentialAge | float | Age of differential corrections, in seconds |
+| timeOfWeekMs | uint32_t | (ms) GPS time of week (since Sunday morning) |
+| differentialAge | float | (s) Age of differential corrections |
 | arRatio | float | Ambiguity resolution ratio factor for validation (unitless; higher indicates greater confidence the fixed integer ambiguity is correct) |
-| baseToRoverVector | float[3] | Vector from base to rover {x,y,z} in ECEF, in meters. If compassing is enabled, this is instead the 3-vector from antenna 2 (GNSS2) to antenna 1 (GNSS1) |
-| baseToRoverDistance | float | Distance from base to rover (baseline length), in meters |
-| baseToRoverHeading | float | Angle from north to baseToRoverVector in the local tangent plane, in radians |
-| baseToRoverHeadingAcc | float | Accuracy (standard deviation) of baseToRoverHeading, in radians |
+| baseToRoverVector | float[3] | (m) Vector from base to rover GNSS antennas {x,y,z} in ECEF.  DID_GNSS1_RTK_POS_REL: RTK base station (base) to GNSS1 (rover).  DID_GNSS2_RTK_CMP_REL (compassing): GNSS1 (base) to GNSS2 (rover) |
+| baseToRoverDistance | float | (m) Distance from base to rover GNSS antennas (baseline length) |
+| baseToRoverHeading | float | (rad) Heading of baseToRoverVector in the local tangent (NED) plane.  Compassing mode: GNSS1 (base) to GNSS2 (rover) |
+| baseToRoverHeadingAcc | float | (rad) Accuracy (standard deviation) of baseToRoverHeading |
 | status | uint32_t | GNSS status (see eGnssStatus): [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
+| covEcefPacked | float[6] | RTK solution covariance in ECEF packed as [Pxx, Pyy, Pzz, Pxy, Pyz, Pzx], in meters^2 |
 
 
 #### DID_GNSS2_SAT
@@ -454,7 +456,7 @@ GNSS 2 GNSS satellite information: sat identifiers, carrier to noise ratio, elev
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSats | uint32_t | Number of satellites in the sky (valid entries in the sat[] list below) |
-| sat | gnss_sat_sv_t[50] | Per-satellite tracking information list |
+| sat | gnss_sat_sv_t[80] | Per-satellite tracking information list |
 
 
 #### DID_GNSS2_VEL
@@ -562,7 +564,8 @@ GPX device information
 | hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
 | hdwRunState | uint8_t | Device Run State: Bootloader, App, etc (see eHdwRunStates) |
 | serialNumber | uint32_t | Serial number |
-| hardwareVer | uint8_t[4] | Hardware version |
+| hardwareVer | uint8_t[3] | Hardware version: [0]=major, [1]=minor, [2]=pcb/a revision |
+| hardwareVariant | uint8_t | Hardware variant; an arbitrary number independent of version that identifies some variation of the hardware; most commonly, IMU population type on IMX-6 (see eImx6ImuPopulationType) |
 | firmwareVer | uint8_t[4] | Firmware (software) version |
 | buildNumber | uint32_t | Build number |
 | protocolVer | uint8_t[4] | Communications protocol version |
@@ -1072,7 +1075,8 @@ Addresses for CAN messages
 | hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
 | hdwRunState | uint8_t | Device Run State: Bootloader, App, etc (see eHdwRunStates) |
 | serialNumber | uint32_t | Serial number |
-| hardwareVer | uint8_t[4] | Hardware version |
+| hardwareVer | uint8_t[3] | Hardware version: [0]=major, [1]=minor, [2]=pcb/a revision |
+| hardwareVariant | uint8_t | Hardware variant; an arbitrary number independent of version that identifies some variation of the hardware; most commonly, IMU population type on IMX-6 (see eImx6ImuPopulationType) |
 | firmwareVer | uint8_t[4] | Firmware (software) version |
 | buildNumber | uint32_t | Build number |
 | protocolVer | uint8_t[4] | Communications protocol version |
@@ -1128,7 +1132,8 @@ EVB device information
 | hardwareType | uint8_t | Hardware Type: 1=uINS, 2=EVB, 3=IMX, 4=GPX (see eIsHardwareType) |
 | hdwRunState | uint8_t | Device Run State: Bootloader, App, etc (see eHdwRunStates) |
 | serialNumber | uint32_t | Serial number |
-| hardwareVer | uint8_t[4] | Hardware version |
+| hardwareVer | uint8_t[3] | Hardware version: [0]=major, [1]=minor, [2]=pcb/a revision |
+| hardwareVariant | uint8_t | Hardware variant; an arbitrary number independent of version that identifies some variation of the hardware; most commonly, IMU population type on IMX-6 (see eImx6ImuPopulationType) |
 | firmwareVer | uint8_t[4] | Firmware (software) version |
 | buildNumber | uint32_t | Build number |
 | protocolVer | uint8_t[4] | Communications protocol version |
@@ -1191,6 +1196,94 @@ sizes the task[] array and is not itself a task ID.
 | data | uint8_t[1] | Variable-length payload, length bytes; interpretation depends on msgTypeID |
 
 
+#### DID_EXT_AIDING_ATTITUDE
+
+`ext_aiding_attitude_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | Attitude representation, 1=euler, 2=quaternion (see eExtAidingAttitudeType) |
+| att | float[4] | attitude, interpreted per `status`: euler {roll,pitch,yaw,-} or quaternion {w,x,y,z} |
+| var | float[9] | 3x3 row-major attitude-error covariance (rad^2), in the roll/pitch/yaw tangent space. Must have a non-zero diagonal or the observation is discarded. |
+
+
+#### DID_EXT_AIDING_DIR_SPEED
+
+`ext_aiding_dir_speed_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | reserved, set to 0 |
+| speed | float | speed along `direction` (m/s) |
+| var | float | observation variance (m^2/s^2).  Must be non-zero or the observation is discarded. |
+| offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
+| direction | float[3] | unit vector, in IMU/body frame, along which `speed` is measured (e.g. [1,0,0] for forward-pointing airspeed) |
+
+
+#### DID_EXT_AIDING_HEADING
+
+`ext_aiding_heading_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | Heading type, 1=true, 2=magnetic, 3=course over ground (see eExtAidingHeadingType) |
+| heading | float | heading (rad), 0 = north, positive clockwise, range [-pi, pi] |
+| var | float | observation variance (rad^2).  Must be non-zero or the observation is discarded. |
+
+
+#### DID_EXT_AIDING_POS
+
+`ext_aiding_pos_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | Frame of measurement, 1=ECEF, 2=NED (see eExtAidingFrame) |
+| pos | double[3] | position {x,y,z} (m) |
+| offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
+| var | float[3] | observation variance, per axis, in NED (m^2).  Must be non-zero or the observation is discarded. |
+
+
+#### DID_EXT_AIDING_SPEED
+
+`ext_aiding_speed_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | Speed type, 1=3D magnitude, 2=horizontal magnitude (see eExtAidingSpeedType) |
+| speed | float | speed (m/s) |
+| var | float | observation variance (m^2/s^2).  Must be non-zero or the observation is discarded. |
+| offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
+
+
+#### DID_EXT_AIDING_VEL
+
+`ext_aiding_vel_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
+| status | uint32_t | Frame of measurement, 1=ECEF, 2=NED, 3=Body (see eExtAidingFrame) |
+| vel | float[3] | velocity {vx,vy,vz} (m/s) |
+| offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
+| var | float[3] | observation variance, per axis, in NED (m^2/s^2).  Must be non-zero or the observation is discarded. |
+
+
+#### DID_EXT_IMU
+
+`imu_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| time | double | Time since boot up in seconds. Convert to GPS time of week by adding gps.towOffset |
+| status | uint32_t | IMU status flags (eImuStatus) |
+| I | imui_t | Combined Inertial Measurement Unit (IMU) sample: angular rate and acceleration |
+
+
 #### DID_GNSS1_SIG
 
 `gnss_sig_t`
@@ -1199,10 +1292,10 @@ sizes the task[] array and is not itself a task ID.
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSigs | uint32_t | Number of satellite signals in the following satellite signal list (valid entries in sig[] below) |
-| sig | gnss_sig_sv_t[100] | Per-signal tracking information list |
+| sig | gnss_sig_sv_t[160] | Per-signal tracking information list |
 
 
-#### DID_GNSS1_TIMEPULSE
+#### DID_GNSS1_TIMESYNC
 
 GNSS1 PPS time synchronization. 
 
@@ -1233,10 +1326,10 @@ GNSS 2 signal information.
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
 | numSigs | uint32_t | Number of satellite signals in the following satellite signal list (valid entries in sig[] below) |
-| sig | gnss_sig_sv_t[100] | Per-signal tracking information list |
+| sig | gnss_sig_sv_t[160] | Per-signal tracking information list |
 
 
-#### DID_GNSS2_TIMEPULSE
+#### DID_GNSS2_TIMESYNC
 
 GNSS2 PPS time synchronization. 
 
@@ -1764,6 +1857,19 @@ instead encode a single small integer value (1-7) at SYS_FAULT_STATUS_CRITICAL_E
 | upTime | double | System up time, in seconds (double precision) |
 
 
+#### DID_TIME_PULSE
+
+`is_time_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| week | uint32_t | GPS number of weeks since January 6th, 1980 |
+| timeOfWeekMs | uint32_t | (ms) GPS time of week (since Sunday morning) of the timepulse event |
+| status | uint32_t | Timepulse status flags |
+| syncCnt | uint32_t | Count of timepulse sync events since power-on |
+| reserved | uint32_t[4] | Reserved for future use |
+
+
 #### DID_WHEEL_ENCODER
 
 `wheel_encoder_t`
@@ -2024,6 +2130,7 @@ System status and configuration is made available through various enumeration an
 | RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT | 0x01000000 |
 | RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT | 0x02000000 |
 | RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CLEAR_CUR_PORT | 0x04000000 |
+| RTK_CFG_BITS_MULTIPATH_MITIGATION | 0x08000000 |
 | RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT\) |
 | RTK_CFG_BITS_BASE_UBLOX_MASK | (RTK_CFG_BITS_BASE_GNSS1_UBLOX_MASK\|RTK_CFG_BITS_BASE_GNSS2_UBLOX_MASK\) |
 | RTK_CFG_BITS_BASE_RTCM3_MASK | (RTK_CFG_BITS_BASE_GNSS1_RTCM3_MASK\|RTK_CFG_BITS_BASE_GNSS2_RTCM3_MASK\) |
@@ -2040,12 +2147,13 @@ System status and configuration is made available through various enumeration an
 |-------|------|
 | GPX_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x0000000F |
 | GPX_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 0 |
-| GPX_STATUS_COM0_RX_TRAFFIC_NOT_DETECTED | 0x00000010 |
-| GPX_STATUS_COM1_RX_TRAFFIC_NOT_DETECTED | 0x00000020 |
-| GPX_STATUS_COM2_RX_TRAFFIC_NOT_DETECTED | 0x00000040 |
-| GPX_STATUS_USB_RX_TRAFFIC_NOT_DETECTED | 0x00000080 |
+| GPX_STATUS_COM0_RX_TRAFFIC_DETECTED | 0x00000010 |
+| GPX_STATUS_COM1_RX_TRAFFIC_DETECTED | 0x00000020 |
+| GPX_STATUS_COM2_RX_TRAFFIC_DETECTED | 0x00000040 |
+| GPX_STATUS_USB_RX_TRAFFIC_DETECTED | 0x00000080 |
 | GPX_STATUS_UPDATE_CONFIRMED | 0x00000100 |
 | GPX_STATUS_GENERAL_FAULT_MASK | 0xFFFF0000 |
+| GPX_STATUS_GENERAL_FAULT_MASK | 0xFFDF0000 |
 | GPX_STATUS_FAULT_RTK_QUEUE_LIMITED | 0x00010000 |
 | GPX_STATUS_FAULT_GNSS_RCVR_TIME | 0x00100000 |
 | GPX_STATUS_FAULT_RTOS_TASK_PERIOD_OVERRUN | 0x00200000 |
@@ -2117,9 +2225,11 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK | 39 |
 | SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK_TESTMODE | 40 |
 | SYS_CMD_GPX_ENABLE_RTOS_STATS | 41 |
+| SYS_CMD_GPX_SAVE_PERSISTENT_MESSAGES | 42 |
 | SYS_CMD_GNSS_RCVR_QUIET_MODE | 60 |
 | SYS_CMD_GNSS_RCVR_SOFT_RESET | 61 |
 | SYS_CMD_GNSS_RCVR_HARD_RESET | 62 |
+| SYS_CMD_GNSS_RCVR_PWR_CYCLE | 63 |
 | SYS_CMD_RESET_EKF_STATES | 70 |
 | SYS_CMD_CLEAR_ERROR_STATUS | 71 |
 | SYS_CMD_SAVE_FLASH | 97 |
@@ -2232,7 +2342,7 @@ System status and configuration is made available through various enumeration an
 | GNSS_STATUS_FLAGS_GNSS_PPS_TIMESYNC | 0x10000000 |
 | GNSS_STATUS_FLAGS_MASK | 0x1FFFE000 |
 | GNSS_STATUS_FLAGS_BIT_OFFSET |  (int)16 |
-| GNSS_STATUS_FLAGS_UNUSED_2 | 0x20000000 |
+| GNSS_STATUS_FLAGS_RTK_COV_ECEF_PACKED_VALID | 0x20000000 |
 | GNSS_STATUS_FLAGS_UNUSED_3 | 0x40000000 |
 | GNSS_STATUS_FLAGS_UNUSED_4 | 0x80000000 |
 
@@ -2426,6 +2536,7 @@ System status and configuration is made available through various enumeration an
 | RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT | 0x01000000 |
 | RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT | 0x02000000 |
 | RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CLEAR_CUR_PORT | 0x04000000 |
+| RTK_CFG_BITS_MULTIPATH_MITIGATION | 0x08000000 |
 | RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT\) |
 | RTK_CFG_BITS_BASE_UBLOX_MASK | (RTK_CFG_BITS_BASE_GNSS1_UBLOX_MASK\|RTK_CFG_BITS_BASE_GNSS2_UBLOX_MASK\) |
 | RTK_CFG_BITS_BASE_RTCM3_MASK | (RTK_CFG_BITS_BASE_GNSS1_RTCM3_MASK\|RTK_CFG_BITS_BASE_GNSS2_RTCM3_MASK\) |
