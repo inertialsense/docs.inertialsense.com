@@ -1241,7 +1241,7 @@ sizes the task[] array and is not itself a task ID.
 | Field | Type | Description |
 |-------|------|-------------|
 | timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | Frame of measurement, 1=ECEF, 2=NED (see eExtAidingFrame) |
+| status | uint32_t | Frame/status of measurement; use 1=ECEF (see eExtAidingFrame). Position is currently processed as ECEF even if another frame is specified. |
 | pos | double[3] | position {x,y,z} (m) |
 | offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
 | var | float[3] | observation variance, per axis, in NED (m^2).  Must be non-zero or the observation is discarded. |
@@ -1299,7 +1299,7 @@ sizes the task[] array and is not itself a task ID.
 
 GNSS1 PPS time synchronization. 
 
-`gnss_timepulse_t`
+`gnss_timesync_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -1333,7 +1333,7 @@ GNSS 2 signal information.
 
 GNSS2 PPS time synchronization. 
 
-`gnss_timepulse_t`
+`gnss_timesync_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -1857,9 +1857,9 @@ instead encode a single small integer value (1-7) at SYS_FAULT_STATUS_CRITICAL_E
 | upTime | double | System up time, in seconds (double precision) |
 
 
-#### DID_TIME_PULSE
+#### DID_TIMEPULSE
 
-`is_time_t`
+`is_timepulse_t`
 
 | Field | Type | Description |
 |-------|------|-------------|
