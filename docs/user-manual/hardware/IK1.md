@@ -1,6 +1,6 @@
 # Hardware Integration: IK-1 (IMX5 or GPX1)
 
-!!! warning
+!!! notice
     The IMX-5 series of products is approaching its End of Life. [Full Notification](http://docs.inertialsense.com/datasheets/IMX-5_EOL_Notice_v3_1.pdf).
 
 <center>
@@ -31,9 +31,9 @@ The IK-1 module pinout is as follows
 
 | IK1                                     | IMX | GPX | Name                                          | Type | Description                                                  |
 | --------------------------------------------- | ---- | ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------------------------------- |
-| 1-3 | 11,21 | 11,13,15,31 | GND | Power | Supply ground |
+| 1-3,16,26 | 11,21 | 11,13,15,31 | GND | Power | Supply ground |
 | 4 | - | 20 | G20/LNA-EN | I/O | GPIO20, GPX LNA enable |
-| 5 | - | 21 | PPS2 | O | GNSS2 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
+| 5 | - | 21 | GNSS2_PPS | O | GNSS2 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
 | 6 | 1   | 1    | USB_P                                         | I/O  | USB full-speed Positive Line. USB will be supported in future firmware updates.           |
 | 7 | 2   | 2    | USB_N                                         | I/O  | USB full-speed Negative Line. USB will be supported in future firmware updates.           |
 | 8 | 3   | 3    | VBKUP                                       | Power | Backup supply voltage input (1.75V to 3.6V). Future firmware updates will use voltage applied on this pin to backup GNSS ephemeris, almanac, and other operating parameters for a faster startup when VCC is applied again. This pin MUST be connected to a backup battery or VCC. |
@@ -52,13 +52,14 @@ The IK-1 module pinout is as follows
 | 22 | 17 | 27   | G10/BOOT                                 | I/O  | Leave unconnected. BOOT mode used in manufacturing. !!! WARNING !!! Asserting a logic high (+3.3V) will cause the IMX to reboot into ROM bootloader (DFU) mode. |
 | 23 | 18 | 28   | G4/Rx0                                        | I/O  | GPIO4<br /> Serial 0 input (TTL)                                  |
 | 24 | 19 | 29   | G3/Tx0                                        | I/O  | GPIO3<br /> Serial 0 output (TTL)                                 |
-| 25 | 20 | 30   | PPS1                                | O (GPX)<br />I (IMX) | GNSS1 PPS time synchronization pulse (1Hz, 10% duty cycle) |
+| 25 | 20 | 30   | GNSS1_PPS                       | O (GPX)<br />I (IMX) | GNSS1 PPS time synchronization pulse (1Hz, 10% duty cycle) |
 | 27 | 22 | 32   | VCC                                           | Power | 1.8V to 3.3V supply input.                                       |
 | 28 | - | 38 | G16/QDEC0.A | I/O | GPIO16 |
 | 29 | - | 39 | G17/QDEC0.B | I/O | GPIO17 |
 | 30 | - | 40 | VAUX | Power | Input supplies for the USB and VCC_RF (GNSS antenna supply).  Connect to +3.3V (3.0V to 3.6V) to supply USB and VCC_RF.  Can be left floating if USB or VCC_RF are not needed.  |
 | 31 | - | 41 | G18/QDEC1.A | I/O | GPIO18 |
 | 32 | - | 42 | G19/QDEC1.B | I/O | GPIO19 |
+| 33 | - | - | VIN | Power | 4V-20V supply voltage input |
 | U.FL1 | - | 12  | GNSS1_RF                            | I    | GNSS1 antenna RF input. Use an active antenna or LNA with a gain of 15-25dB. Place the LNA as close to the antenna as possible. Filtered 3.3V from VCC is injected onto the pad to power active antennas (power injection can be disabled in software).  Connect to ground with 5V-14V TVS diode for ESD and surge protection (e.g. Littlefuse PESD0402-140). |
 | U.FL2 | - | 14 | GNSS2_RF                           | I    | GNSS2 antenna RF input. Same requirements as GNSS1_RF |
 
