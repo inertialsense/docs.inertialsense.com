@@ -47,7 +47,8 @@ The following NMEA messages can be received by the IMX.
 
 | Message                     | Description                                                       |
 | --------------------------- | ------------------------------------------------------------------|
-| ```$ASCE*14\r\n```          | Query the broadcast rate of NMEA output messages.                 |
+| ```$ASCE*14\r\n```          | Query the broadcast rate of NMEA output messages on this port.    |
+| [ASCE](#asce-query)         | Query the broadcast rate of NMEA output messages on any port.     |
 | [ASCE](#asce)               | Set the broadcast period of selected NMEA output messages.        |
 | ```$INFO*0E\r\n```          | Query device information.                                         |
 | ```$SRST*06\r\n```          | Software reset.                                                   |
@@ -67,9 +68,9 @@ $ASCE,OPTIONS,(ID,PERIOD)*xx\r\n
 
 | Index | Field     | Description                                                  |
 | ----- | --------- | ------------------------------------------------------------ |
-| 1     | `OPTIONS` | Port selection. Combine by adding options together:<br/>0=current, 1=ser0, 2=ser1, 4=ser2, 8=USB, <br/>512=persistent (remember after reset) |
+| 1     | `OPTIONS` | Bitmask combining port selection and flags. Add values together.<br/><br/>**Port selection (bits 0-7)**<br/>0=current port, 1=ser0, 2=ser1, 4=ser2, 8=USB, 255=all ports<br/><br/>**Flags**<br/>256=preserve (merge with the messages already enabled instead of replacing them)<br/>512=persistent (remember after reset)<br/>1024=enable NMEA speed filtering, 2048=disable it. Filtering suppresses the small apparent velocity caused by GNSS noise in `$GxGLL`, `$GxRMC` and `$GxVTG`. |
 |       |           | *Start of repeated group (1...20 times)*                     |
-| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e., PPIMU, PINS1, GNGGA) excluding packet start character `$` or **2.) message ID** (eNmeaAsciiMsgId) of the NMEA message to be streamed. See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
+| 2+n*2 | `ID`      | Either **1.) message identifier string** (i.e., PPIMU, PINS1, GNGGA) excluding packet start character `$` or **2.) message ID** (eNmeaMsgId) of the NMEA message to be streamed. See the message ID in the [NMEA output messages](#nmea-output-messages) table. |
 | 3+n*2 | `PERIOD`  | Broadcast period multiple for specified message. Zero queries one message and disables streaming. |
 |       |           | *End of repeated group (1...20 times)*                       |
 
@@ -92,26 +93,89 @@ $ASCE,0,PINS1,0*0D\r\n
 
 | Message             | Data (Output Rate)** |
 | ------------------- | ------- |
-| $ASCE,0,6,1,7,1,8,1,10,1,14,1*04\r\n | GGA, GLL, GSA, ZDA, GSV (all at 5Hz) |
+| $ASCE,0,7,1,8,1,9,1,11,1,15,1*0B\r\n | GGA, GLL, GSA, ZDA, GSV (all at 5Hz) |
 | $ASCE,0,5,2,2,1,7,1*0A\r\n | PINS2 (35.71Hz), PPIMU (71.43Hz), GGA (5Hz) |
-| $ASCE,0,0,1*09\r\n  | PIMU    |
-| $ASCE,0,1,1*08\r\n  | PPIMU   |
-| $ASCE,0,2,1*0B\r\n  | PRIMU   |
-| $ASCE,0,3,1*0A\r\n  | PINS1   |
-| $ASCE,0,4,1*0D\r\n  | PINS2   |
-| $ASCE,0,5,1*0C\r\n  | PGPSP   |
-| $ASCE,0,6,1*0F\r\n  | GGA     |
-| $ASCE,0,7,1*0E\r\n  | GLL     |
-| $ASCE,0,8,1*01\r\n  | GSA     |
-| $ASCE,0,9,1*00\r\n  | RMC     |
-| $ASCE,0,10,1*38\r\n | ZDA     |
-| $ASCE,0,11,1*39\r\n | PASHR   |
-| $ASCE,0,12,1*3A\r\n | PSTRB   |
-| $ASCE,0,13,1*3B\r\n | INFO    |
-| $ASCE,0,14,1*3C\r\n | GSV     |
-| $ASCE,0,15,1*3D\r\n | VTG     |
+| $ASCE,0,1,1*08\r\n  | PIMU    |
+| $ASCE,0,2,1*0B\r\n  | PPIMU   |
+| $ASCE,0,3,1*0A\r\n  | PRIMU   |
+| $ASCE,0,4,1*0D\r\n  | PINS1   |
+| $ASCE,0,5,1*0C\r\n  | PINS2   |
+| $ASCE,0,6,1*0F\r\n  | PGPSP   |
+| $ASCE,0,7,1*0E\r\n  | GGA     |
+| $ASCE,0,8,1*01\r\n  | GLL     |
+| $ASCE,0,9,1*00\r\n  | GSA     |
+| $ASCE,0,10,1*38\r\n | RMC     |
+| $ASCE,0,11,1*39\r\n | ZDA     |
+| $ASCE,0,12,1*3A\r\n | PASHR   |
+| $ASCE,0,13,1*3B\r\n | PSTRB   |
+| $ASCE,0,14,1*3C\r\n | INFO    |
+| $ASCE,0,15,1*3D\r\n | GSV     |
+| $ASCE,0,16,1*3E\r\n | VTG     |
 
 <sup>**</sup> These rates assume the default settings for [data source rates](isb.md#data-source-update-rates).
+
+### ASCE Query
+
+Send `$ASCE` with an `OPTIONS` field but **no** `(ID,PERIOD)` pairs to ask which NMEA messages are
+enabled, and at what period, **on any port** -- not only the port the request arrives on. The
+device replies with one `$ASCE` sentence per port selected in `OPTIONS`.
+
+```
+$ASCE,OPTIONS*xx\r\n
+```
+
+| Index | Field     | Description                                                     |
+| ----- | --------- | --------------------------------------------------------------- |
+| 1     | `OPTIONS` | Port(s) to report, using the port selection values above. `0` reports the port the request arrived on; `255` reports every port. |
+
+The reply format is described in [ASCE Response](#asce-response) below.
+
+| Message              | Reports                                          |
+| -------------------- | ------------------------------------------------ |
+| `$ASCE*14\r\n`       | This port (short form, no `OPTIONS` field)        |
+| `$ASCE,0*08\r\n`     | This port                                        |
+| `$ASCE,1*09\r\n`     | Serial 0                                         |
+| `$ASCE,2*0A\r\n`     | Serial 1                                         |
+| `$ASCE,4*0C\r\n`     | Serial 2                                         |
+| `$ASCE,8*00\r\n`     | USB                                              |
+| `$ASCE,6*0E\r\n`     | Serial 1 and serial 2 (2+4), one reply each       |
+| `$ASCE,255*0A\r\n`   | Every port, one reply per port                    |
+
+!!! note
+    A query applies no configuration. Flags set in `OPTIONS` are still honoured, however, so
+    `$ASCE,512` both saves persistent messages and returns the current port's configuration.
+    A query that selects ports only (for example `$ASCE,2`) changes nothing.
+
+### ASCE Response
+
+The device answers both query forms with an `$ASCE` sentence listing every enabled message on the
+port being reported, with its broadcast period. A port with nothing enabled returns only the port
+index.
+
+```
+$ASCE,PORT,(ID,PERIOD)*xx\r\n
+```
+
+| Index | Field     | Description                                                     |
+| ----- | --------- | --------------------------------------------------------------- |
+| 1     | `PORT`    | Port this response describes, as a single bit using the **same encoding as the `OPTIONS` port selector**: 1=ser0, 2=ser1, 4=ser2, 8=USB. A query and its response therefore use the same value for a given port -- `$ASCE,2` is answered by `$ASCE,2,...`. |
+|       |           | *Start of repeated group (0...20 times)*                        |
+| 2+n*2 | `ID`      | Message ID of an enabled message (see [NMEA output messages](#nmea-output-messages)) |
+| 3+n*2 | `PERIOD`  | Broadcast period multiple for that message                      |
+|       |           | *End of repeated group*                                         |
+
+Examples, with `GNGGA` (ID 7) enabled at period 1 on serial 1 and nothing enabled on USB:
+
+```
+$ASCE,8*00\r\n         Reporting USB: no messages enabled
+$ASCE,2,7,1*0C\r\n     Reporting serial 1: GNGGA at period 1
+```
+
+!!! note
+    Prior firmware always reported the `PORT` field as `0`, regardless of which port the response
+    described. It now identifies the port, so replies to a multi-port query can be told apart.
+    Because `0` is not a valid port bit, a `PORT` value of `0` indicates firmware that predates
+    this change.
 
 ### PERS
 
@@ -151,11 +215,11 @@ The hexadecimal equivalent is:
 
 ## NMEA Output Messages
 
-The following NMEA messages can be sent by the IMX. The message ID (`eNmeaAsciiMsgId`) is used with the `$ASCE` message to enable message streaming. 
+The following NMEA messages can be sent by the IMX. The message ID (`eNmeaMsgId`) is used with the `$ASCE` message to enable message streaming. 
 
 | Identifier      | ID   | Description                                                  |
 | --------------- | ---- | ------------------------------------------------------------ |
-| [ASCB](#ascb)   |      | Broadcast period of NMEA output messages.                    |
+| [ASCE](#asce-response) | —    | Broadcast configuration of the reported port.                |
 | [PIMU](#pimu)   | 1    | IMU data (3-axis gyros and accelerometers) in the body frame. |
 | [PPIMU](#ppimu) | 2    | Preintegrated IMU: delta theta (rad) and delta velocity (m/s). |
 | [PRIMU](#primu) | 3    | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
@@ -174,10 +238,6 @@ The following NMEA messages can be sent by the IMX. The message ID (`eNmeaAsciiM
 | [VTG](#vtg)     | 16   | Standard NMEA VTG track made good and speed over ground.     |
 
 The field codes used in the message descriptions are: lf = double, f = float, d = int.
-
-### ASCB
-
-The `$ASCB` query reports the current NMEA broadcast configuration. Its payload contains the port options followed by `(ID,PERIOD)` pairs that mirror the `DID_NMEA_BCAST_PERIOD` dataset, letting you confirm which messages are enabled and at what rates.
 
 ### NMEA Output GNSS Source
 
