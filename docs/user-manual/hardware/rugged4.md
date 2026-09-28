@@ -70,10 +70,10 @@ The following table shows the Rugged-4 pinout.  Note that pin function can chang
 | -------------- | ---------------- | :-------------------------------------------------- | ------------- | ------------------------------------------------------------ |
 | 1              |                  | GND                                                 | PWR           | -                                                            |
 | 2              | G9               | nSPI_EN/STRB/DRDY                                   | I/O           | (Includes 3K ohm series resistor)<br />SPI Enable: Hold LOW during boot to enable SPI on G5-G8<br />G9-Strobe time sync input or output. <br />SPI data ready |
-| 3              |                  | VIN                                                 | PWR           | 4V-20V supply voltage input                                  |
-| 4              |                  | USB.D+                                              | I/O           | USB Data Positive Line                                       |
+| 3              | -                | VIN                                                 | PWR           | 3.1V - 23V supply voltage input. Input voltage can be extended up to 42V by loading R1 SMT jumper. |
+| 4              | 1                | USB.D+                                              | I/O           | USB Data Positive Line                                       |
 | 5              |                  | PPS1                                                | O             | GNSS 1 PPS time synchronization output pulse (1Hz, 10% duty cycle) |
-| 6              |                  | USB.D-                                              | I/O           | USB Data Negative Line                                       |
+| 6              | 2                | USB.D-                                              | I/O           | USB Data Negative Line                                       |
 | 7              | G3<br/>G2<br/>G5 | Tx0<br/>485Tx1+<br/>SCLK                            | O<br/>O<br/>I | Serial 0 output (TTL or RS232)<br/>Serial 1 output+ (RS485/RS422)<br/>SPI clock |
 | 8              | G2<br/>G2<br/>G7 | Tx2<br/>485Tx1-<br/>Tx1, MISO                       | O<br/>O<br/>O | Serial 2 output (TTL)<br/>Serial 1 output- (RS485/RS422)<br/>Serial 1 output (TTL or RS232), SPI MISO |
 | 9              | G4<br/>G1<br/>G8 | Rx0<br/>485Rx1-<br/>CS, G8_STROBE                   | I<br/>I<br/>I | Serial 0 input (TTL or RS232)<br/>Serial 1 input- (RS485/RS422)<br/>SPI chip select, G8-Strobe time sync input |
