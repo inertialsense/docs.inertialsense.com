@@ -17,7 +17,7 @@ The **RUG-4-GPX, RUG-4-X20, RUG-4-G5P3, and RUG-4-G5P8** expand on the RUG-4-G0 
 ## Features
 
 - **Tactical Grade IMU**
-  - **Gyro: 0.95 °/hr Bias Instability, 0.10 °/√hr ARW**
+  - **Gyro: 0.9 °/hr Bias Instability, 0.10 °/√hr ARW**
   - **Accel: 4.0 µg Bias Instability, 0.011 m/s/√hr VRW**
 * **INS, AHRS**
   - **Dynamic: 0.03° Roll/Pitch, 0.09° Heading**
