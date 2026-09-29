@@ -142,15 +142,13 @@ The reply format is described in [ASCE Response](#asce-response) below.
 | `$ASCE,255*0A\r\n`   | Every port, one reply per port                    |
 
 !!! note
-    A query applies no configuration. Flags set in `OPTIONS` are still honoured, however, so
-    `$ASCE,512` both saves persistent messages and returns the current port's configuration.
-
-!!! note
-    Only queries produce a response. An `$ASCE` sentence carrying `(ID,PERIOD)` pairs is a *set*
-    and is **not** acknowledged, though it does take effect. To confirm a set, follow it with a
-    query — which, with the cross-port form above, works for any port and not only the one the
-    set was sent on.
-    A query that selects ports only (for example `$ASCE,2`) changes nothing.
+    - Only a query produces a response. An `$ASCE` sentence carrying `(ID,PERIOD)` pairs is a
+      *set*, and is not acknowledged even though it does take effect. Follow a set with a query
+      to confirm it — with the cross-port form above, that works for any port, not only the one
+      the set was sent on.
+    - A query that selects ports only, such as `$ASCE,2`, changes no configuration.
+    - Flags in `OPTIONS` are still applied on a query, so `$ASCE,512` saves the persistent
+      messages and returns the current port's configuration.
 
 ### ASCE Response
 
@@ -178,10 +176,11 @@ $ASCE,2,7,1*0C\r\n     Reporting serial 1: GNGGA at period 1
 ```
 
 !!! note
-    Prior firmware always reported the `PORT` field as `0`, regardless of which port the response
-    described. It now identifies the port, so replies to a multi-port query can be told apart.
-    Because `0` is not a valid port bit, a `PORT` value of `0` indicates firmware that predates
-    this change.
+    - Prior firmware always reported the `PORT` field as `0`, regardless of which port the
+      response described. It now identifies the port, so replies to a multi-port query can be
+      told apart.
+    - Because `0` is not a valid port bit, a `PORT` value of `0` indicates firmware that
+      predates this change.
 
 ### PERS
 
