@@ -144,6 +144,12 @@ The reply format is described in [ASCE Response](#asce-response) below.
 !!! note
     A query applies no configuration. Flags set in `OPTIONS` are still honoured, however, so
     `$ASCE,512` both saves persistent messages and returns the current port's configuration.
+
+!!! note
+    Only queries produce a response. An `$ASCE` sentence carrying `(ID,PERIOD)` pairs is a *set*
+    and is **not** acknowledged, though it does take effect. To confirm a set, follow it with a
+    query — which, with the cross-port form above, works for any port and not only the one the
+    set was sent on.
     A query that selects ports only (for example `$ASCE,2`) changes nothing.
 
 ### ASCE Response
