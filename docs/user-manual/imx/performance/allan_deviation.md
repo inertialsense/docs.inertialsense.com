@@ -15,7 +15,7 @@ The Allan Deviation plots below were generated from static IMU data collected un
 
 | Parameter                                |             Value |
 | ---------------------------------------- | ----------------: |
-| Gyro Bias Instability                    |     **0.95 °/hr** |
+| Gyro Bias Instability                    |     **0.9 °/hr** |
 | Gyro Angle Random Walk (ARW)             |    **0.10 °/√hr** |
 | Accelerometer Bias Instability           |        **4.0 µg** |
 | Accelerometer Velocity Random Walk (VRW) | **0.011 m/s/√hr** |

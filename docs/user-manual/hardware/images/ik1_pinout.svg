@@ -8,7 +8,7 @@
    height="756"
    viewBox="0 0 462.22222 840.00076"
    sodipodi:docname="ik1_pinout.svg"
-   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,12 +25,12 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="0.77209821"
-     inkscape:cx="15.542064"
-     inkscape:cy="441.00607"
+     inkscape:zoom="1.5441964"
+     inkscape:cx="143.4403"
+     inkscape:cy="161.57271"
      inkscape:window-width="1920"
      inkscape:window-height="1129"
-     inkscape:window-x="1001"
+     inkscape:window-x="887"
      inkscape:window-y="2152"
      inkscape:window-maximized="1"
      inkscape:current-layer="g1">
@@ -151,6 +151,16 @@
          x="292.64993"
          y="655.1297"
          id="tspan3">16</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:23.7037px;line-height:1.77;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:0.845556;stroke-dasharray:none"
+       x="365.1232"
+       y="-75.409279"
+       id="text647-6"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         x="365.1232"
+         y="-75.409279">33</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:23.7037px;line-height:1.77;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:0.845173"
@@ -689,5 +699,11 @@
          style="fill:none;stroke:#6f6f6f;stroke-width:1.44;stroke-dasharray:none;stroke-opacity:1"
          id="path1624" />
     </g>
+    <circle
+       style="fill:none;stroke:#727272;stroke-width:2.13168;stroke-dasharray:none;stroke-opacity:1"
+       id="path1"
+       cx="378.32486"
+       cy="-30.433796"
+       r="8.433506" />
   </g>
 </svg>
