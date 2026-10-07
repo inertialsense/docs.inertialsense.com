@@ -94,6 +94,8 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
 	if (len > 0) portWrite(0, buf, len);
 ```
 
+**Write all 8 bytes of `rmc.bits`** (or the whole `rmc_t`).  A partial write is merged with the device's single, shared copy of `DID_RMC`, which holds whatever was last read, written, or cleared by a stop-broadcasts command, so the unwritten half of `bits` is not predictable.  This applies with or without `RMC_OPTIONS_PRESERVE_CTRL`, which would OR the unwritten half into the port's bits.
+
 The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is required to apply the change).  Independently, the DID_INS_x broadcast period multiple can be used to set the output data rate down to 1ms.
 
 #### Persistent Messages
