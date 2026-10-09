@@ -89,18 +89,18 @@ The following table shows the Rugged-4 pinout.  Note that pin function can chang
 
 The Rugged 4 "MAIN" connector pinout can be configured for USB, TTL, RS232, RS485, and CAN by setting the  `DID_FLASH_CONFIG.platformConfig`.
 
-| RUG-4 Pin<br/>IMX Pin | 7,9<br/>G3,G4<br/>(G5,G8) | 8,10<br/>G1,G2          | 11,12<br/>G1,G2 | GPS1 | GPS2 |
-| --------------------- | ------------------------- | ----------------------- | --------------- | ---- | ---- |
-| **I/O Preset**        |                           |                         |                 |      |      |
-| 1 *                   | S0-RS232                  |                         | CAN             | S1   |      |
-| 2                     | S0-TTL                    |                         | CAN             | S1   |      |
-| 3                     | S0-TTL                    | S2-TTL or<br/>G2-STROBE |                 | S1   |      |
-| 4                     | S0-RS232                  | S1-RS232                |                 | S2   |      |
-| 5                     | S1-RS485                  | S1-RS485                |                 | S2   | S0   |
-| 6                     | SPI or<br/>G8-STROBE      | SPI                     |                 | S2   | S0   |
-| 7 **                  |                           | S1-RS232                |                 | S2   | S0   |
-| 8                     |                           |                         | CAN             | S1   | S0   |
-| 9                     |                           | S2-TTL                  |                 | S1   | S0   |
+| RUG-4 Pin<br/>IMX Pin | 7,9<br/>G3,G4<br/>(G5,G8) | 8,10<br/>G1,G2          | 11,12<br/>G1,G2 | GPS1<br/>GPS2 |
+| --------------------- | ------------------------- | ----------------------- | --------------- | ------------- |
+| **I/O Preset**        |                           |                         |                 |               |
+| 1 *                   | S0-RS232                  |                         | CAN             | S1            |
+| 2                     | S0-TTL                    |                         | CAN             | S1            |
+| 3                     | S0-TTL                    | S2-TTL or<br/>G2-STROBE |                 | S1            |
+| 4                     | S0-RS232                  | S1-RS232                |                 | S2            |
+| 5                     | S1-RS485                  | S1-RS485                |                 | S2            |
+| 6                     | SPI or<br/>G8-STROBE      | SPI                     |                 | S2            |
+| 7 **                  |                           | S1-RS232                |                 | S2            |
+| 8                     |                           |                         | CAN             | S1            |
+| 9                     |                           | S2-TTL                  |                 | S1            |
 
 <sup>\* RUG-4-G0 default<br/>\** RUG-4-G2 default</sup>
 
