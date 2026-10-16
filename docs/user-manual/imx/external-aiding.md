@@ -21,6 +21,8 @@ All seven are independent — supply whichever ones match the sensors you have. 
 !!! important
     A non-positive variance (or, for `DID_EXT_AIDING_ATTITUDE`, a non-positive covariance diagonal) causes the entire observation to be discarded by the EKF. Variance must always reflect a realistic (non-zero) uncertainty of the measurement — do not use zero to mean "perfect" or "unknown."
 
+    The same applies to `status`: for every type that uses it (all but `DID_EXT_AIDING_DIR_SPEED`), `0` or any other unlisted value causes the observation to be discarded.
+
 ## Position and Velocity
 
 ```c
@@ -35,18 +37,20 @@ enum eExtAidingFrame
 };
 
 /** (DID_EXT_AIDING_POS) External aiding position observation, supplied by a host or external
- *  sensor as an input to the INS/EKF. Position is expected in ECEF; var is expected in NED. */
+ *  sensor as an input to the INS/EKF. Position is in ECEF, or in NED relative to the reference
+ *  LLA (refLla), as selected by status; var is expected in NED. */
 typedef struct PACKED
 {
     uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
-    uint32_t   status;       // Status bitfield; set (status & EXT_AIDING_FRAME_MASK) to frame: 1=ECEF, 2=NED, 3=Body (see eExtAidingFrame)
+    uint32_t   status;       // Status bitfield; set (status & EXT_AIDING_FRAME_MASK) to frame: 1=ECEF, 2=NED (see eExtAidingFrame)
     double     pos[3];       // position {x,y,z} (m)
     float      offset[3];    // point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m)
     float      var[3];       // observation variance, per axis, in NED (m^2). Must be non-zero or the observation is discarded.
 } ext_aiding_pos_t;
 
 /** (DID_EXT_AIDING_VEL) External aiding velocity observation, supplied by a host or external
- *  sensor as an input to the INS/EKF. Velocity is expected in ECEF; var is expected in NED. */
+ *  sensor as an input to the INS/EKF. Velocity is in the frame selected by status; var is
+ *  expected in NED. */
 typedef struct PACKED
 {
     uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
@@ -57,8 +61,8 @@ typedef struct PACKED
 } ext_aiding_vel_t;
 ```
 
-- **`timeOfWeekMs`** — GPS time of week the observation was taken. Used by the EKF to align the observation against its own delayed-state history. If the observation is more than 200 ms old relative to the IMX's current IMU time, its timestamp is clamped and the fix loses some of its benefit — keep aiding latency well under this.
-- **`status`** — the coordinate frame the measurement was taken in (see `eExtAidingFrame`); `0` is invalid and causes the observation to be rejected. `vel` fully honors this — `ECEF`, `NED`, and `BODY` are all correctly rotated into the NED innovation. `pos` currently only checks that `status` is non-zero; the position itself is always processed as if it were ECEF, so flagging `pos` as `NED` or `BODY` will *not* error but will silently produce a wrong result — always send `pos` in ECEF today. `var` is always expressed in NED regardless of `status`.
+- **`timeOfWeekMs`** — time the observation was taken, in the IMX's own time base: the same `timeOfWeekMs` the IMX publishes in `DID_INS_1`/`DID_INS_2`, `DID_SYS_PARAMS` and `DID_STROBE_IN_TIME`. Used by the EKF to align the observation against its own delayed-state history. If the observation is more than 200 ms old relative to the IMX's current IMU time, its timestamp is clamped and the fix loses some of its benefit — keep aiding latency well under this. This applies to all six fused types; see [Time Synchronization](#time-synchronization).
+- **`status`** — the coordinate frame the measurement was taken in (see `eExtAidingFrame`); any frame the observation type doesn't support causes the observation to be rejected. `vel` accepts `ECEF`, `NED`, and `BODY`. `pos` accepts `ECEF`, and `NED` relative to the reference LLA (`refLla` in the flash configuration). `var` is always expressed in NED regardless of `status`.
 - **`offset`** — the lever arm from the IMU origin to the point of measurement (e.g. the antenna phase center of an external GNSS receiver), expressed in the IMU/body frame. Set to `[0,0,0]` if the source measures at the IMU origin.
 - **`var`** — per-axis observation variance in NED; report your source's actual uncertainty, since this is what the EKF weights the observation by and what its outlier (NIS) gate checks the innovation against. In dynamic environments, inflate it to also cover the error that `timeOfWeekMs` timestamp uncertainty induces from vehicle motion — for a position observation this is timestamp uncertainty × speed, and for a velocity observation it's timestamp uncertainty × acceleration — not just the sensor's own noise.
 
@@ -142,17 +146,19 @@ enum eExtAidingAttitudeType
     EXT_AIDING_ATTITUDE_TYPE_QUATERNION = 2  // att = {w, x, y, z}
 };
 
-/** (DID_EXT_AIDING_ATTITUDE) External aiding attitude observation. `var` is the 3x3
- *  attitude-error covariance (row-major), expressed as a small-angle roll/pitch/yaw rotation
- *  vector regardless of whether `att` is euler or quaternion. */
+/** (DID_EXT_AIDING_ATTITUDE) External aiding attitude observation. `att` is the body attitude
+ *  relative to NED. `var` is the 3x3 attitude-error covariance (row-major), expressed as a
+ *  small-angle rotation about the body axes regardless of whether `att` is euler or quaternion. */
 typedef struct PACKED
 {
     uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
     uint32_t   status;       // Attitude representation, 1=euler, 2=quaternion (see eExtAidingAttitudeType)
-    float      att[4];       // attitude, interpreted per `status`: euler {roll,pitch,yaw,-} or quaternion {w,x,y,z}
-    float      var[9];       // 3x3 row-major attitude-error covariance (rad^2). Must have a non-zero diagonal or the observation is discarded.
+    float      att[4];       // attitude relative to NED, interpreted per `status`: euler {roll,pitch,yaw,-} or NED-to-body quaternion {w,x,y,z}
+    float      var[9];       // 3x3 row-major attitude-error covariance (rad^2), about the body axes. Must have a non-zero diagonal or the observation is discarded.
 } ext_aiding_attitude_t;
 ```
+
+The euler angles and quaternion use the same convention as the IMX's own `DID_INS_1.theta` / `DID_INS_2.qn2b` output, so attitude from a second Inertial Sense INS can be passed straight through.
 
 ## DID_EXT_IMU
 
@@ -200,6 +206,23 @@ cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_HEADING: {status: 1, timeOfWeekMs: 
 
 cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_ATTITUDE: {status: 1, timeOfWeekMs: <tow>, att: [<roll>,<pitch>,<yaw>,0], var: [0.01,0,0, 0,0.01,0, 0,0,0.01]}}"
 ```
+
+## Time Synchronization
+
+Every external aiding observation is timestamped in the IMX's time base, which depends on whether the IMX has GPS time:
+
+| IMX state                         | Published `week` | Published `timeOfWeekMs`        |
+| ---------------------------------- | :--------------: | -------------------------------- |
+| GNSS1 has provided GPS time        | GPS week         | GPS time of week                 |
+| No GPS time (no receiver, no fix)  | `1`              | Time since IMX boot              |
+
+Stamping observations with the IMX's published time is correct in both states, so a host does not need GNSS of its own. To relate the host's clock to the IMX's:
+
+- **Strobe input (most precise).** Configure a strobe input pin (see `eIoConfig`) and enable `RMC_BITS_STROBE_IN_TIME`. Pulse the pin when the external sensor samples; the IMX replies with `DID_STROBE_IN_TIME`, whose `timeOfWeekMs` is the value to put in the observation. The timestamp resolves to the IMX sample period.
+- **Streamed time (no wiring).** Stream `DID_INS_1`, `DID_INS_2` or `DID_SYS_PARAMS`, and track the offset between each message's `timeOfWeekMs` and the host clock at arrival. Serial transport delay biases the offset late by a few milliseconds, which is small against the 200 ms window. Take the smallest offset seen over a window to reject jitter.
+
+!!! important
+    The time base changes when the IMX first gets GPS time (`week` changes from `1`), and resets when the IMX reboots. A host tracking the offset must re-acquire it on either event; observations stamped in the old time base are clamped to the 200 ms window instead of being placed correctly.
 
 ## Logging Received Observations
 
