@@ -38,6 +38,8 @@ OPTIONS (General)
     -magRecal[n]    Recalibrate magnetometers: 0=multi-axis, 1=single-axis
     -nmea=[s]       Send NMEA message s with added checksum footer. Display rx messages. (`-nmea=ASCE,0,GxGGA,1`)
     -nmea           Listen mode for NMEA message without sending stop-broadcast command `$STPB` at start.
+                    -nmea options require a single direct serial port (-c PORT or -sn) and use -baud and -dur.
+                    Discovery and relay options (-c *, -device, -use-mdns, -use-relay) do not apply.
     -q              Quiet mode, no display.
     -raw-out        Outputs all data in a human-readable raw format (used for debugging/learning the ISB protocol).
     -reset          Issue software reset.
