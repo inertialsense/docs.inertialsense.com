@@ -79,13 +79,22 @@ The following is an example of how to use the RMC.  The `rmc.options` field cont
 	rmc_t rmc;
     // Enable broadcasts of DID_INS_1 and DID_GNSS1_POS
 	rmc.bits = RMC_BITS_INS1 | RMC_BITS_GNSS1_POS;       
-    // Remember configuration following reboot for automatic data streaming.
+    // Stage this configuration as the startup configuration used after reboot.
 	rmc.options = RMC_OPTIONS_PERSISTENT;
 
 	uint8_t buf[200];
 	int len = is_comm_set_data_to_buf(buf, sizeof(buf), comm, DID_RMC, sizeof(rmc_t), 0, &rmc);
 	if (len > 0) portWrite(0, buf, len);
+
+    // Write it to flash.  On the IMX, RMC_OPTIONS_PERSISTENT alone does not save to flash (see Persistent Messages).
+	system_command_t cfg;
+	cfg.command = SYS_CMD_SAVE_FLASH;
+	cfg.invCommand = ~cfg.command;
+	len = is_comm_set_data_to_buf(buf, sizeof(buf), comm, DID_SYS_CMD, sizeof(system_command_t), 0, &cfg);
+	if (len > 0) portWrite(0, buf, len);
 ```
+
+**Write all 8 bytes of `rmc.bits`** (or the whole `rmc_t`).  A partial write is merged with the device's single, shared copy of `DID_RMC`, which holds whatever was last read, written, or cleared by a stop-broadcasts command, so the unwritten half of `bits` is not predictable.  This applies with or without `RMC_OPTIONS_PRESERVE_CTRL`, which would OR the unwritten half into the port's bits.
 
 The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is required to apply the change).  Independently, the DID_INS_x broadcast period multiple can be used to set the output data rate down to 1ms.
 
@@ -93,7 +102,9 @@ The update rate of the EKF is set by DID_FLASH_CONFIG.startupNavDtMs (reboot is 
 
 The *persistent messages* option saves the current data stream configuration to flash memory for use following reboot,  eliminating the need to re-enable messages following a reset or power cycle.  
 
-- **To save persistent messages** - (to flash memory), bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field or set `DID_SYS_CMD.command = 1` and `DID_SYS_CMD.invCommand = 0xFFFFFFFE`.   See the [save persistent messages example](../software/SDK/CommunicationsBinary.md#step-7-save-persistent-messages) in the Binary Communications example project.
+- **To save persistent messages** - (to flash memory), send the *save persistent messages* command: `DID_SYS_CMD.command = SYS_CMD_SAVE_PERSISTENT_MESSAGES (1)` and `DID_SYS_CMD.invCommand = 0xFFFFFFFE`.  This saves the current data stream configuration of **all** ports.  See the [save persistent messages example](../software/SDK/CommunicationsBinary.md#step-7-save-persistent-messages) in the Binary Communications example project.
+- **To save the configuration of selected ports only** - bitwise OR `RMC_OPTIONS_PERSISTENT (0x200)` with the RMC option field, then send the *save flash* command: `DID_SYS_CMD.command = SYS_CMD_SAVE_FLASH (97)` and `DID_SYS_CMD.invCommand = 0xFFFFFF9E`.
+- **Note (IMX):** on the IMX, setting `RMC_OPTIONS_PERSISTENT` in `DID_RMC` by itself only *stages* the configuration as the startup configuration.  It is not written to flash until the next save, and is lost if power is removed before then.  The save is not automatic because writing flash briefly pauses the processor, which would disrupt IMU sampling.  (The GPX saves `DID_GPX_RMC` with `GRMC_OPTIONS_PERSISTENT` to flash automatically.)
 - **To disable persistent messages** - a [stop all broadcasts packet](../software/SDK/CommunicationsBinary.md#step-4-stop-any-message-broadcasting) followed by a *save persistent messages* command.   
 
 [NMEA persistent messages](nmea.md#persistent-messages) are also available. 
