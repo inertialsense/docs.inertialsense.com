@@ -211,18 +211,51 @@ cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_ATTITUDE: {status: 1, timeOfWeekMs:
 
 Every external aiding observation is timestamped in the IMX's time base, which depends on whether the IMX has GPS time:
 
-| IMX state                         | Published `week` | Published `timeOfWeekMs`        |
-| ---------------------------------- | :--------------: | -------------------------------- |
-| GNSS1 has provided GPS time        | GPS week         | GPS time of week                 |
-| No GPS time (no receiver, no fix)  | `1`              | Time since IMX boot              |
+| IMX state                                          | Published `week`     | Published `timeOfWeekMs`          |
+| --------------------------------------------------- | :------------------: | ---------------------------------- |
+| GNSS has provided GPS time                          | GPS week             | GPS time of week                   |
+| No GNSS time; `DID_EXT_AIDING_TIME_SYNC` active     | External source week | External source time of week       |
+| Neither                                             | `1`                  | Time since IMX boot                |
 
-Stamping observations with the IMX's published time is correct in both states, so a host does not need GNSS of its own. To relate the host's clock to the IMX's:
+GNSS always takes precedence. External time sync becomes the time base only after GNSS has gone 10 s without a time sync (or never had one), and GNSS takes over again as soon as it syncs.
 
-- **Strobe input (most precise).** Configure a strobe input pin (see `eIoConfig`) and enable `RMC_BITS_STROBE_IN_TIME`. Pulse the pin when the external sensor samples; the IMX replies with `DID_STROBE_IN_TIME`, whose `timeOfWeekMs` is the value to put in the observation. The timestamp resolves to the IMX sample period.
-- **Streamed time (no wiring).** Stream `DID_INS_1`, `DID_INS_2` or `DID_SYS_PARAMS`, and track the offset between each message's `timeOfWeekMs` and the host clock at arrival. Serial transport delay biases the offset late by a few milliseconds, which is small against the 200 ms window. Take the smallest offset seen over a window to reject jitter.
+### DID_EXT_AIDING_TIME_SYNC
+
+`DID_EXT_AIDING_TIME_SYNC` puts the IMX on the external source's clock, so the source can stamp observations with its own time. It works the same way as the GNSS 1PPS time sync: the message announces the time of the **next** sync pulse, and the IMX timestamps that pulse when it arrives.
+
+The payload is `is_timepulse_t`:
+
+- **`week`, `timeOfWeekMs`** — the external source's time of its next sync pulse. This becomes the IMX's published week and time of week.
+- **`status`, `syncCnt`, `reserved`** — ignored when written.
+
+Once per second:
+
+1. Send `DID_EXT_AIDING_TIME_SYNC` with the time of the upcoming pulse.
+2. Within 1 s, at exactly that time, drive a rising edge on the pin set in `DID_FLASH_CONFIG.extAidingSyncPin`.
+
+`extAidingSyncPin` is a G pin number: 2, 5, 8, 9, 11, 12, 13 or 15. The pin must not share an interrupt line with a GNSS PPS input or a strobe input. If it does, or the value is not one of those pins, the IMX ignores it and times the sync from the message instead.
+
+**Without a sync pulse** (`extAidingSyncPin = 0`), the IMX takes the pulse to occur one second after the message arrives, so send `timeOfWeekMs` = source time at sending + 1000 ms. Accuracy is then limited by transport latency and jitter, typically a few milliseconds over serial. That is small against the 200 ms observation window, but much coarser than a pulse.
+
+A pulse-timed sync whose offset differs from the previous sync's by more than 0.2% of the time between them is held back until the next sync confirms it, so a single bad pulse cannot step the clock.
+
+Reading `DID_EXT_AIDING_TIME_SYNC` returns the last accepted sync (`week`, `timeOfWeekMs`), the number of accepted syncs (`syncCnt`), and `status` flags (`eExtAidingTimeSyncStatus`):
+
+| Flag                                  | Meaning |
+| -------------------------------------- | ------- |
+| `EXT_TIME_SYNC_STATUS_PULSE`           | Last sync was timed by the sync pulse |
+| `EXT_TIME_SYNC_STATUS_MESSAGE`         | Last sync was timed by message arrival |
+| `EXT_TIME_SYNC_STATUS_TIME_SOURCE`     | External time sync is the IMX time base |
+| `EXT_TIME_SYNC_STATUS_ERR_NO_PULSE`    | No pulse arrived within 1 s of the last message |
+| `EXT_TIME_SYNC_STATUS_ERR_PIN`         | `extAidingSyncPin` is unsupported or its interrupt line is in use |
+| `EXT_TIME_SYNC_STATUS_ERR_DRIFT`       | Last offset held back pending confirmation |
+
+### Without DID_EXT_AIDING_TIME_SYNC
+
+A host that cannot drive the time sync can instead track the IMX's clock: stream `DID_INS_1`, `DID_INS_2` or `DID_SYS_PARAMS`, and track the offset between each message's `timeOfWeekMs` and the host clock at arrival. Serial transport delay makes the offset a few milliseconds late. Take the smallest offset seen over a window to reject jitter.
 
 !!! important
-    The time base changes when the IMX first gets GPS time (`week` changes from `1`), and resets when the IMX reboots. A host tracking the offset must re-acquire it on either event; observations stamped in the old time base are clamped to the 200 ms window instead of being placed correctly.
+    A host tracking the IMX's clock must re-acquire the offset whenever the time base changes — when GNSS or external time sync takes over (`week` changes) — and when the IMX reboots. Observations stamped in the old time base are clamped to the 200 ms window instead of being placed correctly.
 
 ## Logging Received Observations
 
