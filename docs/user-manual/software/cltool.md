@@ -15,18 +15,12 @@ EXAMPLES
     cltool -c /dev/ttyS2 -presetPPD                 # stream post processing data (PPD) with INS2
     cltool -c /dev/ttyS2 -presetPPD -lon -lts=1     # stream PPD + INS2 data, logging, dir timestamp
     cltool -c /dev/ttyS2 -edit DID_FLASH_CONFIG     # edit DID_FLASH_CONFIG message
-    cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GNSS streamed at 10x startupGnssDtMs
+    cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGnssDtMs
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
-    cltool -c COM2,COM4,COM5 -did DID_INS_1              # connect to multiple ports (comma-separated)
-    cltool -c spi:///dev/spi0.0 -did DID_INS_1               # SPI device, mode 3 default
-    cltool -c spi:///dev/spi0.0[b2000000,d18] -did DID_INS_1  # SPI: 2 MHz, data-ready on GPIO 18
-    cltool -c /dev/spi0.0[b2000000,d18] -did DID_INS_1        # SPI: bare device path with opts
     cltool -rp logs/20170117_222549                 # replay log files from a folder
-    cltool -rp logs/20170117_222549 -get 12         # show first DID_FLASH_CONFIG value from a log
-    cltool -rp logs/20170117_222549 -list-dids      # list all DIDs found in log files
-    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password          # Connect to RTK NTRIP base
+    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password         # Connect to RTK NTRIP base
     cltool -c /dev/ttyS2 -get 1,4,13,DID_GNSS1_POS                                    # Return specific DIDs
-    cltool -c /dev/ttyS2 -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"    # Return portion of two DIDs
+    cltool -c /dev/ttyS2 -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"   # Return portion of two DIDs
     cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gnss1AntOffset[1]: 0.8}}"          # Set one value in DID array
     cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gnss1AntOffset: [0.8, 0.0, 1.2]}}" # Set values in DID
     cltool -c /dev/ttyS2 -nmea=ASCE,0,GxGGA,1                                         # Send NMEA message, display rx NMEA
@@ -39,24 +33,11 @@ EXAMPLES (Firmware Update)
 
 OPTIONS (General)
     -baud=BAUDRATE  Set serial port baudrate.  Options: 115200, 230400, 460800, 921600 (default)
-    -c DEVICE_PORT  Select serial port(s). Options: single port (e.g., COM5 or /dev/ttyUSB0), multiple ports separated by ',' (e.g., COM2,COM4,COM5), "*" for all ports, or "*4" for first four ports.
-    -c spi:///DEVICE_PATH[OPTS]  Select SPI device (e.g., spi:///dev/spi0.0). Optional comma-separated OPTS in brackets:
-           b<HZ>     SPI clock speed in Hz (default: 1000000 Hz = 1 MHz).
-           d<GPIO>   GPIO number for data-ready input (omit to disable).
-           m<MODE>   SPI clock/phase mode 0-3 (default: 3).
-    -sn DEVICE_ID   Discover all devices and connect to the one matching the given identifier. Accepts: 129495, SN129495, or IMX-5.0:SN129495. Alternative to -c.
-    -device TYPE    Discover all devices and open only those matching TYPE. Options: imx, imx5, imx6, gpx. Implies -c * if no -c port is given.
+    -c DEVICE_PORT  Select port(s): serial port (e.g., /dev/ttyUSB0 or COM5), tcp://IP:port, or a comma-separated list of these.
+                    Set DEVICE_PORT to "*" for all ports or "*4" for only first four.
     -dboc           Send stop-broadcast command `$STPB` on close.
     -h --help       Display this help menu.
     -list-devices   Discovers and prints a list of discovered Inertial Sense devices and connected ports.
-    -use-mdns       Enable mDNS network discovery of remote devices (e.g., socat TCP-forwarded serial ports).
-    -use-relay      Enable HTTP relay discovery (bridgeboard / SSE); auto-enable all mDNS-discovered relay hosts.
-    -use-relay=URL[,URL...]  Register and enable one or more manual relay host URLs (any of "http://host:port", "host:port", or bare hostname/IP).
-    -use-relay-only=HOST[,HOST...]  When auto-enabling mDNS-discovered relays, enable only hosts whose hostname matches the whitelist.
-    -use-relay-list Enable relay discovery, print the resulting host list, and exit.
-                    Relay connections are annotated with name 'cltool', this command line as the purpose, and priority
-                    high during a firmware update (normal otherwise). Override with the environment variables
-                    IS_RELAY_CLIENT_NAME, IS_RELAY_CLIENT_PURPOSE, IS_RELAY_CLIENT_PRIORITY and IS_RELAY_CLIENT_LINK.
     -lm             Listen mode for ISB. Disables device verification (-vd) and does not send stop-broadcast command on start.
     -magRecal[n]    Recalibrate magnetometers: 0=multi-axis, 1=single-axis
     -nmea=[s]       Send stop-broadcast command `$STPC`, then NMEA message s with added checksum footer. Display rx NMEA. (`-nmea=ASCE,0,GxGGA,1`) With s empty (`-nmea=`), only sends `$STPC`.
@@ -74,8 +55,6 @@ OPTIONS (General)
     -v              Print version information.
 
 OPTIONS (Special)
-    -cal-uploadFILE_PATH      Upload calibration data from FILE_PATH file to the IMX.
-    -factoryReset   Reset IMX flash config to factory defaults.
     -factoryReset   Reset IMX flash config to factory defaults.
     -romBootloader  Reboot into ROM bootloader mode.  Requires power cycle and reloading bootloader and firmware.
 
@@ -95,11 +74,6 @@ OPTIONS (Firmware Update)
     -ub FILEPATH    Update bootloader using .bin file FILEPATH if version is old. Must be used with option -uf.
     -fb             Force bootloader update regardless of the version.
     -uv             Run verification after application firmware update.
-    -fw-set-policy POLICY[:PATTERN]  Set update policy (skip, if-newer, force).
-                                       Without :PATTERN, sets default for all targets.
-                                       With :PATTERN, overrides policy for matching
-                                       step labels or target names (case-insensitive
-                                       substring match). Can be specified multiple times.
 
 OPTIONS (Messages)
     -get <DID1>,<DID2>,...                   Return values of dataset(s). DID may be a name or number.
@@ -113,7 +87,7 @@ OPTIONS (Messages)
                                                        -set "{12: {ioConfig: 0x1a2b012c, ser2BaudRate: 921600}}"
     -did [DID#<=PERIODMULT> DID#<=PERIODMULT> ...]  Stream 1 or more datasets and display w/ compact view.
     -edit [DID#<=PERIODMULT>]                       Stream and edit 1 dataset.
-          Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency.
+          Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency. 
           Message period = source period x PERIODMULT. PERIODMULT is 1 if not specified.
           Common DIDs: DID_INS_1, DID_INS_2, DID_INS_4, DID_PIMU, DID_IMU, DID_GNSS1_POS,
           DID_GNSS2_RTK_CMP_REL, DID_BAROMETER, DID_MAGNETOMETER, DID_FLASH_CONFIG (see data_sets.h for complete list)
@@ -121,10 +95,9 @@ OPTIONS (Messages)
     -persistent     Save current streams as persistent messages enabled on startup
     -presetPPD      Send RMC preset to enable IMX post processing data (PPD) stream
     -presetINS      Send RMC preset to enable INS data stream
-    -presetGNSS     Send RMC preset to enable GNSS data stream
     -presetGPXPPD   Send RMC preset to enable GPX post processing data (PPD) stream
 
-OPTIONS (Writing to data log file)
+OPTIONS (Logging to file, disabled by default)
     -lon            Enable logging
     -lt=TYPE        Log type: raw (default), dat, sdat, kml or csv
     -lp PATH        Log data to path (default: ./IS_logs)
@@ -132,13 +105,9 @@ OPTIONS (Writing to data log file)
     -lms=PERCENT    File culling: Log drive space limit in percent of total drive, 0.0 to 1.0. (default: 0.5)
     -lmf=BYTES      Log max file size in bytes (default: 5242880)
     -lts=0          Log sub folder, 0 or blank for none, 1 for timestamp, else use as is
-
-OPTIONS (Reading from data log file)
     -r              Replay data log from default path
     -rp PATH        Replay data log from PATH
     -rs=SPEED       Replay data log at x SPEED. SPEED=0 runs as fast as possible.
-    -list-dids      List all DID messages found in replay data log with occurrence counts (use with -rp)
-                         Example: -rp logs/20170117_222549 -list-dids
 
 OPTIONS (READ flash config) - DEPRECATED, use `-get` instead
     -imxFlashCfg                                # List all "keys" and "values" in IMX
@@ -147,8 +116,8 @@ OPTIONS (READ flash config) - DEPRECATED, use `-get` instead
     "-gpxFlashCfg=[key]|[key]|[key]"            # List specific GPX values
 
 OPTIONS (WRITE flash config) - DEPRECATED, use `-set` instead
-    "-imxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in IMX flash config.
-    "-gpxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in GPX flash config.
+    "-imxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in IMX flash config. 
+    "-gpxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in GPX flash config. 
                                                 # Surround with "quotes" when using pipe operator.
 EXAMPLES
     cltool -c /dev/ttyS2 -imxFlashCfg  # Read from device and print all keys and values
@@ -157,13 +126,14 @@ EXAMPLES
 OPTIONS (RTK Rover / Base)
     -rover=[type]:[IP or URL]:[port]:[mountpoint]:[username]:[password]
         As a rover (client), receive RTK corrections.  Examples:
-            -rover=ntrip://192.168.1.100:7777:mountpoint:username:password   (NTRIP)
-            -rover=tcp://192.168.1.100:7777                                  (raw RTCM3 over TCP)
-            -rover=/dev//dev/ttyS2:57600        (port, baud rate)
-    -base=tcp://[IP]:[port]   As a Base (server), send RTK corrections.  Examples:
-            -base=tcp://:7777                           (IP is optional)
-            -base=tcp://192.168.1.43:7777
-            -base=tcp://[::1]:7777                      (IPv6 host in brackets)
+            -rover=TCP:RTCM3:192.168.1.100:7777:mountpoint:username:password   (NTRIP)
+            -rover=TCP:RTCM3:192.168.1.100:7777
+            -rover=TCP:UBLOX:192.168.1.100:7777
+            -rover=SERIAL:RTCM3:/dev/ttyS2:57600        (port, baud rate)
+    -base=[IP]:[port]   As a Base (sever), send RTK corrections.  Examples:
+            -base=TCP::7777                             (IP is optional)
+            -base=TCP:192.168.1.43:7777
+            -base=SERIAL:/dev/ttyS2:921600
 ```
 
 ## Compile & Run (Linux/Mac)
