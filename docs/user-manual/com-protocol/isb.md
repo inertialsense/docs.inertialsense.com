@@ -51,7 +51,7 @@ if (len > 0) portWrite(0, buf, len);
 | DID                                                    | Default Update Rate (Period)                                 |
 | ------------------------------------------------------ | ------------------------------------------------------------ |
 | DID_INS_[1-4]                                          | (7ms default) Configured with DID_FLASH_CONFIG.startupNavDtMs |
-| DID_IMU, <br/>DID_PIMU<sup>*</sup>                     | (14ms default) Configured with DID_FLASH_CONFIG.startupImuDtMs |
+| DID_IMU, <br/>DID_PIMU<sup>*</sup>                     | (14ms default) Configured with DID_FLASH_CONFIG.startupImuOdr  |
 | DID_BAROMETER                                          | ~20ms                                                        |
 | DID_MAGNETOMETER                                       | ~20ms                                                        |
 | DID_GNSS[1-2]_[X] <br/>(Any DID beginning with DID_GNSS) | (200ms default) Configured with DID_FLASH_CONFIG. startupGnssDtMs |

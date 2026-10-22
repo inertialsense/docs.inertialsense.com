@@ -591,7 +591,7 @@ GPX device information
 | size | uint32_t | Size of group or union, which is nvm_group_x_t + padding |
 | checksum | uint32_t | Checksum, excluding size and checksum.  0xFFFFFFFF is invalid. |
 | key | uint32_t | Manufacturer method for restoring flash defaults |
-| startupImuDtMs | uint32_t | (ms) IMU sample (system input) period set on startup. Cannot be larger than startupNavDtMs. Zero disables sensor/IMU sampling. |
+| startupImuOdr | uint32_t | IMU output data rate set on startup (see eImuOdr). Raised if its sample period would be larger than startupNavDtMs. IMU_ODR_DISABLED disables sensor/IMU sampling. |
 | startupNavDtMs | uint32_t | (ms) Navigation filter (system output) output period set on startup.  Used to initialize sysParams.navOutputPeriodMs. |
 | ser0BaudRate | uint32_t | (bps) Serial port 0 baud rate |
 | ser1BaudRate | uint32_t | (bps) Serial port 1 baud rate |
@@ -873,7 +873,7 @@ GNSS raw data for rover (observation, ephemeris, etc.) - requires little endian 
 | size | uint32_t | Size of group or union, which is nvm_group_x_t + padding |
 | checksum | uint32_t | Checksum, excluding size and checksum.  0xFFFFFFFF is invalid. |
 | key | uint32_t | Manufacturer method for restoring flash defaults |
-| startupImuDtMs | uint32_t | (ms) IMU sample (system input) period set on startup. Cannot be larger than startupNavDtMs. Zero disables sensor/IMU sampling. |
+| startupImuOdr | uint32_t | IMU output data rate set on startup (see eImuOdr). Raised if its sample period would be larger than startupNavDtMs. IMU_ODR_DISABLED disables sensor/IMU sampling. |
 | startupNavDtMs | uint32_t | (ms) Navigation filter (system output) output period set on startup.  Used to initialize sysParams.navOutputPeriodMs. |
 | ser0BaudRate | uint32_t | (bps) Serial port 0 baud rate |
 | ser1BaudRate | uint32_t | (bps) Serial port 1 baud rate |
@@ -1545,15 +1545,14 @@ INL2 magnetometer calibration information.
 | accel_motion | int | Non-zero when accelerometer-sensed motion is detected |
 | rot_motion | int | Non-zero when rotational motion is detected |
 | zero_vel | int | Non-zero when zero-velocity condition is detected |
-| ahrs_gnss_cnt | int | Counter of sequential valid GNSS data (for switching from AHRS to navigation) |
-| hdg_err | float | Estimated heading error, in radians |
-| hdg_coarse | int | Flag whether a coarse (uncertain) initial heading has been established |
-| hdg_aligned | int | Flag whether initial attitude error has converged (heading alignment complete) |
-| hdg_aligning | int | Flag whether heading alignment is currently in progress |
-| ekf_init_done | int | Hot EKF initialization completed |
-| mag_cal_good | int | Flag whether the magnetometer calibration is good |
-| mag_cal_done | int | Flag whether the magnetometer calibration process has completed |
-| stat_magfield | int | Flag whether the magnetic field is stationary/consistent (suitable for mag calibration) |
+| reserved | int | Estimated heading error, in radians |
+| hdg_err | float | Flag whether a coarse (uncertain) initial heading has been established |
+| hdg_coarse | int | Flag whether initial attitude error has converged (heading alignment complete) |
+| hdg_aligned | int | Flag whether heading alignment is currently in progress |
+| hdg_aligning | int | Hot EKF initialization completed |
+| ekf_init_done | int | Flag whether the magnetometer calibration is good |
+| mag_cal_good | int | Flag whether the magnetometer calibration process has completed |
+| mag_cal_done | int | Flag whether the magnetic field is stationary/consistent (suitable for mag calibration) |
 
 
 #### DID_MANUFACTURING_INFO
@@ -1567,7 +1566,7 @@ INL2 magnetometer calibration information.
 | lotNumber | uint16_t | Inertial Sense lot number |
 | date | char[16] | Inertial Sense manufacturing date (YYYYMMDDHHMMSS) |
 | key | uint32_t | Key - write: unlock manufacturing info, read: number of times OTP has been set, 15 max |
-| platformType | int32_t | Platform / carrier board (ePlatformConfig::PLATFORM_CFG_TYPE_MASK). Only valid if greater than zero. |
+| platformType | int32_t | Platform / carrier board (ePlatformConfig::PLATFORM_CFG_TYPE_MASK). Only valid if greater than zero. Write: a negative value in a full-struct write keeps the current platform type. |
 | reserved | int32_t | Reserved |
 | uid | uint32_t[4] | Microcontroller unique identifier, 128 bits for SAM / 96 for STM32 |
 
@@ -2282,6 +2281,7 @@ System status and configuration is made available through various enumeration an
 | GFC_GNSS_GENERAL_FAULT | 0x08000000 |
 | GFC_EKF_INPUT_INVALID_IMU | 0x10000000 |
 | GFC_GNSS_RTOS_ERROR | 0x20000000 |
+| GFC_EKF_BIAS_SATURATED | 0x40000000 |
 | GFC_GPX_STATUS_COMMON_MASK | GFC_GNSS1_INIT\|GFC_GNSS2_INIT\|GFC_GNSS_TX_LIMITED\|GFC_GNSS_RX_OVERRUN\|GFC_GNSS_CRITICAL_FAULT\|GFC_GNSS_RECEIVER_TIME\|GFC_GNSS_GENERAL_FAULT |
 
 
