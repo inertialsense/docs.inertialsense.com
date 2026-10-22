@@ -1847,7 +1847,7 @@ instead encode a single small integer value (1-7) at SYS_FAULT_STATUS_CRITICAL_E
 | baroTemp | float | Barometer temperature, in Celsius |
 | mcuTemp | float | MCU temperature, in Celsius (not available yet) |
 | sysStatus | uint32_t | System status flags (see eSysStatusFlags) |
-| imuSamplePeriodMs | uint32_t | IMU sample task period, in milliseconds. Not the sensor sample period (see eImuOdr). Zero disables sampling. |
+| sampleTaskPeriodMs | uint32_t | IMU sample task period, in milliseconds. Not the sensor sample period (see eImuOdr). Zero disables sampling. |
 | navOutputPeriodMs | uint32_t | Preintegrated IMU (PIMU) integration period and navigation/AHRS filter output period, in milliseconds |
 | sensorTruePeriod | double | Actual sample period relative to GNSS PPS, in seconds |
 | flashCfgChecksum | uint32_t | Flash config checksum used with host SDK synchronization |
