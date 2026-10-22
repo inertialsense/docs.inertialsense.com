@@ -103,7 +103,7 @@ Spoofing that affects only some satellites is usually caught by the residual che
 When the GPX-1 provides GNSS to an IMX, the IMX INS adds a further layer:
 
 - **Outlier rejection.** Each GNSS position and velocity observation is tested against the inertial prediction using normalized innovation squared (NIS). Observations that disagree with the INS are de-weighted, and large disagreements are rejected. A sudden position or velocity jump from a spoofer is therefore resisted.
-- **Dead reckoning.** When GNSS is lost to jamming, the INS continues to navigate from the IMU (and any other aiding such as wheel encoders) and accuracy degrades with time. `DID_INS_*` accuracy fields and `insStatus` show the degraded state.
+- **Dead reckoning.** When GNSS is lost to jamming, the INS continues to navigate from the IMU (and any other aiding such as wheel encoders) and accuracy degrades with time. Monitor `StdPosNed`, `StdVelNed`, and `StdAttNed` in `DID_INL2_NED_SIGMA` for estimated uncertainty, and `insStatus` in the `DID_INS_*` messages for the solution state.
 
 ### Response to jam/spoof flags
 
