@@ -58,14 +58,14 @@ The IMU output data rate (ODR) is configured by setting `DID_FLASH_CONFIG.startu
 | startupImuOdr | eImuOdr             | Rate       | Sensor sample period | Sample task period |
 |---------------|---------------------|------------|----------------------|--------------------|
 | 0             | `IMU_ODR_DISABLED`  | Disabled   | -                    | -                  |
-| 1 (default)   | `IMU_ODR_1000HZ`    | 1 kHz      | 1 ms                 | 1 ms               |
-| 2             | `IMU_ODR_500HZ`     | 500 Hz     | 2 ms                 | 2 ms               |
-| 3             | `IMU_ODR_250HZ`     | 250 Hz     | 4 ms                 | 4 ms               |
-| 4             | `IMU_ODR_125HZ`     | 125 Hz     | 8 ms                 | 8 ms               |
-| 5             | `IMU_ODR_62_5HZ`    | 62.5 Hz    | 16 ms                | 16 ms              |
-| 6             | `IMU_ODR_31_25HZ`   | 31.25 Hz   | 32 ms                | 32 ms              |
-| 7             | `IMU_ODR_15_625HZ`  | 15.625 Hz  | 64 ms                | 64 ms              |
-| 8             | `IMU_ODR_2000HZ`    | 2 kHz      | 0.5 ms               | 1 ms               |
+| 1 (default)   | `IMU_ODR_2000HZ`    | 2 kHz      | 0.5 ms               | 1 ms               |
+| 2             | `IMU_ODR_1000HZ`    | 1 kHz      | 1 ms                 | 1 ms               |
+| 3             | `IMU_ODR_500HZ`     | 500 Hz     | 2 ms                 | 2 ms               |
+| 4             | `IMU_ODR_250HZ`     | 250 Hz     | 4 ms                 | 4 ms               |
+| 5             | `IMU_ODR_125HZ`     | 125 Hz     | 8 ms                 | 8 ms               |
+| 6             | `IMU_ODR_62_5HZ`    | 62.5 Hz    | 16 ms                | 16 ms              |
+| 7             | `IMU_ODR_31_25HZ`   | 31.25 Hz   | 32 ms                | 32 ms              |
+| 8             | `IMU_ODR_15_625HZ`  | 15.625 Hz  | 64 ms                | 64 ms              |
 | 9             | `IMU_ODR_4000HZ`    | 4 kHz      | 0.25 ms              | 1 ms               |
 | 10            | `IMU_ODR_8000HZ`    | 8 kHz      | 0.125 ms             | 1 ms               |
 
