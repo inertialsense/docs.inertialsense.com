@@ -147,7 +147,7 @@ nav:
   - GPX:
     - Configuration: user-manual/gpx/configuration.md
     - GPX System Status: user-manual/reference/GPX_system_status.md
-    - GNSS Jam/Spoof Detection: user-manual/gnss/gnss_jam_spoof_detection.md
+    - GNSS Jam/Spoof Detection: user-manual/gnss/gnss_jamming_spoofing.md
   - Communication Protocols:
     - Overview: user-manual/com-protocol/overview.md
     - Data Sets (DIDs): user-manual/com-protocol/DID-descriptions.md
