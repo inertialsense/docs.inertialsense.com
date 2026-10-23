@@ -320,7 +320,6 @@ GNSS RTK position data
 | baseToRoverHeading | float | (rad) Heading of baseToRoverVector in the local tangent (NED) plane.  Compassing mode: GNSS1 (base) to GNSS2 (rover) |
 | baseToRoverHeadingAcc | float | (rad) Accuracy (standard deviation) of baseToRoverHeading |
 | status | uint32_t | GNSS status (see eGnssStatus): [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
-| covEcefPacked | float[6] | RTK solution covariance in ECEF packed as [Pxx, Pyy, Pzz, Pxy, Pyz, Pzx], in meters^2 |
 
 
 #### DID_GNSS1_SAT
@@ -443,7 +442,6 @@ Dual GNSS RTK compassing / moving base to rover (GNSS 1 to GNSS 2) relative info
 | baseToRoverHeading | float | (rad) Heading of baseToRoverVector in the local tangent (NED) plane.  Compassing mode: GNSS1 (base) to GNSS2 (rover) |
 | baseToRoverHeadingAcc | float | (rad) Accuracy (standard deviation) of baseToRoverHeading |
 | status | uint32_t | GNSS status (see eGnssStatus): [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
-| covEcefPacked | float[6] | RTK solution covariance in ECEF packed as [Pxx, Pyy, Pzz, Pxy, Pyz, Pzx], in meters^2 |
 
 
 #### DID_GNSS2_SAT
@@ -1925,698 +1923,717 @@ System status and configuration is made available through various enumeration an
 
 #### DID_FLASH_CONFIG.gnssSatSigConst
 
-(eGnssSatSigConst)  
+(eGnssSatSigConst)  GNSS satellite system/signal constellation enable bits, used with nvm_flash_cfg_t.gnssSatSigConst (DID_FLASH_CONFIG). OR together the per-constellation bits (each already covers that constellation's tracked signal bands) to select which satellite systems the receiver tracks; GNSS_SAT_SIG_CONST_DEFAULT is the factory selection applied unless overridden.
 
-| Field | Value |
-|-------|------|
-| GNSS_SAT_SIG_CONST_GPS | 0x0003 |
-| GNSS_SAT_SIG_CONST_QZS | 0x000C |
-| GNSS_SAT_SIG_CONST_GAL | 0x0030 |
-| GNSS_SAT_SIG_CONST_BDS | 0x00C0 |
-| GNSS_SAT_SIG_CONST_GLO | 0x0300 |
-| GNSS_SAT_SIG_CONST_SBS | 0x1000 |
-| GNSS_SAT_SIG_CONST_IRN | 0x2000 |
-| GNSS_SAT_SIG_CONST_IME | 0x4000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| GNSS_SAT_SIG_CONST_GPS | 0x0003 | GPS, all supported signals |
+| GNSS_SAT_SIG_CONST_QZS | 0x000C | QZSS, all supported signals |
+| GNSS_SAT_SIG_CONST_GAL | 0x0030 | Galileo, all supported signals |
+| GNSS_SAT_SIG_CONST_BDS | 0x00C0 | BeiDou, all supported signals |
+| GNSS_SAT_SIG_CONST_GLO | 0x0300 | GLONASS, all supported signals |
+| GNSS_SAT_SIG_CONST_SBS | 0x1000 | SBAS, all supported signals |
+| GNSS_SAT_SIG_CONST_IRN | 0x2000 | IRNSS / NavIC |
+| GNSS_SAT_SIG_CONST_IME | 0x4000 | IMES |
 
 
 #### DID_FLASH_CONFIG.sensorConfig
 
-(eSensorConfig)  
+(eSensorConfig)  IMU/magnetometer sensor hardware configuration, used with nvm_flash_cfg_t.sensorConfig (DID_FLASH_CONFIG). Packs several small sub-fields (each with its own _MASK/_OFFSET pair) selecting gyro/accel full-scale range, gyro/accel DLPF bandwidth, IMU-to-sensor-frame mounting rotation, and disable/fault-detection flags for the magnetometer, barometer, and multi-IMU voting. Most fields require a system reset to take effect.
 
-| Field | Value |
-|-------|------|
-| SENSOR_CFG_GYR_FS_250 | 0x00000000 |
-| SENSOR_CFG_GYR_FS_500 | 0x00000001 |
-| SENSOR_CFG_GYR_FS_1000 | 0x00000002 |
-| SENSOR_CFG_GYR_FS_2000 | 0x00000003 |
-| SENSOR_CFG_GYR_FS_4000 | 0x00000004 |
-| SENSOR_CFG_GYR_FS_MAX | 0x00000007 |
-| SENSOR_CFG_GYR_FS_MASK | 0x00000007 |
-| SENSOR_CFG_GYR_FS_OFFSET |  (int)0 |
-| SENSOR_CFG_ACC_FS_2G | 0x00000000 |
-| SENSOR_CFG_ACC_FS_4G | 0x00000001 |
-| SENSOR_CFG_ACC_FS_8G | 0x00000002 |
-| SENSOR_CFG_ACC_FS_16G | 0x00000003 |
-| SENSOR_CFG_ACC_FS_32G | 0x00000004 |
-| SENSOR_CFG_ACC_FS_MAX | 0x00000007 |
-| SENSOR_CFG_ACC_FS_MASK | 0x00000070 |
-| SENSOR_CFG_ACC_FS_OFFSET |  (int)4 |
-| SENSOR_CFG_GYR_DLPF_250HZ | 0x00000000 |
-| SENSOR_CFG_GYR_DLPF_184HZ | 0x00000001 |
-| SENSOR_CFG_GYR_DLPF_92HZ | 0x00000002 |
-| SENSOR_CFG_GYR_DLPF_41HZ | 0x00000003 |
-| SENSOR_CFG_GYR_DLPF_20HZ | 0x00000004 |
-| SENSOR_CFG_GYR_DLPF_10HZ | 0x00000005 |
-| SENSOR_CFG_GYR_DLPF_5HZ | 0x00000006 |
-| SENSOR_CFG_GYR_DLPF_MASK | 0x00000F00 |
-| SENSOR_CFG_GYR_DLPF_OFFSET |  (int)8 |
-| SENSOR_CFG_ACC_DLPF_218HZ | 0x00000000 |
-| SENSOR_CFG_ACC_DLPF_218HZb | 0x00000001 |
-| SENSOR_CFG_ACC_DLPF_99HZ | 0x00000002 |
-| SENSOR_CFG_ACC_DLPF_45HZ | 0x00000003 |
-| SENSOR_CFG_ACC_DLPF_21HZ | 0x00000004 |
-| SENSOR_CFG_ACC_DLPF_10HZ | 0x00000005 |
-| SENSOR_CFG_ACC_DLPF_5HZ | 0x00000006 |
-| SENSOR_CFG_ACC_DLPF_MASK | 0x0000F000 |
-| SENSOR_CFG_ACC_DLPF_OFFSET |  (int)12 |
-| SENSOR_CFG_SENSOR_ROTATION_MASK | 0x001F0000 |
-| SENSOR_CFG_SENSOR_ROTATION_OFFSET |  (int)16 |
-| SENSOR_CFG_SENSOR_ROTATION_0_0_0 |  (int)0 |
-| SENSOR_CFG_SENSOR_ROTATION_0_0_90 |  (int)1 |
-| SENSOR_CFG_SENSOR_ROTATION_0_0_180 |  (int)2 |
-| SENSOR_CFG_SENSOR_ROTATION_0_0_N90 |  (int)3 |
-| SENSOR_CFG_SENSOR_ROTATION_90_0_0 |  (int)4 |
-| SENSOR_CFG_SENSOR_ROTATION_90_0_90 |  (int)5 |
-| SENSOR_CFG_SENSOR_ROTATION_90_0_180 |  (int)6 |
-| SENSOR_CFG_SENSOR_ROTATION_90_0_N90 |  (int)7 |
-| SENSOR_CFG_SENSOR_ROTATION_180_0_0 |  (int)8 |
-| SENSOR_CFG_SENSOR_ROTATION_180_0_90 |  (int)9 |
-| SENSOR_CFG_SENSOR_ROTATION_180_0_180 |  (int)10 |
-| SENSOR_CFG_SENSOR_ROTATION_180_0_N90 |  (int)11 |
-| SENSOR_CFG_SENSOR_ROTATION_N90_0_0 |  (int)12 |
-| SENSOR_CFG_SENSOR_ROTATION_N90_0_90 |  (int)13 |
-| SENSOR_CFG_SENSOR_ROTATION_N90_0_180 |  (int)14 |
-| SENSOR_CFG_SENSOR_ROTATION_N90_0_N90 |  (int)15 |
-| SENSOR_CFG_SENSOR_ROTATION_0_90_0 |  (int)16 |
-| SENSOR_CFG_SENSOR_ROTATION_0_90_90 |  (int)17 |
-| SENSOR_CFG_SENSOR_ROTATION_0_90_180 |  (int)18 |
-| SENSOR_CFG_SENSOR_ROTATION_0_90_N90 |  (int)19 |
-| SENSOR_CFG_SENSOR_ROTATION_0_N90_0 |  (int)20 |
-| SENSOR_CFG_SENSOR_ROTATION_0_N90_90 |  (int)21 |
-| SENSOR_CFG_SENSOR_ROTATION_0_N90_180 |  (int)22 |
-| SENSOR_CFG_SENSOR_ROTATION_0_N90_N90 |  (int)23 |
-| SENSOR_CFG_DISABLE_MAGNETOMETER | 0x00400000 |
-| SENSOR_CFG_DISABLE_BAROMETER | 0x00800000 |
-| SENSOR_CFG_IMU_FAULT_DETECT_MASK | 0xFF000000 |
-| SENSOR_CFG_IMU_FAULT_DETECT_GYR | 0x01000000 |
-| SENSOR_CFG_IMU_FAULT_DETECT_ACC | 0x02000000 |
-| SENSOR_CFG_IMU_FAULT_DETECT_OFFLINE | 0x04000000 |
-| SENSOR_CFG_IMU_FAULT_DETECT_LARGE_BIAS | 0x08000000 |
-| SENSOR_CFG_IMU_FAULT_DETECT_SENSOR_NOISE | 0x10000000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| SENSOR_CFG_GYR_FS_250 | 0x00000000 | Gyro full-scale range: +-250 deg/s |
+| SENSOR_CFG_GYR_FS_500 | 0x00000001 | Gyro full-scale range: +-500 deg/s |
+| SENSOR_CFG_GYR_FS_1000 | 0x00000002 | Gyro full-scale range: +-1000 deg/s |
+| SENSOR_CFG_GYR_FS_2000 | 0x00000003 | Gyro full-scale range: +-2000 deg/s |
+| SENSOR_CFG_GYR_FS_4000 | 0x00000004 | Gyro full-scale range: +-4000 deg/s |
+| SENSOR_CFG_GYR_FS_MAX | 0x00000007 | Gyro full-scale range: use individual sensor's max range |
+| SENSOR_CFG_GYR_FS_MASK | 0x00000007 | Mask for gyro full-scale range field |
+| SENSOR_CFG_GYR_FS_OFFSET |  (int)0 | Bit offset of SENSOR_CFG_GYR_FS_MASK within sensorConfig |
+| SENSOR_CFG_ACC_FS_2G | 0x00000000 | Accelerometer full-scale range: +-2 g (m/s^2) |
+| SENSOR_CFG_ACC_FS_4G | 0x00000001 | Accelerometer full-scale range: +-4 g (m/s^2) |
+| SENSOR_CFG_ACC_FS_8G | 0x00000002 | Accelerometer full-scale range: +-8 g (m/s^2) |
+| SENSOR_CFG_ACC_FS_16G | 0x00000003 | Accelerometer full-scale range: +-16 g (m/s^2) |
+| SENSOR_CFG_ACC_FS_32G | 0x00000004 | Accelerometer full-scale range: +-32 g (m/s^2) |
+| SENSOR_CFG_ACC_FS_MAX | 0x00000007 | Accelerometer full-scale range: use individual sensor's max range |
+| SENSOR_CFG_ACC_FS_MASK | 0x00000070 | Mask for accelerometer full-scale range field |
+| SENSOR_CFG_ACC_FS_OFFSET |  (int)4 | Bit offset of SENSOR_CFG_ACC_FS_MASK within sensorConfig |
+| SENSOR_CFG_GYR_DLPF_250HZ | 0x00000000 | Gyro DLPF bandwidth override: 250 Hz |
+| SENSOR_CFG_GYR_DLPF_184HZ | 0x00000001 | Gyro DLPF bandwidth override: 184 Hz |
+| SENSOR_CFG_GYR_DLPF_92HZ | 0x00000002 | Gyro DLPF bandwidth override: 92 Hz |
+| SENSOR_CFG_GYR_DLPF_41HZ | 0x00000003 | Gyro DLPF bandwidth override: 41 Hz |
+| SENSOR_CFG_GYR_DLPF_20HZ | 0x00000004 | Gyro DLPF bandwidth override: 20 Hz |
+| SENSOR_CFG_GYR_DLPF_10HZ | 0x00000005 | Gyro DLPF bandwidth override: 10 Hz |
+| SENSOR_CFG_GYR_DLPF_5HZ | 0x00000006 | Gyro DLPF bandwidth override: 5 Hz |
+| SENSOR_CFG_GYR_DLPF_MASK | 0x00000F00 | Mask for gyro DLPF bandwidth field |
+| SENSOR_CFG_GYR_DLPF_OFFSET |  (int)8 | Bit offset of SENSOR_CFG_GYR_DLPF_MASK within sensorConfig |
+| SENSOR_CFG_ACC_DLPF_218HZ | 0x00000000 | Accelerometer DLPF bandwidth override: 218 Hz |
+| SENSOR_CFG_ACC_DLPF_218HZb | 0x00000001 | Accelerometer DLPF bandwidth override: 218 Hz (alternate register value) |
+| SENSOR_CFG_ACC_DLPF_99HZ | 0x00000002 | Accelerometer DLPF bandwidth override: 99 Hz |
+| SENSOR_CFG_ACC_DLPF_45HZ | 0x00000003 | Accelerometer DLPF bandwidth override: 45 Hz |
+| SENSOR_CFG_ACC_DLPF_21HZ | 0x00000004 | Accelerometer DLPF bandwidth override: 21 Hz |
+| SENSOR_CFG_ACC_DLPF_10HZ | 0x00000005 | Accelerometer DLPF bandwidth override: 10 Hz |
+| SENSOR_CFG_ACC_DLPF_5HZ | 0x00000006 | Accelerometer DLPF bandwidth override: 5 Hz |
+| SENSOR_CFG_ACC_DLPF_MASK | 0x0000F000 | Mask for accelerometer DLPF bandwidth field |
+| SENSOR_CFG_ACC_DLPF_OFFSET |  (int)12 | Bit offset of SENSOR_CFG_ACC_DLPF_MASK within sensorConfig |
+| SENSOR_CFG_SENSOR_ROTATION_MASK | 0x001F0000 | Mask for IMU/magnetometer mounting rotation field |
+| SENSOR_CFG_SENSOR_ROTATION_OFFSET |  (int)16 | Bit offset of SENSOR_CFG_SENSOR_ROTATION_MASK within sensorConfig |
+| SENSOR_CFG_SENSOR_ROTATION_0_0_0 |  (int)0 | Mounting rotation (roll, pitch, yaw deg): 0, 0, 0 |
+| SENSOR_CFG_SENSOR_ROTATION_0_0_90 |  (int)1 | Mounting rotation (roll, pitch, yaw deg): 0, 0, 90 |
+| SENSOR_CFG_SENSOR_ROTATION_0_0_180 |  (int)2 | Mounting rotation (roll, pitch, yaw deg): 0, 0, 180 |
+| SENSOR_CFG_SENSOR_ROTATION_0_0_N90 |  (int)3 | Mounting rotation (roll, pitch, yaw deg): 0, 0, -90 |
+| SENSOR_CFG_SENSOR_ROTATION_90_0_0 |  (int)4 | Mounting rotation (roll, pitch, yaw deg): 90, 0, 0 |
+| SENSOR_CFG_SENSOR_ROTATION_90_0_90 |  (int)5 | Mounting rotation (roll, pitch, yaw deg): 90, 0, 90 |
+| SENSOR_CFG_SENSOR_ROTATION_90_0_180 |  (int)6 | Mounting rotation (roll, pitch, yaw deg): 90, 0, 180 |
+| SENSOR_CFG_SENSOR_ROTATION_90_0_N90 |  (int)7 | Mounting rotation (roll, pitch, yaw deg): 90, 0, -90 |
+| SENSOR_CFG_SENSOR_ROTATION_180_0_0 |  (int)8 | Mounting rotation (roll, pitch, yaw deg): 180, 0, 0 |
+| SENSOR_CFG_SENSOR_ROTATION_180_0_90 |  (int)9 | Mounting rotation (roll, pitch, yaw deg): 180, 0, 90 |
+| SENSOR_CFG_SENSOR_ROTATION_180_0_180 |  (int)10 | Mounting rotation (roll, pitch, yaw deg): 180, 0, 180 |
+| SENSOR_CFG_SENSOR_ROTATION_180_0_N90 |  (int)11 | Mounting rotation (roll, pitch, yaw deg): 180, 0, -90 |
+| SENSOR_CFG_SENSOR_ROTATION_N90_0_0 |  (int)12 | Mounting rotation (roll, pitch, yaw deg): -90, 0, 0 |
+| SENSOR_CFG_SENSOR_ROTATION_N90_0_90 |  (int)13 | Mounting rotation (roll, pitch, yaw deg): -90, 0, 90 |
+| SENSOR_CFG_SENSOR_ROTATION_N90_0_180 |  (int)14 | Mounting rotation (roll, pitch, yaw deg): -90, 0, 180 |
+| SENSOR_CFG_SENSOR_ROTATION_N90_0_N90 |  (int)15 | Mounting rotation (roll, pitch, yaw deg): -90, 0, -90 |
+| SENSOR_CFG_SENSOR_ROTATION_0_90_0 |  (int)16 | Mounting rotation (roll, pitch, yaw deg): 0, 90, 0 |
+| SENSOR_CFG_SENSOR_ROTATION_0_90_90 |  (int)17 | Mounting rotation (roll, pitch, yaw deg): 0, 90, 90 |
+| SENSOR_CFG_SENSOR_ROTATION_0_90_180 |  (int)18 | Mounting rotation (roll, pitch, yaw deg): 0, 90, 180 |
+| SENSOR_CFG_SENSOR_ROTATION_0_90_N90 |  (int)19 | Mounting rotation (roll, pitch, yaw deg): 0, 90, -90 |
+| SENSOR_CFG_SENSOR_ROTATION_0_N90_0 |  (int)20 | Mounting rotation (roll, pitch, yaw deg): 0, -90, 0 |
+| SENSOR_CFG_SENSOR_ROTATION_0_N90_90 |  (int)21 | Mounting rotation (roll, pitch, yaw deg): 0, -90, 90 |
+| SENSOR_CFG_SENSOR_ROTATION_0_N90_180 |  (int)22 | Mounting rotation (roll, pitch, yaw deg): 0, -90, 180 |
+| SENSOR_CFG_SENSOR_ROTATION_0_N90_N90 |  (int)23 | Mounting rotation (roll, pitch, yaw deg): 0, -90, -90 |
+| SENSOR_CFG_DISABLE_MAGNETOMETER | 0x00400000 | Disable magnetometer sensor (sensorConfig[22]) |
+| SENSOR_CFG_DISABLE_BAROMETER | 0x00800000 | Disable barometer sensor (sensorConfig[23]) |
+| SENSOR_CFG_IMU_FAULT_DETECT_MASK | 0xFF000000 | Mask for multiple-IMU fault detection level field. Higher levels add new features to previous levels. |
+| SENSOR_CFG_IMU_FAULT_DETECT_GYR | 0x01000000 | Enable multiple IMU gyro fault detection. Must be enabled for other gyro detection modes (offline, large bias, and noise). |
+| SENSOR_CFG_IMU_FAULT_DETECT_ACC | 0x02000000 | Enable multiple IMU accelerometer fault detection. Must be enabled for other accel detection modes (offline, large bias, and noise). |
+| SENSOR_CFG_IMU_FAULT_DETECT_OFFLINE | 0x04000000 | (Disabled/reserved, would be (int)0x04000000) One or more IMUs is offline or stuck |
+| SENSOR_CFG_IMU_FAULT_DETECT_LARGE_BIAS | 0x08000000 | (Disabled/reserved, would be (int)0x08000000) IMU large-bias fault detection |
+| SENSOR_CFG_IMU_FAULT_DETECT_SENSOR_NOISE | 0x10000000 | (Disabled/reserved, would be (int)0x10000000) IMU excessive-noise fault detection |
+
+
+#### DID_FLASH_CONFIG.startupImuOdr
+
+(eImuOdr)  IMU output data rate (ODR), used with nvm_flash_cfg_t.startupImuOdr (DID_FLASH_CONFIG). Each IMU runs at its supported ODR nearest the nominal rate (exactly the nominal rate on the LSM6DSV). Each value lists its sensor sample period, the time between IMU samples (1 / ODR). This differs from the firmware sample task period (DID_SYS_PARAMS.sampleTaskPeriodMs, see IMU_ODR_TASK_PERIOD_MS()), which is 1 ms for rates of 1 kHz and above, processing every IMU sample where the hardware supports it (IMX-6), and the sensor sample period below 1 kHz.
+
+| Field | Value | Description |
+|-------|-------|-------------|
+| IMU_ODR_DISABLED | 0 | IMU sampling disabled |
+| IMU_ODR_2000HZ | 1 | 2 kHz, 0.5 ms sample period (default) |
+| IMU_ODR_1000HZ | 2 | 1 kHz, 1 ms sample period |
+| IMU_ODR_500HZ | 3 | 500 Hz, 2 ms sample period |
+| IMU_ODR_250HZ | 4 | 250 Hz, 4 ms sample period |
+| IMU_ODR_125HZ | 5 | 125 Hz, 8 ms sample period |
+| IMU_ODR_62_5HZ | 6 | 62.5 Hz, 16 ms sample period |
+| IMU_ODR_31_25HZ | 7 | 31.25 Hz, 32 ms sample period |
+| IMU_ODR_15_625HZ | 8 | 15.625 Hz, 64 ms sample period |
+| IMU_ODR_4000HZ | 9 | 4 kHz, 0.25 ms sample period. Compared with 2 kHz, doubles the accelerometer bandwidth (ODR/4, 1 kHz) and moves the anti-aliasing margin well above the gyro's fixed bandwidth (about 500 Hz, the same at either rate), so vibration between 1 and 2 kHz is filtered instead of aliasing into the solution. Consider it for platforms with strong high-frequency vibration (engines, rotors, motors) or when accelerometer content above 500 Hz is needed. Costs about twice the sample processing of 2 kHz, and DID_IMUS_RAW output at this rate needs a high-bandwidth port. |
+| IMU_ODR_8000HZ | 10 | 8 kHz, 0.125 ms sample period (requires high-bandwidth communication port to prevent data loss) |
 
 
 #### DID_FLASH_CONFIG.sysCfgBits
 
-(eSysConfigBits)  
+(eSysConfigBits)  System configuration bitflags, used with nvm_flash_cfg_t.sysCfgBits (DID_FLASH_CONFIG). OR these bits together to disable/enable EKF sensor fusion sources, mag calibration behavior, automatic zero-velocity/zero-rate updates, BIT-on-startup, and brownout reset threshold. Written to flash and applied on the next reset.
 
-| Field | Value |
-|-------|------|
-| UNUSED1 | 0x00000001 |
-| SYS_CFG_BITS_ENABLE_MAG_CONTINUOUS_CAL | 0x00000002 |
-| SYS_CFG_BITS_AUTO_MAG_RECAL | 0x00000004 |
-| SYS_CFG_BITS_DISABLE_MAG_DECL_ESTIMATION | 0x00000008 |
-| SYS_CFG_BITS_DISABLE_LEDS | 0x00000010 |
-| SYS_CFG_BITS_MAG_RECAL_MODE_MASK | 0x00000700 |
-| SYS_CFG_BITS_MAG_RECAL_MODE_OFFSET | 8 |
-| SYS_CFG_BITS_MAG_ENABLE_WMM_DECLINATION | 0x00000800 |
-| SYS_CFG_BITS_DISABLE_MAGNETOMETER_FUSION | 0x00001000 |
-| SYS_CFG_BITS_DISABLE_BAROMETER_FUSION | 0x00002000 |
-| SYS_CFG_BITS_DISABLE_GNSS1_FUSION | 0x00004000 |
-| SYS_CFG_BITS_DISABLE_GNSS2_FUSION | 0x00008000 |
-| SYS_CFG_BITS_DISABLE_AUTO_ZERO_VELOCITY_UPDATES | 0x00010000 |
-| SYS_CFG_BITS_DISABLE_AUTO_ZERO_ANGULAR_RATE_UPDATES | 0x00020000 |
-| SYS_CFG_BITS_DISABLE_INS_EKF | 0x00040000 |
-| SYS_CFG_BITS_DISABLE_AUTO_BIT_ON_STARTUP | 0x00080000 |
-| SYS_CFG_BITS_DISABLE_WHEEL_ENCODER_FUSION | 0x00100000 |
-| SYS_CFG_BITS_ENABLE_GNSS_ANTENNA_OFFSET_ESTIMATION | 0x00200000 |
-| SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 |
-| SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 |
-| SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 |
-| SYS_CFG_BITS_BOR_LEVEL_3 | 0x3 |
-| SYS_CFG_BITS_BOR_THRESHOLD_MASK | 0x00C00000 |
-| SYS_CFG_BITS_BOR_THRESHOLD_OFFSET | 22 |
-| SYS_CFG_USE_REFERENCE_IMU_IN_EKF | 0x01000000 |
-| SYS_CFG_EKF_REF_POINT_STATIONARY_ON_STROBE_INPUT | 0x02000000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| UNUSED1 | 0x00000001 | Unused/reserved bit |
+| SYS_CFG_BITS_ENABLE_MAG_CONTINUOUS_CAL | 0x00000002 | Enable mag continuous calibration. Allow slow background magnetometer calibration in the EKF. |
+| SYS_CFG_BITS_AUTO_MAG_RECAL | 0x00000004 | Enable automatic mag recalibration |
+| SYS_CFG_BITS_DISABLE_MAG_DECL_ESTIMATION | 0x00000008 | Disable mag declination estimation |
+| SYS_CFG_BITS_DISABLE_LEDS | 0x00000010 | Disable LEDs |
+| SYS_CFG_BITS_MAG_RECAL_MODE_MASK | 0x00000700 | Magnetometer recalibration mode mask. (see eMagCalState) 1 = multi-axis, 2 = single-axis |
+| SYS_CFG_BITS_MAG_RECAL_MODE_OFFSET | 8 | Bit offset of SYS_CFG_BITS_MAG_RECAL_MODE_MASK within sysCfgBits |
+| SYS_CFG_BITS_MAG_ENABLE_WMM_DECLINATION | 0x00000800 | When set, World Magnetic Model (WMM) will be used to set mag declination |
+| SYS_CFG_BITS_DISABLE_MAGNETOMETER_FUSION | 0x00001000 | Disable magnetometer fusion |
+| SYS_CFG_BITS_DISABLE_BAROMETER_FUSION | 0x00002000 | Disable barometer fusion |
+| SYS_CFG_BITS_DISABLE_GNSS1_FUSION | 0x00004000 | Disable GNSS 1 fusion |
+| SYS_CFG_BITS_DISABLE_GNSS2_FUSION | 0x00008000 | Disable GNSS 2 fusion |
+| SYS_CFG_BITS_DISABLE_AUTO_ZERO_VELOCITY_UPDATES | 0x00010000 | Disable automatic Zero Velocity Updates (ZUPT). Useful for degraded GNSS environments or applications with very slow velocities. |
+| SYS_CFG_BITS_DISABLE_AUTO_ZERO_ANGULAR_RATE_UPDATES | 0x00020000 | Disable automatic Zero Angular Rate Updates (ZARU). Useful for applications with small/slow angular rates. |
+| SYS_CFG_BITS_DISABLE_INS_EKF | 0x00040000 | Disable INS EKF updates |
+| SYS_CFG_BITS_DISABLE_AUTO_BIT_ON_STARTUP | 0x00080000 | Prevent built-in test (BIT) from running automatically on startup |
+| SYS_CFG_BITS_DISABLE_WHEEL_ENCODER_FUSION | 0x00100000 | Disable wheel encoder fusion |
+| SYS_CFG_BITS_ENABLE_GNSS_ANTENNA_OFFSET_ESTIMATION | 0x00200000 | Enable rover GNSS antenna offset estimation in RTK compassing mode |
+| SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 | Brownout reset threshold: 1.65 - 1.75 V (default) |
+| SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 | Brownout reset threshold: 2.0 - 2.1 V |
+| SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 | Brownout reset threshold: 2.25 - 2.35 V |
+| SYS_CFG_BITS_BOR_LEVEL_3 | 0x3 | Brownout reset threshold: 2.5 - 2.6 V |
+| SYS_CFG_BITS_BOR_THRESHOLD_MASK | 0x00C00000 | Mask for brownout reset threshold voltage level field |
+| SYS_CFG_BITS_BOR_THRESHOLD_OFFSET | 22 | Bit offset of SYS_CFG_BITS_BOR_THRESHOLD_MASK within sysCfgBits |
+| SYS_CFG_USE_REFERENCE_IMU_IN_EKF | 0x01000000 | Use reference IMU in EKF instead of onboard IMU |
+| SYS_CFG_EKF_REF_POINT_STATIONARY_ON_STROBE_INPUT | 0x02000000 | Reference point stationary on strobe input |
 
 
 #### DID_GPX_FLASH_CFG.sysCfgBits
 
-(eGpxSysConfigBits)  
+(eGpxSysConfigBits)  GPX system configuration bits, used with DID_GPX_FLASH_CFG::sysCfgBits (gpx_flash_cfg_t.sysCfgBits). Controls VCC_RF power switching and the brownout reset threshold. GPX_SYS_CFG_BITS_BOR_LEVEL_x are raw 2-bit codes (0-3), not pre-shifted bit flags -- shift the desired code left by GPX_SYS_CFG_BITS_BOR_THRESHOLD_OFFSET and mask with GPX_SYS_CFG_BITS_BOR_THRESHOLD_MASK before ORing it into sysCfgBits.
 
-| Field | Value |
-|-------|------|
-| GPX_SYS_CFG_BITS_DISABLE_VCC_RF | 0x00000001 |
-| GPX_SYS_CFG_BITS_EXT_AIDING_LATENCY | 0x00000002 |
-| GPX_SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 |
-| GPX_SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 |
-| GPX_SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 |
-| GPX_SYS_CFG_BITS_BOR_LEVEL_3 | 0x3 |
-| GPX_SYS_CFG_BITS_BOR_THRESHOLD_MASK | 0x00C00000 |
-| GPX_SYS_CFG_BITS_BOR_THRESHOLD_OFFSET | 22 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| GPX_SYS_CFG_BITS_DISABLE_VCC_RF | 0x00000001 | Disable (tri-state) VCC_RF (GPX pin 16) output supplied via VAUX (GPX pin 40) |
+| GPX_SYS_CFG_BITS_EXT_AIDING_LATENCY | 0x00000002 | Time the DID_EXT_AIDING_POS/_VEL observations the GPX emits (GRMC_BITS_EXT_AIDING_POS/_VEL) as fixed latency (EXT_AIDING_STATUS_TIME_LATENCY) instead of GNSS time of week |
+| GPX_SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 | Brownout reset threshold voltage level: 1.65 - 1.75 V (default) |
+| GPX_SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 | Brownout reset threshold voltage level: 2.0 - 2.1 V |
+| GPX_SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 | Brownout reset threshold voltage level: 2.25 - 2.35 V |
+| GPX_SYS_CFG_BITS_BOR_LEVEL_3 | 0x3 | Brownout reset threshold voltage level: 2.5 - 2.6 V |
+| GPX_SYS_CFG_BITS_BOR_THRESHOLD_MASK | 0x00C00000 | Mask for the brownout reset threshold field, once shifted into position within sysCfgBits |
+| GPX_SYS_CFG_BITS_BOR_THRESHOLD_OFFSET | 22 | Bit offset of GPX_SYS_CFG_BITS_BOR_THRESHOLD_MASK within sysCfgBits |
 
 
 #### DID_GPX_STATUS.hdwStatus
 
-(eGPXHdwStatusFlags)  
+(eGPXHdwStatusFlags)  (DID_GPX_STATUS) GPX hardware status flags, reported in gpx_status_t.hdwStatus. Reports per-GNSS-receiver signal/time/reset/init health, communications and PPS timing errors, CNO (carrier-to-noise) signal quality errors, built-in self-test (BIT) progress, temperature, and the cause of the last system reset. GPX_HDW_STATUS_ERROR_MASK ORs together the sub-fields considered indicative of an error condition for quick fault checks.
 
-| Field | Value |
-|-------|------|
-| GPX_HDW_STATUS_GNSS1_SATELLITE_RX | 0x00000001 |
-| GPX_HDW_STATUS_GNSS2_SATELLITE_RX | 0x00000002 |
-| GPX_HDW_STATUS_GNSS1_TIME_OF_WEEK_VALID | 0x00000004 |
-| GPX_HDW_STATUS_GNSS2_TIME_OF_WEEK_VALID | 0x00000008 |
-| GPX_HDW_STATUS_GNSS1_RESET_COUNT_MASK | 0x00000070 |
-| GPX_HDW_STATUS_GNSS1_RESET_COUNT_OFFSET | 4 |
-| GPX_HDW_STATUS_FAULT_GNSS1_INIT | 0x00000080 |
-| GPX_HDW_STATUS_GNSS1_FAULT_FLAG_OFFSET | 7 |
-| GPX_HDW_STATUS_GNSS2_RESET_COUNT_MASK | 0x00000700 |
-| GPX_HDW_STATUS_GNSS2_RESET_COUNT_OFFSET | 8 |
-| GPX_HDW_STATUS_FAULT_GNSS2_INIT | 0x00000800 |
-| GPX_HDW_STATUS_GNSS2_FAULT_FLAG_OFFSET | 11 |
-| GPX_HDW_STATUS_GNSS_FW_UPDATE_REQUIRED | 0x00001000 |
-| GPX_HDW_STATUS_LED_ENABLED | 0x00002000 |
-| GPX_HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00004000 |
-| GPX_HDW_STATUS_FLASH_WRITE_PENDING | 0x00008000 |
-| GPX_HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
-| GPX_HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
-| GPX_HDW_STATUS_ERR_COM_MASK | 0x00030000 |
-| GPX_HDW_STATUS_ERR_NO_GNSS1_PPS | 0x00040000 |
-| GPX_HDW_STATUS_ERR_NO_GNSS2_PPS | 0x00080000 |
-| GPX_HDW_STATUS_ERR_PPS_MASK | 0x000C0000 |
-| GPX_HDW_STATUS_ERR_LOW_CNO_GNSS1 | 0x00100000 |
-| GPX_HDW_STATUS_ERR_LOW_CNO_GNSS2 | 0x00200000 |
-| GPX_HDW_STATUS_ERR_CNO_GNSS1_IR | 0x00400000 |
-| GPX_HDW_STATUS_ERR_CNO_GNSS2_IR | 0x00800000 |
-| GPX_HDW_STATUS_ERR_CNO_MASK | 0x00F00000 |
-| GPX_HDW_STATUS_BIT_RUNNING | 0x01000000 |
-| GPX_HDW_STATUS_BIT_PASSED | 0x02000000 |
-| GPX_HDW_STATUS_BIT_FAULT | 0x03000000 |
-| GPX_HDW_STATUS_BIT_MASK | 0x03000000 |
-| GPX_HDW_STATUS_BIT_OFFSET | 24 |
-| GPX_HDW_STATUS_ERR_TEMPERATURE | 0x04000000 |
-| GPX_HDW_STATUS_GNSS_PPS_TIMESYNC | 0x08000000 |
-| GPX_HDW_STATUS_RESET_CAUSE_MASK | 0x70000000 |
-| GPX_HDW_STATUS_RESET_CAUSE_BACKUP_MODE | 0x10000000 |
-| GPX_HDW_STATUS_RESET_CAUSE_SOFT | 0x20000000 |
-| GPX_HDW_STATUS_RESET_CAUSE_HDW | 0x40000000 |
-| GPX_HDW_STATUS_FAULT_SYS_CRITICAL | 0x80000000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| GPX_HDW_STATUS_GNSS1_SATELLITE_RX | 0x00000001 | GNSS1 satellite signals are being received (antenna and cable are good) |
+| GPX_HDW_STATUS_GNSS2_SATELLITE_RX | 0x00000002 | GNSS2 satellite signals are being received (antenna and cable are good) |
+| GPX_HDW_STATUS_GNSS1_TIME_OF_WEEK_VALID | 0x00000004 | GPS time of week is valid and reported for GNSS1. Otherwise the timeOfWeek is local system time. |
+| GPX_HDW_STATUS_GNSS2_TIME_OF_WEEK_VALID | 0x00000008 | GPS time of week is valid and reported for GNSS2. Otherwise the timeOfWeek is local system time. |
+| GPX_HDW_STATUS_GNSS1_RESET_COUNT_MASK | 0x00000070 | Mask for the GNSS1 reset-required count field |
+| GPX_HDW_STATUS_GNSS1_RESET_COUNT_OFFSET | 4 | Bit offset of GPX_HDW_STATUS_GNSS1_RESET_COUNT_MASK within hdwStatus |
+| GPX_HDW_STATUS_FAULT_GNSS1_INIT | 0x00000080 | Failed to communicate or setup GNSS receiver 1 |
+| GPX_HDW_STATUS_GNSS1_FAULT_FLAG_OFFSET | 7 | Bit offset of GPX_HDW_STATUS_FAULT_GNSS1_INIT within hdwStatus |
+| GPX_HDW_STATUS_GNSS2_RESET_COUNT_MASK | 0x00000700 | Mask for the GNSS2 reset-required count field |
+| GPX_HDW_STATUS_GNSS2_RESET_COUNT_OFFSET | 8 | Bit offset of GPX_HDW_STATUS_GNSS2_RESET_COUNT_MASK within hdwStatus |
+| GPX_HDW_STATUS_FAULT_GNSS2_INIT | 0x00000800 | Failed to communicate or setup GNSS receiver 2 |
+| GPX_HDW_STATUS_GNSS2_FAULT_FLAG_OFFSET | 11 | Bit offset of GPX_HDW_STATUS_FAULT_GNSS2_INIT within hdwStatus |
+| GPX_HDW_STATUS_GNSS_FW_UPDATE_REQUIRED | 0x00001000 | GNSS is faulting; firmware update REQUIRED |
+| GPX_HDW_STATUS_LED_ENABLED | 0x00002000 | Enables LED in Manufacturing TBed |
+| GPX_HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00004000 | System reset is required for proper function |
+| GPX_HDW_STATUS_FLASH_WRITE_PENDING | 0x00008000 | System flash write staging or occurring now. Processor will pause and not respond during a flash write, typically 150-250 ms. |
+| GPX_HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 | Communications Tx buffer limited |
+| GPX_HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 | Communications Rx buffer overrun |
+| GPX_HDW_STATUS_ERR_COM_MASK | 0x00030000 | Communications error mask |
+| GPX_HDW_STATUS_ERR_NO_GNSS1_PPS | 0x00040000 | GNSS1 PPS timepulse signal has not been received or is in error |
+| GPX_HDW_STATUS_ERR_NO_GNSS2_PPS | 0x00080000 | GNSS2 PPS timepulse signal has not been received or is in error |
+| GPX_HDW_STATUS_ERR_PPS_MASK | 0x000C0000 | GNSS PPS error mask |
+| GPX_HDW_STATUS_ERR_LOW_CNO_GNSS1 | 0x00100000 | GNSS1 signal strength low (<20) |
+| GPX_HDW_STATUS_ERR_LOW_CNO_GNSS2 | 0x00200000 | GNSS2 signal strength low (<20) |
+| GPX_HDW_STATUS_ERR_CNO_GNSS1_IR | 0x00400000 | GNSS1 signal irregular. High CNO standard deviation over 5 second period detected. 10x CNO mean sigma (i.e. >1.0 dBHz) |
+| GPX_HDW_STATUS_ERR_CNO_GNSS2_IR | 0x00800000 | GNSS2 signal irregular. High CNO standard deviation over 5 second period detected. 10x CNO mean sigma (i.e. >1.0 dBHz) |
+| GPX_HDW_STATUS_ERR_CNO_MASK | 0x00F00000 | GNSS signal error mask |
+| GPX_HDW_STATUS_BIT_RUNNING | 0x01000000 | (BIT) Built-in self-test running |
+| GPX_HDW_STATUS_BIT_PASSED | 0x02000000 | (BIT) Built-in self-test passed |
+| GPX_HDW_STATUS_BIT_FAULT | 0x03000000 | (BIT) Built-in self-test failure |
+| GPX_HDW_STATUS_BIT_MASK | 0x03000000 | (BIT) Built-in self-test mask |
+| GPX_HDW_STATUS_BIT_OFFSET | 24 | (BIT) Built-in self-test offset |
+| GPX_HDW_STATUS_ERR_TEMPERATURE | 0x04000000 | Temperature outside spec'd operating range |
+| GPX_HDW_STATUS_GNSS_PPS_TIMESYNC | 0x08000000 | Time synchronized by GNSS PPS |
+| GPX_HDW_STATUS_RESET_CAUSE_MASK | 0x70000000 | Mask for the cause-of-system-reset field |
+| GPX_HDW_STATUS_RESET_CAUSE_BACKUP_MODE | 0x10000000 | Reset from Backup mode (low-power state w/ CPU off) |
+| GPX_HDW_STATUS_RESET_CAUSE_SOFT | 0x20000000 | Reset from Software |
+| GPX_HDW_STATUS_RESET_CAUSE_HDW | 0x40000000 | Reset from Hardware (NRST pin low) |
+| GPX_HDW_STATUS_FAULT_SYS_CRITICAL | 0x80000000 | Critical System Fault, CPU error. (see DID_GPX_STATUS.status, eGpxStatus::GPX_STATUS_FATAL_MASK) |
 
 
 #### DID_GPX_STATUS.rtkMode
 
-(eRTKConfigBits)  
+(eRTKConfigBits)  RTK positioning, compassing, and base-station configuration bitflags, used with nvm_flash_cfg_t.RTKCfgBits (DID_FLASH_CONFIG). Selects rover mode (precision positioning vs. dual-GNSS compassing), and independently configures the device to act as an RTK base station broadcasting ublox/RTCM3 correction data from GNSS1 and/or GNSS2 out any combination of serial ports, USB, or the "current" port. OR the desired bits together; RTK_CFG_BITS_ROVER_MODE_MASK and RTK_CFG_BITS_BASE_MODE isolate the rover-mode and base-mode sub-fields respectively.
 
-| Field | Value |
-|-------|------|
-| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED | 0x00000001 |
-| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING | 0x00000002 |
-| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING | 0x00000004 |
-| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED | 0x00000008 |
-| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\) |
-| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) |
-| RTK_CFG_BITS_ROVER_MODE_MASK | 0x0000000F |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER0 | 0x00000010 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER1 | 0x00000020 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER2 | 0x00000040 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_USB | 0x00000080 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER0 | 0x00000100 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER1 | 0x00000200 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER2 | 0x00000400 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_USB | 0x00000800 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER0 | 0x00001000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER1 | 0x00002000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER2 | 0x00004000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_USB | 0x00008000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER0 | 0x00010000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER1 | 0x00020000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER2 | 0x00040000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_USB | 0x00080000 |
-| RTK_CFG_BITS_BASE_POS_MOVING | 0x00100000 |
-| RTK_CFG_BITS_RESERVED1 | 0x00200000 |
-| RTK_CFG_BITS_RTK_BASE_IS_IDENTICAL_TO_ROVER | 0x00400000 |
-| RTK_CFG_BITS_GNSS_PORT_PASS_THROUGH | 0x00800000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT | 0x01000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT | 0x02000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CLEAR_CUR_PORT | 0x04000000 |
-| RTK_CFG_BITS_MULTIPATH_MITIGATION | 0x08000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT\) |
-| RTK_CFG_BITS_BASE_UBLOX_MASK | (RTK_CFG_BITS_BASE_GNSS1_UBLOX_MASK\|RTK_CFG_BITS_BASE_GNSS2_UBLOX_MASK\) |
-| RTK_CFG_BITS_BASE_RTCM3_MASK | (RTK_CFG_BITS_BASE_GNSS1_RTCM3_MASK\|RTK_CFG_BITS_BASE_GNSS2_RTCM3_MASK\) |
-| RTK_CFG_BITS_BASE_MODE | (RTK_CFG_BITS_BASE_UBLOX_MASK\|RTK_CFG_BITS_BASE_RTCM3_MASK\) |
-| RTK_CFG_BITS_ROVER_MODE_ONBOARD_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) |
-| RTK_CFG_BITS_ALL_MODES_MASK | (RTK_CFG_BITS_ROVER_MODE_MASK\|RTK_CFG_BITS_BASE_MODE\) |
+| Field | Value | Description |
+|-------|-------|-------------|
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED | 0x00000001 | Enable onboard RTK GNSS precision positioning (GNSS1) DEPRECATED |
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING | 0x00000002 | Enable external RTK GNSS positioning (GNSS1) |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING | 0x00000004 | Enable dual GNSS RTK compassing (GNSS2 to GNSS1) |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED | 0x00000008 | Enable dual GNSS RTK compassing (GNSS2 to GNSS1) DEPRECATED |
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\) | Mask of RTK GNSS positioning types |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) | Mask of dual GNSS RTK compassing types |
+| RTK_CFG_BITS_ROVER_MODE_MASK | 0x0000000F | Mask of RTK position, heading, and base modes |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER0 | 0x00000010 | Enable RTK base and output ublox data from GNSS 1 on serial port 0 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER1 | 0x00000020 | Enable RTK base and output ublox data from GNSS 1 on serial port 1 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER2 | 0x00000040 | Enable RTK base and output ublox data from GNSS 1 on serial port 2 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_USB | 0x00000080 | Enable RTK base and output ublox data from GNSS 1 on USB port |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER0 | 0x00000100 | Enable RTK base and output RTCM3 data from GNSS 1 on serial port 0 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER1 | 0x00000200 | Enable RTK base and output RTCM3 data from GNSS 1 on serial port 1 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER2 | 0x00000400 | Enable RTK base and output RTCM3 data from GNSS 1 on serial port 2 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_USB | 0x00000800 | Enable RTK base and output RTCM3 data from GNSS 1 on USB port |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER0 | 0x00001000 | Enable RTK base and output ublox data from GNSS 2 on serial port 0 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER1 | 0x00002000 | Enable RTK base and output ublox data from GNSS 2 on serial port 1 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER2 | 0x00004000 | Enable RTK base and output ublox data from GNSS 2 on serial port 2 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_USB | 0x00008000 | Enable RTK base and output ublox data from GNSS 2 on USB port |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER0 | 0x00010000 | Enable RTK base and output RTCM3 data from GNSS 2 on serial port 0 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER1 | 0x00020000 | Enable RTK base and output RTCM3 data from GNSS 2 on serial port 1 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER2 | 0x00040000 | Enable RTK base and output RTCM3 data from GNSS 2 on serial port 2 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_USB | 0x00080000 | Enable RTK base and output RTCM3 data from GNSS 2 on USB port |
+| RTK_CFG_BITS_BASE_POS_MOVING | 0x00100000 | Enable base mode moving position. (For future use. Not implemented. This bit should always be 0 for now.) TODO: Implement moving base. |
+| RTK_CFG_BITS_RESERVED1 | 0x00200000 | Reserved for future use |
+| RTK_CFG_BITS_RTK_BASE_IS_IDENTICAL_TO_ROVER | 0x00400000 | When using RTK, specifies whether the base station is identical hardware to this rover. If so, optimizations are enabled to get fix faster. |
+| RTK_CFG_BITS_GNSS_PORT_PASS_THROUGH | 0x00800000 | Forward all messages between the selected GNSS and serial port. Disable for RTK base use (to forward only GNSS raw messages and use the surveyed location refLLA instead of current GNSS position). |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT | 0x01000000 | Enable RTK base and output RTCM3 data from GNSS 1 on the current serial port |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT | 0x02000000 | Enable RTK base and output RTCM3 data from GNSS 2 on the current serial port |
+| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CLEAR_CUR_PORT | 0x04000000 | If this bit is set in conjunction with setting the current port, this clears the current port |
+| RTK_CFG_BITS_MULTIPATH_MITIGATION | 0x08000000 | Enable multipath detection and mitigation in RTK solutiion |
+| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT\) | Mask of RTK base and output RTCM3 data on the current serial ports |
+| RTK_CFG_BITS_BASE_UBLOX_MASK | (RTK_CFG_BITS_BASE_GNSS1_UBLOX_MASK\|RTK_CFG_BITS_BASE_GNSS2_UBLOX_MASK\) | Mask of all ublox base-output bits, both GNSS receivers |
+| RTK_CFG_BITS_BASE_RTCM3_MASK | (RTK_CFG_BITS_BASE_GNSS1_RTCM3_MASK\|RTK_CFG_BITS_BASE_GNSS2_RTCM3_MASK\) | Mask of all RTCM3 base-output bits, both GNSS receivers |
+| RTK_CFG_BITS_BASE_MODE | (RTK_CFG_BITS_BASE_UBLOX_MASK\|RTK_CFG_BITS_BASE_RTCM3_MASK\) | All base station bits |
+| RTK_CFG_BITS_ROVER_MODE_ONBOARD_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) | Mask selecting the deprecated onboard RTK engine rover modes |
+| RTK_CFG_BITS_ALL_MODES_MASK | (RTK_CFG_BITS_ROVER_MODE_MASK\|RTK_CFG_BITS_BASE_MODE\) | Mask of Rover, Compassing, and Base modes |
 
 
 #### DID_GPX_STATUS.status
 
-(eGpxStatus)  
+(eGpxStatus)  (DID_GPX_STATUS) GPX status flags, reported in gpx_status_t.status. Packs a communications parse-error counter, per-port Rx-traffic-detected flags, an update-confirmed flag, and a general fault region (bits 16-31) covering RTK/GNSS/RTOS/DMA fault flags plus a fatal-fault sub-field (GPX_STATUS_FATAL_MASK) that reports the specific cause the last time a critical CPU reset occurred. GPX_STATUS_FATAL_RESET_LOW_POW..GPX_STATUS_FATAL_UNKNOWN are raw cause codes, not individual bit flags -- shift the code left by GPX_STATUS_FATAL_OFFSET and mask with GPX_STATUS_FATAL_MASK to read/write the sub-field.
 
-| Field | Value |
-|-------|------|
-| GPX_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x0000000F |
-| GPX_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 0 |
-| GPX_STATUS_COM0_RX_TRAFFIC_DETECTED | 0x00000010 |
-| GPX_STATUS_COM1_RX_TRAFFIC_DETECTED | 0x00000020 |
-| GPX_STATUS_COM2_RX_TRAFFIC_DETECTED | 0x00000040 |
-| GPX_STATUS_USB_RX_TRAFFIC_DETECTED | 0x00000080 |
-| GPX_STATUS_UPDATE_CONFIRMED | 0x00000100 |
-| GPX_STATUS_GENERAL_FAULT_MASK | 0xFFDF0000 |
-| GPX_STATUS_FAULT_RTK_QUEUE_LIMITED | 0x00010000 |
-| GPX_STATUS_FAULT_GNSS_RCVR_TIME | 0x00100000 |
-| GPX_STATUS_FAULT_RTOS_TASK_PERIOD_OVERRUN | 0x00200000 |
-| GPX_STATUS_FAULT_DMA | 0x00800000 |
-| GPX_STATUS_FATAL_MASK | 0x1F000000 |
-| GPX_STATUS_FATAL_OFFSET | 24 |
-| GPX_STATUS_FATAL_RESET_LOW_POW |  (int)1 |
-| GPX_STATUS_FATAL_RESET_BROWN |  (int)2 |
-| GPX_STATUS_FATAL_RESET_WATCHDOG |  (int)3 |
-| GPX_STATUS_FATAL_CPU_EXCEPTION |  (int)4 |
-| GPX_STATUS_FATAL_UNHANDLED_INTERRUPT |  (int)5 |
-| GPX_STATUS_FATAL_STACK_OVERFLOW |  (int)6 |
-| GPX_STATUS_FATAL_KERNEL_OOPS |  (int)7 |
-| GPX_STATUS_FATAL_KERNEL_PANIC |  (int)8 |
-| GPX_STATUS_FATAL_UNALIGNED_ACCESS |  (int)9 |
-| GPX_STATUS_FATAL_MEMORY_ERROR |  (int)10 |
-| GPX_STATUS_FATAL_BUS_ERROR |  (int)11 |
-| GPX_STATUS_FATAL_USAGE_ERROR |  (int)12 |
-| GPX_STATUS_FATAL_DIV_ZERO |  (int)13 |
-| GPX_STATUS_FATAL_SER0_REINIT |  (int)14 |
-| GPX_STATUS_FATAL_UNKNOWN | 0x1F |
-| GPX_STATUS_FAULT_RP | 0x20000000 |
-| GPX_STATUS_FAULT_UNUSED | 0xC0000000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| GPX_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x0000000F | Mask for the communications parse error count field |
+| GPX_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 0 | Bit offset of GPX_STATUS_COM_PARSE_ERR_COUNT_MASK within status |
+| GPX_STATUS_COM0_RX_TRAFFIC_DETECTED | 0x00000010 | Rx communications detected on serial port 0 in the last 30 seconds |
+| GPX_STATUS_COM1_RX_TRAFFIC_DETECTED | 0x00000020 | Rx communications detected on serial port 1 in the last 30 seconds |
+| GPX_STATUS_COM2_RX_TRAFFIC_DETECTED | 0x00000040 | Rx communications detected on serial port 2 in the last 30 seconds |
+| GPX_STATUS_USB_RX_TRAFFIC_DETECTED | 0x00000080 | Rx communications detected on USB in the last 30 seconds |
+| GPX_STATUS_UPDATE_CONFIRMED | 0x00000100 | Update confirmed |
+| GPX_STATUS_GENERAL_FAULT_MASK | 0xFFDF0000 | Mask covering all general fault bits (RTK/GNSS/RTOS/DMA faults and the fatal sub-field)        // GPX_STATUS_FAULT_RTOS_TASK_PERIOD_OVERRUN excluded to prevent RTOS task period overrun false positives. WHJ |
+| GPX_STATUS_FAULT_RTK_QUEUE_LIMITED | 0x00010000 | RTK buffer filled causing data loss |
+| GPX_STATUS_FAULT_GNSS_RCVR_TIME | 0x00100000 | GNSS receiver time fault |
+| GPX_STATUS_FAULT_RTOS_TASK_PERIOD_OVERRUN | 0x00200000 | RTOS task period overrun |
+| GPX_STATUS_FAULT_DMA | 0x00800000 | DMA fault detected |
+| GPX_STATUS_FATAL_MASK | 0x1F000000 | Mask for the fatal-fault cause sub-field (critical failure resulting in CPU reset), once shifted into position within status |
+| GPX_STATUS_FATAL_OFFSET | 24 | Bit offset of GPX_STATUS_FATAL_MASK within status |
+| GPX_STATUS_FATAL_RESET_LOW_POW |  (int)1 | Fatal cause: reset from low power |
+| GPX_STATUS_FATAL_RESET_BROWN |  (int)2 | Fatal cause: reset from brown out |
+| GPX_STATUS_FATAL_RESET_WATCHDOG |  (int)3 | Fatal cause: reset from watchdog |
+| GPX_STATUS_FATAL_CPU_EXCEPTION |  (int)4 | Fatal cause: CPU exception |
+| GPX_STATUS_FATAL_UNHANDLED_INTERRUPT |  (int)5 | Fatal cause: unhandled interrupt |
+| GPX_STATUS_FATAL_STACK_OVERFLOW |  (int)6 | Fatal cause: stack overflow |
+| GPX_STATUS_FATAL_KERNEL_OOPS |  (int)7 | Fatal cause: kernel oops |
+| GPX_STATUS_FATAL_KERNEL_PANIC |  (int)8 | Fatal cause: kernel panic |
+| GPX_STATUS_FATAL_UNALIGNED_ACCESS |  (int)9 | Fatal cause: unaligned memory access |
+| GPX_STATUS_FATAL_MEMORY_ERROR |  (int)10 | Fatal cause: memory error |
+| GPX_STATUS_FATAL_BUS_ERROR |  (int)11 | Fatal cause: bus error (bad pointer or malloc) |
+| GPX_STATUS_FATAL_USAGE_ERROR |  (int)12 | Fatal cause: usage error |
+| GPX_STATUS_FATAL_DIV_ZERO |  (int)13 | Fatal cause: divide by zero |
+| GPX_STATUS_FATAL_SER0_REINIT |  (int)14 | Fatal cause: serial port 0 re-initialization |
+| GPX_STATUS_FATAL_UNKNOWN | 0x1F | Fatal cause: unknown. TODO: Temporarily set to (5 bits). Reset to 0xFF when gpx_flash_cfg.debug is no longer used with fault reporting. (WHJ) |
+| GPX_STATUS_FAULT_RP | 0x20000000 | Internal use |
+| GPX_STATUS_FAULT_UNUSED | 0xC0000000 | Reserved for future fault status |
 
 
 #### DID_SYS_CMD.command
 
-(eSystemCommand)  
+(eSystemCommand)  Command codes for system_command_t.command (DID_SYS_CMD). The paired invCommand value (shown in parens as "inv") is the bitwise inverse of command and must be sent in the same write for the command to be processed.
 
-| Field | Value |
-|-------|------|
-| SYS_CMD_NONE | 0 |
-| SYS_CMD_SAVE_PERSISTENT_MESSAGES | 1 |
-| SYS_CMD_ENABLE_BOOTLOADER_AND_RESET | 2 |
-| SYS_CMD_ENABLE_SENSOR_STATS | 3 |
-| SYS_CMD_ENABLE_RTOS_STATS | 4 |
-| SYS_CMD_ZERO_MOTION | 5 |
-| SYS_CMD_REF_POINT_STATIONARY | 6 |
-| SYS_CMD_REF_POINT_MOVING | 7 |
-| SYS_CMD_RESET_RTOS_STATS | 8 |
-| SYS_CMD_ENABLE_GNSS_LOW_LEVEL_CONFIG | 10 |
-| SYS_CMD_DISABLE_SERIAL_PORT_BRIDGE | 11 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GNSS1 | 12 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GNSS2 | 13 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER0 | 14 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER1 | 15 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER2 | 16 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER0_TO_GNSS1 | 17 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GNSS1 | 18 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GNSS2 | 19 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_USB | 20 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER0 | 21 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER1 | 22 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER2 | 23 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_LOOPBACK | 24 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER0_LOOPBACK | 25 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER1_LOOPBACK | 26 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER2_LOOPBACK | 27 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_LOOPBACK | 28 |
-| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_LOOPBACK_TESTMODE | 29 |
-| SYS_CMD_GPX_ENABLE_BOOTLOADER_MODE | 30 |
-| SYS_CMD_GPX_ENABLE_GNSS1_CHIPSET_BOOTLOADER | 31 |
-| SYS_CMD_GPX_ENABLE_GNSS2_CHIPSET_BOOTLOADER | 32 |
-| SYS_CMD_GPX_ENABLE_GNSS1_PASS_THROUGH | 33 |
-| SYS_CMD_GPX_ENABLE_GNSS2_PASS_THROUGH | 34 |
-| SYS_CMD_GPX_HARD_RESET_GNSS1 | 36 |
-| SYS_CMD_GPX_HARD_RESET_GNSS2 | 37 |
-| SYS_CMD_GPX_SOFT_RESET_GPX | 38 |
-| SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK | 39 |
-| SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK_TESTMODE | 40 |
-| SYS_CMD_GPX_ENABLE_RTOS_STATS | 41 |
-| SYS_CMD_GPX_SAVE_PERSISTENT_MESSAGES | 42 |
-| SYS_CMD_GNSS_RCVR_QUIET_MODE | 60 |
-| SYS_CMD_GNSS_RCVR_SOFT_RESET | 61 |
-| SYS_CMD_GNSS_RCVR_HARD_RESET | 62 |
-| SYS_CMD_GNSS_RCVR_PWR_CYCLE | 63 |
-| SYS_CMD_RESET_EKF_STATES | 70 |
-| SYS_CMD_CLEAR_ERROR_STATUS | 71 |
-| SYS_CMD_SAVE_FLASH | 97 |
-| SYS_CMD_SAVE_GNSS_ASSIST_TO_FLASH_RESET | 98 |
-| SYS_CMD_SOFTWARE_RESET | 99 |
-| SYS_CMD_MANF_UNLOCK | 1122334455 |
-| SYS_CMD_MANF_ERASE_CALIBRATION_MOTION | 1357924678 |
-| SYS_CMD_MANF_ERASE_CALIBRATION | 1357924679 |
-| SYS_CMD_MANF_FACTORY_RESET | 1357924680 |
-| SYS_CMD_MANF_CHIP_ERASE | 1357924681 |
-| SYS_CMD_MANF_DOWNGRADE_CALIBRATION | 1357924682 |
-| SYS_CMD_MANF_ENABLE_ROM_BOOTLOADER | 1357924683 |
-| SYS_CMD_MANF_LED_ON | 1357924684 |
-| SYS_CMD_MANF_LED_OFF | 1357924685 |
-| SYS_CMD_FAULT_TEST_TRIG_MALLOC | 57005 |
-| SYS_CMD_FAULT_TEST_TRIG_HARD_FAULT | 57006 |
-| SYS_CMD_FAULT_TEST_TRIG_WATCHDOG | 57007 |
-| SYS_CMD_FAULT_TEST_TRIG_FLASH_TORN_WRITE | 57008 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| SYS_CMD_NONE | 0 | No command (uint32 inv: 4294967295) |
+| SYS_CMD_SAVE_PERSISTENT_MESSAGES | 1 | Save current persistent messages (uint32 inv: 4294967294) |
+| SYS_CMD_ENABLE_BOOTLOADER_AND_RESET | 2 | Enable bootloader and reset (uint32 inv: 4294967293) |
+| SYS_CMD_ENABLE_SENSOR_STATS | 3 | Enable sensor stats collection (uint32 inv: 4294967292) |
+| SYS_CMD_ENABLE_RTOS_STATS | 4 | Enable RTOS task stats collection (uint32 inv: 4294967291) |
+| SYS_CMD_ZERO_MOTION | 5 | Zero motion (stationary) command, used to aid the EKF (uint32 inv: 4294967290) |
+| SYS_CMD_REF_POINT_STATIONARY | 6 | Mark reference/truth input as stationary, for calibration (uint32 inv: 4294967289) |
+| SYS_CMD_REF_POINT_MOVING | 7 | Mark reference/truth input as moving, for calibration (uint32 inv: 4294967288) |
+| SYS_CMD_RESET_RTOS_STATS | 8 | Reset RTOS task stats (uint32 inv: 4294967287) |
+| SYS_CMD_ENABLE_GNSS_LOW_LEVEL_CONFIG | 10 | Enable GNSS low level (chipset-specific) configuration (uint32 inv: 4294967285) |
+| SYS_CMD_DISABLE_SERIAL_PORT_BRIDGE | 11 | Disable serial port bridge (uint32 inv: 4294967284) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GNSS1 | 12 | Enable serial port bridge: USB to GNSS1 (uint32 inv: 4294967283) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_GNSS2 | 13 | Enable serial port bridge: USB to GNSS2 (uint32 inv: 4294967282) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER0 | 14 | Enable serial port bridge: USB to SER0 (uint32 inv: 4294967281) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER1 | 15 | Enable serial port bridge: USB to SER1 (uint32 inv: 4294967280) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_TO_SER2 | 16 | Enable serial port bridge: USB to SER2 (uint32 inv: 4294967279) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER0_TO_GNSS1 | 17 | Enable serial port bridge: SER0 to GNSS1 (uint32 inv: 4294967278) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GNSS1 | 18 | Enable serial port bridge: current port to GNSS1 (uint32 inv: 4294967277) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_GNSS2 | 19 | Enable serial port bridge: current port to GNSS2 (uint32 inv: 4294967276) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_USB | 20 | Enable serial port bridge: current port to USB (uint32 inv: 4294967275) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER0 | 21 | Enable serial port bridge: current port to SER0 (uint32 inv: 4294967274) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER1 | 22 | Enable serial port bridge: current port to SER1 (uint32 inv: 4294967273) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_TO_SER2 | 23 | Enable serial port bridge: current port to SER2 (uint32 inv: 4294967272) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_USB_LOOPBACK | 24 | Enable serial port bridge: USB loopback (uint32 inv: 4294967271) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER0_LOOPBACK | 25 | Enable serial port bridge: SER0 loopback (uint32 inv: 4294967270) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER1_LOOPBACK | 26 | Enable serial port bridge: SER1 loopback (uint32 inv: 4294967269) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_SER2_LOOPBACK | 27 | Enable serial port bridge: SER2 loopback (uint32 inv: 4294967268) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_LOOPBACK | 28 | Enable serial port bridge: current port loopback (uint32 inv: 4294967267) |
+| SYS_CMD_ENABLE_SERIAL_PORT_BRIDGE_CUR_PORT_LOOPBACK_TESTMODE | 29 | Enable serial port bridge: current port loopback, driver test mode (uint32 inv: 4294967266) |
+| SYS_CMD_GPX_ENABLE_BOOTLOADER_MODE | 30 | GPX: enable bootloader mode (uint32 inv: 4294967265) |
+| SYS_CMD_GPX_ENABLE_GNSS1_CHIPSET_BOOTLOADER | 31 | GPX: enable GNSS1 chipset bootloader (uint32 inv: 4294967264) |
+| SYS_CMD_GPX_ENABLE_GNSS2_CHIPSET_BOOTLOADER | 32 | GPX: enable GNSS2 chipset bootloader (uint32 inv: 4294967263) |
+| SYS_CMD_GPX_ENABLE_GNSS1_PASS_THROUGH | 33 | GPX: enable GNSS1 pass-through (uint32 inv: 4294967262) |
+| SYS_CMD_GPX_ENABLE_GNSS2_PASS_THROUGH | 34 | GPX: enable GNSS2 pass-through (uint32 inv: 4294967261) |
+| SYS_CMD_GPX_HARD_RESET_GNSS1 | 36 | GPX: hard reset GNSS1 receiver (uint32 inv: 4294967259) |
+| SYS_CMD_GPX_HARD_RESET_GNSS2 | 37 | GPX: hard reset GNSS2 receiver (uint32 inv: 4294967258) |
+| SYS_CMD_GPX_SOFT_RESET_GPX | 38 | GPX: soft reset GPX (uint32 inv: 4294967257) |
+| SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK | 39 | GPX: enable serial bridge on IMX to GPX and loopback on GPX (uint32 inv: 4294967256) |
+| SYS_CMD_GPX_ENABLE_SERIAL_BRIDGE_CUR_PORT_LOOPBACK_TESTMODE | 40 | GPX: enable serial bridge on IMX to GPX and loopback on GPX, driver test mode (uint32 inv: 4294967255) |
+| SYS_CMD_GPX_ENABLE_RTOS_STATS | 41 | GPX: enable RTOS task stats collection (uint32 inv: 4294967254) |
+| SYS_CMD_GPX_SAVE_PERSISTENT_MESSAGES | 42 | GPX: save current persistent messages (uint32 inv: 4294967253) |
+| SYS_CMD_GNSS_RCVR_QUIET_MODE | 60 | Put GNSS receiver into quiet mode (uint32 inv: 4294967235) |
+| SYS_CMD_GNSS_RCVR_SOFT_RESET | 61 | Soft reset GNSS receiver (uint32 inv: 4294967234) |
+| SYS_CMD_GNSS_RCVR_HARD_RESET | 62 | Hard reset GNSS receiver (uint32 inv: 4294967233) |
+| SYS_CMD_GNSS_RCVR_PWR_CYCLE | 63 | Power cycle GNSS receiver (uint32 inv: 4294967232) |
+| SYS_CMD_RESET_EKF_STATES | 70 | Resets the Extended Kalman Filter (EKF) states in the INS solution. Use to reinitialize navigation filter without a full system reset. (uint32 inv: 4294967226) |
+| SYS_CMD_CLEAR_ERROR_STATUS | 71 | Resets debug information such as CPU reset cause and fault states. (uint32 inv: 4294967225) |
+| SYS_CMD_SAVE_FLASH | 97 | Save current flash config to persistent flash memory (uint32 inv: 4294967198) |
+| SYS_CMD_SAVE_GNSS_ASSIST_TO_FLASH_RESET | 98 | Save GNSS assist data (ephemeris/almanac) to flash then reset (uint32 inv: 4294967197) |
+| SYS_CMD_SOFTWARE_RESET | 99 | Software reset (uint32 inv: 4294967196) |
+| SYS_CMD_MANF_UNLOCK | 1122334455 | Manufacturing unlock, required before any SYS_CMD_MANF_* command below is accepted (uint32 inv: 3172632840) |
+| SYS_CMD_MANF_ERASE_CALIBRATION_MOTION | 1357924678 | Manufacturing: erase motion calibration. SYS_CMD_MANF_UNLOCK must be sent prior to this command. (uint32 inv: 2937042617) |
+| SYS_CMD_MANF_ERASE_CALIBRATION | 1357924679 | Manufacturing: erase calibration. SYS_CMD_MANF_UNLOCK must be sent prior to this command. (uint32 inv: 2937042616) |
+| SYS_CMD_MANF_FACTORY_RESET | 1357924680 | Manufacturing: factory reset. SYS_CMD_MANF_UNLOCK must be sent prior to this command. (uint32 inv: 2937042615) |
+| SYS_CMD_MANF_CHIP_ERASE | 1357924681 | Manufacturing: chip erase. SYS_CMD_MANF_UNLOCK must be sent prior to this command.  A device power cycle may be necessary to complete this command. (uint32 inv: 2937042614) |
+| SYS_CMD_MANF_DOWNGRADE_CALIBRATION | 1357924682 | Manufacturing: downgrade calibration. SYS_CMD_MANF_UNLOCK must be sent prior to this command. (uint32 inv: 2937042613) |
+| SYS_CMD_MANF_ENABLE_ROM_BOOTLOADER | 1357924683 | Manufacturing: enable ROM bootloader. SYS_CMD_MANF_UNLOCK must be sent prior to this command.  A device power cycle may be necessary to complete this command. (uint32 inv: 2937042612) |
+| SYS_CMD_MANF_LED_ON | 1357924684 | Enable testbed LED on IMX (sysStatus) and GPX (hdwStatus). (uint32 inv: 2937042611) |
+| SYS_CMD_MANF_LED_OFF | 1357924685 | Disable testbed LED on IMX (sysStatus) and GPX (hdwStatus). (uint32 inv: 2937042610) |
+| SYS_CMD_FAULT_TEST_TRIG_MALLOC | 57005 | Fault injection test: trigger a malloc-related fault |
+| SYS_CMD_FAULT_TEST_TRIG_HARD_FAULT | 57006 | Fault injection test: trigger a hard fault |
+| SYS_CMD_FAULT_TEST_TRIG_WATCHDOG | 57007 | Fault injection test: trigger a watchdog timeout |
+| SYS_CMD_FAULT_TEST_TRIG_FLASH_TORN_WRITE | 57008 | Fault injection test (SN-7873): erase test page, start dword program, NVIC_SystemReset mid-flight to leave a torn dword with bad ECC; auto-fires NMI on next boot to exercise the full classify+recover cycle |
 
 
 #### DID_SYS_PARAMS.genFaultCode
 
-(eGenFaultCodes)  
+(eGenFaultCodes)  General fault code bitflags, carried in sys_params_t.genFaultCode (DID_SYS_PARAMS). Multiple bits may be set simultaneously; a value of zero indicates no fault is latched.
 
-| Field | Value |
-|-------|------|
-| GFC_INS_STATE_ORUN_UVW | 0x00000001 |
-| GFC_INS_STATE_ORUN_LAT | 0x00000002 |
-| GFC_INS_STATE_ORUN_ALT | 0x00000004 |
-| GFC_UNHANDLED_INTERRUPT | 0x00000010 |
-| GFC_GNSS_CRITICAL_FAULT | 0x00000020 |
-| GFC_GNSS_TX_LIMITED | 0x00000040 |
-| GFC_GNSS_RX_OVERRUN | 0x00000080 |
-| GFC_INIT_SENSORS | 0x00000100 |
-| GFC_INIT_SPI | 0x00000200 |
-| GFC_CONFIG_SPI | 0x00000400 |
-| GFC_GNSS1_INIT | 0x00000800 |
-| GFC_GNSS2_INIT | 0x00001000 |
-| GFC_FLASH_INVALID_VALUES | 0x00002000 |
-| GFC_FLASH_CHECKSUM_FAILURE | 0x00004000 |
-| GFC_FLASH_WRITE_FAILURE | 0x00008000 |
-| GFC_SYS_FAULT_GENERAL | 0x00010000 |
-| GFC_SYS_FAULT_CRITICAL | 0x00020000 |
-| GFC_SENSOR_SATURATION | 0x00040000 |
-| GFC_EKF_STATES_INVALID | 0x00080000 |
-| GFC_INIT_IMU | 0x00100000 |
-| GFC_INIT_BAROMETER | 0x00200000 |
-| GFC_INIT_MAGNETOMETER | 0x00400000 |
-| GFC_INIT_I2C | 0x00800000 |
-| GFC_CHIP_ERASE_INVALID | 0x01000000 |
-| GFC_EKF_GNSS_TIME_FAULT | 0x02000000 |
-| GFC_GNSS_RECEIVER_TIME | 0x04000000 |
-| GFC_GNSS_GENERAL_FAULT | 0x08000000 |
-| GFC_EKF_INPUT_INVALID_IMU | 0x10000000 |
-| GFC_GNSS_RTOS_ERROR | 0x20000000 |
-| GFC_EKF_BIAS_SATURATED | 0x40000000 |
-| GFC_GPX_STATUS_COMMON_MASK | GFC_GNSS1_INIT\|GFC_GNSS2_INIT\|GFC_GNSS_TX_LIMITED\|GFC_GNSS_RX_OVERRUN\|GFC_GNSS_CRITICAL_FAULT\|GFC_GNSS_RECEIVER_TIME\|GFC_GNSS_GENERAL_FAULT |
+| Field | Value | Description |
+|-------|-------|-------------|
+| GFC_INS_STATE_ORUN_UVW | 0x00000001 | INS state limit overrun - UVW (body frame velocity) |
+| GFC_INS_STATE_ORUN_LAT | 0x00000002 | INS state limit overrun - Latitude |
+| GFC_INS_STATE_ORUN_ALT | 0x00000004 | INS state limit overrun - Altitude |
+| GFC_UNHANDLED_INTERRUPT | 0x00000010 | Unhandled interrupt |
+| GFC_GNSS_CRITICAL_FAULT | 0x00000020 | GNSS receiver critical fault. See the corresponding GNSS status fault flags (i.e. GPX_STATUS_FATAL_MASK) |
+| GFC_GNSS_TX_LIMITED | 0x00000040 | GNSS Tx limited |
+| GFC_GNSS_RX_OVERRUN | 0x00000080 | GNSS Rx overrun |
+| GFC_INIT_SENSORS | 0x00000100 | Fault: sensor initialization |
+| GFC_INIT_SPI | 0x00000200 | Fault: SPI bus initialization |
+| GFC_CONFIG_SPI | 0x00000400 | Fault: SPI configuration |
+| GFC_GNSS1_INIT | 0x00000800 | Fault: GNSS1 init |
+| GFC_GNSS2_INIT | 0x00001000 | Fault: GNSS2 init |
+| GFC_FLASH_INVALID_VALUES | 0x00002000 | Flash failed to load valid values |
+| GFC_FLASH_CHECKSUM_FAILURE | 0x00004000 | Flash checksum failure |
+| GFC_FLASH_WRITE_FAILURE | 0x00008000 | Flash write failure |
+| GFC_SYS_FAULT_GENERAL | 0x00010000 | System Fault: general |
+| GFC_SYS_FAULT_CRITICAL | 0x00020000 | System Fault: CRITICAL system fault (see DID_SYS_FAULT) |
+| GFC_SENSOR_SATURATION | 0x00040000 | Sensor(s) saturated |
+| GFC_EKF_STATES_INVALID | 0x00080000 | INS extended kalman filter states invalid and the EKF was reset |
+| GFC_INIT_IMU | 0x00100000 | Fault: IMU initialization |
+| GFC_INIT_BAROMETER | 0x00200000 | Fault: Barometer initialization |
+| GFC_INIT_MAGNETOMETER | 0x00400000 | Fault: Magnetometer initialization |
+| GFC_INIT_I2C | 0x00800000 | Fault: I2C initialization |
+| GFC_CHIP_ERASE_INVALID | 0x01000000 | Fault: Chip erase line toggled but did not meet required hold time.  This is caused by noise/transient on chip erase pin. |
+| GFC_EKF_GNSS_TIME_FAULT | 0x02000000 | Fault: EKF GNSS time fault |
+| GFC_GNSS_RECEIVER_TIME | 0x04000000 | Fault: GNSS receiver time fault |
+| GFC_GNSS_GENERAL_FAULT | 0x08000000 | Fault: GNSS receiver general fault. See the corresponding GNSS status fault flags (i.e. GPX_STATUS_GENERAL_FAULT_MASK) |
+| GFC_EKF_INPUT_INVALID_IMU | 0x10000000 | Fault: Invalid IMU input rejected by EKF |
+| GFC_GNSS_RTOS_ERROR | 0x20000000 | Fault: GNSS RTOS error |
+| GFC_EKF_BIAS_SATURATED | 0x40000000 | Fault: EKF bias saturated |
+| GFC_GPX_STATUS_COMMON_MASK | GFC_GNSS1_INIT\|GFC_GNSS2_INIT\|GFC_GNSS_TX_LIMITED\|GFC_GNSS_RX_OVERRUN\|GFC_GNSS_CRITICAL_FAULT\|GFC_GNSS_RECEIVER_TIME\|GFC_GNSS_GENERAL_FAULT | IMX GFC flags that relate to GPX status flags |
 
 
 #### GPS Navigation Fix Type
 
-(eGnssNavFixStatus)  
+(eGnssNavFixStatus)  GNSS navigation fix type, packed into eInsStatusFlags::INS_STATUS_GNSS_NAV_FIX_MASK and extracted via INS_STATUS_NAV_FIX_STATUS(). Higher values indicate a more accurate fix. / /* NOTE: If you modify this enum, please also modify the eGnssNavFixStatus enum in IS-src/python/src/ci_hdw/data_sets.py
 
-| Field | Value |
-|-------|------|
-| GNSS_NAV_FIX_NONE | 0x00000000 |
-| GNSS_NAV_FIX_POSITIONING_3D | 0x00000001 |
-| GNSS_NAV_FIX_POSITIONING_RTK_FLOAT | 0x00000002 |
-| GNSS_NAV_FIX_POSITIONING_RTK_FIX | 0x00000003 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| GNSS_NAV_FIX_NONE | 0x00000000 | No GNSS fix |
+| GNSS_NAV_FIX_POSITIONING_3D | 0x00000001 | Standard 3D GNSS position fix (no RTK corrections) |
+| GNSS_NAV_FIX_POSITIONING_RTK_FLOAT | 0x00000002 | RTK fix with floating (unresolved) integer ambiguities |
+| GNSS_NAV_FIX_POSITIONING_RTK_FIX | 0x00000003 | RTK fix with resolved integer ambiguities. Includes fix & hold |
 
 
 #### GPS Status
 
-(eGnssStatus)  
+(eGnssStatus)  GNSS receiver status bitflags, carried in gnss_pos_t.status (DID_GNSS1_POS, DID_GNSS2_POS, DID_GNSS1_RCVR_POS, DID_GNSS1_RTK_POS, etc). Packs [0x000000xx] a legacy satellite-used count, [0x0000xx00] the fix type, and [0x xxxx0000] status/quality flags into a single 32-bit word.
 
-| Field | Value |
-|-------|------|
-| GNSS_STATUS_NUM_SATS_USED_MASK | 0x000000FF |
-| GNSS_STATUS_FIX_NONE | 0x00000000 |
-| GNSS_STATUS_FIX_DEAD_RECKONING_ONLY | 0x00000100 |
-| GNSS_STATUS_FIX_2D | 0x00000200 |
-| GNSS_STATUS_FIX_3D | 0x00000300 |
-| GNSS_STATUS_FIX_GNSS_PLUS_DEAD_RECK | 0x00000400 |
-| GNSS_STATUS_FIX_TIME_ONLY | 0x00000500 |
-| GNSS_STATUS_FIX_REF_LLA | 0x00000600 |
-| GNSS_STATUS_FIX_UNUSED2 | 0x00000700 |
-| GNSS_STATUS_FIX_DGPS | 0x00000800 |
-| GNSS_STATUS_FIX_SBAS | 0x00000900 |
-| GNSS_STATUS_FIX_RTK_SINGLE | 0x00000A00 |
-| GNSS_STATUS_FIX_RTK_FLOAT | 0x00000B00 |
-| GNSS_STATUS_FIX_RTK_FIX | 0x00000C00 |
-| GNSS_STATUS_FIX_MASK | 0x00001F00 |
-| GNSS_STATUS_FIX_BIT_OFFSET |  (int)8 |
-| GNSS_STATUS_FLAGS_FIX_OK | 0x00010000 |
-| GNSS_STATUS_FLAGS_DGPS_USED | 0x00020000 |
-| GNSS_STATUS_FLAGS_RTK_FIX_AND_HOLD | 0x00040000 |
-| GNSS_STATUS_FLAGS_UNUSED_1 | 0x00080000 |
-| GNSS_STATUS_FLAGS_GNSS1_RTK_POSITION_ENABLED | 0x00100000 |
-| GNSS_STATUS_FLAGS_STATIC_MODE | 0x00200000 |
-| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_ENABLED | 0x00400000 |
-| GNSS_STATUS_FLAGS_GNSS1_RTK_RAW_GNSS_DATA_ERROR | 0x00800000 |
-| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_DATA_MISSING | 0x01000000 |
-| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_POSITION_MOVING | 0x02000000 |
-| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_POSITION_INVALID | 0x03000000 |
-| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_POSITION_MASK | 0x03000000 |
-| GNSS_STATUS_FLAGS_GNSS1_RTK_POSITION_VALID | 0x04000000 |
-| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_VALID | 0x08000000 |
-| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_BASELINE_BAD | 0x00002000 |
-| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_BASELINE_UNSET | 0x00004000 |
-| GNSS_STATUS_FLAGS_GNSS_NMEA_DATA | 0x00008000 |
-| GNSS_STATUS_FLAGS_GNSS_PPS_TIMESYNC | 0x10000000 |
-| GNSS_STATUS_FLAGS_MASK | 0x1FFFE000 |
-| GNSS_STATUS_FLAGS_BIT_OFFSET |  (int)16 |
-| GNSS_STATUS_FLAGS_RTK_COV_ECEF_PACKED_VALID | 0x20000000 |
-| GNSS_STATUS_FLAGS_UNUSED_3 | 0x40000000 |
-| GNSS_STATUS_FLAGS_UNUSED_4 | 0x80000000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| GNSS_STATUS_NUM_SATS_USED_MASK | 0x000000FF | (deprecated) Number of satellites used in solution; use gnss_pos_t.satsUsed instead |
+| GNSS_STATUS_FIX_NONE | 0x00000000 | No fix |
+| GNSS_STATUS_FIX_DEAD_RECKONING_ONLY | 0x00000100 | Dead reckoning only, no GNSS fix |
+| GNSS_STATUS_FIX_2D | 0x00000200 | 2D fix (no reliable altitude) |
+| GNSS_STATUS_FIX_3D | 0x00000300 | 3D fix |
+| GNSS_STATUS_FIX_GNSS_PLUS_DEAD_RECK | 0x00000400 | GNSS fix combined with dead reckoning |
+| GNSS_STATUS_FIX_TIME_ONLY | 0x00000500 | Time-only fix (no position) |
+| GNSS_STATUS_FIX_REF_LLA | 0x00000600 | Fixed at a reference LLA position (e.g. surveyed base station) |
+| GNSS_STATUS_FIX_UNUSED2 | 0x00000700 | Unused |
+| GNSS_STATUS_FIX_DGPS | 0x00000800 | Differential GPS (DGPS) fix |
+| GNSS_STATUS_FIX_SBAS | 0x00000900 | SBAS (satellite-based augmentation) fix |
+| GNSS_STATUS_FIX_RTK_SINGLE | 0x00000A00 | RTK single (no differential corrections applied) |
+| GNSS_STATUS_FIX_RTK_FLOAT | 0x00000B00 | RTK fix with floating (unresolved) integer ambiguities |
+| GNSS_STATUS_FIX_RTK_FIX | 0x00000C00 | RTK fix with resolved integer ambiguities |
+| GNSS_STATUS_FIX_MASK | 0x00001F00 | Mask isolating the fix-type field |
+| GNSS_STATUS_FIX_BIT_OFFSET |  (int)8 | Bit offset of the fix-type field within status |
+| GNSS_STATUS_FLAGS_FIX_OK | 0x00010000 | Fix is within limits (e.g. DOP & accuracy) |
+| GNSS_STATUS_FLAGS_DGPS_USED | 0x00020000 | Differential GPS (DGPS) used. |
+| GNSS_STATUS_FLAGS_RTK_FIX_AND_HOLD | 0x00040000 | RTK feedback on the integer solutions to drive the float biases towards the resolved integers |
+| GNSS_STATUS_FLAGS_UNUSED_1 | 0x00080000 | Unused |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_POSITION_ENABLED | 0x00100000 | GNSS1 RTK precision positioning mode enabled |
+| GNSS_STATUS_FLAGS_STATIC_MODE | 0x00200000 | Static mode |
+| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_ENABLED | 0x00400000 | GNSS2 RTK moving base mode enabled |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_RAW_GNSS_DATA_ERROR | 0x00800000 | GNSS1 RTK error: observations or ephemeris are invalid or not received (i.e. RTK differential corrections) |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_DATA_MISSING | 0x01000000 | GNSS1 RTK error: Either base observations or antenna position have not been received. |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_POSITION_MOVING | 0x02000000 | GNSS1 RTK error: base position moved when it should be stationary |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_POSITION_INVALID | 0x03000000 | GNSS1 RTK error: base position is invalid or not surveyed well |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_BASE_POSITION_MASK | 0x03000000 | GNSS1 RTK error: base position error bitmask |
+| GNSS_STATUS_FLAGS_GNSS1_RTK_POSITION_VALID | 0x04000000 | GNSS1 RTK precision position and carrier phase range solution with fixed ambiguities (i.e. < 6cm horizontal accuracy). The carrier phase range solution with floating ambiguities occurs if GNSS_STATUS_FIX_RTK_FIX is set and GNSS_STATUS_FLAGS_GNSS1_RTK_POSITION_VALID is not set (i.e. > 6cm horizontal accuracy). |
+| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_VALID | 0x08000000 | GNSS2 RTK moving base heading. Indicates RTK compassing heading valid and available in DID_GNSS2_RTK_CMP_REL. |
+| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_BASELINE_BAD | 0x00002000 | GNSS2 RTK compassing antenna baseline specified in flashCfg and measured by GNSS do not match |
+| GNSS_STATUS_FLAGS_GNSS2_RTK_COMPASS_BASELINE_UNSET | 0x00004000 | GNSS2 RTK compassing antenna baseline offsets are not set in flashCfg |
+| GNSS_STATUS_FLAGS_GNSS_NMEA_DATA | 0x00008000 | 1 = Data from NMEA message. GNSS velocity is NED (not ECEF). |
+| GNSS_STATUS_FLAGS_GNSS_PPS_TIMESYNC | 0x10000000 | Time is synchronized by GNSS PPS. |
+| GNSS_STATUS_FLAGS_MASK | 0x1FFFE000 | Mask isolating all status/quality flag bits |
+| GNSS_STATUS_FLAGS_BIT_OFFSET |  (int)16 | Bit offset of the status/quality flags field within status |
+| GNSS_STATUS_FLAGS_RTK_COV_ECEF_PACKED_VALID | 0x20000000 | RTK ECEF covariance matrix is valid and packed in rel->covEcefPacked |
+| GNSS_STATUS_FLAGS_UNUSED_3 | 0x40000000 | Unused |
+| GNSS_STATUS_FLAGS_UNUSED_4 | 0x80000000 | Unused |
 
 
 #### Hardware Status Flags
 
-(eHdwStatusFlags)  
+(eHdwStatusFlags)  Hardware status bitflags, carried in DID_SYS_PARAMS.hdwStatus and copied into every INS output message (DID_INS_1, DID_INS_2, DID_INS_3, DID_INS_4). Reports motion state, sensor saturation/fault conditions, GNSS timing/PPS health, communications errors, built-in self-test (BIT) state, and the cause of the last system reset. HDW_STATUS_ERROR_MASK aggregates the bits that indicate a hardware fault requiring attention.
 
-| Field | Value |
-|-------|------|
-| HDW_STATUS_MOTION_GYR | 0x00000001 |
-| HDW_STATUS_MOTION_ACC | 0x00000002 |
-| HDW_STATUS_MOTION_MASK | 0x00000003 |
-| HDW_STATUS_IMU_FAULT_REJECT_GYR | 0x00000004 |
-| HDW_STATUS_IMU_FAULT_REJECT_ACC | 0x00000008 |
-| HDW_STATUS_IMU_FAULT_REJECT_MASK | 0x0000000C |
-| HDW_STATUS_GNSS_SATELLITE_RX_VALID | 0x00000010 |
-| HDW_STATUS_STROBE_IN_EVENT | 0x00000020 |
-| HDW_STATUS_GNSS_TIME_OF_WEEK_VALID | 0x00000040 |
-| HDW_STATUS_REFERENCE_IMU_RX | 0x00000080 |
-| HDW_STATUS_SATURATION_GYR | 0x00000100 |
-| HDW_STATUS_SATURATION_ACC | 0x00000200 |
-| HDW_STATUS_SATURATION_MAG | 0x00000400 |
-| HDW_STATUS_SATURATION_BARO | 0x00000800 |
-| HDW_STATUS_IMU_SATURATION_MASK | (int)(HDW_STATUS_SATURATION_GYR\|HDW_STATUS_SATURATION_ACC\) |
-| HDW_STATUS_SATURATION_MASK | 0x00000F00 |
-| HDW_STATUS_SATURATION_OFFSET | 8 |
-| HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00001000 |
-| HDW_STATUS_ERR_GNSS_PPS_NOISE | 0x00002000 |
-| HDW_STATUS_MAG_RECAL_COMPLETE | 0x00004000 |
-| HDW_STATUS_FLASH_WRITE_PENDING | 0x00008000 |
-| HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 |
-| HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 |
-| HDW_STATUS_ERR_NO_GNSS_PPS | 0x00040000 |
-| HDW_STATUS_GNSS_PPS_TIMESYNC | 0x00080000 |
-| HDW_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x00F00000 |
-| HDW_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 20 |
-| HDW_STATUS_BIT_RUNNING | 0x01000000 |
-| HDW_STATUS_BIT_PASSED | 0x02000000 |
-| HDW_STATUS_BIT_FAILED | 0x03000000 |
-| HDW_STATUS_BIT_MASK | 0x03000000 |
-| HDW_STATUS_ERR_TEMPERATURE | 0x04000000 |
-| HDW_STATUS_SPI_INTERFACE_ENABLED | 0x08000000 |
-| HDW_STATUS_RESET_CAUSE_MASK | 0x70000000 |
-| HDW_STATUS_RESET_CAUSE_BACKUP_MODE | 0x10000000 |
-| HDW_STATUS_RESET_CAUSE_WATCHDOG_FAULT | 0x20000000 |
-| HDW_STATUS_RESET_CAUSE_SOFT | 0x30000000 |
-| HDW_STATUS_RESET_CAUSE_HDW | 0x40000000 |
-| HDW_STATUS_FAULT_SYS_CRITICAL | 0x80000000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| HDW_STATUS_MOTION_GYR | 0x00000001 | Gyro motion detected |
+| HDW_STATUS_MOTION_ACC | 0x00000002 | Accelerometer motion detected |
+| HDW_STATUS_MOTION_MASK | 0x00000003 | Unit is moving and NOT stationary |
+| HDW_STATUS_IMU_FAULT_REJECT_GYR | 0x00000004 | IMU gyro fault rejection. One of the redundant gyro sensors is divergent and being excluded. |
+| HDW_STATUS_IMU_FAULT_REJECT_ACC | 0x00000008 | IMU accelerometer fault rejection. One of the redundant accelerometer sensors is divergent and being excluded. |
+| HDW_STATUS_IMU_FAULT_REJECT_MASK | 0x0000000C | IMU fault rejection mask. One of the redundant IMU sensors is divergent and being excluded. |
+| HDW_STATUS_GNSS_SATELLITE_RX_VALID | 0x00000010 | GNSS satellite signals are being received (antenna and cable are good). Unset indicates weak signal or no output from GNSS receiver. |
+| HDW_STATUS_STROBE_IN_EVENT | 0x00000020 | Event occurred on strobe input pin |
+| HDW_STATUS_GNSS_TIME_OF_WEEK_VALID | 0x00000040 | GPS time of week is valid and reported. Otherwise the timeOfWeek is local system time. |
+| HDW_STATUS_REFERENCE_IMU_RX | 0x00000080 | Reference IMU data being received |
+| HDW_STATUS_SATURATION_GYR | 0x00000100 | Sensor saturation on gyro |
+| HDW_STATUS_SATURATION_ACC | 0x00000200 | Sensor saturation on accelerometer |
+| HDW_STATUS_SATURATION_MAG | 0x00000400 | Sensor saturation on magnetometer |
+| HDW_STATUS_SATURATION_BARO | 0x00000800 | Sensor saturation on barometric pressure |
+| HDW_STATUS_IMU_SATURATION_MASK | (int)(HDW_STATUS_SATURATION_GYR\|HDW_STATUS_SATURATION_ACC\) | Sensor saturation mask (IMU only: gyro + accelerometer) |
+| HDW_STATUS_SATURATION_MASK | 0x00000F00 | Sensor saturation mask (all sensors: gyro, accelerometer, magnetometer, barometer) |
+| HDW_STATUS_SATURATION_OFFSET | 8 | Bit offset of the sensor saturation field within hdwStatus |
+| HDW_STATUS_SYSTEM_RESET_REQUIRED | 0x00001000 | System Reset is required for proper function |
+| HDW_STATUS_ERR_GNSS_PPS_NOISE | 0x00002000 | GNSS PPS timepulse signal has noise and occurred too frequently |
+| HDW_STATUS_MAG_RECAL_COMPLETE | 0x00004000 | Magnetometer recalibration has finished (when INS_STATUS_MAG_RECALIBRATING is unset). |
+| HDW_STATUS_FLASH_WRITE_PENDING | 0x00008000 | System flash write staging or occurring now. Processor will pause and not respond during a flash write, typically 150-250 ms. |
+| HDW_STATUS_ERR_COM_TX_LIMITED | 0x00010000 | Communications Tx buffer limited |
+| HDW_STATUS_ERR_COM_RX_OVERRUN | 0x00020000 | Communications Rx buffer overrun |
+| HDW_STATUS_ERR_NO_GNSS_PPS | 0x00040000 | GNSS PPS timepulse signal has not been received or is in error |
+| HDW_STATUS_GNSS_PPS_TIMESYNC | 0x00080000 | Time synchronized by GNSS PPS |
+| HDW_STATUS_COM_PARSE_ERR_COUNT_MASK | 0x00F00000 | Communications parse error count mask; extract with HDW_STATUS_COM_PARSE_ERROR_COUNT() |
+| HDW_STATUS_COM_PARSE_ERR_COUNT_OFFSET | 20 | Bit offset of the communications parse error count field within hdwStatus |
+| HDW_STATUS_BIT_RUNNING | 0x01000000 | (BIT) Built-in self-test running |
+| HDW_STATUS_BIT_PASSED | 0x02000000 | (BIT) Built-in self-test passed |
+| HDW_STATUS_BIT_FAILED | 0x03000000 | (BIT) Built-in self-test failure |
+| HDW_STATUS_BIT_MASK | 0x03000000 | (BIT) Built-in self-test mask |
+| HDW_STATUS_ERR_TEMPERATURE | 0x04000000 | Temperature outside spec'd operating range |
+| HDW_STATUS_SPI_INTERFACE_ENABLED | 0x08000000 | IMX pins G5-G8 are configure for SPI use |
+| HDW_STATUS_RESET_CAUSE_MASK | 0x70000000 | Cause of system reset mask |
+| HDW_STATUS_RESET_CAUSE_BACKUP_MODE | 0x10000000 | Reset from backup mode (low-power state w/ CPU off) |
+| HDW_STATUS_RESET_CAUSE_WATCHDOG_FAULT | 0x20000000 | Reset from watchdog fault |
+| HDW_STATUS_RESET_CAUSE_SOFT | 0x30000000 | Reset from software |
+| HDW_STATUS_RESET_CAUSE_HDW | 0x40000000 | Reset from hardware (NRST pin low) |
+| HDW_STATUS_FAULT_SYS_CRITICAL | 0x80000000 | Critical System Fault, CPU error. (see DID_SYS_FAULT.status, eSysFaultStatus) |
 
 
 #### IMU Shock Options
 
-(eImuShockOptions)  
+(eImuShockOptions)  IMU shock-rejection configuration bitflags, used with nvm_flash_cfg_t.imuShockOptions (DID_FLASH_CONFIG). Controls whether the EKF detects and rejects IMU shock/impact events during attitude estimation.
 
-| Field | Value |
-|-------|------|
-| IMU_SHOCK_OPTIONS_ENABLE | 0x01 |
-| IMU_SHOCK_OPTIONS_FAST_RECOVERY | 0x02 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| IMU_SHOCK_OPTIONS_ENABLE | 0x01 | Enable IMU shock detection and rejection |
+| IMU_SHOCK_OPTIONS_FAST_RECOVERY | 0x02 | Useful when shocks occur during rotation, as it minimizes post-shock error and reduces the time required for attitude convergence. However, this option increases the amount of attitude error induced by shock events and is therefore discouraged when the platform is stationary and not rotating during shocks. |
 
 
 #### IMU Status
 
-(eImuStatus)  
+(eImuStatus)  Combined-IMU status bitflags for imu_t.status and pimu_t.status (DID_IMU, DID_IMU_RAW, DID_PIMU, etc).
 
-| Field | Value |
-|-------|------|
-| IMU_STATUS_GYR_X_OK | 0x00000001 |
-| IMU_STATUS_GYR_Y_OK | 0x00000002 |
-| IMU_STATUS_GYR_Z_OK | 0x00000004 |
-| IMU_STATUS_ACC_X_OK | 0x00000008 |
-| IMU_STATUS_ACC_Y_OK | 0x00000010 |
-| IMU_STATUS_ACC_Z_OK | 0x00000020 |
-| IMU_STATUS_IMU_OK_BITSIZE | 6 |
-| IMU_STATUS_IMU_OK_MASK | IMU_STATUS_GYR_X_OK\|IMU_STATUS_GYR_Y_OK\|IMU_STATUS_GYR_Z_OK\|IMU_STATUS_ACC_X_OK\|IMU_STATUS_ACC_Y_OK\|IMU_STATUS_ACC_Z_OK |
-| IMU_STATUS_GYR_OK_MASK | IMU_STATUS_GYR_X_OK\|IMU_STATUS_GYR_Y_OK\|IMU_STATUS_GYR_Z_OK |
-| IMU_STATUS_ACC_OK_MASK | IMU_STATUS_ACC_X_OK\|IMU_STATUS_ACC_Y_OK\|IMU_STATUS_ACC_Z_OK |
-| IMU_STATUS_SHOCK_PRESENT | 0x00000040 |
-| IMU_STATUS_MAG_UPDATE | 0x00000100 |
-| IMU_STATUS_REFERENCE_IMU_PRESENT | 0x00000200 |
-| IMU_STATUS_GYR_FAULT_REJECT | 0x01000000 |
-| IMU_STATUS_ACC_FAULT_REJECT | 0x02000000 |
-| IMU_STATUS_SATURATION_GYR | 0x40000000 |
-| IMU_STATUS_SATURATION_ACC | 0x80000000 |
-| IMU_STATUS_SATURATION_MASK | 0xC0000000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| IMU_STATUS_GYR_X_OK | 0x00000001 | IMU X gyro is valid |
+| IMU_STATUS_GYR_Y_OK | 0x00000002 | IMU Y gyro is valid |
+| IMU_STATUS_GYR_Z_OK | 0x00000004 | IMU Z gyro is valid |
+| IMU_STATUS_ACC_X_OK | 0x00000008 | IMU X accelerometer is valid |
+| IMU_STATUS_ACC_Y_OK | 0x00000010 | IMU Y accelerometer is valid |
+| IMU_STATUS_ACC_Z_OK | 0x00000020 | IMU Z accelerometer is valid |
+| IMU_STATUS_IMU_OK_BITSIZE | 6 | Number of IMU OK bits |
+| IMU_STATUS_IMU_OK_MASK | IMU_STATUS_GYR_X_OK\|IMU_STATUS_GYR_Y_OK\|IMU_STATUS_GYR_Z_OK\|IMU_STATUS_ACC_X_OK\|IMU_STATUS_ACC_Y_OK\|IMU_STATUS_ACC_Z_OK | IMU valid mask |
+| IMU_STATUS_GYR_OK_MASK | IMU_STATUS_GYR_X_OK\|IMU_STATUS_GYR_Y_OK\|IMU_STATUS_GYR_Z_OK | Gyro valid mask |
+| IMU_STATUS_ACC_OK_MASK | IMU_STATUS_ACC_X_OK\|IMU_STATUS_ACC_Y_OK\|IMU_STATUS_ACC_Z_OK | Accelerometer valid mask |
+| IMU_STATUS_SHOCK_PRESENT | 0x00000040 | Sensor shock detected |
+| IMU_STATUS_MAG_UPDATE | 0x00000100 | Magnetometer sample occurred |
+| IMU_STATUS_REFERENCE_IMU_PRESENT | 0x00000200 | Data was received at least once from Reference IMU |
+| IMU_STATUS_GYR_FAULT_REJECT | 0x01000000 | IMU fault rejection is excluding one of the gyros from the combined IMU output |
+| IMU_STATUS_ACC_FAULT_REJECT | 0x02000000 | IMU fault rejection is excluding one of the accelerometers from the combined IMU output |
+| IMU_STATUS_SATURATION_GYR | 0x40000000 | Sensor saturation |
+| IMU_STATUS_SATURATION_ACC | 0x80000000 |  |
+| IMU_STATUS_SATURATION_MASK | 0xC0000000 |  |
 
 
 #### INS status Flags
 
-(eInsStatusFlags)  
+(eInsStatusFlags)  INS/AHRS solution status bitflags, carried in DID_SYS_PARAMS.insStatus and copied into every INS output message (DID_INS_1, DID_INS_2, DID_INS_3, DID_INS_4). Bits [0:2] and [4:6] report alignment quality (COARSE = usable but outside spec, FINE = within spec) for heading, velocity, and position independently. Bits [16:19] (INS_STATUS_SOLUTION_MASK) report the overall solution mode via INS_STATUS_SOLUTION(). Bits [24:25] report the GNSS navigation fix type via INS_STATUS_NAV_FIX_STATUS() (see eGnssNavFixStatus). The remaining bits report aiding sources in use and fault/error conditions; INS_STATUS_ERROR_MASK aggregates the bits that indicate a solution problem requiring attention.
 
-| Field | Value |
-|-------|------|
-| INS_STATUS_HDG_ALIGN_COARSE | 0x00000001 |
-| INS_STATUS_VEL_ALIGN_COARSE | 0x00000002 |
-| INS_STATUS_POS_ALIGN_COARSE | 0x00000004 |
-| INS_STATUS_ALIGN_COARSE_MASK | 0x00000007 |
-| INS_STATUS_WHEEL_AIDING_VEL | 0x00000008 |
-| INS_STATUS_HDG_ALIGN_FINE | 0x00000010 |
-| INS_STATUS_VEL_ALIGN_FINE | 0x00000020 |
-| INS_STATUS_POS_ALIGN_FINE | 0x00000040 |
-| INS_STATUS_ALIGN_FINE_MASK | 0x00000070 |
-| INS_STATUS_GNSS_AIDING_HEADING | 0x00000080 |
-| INS_STATUS_GNSS_AIDING_POS | 0x00000100 |
-| INS_STATUS_GNSS_UPDATE_IN_SOLUTION | 0x00000200 |
-| INS_STATUS_EKF_USING_REFERENCE_IMU | 0x00000400 |
-| INS_STATUS_MAG_AIDING_HEADING | 0x00000800 |
-| INS_STATUS_NAV_MODE | 0x00001000 |
-| INS_STATUS_STATIONARY_MODE | 0x00002000 |
-| INS_STATUS_GNSS_AIDING_VEL | 0x00004000 |
-| INS_STATUS_KINEMATIC_CAL_GOOD | 0x00008000 |
-| INS_STATUS_SOLUTION_MASK | 0x000F0000 |
-| INS_STATUS_SOLUTION_OFFSET | 16 |
-| INS_STATUS_SOLUTION_OFF | 0 |
-| INS_STATUS_SOLUTION_ALIGNING | 1 |
-| INS_STATUS_SOLUTION_NAV | 3 |
-| INS_STATUS_SOLUTION_NAV_HIGH_VARIANCE | 4 |
-| INS_STATUS_SOLUTION_AHRS | 5 |
-| INS_STATUS_SOLUTION_AHRS_HIGH_VARIANCE | 6 |
-| INS_STATUS_SOLUTION_VRS | 7 |
-| INS_STATUS_SOLUTION_VRS_HIGH_VARIANCE | 8 |
-| INS_STATUS_RTK_COMPASSING_BASELINE_UNSET | 0x00100000 |
-| INS_STATUS_RTK_COMPASSING_BASELINE_BAD | 0x00200000 |
-| INS_STATUS_RTK_COMPASSING_MASK | (INS_STATUS_RTK_COMPASSING_BASELINE_UNSET\|INS_STATUS_RTK_COMPASSING_BASELINE_BAD\) |
-| INS_STATUS_MAG_RECALIBRATING | 0x00400000 |
-| INS_STATUS_MAG_INTERFERENCE_OR_BAD_CAL_OR_NO_CAL | 0x00800000 |
-| INS_STATUS_GNSS_NAV_FIX_MASK | 0x03000000 |
-| INS_STATUS_GNSS_NAV_FIX_OFFSET | 24 |
-| INS_STATUS_RTK_COMPASSING_VALID | 0x04000000 |
-| INS_STATUS_RTK_RAW_GNSS_DATA_ERROR | 0x08000000 |
-| INS_STATUS_RTK_ERR_BASE_DATA_MISSING | 0x10000000 |
-| INS_STATUS_RTK_ERR_BASE_POSITION_MOVING | 0x20000000 |
-| INS_STATUS_RTK_ERR_BASE_POSITION_INVALID | 0x30000000 |
-| INS_STATUS_RTK_ERR_BASE_MASK | 0x30000000 |
-| INS_STATUS_RTK_ERROR_MASK | (INS_STATUS_RTK_RAW_GNSS_DATA_ERROR\|INS_STATUS_RTK_ERR_BASE_MASK\) |
-| INS_STATUS_RTOS_TASK_PERIOD_OVERRUN | 0x40000000 |
-| INS_STATUS_GENERAL_FAULT | 0x80000000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| INS_STATUS_HDG_ALIGN_COARSE | 0x00000001 | Heading estimate is usable but outside spec (COARSE) |
+| INS_STATUS_VEL_ALIGN_COARSE | 0x00000002 | Velocity estimate is usable but outside spec (COARSE) |
+| INS_STATUS_POS_ALIGN_COARSE | 0x00000004 | Position estimate is usable but outside spec (COARSE) |
+| INS_STATUS_ALIGN_COARSE_MASK | 0x00000007 | Mask of all COARSE (usable but outside spec) alignment bits |
+| INS_STATUS_WHEEL_AIDING_VEL | 0x00000008 | Velocity aided by wheel sensor |
+| INS_STATUS_HDG_ALIGN_FINE | 0x00000010 | Heading estimate is within spec (FINE); see detailed note above |
+| INS_STATUS_VEL_ALIGN_FINE | 0x00000020 | Velocity estimate is within spec (FINE) |
+| INS_STATUS_POS_ALIGN_FINE | 0x00000040 | Position estimate is within spec (FINE) |
+| INS_STATUS_ALIGN_FINE_MASK | 0x00000070 | Mask of all FINE (within spec) alignment bits |
+| INS_STATUS_GNSS_AIDING_HEADING | 0x00000080 | Heading aided by GNSS |
+| INS_STATUS_GNSS_AIDING_POS | 0x00000100 | Position aided by GNSS position |
+| INS_STATUS_GNSS_UPDATE_IN_SOLUTION | 0x00000200 | GNSS update event occurred in solution, potentially causing discontinuity in position path |
+| INS_STATUS_EKF_USING_REFERENCE_IMU | 0x00000400 | Reference IMU used in EKF |
+| INS_STATUS_MAG_AIDING_HEADING | 0x00000800 | Heading aided by magnetic heading |
+| INS_STATUS_NAV_MODE | 0x00001000 | Nav mode (set) = estimating velocity and position. AHRS mode (cleared) = NOT estimating velocity and position |
+| INS_STATUS_STATIONARY_MODE | 0x00002000 | INS in stationary mode. If initiated by zero velocity command, user should not move (keep system motionless) to assist on-board processing. |
+| INS_STATUS_GNSS_AIDING_VEL | 0x00004000 | Velocity aided by GNSS velocity |
+| INS_STATUS_KINEMATIC_CAL_GOOD | 0x00008000 | Vehicle kinematic calibration is good |
+| INS_STATUS_SOLUTION_MASK | 0x000F0000 | INS/AHRS solution status mask; extract with INS_STATUS_SOLUTION() |
+| INS_STATUS_SOLUTION_OFFSET | 16 | Bit offset of the solution status field within insStatus |
+| INS_STATUS_SOLUTION_OFF | 0 | System is off |
+| INS_STATUS_SOLUTION_ALIGNING | 1 | System is in alignment mode |
+| INS_STATUS_SOLUTION_NAV | 3 | System is in navigation mode and solution is good. |
+| INS_STATUS_SOLUTION_NAV_HIGH_VARIANCE | 4 | System is in navigation mode but the attitude uncertainty has exceeded the threshold. |
+| INS_STATUS_SOLUTION_AHRS | 5 | System is in AHRS mode and solution is good. |
+| INS_STATUS_SOLUTION_AHRS_HIGH_VARIANCE | 6 | System is in AHRS mode but the attitude uncertainty has exceeded the threshold. |
+| INS_STATUS_SOLUTION_VRS | 7 | System is in VRS mode (no earth relative heading) and roll and pitch are good. |
+| INS_STATUS_SOLUTION_VRS_HIGH_VARIANCE | 8 | System is in VRS mode (no earth relative heading) but roll and pitch uncertainty has exceeded the threshold. |
+| INS_STATUS_RTK_COMPASSING_BASELINE_UNSET | 0x00100000 | GNSS compassing antenna offsets are not set in flashCfg. |
+| INS_STATUS_RTK_COMPASSING_BASELINE_BAD | 0x00200000 | GNSS antenna baseline specified in flashCfg and measured by GNSS do not match. |
+| INS_STATUS_RTK_COMPASSING_MASK | (INS_STATUS_RTK_COMPASSING_BASELINE_UNSET\|INS_STATUS_RTK_COMPASSING_BASELINE_BAD\) | Mask of RTK compassing baseline error bits |
+| INS_STATUS_MAG_RECALIBRATING | 0x00400000 | Magnetometer is being recalibrated. Device requires rotation to complete the calibration process. HDW_STATUS_MAG_RECAL_COMPLETE is set when complete. |
+| INS_STATUS_MAG_INTERFERENCE_OR_BAD_CAL_OR_NO_CAL | 0x00800000 | Magnetometer is experiencing interference or calibration is bad. Attention may be required to remove interference (move the device) or recalibrate the magnetometer. |
+| INS_STATUS_GNSS_NAV_FIX_MASK | 0x03000000 | GNSS navigation fix type mask (see eGnssNavFixStatus); extract with INS_STATUS_NAV_FIX_STATUS() |
+| INS_STATUS_GNSS_NAV_FIX_OFFSET | 24 | Bit offset of the GNSS navigation fix type field within insStatus |
+| INS_STATUS_RTK_COMPASSING_VALID | 0x04000000 | RTK compassing heading is accurate and aiding INS heading. (RTK fix and hold status) |
+| INS_STATUS_RTK_RAW_GNSS_DATA_ERROR | 0x08000000 | RTK error: Observations invalid or not received (i.e. RTK differential corrections) |
+| INS_STATUS_RTK_ERR_BASE_DATA_MISSING | 0x10000000 | RTK error: Either base observations or antenna position have not been received |
+| INS_STATUS_RTK_ERR_BASE_POSITION_MOVING | 0x20000000 | RTK error: base position moved when it should be stationary |
+| INS_STATUS_RTK_ERR_BASE_POSITION_INVALID | 0x30000000 | RTK error: base position invalid or not surveyed |
+| INS_STATUS_RTK_ERR_BASE_MASK | 0x30000000 | RTK error: NO base position received (mask of base position error codes) |
+| INS_STATUS_RTK_ERROR_MASK | (INS_STATUS_RTK_RAW_GNSS_DATA_ERROR\|INS_STATUS_RTK_ERR_BASE_MASK\) | GNSS base mask: combined RTK observation/base error bits |
+| INS_STATUS_RTOS_TASK_PERIOD_OVERRUN | 0x40000000 | RTOS task ran longer than allotted period |
+| INS_STATUS_GENERAL_FAULT | 0x80000000 | General fault (see sys_params_t.genFaultCode) |
 
 
 #### Magnetometer Recalibration Mode
 
-(eMagCalState)  
+(eMagCalState)  Magnetometer calibration command/status codes, used for mag_cal_t.state (DID_MAG_CAL). Values below 100 are commands written by the host to start/stop a calibration; values 100+ are abort/status codes reported back by the device.
 
-| Field | Value |
-|-------|------|
-| MAG_CAL_STATE_DO_NOTHING |  (int)0 |
-| MAG_CAL_STATE_MULTI_AXIS |  (int)1 |
-| MAG_CAL_STATE_SINGLE_AXIS |  (int)2 |
-| MAG_CAL_STATE_ABORT |  (int)101 |
-| MAG_CAL_STATE_RECAL_RUNNING |  (int)200 |
-| MAG_CAL_STATE_RECAL_COMPLETE |  (int)201 |
-| MAG_CAL_STATE_RECAL_MODE_NOT_SUPPORTED |  (int)202 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| MAG_CAL_STATE_DO_NOTHING |  (int)0 | No command / idle, no calibration in progress |
+| MAG_CAL_STATE_MULTI_AXIS |  (int)1 | COMMAND: Recalibrate magnetometers using multiple axis |
+| MAG_CAL_STATE_SINGLE_AXIS |  (int)2 | COMMAND: Recalibrate magnetometers using only one axis |
+| MAG_CAL_STATE_ABORT |  (int)101 | COMMAND: Stop mag recalibration and do not save results |
+| MAG_CAL_STATE_RECAL_RUNNING |  (int)200 | STATUS: Mag recalibration is in progress |
+| MAG_CAL_STATE_RECAL_COMPLETE |  (int)201 | STATUS: Mag recalibration has completed |
+| MAG_CAL_STATE_RECAL_MODE_NOT_SUPPORTED |  (int)202 | STATUS: Mag recalibration mode not supported |
 
 
 #### RTK Configuration
 
-(eRTKConfigBits)  
+(eRTKConfigBits)  RTK positioning, compassing, and base-station configuration bitflags, used with nvm_flash_cfg_t.RTKCfgBits (DID_FLASH_CONFIG). Selects rover mode (precision positioning vs. dual-GNSS compassing), and independently configures the device to act as an RTK base station broadcasting ublox/RTCM3 correction data from GNSS1 and/or GNSS2 out any combination of serial ports, USB, or the "current" port. OR the desired bits together; RTK_CFG_BITS_ROVER_MODE_MASK and RTK_CFG_BITS_BASE_MODE isolate the rover-mode and base-mode sub-fields respectively.
 
-| Field | Value |
-|-------|------|
-| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED | 0x00000001 |
-| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING | 0x00000002 |
-| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING | 0x00000004 |
-| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED | 0x00000008 |
-| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\) |
-| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) |
-| RTK_CFG_BITS_ROVER_MODE_MASK | 0x0000000F |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER0 | 0x00000010 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER1 | 0x00000020 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER2 | 0x00000040 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_USB | 0x00000080 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER0 | 0x00000100 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER1 | 0x00000200 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER2 | 0x00000400 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_USB | 0x00000800 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER0 | 0x00001000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER1 | 0x00002000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER2 | 0x00004000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_USB | 0x00008000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER0 | 0x00010000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER1 | 0x00020000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER2 | 0x00040000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_USB | 0x00080000 |
-| RTK_CFG_BITS_BASE_POS_MOVING | 0x00100000 |
-| RTK_CFG_BITS_RESERVED1 | 0x00200000 |
-| RTK_CFG_BITS_RTK_BASE_IS_IDENTICAL_TO_ROVER | 0x00400000 |
-| RTK_CFG_BITS_GNSS_PORT_PASS_THROUGH | 0x00800000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT | 0x01000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT | 0x02000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CLEAR_CUR_PORT | 0x04000000 |
-| RTK_CFG_BITS_MULTIPATH_MITIGATION | 0x08000000 |
-| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT\) |
-| RTK_CFG_BITS_BASE_UBLOX_MASK | (RTK_CFG_BITS_BASE_GNSS1_UBLOX_MASK\|RTK_CFG_BITS_BASE_GNSS2_UBLOX_MASK\) |
-| RTK_CFG_BITS_BASE_RTCM3_MASK | (RTK_CFG_BITS_BASE_GNSS1_RTCM3_MASK\|RTK_CFG_BITS_BASE_GNSS2_RTCM3_MASK\) |
-| RTK_CFG_BITS_BASE_MODE | (RTK_CFG_BITS_BASE_UBLOX_MASK\|RTK_CFG_BITS_BASE_RTCM3_MASK\) |
-| RTK_CFG_BITS_ROVER_MODE_ONBOARD_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) |
-| RTK_CFG_BITS_ALL_MODES_MASK | (RTK_CFG_BITS_ROVER_MODE_MASK\|RTK_CFG_BITS_BASE_MODE\) |
+| Field | Value | Description |
+|-------|-------|-------------|
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED | 0x00000001 | Enable onboard RTK GNSS precision positioning (GNSS1) DEPRECATED |
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING | 0x00000002 | Enable external RTK GNSS positioning (GNSS1) |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING | 0x00000004 | Enable dual GNSS RTK compassing (GNSS2 to GNSS1) |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED | 0x00000008 | Enable dual GNSS RTK compassing (GNSS2 to GNSS1) DEPRECATED |
+| RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING\|RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\) | Mask of RTK GNSS positioning types |
+| RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) | Mask of dual GNSS RTK compassing types |
+| RTK_CFG_BITS_ROVER_MODE_MASK | 0x0000000F | Mask of RTK position, heading, and base modes |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER0 | 0x00000010 | Enable RTK base and output ublox data from GNSS 1 on serial port 0 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER1 | 0x00000020 | Enable RTK base and output ublox data from GNSS 1 on serial port 1 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_SER2 | 0x00000040 | Enable RTK base and output ublox data from GNSS 1 on serial port 2 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_UBLOX_USB | 0x00000080 | Enable RTK base and output ublox data from GNSS 1 on USB port |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER0 | 0x00000100 | Enable RTK base and output RTCM3 data from GNSS 1 on serial port 0 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER1 | 0x00000200 | Enable RTK base and output RTCM3 data from GNSS 1 on serial port 1 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_SER2 | 0x00000400 | Enable RTK base and output RTCM3 data from GNSS 1 on serial port 2 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_USB | 0x00000800 | Enable RTK base and output RTCM3 data from GNSS 1 on USB port |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER0 | 0x00001000 | Enable RTK base and output ublox data from GNSS 2 on serial port 0 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER1 | 0x00002000 | Enable RTK base and output ublox data from GNSS 2 on serial port 1 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_SER2 | 0x00004000 | Enable RTK base and output ublox data from GNSS 2 on serial port 2 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_UBLOX_USB | 0x00008000 | Enable RTK base and output ublox data from GNSS 2 on USB port |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER0 | 0x00010000 | Enable RTK base and output RTCM3 data from GNSS 2 on serial port 0 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER1 | 0x00020000 | Enable RTK base and output RTCM3 data from GNSS 2 on serial port 1 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_SER2 | 0x00040000 | Enable RTK base and output RTCM3 data from GNSS 2 on serial port 2 |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_USB | 0x00080000 | Enable RTK base and output RTCM3 data from GNSS 2 on USB port |
+| RTK_CFG_BITS_BASE_POS_MOVING | 0x00100000 | Enable base mode moving position. (For future use. Not implemented. This bit should always be 0 for now.) TODO: Implement moving base. |
+| RTK_CFG_BITS_RESERVED1 | 0x00200000 | Reserved for future use |
+| RTK_CFG_BITS_RTK_BASE_IS_IDENTICAL_TO_ROVER | 0x00400000 | When using RTK, specifies whether the base station is identical hardware to this rover. If so, optimizations are enabled to get fix faster. |
+| RTK_CFG_BITS_GNSS_PORT_PASS_THROUGH | 0x00800000 | Forward all messages between the selected GNSS and serial port. Disable for RTK base use (to forward only GNSS raw messages and use the surveyed location refLLA instead of current GNSS position). |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT | 0x01000000 | Enable RTK base and output RTCM3 data from GNSS 1 on the current serial port |
+| RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT | 0x02000000 | Enable RTK base and output RTCM3 data from GNSS 2 on the current serial port |
+| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CLEAR_CUR_PORT | 0x04000000 | If this bit is set in conjunction with setting the current port, this clears the current port |
+| RTK_CFG_BITS_MULTIPATH_MITIGATION | 0x08000000 | Enable multipath detection and mitigation in RTK solutiion |
+| RTK_CFG_BITS_BASE_OUTPUT_RTCM3_CUR_PORT_MASK | (RTK_CFG_BITS_BASE_OUTPUT_GNSS1_RTCM3_CUR_PORT\|RTK_CFG_BITS_BASE_OUTPUT_GNSS2_RTCM3_CUR_PORT\) | Mask of RTK base and output RTCM3 data on the current serial ports |
+| RTK_CFG_BITS_BASE_UBLOX_MASK | (RTK_CFG_BITS_BASE_GNSS1_UBLOX_MASK\|RTK_CFG_BITS_BASE_GNSS2_UBLOX_MASK\) | Mask of all ublox base-output bits, both GNSS receivers |
+| RTK_CFG_BITS_BASE_RTCM3_MASK | (RTK_CFG_BITS_BASE_GNSS1_RTCM3_MASK\|RTK_CFG_BITS_BASE_GNSS2_RTCM3_MASK\) | Mask of all RTCM3 base-output bits, both GNSS receivers |
+| RTK_CFG_BITS_BASE_MODE | (RTK_CFG_BITS_BASE_UBLOX_MASK\|RTK_CFG_BITS_BASE_RTCM3_MASK\) | All base station bits |
+| RTK_CFG_BITS_ROVER_MODE_ONBOARD_MASK | (RTK_CFG_BITS_ROVER_MODE_RTK_POSITIONING_DEPRECATED\|RTK_CFG_BITS_ROVER_MODE_RTK_COMPASSING_DEPRECATED\) | Mask selecting the deprecated onboard RTK engine rover modes |
+| RTK_CFG_BITS_ALL_MODES_MASK | (RTK_CFG_BITS_ROVER_MODE_MASK\|RTK_CFG_BITS_BASE_MODE\) | Mask of Rover, Compassing, and Base modes |
 
 
 #### RTK Solution Status
 
-(eRtkSolStatus)  
+(eRtkSolStatus)  RTK solution status, reported as the value decoded from the fix-type field of an eGnssStatus status word (e.g. gnss_pos_t.status, gnss_rtk_rel_t.status). Ordered roughly from lowest to highest accuracy: single is a standalone (non-differential) solution, dgps/sbas are code-based differential corrections, float is a carrier-phase RTK solution with unresolved (floating) integer ambiguities, and fix is a carrier-phase RTK solution with resolved integer ambiguities (highest accuracy).
 
-| Field | Value |
-|-------|------|
-| rtk_solution_status_none | 0 |
-| rtk_solution_status_fix | 1 |
-| rtk_solution_status_float | 2 |
-| rtk_solution_status_sbas | 3 |
-| rtk_solution_status_dgps | 4 |
-| rtk_solution_status_single | 5 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| rtk_solution_status_none | 0 | No RTK solution status available |
+| rtk_solution_status_fix | 1 | RTK fix: carrier-phase solution with resolved (fixed) integer ambiguities (highest accuracy, typically < 6cm horizontal) |
+| rtk_solution_status_float | 2 | RTK float: carrier-phase solution with unresolved (floating) integer ambiguities |
+| rtk_solution_status_sbas | 3 | SBAS (satellite-based augmentation system) corrected solution |
+| rtk_solution_status_dgps | 4 | DGPS (code-based differential GPS) corrected solution |
+| rtk_solution_status_single | 5 | Single point (standalone, non-differential) solution |
 
 
 #### Raw GPS Data Type
 
-(eRawDataType)  
+(eRawDataType)  Identifies which member of the uGnssRawData union in gnss_raw_t is populated, mapping onto the RTKLIB-derived structures documented above (obsd_t, eph_t, geph_t, sbsmsg_t, sta_t, ion_model_utc_alm_t). Used for DID_GNSS_BASE_RAW, DID_GNSS1_RAW, and DID_GNSS2_RAW.
 
-| Field | Value |
-|-------|------|
-| raw_data_type_observation | 1 |
-| raw_data_type_ephemeris | 2 |
-| raw_data_type_glonass_ephemeris | 3 |
-| raw_data_type_sbas | 4 |
-| raw_data_type_base_station_antenna_position | 5 |
-| raw_data_type_ionosphere_model_utc_alm | 6 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| raw_data_type_observation | 1 | Satellite pseudorange/carrier-phase observation data (obsd_t[]; see uGnssRawData.obs) |
+| raw_data_type_ephemeris | 2 | Broadcast ephemeris for non-GLONASS constellations - GPS, Galileo, BeiDou, QZSS (eph_t; see uGnssRawData.eph) |
+| raw_data_type_glonass_ephemeris | 3 | Broadcast GLONASS ephemeris (geph_t; see uGnssRawData.gloEph) |
+| raw_data_type_sbas | 4 | SBAS (satellite-based augmentation system) message (sbsmsg_t; see uGnssRawData.sbas) |
+| raw_data_type_base_station_antenna_position | 5 | Base station position / antenna information (sta_t; see uGnssRawData.sta) |
+| raw_data_type_ionosphere_model_utc_alm | 6 | Ionosphere model, UTC, and almanac data (ion_model_utc_alm_t; see uGnssRawData.ion) |
 
 
 #### System Configuration
 
-(eSysConfigBits)  
+(eSysConfigBits)  System configuration bitflags, used with nvm_flash_cfg_t.sysCfgBits (DID_FLASH_CONFIG). OR these bits together to disable/enable EKF sensor fusion sources, mag calibration behavior, automatic zero-velocity/zero-rate updates, BIT-on-startup, and brownout reset threshold. Written to flash and applied on the next reset.
 
-| Field | Value |
-|-------|------|
-| UNUSED1 | 0x00000001 |
-| SYS_CFG_BITS_ENABLE_MAG_CONTINUOUS_CAL | 0x00000002 |
-| SYS_CFG_BITS_AUTO_MAG_RECAL | 0x00000004 |
-| SYS_CFG_BITS_DISABLE_MAG_DECL_ESTIMATION | 0x00000008 |
-| SYS_CFG_BITS_DISABLE_LEDS | 0x00000010 |
-| SYS_CFG_BITS_MAG_RECAL_MODE_MASK | 0x00000700 |
-| SYS_CFG_BITS_MAG_RECAL_MODE_OFFSET | 8 |
-| SYS_CFG_BITS_MAG_ENABLE_WMM_DECLINATION | 0x00000800 |
-| SYS_CFG_BITS_DISABLE_MAGNETOMETER_FUSION | 0x00001000 |
-| SYS_CFG_BITS_DISABLE_BAROMETER_FUSION | 0x00002000 |
-| SYS_CFG_BITS_DISABLE_GNSS1_FUSION | 0x00004000 |
-| SYS_CFG_BITS_DISABLE_GNSS2_FUSION | 0x00008000 |
-| SYS_CFG_BITS_DISABLE_AUTO_ZERO_VELOCITY_UPDATES | 0x00010000 |
-| SYS_CFG_BITS_DISABLE_AUTO_ZERO_ANGULAR_RATE_UPDATES | 0x00020000 |
-| SYS_CFG_BITS_DISABLE_INS_EKF | 0x00040000 |
-| SYS_CFG_BITS_DISABLE_AUTO_BIT_ON_STARTUP | 0x00080000 |
-| SYS_CFG_BITS_DISABLE_WHEEL_ENCODER_FUSION | 0x00100000 |
-| SYS_CFG_BITS_ENABLE_GNSS_ANTENNA_OFFSET_ESTIMATION | 0x00200000 |
-| SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 |
-| SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 |
-| SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 |
-| SYS_CFG_BITS_BOR_LEVEL_3 | 0x3 |
-| SYS_CFG_BITS_BOR_THRESHOLD_MASK | 0x00C00000 |
-| SYS_CFG_BITS_BOR_THRESHOLD_OFFSET | 22 |
-| SYS_CFG_USE_REFERENCE_IMU_IN_EKF | 0x01000000 |
-| SYS_CFG_EKF_REF_POINT_STATIONARY_ON_STROBE_INPUT | 0x02000000 |
+| Field | Value | Description |
+|-------|-------|-------------|
+| UNUSED1 | 0x00000001 | Unused/reserved bit |
+| SYS_CFG_BITS_ENABLE_MAG_CONTINUOUS_CAL | 0x00000002 | Enable mag continuous calibration. Allow slow background magnetometer calibration in the EKF. |
+| SYS_CFG_BITS_AUTO_MAG_RECAL | 0x00000004 | Enable automatic mag recalibration |
+| SYS_CFG_BITS_DISABLE_MAG_DECL_ESTIMATION | 0x00000008 | Disable mag declination estimation |
+| SYS_CFG_BITS_DISABLE_LEDS | 0x00000010 | Disable LEDs |
+| SYS_CFG_BITS_MAG_RECAL_MODE_MASK | 0x00000700 | Magnetometer recalibration mode mask. (see eMagCalState) 1 = multi-axis, 2 = single-axis |
+| SYS_CFG_BITS_MAG_RECAL_MODE_OFFSET | 8 | Bit offset of SYS_CFG_BITS_MAG_RECAL_MODE_MASK within sysCfgBits |
+| SYS_CFG_BITS_MAG_ENABLE_WMM_DECLINATION | 0x00000800 | When set, World Magnetic Model (WMM) will be used to set mag declination |
+| SYS_CFG_BITS_DISABLE_MAGNETOMETER_FUSION | 0x00001000 | Disable magnetometer fusion |
+| SYS_CFG_BITS_DISABLE_BAROMETER_FUSION | 0x00002000 | Disable barometer fusion |
+| SYS_CFG_BITS_DISABLE_GNSS1_FUSION | 0x00004000 | Disable GNSS 1 fusion |
+| SYS_CFG_BITS_DISABLE_GNSS2_FUSION | 0x00008000 | Disable GNSS 2 fusion |
+| SYS_CFG_BITS_DISABLE_AUTO_ZERO_VELOCITY_UPDATES | 0x00010000 | Disable automatic Zero Velocity Updates (ZUPT). Useful for degraded GNSS environments or applications with very slow velocities. |
+| SYS_CFG_BITS_DISABLE_AUTO_ZERO_ANGULAR_RATE_UPDATES | 0x00020000 | Disable automatic Zero Angular Rate Updates (ZARU). Useful for applications with small/slow angular rates. |
+| SYS_CFG_BITS_DISABLE_INS_EKF | 0x00040000 | Disable INS EKF updates |
+| SYS_CFG_BITS_DISABLE_AUTO_BIT_ON_STARTUP | 0x00080000 | Prevent built-in test (BIT) from running automatically on startup |
+| SYS_CFG_BITS_DISABLE_WHEEL_ENCODER_FUSION | 0x00100000 | Disable wheel encoder fusion |
+| SYS_CFG_BITS_ENABLE_GNSS_ANTENNA_OFFSET_ESTIMATION | 0x00200000 | Enable rover GNSS antenna offset estimation in RTK compassing mode |
+| SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 | Brownout reset threshold: 1.65 - 1.75 V (default) |
+| SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 | Brownout reset threshold: 2.0 - 2.1 V |
+| SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 | Brownout reset threshold: 2.25 - 2.35 V |
+| SYS_CFG_BITS_BOR_LEVEL_3 | 0x3 | Brownout reset threshold: 2.5 - 2.6 V |
+| SYS_CFG_BITS_BOR_THRESHOLD_MASK | 0x00C00000 | Mask for brownout reset threshold voltage level field |
+| SYS_CFG_BITS_BOR_THRESHOLD_OFFSET | 22 | Bit offset of SYS_CFG_BITS_BOR_THRESHOLD_MASK within sysCfgBits |
+| SYS_CFG_USE_REFERENCE_IMU_IN_EKF | 0x01000000 | Use reference IMU in EKF instead of onboard IMU |
+| SYS_CFG_EKF_REF_POINT_STATIONARY_ON_STROBE_INPUT | 0x02000000 | Reference point stationary on strobe input |
