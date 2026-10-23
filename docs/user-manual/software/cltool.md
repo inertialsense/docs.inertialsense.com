@@ -310,7 +310,26 @@ FLASH_CFG:
   ser0BaudRate: 921600
 ```
 
-`-imxFlashCfg` and `-gpxFlashCfg` use CBOR when the device supports it, and the binary DIDs otherwise; their usage and output are unchanged. `-gpxFlashCfg` still changes the configuration of a GPX connected through an IMX, but the change is proxied by the IMX rather than forwarded: the IMX applies it to its own copy of the GPX's configuration and then sends it on to the GPX.
+`-imxFlashCfg` and `-gpxFlashCfg` use CBOR when the device supports it, and the binary DIDs otherwise; their usage is unchanged. `-gpxFlashCfg` still changes the configuration of a GPX connected through an IMX, but the change is proxied by the IMX rather than forwarded: the IMX applies it to its own copy of the GPX's configuration and then sends it on to the GPX.
+
+Some GPX settings are set by the IMX's own flash configuration: `startupGnssDtMs`, `gnss1AntOffset`, `gnss2AntOffset`, `refLla`, `gnssSatSigConst`, `dynamicModel`, `gnssTimeSyncPeriodMs`, `gnssTimeUserDelay`, `gnssMinimumElevation`, `RTKCfgBits`, `gnssCn0Minimum` and `gnssCn0DynMinOffset`. For a GPX behind an IMX, change these with `-flashCfg` on the IMX. A `-gpxFlashCfg` write keeps the IMX's values for them, applies the other fields, and lists the values the IMX kept. After a write, `-gpxFlashCfg` reads the written fields back from the GPX and prints them:
+
+```bash
+$ cltool -c /dev/ttyACM0 "-gpxFlashCfg=gnss1AntOffset[0]=0.7|ser2BaudRate=460800"
+The IMX kept the values its flash config sets:
+GPX_FLASH_CFG:
+  gnss1AntOffset:
+    - 0.2
+    - 0
+    - 0
+DID_GPX_FLASH_CFG (121)
+gnss1AntOffset[0] = 0.2
+gnss1AntOffset[1] = 0
+gnss1AntOffset[2] = 0
+ser2BaudRate = 460800
+```
+
+A write the device refuses, or one the GPX does not apply within 3 seconds, prints the reason or the values the GPX kept, and exits with -2.
 
 ## Logging with CLTool
 
