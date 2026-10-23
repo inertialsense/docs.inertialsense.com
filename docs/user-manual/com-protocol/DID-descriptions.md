@@ -320,7 +320,6 @@ GNSS RTK position data
 | baseToRoverHeading | float | (rad) Heading of baseToRoverVector in the local tangent (NED) plane.  Compassing mode: GNSS1 (base) to GNSS2 (rover) |
 | baseToRoverHeadingAcc | float | (rad) Accuracy (standard deviation) of baseToRoverHeading |
 | status | uint32_t | GNSS status (see eGnssStatus): [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
-| covEcefPacked | float[6] | RTK solution covariance in ECEF packed as [Pxx, Pyy, Pzz, Pxy, Pyz, Pzx], in meters^2 |
 
 
 #### DID_GNSS1_SAT
@@ -443,7 +442,6 @@ Dual GNSS RTK compassing / moving base to rover (GNSS 1 to GNSS 2) relative info
 | baseToRoverHeading | float | (rad) Heading of baseToRoverVector in the local tangent (NED) plane.  Compassing mode: GNSS1 (base) to GNSS2 (rover) |
 | baseToRoverHeadingAcc | float | (rad) Accuracy (standard deviation) of baseToRoverHeading |
 | status | uint32_t | GNSS status (see eGnssStatus): [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags, NMEA input flag |
-| covEcefPacked | float[6] | RTK solution covariance in ECEF packed as [Pxx, Pyy, Pzz, Pxy, Pyz, Pzx], in meters^2 |
 
 
 #### DID_GNSS2_SAT
@@ -1545,14 +1543,15 @@ INL2 magnetometer calibration information.
 | accel_motion | int | Non-zero when accelerometer-sensed motion is detected |
 | rot_motion | int | Non-zero when rotational motion is detected |
 | zero_vel | int | Non-zero when zero-velocity condition is detected |
-| reserved | int | Estimated heading error, in radians |
-| hdg_err | float | Flag whether a coarse (uncertain) initial heading has been established |
-| hdg_coarse | int | Flag whether initial attitude error has converged (heading alignment complete) |
-| hdg_aligned | int | Flag whether heading alignment is currently in progress |
-| hdg_aligning | int | Hot EKF initialization completed |
-| ekf_init_done | int | Flag whether the magnetometer calibration is good |
-| mag_cal_good | int | Flag whether the magnetometer calibration process has completed |
-| mag_cal_done | int | Flag whether the magnetic field is stationary/consistent (suitable for mag calibration) |
+| reserved | int |  |
+| hdg_err | float | Estimated heading error, in radians |
+| hdg_coarse | int | Flag whether a coarse (uncertain) initial heading has been established |
+| hdg_aligned | int | Flag whether initial attitude error has converged (heading alignment complete) |
+| hdg_aligning | int | Flag whether heading alignment is currently in progress |
+| ekf_init_done | int | Hot EKF initialization completed |
+| mag_cal_good | int | Flag whether the magnetometer calibration is good |
+| mag_cal_done | int | Flag whether the magnetometer calibration process has completed |
+| stat_magfield | int | Flag whether the magnetic field is stationary/consistent (suitable for mag calibration) |
 
 
 #### DID_MANUFACTURING_INFO
