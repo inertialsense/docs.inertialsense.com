@@ -1562,7 +1562,7 @@ INL2 magnetometer calibration information.
 | accel_motion | int | Non-zero when accelerometer-sensed motion is detected |
 | rot_motion | int | Non-zero when rotational motion is detected |
 | zero_vel | int | Non-zero when zero-velocity condition is detected |
-| reserved | int |  |
+| reserved | int | Reserved |
 | hdg_err | float | Estimated heading error, in radians |
 | hdg_coarse | int | Flag whether a coarse (uncertain) initial heading has been established |
 | hdg_aligned | int | Flag whether initial attitude error has converged (heading alignment complete) |
@@ -2073,7 +2073,7 @@ System status and configuration is made available through various enumeration an
 | Field | Value | Description |
 |-------|-------|-------------|
 | GPX_SYS_CFG_BITS_DISABLE_VCC_RF | 0x00000001 | Disable (tri-state) VCC_RF (GPX pin 16) output supplied via VAUX (GPX pin 40) |
-| GPX_SYS_CFG_BITS_EXT_AIDING_LATENCY | 0x00000002 |
+| GPX_SYS_CFG_BITS_EXT_AIDING_LATENCY | 0x00000002 | Time the DID_EXT_AIDING_POS/_VEL observations the GPX emits (GRMC_BITS_EXT_AIDING_POS/_VEL) as fixed latency (EXT_AIDING_STATUS_TIME_LATENCY) instead of GNSS time of week |
 | GPX_SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 | Brownout reset threshold voltage level: 1.65 - 1.75 V (default) |
 | GPX_SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 | Brownout reset threshold voltage level: 2.0 - 2.1 V |
 | GPX_SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 | Brownout reset threshold voltage level: 2.25 - 2.35 V |
@@ -2320,7 +2320,6 @@ System status and configuration is made available through various enumeration an
 | GFC_EKF_INPUT_INVALID_IMU | 0x10000000 | Fault: Invalid IMU input rejected by EKF |
 | GFC_GNSS_RTOS_ERROR | 0x20000000 | Fault: GNSS RTOS error |
 | GFC_EKF_BIAS_SATURATED | 0x40000000 | Fault: EKF bias saturated |
-| GFC_EKF_BIAS_SATURATED | 0x40000000 |
 | GFC_GPX_STATUS_COMMON_MASK | GFC_GNSS1_INIT\|GFC_GNSS2_INIT\|GFC_GNSS_TX_LIMITED\|GFC_GNSS_RX_OVERRUN\|GFC_GNSS_CRITICAL_FAULT\|GFC_GNSS_RECEIVER_TIME\|GFC_GNSS_GENERAL_FAULT | IMX GFC flags that relate to GPX status flags |
 
 
