@@ -53,7 +53,21 @@ The [*Infield Calibration*](infield_calibration.md) provides a method to 1.) zer
 
 ## IMU Sample and Navigation Periods
 
-The IMU sample period is configured by setting `DID_FLASH_CONFIG.startupImuDtMs`  in milliseconds.  This parameter determines how frequently the IMU is measured and data integrated into the `DID_PIMU` data.  `DID_FLASH_CONFIG.startupImuDtMs` also automatically sets the bandwidth of the IMU anti-aliasing filter to less than one half the Nyquist frequency (i.e. < 250 / startupImuDtMs).  
+The IMU output data rate (ODR) is configured by setting `DID_FLASH_CONFIG.startupImuOdr` to an `eImuOdr` value.  This parameter determines how frequently the IMU is measured and data integrated into the `DID_PIMU` data.  It also sets the bandwidth of the IMU anti-aliasing filter from the ODR.  The IMX-6 LSM6DSV IMUs run in high-accuracy ODR mode at exactly the selected rate.  The sensor sample period, the time between IMU samples, is 1 / ODR.  The firmware processes IMU samples in a task that runs every `DID_SYS_PARAMS.sampleTaskPeriodMs`: 1 ms for rates of 1 kHz and above, handling every sample the IMU produced since the last run, and the sensor sample period below that.  If the sensor sample period would be larger than `DID_FLASH_CONFIG.startupNavDtMs`, the ODR is raised to fit.
+
+| startupImuOdr | eImuOdr             | Rate       | Sensor sample period | Sample task period |
+|---------------|---------------------|------------|----------------------|--------------------|
+| 0             | `IMU_ODR_DISABLED`  | Disabled   | -                    | -                  |
+| 1 (default)   | `IMU_ODR_2000HZ`    | 2 kHz      | 0.5 ms               | 1 ms               |
+| 2             | `IMU_ODR_1000HZ`    | 1 kHz      | 1 ms                 | 1 ms               |
+| 3             | `IMU_ODR_500HZ`     | 500 Hz     | 2 ms                 | 2 ms               |
+| 4             | `IMU_ODR_250HZ`     | 250 Hz     | 4 ms                 | 4 ms               |
+| 5             | `IMU_ODR_125HZ`     | 125 Hz     | 8 ms                 | 8 ms               |
+| 6             | `IMU_ODR_62_5HZ`    | 62.5 Hz    | 16 ms                | 16 ms              |
+| 7             | `IMU_ODR_31_25HZ`   | 31.25 Hz   | 32 ms                | 32 ms              |
+| 8             | `IMU_ODR_15_625HZ`  | 15.625 Hz  | 64 ms                | 64 ms              |
+| 9             | `IMU_ODR_4000HZ`    | 4 kHz      | 0.25 ms              | 1 ms               |
+| 10            | `IMU_ODR_8000HZ`    | 8 kHz      | 0.125 ms             | 1 ms               |
 
 ![IMU Chain](../../images/imu_chain.svg)
 
