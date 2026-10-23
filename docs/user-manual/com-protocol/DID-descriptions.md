@@ -2047,6 +2047,7 @@ System status and configuration is made available through various enumeration an
 | Field | Value |
 |-------|------|
 | GPX_SYS_CFG_BITS_DISABLE_VCC_RF | 0x00000001 |
+| GPX_SYS_CFG_BITS_EXT_AIDING_LATENCY | 0x00000002 |
 | GPX_SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 |
 | GPX_SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 |
 | GPX_SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 |

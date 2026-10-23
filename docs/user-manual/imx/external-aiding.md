@@ -268,6 +268,7 @@ Behavior:
 - The fix must be at least 3D-class (3D, GNSS+dead-reckoning, DGPS, SBAS, or any RTK fix level). 2D, dead-reckoning-only, time-only, and surveyed/reference-position fixes are excluded.
 - `var` is derived from the receiver's reported `hAcc`/`vAcc`/`sAcc`, floored at 0.01 m (position) / 0.01 m/s (velocity) so an optimistic or unreported accuracy is never presented as noise-free.
 - `offset` is taken from `gnss1AntOffset` in the GPX's flash configuration.
+- Observations are timed by GNSS time of week by default. Setting `GPX_SYS_CFG_BITS_EXT_AIDING_LATENCY` (`0x2`) in `DID_GPX_FLASH_CFG.sysCfgBits` times them as latency (`EXT_AIDING_STATUS_TIME_LATENCY`) instead, so the IMX needs no GNSS time to place them: position then reports a fixed 150 ms latency and velocity a fixed 250 ms. The IMX limits latency to 200 ms (see [Measurement Time](#measurement-time)), so velocity observations are placed 200 ms back.
 
 !!! important
     These bits are deliberately excluded from `GRMC_PRESET_GPX_IMX`. If the IMX is already using this same GPX-1 as its GNSS receiver, also enabling external aiding from it would fuse the same solution into the EKF twice. Only enable these bits when the GPX-1's GNSS solution is being used to aid an *independent* IMX, or for bench testing the external aiding path itself.
