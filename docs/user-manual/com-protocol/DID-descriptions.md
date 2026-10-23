@@ -1062,6 +1062,15 @@ Addresses for CAN messages
 | can_receive_address | uint32_t | Receive address |
 
 
+#### DID_CBOR
+
+`cbor_msg_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| data | uint8_t[1] | CBOR map, ISB packet size bytes |
+
+
 #### DID_DEV_INFO
 
 `dev_info_t`
