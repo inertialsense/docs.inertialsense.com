@@ -89,11 +89,12 @@ OPTIONS (Messages)
                                                        -set "{12: {ioConfig: 0x1a2b012c, ser2BaudRate: 921600}}"
     -cbor-get "{<DID>: {<FIELD1>,<FIELD2>,...}}" As -get, over CBOR (DID_CBOR). DID: registry name (FLASH_CFG), DID_ name or number.
                                              Examples: -cbor-get FLASH_CFG
-                                                       -cbor-get "{GPX_FLASH_CFG: {ser2BaudRate}}" -cbor-dst=GPX-1.0::-1
+                                                       -cbor-get "{GPX_FLASH_CFG: {ser2BaudRate}}" -cbor-dst=GPX
     -cbor-set "{<DID>: {<FIELD1>: <VALUE>, ...}}" As -set, over CBOR. Numeric keys (incl. MSG_* keys) are sent as given.
                                              Examples: -cbor-set "{FLASH_CFG: {gnss1AntOffset[2]: 1.2}}"
                                                        -cbor-set "{RMC_STORED: {0: {RMC_PRESET: INS}}}"
-    -cbor-dst=<FILTER>    Device(s) a -cbor-get/-cbor-set addresses: IMX-5.0::62797, GPX-1.0::-1 (any GPX-1.0), all.
+    -cbor-dst=<FILTER>    Device(s) a -cbor-get/-cbor-set addresses: TYPE[-MAJOR[.MINOR]][::SN], parts left out match any
+                          (GPX, GPX-1.0, IMX-5.0::SN62797), or all.
                           Without it, the device at the other end of the link answers. A wildcard collects every reply.
     -cbor-ack=<LEVEL>     Reply level of a -cbor-set: none, minimal (default: errors and adjusted values) or detailed.
     -cbor-timeout=<MS>    Time allowed for each CBOR reply (default 1000).
@@ -272,10 +273,10 @@ FLASH_CFG:
   gnssMinimumElevation: 0.17453292
 ```
 
-A GPX connected through an IMX is read by addressing it with `-cbor-dst`. A wildcard filter collects a reply from every matching device:
+A GPX connected through an IMX is read by addressing it with `-cbor-dst`. Any part of the filter left out matches every value, so `GPX`, `GPX-1.0` and `GPX-1.0::SN928401213` all reach the same single GPX. A filter that can match more than one device collects a reply from each:
 
 ```bash
-$ cltool -c /dev/ttyACM0 -cbor-get "{GPX_FLASH_CFG: {ser2BaudRate, startupGnssDtMs}}" -cbor-dst=GPX-1.0::-1
+$ cltool -c /dev/ttyACM0 -cbor-get "{GPX_FLASH_CFG: {ser2BaudRate, startupGnssDtMs}}" -cbor-dst=GPX
 GPX-1.0::928401213:
   GPX_FLASH_CFG:
     ser2BaudRate: 921600
