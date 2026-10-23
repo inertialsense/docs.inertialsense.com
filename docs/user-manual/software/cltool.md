@@ -26,6 +26,8 @@ EXAMPLES
     cltool -c /dev/ttyS2 -nmea=ASCE,0,GxGGA,1                                         # Send NMEA message, display rx NMEA
     cltool -c tcp://192.168.1.100:7777 -nmea=ASCE                                     # Send NMEA query over TCP
     cltool -c COM2,COM4 -nmea                                                         # Listen for NMEA on two ports
+    cltool -c /dev/ttyS2 -cbor-get "{FLASH_CFG: {ser0BaudRate, insRotation}}"        # Read fields over CBOR
+    cltool -c /dev/ttyS2 -cbor-set "{FLASH_CFG: {gnss1AntOffset[1]: 0.8}}"            # Set one value over CBOR
 
 EXAMPLES (Firmware Update)
     cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
@@ -85,6 +87,18 @@ OPTIONS (Messages)
                                              Examples: -set "{DID_FLASH_CONFIG: {gnss1AntOffset: [0.8, 0.0, 1.2]}}"
                                                        -set "{DID_FLASH_CONFIG: {gnss1AntOffset[2]: 1.2}}"
                                                        -set "{12: {ioConfig: 0x1a2b012c, ser2BaudRate: 921600}}"
+    -cbor-get "{<DID>: {<FIELD1>,<FIELD2>,...}}" As -get, over CBOR (DID_CBOR). DID: registry name (FLASH_CFG), DID_ name or number.
+                                             Examples: -cbor-get FLASH_CFG
+                                                       -cbor-get "{GPX_FLASH_CFG: {ser2BaudRate}}" -cbor-dst=GPX-1.0::-1
+    -cbor-set "{<DID>: {<FIELD1>: <VALUE>, ...}}" As -set, over CBOR. Numeric keys (incl. MSG_* keys) are sent as given.
+                                             Examples: -cbor-set "{FLASH_CFG: {gnss1AntOffset[2]: 1.2}}"
+                                                       -cbor-set "{RMC_STORED: {0: {RMC_PRESET: INS}}}"
+    -cbor-dst=<FILTER>    Device(s) a -cbor-get/-cbor-set addresses: IMX-5.0::62797, GPX-1.0::-1 (any GPX-1.0), all.
+                          Without it, the device at the other end of the link answers. A wildcard collects every reply.
+    -cbor-ack=<LEVEL>     Reply level of a -cbor-set: none, minimal (default: errors and adjusted values) or detailed.
+    -cbor-timeout=<MS>    Time allowed for each CBOR reply (default 1000).
+    -cbor-out[=raw]       Print every DID_CBOR message sent and received, in CBOR diagnostic notation with
+                          registry names (=raw: plain diagnostic notation).
     -did [DID#<=PERIODMULT> DID#<=PERIODMULT> ...]  Stream 1 or more datasets and display w/ compact view.
     -edit [DID#<=PERIODMULT>]                       Stream and edit 1 dataset.
           Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency. 
@@ -242,6 +256,60 @@ cltool -c /dev/ttyS2 -uf fw/IS_IMX-5.hex -ub fw/IS_bootloader-STM32L4.hex -uv
 ```
 
 Note: The firmware can only be updated at the following baud rates: 3000000, 921600, 460800, 230400, 115200
+
+## CBOR Messaging
+
+On firmware that supports CBOR messaging (`DID_CBOR`), `-cbor-get` and `-cbor-set` read and write configuration in the same YAML form as `-get` and `-set`. DIDs and fields use the CBOR registry names (`FLASH_CFG`, `GPX_FLASH_CFG`, `CAN_CONFIG`, `RMC_STORED`); the legacy `DID_` names and numbers are also accepted. Replies are printed as YAML.
+
+```bash
+$ cltool -c /dev/ttyACM0 -cbor-get "{FLASH_CFG: {ser0BaudRate, insRotation, gnssMinimumElevation}}"
+FLASH_CFG:
+  ser0BaudRate: 921600
+  insRotation:
+    - 0
+    - 0
+    - 0
+  gnssMinimumElevation: 0.17453292
+```
+
+A GPX connected through an IMX is read by addressing it with `-cbor-dst`. A wildcard filter collects a reply from every matching device:
+
+```bash
+$ cltool -c /dev/ttyACM0 -cbor-get "{GPX_FLASH_CFG: {ser2BaudRate, startupGnssDtMs}}" -cbor-dst=GPX-1.0::-1
+GPX-1.0::928401213:
+  GPX_FLASH_CFG:
+    ser2BaudRate: 921600
+    startupGnssDtMs: 200
+
+$ cltool -c /dev/ttyACM0 -cbor-get "{CAN_CONFIG: {can_setting}}" -cbor-dst=all
+IMX-5.0::62797:
+  CAN_CONFIG:
+    can_setting: 100
+GPX-1.0::928401213: OK
+```
+
+A write prints `OK`, or the values the device adjusted. With `-cbor-ack=detailed` it prints every value as the device kept it. A write the device refuses prints its status and exits with a non-zero code:
+
+```bash
+$ cltool -c /dev/ttyACM0 -cbor-set "{FLASH_CFG: {gnss2AntOffset[2]: 0.5}}"
+OK
+
+$ cltool -c /dev/ttyACM0 -cbor-set "{ROUTE_FILTER: {0: {ACTION: ALLOW}}}"
+ROUTE_FILTER:
+  MSG_STATUS: READ_ONLY
+```
+
+`-cbor-out` prints every CBOR message sent and received, in CBOR diagnostic notation with registry names (`-cbor-out=raw` for plain diagnostic notation):
+
+```bash
+$ cltool -c /dev/ttyACM0 -cbor-out -cbor-get "{FLASH_CFG: {ser0BaudRate}}"
+CBOR tx: {MSG_TYPE(0xC000): GET, MSG_REQ_ID(0xC003): 1, FLASH_CFG(12): [2]}
+CBOR rx: {MSG_TYPE(0xC000): REPLY|GET, MSG_SRC_DEV_ID(0xC001): IMX-5.0::62797, MSG_REQ_ID(0xC003): 1, MSG_TIME_GPS_NS(0xC006): week 2441 tow 507663.403376, FLASH_CFG(12): {ser0BaudRate(2): 921600}}
+FLASH_CFG:
+  ser0BaudRate: 921600
+```
+
+`-imxFlashCfg` and `-gpxFlashCfg` use CBOR when the device supports it, and the legacy DIDs otherwise; their usage and output are unchanged. A GPX connected through an IMX is written through the legacy DID, since the IMX manages its GPX's configuration.
 
 ## Logging with CLTool
 
