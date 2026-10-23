@@ -310,7 +310,7 @@ FLASH_CFG:
   ser0BaudRate: 921600
 ```
 
-`-imxFlashCfg` and `-gpxFlashCfg` use CBOR when the device supports it, and the legacy DIDs otherwise; their usage and output are unchanged. A GPX connected through an IMX is written through the legacy DID, since the IMX manages its GPX's configuration.
+`-imxFlashCfg` and `-gpxFlashCfg` use CBOR when the device supports it, and the binary DIDs otherwise; their usage and output are unchanged. `-gpxFlashCfg` still changes the configuration of a GPX connected through an IMX, but the change is proxied by the IMX rather than forwarded: the IMX applies it to its own copy of the GPX's configuration and then sends it on to the GPX.
 
 ## Logging with CLTool
 
