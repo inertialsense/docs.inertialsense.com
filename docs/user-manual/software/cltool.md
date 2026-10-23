@@ -23,6 +23,9 @@ EXAMPLES
     cltool -c /dev/ttyS2 -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"   # Return portion of two DIDs
     cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gnss1AntOffset[1]: 0.8}}"          # Set one value in DID array
     cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gnss1AntOffset: [0.8, 0.0, 1.2]}}" # Set values in DID
+    cltool -c /dev/ttyS2 -nmea=ASCE,0,GxGGA,1                                         # Send NMEA message, display rx NMEA
+    cltool -c tcp://192.168.1.100:7777 -nmea=ASCE                                     # Send NMEA query over TCP
+    cltool -c COM2,COM4 -nmea                                                         # Listen for NMEA on two ports
 
 EXAMPLES (Firmware Update)
     cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
@@ -30,14 +33,16 @@ EXAMPLES (Firmware Update)
 
 OPTIONS (General)
     -baud=BAUDRATE  Set serial port baudrate.  Options: 115200, 230400, 460800, 921600 (default)
-    -c DEVICE_PORT  Select serial port. Set DEVICE_PORT to "*" for all ports or "*4" for only first four.
+    -c DEVICE_PORT  Select port(s): serial port (e.g., /dev/ttyUSB0 or COM5), tcp://IP:port, or a comma-separated list of these.
+                    Set DEVICE_PORT to "*" for all ports or "*4" for only first four.
     -dboc           Send stop-broadcast command `$STPB` on close.
     -h --help       Display this help menu.
     -list-devices   Discovers and prints a list of discovered Inertial Sense devices and connected ports.
     -lm             Listen mode for ISB. Disables device verification (-vd) and does not send stop-broadcast command on start.
     -magRecal[n]    Recalibrate magnetometers: 0=multi-axis, 1=single-axis
-    -nmea=[s]       Send NMEA message s with added checksum footer. Display rx messages. (`-nmea=ASCE,0,GxGGA,1`)
-    -nmea           Listen mode for NMEA message without sending stop-broadcast command `$STPB` at start.
+    -nmea=[s]       Send stop-broadcast command `$STPC`, then NMEA message s with added checksum footer. Display rx NMEA. (`-nmea=ASCE,0,GxGGA,1`) With s empty (`-nmea=`), only sends `$STPC`.
+    -nmea           Listen mode for NMEA. Displays rx NMEA and sends nothing to the device (like -lm).
+                    Only rx NMEA with a valid checksum is displayed, timestamped. Works with any -c port type. Runs until 'q' or -dur.
     -q              Quiet mode, no display.
     -raw-out        Outputs all data in a human-readable raw format (used for debugging/learning the ISB protocol).
     -reset          Issue software reset.
