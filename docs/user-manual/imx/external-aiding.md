@@ -16,7 +16,7 @@ Seven data sets are available:
 | `DID_EXT_AIDING_ATTITUDE`     | `ext_aiding_attitude_t`    | Full attitude (euler or quaternion)   | Yes |
 | `DID_EXT_IMU`                 | `imu_t`                    | Gyro/accel                            | No — see [below](#did_ext_imu) |
 
-All seven are independent — supply whichever ones match the sensors you have. Each carries its own GPS time of week and a discard-on-invalid observation variance (or, for attitude, a full covariance matrix).
+All seven are independent — supply whichever ones match the sensors you have. Each of the six fused types carries its own measurement time (`timeMs`, given as GNSS time of week or as latency — see [Measurement Time](#measurement-time)) and a discard-on-invalid observation variance (or, for attitude, a full covariance matrix).
 
 !!! important
     A non-positive variance (or, for `DID_EXT_AIDING_ATTITUDE`, a non-positive covariance diagonal) causes the entire observation to be discarded by the EKF. Variance must always reflect a realistic (non-zero) uncertainty of the measurement — do not use zero to mean "perfect" or "unknown."
@@ -24,43 +24,49 @@ All seven are independent — supply whichever ones match the sensors you have. 
 ## Position and Velocity
 
 ```c
-/** Frame of measurement for an external aiding observation, held in the low nibble of
- *  ext_aiding_pos_t.status / ext_aiding_vel_t.status. Note 0 is not a valid frame. */
-enum eExtAidingFrame
+/** Status bits of the external aiding observations. The low nibble holds the frame of measurement
+ *  for ext_aiding_pos_t / ext_aiding_vel_t (0 is not a valid frame), or the type for the other
+ *  messages. The time bits select how timeMs is interpreted, in every message. */
+enum eExtAidingStatus
 {
-    EXT_AIDING_FRAME_MASK    = 0x0000000F,  // Mask for the frame of measurement
-    EXT_AIDING_FRAME_ECEF    = 1,           // ECEF frame
-    EXT_AIDING_FRAME_NED     = 2,           // NED frame
-    EXT_AIDING_FRAME_BODY    = 3            // Body frame
+    EXT_AIDING_FRAME_MASK           = 0x0000000F,  // Mask for the frame of measurement
+    EXT_AIDING_FRAME_ECEF           = 1,           // ECEF frame
+    EXT_AIDING_FRAME_NED            = 2,           // NED frame
+    EXT_AIDING_FRAME_BODY           = 3,           // Body frame
+    EXT_AIDING_STATUS_TIME_MASK     = 0x00000300,  // Bitmask for how timeMs is interpreted
+    EXT_AIDING_STATUS_TIME_TOW_MS   = 0x00000000,  // timeMs is GNSS time of week (ms)
+    EXT_AIDING_STATUS_TIME_LATENCY  = 0x00000100,  // timeMs is latency from IMU time (ms)
 };
 
 /** (DID_EXT_AIDING_POS) External aiding position observation, supplied by a host or external
- *  sensor as an input to the INS/EKF. Position is expected in ECEF; var is expected in NED. */
+ *  sensor as an input to the INS/EKF. Position is in ECEF, or in NED relative to the reference
+ *  LLA (refLla), as selected by status; var is expected in NED. */
 typedef struct PACKED
 {
-    uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
-    uint32_t   status;       // Status bitfield; set (status & EXT_AIDING_FRAME_MASK) to frame: 1=ECEF, 2=NED, 3=Body (see eExtAidingFrame)
+    uint32_t   timeMs;       // (ms) Time of measurement: GNSS time of week, or latency before reception (see eExtAidingStatus)
+    uint32_t   status;       // Status bitfield; set (status & EXT_AIDING_FRAME_MASK) to frame: 1=ECEF, 2=NED (see eExtAidingStatus)
     double     pos[3];       // position {x,y,z} (m)
     float      offset[3];    // point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m)
     float      var[3];       // observation variance, per axis, in NED (m^2). Must be non-zero or the observation is discarded.
 } ext_aiding_pos_t;
 
 /** (DID_EXT_AIDING_VEL) External aiding velocity observation, supplied by a host or external
- *  sensor as an input to the INS/EKF. Velocity is expected in ECEF; var is expected in NED. */
+ *  sensor as an input to the INS/EKF. Velocity is in the frame selected by status; var is
+ *  expected in NED. */
 typedef struct PACKED
 {
-    uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
-    uint32_t   status;       // Status bitfield; set (status & EXT_AIDING_FRAME_MASK) to frame: 1=ECEF, 2=NED, 3=Body (see eExtAidingFrame)
+    uint32_t   timeMs;       // (ms) Time of measurement: GNSS time of week, or latency before reception (see eExtAidingStatus)
+    uint32_t   status;       // Status bitfield; set (status & EXT_AIDING_FRAME_MASK) to frame: 1=ECEF, 2=NED, 3=Body (see eExtAidingStatus)
     float      vel[3];       // velocity {vx,vy,vz} (m/s)
     float      offset[3];    // point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m)
     float      var[3];       // observation variance, per axis, in NED (m^2/s^2). Must be non-zero or the observation is discarded.
 } ext_aiding_vel_t;
 ```
 
-- **`timeOfWeekMs`** — GPS time of week the observation was taken. Used by the EKF to align the observation against its own delayed-state history. If the observation is more than 200 ms old relative to the IMX's current IMU time, its timestamp is clamped and the fix loses some of its benefit — keep aiding latency well under this.
-- **`status`** — the coordinate frame the measurement was taken in (see `eExtAidingFrame`); `0` is invalid and causes the observation to be rejected. `vel` fully honors this — `ECEF`, `NED`, and `BODY` are all correctly rotated into the NED innovation. `pos` currently only checks that `status` is non-zero; the position itself is always processed as if it were ECEF, so flagging `pos` as `NED` or `BODY` will *not* error but will silently produce a wrong result — always send `pos` in ECEF today. `var` is always expressed in NED regardless of `status`.
+- **`timeMs`** — when the measurement was taken, as GNSS time of week or as latency, selected by the `status` time bits. Used by the EKF to align the observation against its own delayed-state history. See [Measurement Time](#measurement-time); this applies to all six fused types.
+- **`status`** — the coordinate frame the measurement was taken in (see `eExtAidingStatus`), plus the time bits; any frame the observation type doesn't support causes the observation to be rejected. `vel` accepts `ECEF`, `NED`, and `BODY`. `pos` accepts `ECEF`, and `NED` relative to the reference LLA (`refLla` in the flash configuration). `var` is always expressed in NED regardless of `status`.
 - **`offset`** — the lever arm from the IMU origin to the point of measurement (e.g. the antenna phase center of an external GNSS receiver), expressed in the IMU/body frame. Set to `[0,0,0]` if the source measures at the IMU origin.
-- **`var`** — per-axis observation variance in NED; report your source's actual uncertainty, since this is what the EKF weights the observation by and what its outlier (NIS) gate checks the innovation against. In dynamic environments, inflate it to also cover the error that `timeOfWeekMs` timestamp uncertainty induces from vehicle motion — for a position observation this is timestamp uncertainty × speed, and for a velocity observation it's timestamp uncertainty × acceleration — not just the sensor's own noise.
+- **`var`** — per-axis observation variance in NED; report your source's actual uncertainty, since this is what the EKF weights the observation by and what its outlier (NIS) gate checks the innovation against. In dynamic environments, inflate it to also cover the error that `timeMs` timestamp uncertainty induces from vehicle motion — for a position observation this is timestamp uncertainty × speed, and for a velocity observation it's timestamp uncertainty × acceleration — not just the sensor's own noise.
 
 ## Speed
 
@@ -77,7 +83,7 @@ enum eExtAidingSpeedType
 /** (DID_EXT_AIDING_SPEED) External aiding scalar speed observation. */
 typedef struct PACKED
 {
-    uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
+    uint32_t   timeMs;       // (ms) Time of measurement: GNSS time of week, or latency before reception (see eExtAidingStatus)
     uint32_t   status;       // Speed type, 1=3D magnitude, 2=horizontal magnitude (see eExtAidingSpeedType)
     float      speed;        // speed (m/s)
     float      var;          // observation variance (m^2/s^2). Must be positive or the observation is discarded.
@@ -95,8 +101,8 @@ typedef struct PACKED
  *  `speed` is the velocity component along that direction at the point of measurement. */
 typedef struct PACKED
 {
-    uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
-    uint32_t   status;       // reserved, set to 0
+    uint32_t   timeMs;       // (ms) Time of measurement: GNSS time of week, or latency before reception (see eExtAidingStatus)
+    uint32_t   status;       // time mode of timeMs (see eExtAidingStatus); other bits reserved, set to 0
     float      speed;        // speed along `direction` (m/s)
     float      var;          // observation variance (m^2/s^2). Must be non-zero or the observation is discarded.
     float      offset[3];    // point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m)
@@ -120,7 +126,7 @@ enum eExtAidingHeadingType
 /** (DID_EXT_AIDING_HEADING) External aiding heading observation. */
 typedef struct PACKED
 {
-    uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
+    uint32_t   timeMs;       // (ms) Time of measurement: GNSS time of week, or latency before reception (see eExtAidingStatus)
     uint32_t   status;       // Heading type, 1=true, 2=magnetic, 3=course over ground (see eExtAidingHeadingType)
     float      heading;      // heading (rad), 0 = north, positive clockwise, range [-pi, pi]
     float      var;          // observation variance (rad^2). Must be non-zero or the observation is discarded.
@@ -142,17 +148,19 @@ enum eExtAidingAttitudeType
     EXT_AIDING_ATTITUDE_TYPE_QUATERNION = 2  // att = {w, x, y, z}
 };
 
-/** (DID_EXT_AIDING_ATTITUDE) External aiding attitude observation. `var` is the 3x3
- *  attitude-error covariance (row-major), expressed as a small-angle roll/pitch/yaw rotation
- *  vector regardless of whether `att` is euler or quaternion. */
+/** (DID_EXT_AIDING_ATTITUDE) External aiding attitude observation. `att` is the body attitude
+ *  relative to NED. `var` is the 3x3 attitude-error covariance (row-major), expressed as a
+ *  small-angle rotation about the body axes regardless of whether `att` is euler or quaternion. */
 typedef struct PACKED
 {
-    uint32_t   timeOfWeekMs; // GPS time of week (since Sunday morning) in milliseconds
+    uint32_t   timeMs;       // (ms) Time of measurement: GNSS time of week, or latency before reception (see eExtAidingStatus)
     uint32_t   status;       // Attitude representation, 1=euler, 2=quaternion (see eExtAidingAttitudeType)
-    float      att[4];       // attitude, interpreted per `status`: euler {roll,pitch,yaw,-} or quaternion {w,x,y,z}
-    float      var[9];       // 3x3 row-major attitude-error covariance (rad^2). Must have a non-zero diagonal or the observation is discarded.
+    float      att[4];       // attitude relative to NED, interpreted per `status`: euler {roll,pitch,yaw,-} or NED-to-body quaternion {w,x,y,z}
+    float      var[9];       // 3x3 row-major attitude-error covariance (rad^2), about the body axes. Must have a non-zero diagonal or the observation is discarded.
 } ext_aiding_attitude_t;
 ```
+
+The euler angles and quaternion use the same convention as the IMX's own `DID_INS_1.theta` / `DID_INS_2.qn2b` output, so attitude from a second Inertial Sense INS can be passed straight through.
 
 ## DID_EXT_IMU
 
@@ -176,7 +184,7 @@ typedef struct PACKED
 } imui_t;
 ```
 
-Because `DID_EXT_IMU` reuses `imu_t` as-is, its `time` field is seconds since boot (matching `DID_IMU`'s convention), not the GPS time-of-week-in-milliseconds convention the other six external aiding types use — convert using the same `gps.towOffset` relationship other IMU DIDs use if you need GPS time.
+Because `DID_EXT_IMU` reuses `imu_t` as-is, its `time` field is seconds since boot (matching `DID_IMU`'s convention), not the `timeMs` convention the other six external aiding types use — convert using the same `gps.towOffset` relationship other IMU DIDs use if you need GPS time.
 
 !!! note
     `DID_EXT_IMU` also has no relay/logging RMC bit (unlike the six fused types below), so it can't be relayed to another port for logging the way the others can — poll or stream it directly from the port it's written to.
@@ -188,18 +196,42 @@ All seven DIDs are writable. A host streams an observation to the IMX using the 
 For bring-up or quick testing, an observation can be injected directly with the CLTool:
 
 ```
-cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_POS: {status: 1, timeOfWeekMs: <tow>, pos: [<x>, <y>, <z>], offset: [0,0,0], var: [4.0, 4.0, 9.0]}}"
+cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_POS: {status: 1, timeMs: <tow>, pos: [<x>, <y>, <z>], offset: [0,0,0], var: [4.0, 4.0, 9.0]}}"
 
-cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_VEL: {status: 1, timeOfWeekMs: <tow>, vel: [<vx>, <vy>, <vz>], offset: [0,0,0], var: [0.25, 0.25, 0.25]}}"
+cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_VEL: {status: 1, timeMs: <tow>, vel: [<vx>, <vy>, <vz>], offset: [0,0,0], var: [0.25, 0.25, 0.25]}}"
 
-cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_SPEED: {status: 1, timeOfWeekMs: <tow>, speed: <s>, offset: [0,0,0], var: 0.25}}"
+cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_SPEED: {status: 1, timeMs: <tow>, speed: <s>, offset: [0,0,0], var: 0.25}}"
 
-cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_DIR_SPEED: {status: 0, timeOfWeekMs: <tow>, speed: <s>, offset: [0,0,0], direction: [1,0,0], var: 0.25}}"
+cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_DIR_SPEED: {status: 0, timeMs: <tow>, speed: <s>, offset: [0,0,0], direction: [1,0,0], var: 0.25}}"
 
-cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_HEADING: {status: 1, timeOfWeekMs: <tow>, heading: <rad>, var: 0.01}}"
+cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_HEADING: {status: 1, timeMs: <tow>, heading: <rad>, var: 0.01}}"
 
-cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_ATTITUDE: {status: 1, timeOfWeekMs: <tow>, att: [<roll>,<pitch>,<yaw>,0], var: [0.01,0,0, 0,0.01,0, 0,0,0.01]}}"
+cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_ATTITUDE: {status: 1, timeMs: <tow>, att: [<roll>,<pitch>,<yaw>,0], var: [0.01,0,0, 0,0.01,0, 0,0,0.01]}}"
 ```
+
+Without GNSS time, set the latency time bit and give `timeMs` as the measurement's age in milliseconds, e.g. an ECEF velocity measured 20 ms before it was sent (`status` 257 = `0x101`):
+
+```
+cltool -c /dev/ttyUSB0 -set "{DID_EXT_AIDING_VEL: {status: 257, timeMs: 20, vel: [<vx>, <vy>, <vz>], offset: [0,0,0], var: [0.25, 0.25, 0.25]}}"
+```
+
+## Measurement Time
+
+Every fused external aiding message carries `timeMs`, and two bits of its `status` field (`EXT_AIDING_STATUS_TIME_MASK`, bits 8–9) say how to read it. The time bits sit above the low-nibble frame and type fields, so they combine with them by OR — for example `status: 0x101` is a velocity in ECEF with latency timing.
+
+| Time bits                                  | `timeMs` is                                      | Use when |
+| ------------------------------------------- | ------------------------------------------------ | -------- |
+| `EXT_AIDING_STATUS_TIME_TOW_MS` (`0x000`)   | GNSS time of week the measurement was taken (ms)  | The host has GNSS time |
+| `EXT_AIDING_STATUS_TIME_LATENCY` (`0x100`)  | How long before reception it was taken (ms)       | The host has no GNSS time, e.g. before a fix or with no GNSS at all |
+| `0x200`, `0x300`                            | Reserved                                          | The observation is discarded |
+
+The time bits default to `0`, so a host that doesn't set them gets GNSS time of week, as before.
+
+**Latency** is measured back from the IMU time at which the IMX takes up the observation. That is the first IMX sample after the message has been received and parsed, so it trails the actual arrival by up to one sample period plus communication-task scheduling. Report latency from the moment of measurement to the moment the message is sent; transport time over the link is not compensated, so keep the link fast or add its typical delay to `timeMs`.
+
+In either mode, an observation more than 200 ms older than the IMX's current IMU time has its time clamped to 200 ms and loses some of its benefit, and one dated in the future is treated as current. Keep aiding latency well under 200 ms.
+
+## Logging Received Observations
 
 ## Logging Received Observations
 
@@ -236,6 +268,7 @@ Behavior:
 - The fix must be at least 3D-class (3D, GNSS+dead-reckoning, DGPS, SBAS, or any RTK fix level). 2D, dead-reckoning-only, time-only, and surveyed/reference-position fixes are excluded.
 - `var` is derived from the receiver's reported `hAcc`/`vAcc`/`sAcc`, floored at 0.01 m (position) / 0.01 m/s (velocity) so an optimistic or unreported accuracy is never presented as noise-free.
 - `offset` is taken from `gnss1AntOffset` in the GPX's flash configuration.
+- Observations are timed by GNSS time of week by default. Setting `GPX_SYS_CFG_BITS_EXT_AIDING_LATENCY` (`0x2`) in `DID_GPX_FLASH_CFG.sysCfgBits` times them as latency (`EXT_AIDING_STATUS_TIME_LATENCY`) instead, so the IMX needs no GNSS time to place them: position then reports a fixed 150 ms latency and velocity a fixed 250 ms. The IMX limits latency to 200 ms (see [Measurement Time](#measurement-time)), so velocity observations are placed 200 ms back.
 
 !!! important
     These bits are deliberately excluded from `GRMC_PRESET_GPX_IMX`. If the IMX is already using this same GPX-1 as its GNSS receiver, also enabling external aiding from it would fuse the same solution into the EKF twice. Only enable these bits when the GPX-1's GNSS solution is being used to aid an *independent* IMX, or for bench testing the external aiding path itself.
@@ -246,6 +279,7 @@ Behavior:
 - (GPX-1) SN-8472 — GPX-1 restates its GNSS1 solution as external aiding observations.
 - (IMX/EvalTool) SN-8317 — external aiding relay/logging support.
 - (IMX/SDK) SN-8318 — `DID_EXT_AIDING_SPEED`/`DID_EXT_AIDING_DIR_SPEED`/`DID_EXT_AIDING_HEADING`/`DID_EXT_AIDING_ATTITUDE`/`DID_EXT_IMU` added.
+- (IMX/SDK) SN-8565 — `timeMs` can be given as latency instead of GNSS time of week. `timeOfWeekMs` renamed to `timeMs`, and `eExtAidingFrame` to `eExtAidingStatus`.
 
 <a href="https://inertialsense.com/"><center>
 
