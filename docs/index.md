@@ -43,7 +43,7 @@ The [**Inertial Sense SDK**](https://github.com/inertialsense/inertial-sense-sdk
 | Dynamic Heading                     | 0.13°         | 0.09°         |
 Performance specifications per IEEE-STD-952-1997.
 
-* Up to 1 KHz IMU and 500 Hz INS Output Data Rate
+* Output Data Rate Up to 8 kHz IMU and 500 Hz INS AHRS
 * Small Form Factor: 15.6 x 12.5 x 2.9 mm
 * Light Weight: 0.9 g
 * Low power consumption: <120mW

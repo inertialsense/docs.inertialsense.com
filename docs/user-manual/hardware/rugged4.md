@@ -22,7 +22,7 @@ The **RUG-4-GPX, RUG-4-X20, RUG-4-G5P3, and RUG-4-G5P8** expand on the RUG-4-G0 
 * **INS, AHRS**
   - **Dynamic: 0.03° Roll/Pitch, 0.09° Heading**
   - **Static: 0.09° Roll/Pitch, 0.4° Heading**
-- Up to 1KHz IMU Output Data Rate
+- Output Data Rate: 2, 4, 8 kHz IMU, 500 INS AHRS
 - Dual onboard all-band (L1/L2/L5/L6) GNSS receivers
 - Dual MMCX antenna ports for GPS compassing
 - Size: 25.4 x 25.4 x 20.0 mm
