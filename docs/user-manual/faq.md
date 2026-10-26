@@ -16,7 +16,7 @@ Inertial navigation is a technique of estimating position, velocity, and orienta
 
 **Dead Reckoning** - An inertial navigation system (INS) integrates the IMU data to dead reckon (estimate position and velocity) between GPS updates and during GPS outage.   
 
-**Higher Data Rates** - Typical GPS receivers data rates vary from 1Hz to 20Hz whereas INS systems like the IMX have data rates up to 1KHz.  
+**Higher Data Rates** - Typical GPS receivers data rates vary from 1Hz to 20Hz whereas INS systems like the IMX have data rates up to 8 kHz.  
 
 **Signal Conditioning** - An INS filters out noise in the GPS data and provides a smoother, more continuous data stream.  
 

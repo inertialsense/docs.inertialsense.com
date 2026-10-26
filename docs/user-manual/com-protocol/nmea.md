@@ -289,7 +289,7 @@ $PPIMU,lf,f,f,f,f,f,f,f*xx\r\n
 
 ### PRIMU
 
-Raw IMU sensor data (3-axis gyros and accelerometers) in the body frame (up to 1KHz). Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs. Otherwise, we recommend use of PIMU or PPIMU as they are oversampled and contain less noise. 0 to disable.
+Raw IMU sensor data (3-axis gyros and accelerometers) in the body frame (up to 8 kHz). Use this IMU data for output data rates faster than DID_FLASH_CONFIG.startupNavDtMs. Otherwise, we recommend use of PIMU or PPIMU as they are oversampled and contain less noise. 0 to disable.
 
 ```
 $PRIMU,lf,f,f,f,f,f,f*xx\r\n
