@@ -26,7 +26,7 @@ The **RUG-3-IMX-5-Dual** includes two multi-frequency GNSS receivers with RTK pr
 * **INS, AHRS**
   - **Dynamic: 0.04° Roll/Pitch, 0.13° Heading**
   - **Static: 0.1° Roll/Pitch, 0.5° Heading**
-- Up to 1KHz IMU Output Data Rate
+- Up to 8 kHz IMU Output Data Rate
 - Dual onboard multi-band (L1/L2/E5) GNSS receivers
 - Dual MMCX antenna ports for GPS compassing
 - Size: 25.4 x 25.4 x 20.0 mm
