@@ -633,6 +633,11 @@ GPX device information
 | imuShockDeltaGyroHighThreshold | uint8_t | (deg/s) IMU shock detection. Min angular rate difference between the 3 IMUs to detect the start of a shock. |
 | imuShockDeltaGyroLowThreshold | uint8_t | (deg/s) IMU shock detection. Max angular rate difference between the 3 IMUs within the latch time to detect the end of a shock. |
 | ioConfig2 | uint8_t | Hardware interface configuration bits for GNSS2 PPS (see eIoConfig2). |
+| deadReckoningTimeout | uint8_t | (s) Time without any position, velocity, or wheel/kinematic aiding after which the INS drops from NAV to AHRS mode.  0 = never time out. |
+| reserved1 | uint8_t | Reserved for future use |
+| reserved2 | uint16_t | Reserved for future use |
+| reserved3 | uint32_t | Reserved for future use |
+| reserved4 | uint32_t | Reserved for future use |
 
 
 #### DID_GPX_RMC
@@ -915,6 +920,11 @@ GNSS raw data for rover (observation, ephemeris, etc.) - requires little endian 
 | imuShockDeltaGyroHighThreshold | uint8_t | (deg/s) IMU shock detection. Min angular rate difference between the 3 IMUs to detect the start of a shock. |
 | imuShockDeltaGyroLowThreshold | uint8_t | (deg/s) IMU shock detection. Max angular rate difference between the 3 IMUs within the latch time to detect the end of a shock. |
 | ioConfig2 | uint8_t | Hardware interface configuration bits for GNSS2 PPS (see eIoConfig2). |
+| deadReckoningTimeout | uint8_t | (s) Time without any position, velocity, or wheel/kinematic aiding after which the INS drops from NAV to AHRS mode.  0 = never time out. |
+| reserved1 | uint8_t | Reserved for future use |
+| reserved2 | uint16_t | Reserved for future use |
+| reserved3 | uint32_t | Reserved for future use |
+| reserved4 | uint32_t | Reserved for future use |
 
 
 #### DID_NMEA_BCAST_PERIOD
@@ -1209,10 +1219,10 @@ sizes the task[] array and is not itself a task ID.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | Attitude representation, 1=euler, 2=quaternion (see eExtAidingAttitudeType) |
-| att | float[4] | attitude, interpreted per `status`: euler {roll,pitch,yaw,-} or quaternion {w,x,y,z} |
-| var | float[9] | 3x3 row-major attitude-error covariance (rad^2), in the roll/pitch/yaw tangent space. Must have a non-zero diagonal or the observation is discarded. |
+| timeMs | uint32_t | (ms) When the measurement was taken: GNSS time of week, or its age when the IMX receives it, as selected by the status time bits (see eExtAidingStatus) |
+| status | uint32_t | Attitude representation, 1=euler, 2=quaternion (see eExtAidingAttitudeType), plus time interpretation of timeMs (see eExtAidingStatus) |
+| att | float[4] | attitude relative to NED, interpreted per `status`: euler {roll,pitch,yaw,-} or NED-to-body quaternion {w,x,y,z} |
+| var | float[9] | 3x3 row-major attitude-error covariance (rad^2), about the body axes. Must have a non-zero diagonal or the observation is discarded. |
 
 
 #### DID_EXT_AIDING_DIR_SPEED
@@ -1221,8 +1231,8 @@ sizes the task[] array and is not itself a task ID.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | reserved, set to 0 |
+| timeMs | uint32_t | (ms) When the measurement was taken: GNSS time of week, or its age when the IMX receives it, as selected by the status time bits (see eExtAidingStatus) |
+| status | uint32_t | Time interpretation of timeMs (see eExtAidingStatus); other bits reserved, set to 0 |
 | speed | float | speed along `direction` (m/s) |
 | var | float | observation variance (m^2/s^2).  Must be non-zero or the observation is discarded. |
 | offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
@@ -1235,8 +1245,8 @@ sizes the task[] array and is not itself a task ID.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | Heading type, 1=true, 2=magnetic, 3=course over ground (see eExtAidingHeadingType) |
+| timeMs | uint32_t | (ms) When the measurement was taken: GNSS time of week, or its age when the IMX receives it, as selected by the status time bits (see eExtAidingStatus) |
+| status | uint32_t | Heading type, 1=true, 2=magnetic, 3=course over ground (see eExtAidingHeadingType), plus time interpretation of timeMs (see eExtAidingStatus) |
 | heading | float | heading (rad), 0 = north, positive clockwise, range [-pi, pi] |
 | var | float | observation variance (rad^2).  Must be non-zero or the observation is discarded. |
 
@@ -1247,8 +1257,8 @@ sizes the task[] array and is not itself a task ID.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | Frame/status of measurement; use 1=ECEF (see eExtAidingFrame). Position is currently processed as ECEF even if another frame is specified. |
+| timeMs | uint32_t | (ms) When the measurement was taken: GNSS time of week, or its age when the IMX receives it, as selected by the status time bits (see eExtAidingStatus) |
+| status | uint32_t | Frame of measurement, 1=ECEF, 2=NED, plus time interpretation of timeMs (see eExtAidingStatus). Any other frame is discarded. |
 | pos | double[3] | position {x,y,z} (m) |
 | offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
 | var | float[3] | observation variance, per axis, in NED (m^2).  Must be non-zero or the observation is discarded. |
@@ -1260,8 +1270,8 @@ sizes the task[] array and is not itself a task ID.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | Speed type, 1=3D magnitude, 2=horizontal magnitude (see eExtAidingSpeedType) |
+| timeMs | uint32_t | (ms) When the measurement was taken: GNSS time of week, or its age when the IMX receives it, as selected by the status time bits (see eExtAidingStatus) |
+| status | uint32_t | Speed type, 1=3D magnitude, 2=horizontal magnitude (see eExtAidingSpeedType), plus time interpretation of timeMs (see eExtAidingStatus) |
 | speed | float | speed (m/s) |
 | var | float | observation variance (m^2/s^2).  Must be non-zero or the observation is discarded. |
 | offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
@@ -1273,8 +1283,8 @@ sizes the task[] array and is not itself a task ID.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| timeOfWeekMs | uint32_t | GPS time of week (since Sunday morning) in milliseconds |
-| status | uint32_t | Frame of measurement, 1=ECEF, 2=NED, 3=Body (see eExtAidingFrame) |
+| timeMs | uint32_t | (ms) When the measurement was taken: GNSS time of week, or its age when the IMX receives it, as selected by the status time bits (see eExtAidingStatus) |
+| status | uint32_t | Frame of measurement, 1=ECEF, 2=NED, 3=Body, plus time interpretation of timeMs (see eExtAidingStatus). Any other frame is discarded. |
 | vel | float[3] | velocity {vx,vy,vz} (m/s) |
 | offset | float[3] | point of measurement relative to IMU origin in IMU/body frame {x,y,z} (m) |
 | var | float[3] | observation variance, per axis, in NED (m^2/s^2).  Must be non-zero or the observation is discarded. |
@@ -1552,7 +1562,7 @@ INL2 magnetometer calibration information.
 | accel_motion | int | Non-zero when accelerometer-sensed motion is detected |
 | rot_motion | int | Non-zero when rotational motion is detected |
 | zero_vel | int | Non-zero when zero-velocity condition is detected |
-| reserved | int |  |
+| reserved | int | Reserved |
 | hdg_err | float | Estimated heading error, in radians |
 | hdg_coarse | int | Flag whether a coarse (uncertain) initial heading has been established |
 | hdg_aligned | int | Flag whether initial attitude error has converged (heading alignment complete) |
@@ -2063,6 +2073,7 @@ System status and configuration is made available through various enumeration an
 | Field | Value | Description |
 |-------|-------|-------------|
 | GPX_SYS_CFG_BITS_DISABLE_VCC_RF | 0x00000001 | Disable (tri-state) VCC_RF (GPX pin 16) output supplied via VAUX (GPX pin 40) |
+| GPX_SYS_CFG_BITS_EXT_AIDING_LATENCY | 0x00000002 | Timestamp the DID_EXT_AIDING_POS/_VEL observations the GPX outputs (GRMC_BITS_EXT_AIDING_POS/_VEL) with a fixed latency (150 ms position, 250 ms velocity; EXT_AIDING_STATUS_TIME_LATENCY) instead of GNSS time of week, so a consumer that has no GNSS time can still use them. Clear (default): GNSS time of week. |
 | GPX_SYS_CFG_BITS_BOR_LEVEL_0 | 0x0 | Brownout reset threshold voltage level: 1.65 - 1.75 V (default) |
 | GPX_SYS_CFG_BITS_BOR_LEVEL_1 | 0x1 | Brownout reset threshold voltage level: 2.0 - 2.1 V |
 | GPX_SYS_CFG_BITS_BOR_LEVEL_2 | 0x2 | Brownout reset threshold voltage level: 2.25 - 2.35 V |
