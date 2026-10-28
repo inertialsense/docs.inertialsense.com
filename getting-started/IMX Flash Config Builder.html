@@ -1,0 +1,547 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>IMX Flash Config Builder</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: left step rail, centre form for one section at a time, right live output pane (stacks on phones). */
+:root{
+  --bg:#eef1f4; --panel:#fbfcfd; --ink:#15212c; --muted:#5a6a78; --line:#d3dae1;
+  --accent:#0a6a86; --accent-ink:#ffffff; --accent-soft:#d9eef4;
+  --warn:#b4540a; --warn-soft:#fbe9d8; --good:#22794a; --code-bg:#101b24; --code-ink:#cfe3ee;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e161d; --panel:#16212a; --ink:#e3ecf2; --muted:#93a5b3; --line:#27363f;
+  --accent:#4fc0de; --accent-ink:#06222c; --accent-soft:#12323d;
+  --warn:#f0a35e; --warn-soft:#3a2713; --good:#62c58d; --code-bg:#0a1117; --code-ink:#cfe3ee; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e161d; --panel:#16212a; --ink:#e3ecf2; --muted:#93a5b3; --line:#27363f;
+  --accent:#4fc0de; --accent-ink:#06222c; --accent-soft:#12323d;
+  --warn:#f0a35e; --warn-soft:#3a2713; --good:#62c58d; --code-bg:#0a1117; --code-ink:#cfe3ee; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.5;
+  padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;text-wrap:balance}
+button,input,select,textarea{font:inherit;color:inherit}
+.top{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;padding-block:20px 14px;border-bottom:1px solid var(--line)}
+.top h1{font-size:22px;font-weight:600;letter-spacing:-.01em}
+.top p{margin:4px 0 0;color:var(--muted);max-width:62ch}
+.top .tools{display:flex;gap:8px;flex-wrap:wrap}
+.btn{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.step:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.shell{display:grid;grid-template-columns:200px minmax(0,1fr) minmax(0,420px);gap:20px;padding-block:18px 40px;align-items:start}
+@media (max-width:1100px){.shell{grid-template-columns:180px minmax(0,1fr)}.out{grid-column:1/-1}}
+@media (max-width:700px){.shell{grid-template-columns:minmax(0,1fr)}.rail{display:flex;overflow-x:auto;gap:6px;position:static!important}.step{white-space:nowrap}}
+.rail{position:sticky;top:12px;display:flex;flex-direction:column;gap:2px}
+.step{display:flex;gap:8px;align-items:center;text-align:left;background:none;border:0;border-left:3px solid transparent;padding:7px 10px;cursor:pointer;color:var(--muted);border-radius:0 6px 6px 0}
+.step[aria-current="true"]{color:var(--ink);background:var(--panel);border-left-color:var(--accent);font-weight:600}
+.step .dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex:none}
+.step.touched .dot{background:var(--accent)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
+.card h2{font-size:18px;font-weight:600}
+.card .lede{color:var(--muted);margin:4px 0 16px;max-width:64ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px 16px}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field>label,.legend{font-weight:600;font-size:13px}
+.field .key{font-family:var(--font-mono);font-size:11px;color:var(--muted);font-weight:400;margin-left:6px}
+.field .hint{font-size:12px;color:var(--muted)}
+input[type=number],input[type=text],select,textarea{background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:6px 8px;width:100%;min-width:0}
+input[type=number],.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.vec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.vec span{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
+.checks{display:flex;flex-direction:column;gap:6px;margin-top:2px}
+.chk{display:flex;gap:8px;align-items:flex-start}
+.chk input{margin-top:3px;flex:none}
+.chk small{display:block;color:var(--muted);font-size:12px}
+fieldset{border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:0 0 16px;min-width:0}
+legend{padding:0 6px;font-weight:600;font-size:13px}
+.hex{font-family:var(--font-mono);font-size:12px;background:var(--accent-soft);color:var(--ink);padding:2px 8px;border-radius:4px;display:inline-block;margin-top:6px}
+.note{background:var(--warn-soft);border-left:3px solid var(--warn);padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;margin:0 0 14px}
+.qa{display:flex;flex-direction:column;gap:18px}
+.q{border-bottom:1px solid var(--line);padding-bottom:16px}
+.q:last-child{border-bottom:0}
+.q h3{font-size:15px;margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line);border-radius:6px;padding:7px 12px;background:var(--bg);cursor:pointer}
+.opt[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.nav{display:flex;justify-content:space-between;gap:8px;margin-top:18px}
+.out{position:sticky;top:12px;min-width:0}
+.out .tabs{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:5px 10px;cursor:pointer;font-size:13px}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+pre{margin:0;background:var(--code-bg);color:var(--code-ink);font-family:var(--font-mono);font-size:12px;line-height:1.55;padding:12px;border-radius:6px;overflow:auto;max-height:52vh;white-space:pre-wrap;word-break:break-all}
+.outbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:8px;flex-wrap:wrap}
+.outbar label{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.status{font-size:12px;color:var(--good);min-height:1em}
+table.sum{width:100%;border-collapse:collapse;font-size:12px;font-family:var(--font-mono)}
+table.sum td{padding:3px 6px;border-bottom:1px solid var(--line)}
+.scroll{overflow-x:auto}
+.beta{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:16px;padding:18px 20px;background:var(--warn-soft);border:2px solid var(--warn);border-radius:8px}
+.beta .tag{font-family:var(--font-mono);font-weight:500;font-size:20px;letter-spacing:.14em;background:var(--warn);color:var(--bg);padding:4px 14px;border-radius:4px}
+.beta h2{font-size:22px;font-weight:600;letter-spacing:-.01em;flex:1 1 280px;min-width:0}
+.beta p{margin:0;flex:1 1 100%;font-size:15px;max-width:90ch}
+@media (prefers-reduced-motion:no-preference){.btn,.opt,.step{transition:background .12s,border-color .12s}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<section class="beta" role="note" aria-label="Beta release notice">
+  <span class="tag">BETA</span>
+  <h2>This configuration tool is a beta release</h2>
+  <p>Field and bit definitions come from the Inertial Sense SDK header, and the starting values are not read from your device. Review every generated value against your firmware before writing it to a unit, and report anything that looks wrong.</p>
+</section>
+<header class="top">
+  <div>
+    <h1>IMX Flash Config Builder</h1>
+    <p>Set every parameter in <span class="mono">DID_FLASH_CONFIG</span> (<span class="mono">nvm_flash_cfg_t</span>) through guided questions or direct fields. Output is a ready-to-run <span class="mono">cltool</span> command, JSON, or C code.</p>
+  </div>
+  <div class="tools">
+    <button class="btn" id="btnImport" type="button">Import</button>
+    <button class="btn" id="btnReset" type="button">Reset to defaults</button>
+  </div>
+</header>
+<div class="shell">
+  <nav class="rail" id="rail" aria-label="Sections"></nav>
+  <main id="main" class="card" aria-live="polite"></main>
+  <aside class="out card" aria-label="Generated output">
+    <div class="tabs" role="tablist" id="outTabs">
+      <button class="tab" role="tab" data-t="cltool" aria-selected="true">cltool</button>
+      <button class="tab" role="tab" data-t="json" aria-selected="false">JSON</button>
+      <button class="tab" role="tab" data-t="c" aria-selected="false">C code</button>
+      <button class="tab" role="tab" data-t="bits" aria-selected="false">Bit fields</button>
+    </div>
+    <pre id="outText" tabindex="0"></pre>
+    <div class="outbar">
+      <label><input type="checkbox" id="allFields"> Include every field, not only edited ones</label>
+      <span><span class="status" id="status"></span> <button class="btn primary" id="btnCopy" type="button">Copy</button></span>
+    </div>
+    <div id="importBox" hidden style="margin-top:12px">
+      <div class="field">
+        <label for="importText">Paste JSON from this tool, or a <span class="mono">key=value|key=value</span> string</label>
+        <textarea id="importText" rows="5" class="mono"></textarea>
+      </div>
+      <div class="outbar"><span class="status" id="importStatus"></span><button class="btn primary" id="btnApply" type="button">Load values</button></div>
+    </div>
+  </aside>
+</div>
+<script>
+/* ---------- Field definitions (from InertialSense SDK data_sets.h, nvm_flash_cfg_t) ---------- */
+const F = (mask, off, opts) => ({kind:'enum', mask:(mask<<off)>>>0, opts:opts.map(([v,l,h]) => [(v<<off)>>>0, l, h])});
+const flag = (bit, label, hint) => ({kind:'flag', mask:bit>>>0, label, hint});
+const ROT = [[0,0,0],[0,0,90],[0,0,180],[0,0,-90],[90,0,0],[90,0,90],[90,0,180],[90,0,-90],[180,0,0],[180,0,90],[180,0,180],[180,0,-90],[-90,0,0],[-90,0,90],[-90,0,180],[-90,0,-90],[0,90,0],[0,90,90],[0,90,180],[0,90,-90],[0,-90,0],[0,-90,90],[0,-90,180],[0,-90,-90]];
+const bitsOf = (parts) => parts;
+
+const BITS = {
+  sysCfgBits: [
+    {kind:'group', label:'Magnetometer', parts:[
+      flag(0x2,'Continuous mag calibration','Slow background calibration inside the EKF.'),
+      flag(0x4,'Automatic mag recalibration'),
+      Object.assign(F(7,8,[[0,'Recalibration mode: default'],[1,'Multi-axis'],[2,'Single-axis']]),{label:'Mag recalibration mode'}),
+      flag(0x800,'Use World Magnetic Model for declination'),
+      flag(0x8,'Disable declination estimation'),
+      flag(0x1000,'Disable magnetometer fusion')]},
+    {kind:'group', label:'Sensor fusion', parts:[
+      flag(0x2000,'Disable barometer fusion'),
+      flag(0x4000,'Disable GNSS 1 fusion'),
+      flag(0x8000,'Disable GNSS 2 fusion'),
+      flag(0x100000,'Disable wheel encoder fusion'),
+      flag(0x40000,'Disable INS EKF updates','Turns off the INS solution entirely.'),
+      flag(0x10000,'Disable automatic zero-velocity updates (ZUPT)','Useful in degraded GNSS or very slow applications.'),
+      flag(0x20000,'Disable automatic zero angular rate updates (ZARU)'),
+      flag(0x200000,'Estimate GNSS antenna offset in RTK compassing'),
+      flag(0x1000000,'Use reference IMU in EKF instead of onboard IMU'),
+      flag(0x2000000,'Reference point stationary on strobe input')]},
+    {kind:'group', label:'System', parts:[
+      flag(0x10,'Disable LEDs'),
+      flag(0x80000,'Skip built-in test (BIT) on startup')]},
+    {kind:'group', adv:true, label:'Brownout', parts:[
+      Object.assign(F(3,22,[[0,'1.65 to 1.75 V (default)'],[1,'2.0 to 2.1 V'],[2,'2.25 to 2.35 V'],[3,'2.5 to 2.6 V']]),{label:'Brownout reset threshold'})]}
+  ],
+  gnssSatSigConst: [{kind:'group', label:'Constellations', parts:[
+    flag(0x3,'GPS (L1, L5)'), flag(0xC,'QZSS'), flag(0x30,'Galileo'), flag(0xC0,'BeiDou'),
+    flag(0x300,'GLONASS'), flag(0x1000,'SBAS'), flag(0x2000,'IRNSS / NavIC'), flag(0x4000,'IMES')]}],
+  RTKCfgBits: [
+    {kind:'group', label:'Rover mode', parts:[
+      Object.assign(F(0xF,0,[[0,'Off'],[2,'RTK positioning (external corrections, GNSS1)'],[4,'RTK compassing (dual GNSS, GNSS2 to GNSS1)']]),{label:'Rover mode'}),
+      flag(0x400000,'Base station is identical hardware to this rover','Enables optimizations to get a fix faster.'),
+      flag(0x8000000,'Multipath mitigation')]},
+    {kind:'group', label:'Base station output', parts:[
+      {kind:'matrix', cols:['Ser0','Ser1','Ser2','USB'], rows:[
+        ['GNSS1 u-blox',[0x10,0x20,0x40,0x80]],['GNSS1 RTCM3',[0x100,0x200,0x400,0x800]],
+        ['GNSS2 u-blox',[0x1000,0x2000,0x4000,0x8000]],['GNSS2 RTCM3',[0x10000,0x20000,0x40000,0x80000]]]},
+      flag(0x1000000,'GNSS1 RTCM3 on the current port'),
+      flag(0x2000000,'GNSS2 RTCM3 on the current port'),
+      flag(0x4000000,'Clear the current port (with the bits above)'),
+      flag(0x800000,'Pass GNSS through to serial port','Turn off for RTK base use, so refLla is used instead of the live position.')]}
+  ],
+  sensorConfig: [
+    {kind:'group', adv:true, label:'Ranges and filters', parts:[
+      Object.assign(F(7,0,[[0,'±250 °/s'],[1,'±500 °/s'],[2,'±1000 °/s'],[3,'±2000 °/s'],[4,'±4000 °/s'],[7,'Sensor maximum']]),{label:'Gyro full scale'}),
+      Object.assign(F(7,4,[[0,'±2 g'],[1,'±4 g'],[2,'±8 g'],[3,'±16 g'],[4,'±32 g'],[7,'Sensor maximum']]),{label:'Accelerometer full scale'}),
+      Object.assign(F(0xF,8,[[0,'Automatic (250 Hz)'],[1,'184 Hz'],[2,'92 Hz'],[3,'41 Hz'],[4,'20 Hz'],[5,'10 Hz'],[6,'5 Hz']]),{label:'Gyro low-pass bandwidth'}),
+      Object.assign(F(0xF,12,[[0,'Automatic (218 Hz)'],[2,'99 Hz'],[3,'45 Hz'],[4,'21 Hz'],[5,'10 Hz'],[6,'5 Hz']]),{label:'Accelerometer low-pass bandwidth'})]},
+    {kind:'group', label:'Mounting and fault detection', parts:[
+      Object.assign(F(0x1F,16,ROT.map((r,i)=>[i,'Roll '+r[0]+'°, pitch '+r[1]+'°, yaw '+r[2]+'°'])),{label:'IMU and magnetometer mounting rotation'}),
+      flag(0x400000,'Disable magnetometer'),
+      flag(0x800000,'Disable barometer'),
+      flag(0x1000000,'Multi-IMU gyro fault detection'),
+      flag(0x2000000,'Multi-IMU accelerometer fault detection')]}
+  ],
+  platformConfig: [{kind:'group', label:'Carrier board', parts:[
+    Object.assign(F(0x3F,0,[[0,'None / unknown (IMX-5 default)'],[1,'IS-IMX-GPX-DEV (external GPX-1)'],[2,'IS-IMX-GPX-DEV-2, onboard X20'],[3,'IS-IMX-GPX-DEV-2, onboard Septentrio'],
+      [5,'RUG-4-X20'],[6,'RUG-4-SG5'],[7,'RUG-4-GPX'],[8,'RUG-x.x, PPS disabled'],[9,'RUG-3.x G1'],[10,'RUG-3.x G2'],[11,'EVB-2 G2'],[12,'Testbed-3'],
+      [13,'IG-1.0 G2'],[14,'IG-1.1+ G1'],[15,'IG-1.1+ G2'],[16,'IG-2'],[17,'Lambda G1'],[18,'Lambda G2'],[19,'Testbed-2 G1 with Lambda'],[20,'Testbed-2 G2 with Lambda'],[21,'IG-2.1+']]),{label:'Platform type'}),
+    flag(0x80,'Type comes from manufacturing OTP (write-protected)'),
+    Object.assign(F(0xFF,8,[[0,'Presets disabled'],[1,'1: S0 RS232 + CAN, S1 GNSS1 (RUG-3 G0 default)'],[2,'2: S0 TTL + CAN, S1 GNSS1'],[3,'3: S0 TTL + S2 TTL, S1 GNSS1'],
+      [4,'4: S0 RS232 + S1 RS232, S2 GNSS'],[5,'5: S1 RS485, S2 GNSS'],[6,'6: SPI, S2 GNSS'],[7,'7: S1 RS232, S2 GNSS (RUG-4 default)'],[8,'8: CAN, S1 GNSS'],[9,'9: S2 TTL, S1 GNSS']]),{label:'RUG-3 / RUG-4 preset'}),
+    flag(0x1000000,'Regenerate ioConfig from platform config (one-shot)')]}],
+  ioConfig: [
+    {kind:'group', label:'Pins', parts:[
+      flag(0x1,'Strobe triggers on rising edge','Applies to both strobe input and output.'),
+      Object.assign(F(7,1,[[0,'Unassigned'],[1,'Strobe input on G2'],[2,'CAN bus'],[3,'Ser2 (COM2), no GNSS'],[4,'I2C']]),{label:'G1 / G2'}),
+      Object.assign(F(3,4,[[0,'Default'],[1,'Strobe input'],[2,'Nav update strobe output'],[3,'SPI data ready']]),{label:'G9'}),
+      Object.assign(F(3,6,[[0,'Unassigned'],[1,'Ser1 (COM1), no GNSS']]),{label:'G6 / G7'}),
+      Object.assign(F(7,8,[[0,'Default'],[1,'Strobe input on G5'],[2,'Strobe input on G8'],[3,'Strobe input on G5 and G8'],[4,'Enable SPI on G6/G7'],[5,'Quadrature wheel encoder input']]),{label:'G5 / G8'}),
+      flag(0x800,'G15 (GNSS PPS) as strobe input')]},
+    {kind:'group', label:'GNSS receivers', parts:[
+      Object.assign(F(7,16,[[0,'Disabled'],[3,'Serial 0'],[4,'Serial 1'],[5,'Serial 2']]),{label:'GNSS 1 port'}),
+      Object.assign(F(7,22,[[0,'None'],[1,'u-blox (ZED-F9P or X20)'],[2,'NMEA'],[3,'Inertial Sense GPX'],[4,'Septentrio'],[5,'Host pass-through']]),{label:'GNSS 1 type'}),
+      Object.assign(F(7,13,[[0,'Disabled'],[1,'G15'],[3,'G2'],[4,'G5'],[5,'G12'],[6,'G9']]),{label:'GNSS 1 PPS pin'}),
+      flag(0x1000,'GNSS 1: skip initialization'),
+      Object.assign(F(7,19,[[0,'Disabled'],[3,'Serial 0'],[4,'Serial 1'],[5,'Serial 2']]),{label:'GNSS 2 port'}),
+      Object.assign(F(7,25,[[0,'None'],[1,'u-blox (ZED-F9P or X20)'],[2,'NMEA'],[3,'Inertial Sense GPX'],[4,'Septentrio'],[5,'Host pass-through']]),{label:'GNSS 2 type'}),
+      flag(0x10000000,'GNSS 2: skip initialization')]},
+    {kind:'group', label:'IMUs', parts:[
+      flag(0x20000000,'Disable IMU 1'), flag(0x40000000,'Disable IMU 2'), flag(0x80000000,'Disable IMU 3')]}
+  ],
+  ioConfig2: [{kind:'group', label:'G11 to G13 and GNSS2 PPS', parts:[
+    Object.assign(F(1,0,[[0,'SWDIO (debug)'],[1,'Strobe input']]),{label:'G11'}),
+    Object.assign(F(3,1,[[0,'SWO (debug)'],[1,'XSCL (secondary I2C clock)'],[2,'Strobe input']]),{label:'G12'}),
+    Object.assign(F(3,3,[[0,'DRDY (data ready)'],[1,'XSDA (secondary I2C data)'],[2,'Strobe input']]),{label:'G13'}),
+    flag(0x20,'Use GNSS 2 as the NMEA source'),
+    Object.assign(F(3,6,[[0,'Disabled'],[1,'G8'],[2,'G11'],[3,'G13']]),{label:'GNSS 2 PPS pin'})]}],
+  'wheelConfig.bits': [{kind:'group', label:'Wheel encoder', parts:[
+    flag(0x2,'Enable wheel encoder fusion'), flag(0x4,'Enable wheel-based velocity control'),
+    flag(0x100,'Reverse left wheel direction'), flag(0x200,'Reverse right wheel direction'),
+    flag(0x400,'Encoder hardware is on the EVB (off = uINS)')]}],
+  imuShockOptions: [{kind:'group', label:'Shock rejection', parts:[
+    flag(0x1,'Enable shock detection and rejection'),
+    flag(0x2,'Fast recovery','Best when shocks occur while rotating. Adds attitude error per shock, so avoid it on a stationary, non-rotating platform.')]}]
+};
+const BIT_WIDTH = {ioConfig2:8, imuShockOptions:8};
+
+/* Numeric / vector fields. unit shown is the unit cltool uses. */
+const DYN = [[0,'Portable'],[1,'Fixed position'],[2,'Stationary'],[3,'Pedestrian'],[4,'Ground vehicle'],[5,'Marine'],[6,'Airborne, up to 1 g'],[7,'Airborne, up to 2 g'],[8,'Airborne, up to 4 g'],[9,'Wrist'],[10,'Indoor']];
+const FIELDS = {
+  startupImuDtMs:{label:'IMU sample period',unit:'ms',min:0,step:1,def:2,hint:'Cannot exceed the nav period. 0 disables IMU sampling.'},
+  startupNavDtMs:{label:'Navigation output period',unit:'ms',min:1,step:1,def:4,hint:'Initializes sysParams.navOutputPeriodMs.'},
+  startupGnssDtMs:{label:'GNSS measurement period',unit:'ms',min:200,step:1,def:200,hint:'200 ms minimum (5 Hz max).'},
+  ser0BaudRate:{label:'Serial 0 baud rate',unit:'bps',min:0,step:1,def:921600,list:[9600,19200,38400,57600,115200,230400,460800,921600,2000000,3000000]},
+  ser1BaudRate:{label:'Serial 1 baud rate',unit:'bps',min:0,step:1,def:921600,list:[9600,19200,38400,57600,115200,230400,460800,921600,2000000,3000000]},
+  ser2BaudRate:{label:'Serial 2 baud rate',unit:'bps',min:0,step:1,def:921600,list:[9600,19200,38400,57600,115200,230400,460800,921600,2000000,3000000]},
+  dynamicModel:{label:'Dynamic model',type:'select',opts:DYN,def:8,hint:'Must be at least as dynamic as your platform, or accuracy suffers.'},
+  insRotation:{label:'INS rotation (roll, pitch, yaw)',unit:'deg',vec:['roll','pitch','yaw'],step:0.1,def:[0,0,0],hint:'Sensor frame to intermediate output frame. Applied Z, Y, X.'},
+  insOffset:{label:'INS offset',unit:'m',vec:['x','y','z'],step:0.001,def:[0,0,0],hint:'Intermediate output frame to INS output frame.'},
+  gnss1AntOffset:{label:'GNSS 1 antenna offset',unit:'m',vec:['x','y','z'],step:0.001,def:[0,0,0],hint:'Lever arm in the sensor frame.'},
+  gnss2AntOffset:{label:'GNSS 2 antenna offset',unit:'m',vec:['x','y','z'],step:0.001,def:[0,0,0],hint:'Lever arm in the sensor frame.'},
+  zeroVelRotation:{label:'Zero-velocity rotation (roll, pitch, yaw)',unit:'deg',vec:['roll','pitch','yaw'],step:0.1,def:[0,0,0],hint:'Sensor frame to intermediate zero-velocity frame.'},
+  zeroVelOffset:{label:'Zero-velocity offset',unit:'m',vec:['x','y','z'],step:0.001,def:[0,0,0]},
+  gnssMinimumElevation:{label:'Minimum satellite elevation',unit:'deg',min:0,max:90,step:0.5,def:10,hint:'Low satellites travel a longer path through the atmosphere.'},
+  gnssCn0Minimum:{label:'CN0 absolute minimum',unit:'dBHz',min:0,max:255,step:1,def:30,hint:'Filters signals used in the RTK solution.'},
+  gnssCn0DynMinOffset:{label:'CN0 dynamic minimum offset',unit:'dBHz',min:0,max:255,step:1,def:20,hint:'Offset below the strongest satellite. Zero disables.'},
+  gnssTimeUserDelay:{label:'GNSS time delay',unit:'s',step:0.001,def:0,hint:'Use to account for antenna cable delay.'},
+  gnssTimeSyncPeriodMs:{label:'GNSS time sync period',unit:'ms',min:0,step:1,def:1000,hint:'Requires a reboot.'},
+  refLla:{label:'Reference position (lat, lon, height)',unit:'deg, deg, m',vec:['lat','lon','HAE'],step:0.0000001,def:[0,0,0],hint:'Origin for NED calculations. For an RTK base, the surveyed position.'},
+  lastLlaUpdateDistance:{label:'Last-position update distance',unit:'m',min:0,step:1,def:1000,hint:'Distance moved before the stored start-up position is refreshed.'},
+  magDeclination:{label:'Magnetic declination',unit:'deg',step:0.01,def:0,hint:'Heading offset between magnetic and true north.'},
+  magInterferenceThreshold:{label:'Mag interference threshold',unit:'',step:0.1,min:0,def:3,hint:'Typical 2 to 10. Use 1000 to disable detection.'},
+  magCalibrationQualityThreshold:{label:'Mag calibration quality threshold',unit:'',step:0.1,min:0,def:10,hint:'Typical 10 to 20. Use 1000 to force "good".'},
+  imuRejectThreshGyroLow:{label:'Gyro fault rejection, low',unit:'',min:0,max:255,step:1,def:0},
+  imuRejectThreshGyroHigh:{label:'Gyro fault rejection, high',unit:'',min:0,max:255,step:1,def:0},
+  imuShockDetectLatencyMs:{label:'Shock detect latency',unit:'ms',min:0,max:255,step:1,def:0,hint:'Time the EKF rewinds so a shock does not affect it.'},
+  imuShockRejectLatchMs:{label:'Shock reject latch time',unit:'ms',min:0,max:255,step:1,def:0,hint:'Time after a shock ends before rejection turns off.'},
+  imuShockDeltaAccHighThreshold:{label:'Shock start: accel difference',unit:'m/s²',min:0,max:255,step:1,def:0,hint:'Minimum difference between the 3 IMUs to detect a shock.'},
+  imuShockDeltaAccLowThreshold:{label:'Shock end: accel difference',unit:'m/s²',min:0,max:255,step:1,def:0,hint:'Maximum difference within the latch time to end a shock.'},
+  imuShockDeltaGyroHighThreshold:{label:'Shock start: gyro difference',unit:'°/s',min:0,max:255,step:1,def:0},
+  imuShockDeltaGyroLowThreshold:{label:'Shock end: gyro difference',unit:'°/s',min:0,max:255,step:1,def:0},
+  'wheelConfig.transform.e_b2w':{label:'IMU to wheel frame rotation',unit:'rad',vec:['roll','pitch','yaw'],step:0.001,def:[0,0,0],hint:'Wheel frame is at the centre of the non-steering axle. Note: radians, as the SDK stores it.'},
+  'wheelConfig.transform.t_b2w':{label:'IMU to wheel frame translation',unit:'m',vec:['x','y','z'],step:0.001,def:[0,0,0]},
+  'wheelConfig.track_width':{label:'Track width',unit:'m',min:0,step:0.001,def:0,hint:'Distance between left and right wheels.'},
+  'wheelConfig.radius':{label:'Wheel radius',unit:'m',min:0,step:0.001,def:0}
+};
+const BITDEF = {sysCfgBits:0, gnssSatSigConst:0x13FF, RTKCfgBits:0, sensorConfig:0x00000070|0x7, platformConfig:0, ioConfig:0x46, ioConfig2:0, 'wheelConfig.bits':0, imuShockOptions:0};
+const BITLABEL = {sysCfgBits:'System configuration',gnssSatSigConst:'GNSS constellations',RTKCfgBits:'RTK configuration',sensorConfig:'Sensor configuration',platformConfig:'Platform configuration',ioConfig:'I/O configuration',ioConfig2:'I/O configuration 2','wheelConfig.bits':'Wheel configuration',imuShockOptions:'IMU shock options'};
+const U16 = {gnssSatSigConst:true};
+
+const SECTIONS = [
+  {id:'start',title:'Quick start',lede:'Answer a few questions and the matching fields are filled in. Every value can still be changed in the sections that follow.',qs:'start'},
+  {id:'platform',title:'Platform and I/O',lede:'Which carrier board this is, and what each shared pin does.',items:['platformConfig','ioConfig','ioConfig2']},
+  {id:'gnss',title:'GNSS',lede:'Satellite systems, receivers and signal filtering.',items:['gnssSatSigConst','startupGnssDtMs','gnssMinimumElevation','gnssCn0Minimum','gnssCn0DynMinOffset','gnssTimeUserDelay','gnssTimeSyncPeriodMs']},
+  {id:'rates',title:'Rates and serial ports',lede:'How fast the sensors run and how fast each port talks.',items:['startupImuDtMs','startupNavDtMs','ser0BaudRate','ser1BaudRate','ser2BaudRate']},
+  {id:'mount',title:'Mounting and offsets',lede:'Where the unit and its antennas sit on your platform.',items:['insRotation','insOffset','gnss1AntOffset','gnss2AntOffset','zeroVelOffset','refLla']},
+  {id:'sensors',title:'Sensors',lede:'Full-scale ranges, filters, mounting rotation and per-sensor switches.',items:['sensorConfig']},
+  {id:'ekf',title:'EKF and dynamics',lede:'What the filter fuses and how it models motion.',items:['dynamicModel','sysCfgBits']},
+  {id:'rtk',title:'RTK',lede:'Rover mode, compassing, or base station output.',items:['RTKCfgBits']},
+  {id:'mag',title:'Magnetometer',lede:'Declination and the thresholds that decide when the mag is trusted.',items:['magDeclination','magInterferenceThreshold','magCalibrationQualityThreshold']},
+  {id:'shock',title:'IMU shock rejection',lede:'Detection thresholds for multi-IMU units.',qs:'shock',items:['imuShockOptions','imuShockDetectLatencyMs','imuShockRejectLatchMs','imuShockDeltaAccHighThreshold','imuShockDeltaAccLowThreshold','imuShockDeltaGyroHighThreshold','imuShockDeltaGyroLowThreshold','imuRejectThreshGyroLow','imuRejectThreshGyroHigh']},
+  {id:'wheel',title:'Wheel encoder',lede:'Ground vehicle encoder fusion and geometry.',items:['wheelConfig.bits','wheelConfig.transform.e_b2w','wheelConfig.transform.t_b2w','wheelConfig.track_width','wheelConfig.radius']},
+  {id:'advanced',title:'Advanced (typically not needed)',lede:'Settings most setups can leave alone. If you skip the question, the gyro stays at its sensor-maximum range.',qs:'adv',items:['sensorConfig#adv','sysCfgBits#adv','zeroVelRotation','lastLlaUpdateDistance']}
+];
+</script>
+<script>
+/* ---------- State ---------- */
+const ALLKEYS = [...Object.keys(FIELDS), ...Object.keys(BITS)];
+const clone = v => Array.isArray(v) ? v.slice() : v;
+let S = {}, T = new Set(), cur = 'start', outTab = 'cltool', answers = {};
+function resetState(){
+  S = {}; T = new Set(); answers = {};
+  for (const k of Object.keys(FIELDS)) S[k] = clone(FIELDS[k].def);
+  for (const k of Object.keys(BITS)) S[k] = BITDEF[k] >>> 0;
+}
+const STORE = 'imxFlashCfgBuilder.v1';
+function save(){ try{ localStorage.setItem(STORE, JSON.stringify({S,T:[...T],answers})); }catch(e){} }
+function load(){
+  try{ const d = JSON.parse(localStorage.getItem(STORE)||'null'); if(d&&d.S){ S=Object.assign(S,d.S); T=new Set(d.T||[]); answers=d.answers||{}; } }catch(e){}
+}
+const hex = (k) => '0x' + (S[k]>>>0).toString(16).toUpperCase().padStart(U16[k]?4:(BIT_WIDTH[k]?2:8),'0');
+const el = (tag, attrs={}, ...kids) => {
+  const n = document.createElement(tag);
+  for (const [a,v] of Object.entries(attrs)){
+    if (a==='class') n.className=v; else if (a==='text') n.textContent=v;
+    else if (a.startsWith('on')) n.addEventListener(a.slice(2), v);
+    else if (v===true) n.setAttribute(a,''); else if (v!==false && v!=null) n.setAttribute(a,v);
+  }
+  kids.flat().forEach(c => c!=null && n.append(c.nodeType?c:document.createTextNode(c)));
+  return n;
+};
+function touch(k){ T.add(k); save(); refreshOut(); markRail(); }
+function setBits(k, clearMask, setMask){ S[k] = (((S[k] & ~clearMask) | setMask) >>> 0); touch(k); }
+
+/* ---------- Field rendering ---------- */
+let uid = 0;
+function numField(k){
+  const f = FIELDS[k], id = 'f'+(uid++);
+  const w = el('div',{class:'field'}, el('label',{for:id+(f.vec?'0':'')}, f.label, el('span',{class:'key',text:k})));
+  const mk = (idx) => {
+    const inp = el('input',{type:'number',id:id+(idx==null?'':idx),step:f.step,min:f.min,max:f.max,list:f.list?('dl_'+k):null});
+    inp.value = idx==null ? S[k] : S[k][idx];
+    inp.addEventListener('input',()=>{ const v = inp.value===''?0:parseFloat(inp.value); if(Number.isNaN(v))return; if(idx==null) S[k]=v; else S[k][idx]=v; touch(k); });
+    return inp;
+  };
+  if (f.vec){ w.append(el('div',{class:'vec'}, f.vec.map((n,i)=>el('div',{}, mk(i), el('span',{text:n}))))); }
+  else w.append(mk(null));
+  if (f.list) w.append(el('datalist',{id:'dl_'+k}, f.list.map(v=>el('option',{value:v}))));
+  w.append(el('div',{class:'hint'}, [f.unit?('Unit: '+f.unit+'. '):'', f.hint||'']));
+  return w;
+}
+function selField(k){
+  const f = FIELDS[k], id='f'+(uid++);
+  const sel = el('select',{id}, f.opts.map(([v,l])=>el('option',{value:v,text:v+': '+l})));
+  sel.value = S[k];
+  sel.addEventListener('change',()=>{ S[k]=parseInt(sel.value,10); touch(k); });
+  return el('div',{class:'field'}, el('label',{for:id}, f.label, el('span',{class:'key',text:k})), sel, el('div',{class:'hint',text:f.hint||''}));
+}
+function bitsField(k, advOnly){
+  const box = el('div',{});
+  const hexEl = el('span',{class:'hex'});
+  const upd = () => { hexEl.textContent = k+' = '+hex(k); };
+  box.append(el('h3',{style:'font-size:15px;margin:2px 0 10px'}, BITLABEL[k], el('span',{class:'key',text:k, style:'margin-left:8px;font-family:var(--font-mono);font-size:11px;color:var(--muted);font-weight:400'})));
+  for (const g of BITS[k]){
+    if (!!g.adv !== !!advOnly) continue;
+    const fs = el('fieldset',{}, el('legend',{text:g.label}));
+    const checks = el('div',{class:'checks'}), grid = el('div',{class:'grid',style:'margin-bottom:10px'});
+    for (const p of g.parts){
+      if (p.kind==='flag'){
+        const id='f'+(uid++), c = el('input',{type:'checkbox',id}); c.checked = ((S[k]&p.mask)>>>0)===p.mask;
+        c.addEventListener('change',()=>{ setBits(k, p.mask, c.checked?p.mask:0); upd(); });
+        checks.append(el('div',{class:'chk'}, c, el('label',{for:id}, p.label, p.hint?el('small',{text:p.hint}):null)));
+      } else if (p.kind==='enum'){
+        const id='f'+(uid++), sel = el('select',{id});
+        const curV = (S[k]&p.mask)>>>0;
+        p.opts.forEach(([v,l])=>sel.append(el('option',{value:v,text:l})));
+        if (!p.opts.some(o=>o[0]===curV)) sel.append(el('option',{value:curV,text:'Custom value 0x'+curV.toString(16).toUpperCase()}));
+        sel.value = curV;
+        sel.addEventListener('change',()=>{ setBits(k, p.mask, parseInt(sel.value,10)); upd(); });
+        grid.append(el('div',{class:'field'}, el('label',{for:id,text:p.label}), sel));
+      } else if (p.kind==='matrix'){
+        const t = el('table',{class:'sum'}, el('tr',{}, el('td'), p.cols.map(c=>el('td',{text:c}))));
+        p.rows.forEach(([name,bits])=>{
+          t.append(el('tr',{}, el('td',{text:name}), bits.map((b,i)=>{
+            const c = el('input',{type:'checkbox','aria-label':name+' '+p.cols[i]}); c.checked = !!(S[k]&b);
+            c.addEventListener('change',()=>{ setBits(k,b,c.checked?b:0); upd(); });
+            return el('td',{}, c); })));
+        });
+        fs.append(el('div',{class:'scroll',style:'margin-bottom:10px'}, t));
+      }
+    }
+    if (grid.children.length) fs.append(grid);
+    if (checks.children.length) fs.append(checks);
+    box.append(fs);
+  }
+  upd(); box.append(hexEl);
+  return box;
+}
+function itemEl(k){ const b=k.split('#')[0]; return BITS[b] ? bitsField(b, k.includes('#adv')) : (FIELDS[b].type==='select' ? selField(b) : numField(b)); }
+
+/* ---------- Wizard ---------- */
+const Q = [
+ {id:'dyn',q:'What does the unit move on?',opts:[['Car, truck or other wheeled vehicle',()=>S.dynamicModel=4],['Boat or ship',()=>S.dynamicModel=5],['Aircraft, gentle (up to 1 g)',()=>S.dynamicModel=6],['Aircraft or drone (up to 4 g)',()=>S.dynamicModel=8],['Person walking or handheld',()=>S.dynamicModel=3],['Fixed in place',()=>S.dynamicModel=2],['Something else',()=>S.dynamicModel=0]],touch:['dynamicModel']},
+ {id:'rate',q:'How often do you need navigation output?',opts:[['10 Hz',()=>nav(100)],['50 Hz',()=>nav(20)],['100 Hz',()=>nav(10)],['200 Hz',()=>nav(5)],['500 Hz',()=>nav(2)]],touch:['startupNavDtMs','startupImuDtMs']},
+ {id:'gyro',grp:'adv',q:'Fastest rotation rate you expect?',opts:[['Up to 250 °/s',()=>fs('sensorConfig',7,0)],['Up to 500 °/s',()=>fs('sensorConfig',7,1)],['Up to 1000 °/s',()=>fs('sensorConfig',7,2)],['Up to 2000 °/s',()=>fs('sensorConfig',7,3)],['Up to 4000 °/s',()=>fs('sensorConfig',7,4)],['Use sensor maximum',()=>fs('sensorConfig',7,7)]],touch:['sensorConfig']},
+ {id:'acc',grp:'shock',q:'Strongest acceleration or shock you expect?',opts:[['Up to 2 g',()=>fs('sensorConfig',0x70,0x00)],['Up to 4 g',()=>fs('sensorConfig',0x70,0x10)],['Up to 8 g',()=>fs('sensorConfig',0x70,0x20)],['Up to 16 g',()=>fs('sensorConfig',0x70,0x30)],['Up to 32 g',()=>fs('sensorConfig',0x70,0x40)],['Use sensor maximum',()=>fs('sensorConfig',0x70,0x70)]],touch:['sensorConfig']},
+ {id:'gnss',q:'How many GNSS antennas are connected?',opts:[['None',()=>{S.sysCfgBits=(S.sysCfgBits|0xC000)>>>0;S.RTKCfgBits=(S.RTKCfgBits&~0xF)>>>0;}],['One',()=>{S.sysCfgBits=(S.sysCfgBits&~0xC000)>>>0;S.RTKCfgBits=(S.RTKCfgBits&~0xF)>>>0;}],['Two, for dual-antenna heading',()=>{S.sysCfgBits=(S.sysCfgBits&~0xC000)>>>0;S.RTKCfgBits=((S.RTKCfgBits&~0xF)|4)>>>0;}]],touch:['sysCfgBits','RTKCfgBits'],after:'Set the antenna positions in Mounting and offsets. Pin and receiver assignment is in Platform and I/O.'},
+ {id:'rtk',q:'What is the unit\'s RTK role?',opts:[['No RTK',()=>rtk('none')],['Rover using external corrections',()=>rtk('rover')],['Base station (outputs corrections)',()=>rtk('base')]],touch:['RTKCfgBits']},
+ {id:'basePort',q:'Which port should the base station send RTCM3 corrections on?',when:()=>answers.rtk===2,opts:[['Serial 0',()=>base(0x100)],['Serial 1',()=>base(0x200)],['Serial 2',()=>base(0x400)],['USB',()=>base(0x800)]],touch:['RTKCfgBits']},
+ {id:'mag',q:'How should the magnetometer be used?',opts:[['Fuse it, declination from the World Magnetic Model',()=>{S.sysCfgBits=((S.sysCfgBits&~0x1000)|0x800)>>>0;}],['Fuse it, I will set declination myself',()=>{S.sysCfgBits=(S.sysCfgBits&~0x1800)>>>0;}],['Do not use it (metal or magnetic interference)',()=>{S.sysCfgBits=((S.sysCfgBits&~0x800)|0x1000)>>>0;}]],touch:['sysCfgBits']}
+];
+function nav(dt){ S.startupNavDtMs=dt; S.startupImuDtMs=Math.min(2,dt); }
+function fs(k,mask,val){ S[k]=(((S[k]&~mask)|val)>>>0); }
+function rtk(m){ const BASE=0xFFF0|0xF0000|0x1000000|0x2000000|0x4000000; S.RTKCfgBits=(S.RTKCfgBits&~(0xF|0xFF0|0xF000|0xF0000|0x1000000|0x2000000|0x4000000))>>>0;
+  if(m==='rover'){ S.RTKCfgBits=(S.RTKCfgBits|2)>>>0; } if(m==='base'){ S.RTKCfgBits=(S.RTKCfgBits&~0x800000)>>>0; } }
+function base(bit){ S.RTKCfgBits=(S.RTKCfgBits&~(0xF00|0x3000000))>>>0; S.RTKCfgBits=((S.RTKCfgBits|bit)&~0x800000)>>>0; }
+function wizard(grp){
+  const wrap = el('div',{class:'qa'});
+  Q.forEach(q=>{
+    if ((q.grp||'start') !== grp) return;
+    if (q.when && !q.when()) return;
+    const box = el('div',{class:'q'}, el('h3',{text:q.q}));
+    const o = el('div',{class:'opts'});
+    q.opts.forEach(([label,fn],i)=>{
+      o.append(el('button',{class:'opt',type:'button','aria-pressed':String(answers[q.id]===i),text:label,onclick:()=>{
+        answers[q.id]=i; fn(); q.touch.forEach(k=>T.add(k)); save(); refreshOut(); render(); }}));
+    });
+    box.append(o);
+    if (q.after && answers[q.id]!=null) box.append(el('div',{class:'hint',style:'margin-top:6px',text:q.after}));
+    wrap.append(box);
+  });
+  return wrap;
+}
+
+/* ---------- Page render ---------- */
+function render(){
+  uid = 0;
+  const sec = SECTIONS.find(s=>s.id===cur), main = document.getElementById('main');
+  main.replaceChildren(el('h2',{text:sec.title}), el('p',{class:'lede',text:sec.lede}));
+  if (sec.qs){
+    if (sec.id==='start') main.append(el('div',{class:'note',text:'Starting values are typical, not read from your device. For an existing unit, run cltool with -imxFlashCfg, then use Import to load what it returns.'}));
+    main.append(wizard(sec.qs));
+  }
+  if (sec.items) {
+    const nums = el('div',{class:'grid'});
+    sec.items.forEach(k=>{ const n=itemEl(k); if (BITS[k.split('#')[0]]) main.append(n); else nums.append(n); });
+    if (nums.children.length) main.append(nums);
+    if (sec.id==='rtk') main.append(el('div',{class:'note',style:'margin-top:14px',text:'A base station should use a surveyed reference position. Set it under Mounting and offsets (reference position).'}));
+  }
+  const i = SECTIONS.indexOf(sec);
+  main.append(el('div',{class:'nav'},
+    i>0 ? el('button',{class:'btn',type:'button',text:'Back: '+SECTIONS[i-1].title,onclick:()=>go(SECTIONS[i-1].id)}) : el('span'),
+    i<SECTIONS.length-1 ? el('button',{class:'btn primary',type:'button',text:'Next: '+SECTIONS[i+1].title,onclick:()=>go(SECTIONS[i+1].id)}) : el('span')));
+  markRail();
+}
+function go(id){ cur=id; render(); window.scrollTo({top:0}); }
+function markRail(){
+  const rail = document.getElementById('rail'); rail.replaceChildren();
+  SECTIONS.forEach(s=>{
+    const t = (s.items && s.items.some(k=>T.has(k.split('#')[0]))) || (s.qs && Q.some(q=>(q.grp||'start')===s.qs && answers[q.id]!=null));
+    rail.append(el('button',{class:'step'+(t?' touched':''),type:'button','aria-current':String(s.id===cur),onclick:()=>go(s.id)}, el('span',{class:'dot'}), s.title));
+  });
+}
+
+/* ---------- Output ---------- */
+const DEG = new Set(['insRotation','zeroVelRotation','magDeclination','gnssMinimumElevation']);
+const FLOATS = new Set(['insRotation','insOffset','gnss1AntOffset','gnss2AntOffset','zeroVelRotation','zeroVelOffset','magDeclination','magInterferenceThreshold','magCalibrationQualityThreshold','gnssMinimumElevation','gnssTimeUserDelay','lastLlaUpdateDistance','wheelConfig.transform.e_b2w','wheelConfig.transform.t_b2w','wheelConfig.track_width','wheelConfig.radius']);
+const num = n => { const r = Math.round(n*1e9)/1e9; return String(r); };
+function activeKeys(){ return document.getElementById('allFields').checked ? ALLKEYS : ALLKEYS.filter(k=>T.has(k)); }
+function pairs(){
+  const out = [];
+  activeKeys().forEach(k=>{
+    if (BITS[k]) out.push([k, hex(k)]);
+    else if (FIELDS[k].vec) S[k].forEach((v,i)=>out.push([k+'['+i+']', num(v)]));
+    else out.push([k, num(S[k])]);
+  });
+  return out;
+}
+function genCltool(){
+  const p = pairs(); if(!p.length) return '# No fields edited yet.\n# Change a value or answer a quick-start question.';
+  const port = (document.getElementById('port')||{}).value || '/dev/ttyACM0';
+  return 'cltool -c '+port+' "-imxFlashCfg='+p.map(x=>x[0]+'='+x[1]).join('|')+'"\n\n# Read back to verify:\ncltool -c '+port+' -imxFlashCfg';
+}
+function genJson(){
+  const o = {}; activeKeys().forEach(k=>{ o[k] = BITS[k] ? hex(k) : clone(S[k]); });
+  return Object.keys(o).length ? JSON.stringify(o,null,2) : '{}';
+}
+function genC(){
+  const ks = activeKeys(); if(!ks.length) return '// No fields edited yet.';
+  const L = ['nvm_flash_cfg_t flashCfg;','inertialSense.ImxFlashConfig(flashCfg);   // read the current config first',''];
+  ks.forEach(k=>{
+    if (BITS[k]) { L.push('flashCfg.'+k+' = '+hex(k)+';'); return; }
+    const f = FIELDS[k], conv = DEG.has(k) ? ' * C_DEG2RAD_F' : '';
+    const sfx = FLOATS.has(k) && k!=='refLla' ? 'f' : '';
+    if (f.vec) S[k].forEach((v,i)=>L.push('flashCfg.'+k+'['+i+'] = '+num(v)+(Number.isInteger(v)&&!sfx?'':(Number.isInteger(v)?'.0':''))+sfx+conv+';'));
+    else L.push('flashCfg.'+k+' = '+num(S[k])+(sfx&&Number.isInteger(S[k])?'.0':'')+sfx+conv+';');
+  });
+  L.push('','inertialSense.SetImxFlashConfig(flashCfg);');
+  return L.join('\n');
+}
+function describeBits(k){
+  const rows = [];
+  BITS[k].forEach(g=>g.parts.forEach(p=>{
+    if(p.kind==='flag'&&((S[k]&p.mask)>>>0)===p.mask) rows.push(p.label);
+    else if(p.kind==='enum'){ const v=(S[k]&p.mask)>>>0, o=p.opts.find(o=>o[0]===v); rows.push(p.label+': '+(o?o[1]:'custom 0x'+v.toString(16))); }
+    else if(p.kind==='matrix') p.rows.forEach(([n,bs])=>bs.forEach((b,i)=>{ if(S[k]&b) rows.push(n+' on '+p.cols[i]); }));
+  }));
+  return rows;
+}
+function genBits(){
+  return ALLKEYS.filter(k=>BITS[k]).map(k=>k+' = '+hex(k)+(T.has(k)?'  (edited)':'')+'\n'+describeBits(k).map(r=>'  - '+r).join('\n')).join('\n\n');
+}
+function refreshOut(){
+  const t = {cltool:genCltool,json:genJson,c:genC,bits:genBits}[outTab]();
+  document.getElementById('outText').textContent = t;
+  const pw = document.getElementById('portWrap'); if (pw) pw.hidden = outTab!=='cltool';
+}
+
+/* ---------- Import ---------- */
+function applyImport(text){
+  let n = 0;
+  const setKV = (key,val) => {
+    const m = key.match(/^(.+?)\[(\d)\]$/), base = m?m[1]:key;
+    if (!(base in S)) return;
+    if (BITS[base]){ S[base] = (parseInt(val)>>>0); T.add(base); n++; return; }
+    if (FIELDS[base].vec){
+      if (Array.isArray(val)) S[base] = val.map(Number); else if (m) S[base][+m[2]] = Number(val); else return;
+    } else S[base] = Number(val);
+    T.add(base); n++;
+  };
+  const t = text.trim();
+  if (t.startsWith('{')) { Object.entries(JSON.parse(t)).forEach(([k,v])=>setKV(k, typeof v==='string'?v:v)); }
+  else t.split(/[|\n,]+/).forEach(s=>{ const i=s.indexOf('='); if(i>0) setKV(s.slice(0,i).trim(), s.slice(i+1).trim()); });
+  save(); render(); refreshOut(); return n;
+}
+
+/* ---------- Wire up ---------- */
+resetState(); load();
+(function init(){
+  const outPre = document.getElementById('outText');
+  const pw = el('div',{class:'field',id:'portWrap',style:'margin-bottom:8px'}, el('label',{for:'port',text:'Serial port used in the command'}), el('input',{type:'text',id:'port',value:'/dev/ttyACM0',class:'mono'}));
+  outPre.before(pw); document.getElementById('port').addEventListener('input',refreshOut);
+  document.querySelectorAll('#outTabs .tab').forEach(b=>b.addEventListener('click',()=>{
+    outTab=b.dataset.t; document.querySelectorAll('#outTabs .tab').forEach(x=>x.setAttribute('aria-selected',String(x===b))); refreshOut(); }));
+  document.getElementById('allFields').addEventListener('change',refreshOut);
+  document.getElementById('btnReset').addEventListener('click',()=>{ resetState(); save(); render(); refreshOut(); setStatus('Reset to defaults'); });
+  document.getElementById('btnImport').addEventListener('click',()=>{ const b=document.getElementById('importBox'); b.hidden=!b.hidden; });
+  document.getElementById('btnApply').addEventListener('click',()=>{
+    try{ const n = applyImport(document.getElementById('importText').value); document.getElementById('importStatus').textContent = n+' fields loaded'; }
+    catch(e){ document.getElementById('importStatus').textContent = 'Could not read that: '+e.message; }
+  });
+  document.getElementById('btnCopy').addEventListener('click',async()=>{
+    const txt = outPre.textContent;
+    try{ await navigator.clipboard.writeText(txt); setStatus('Copied'); }
+    catch(e){ const r=document.createRange(); r.selectNodeContents(outPre); const s=getSelection(); s.removeAllRanges(); s.addRange(r); setStatus('Selected. Press Ctrl+C'); }
+  });
+  render(); refreshOut();
+})();
+function setStatus(t){ const s=document.getElementById('status'); s.textContent=t; setTimeout(()=>{s.textContent='';},2200); }
+</script>
+
+</body></html>
