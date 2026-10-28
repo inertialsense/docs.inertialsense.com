@@ -1,4 +1,4 @@
-#IMX-5 Quick Start Guide
+#IMX-6 Quick Start Guide
 ## Basic Configuration
 The configuration settings found in DID_FLASH_CONFIG are used to configure the various features of the device. These can be modified directly to the appropriate values using either the [EvalTool](../user-manual/software/evaltool.md), the [CLTool](../user-manual/software/cltool.md), or the [SDK](../user-manual/software/SDK/overview.md). However, it is convenient initially to configure the main features by modifying the settings in the GPS and General tabs within the Settings tab of the EvalTool. 
 
@@ -8,7 +8,7 @@ The antenna offset should also be configured by going to the Data Sets Tab and s
 
 2. gnss2AntOffset[X-Z] - Position offset of sensor frame with respect to GPS2 antenna.
 
-IMX-5 data sets can then be requested by one of several methods:
+IMX-6 data sets can then be requested by one of several methods:
 
 1. Requesting NMEA data using the [ASCE](../user-manual/com-protocol/nmea.md#asce) command. There is a convenient tool in the lower left corner of the Data Logs tab of the EvalTool.
 
