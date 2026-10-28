@@ -37,13 +37,14 @@ OPTIONS (General)
     -baud=BAUDRATE  Set serial port baudrate.  Options: 115200, 230400, 460800, 921600 (default)
     -c DEVICE_PORT  Select port(s): serial port (e.g., /dev/ttyUSB0 or COM5), tcp://IP:port, or a comma-separated list of these.
                     Set DEVICE_PORT to "*" for all ports or "*4" for only first four.
-    -dboc           Send stop-broadcast command `$STPB` on close.
+    -dboc           Send stop-broadcast command `$STPC` on close.
     -h --help       Display this help menu.
     -list-devices   Discovers and prints a list of discovered Inertial Sense devices and connected ports.
-    -lm             Listen mode for ISB. Disables device verification (-vd) and does not send stop-broadcast command on start.
+    -lm             Listen mode for ISB. Does not send the stop-broadcast command on start, so the device's current output
+                    is left unchanged. Disables device validation (-vd). Requests such as -did and -edit are still sent.
     -magRecal[n]    Recalibrate magnetometers: 0=multi-axis, 1=single-axis
     -nmea=[s]       Send stop-broadcast command `$STPC`, then NMEA message s with added checksum footer. Display rx NMEA. (`-nmea=ASCE,0,GxGGA,1`) With s empty (`-nmea=`), only sends `$STPC`.
-    -nmea           Listen mode for NMEA. Displays rx NMEA and sends nothing to the device (like -lm).
+    -nmea           Listen mode for NMEA. Displays rx NMEA and sends nothing to the device.
                     Only rx NMEA with a valid checksum is displayed, timestamped. Works with any -c port type. Runs until 'q' or -dur.
     -q              Quiet mode, no display.
     -raw-out        Outputs all data in a human-readable raw format (used for debugging/learning the ISB protocol).
@@ -53,6 +54,7 @@ OPTIONS (General)
     -survey=[s],[d] Survey-in and store base position to refLla: s=[2=3D, 3=float, 4=fix], d=durationSec
     -sysCmd=[c]     Send DID_SYS_CMD c (see eSystemCommand) command then exit the program.
     -vd             Disable device validation.  Use to keep port(s) open even if device response is not received.
+                    Still sends the stop-broadcast command on start (use -lm to skip it).
     -verbose[=n]    Enable verbose event logging. Use optional '=n' to specify log level between 0 (errors only) and 99 (all events)
     -v              Print version information.
 
