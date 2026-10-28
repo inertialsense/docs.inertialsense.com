@@ -10,7 +10,7 @@
 ## Basic Configuration
 
 !!!Note 
-    When the GPX-1 is paired with an IMX-5, the IMX-5 will configure the GPX-1 automatically based on the configuration of the IMX-5. No further action is required.
+    When the GPX-1 is paired with an IMX-6, the IMX-6 will configure the GPX-1 automatically based on the configuration of the IMX-6. No further action is required.
 
 The GPX-1 should be connected to a host via a communications port: USB, UART, or SPI.
 
