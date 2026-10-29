@@ -153,6 +153,8 @@ nav:
     - Data Sets (DIDs): user-manual/com-protocol/DID-descriptions.md
     - Inertial Sense Binary (ISB): user-manual/com-protocol/isb.md
     - NMEA: user-manual/com-protocol/nmea.md
+    - CBOR Messaging: user-manual/com-protocol/cbor.md
+    - CBOR Parameters: user-manual/com-protocol/cbor-parameters.md
     - SPI: user-manual/com-protocol/SPI.md
     - CAN: user-manual/com-protocol/CAN.md
   - GNSS - RTK:
