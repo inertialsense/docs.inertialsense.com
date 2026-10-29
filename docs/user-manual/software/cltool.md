@@ -262,6 +262,8 @@ Note: The firmware can only be updated at the following baud rates: 3000000, 921
 
 On firmware that supports CBOR messaging (`DID_CBOR`), `-cbor-get` and `-cbor-set` read and write configuration in the same YAML form as `-get` and `-set`. DIDs and fields use the CBOR registry names (`FLASH_CFG`, `GPX_FLASH_CFG`, `CAN_CONFIG`, `RMC_STORED`); the legacy `DID_` names and numbers are also accepted. Replies are printed as YAML.
 
+The DIDs and fields available are listed in [CBOR Parameters](../com-protocol/cbor-parameters.md), and the messages themselves are described in [CBOR Messaging](../com-protocol/cbor.md).
+
 ```bash
 $ cltool -c /dev/ttyACM0 -cbor-get "{FLASH_CFG: {ser0BaudRate, insRotation, gnssMinimumElevation}}"
 FLASH_CFG:
