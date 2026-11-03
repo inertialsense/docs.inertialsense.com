@@ -8,7 +8,7 @@ The antenna offset should also be configured by going to the Data Sets Tab and s
 
 2. gnss2AntOffset[X-Z] - Position of GPS2 antenna with respect to sensor frame.
 
-IMX-5 data sets can then be requested by one of several methods:
+IMX-6 data sets can then be requested by one of several methods:
 
 1. Requesting NMEA data using the [ASCE](../user-manual/com-protocol/nmea.md#asce) command. There is a convenient tool in the lower left corner of the Data Logs tab of the EvalTool.
 
