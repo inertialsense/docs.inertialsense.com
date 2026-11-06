@@ -186,7 +186,7 @@ OPTIONS (RTK Rover / Base)
 1. You must have cmake installed on your machine. To do this, download the cmake application at https://cmake.org/download/. Then, using the command line, you will need to install cmake with either of the following commands depending on your platform:
     ```bash
     Mac:
-    sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install
+    sudo "/Applications/CMake.app/Contents.bin/cmake-gui" --install
     
     Linux:
     sudo apt-get install cmake
