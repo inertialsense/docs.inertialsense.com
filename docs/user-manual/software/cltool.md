@@ -146,7 +146,7 @@ OPTIONS (Writing to data log file)
     -lmb=MB         File culling: Log drive usage limit in MB. (default: 0). `-lmb=0 -lms=0` disables file culling.
     -lms=PERCENT    File culling: Log drive space limit in percent of total drive, 0.0 to 1.0. (default: 0.5)
     -lmf=BYTES      Log max file size in bytes (default: 5242880)
-    -lts=0          Log sub folder, 0 or blank for none, 1 for timestamp (default), else use as is
+    -lts=FOLDER     Log sub folder: 1 for timestamp (default), 0 or blank for none, else use FOLDER as is
 
 OPTIONS (Reading from data log file)
     -r              Replay data log from default path
