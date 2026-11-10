@@ -392,7 +392,7 @@ cltool -c DEVICE_PORT -lon -lt=LOG_TYPE -lp DIRECTORY
 | `dat`    | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups containing data in serial order as they appear over the serial port.  ***Recommended for post processing.*** |
 | `csv`    | Comma-Separated Values - Plain text file that uses specific structuring to arrange tabular data. Its basic format involves separating each data field (or cell in a table) with a comma and each record (or row) is on a new line. This simple format allows for ease in data import and export between programs that handle tabular data, such as databases and spreadsheets. |
 | `kml`    | Keyhole Markup Language - Plain text file containing the device position track, for viewing in Google Earth and other mapping tools. Write only; cannot be replayed. |
-| `json`   | JSON Lines - Plain text file per data set, one JSON object per line. |
+| `json`   | JSON - Plain text file per device containing a JSON array of data records from all data sets, one record per line. Parse each file as a single JSON array, not as JSON Lines. |
 
 The following is an example of enabling the logger with type raw and specifying the output directory:
 ```bash
