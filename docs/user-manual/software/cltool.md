@@ -11,22 +11,25 @@ The Inertial Sense CLTool is a command line utility that can be used to read and
 EXAMPLES
     cltool -c /dev/ttyS2 -did DID_INS_1 DID_GNSS1_POS DID_PIMU      # stream DID messages
     cltool -c /dev/ttyS2 -did 4 13 3                # stream same as line above
-    cltool -c /dev/ttyS2 -did 3=5                   # stream DID_PIMU at startupNavDtMs x 5
+    cltool -c /dev/ttyS2 -did 4=5                   # stream DID_INS_1 at startupNavDtMs x 5
     cltool -c /dev/ttyS2 -presetPPD                 # stream post processing data (PPD) with INS2
     cltool -c /dev/ttyS2 -presetPPD -lon -lts=1     # stream PPD + INS2 data, logging, dir timestamp
     cltool -c /dev/ttyS2 -edit DID_FLASH_CONFIG     # edit DID_FLASH_CONFIG message
-    cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GPS streamed at 10x startupGnssDtMs
+    cltool -c /dev/ttyS2 -baud=115200 -did 5 13=10  # stream at 115200 bps, GNSS streamed at 10x startupGnssDtMs
     cltool -c * -baud=921600                        # 921600 bps baudrate on all serial ports
+    cltool -c COM2,COM4,COM5 -did DID_INS_1              # connect to multiple ports (comma-separated)
     cltool -rp logs/20170117_222549                 # replay log files from a folder
-    cltool -c /dev/ttyS2 -rover=RTCM3:192.168.1.100:7777:mount:user:password         # Connect to RTK NTRIP base
+    cltool -rp logs/20170117_222549 -get 12         # show first DID_FLASH_CONFIG value from a log
+    cltool -rp logs/20170117_222549 -list-dids      # list all DIDs found in log files
+    cltool -c /dev/ttyS2 -rover=ntrip://user:password@192.168.1.100:7777/mount        # Connect to RTK NTRIP base
     cltool -c /dev/ttyS2 -get 1,4,13,DID_GNSS1_POS                                    # Return specific DIDs
-    cltool -c /dev/ttyS2 -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"   # Return portion of two DIDs
+    cltool -c /dev/ttyS2 -get "{DID_INS_1: {insStatus, theta}, DID_INS_2: {qn2b}}"    # Return portion of two DIDs
     cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gnss1AntOffset[1]: 0.8}}"          # Set one value in DID array
     cltool -c /dev/ttyS2 -set "{DID_FLASH_CONFIG: {gnss1AntOffset: [0.8, 0.0, 1.2]}}" # Set values in DID
     cltool -c /dev/ttyS2 -nmea=ASCE,0,GxGGA,1                                         # Send NMEA message, display rx NMEA
     cltool -c tcp://192.168.1.100:7777 -nmea=ASCE                                     # Send NMEA query over TCP
     cltool -c COM2,COM4 -nmea                                                         # Listen for NMEA on two ports
-    cltool -c /dev/ttyS2 -cbor-get "{FLASH_CFG: {ser0BaudRate, insRotation}}"        # Read fields over CBOR
+    cltool -c /dev/ttyS2 -cbor-get "{FLASH_CFG: {ser0BaudRate, insRotation}}"         # Read fields over CBOR
     cltool -c /dev/ttyS2 -cbor-set "{FLASH_CFG: {gnss1AntOffset[1]: 0.8}}"            # Set one value over CBOR
 
 EXAMPLES (Firmware Update)
@@ -37,9 +40,20 @@ OPTIONS (General)
     -baud=BAUDRATE  Set serial port baudrate.  Options: 115200, 230400, 460800, 921600 (default)
     -c DEVICE_PORT  Select port(s): serial port (e.g., /dev/ttyUSB0 or COM5), tcp://IP:port, or a comma-separated list of these.
                     Set DEVICE_PORT to "*" for all ports or "*4" for only first four.
+    -sn DEVICE_ID   Discover all devices and connect to the one matching the given identifier. Accepts: 129495, SN129495, or IMX-5.0:SN129495. Alternative to -c.
+    -device TYPE    Discover all devices and open only those matching TYPE. Options: imx, imx5, imx6, gpx. Implies -c * if no -c port is given.
     -dboc           Send stop-broadcast command `$STPC` on close.
+    -dur=SECONDS    Run for SECONDS (decimals allowed), then exit.
     -h --help       Display this help menu.
     -list-devices   Discovers and prints a list of discovered Inertial Sense devices and connected ports.
+    -use-mdns       Enable mDNS network discovery of remote devices (e.g., socat TCP-forwarded serial ports).
+    -use-relay      Enable HTTP relay discovery (bridgeboard / SSE); auto-enable all mDNS-discovered relay hosts.
+    -use-relay=URL[,URL...]  Register and enable one or more manual relay host URLs (any of "http://host:port", "host:port", or bare hostname/IP).
+    -use-relay-only=HOST[,HOST...]  When auto-enabling mDNS-discovered relays, enable only hosts whose hostname matches the whitelist.
+    -use-relay-list Enable relay discovery, print the resulting host list, and exit.
+                    Relay connections are annotated with name 'cltool', this command line as the purpose, and priority
+                    high during a firmware update (normal otherwise). Override with the environment variables
+                    IS_RELAY_CLIENT_NAME, IS_RELAY_CLIENT_PURPOSE, IS_RELAY_CLIENT_PRIORITY and IS_RELAY_CLIENT_LINK.
     -lm             Listen mode for ISB. Does not send the stop-broadcast command on start, so the device's current output
                     is left unchanged. Disables device validation (-vd). Requests such as -did and -edit are still sent.
     -magRecal[n]    Recalibrate magnetometers: 0=multi-axis, 1=single-axis
@@ -55,10 +69,11 @@ OPTIONS (General)
     -sysCmd=[c]     Send DID_SYS_CMD c (see eSystemCommand) command then exit the program.
     -vd             Disable device validation.  Use to keep port(s) open even if device response is not received.
                     Still sends the stop-broadcast command on start (use -lm to skip it).
-    -verbose[=n]    Enable verbose event logging. Use optional '=n' to specify log level between 0 (errors only) and 99 (all events)
+    -verbose[=n]    Enable verbose event logging to inertial_sense.log. Use optional '=n' to specify log level between 0 (errors only) and 99 (all events)
     -v              Print version information.
 
 OPTIONS (Special)
+    -cal-upload FILE_PATH     Upload calibration data from FILE_PATH file to the IMX.
     -factoryReset   Reset IMX flash config to factory defaults.
     -romBootloader  Reboot into ROM bootloader mode.  Requires power cycle and reloading bootloader and firmware.
 
@@ -75,9 +90,14 @@ OPTIONS (Event)
 OPTIONS (Firmware Update)
     -ufpkg FILEPATH Update firmware using firmware package file (.fpkg) at FILEPATH.
     -uf FILEPATH    Update app firmware using .hex file FILEPATH.  Add -baud=115200 for systems w/ baud limits.
-    -ub FILEPATH    Update bootloader using .bin file FILEPATH if version is old. Must be used with option -uf.
+    -ub FILEPATH    Update bootloader using FILEPATH (.hex for IMX-5, .bin for uINS-3/EVB-2) if version is old. Must be used with option -uf.
     -fb             Force bootloader update regardless of the version.
-    -uv             Run verification after application firmware update.
+    -uv             Show verification progress for uINS-3/EVB-2 bootloader updates. Application firmware is not verified.
+    -fw-set-policy POLICY[:PATTERN]  Set update policy (skip, if-newer, force).
+                                       Without :PATTERN, sets default for all targets.
+                                       With :PATTERN, overrides policy for matching
+                                       step labels or target names (case-insensitive
+                                       substring match). Can be specified multiple times.
 
 OPTIONS (Messages)
     -get <DID1>,<DID2>,...                   Return values of dataset(s). DID may be a name or number.
@@ -104,27 +124,36 @@ OPTIONS (Messages)
                           registry names (=raw: plain diagnostic notation).
     -did [DID#<=PERIODMULT> DID#<=PERIODMULT> ...]  Stream 1 or more datasets and display w/ compact view.
     -edit [DID#<=PERIODMULT>]                       Stream and edit 1 dataset.
-          Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency. 
+          Each DID# can be the DID number or name and appended with <=PERIODMULT> to decrease message frequency.
           Message period = source period x PERIODMULT. PERIODMULT is 1 if not specified.
+          DID_PIMU ignores PERIODMULT and always streams at the nav update period.
           Common DIDs: DID_INS_1, DID_INS_2, DID_INS_4, DID_PIMU, DID_IMU, DID_GNSS1_POS,
           DID_GNSS2_RTK_CMP_REL, DID_BAROMETER, DID_MAGNETOMETER, DID_FLASH_CONFIG (see data_sets.h for complete list)
     -dids           Print list of all DID datasets
     -persistent     Save current streams as persistent messages enabled on startup
-    -presetPPD      Send RMC preset to enable IMX post processing data (PPD) stream
+    -presetPPD      Send RMC preset to enable IMX post processing data (PPD) stream with ground vehicle
+                    data (same as -preset=PPD_GROUND_VEHICLE)
     -presetINS      Send RMC preset to enable INS data stream
+    -presetGNSS     Send RMC preset to enable GNSS data stream
     -presetGPXPPD   Send RMC preset to enable GPX post processing data (PPD) stream
+    -preset=<NAME>  Send the named RMC preset: INS, PPD (IMX PPD without ground vehicle data),
+                    PPD_GROUND_VEHICLE, PPD_RTK (PPD + RTK debug) or PPD_GPX
 
-OPTIONS (Logging to file, disabled by default)
+OPTIONS (Writing to data log file)
     -lon            Enable logging
-    -lt=TYPE        Log type: raw (default), dat, sdat, kml or csv
+    -lt=TYPE        Log type: raw (default), dat, csv, kml or json
     -lp PATH        Log data to path (default: ./IS_logs)
     -lmb=MB         File culling: Log drive usage limit in MB. (default: 0). `-lmb=0 -lms=0` disables file culling.
     -lms=PERCENT    File culling: Log drive space limit in percent of total drive, 0.0 to 1.0. (default: 0.5)
     -lmf=BYTES      Log max file size in bytes (default: 5242880)
-    -lts=0          Log sub folder, 0 or blank for none, 1 for timestamp, else use as is
+    -lts=FOLDER     Log sub folder: 1 for timestamp (default), 0 or blank for none, else use FOLDER as is
+
+OPTIONS (Reading from data log file)
     -r              Replay data log from default path
     -rp PATH        Replay data log from PATH
     -rs=SPEED       Replay data log at x SPEED. SPEED=0 runs as fast as possible.
+    -list-dids      List all DID messages found in replay data log with occurrence counts (use with -rp)
+                         Example: -rp logs/20170117_222549 -list-dids
 
 OPTIONS (READ flash config) - DEPRECATED, use `-get` instead
     -imxFlashCfg                                # List all "keys" and "values" in IMX
@@ -133,24 +162,23 @@ OPTIONS (READ flash config) - DEPRECATED, use `-get` instead
     "-gpxFlashCfg=[key]|[key]|[key]"            # List specific GPX values
 
 OPTIONS (WRITE flash config) - DEPRECATED, use `-set` instead
-    "-imxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in IMX flash config. 
-    "-gpxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in GPX flash config. 
+    "-imxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in IMX flash config.
+    "-gpxFlashCfg=[key]=[value]|[key]=[value]"  # Set key / value pairs in GPX flash config.
                                                 # Surround with "quotes" when using pipe operator.
 EXAMPLES
     cltool -c /dev/ttyS2 -imxFlashCfg  # Read from device and print all keys and values
     cltool -c /dev/ttyS2 "-imxFlashCfg=insOffset[1]=1.2|ser2BaudRate=115200"  # Set multiple values
 
 OPTIONS (RTK Rover / Base)
-    -rover=[type]:[IP or URL]:[port]:[mountpoint]:[username]:[password]
+    -rover=URL
         As a rover (client), receive RTK corrections.  Examples:
-            -rover=TCP:RTCM3:192.168.1.100:7777:mountpoint:username:password   (NTRIP)
-            -rover=TCP:RTCM3:192.168.1.100:7777
-            -rover=TCP:UBLOX:192.168.1.100:7777
-            -rover=SERIAL:RTCM3:/dev/ttyS2:57600        (port, baud rate)
-    -base=[IP]:[port]   As a Base (sever), send RTK corrections.  Examples:
-            -base=TCP::7777                             (IP is optional)
-            -base=TCP:192.168.1.43:7777
-            -base=SERIAL:/dev/ttyS2:921600
+            -rover=ntrip://username:password@192.168.1.100:7777/mountpoint   (NTRIP, username:password@ optional)
+            -rover=tcp://192.168.1.100:7777                                  (raw RTCM3 over TCP)
+            -rover=/dev/ttyS2                   (serial port, baud rate from -baud=, which also sets the -c port baud rate)
+    -base=tcp://[IP]:[port]   As a Base (server), send RTK corrections.  Examples:
+            -base=tcp://:7777                           (IP is optional)
+            -base=tcp://192.168.1.43:7777
+            -base=tcp://[::1]:7777                      (IPv6 host in brackets)
 ```
 
 ## Compile & Run (Linux/Mac)
@@ -187,9 +215,8 @@ OPTIONS (RTK Rover / Base)
    (reboot computer)
    ```
 
-6. Run executable
+6. Run executable from the build directory
    ``` bash
-   cd build
    ./cltool
    ```
 
@@ -200,7 +227,8 @@ OPTIONS (RTK Rover / Base)
     ```bash
     cd cltool
     mkdir build
-    
+    ```
+
 3. Run cmake from within build directory
    ```bash
    cd build
@@ -250,7 +278,7 @@ cltool -c DEVICE_PORT -uf [FW_FILEPATH] -ub [BL_FILEPATH] -uv
 | `-c DEVICE_PORT`    | Specifies the device serial or USB port (i.e. `/dev/ttyACM0`). |
 | `-uf [FW_FILEPATH]` | Specifies the application firmware file path.                |
 | `-ub [BL_FILEPATH]` | (Optional) Specified the bootloader firmware file.  The bootloader is only updated if the version of the file provided is newer than the bootloader version currently on the device. |
-| `-uv`               | (Optional) Run verification after application firmware update. |
+| `-uv`               | (Optional) Show verification progress for uINS-3/EVB-2 bootloader updates. Application firmware is not verified. |
 
 The following is a specific example:
 
@@ -302,6 +330,15 @@ ROUTE_FILTER:
   MSG_STATUS: READ_ONLY
 ```
 
+For a GPX behind an IMX, write `GPX_FLASH_CFG` to the IMX: leave out `-cbor-dst`, or use `-gpxFlashCfg`. The IMX applies the write to its copy of the GPX's configuration and sends it on (see below). A `GPX_FLASH_CFG` write addressed to the GPX with `-cbor-dst=GPX` is not passed on to the GPX, and the IMX answers it with `FORWARD_DENIED`:
+
+```bash
+$ cltool -c /dev/ttyACM0 -cbor-set "{GPX_FLASH_CFG: {ser1BaudRate: 460800}}" -cbor-dst=GPX
+IMX-5.0::62797:
+  GPX_FLASH_CFG:
+    MSG_STATUS: FORWARD_DENIED
+```
+
 `-cbor-out` prints every CBOR message sent and received, in CBOR diagnostic notation with registry names (`-cbor-out=raw` for plain diagnostic notation):
 
 ```bash
@@ -314,7 +351,7 @@ FLASH_CFG:
 
 `-imxFlashCfg` and `-gpxFlashCfg` use CBOR when the device supports it, and the binary DIDs otherwise; their usage is unchanged. `-gpxFlashCfg` still changes the configuration of a GPX connected through an IMX, but the change is proxied by the IMX rather than forwarded: the IMX applies it to its own copy of the GPX's configuration and then sends it on to the GPX.
 
-Some GPX settings are set by the IMX's own flash configuration: `startupGnssDtMs`, `gnss1AntOffset`, `gnss2AntOffset`, `refLla`, `gnssSatSigConst`, `dynamicModel`, `gnssTimeSyncPeriodMs`, `gnssTimeUserDelay`, `gnssMinimumElevation`, `RTKCfgBits`, `gnssCn0Minimum` and `gnssCn0DynMinOffset`. For a GPX behind an IMX, change these with `-flashCfg` on the IMX. A `-gpxFlashCfg` write keeps the IMX's values for them, applies the other fields, and lists the values the IMX kept. After a write, `-gpxFlashCfg` reads the written fields back from the GPX and prints them:
+Some GPX settings are set by the IMX's own flash configuration: `startupGnssDtMs`, `gnss1AntOffset`, `gnss2AntOffset`, `refLla`, `gnssSatSigConst`, `dynamicModel`, `gnssTimeSyncPeriodMs`, `gnssTimeUserDelay`, `gnssMinimumElevation`, `RTKCfgBits`, `gnssCn0Minimum` and `gnssCn0DynMinOffset`. For a GPX behind an IMX, change these with `-imxFlashCfg` on the IMX. A `-gpxFlashCfg` write keeps the IMX's values for them, applies the other fields, and lists the values the IMX kept. After a write, `-gpxFlashCfg` reads the written fields back from the GPX and prints them:
 
 ```bash
 $ cltool -c /dev/ttyACM0 "-gpxFlashCfg=gnss1AntOffset[0]=0.7|ser2BaudRate=460800"
@@ -331,7 +368,7 @@ gnss1AntOffset[2] = 0
 ser2BaudRate = 460800
 ```
 
-A write the device refuses, or one the GPX does not apply within 3 seconds, prints the reason or the values the GPX kept, and exits with -2.
+A write the device refuses, or one the GPX does not apply within 3 seconds, prints the reason or the values the GPX kept, and exits with -2. A successful `-imxFlashCfg` write prints nothing unless the IMX adjusted a value. A `-gpxFlashCfg` or `-imxFlashCfg` write that changes no value sends nothing, prints nothing and exits with 0.
 
 ## Logging with CLTool
 
@@ -344,18 +381,18 @@ cltool -c DEVICE_PORT -lon -lt=LOG_TYPE -lp DIRECTORY
 | Options         | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
 | `-lon`          | Enable logging.                                              |
-| `-lt=LOG_TYPE`  | Specifies the  [log file type](#log-type) to be written.  LOG_TYPE can be `raw`, `dat`, or `csv`. |
-| `-lp DIRECTORY` | (Optional) Specifies the path where log files will be written.  When not specified, the default location will be the current working directory. |
-
-### Log File Types
+| `-lt=LOG_TYPE`  | (Optional) Specifies the [log file type](#log-type) to be written.  LOG_TYPE can be `raw` (default), `dat`, `csv`, `kml`, or `json`. |
+| `-lp DIRECTORY` | (Optional) Specifies the path where log files will be written.  When not specified, the default location is `./IS_logs`. |
 
 ### Log Type
 
 | Log Type | Description                                                  |
 | -------- | ------------------------------------------------------------ |
-| `raw`    | Binary file containing byte for byte data received over the serial ports.  All packets remain in their native form.  Used for logging InertialSense binary (ISB), NMEA, RTCM3, uBlox UBX binary and SPARTN, and any other packet formats.  ***Recommended for logging all data formats and post processing***. |
-| `dat`    | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups containing data in serial order as they appear over the serial port.  Default file format.  ***Recommended for post processing.*** |
+| `raw`    | Binary file containing byte for byte data received over the serial ports.  All packets remain in their native form.  Used for logging InertialSense binary (ISB), NMEA, RTCM3, uBlox UBX binary and SPARTN, and any other packet formats.  Default file format.  ***Recommended for logging all data formats and post processing***. |
+| `dat`    | Binary file containing InertialSense binary (ISB) DID data sets in "chunk" groups containing data in serial order as they appear over the serial port.  ***Recommended for post processing.*** |
 | `csv`    | Comma-Separated Values - Plain text file that uses specific structuring to arrange tabular data. Its basic format involves separating each data field (or cell in a table) with a comma and each record (or row) is on a new line. This simple format allows for ease in data import and export between programs that handle tabular data, such as databases and spreadsheets. |
+| `kml`    | Keyhole Markup Language - Plain text file containing the device position track, for viewing in Google Earth and other mapping tools. Write only; cannot be replayed. |
+| `json`   | JSON - Plain text file per device containing a JSON array of data records from all data sets, one record per line. Parse each file as a single JSON array, not as JSON Lines. |
 
 The following is an example of enabling the logger with type raw and specifying the output directory:
 ```bash
@@ -364,7 +401,7 @@ The following is an example of enabling the logger with type raw and specifying 
 
 ## Command Line Options
 
-Navigate to the directory `/cpp/SDK/cltool/build` and run the CLTool with the help option, "`-h`"
+Navigate to the directory `cltool/build` in the SDK and run the CLTool with the help option, "`-h`"
 
 ``` bash
 ./cltool -h
