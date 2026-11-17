@@ -109,9 +109,53 @@ The following table lists the output and update period minimum limits for the IM
 | VRS (GPS and <br/>magnetometer disabled) | 4 ms (250 Hz) / 8 ms                              | 2 ms (500 Hz) / 4 ms                                      |
 
 ## INS-GNSS Dynamic Model
-The `DID_FLASH_CONFIG.dynamicModel` setting allows the user to adjust how the EKF behaves in different dynamic environments. All values except for 2 (STATIONARY) and 8 (AIR <4g) are experimental. The user is encouraged to attempt to use different settings to improve performance, however in most applications the default setting, 8: airborne <4g, will yield best performance. This parameter is applied to the GNSS receiver(s) engine as well as the INS EKF.
 
-The STATIONARY configuration (dynamicModel = 2) can be used to configure the EKF for static applications. It is a permanent implementation of the [Zero Motion Command](zero_motion_command.md) which will reduce EKF drift under stationary conditions.
+The `DID_FLASH_CONFIG.dynamicModel` setting describes how the platform moves. The IMX uses it to balance measurement noise rejection against tracking responsiveness in the INS EKF, and it is applied to the GNSS receiver engine(s) as well, where the receiver supports it. A lower-dynamics model rejects more measurement noise but follows fast motion more slowly. A higher-dynamics model tracks motion more responsively but passes more noise.
+
+Select a model that is at least as dynamic as the worst-case motion of your platform. If the platform moves faster or accelerates harder than the selected model allows, navigation accuracy suffers.
+
+### Available Models
+
+| Value | Model | Intended use | EKF behavior |
+| ----- | ----- | ------------ | ------------ |
+| 0 | Portable | General portable use; default balance of noise rejection and responsiveness | Default balance of noise rejection and responsiveness |
+| 2 | Stationary | Stationary, minimal motion expected | Permanent [Zero Motion Command](zero_motion_command.md); reduces EKF drift under stationary conditions |
+| 3 | Pedestrian | Walking-speed motion with frequent direction and speed changes | Walking speed, small accelerations and horizontal velocity |
+| 4 | Ground vehicle | Wheeled ground vehicle dynamics | Required for [ground vehicle dead reckoning](../dead-reckoning/dead_reckoning.md) (set automatically during Learning Mode) |
+| 5 | Marine | Surface marine vessel dynamics | Assumes zero vertical velocity, near sea level |
+| 6 | Airborne 1g | Airborne, limited to approximately 1g of acceleration | Aircraft or UAVs with gentle dynamics |
+| 7 | Airborne 2g | Airborne, limited to approximately 2g of acceleration | Dynamic motion and lateral slip |
+| 8 | Airborne 4g | Airborne, limited to approximately 4g of acceleration | Highly dynamic: aerobatic, rocketry, high-g UAVs. Default setting; best performance in most applications |
+| 9 | Wrist | Wrist-worn device dynamics | Filters out arm-swing motion |
+| 10 | Indoor | Indoor pedestrian or robot use with minimal GNSS visibility | Reduced GNSS signal |
+
+### Choosing a Model
+
+| Application | Suggested model | Notes |
+| ----------- | --------------- | ----- |
+| Static installation, RTK compassing on a fixed platform | 2 (Stationary) | Reduces heading noise and drift. See [RTK Compassing](../../gnss/rtk_compassing.md). |
+| Wheeled ground vehicle, dead reckoning | 4 (Ground vehicle) | Required for dead reckoning |
+| Boat or surface vessel | 5 (Marine) | Marine motion |
+| Aircraft, UAV, general | 8 (Airborne 4g), or 6 or 7 for gentler flight | Difference in EKF behavior between 6, 7 and 8: |
+| Handheld, wearable, pedestrian | 0, 3 or 9 | Low accelerations and horizontal velocity |
+| Indoors or poor GNSS visibility | 10 (Indoor) | GNSS coverage limited |
+| Platform on a stabilized gimbal or other low-motion mount | 2 (Stationary) | Effect of the model on heading drift when static, with and without magnetometer fusion: |
+
+### Setting the Model
+
+Set `DID_FLASH_CONFIG.dynamicModel` in the EvalTool or with cltool, for example:
+
+```
+cltool -c COM5 -set "{DID_FLASH_CONFIG: {dynamicModel: 8}}"
+```
+
+Whether the change takes effect immediately or after a reset: [TO CONFIRM].
+
+### Notes
+
+- Model 10 is defined in `eDynamicModel` in data_sets.h, but some DID descriptions list only 0 and 2 to 9.
+- On a unit with a magnetometer, magnetometer fusion also affects heading drift. See [Disable Magnetometer and Barometer Updates](#disable-magnetometer-and-barometer-updates).
+- Altitude, speed and position-jump limits of each receiver mode are set by the receiver manufacturer. See the manufacturer's documentation for your receiver.
 
 ## Disable Magnetometer and Barometer Updates
 
