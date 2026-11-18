@@ -181,7 +181,7 @@ const BITS = {
       Object.assign(F(0xF,8,[[0,'Automatic (250 Hz)'],[1,'184 Hz'],[2,'92 Hz'],[3,'41 Hz'],[4,'20 Hz'],[5,'10 Hz'],[6,'5 Hz']]),{label:'Gyro low-pass bandwidth'}),
       Object.assign(F(0xF,12,[[0,'Automatic (218 Hz)'],[1,'218 Hz (alternate register setting)'],[2,'99 Hz'],[3,'45 Hz'],[4,'21 Hz'],[5,'10 Hz'],[6,'5 Hz']]),{label:'Accelerometer low-pass bandwidth'})]},
     {kind:'group', label:'Mounting and fault detection', parts:[
-      Object.assign(F(0x1F,16,ROT.map((r,i)=>[i,'Roll '+r[0]+'°, pitch '+r[1]+'°, yaw '+r[2]+'°'])),{label:'IMU and magnetometer mounting rotation'}),
+      Object.assign(F(0x1F,16,ROT.map((r,i)=>[i,'Roll '+r[0]+'°, pitch '+r[1]+'°, yaw '+r[2]+'°'])),{label:'IMU and magnetometer mounting rotation - Mounting rotation options are applied in yaw, pitch, then roll order (Z, Y, X).'}),
       flag(0x400000,'Disable magnetometer'),
       flag(0x800000,'Disable barometer'),
       flag(0x1000000,'Multi-IMU gyro fault detection'),
@@ -435,6 +435,7 @@ function render(){
     const nums = el('div',{class:'grid'});
     sec.items.forEach(k=>{ const n=itemEl(k); if (BITS[k.split('#')[0]]) main.append(n); else nums.append(n); });
     if (nums.children.length) main.append(nums);
+    if (sec.id==='sensors') main.append(el('div',{class:'note',style:'margin-top:14px',text:'Mounting rotation options are listed as roll, pitch, yaw, but are applied in yaw, pitch, then roll order (Z, Y, X).'}));
     if (sec.id==='rtk') main.append(el('div',{class:'note',style:'margin-top:14px',text:'A base station should use a surveyed reference position. Set it under Mounting and offsets (reference position). "Positioning and compassing" sets both rover bits (0x2 and 0x4). The SDK header defines them as separate bits but does not say whether every firmware version supports both at once, so confirm on your firmware.'}));
   }
   const i = SECTIONS.indexOf(sec);
