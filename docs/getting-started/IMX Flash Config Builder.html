@@ -162,7 +162,7 @@ const BITS = {
     flag(0x300,'GLONASS'), flag(0x1000,'SBAS'), flag(0x2000,'IRNSS / NavIC'), flag(0x4000,'IMES')]}],
   RTKCfgBits: [
     {kind:'group', label:'Rover mode', parts:[
-      Object.assign(F(0xF,0,[[0,'Off'],[2,'RTK positioning (external corrections, GNSS1)'],[4,'RTK compassing (dual GNSS, GNSS2 to GNSS1)']]),{label:'Rover mode'}),
+      Object.assign(F(0xF,0,[[0,'Off'],[2,'RTK positioning (external corrections, GNSS1)'],[4,'RTK compassing (dual GNSS, GNSS2 to GNSS1)'],[6,'RTK positioning and compassing (both)']]),{label:'Rover mode'}),
       flag(0x400000,'Base station is identical hardware to this rover','Enables optimizations to get a fix faster.'),
       flag(0x8000000,'Multipath mitigation')]},
     {kind:'group', label:'Base station output', parts:[
@@ -179,7 +179,7 @@ const BITS = {
       Object.assign(F(7,0,[[0,'±250 °/s'],[1,'±500 °/s'],[2,'±1000 °/s'],[3,'±2000 °/s'],[4,'±4000 °/s'],[7,'Sensor maximum']]),{label:'Gyro full scale'}),
       Object.assign(F(7,4,[[0,'±2 g'],[1,'±4 g'],[2,'±8 g'],[3,'±16 g'],[4,'±32 g'],[7,'Sensor maximum']]),{label:'Accelerometer full scale'}),
       Object.assign(F(0xF,8,[[0,'Automatic (250 Hz)'],[1,'184 Hz'],[2,'92 Hz'],[3,'41 Hz'],[4,'20 Hz'],[5,'10 Hz'],[6,'5 Hz']]),{label:'Gyro low-pass bandwidth'}),
-      Object.assign(F(0xF,12,[[0,'Automatic (218 Hz)'],[2,'99 Hz'],[3,'45 Hz'],[4,'21 Hz'],[5,'10 Hz'],[6,'5 Hz']]),{label:'Accelerometer low-pass bandwidth'})]},
+      Object.assign(F(0xF,12,[[0,'Automatic (218 Hz)'],[1,'218 Hz (alternate register setting)'],[2,'99 Hz'],[3,'45 Hz'],[4,'21 Hz'],[5,'10 Hz'],[6,'5 Hz']]),{label:'Accelerometer low-pass bandwidth'})]},
     {kind:'group', label:'Mounting and fault detection', parts:[
       Object.assign(F(0x1F,16,ROT.map((r,i)=>[i,'Roll '+r[0]+'°, pitch '+r[1]+'°, yaw '+r[2]+'°'])),{label:'IMU and magnetometer mounting rotation'}),
       flag(0x400000,'Disable magnetometer'),
@@ -193,7 +193,9 @@ const BITS = {
       [13,'IG-1.0 G2'],[14,'IG-1.1+ G1'],[15,'IG-1.1+ G2'],[16,'IG-2'],[17,'Lambda G1'],[18,'Lambda G2'],[19,'Testbed-2 G1 with Lambda'],[20,'Testbed-2 G2 with Lambda'],[21,'IG-2.1+']]),{label:'Platform type'}),
     flag(0x80,'Type comes from manufacturing OTP (write-protected)'),
     Object.assign(F(0xFF,8,[[0,'Presets disabled'],[1,'1: S0 RS232 + CAN, S1 GNSS1 (RUG-3 G0 default)'],[2,'2: S0 TTL + CAN, S1 GNSS1'],[3,'3: S0 TTL + S2 TTL, S1 GNSS1'],
-      [4,'4: S0 RS232 + S1 RS232, S2 GNSS'],[5,'5: S1 RS485, S2 GNSS'],[6,'6: SPI, S2 GNSS'],[7,'7: S1 RS232, S2 GNSS (RUG-4 default)'],[8,'8: CAN, S1 GNSS'],[9,'9: S2 TTL, S1 GNSS']]),{label:'RUG-3 / RUG-4 preset'}),
+      [4,'4: S0 RS232 + S1 RS232, S2 GNSS1'],[5,'5: S1 RS485; RUG-3: S2 GNSS1 + S0 GNSS2, RUG-4: S2 GNSS1+2'],
+      [6,'6: SPI; RUG-3: S2 GNSS1 + S0 GNSS2, RUG-4: S2 GNSS1+2'],[7,'7: S1 RS232; RUG-3: S2 GNSS1 + S0 GNSS2, RUG-4: S2 GNSS1+2 (RUG-4 default)'],
+      [8,'8: CAN; RUG-3: S1 GNSS1 + S0 GNSS2, RUG-4: S1 GNSS1+2'],[9,'9: S2 TTL; RUG-3: S1 GNSS1 + S0 GNSS2, RUG-4: S1 GNSS1+2']]),{label:'RUG-3 / RUG-4 preset'}),
     flag(0x1000000,'Regenerate ioConfig from platform config (one-shot)')]}],
   ioConfig: [
     {kind:'group', label:'Pins', parts:[
@@ -240,11 +242,11 @@ const FIELDS = {
   ser1BaudRate:{label:'Serial 1 baud rate',unit:'bps',min:0,step:1,def:921600,list:[9600,19200,38400,57600,115200,230400,460800,921600,2000000,3000000]},
   ser2BaudRate:{label:'Serial 2 baud rate',unit:'bps',min:0,step:1,def:921600,list:[9600,19200,38400,57600,115200,230400,460800,921600,2000000,3000000]},
   dynamicModel:{label:'Dynamic model',type:'select',opts:DYN,def:8,hint:'Must be at least as dynamic as your platform, or accuracy suffers.'},
-  insRotation:{label:'INS rotation (roll, pitch, yaw)',unit:'deg',vec:['roll','pitch','yaw'],step:0.1,def:[0,0,0],hint:'Sensor frame to intermediate output frame. Applied Z, Y, X.'},
+  insRotation:{label:'INS rotation (roll, pitch, yaw)',unit:'rad',vec:['roll','pitch','yaw'],step:0.001,def:[0,0,0],hint:'Rotation in radians from Sensor Frame to Intermediate Output Frame. Applied Z, Y, X.'},
   insOffset:{label:'INS offset',unit:'m',vec:['x','y','z'],step:0.001,def:[0,0,0],hint:'Intermediate output frame to INS output frame.'},
   gnss1AntOffset:{label:'GNSS 1 antenna offset',unit:'m',vec:['x','y','z'],step:0.001,def:[0,0,0],hint:'Lever arm in the sensor frame.'},
   gnss2AntOffset:{label:'GNSS 2 antenna offset',unit:'m',vec:['x','y','z'],step:0.001,def:[0,0,0],hint:'Lever arm in the sensor frame.'},
-  zeroVelRotation:{label:'Zero-velocity rotation (roll, pitch, yaw)',unit:'deg',vec:['roll','pitch','yaw'],step:0.1,def:[0,0,0],hint:'Sensor frame to intermediate zero-velocity frame.'},
+  zeroVelRotation:{label:'Zero-velocity rotation (roll, pitch, yaw)',unit:'rad',vec:['roll','pitch','yaw'],step:0.001,def:[0,0,0],hint:'Rotation in radians from Sensor Frame to Intermediate Zero-Velocity Frame.'},
   zeroVelOffset:{label:'Zero-velocity offset',unit:'m',vec:['x','y','z'],step:0.001,def:[0,0,0]},
   gnssMinimumElevation:{label:'Minimum satellite elevation',unit:'deg',min:0,max:90,step:0.5,def:10,hint:'Low satellites travel a longer path through the atmosphere.'},
   gnssCn0Minimum:{label:'CN0 absolute minimum',unit:'dBHz',min:0,max:255,step:1,def:30,hint:'Filters signals used in the RTK solution.'},
@@ -315,7 +317,10 @@ const el = (tag, attrs={}, ...kids) => {
   return n;
 };
 function touch(k){ T.add(k); save(); refreshOut(); markRail(); }
-function setBits(k, clearMask, setMask){ S[k] = (((S[k] & ~clearMask) | setMask) >>> 0); touch(k); }
+function setBits(k, clearMask, setMask){ S[k] = (((S[k] & ~clearMask) | setMask) >>> 0);
+  if(k==='ioConfig2' && (S[k]&0x01) && ((S[k]&0x06)>>>0)===0x04){ S[k] = ((S[k]&~0x06)>>>0); }
+  touch(k);
+}
 
 /* ---------- Field rendering ---------- */
 let uid = 0;
@@ -390,15 +395,15 @@ const Q = [
  {id:'gyro',grp:'adv',q:'Fastest rotation rate you expect?',opts:[['Up to 250 °/s',()=>fs('sensorConfig',7,0)],['Up to 500 °/s',()=>fs('sensorConfig',7,1)],['Up to 1000 °/s',()=>fs('sensorConfig',7,2)],['Up to 2000 °/s',()=>fs('sensorConfig',7,3)],['Up to 4000 °/s',()=>fs('sensorConfig',7,4)],['Use sensor maximum',()=>fs('sensorConfig',7,7)]],touch:['sensorConfig']},
  {id:'acc',grp:'shock',q:'Strongest acceleration or shock you expect?',opts:[['Up to 2 g',()=>fs('sensorConfig',0x70,0x00)],['Up to 4 g',()=>fs('sensorConfig',0x70,0x10)],['Up to 8 g',()=>fs('sensorConfig',0x70,0x20)],['Up to 16 g',()=>fs('sensorConfig',0x70,0x30)],['Up to 32 g',()=>fs('sensorConfig',0x70,0x40)],['Use sensor maximum',()=>fs('sensorConfig',0x70,0x70)]],touch:['sensorConfig']},
  {id:'gnss',q:'How many GNSS antennas are connected?',opts:[['None',()=>{S.sysCfgBits=(S.sysCfgBits|0xC000)>>>0;S.RTKCfgBits=(S.RTKCfgBits&~0xF)>>>0;}],['One',()=>{S.sysCfgBits=(S.sysCfgBits&~0xC000)>>>0;S.RTKCfgBits=(S.RTKCfgBits&~0xF)>>>0;}],['Two, for dual-antenna heading',()=>{S.sysCfgBits=(S.sysCfgBits&~0xC000)>>>0;S.RTKCfgBits=((S.RTKCfgBits&~0xF)|4)>>>0;}]],touch:['sysCfgBits','RTKCfgBits'],after:'Set the antenna positions in Mounting and offsets. Pin and receiver assignment is in Platform and I/O.'},
- {id:'rtk',q:'What is the unit\'s RTK role?',opts:[['No RTK',()=>rtk('none')],['Rover using external corrections',()=>rtk('rover')],['Base station (outputs corrections)',()=>rtk('base')]],touch:['RTKCfgBits']},
- {id:'basePort',q:'Which port should the base station send RTCM3 corrections on?',when:()=>answers.rtk===2,opts:[['Serial 0',()=>base(0x100)],['Serial 1',()=>base(0x200)],['Serial 2',()=>base(0x400)],['USB',()=>base(0x800)]],touch:['RTKCfgBits']},
+ {id:'rtk',q:'What is the unit\'s RTK role?',opts:[['No RTK',()=>rtk('none')],['Rover with external corrections',()=>rtk('rover')],['Rover with both RTK positioning and compassing',()=>rtk('both')],['Compassing only',()=>rtk('compass')],['Base station (outputs corrections)',()=>rtk('base')]],touch:['RTKCfgBits']},
+ {id:'basePort',q:'Which port should the base station send RTCM3 corrections on?',when:()=>answers.rtk===4,opts:[['Serial 0',()=>base(0x100)],['Serial 1',()=>base(0x200)],['Serial 2',()=>base(0x400)],['USB',()=>base(0x800)]],touch:['RTKCfgBits']},
  {id:'mag',q:'How should the magnetometer be used?',opts:[['Fuse it, declination from the World Magnetic Model',()=>{S.sysCfgBits=((S.sysCfgBits&~0x1000)|0x800)>>>0;}],['Fuse it, I will set declination myself',()=>{S.sysCfgBits=(S.sysCfgBits&~0x1800)>>>0;}],['Do not use it (metal or magnetic interference)',()=>{S.sysCfgBits=((S.sysCfgBits&~0x800)|0x1000)>>>0;}]],touch:['sysCfgBits']}
 ];
 function nav(dt){ S.startupNavDtMs=dt; S.startupImuDtMs=Math.min(2,dt); }
 function fs(k,mask,val){ S[k]=(((S[k]&~mask)|val)>>>0); }
-function rtk(m){ const BASE=0xFFF0|0xF0000|0x1000000|0x2000000|0x4000000; S.RTKCfgBits=(S.RTKCfgBits&~(0xF|0xFF0|0xF000|0xF0000|0x1000000|0x2000000|0x4000000))>>>0;
-  if(m==='rover'){ S.RTKCfgBits=(S.RTKCfgBits|2)>>>0; } if(m==='base'){ S.RTKCfgBits=(S.RTKCfgBits&~0x800000)>>>0; } }
-function base(bit){ S.RTKCfgBits=(S.RTKCfgBits&~(0xF00|0x3000000))>>>0; S.RTKCfgBits=((S.RTKCfgBits|bit)&~0x800000)>>>0; }
+function rtk(m){ S.RTKCfgBits=(S.RTKCfgBits&~(0xF|0xFF0|0xF000|0xF0000|0x100000|0x1000000|0x2000000|0x4000000))>>>0;
+  if(m==='rover'){ S.RTKCfgBits=(S.RTKCfgBits|2)>>>0; } if(m==='both'){ S.RTKCfgBits=(S.RTKCfgBits|6)>>>0; } if(m==='compass'){ S.RTKCfgBits=(S.RTKCfgBits|4)>>>0; } if(m==='base'){ S.RTKCfgBits=(S.RTKCfgBits&~0x800000)>>>0; } }
+function base(bit){ S.RTKCfgBits=(S.RTKCfgBits&~(0xFF0|0xFF000|0x100000|0x3000000|0x4000000))>>>0; S.RTKCfgBits=((S.RTKCfgBits|bit)&~0x800000)>>>0; }
 function wizard(grp){
   const wrap = el('div',{class:'qa'});
   Q.forEach(q=>{
@@ -430,7 +435,7 @@ function render(){
     const nums = el('div',{class:'grid'});
     sec.items.forEach(k=>{ const n=itemEl(k); if (BITS[k.split('#')[0]]) main.append(n); else nums.append(n); });
     if (nums.children.length) main.append(nums);
-    if (sec.id==='rtk') main.append(el('div',{class:'note',style:'margin-top:14px',text:'A base station should use a surveyed reference position. Set it under Mounting and offsets (reference position).'}));
+    if (sec.id==='rtk') main.append(el('div',{class:'note',style:'margin-top:14px',text:'A base station should use a surveyed reference position. Set it under Mounting and offsets (reference position). "Positioning and compassing" sets both rover bits (0x2 and 0x4). The SDK header defines them as separate bits but does not say whether every firmware version supports both at once, so confirm on your firmware.'}));
   }
   const i = SECTIONS.indexOf(sec);
   main.append(el('div',{class:'nav'},
@@ -448,7 +453,7 @@ function markRail(){
 }
 
 /* ---------- Output ---------- */
-const DEG = new Set(['insRotation','zeroVelRotation','magDeclination','gnssMinimumElevation']);
+const DEG = new Set(['magDeclination','gnssMinimumElevation']);
 const FLOATS = new Set(['insRotation','insOffset','gnss1AntOffset','gnss2AntOffset','zeroVelRotation','zeroVelOffset','magDeclination','magInterferenceThreshold','magCalibrationQualityThreshold','gnssMinimumElevation','gnssTimeUserDelay','lastLlaUpdateDistance','wheelConfig.transform.e_b2w','wheelConfig.transform.t_b2w','wheelConfig.track_width','wheelConfig.radius']);
 const num = n => { const r = Math.round(n*1e9)/1e9; return String(r); };
 function activeKeys(){ return document.getElementById('allFields').checked ? ALLKEYS : ALLKEYS.filter(k=>T.has(k)); }
