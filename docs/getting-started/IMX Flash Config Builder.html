@@ -162,7 +162,7 @@ const BITS = {
     flag(0x300,'GLONASS'), flag(0x1000,'SBAS'), flag(0x2000,'IRNSS / NavIC'), flag(0x4000,'IMES')]}],
   RTKCfgBits: [
     {kind:'group', label:'Rover mode', parts:[
-      Object.assign(F(0xF,0,[[0,'Off'],[1,'Deprecated onboard RTK positioning'],[2,'RTK positioning (external corrections, GNSS1)'],[4,'RTK compassing (dual GNSS, GNSS2 to GNSS1)'],[6,'RTK positioning and compassing'],[8,'Deprecated RTK compassing']]),{label:'Rover mode'}),
+      Object.assign(F(0xF,0,[[0,'Off'],[2,'RTK positioning (external corrections, GNSS1)'],[4,'RTK compassing (dual GNSS, GNSS2 to GNSS1)'],[6,'RTK positioning and compassing (both)']]),{label:'Rover mode'}),
       flag(0x400000,'Base station is identical hardware to this rover','Enables optimizations to get a fix faster.'),
       flag(0x8000000,'Multipath mitigation')]},
     {kind:'group', label:'Base station output', parts:[
@@ -395,15 +395,15 @@ const Q = [
  {id:'gyro',grp:'adv',q:'Fastest rotation rate you expect?',opts:[['Up to 250 °/s',()=>fs('sensorConfig',7,0)],['Up to 500 °/s',()=>fs('sensorConfig',7,1)],['Up to 1000 °/s',()=>fs('sensorConfig',7,2)],['Up to 2000 °/s',()=>fs('sensorConfig',7,3)],['Up to 4000 °/s',()=>fs('sensorConfig',7,4)],['Use sensor maximum',()=>fs('sensorConfig',7,7)]],touch:['sensorConfig']},
  {id:'acc',grp:'shock',q:'Strongest acceleration or shock you expect?',opts:[['Up to 2 g',()=>fs('sensorConfig',0x70,0x00)],['Up to 4 g',()=>fs('sensorConfig',0x70,0x10)],['Up to 8 g',()=>fs('sensorConfig',0x70,0x20)],['Up to 16 g',()=>fs('sensorConfig',0x70,0x30)],['Up to 32 g',()=>fs('sensorConfig',0x70,0x40)],['Use sensor maximum',()=>fs('sensorConfig',0x70,0x70)]],touch:['sensorConfig']},
  {id:'gnss',q:'How many GNSS antennas are connected?',opts:[['None',()=>{S.sysCfgBits=(S.sysCfgBits|0xC000)>>>0;S.RTKCfgBits=(S.RTKCfgBits&~0xF)>>>0;}],['One',()=>{S.sysCfgBits=(S.sysCfgBits&~0xC000)>>>0;S.RTKCfgBits=(S.RTKCfgBits&~0xF)>>>0;}],['Two, for dual-antenna heading',()=>{S.sysCfgBits=(S.sysCfgBits&~0xC000)>>>0;S.RTKCfgBits=((S.RTKCfgBits&~0xF)|4)>>>0;}]],touch:['sysCfgBits','RTKCfgBits'],after:'Set the antenna positions in Mounting and offsets. Pin and receiver assignment is in Platform and I/O.'},
- {id:'rtk',q:'What is the unit\'s RTK role?',opts:[['No RTK',()=>rtk('none')],['Rover using external corrections',()=>rtk('rover')],['Base station (outputs corrections)',()=>rtk('base')]],touch:['RTKCfgBits']},
- {id:'basePort',q:'Which port should the base station send RTCM3 corrections on?',when:()=>answers.rtk===2,opts:[['Serial 0',()=>base(0x100)],['Serial 1',()=>base(0x200)],['Serial 2',()=>base(0x400)],['USB',()=>base(0x800)]],touch:['RTKCfgBits']},
+ {id:'rtk',q:'What is the unit\'s RTK role?',opts:[['No RTK',()=>rtk('none')],['Rover with external corrections',()=>rtk('rover')],['Rover with both RTK positioning and compassing',()=>rtk('both')],['Compassing only',()=>rtk('compass')],['Base station (outputs corrections)',()=>rtk('base')]],touch:['RTKCfgBits']},
+ {id:'basePort',q:'Which port should the base station send RTCM3 corrections on?',when:()=>answers.rtk===4,opts:[['Serial 0',()=>base(0x100)],['Serial 1',()=>base(0x200)],['Serial 2',()=>base(0x400)],['USB',()=>base(0x800)]],touch:['RTKCfgBits']},
  {id:'mag',q:'How should the magnetometer be used?',opts:[['Fuse it, declination from the World Magnetic Model',()=>{S.sysCfgBits=((S.sysCfgBits&~0x1000)|0x800)>>>0;}],['Fuse it, I will set declination myself',()=>{S.sysCfgBits=(S.sysCfgBits&~0x1800)>>>0;}],['Do not use it (metal or magnetic interference)',()=>{S.sysCfgBits=((S.sysCfgBits&~0x800)|0x1000)>>>0;}]],touch:['sysCfgBits']}
 ];
 function nav(dt){ S.startupNavDtMs=dt; S.startupImuDtMs=Math.min(2,dt); }
 function fs(k,mask,val){ S[k]=(((S[k]&~mask)|val)>>>0); }
-function rtk(m){ const BASE=0xFFF0|0xF0000|0x1000000|0x2000000|0x4000000; S.RTKCfgBits=(S.RTKCfgBits&~(0xF|0xFF0|0xF000|0xF0000|0x1000000|0x2000000|0x4000000))>>>0;
-  if(m==='rover'){ S.RTKCfgBits=(S.RTKCfgBits|2)>>>0; } if(m==='base'){ S.RTKCfgBits=(S.RTKCfgBits&~0x800000)>>>0; } }
-function base(bit){ S.RTKCfgBits=(S.RTKCfgBits&~(0xFF0|0xFF000|0xFF0000|0x3000000|0x4000000))>>>0; S.RTKCfgBits=((S.RTKCfgBits|bit)&~0x800000)>>>0; }
+function rtk(m){ S.RTKCfgBits=(S.RTKCfgBits&~(0xF|0xFF0|0xF000|0xF0000|0x100000|0x1000000|0x2000000|0x4000000))>>>0;
+  if(m==='rover'){ S.RTKCfgBits=(S.RTKCfgBits|2)>>>0; } if(m==='both'){ S.RTKCfgBits=(S.RTKCfgBits|6)>>>0; } if(m==='compass'){ S.RTKCfgBits=(S.RTKCfgBits|4)>>>0; } if(m==='base'){ S.RTKCfgBits=(S.RTKCfgBits&~0x800000)>>>0; } }
+function base(bit){ S.RTKCfgBits=(S.RTKCfgBits&~(0xFF0|0xFF000|0x100000|0x3000000|0x4000000))>>>0; S.RTKCfgBits=((S.RTKCfgBits|bit)&~0x800000)>>>0; }
 function wizard(grp){
   const wrap = el('div',{class:'qa'});
   Q.forEach(q=>{
@@ -435,7 +435,7 @@ function render(){
     const nums = el('div',{class:'grid'});
     sec.items.forEach(k=>{ const n=itemEl(k); if (BITS[k.split('#')[0]]) main.append(n); else nums.append(n); });
     if (nums.children.length) main.append(nums);
-    if (sec.id==='rtk') main.append(el('div',{class:'note',style:'margin-top:14px',text:'A base station should use a surveyed reference position. Set it under Mounting and offsets (reference position).'}));
+    if (sec.id==='rtk') main.append(el('div',{class:'note',style:'margin-top:14px',text:'A base station should use a surveyed reference position. Set it under Mounting and offsets (reference position). "Positioning and compassing" sets both rover bits (0x2 and 0x4). The SDK header defines them as separate bits but does not say whether every firmware version supports both at once, so confirm on your firmware.'}));
   }
   const i = SECTIONS.indexOf(sec);
   main.append(el('div',{class:'nav'},
@@ -454,8 +454,6 @@ function markRail(){
 
 /* ---------- Output ---------- */
 const DEG = new Set(['magDeclination','gnssMinimumElevation']);
-const DEG_TO_RAD = new Set(['magDeclination','gnssMinimumElevation']);
-const DEG_PER_RAD = 180/Math.PI, RAD_PER_DEG = Math.PI/180;
 const FLOATS = new Set(['insRotation','insOffset','gnss1AntOffset','gnss2AntOffset','zeroVelRotation','zeroVelOffset','magDeclination','magInterferenceThreshold','magCalibrationQualityThreshold','gnssMinimumElevation','gnssTimeUserDelay','lastLlaUpdateDistance','wheelConfig.transform.e_b2w','wheelConfig.transform.t_b2w','wheelConfig.track_width','wheelConfig.radius']);
 const num = n => { const r = Math.round(n*1e9)/1e9; return String(r); };
 function activeKeys(){ return document.getElementById('allFields').checked ? ALLKEYS : ALLKEYS.filter(k=>T.has(k)); }
@@ -463,8 +461,8 @@ function pairs(){
   const out = [];
   activeKeys().forEach(k=>{
     if (BITS[k]) out.push([k, hex(k)]);
-    else if (FIELDS[k].vec) S[k].forEach((v,i)=>out.push([k+'['+i+']', num(DEG_TO_RAD.has(k)?v*RAD_PER_DEG:v)]));
-    else out.push([k, num(DEG_TO_RAD.has(k)?S[k]*RAD_PER_DEG:S[k])]);
+    else if (FIELDS[k].vec) S[k].forEach((v,i)=>out.push([k+'['+i+']', num(v)]));
+    else out.push([k, num(S[k])]);
   });
   return out;
 }
@@ -474,11 +472,7 @@ function genCltool(){
   return 'cltool -c '+port+' "-imxFlashCfg='+p.map(x=>x[0]+'='+x[1]).join('|')+'"\n\n# Read back to verify:\ncltool -c '+port+' -imxFlashCfg';
 }
 function genJson(){
-  const o = {}; activeKeys().forEach(k=>{
-    if (BITS[k]) o[k] = hex(k);
-    else if (DEG_TO_RAD.has(k)) o[k] = S[k]*RAD_PER_DEG;
-    else o[k] = clone(S[k]);
-  });
+  const o = {}; activeKeys().forEach(k=>{ o[k] = BITS[k] ? hex(k) : clone(S[k]); });
   return Object.keys(o).length ? JSON.stringify(o,null,2) : '{}';
 }
 function genC(){
@@ -521,7 +515,7 @@ function applyImport(text){
     if (BITS[base]){ S[base] = (parseInt(val)>>>0); T.add(base); n++; return; }
     if (FIELDS[base].vec){
       if (Array.isArray(val)) S[base] = val.map(Number); else if (m) S[base][+m[2]] = Number(val); else return;
-    } else S[base] = DEG_TO_RAD.has(base) ? Number(val)*DEG_PER_RAD : Number(val);
+    } else S[base] = Number(val);
     T.add(base); n++;
   };
   const t = text.trim();
