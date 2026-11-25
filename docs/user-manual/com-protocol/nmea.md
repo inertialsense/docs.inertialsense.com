@@ -232,7 +232,7 @@ The following NMEA messages can be sent by the IMX. The message ID (`eNmeaMsgId`
 | [PINS1](#pins1) | 4    | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
 | [PINS2](#pins2) | 5    | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
 | [PGNSSP](#pgnssp) | 20 | GNSS position and velocity data, including satellites used and jamming/spoofing status. Replaces PGPSP. |
-| [PGPSP](#pgpsp) | 6    | **Deprecated**, use PGNSSP. GPS position data.               |
+| [PGPSP](#pgpsp) | 6    | **Deprecated**, use PGNSSP. Same fields as PGNSSP (3 fields added this release). |
 | [GGA](#gga)     | 7    | Standard NMEA GGA GPS 3D location, fix, and accuracy.        |
 | [GLL](#gll)     | 8    | Standard NMEA GLL GPS 2D location and time.                  |
 | [GSA](#gsa)     | 9    | Standard NMEA GSA GPS DOP and active satellites.             |
@@ -399,20 +399,25 @@ $PGNSSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95
 ### PGPSP
 
 !!! warning "Deprecated"
-    PGPSP is deprecated as of this release and will be removed in a future release. Use [PGNSSP](#pgnssp), which carries the same fields 1-17 plus satsUsed, cnoMeanSigma and status2 (jamming/spoofing). The IMX and GPX still output PGPSP when it is enabled, and the SDK still parses it.
+    PGPSP is deprecated as of this release and will be removed in a future release. Use [PGNSSP](#pgnssp). The IMX and GPX still output PGPSP when it is enabled.
+
+!!! note "Format change (minimal breaking change)"
+    As of this release PGPSP has the same fields as PGNSSP and differs only in its message ID. Three fields are added after field 17: satsUsed (18), cnoMeanSigma (19) and status2 (20). Fields 1-17 are unchanged.
+
+    A parser that reads fields by position, including the SDK's from earlier releases, works unchanged and ignores the new fields. Only a parser that requires exactly 17 fields needs updating. Firmware before this release sends fields 1-17 only; the SDK's `nmea_parse_pgpsp()` and `nmea_parse_pgnssp()` read both forms.
 
 GPS navigation data.
 
 ```
-$PGPSP,d,d,d,lf,lf,lf,f,f,f,f,f,f,f,f,f,lf,d*xx\r\n
-       1 2 3  4  5  6 7 8 9 0 1 2 3 4 5  6 7
+$PGPSP,d,d,d,lf,lf,lf,f,f,f,f,f,f,f,f,f,lf,d,d,d,d*xx\r\n
+       1 2 3  4  5  6 7 8 9 0 1 2 3 4 5  6 7 8 9 0
 
-$PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,0.37,0.55,-0.02,0.02,-0.03,0.17,39.5,337182.4521,18*68\r\n
+$PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,0.37,0.55,-0.02,0.02,-0.03,0.17,39.5,337182.4521,18,24,12,0*71\r\n
 ```
 
 | Index | Field        | Units | Description                                                  |
 | ----- | ------------ | ----- | ------------------------------------------------------------ |
-| 1-17  |              |       | Same as fields 1-17 of [PGNSSP](#pgnssp)                     |
+| 1-20  |              |       | Same as fields 1-20 of [PGNSSP](#pgnssp). Firmware before PGNSSP sent fields 1-17 only. |
 
 ### GGA
 NMEA GPS fix, 3D location and accuracy data.

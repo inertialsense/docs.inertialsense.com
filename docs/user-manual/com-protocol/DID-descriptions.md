@@ -163,7 +163,7 @@ IMU data averaged from DID_IMUS_RAW.  Use this IMU data for output data rates fa
 | Field | Type | Description |
 |-------|------|-------------|
 | state | uint32_t | Mag recalibration command/status.  COMMANDS: 1=multi-axis, 2=single-axis, 101=abort, STATUS: 200=running, 201=done (see eMagCalState) |
-| progress | float | (%) Mag recalibration progress indicator: 0-100 |
+| progress | float | (%) Mag recalibration progress indicator: 0-100. Derived from DID_MAG_CAL_COVERAGE.progressPct: reaches 100 only once the calibration has been applied (state 201). |
 | declination | float | (rad) Magnetic declination estimate |
 
 
@@ -636,7 +636,7 @@ GPX device information
 | deadReckoningTimeout | uint8_t | (s) Time without any position, velocity, or wheel/kinematic aiding after which the INS drops from NAV to AHRS mode.  0 = never time out. |
 | reserved1 | uint8_t | Reserved for future use |
 | reserved2 | uint16_t | Reserved for future use |
-| reserved3 | uint32_t | Reserved for future use |
+| sensorConfig2 | uint32_t | Additional sensor config: extended-range (high-g) accelerometer full-scale range and per-IMU disable (see eSensorConfig2) |
 | reserved4 | uint32_t | Reserved for future use |
 
 
@@ -923,7 +923,7 @@ GNSS raw data for rover (observation, ephemeris, etc.) - requires little endian 
 | deadReckoningTimeout | uint8_t | (s) Time without any position, velocity, or wheel/kinematic aiding after which the INS drops from NAV to AHRS mode.  0 = never time out. |
 | reserved1 | uint8_t | Reserved for future use |
 | reserved2 | uint16_t | Reserved for future use |
-| reserved3 | uint32_t | Reserved for future use |
+| sensorConfig2 | uint32_t | Additional sensor config: extended-range (high-g) accelerometer full-scale range and per-IMU disable (see eSensorConfig2) |
 | reserved4 | uint32_t | Reserved for future use |
 
 
@@ -1571,6 +1571,37 @@ INL2 magnetometer calibration information.
 | mag_cal_good | int | Flag whether the magnetometer calibration is good |
 | mag_cal_done | int | Flag whether the magnetometer calibration process has completed |
 | stat_magfield | int | Flag whether the magnetic field is stationary/consistent (suitable for mag calibration) |
+
+
+#### DID_MAG_CAL_COVERAGE
+
+`mag_cal_coverage_t`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| timeOfWeekMs | uint32_t | (ms) GPS time of week |
+| cellScheme | uint8_t | Cell layout (eMagCalCellScheme) |
+| lifecycle | uint8_t | (eMagCalLifecycle) |
+| mode | uint8_t | Mode that started the recalibration: MAG_CAL_STATE_MULTI_AXIS (1) or MAG_CAL_STATE_SINGLE_AXIS (2) |
+| reason | uint8_t | Why not advancing / fit not accepted (eMagCalReason) |
+| quality | uint8_t | Quality of the current calibration (eMagCalQuality) |
+| progressPct | uint8_t | (%) 0-100 of REQUIRED coverage. Capped at 99 until lifecycle == MAG_CAL_LC_COMPLETE |
+| coveragePct | uint8_t | (%) 0-100 of ALL cells holding at least MAG_CAL_COVERAGE_MIN_COUNT samples (informational) |
+| flags | uint8_t | (eMagCalCoverageFlags) |
+| fitQuality | float | Calibration quality metric Tcal (lower is better); compare with DID_FLASH_CONFIG.magCalibrationQualityThreshold |
+| sampleCount | uint32_t | Samples in the least-squares accumulator |
+| poseDir | int8_t[3] | Guidance pose: the part of the device that should point at the FLOOR, as a body-frame unit vector x127 (e.g. +Z axis = 0,0,127; an edge = two components at 90). All zero when there is no guidance |
+| guidePhase | uint8_t | (eMagCalGuidePhase) AIM at the floor with poseDir, then TURN slowly about the vertical. MAG_CAL_GUIDE_NONE (0) = no guidance, so a zeroed packet means none |
+| fieldDir | int8_t[3] | Current measured field direction in the sensor frame (unit vector x127), i.e. where the "now" marker sits on the map |
+| fitStage | uint8_t | Diagnostic: which check rejected the most recent calibration fit, 0 = none (1 too few samples, 2 r2<=0, 3 no positive eigenvalue, 4 bad eigenvector, 5 not an ellipsoid, 6 not positive definite, 7 sphere conversion failed, 8 per-sample norm tolerance, 9 single-axis fit) |
+| poseErrDeg | uint8_t | (deg) Angle between the floor direction and poseDir: how far still to tilt (0..180) |
+| ringPct | uint8_t | (%) How far round one full turn about the vertical the device has gone (0..100; net rotation measured by the gyro against gravity). 0 while aiming, never decreases during a turn |
+| gravDir | int8_t[3] | Direction of the FLOOR in the sensor frame (unit vector x127), from the accelerometer. A host can draw it as the arrow that should line up with poseDir |
+| inclSin | int8_t | sin(inclination) x127: the firmware's own running estimate of field . floor, which sizes the pose ring. Valid when MAG_CAL_FLAG_INCL_VALID is set |
+| qualityWhy | uint8_t | Why the quality verdict is not GOOD (eMagCalQualityWhy). MAG_CAL_WHY_NONE while good, and while no verdict has been computed yet |
+| normErrPct | uint8_t | (%) How far the calibrated field magnitude is from the expected 1.0 in the last verdict (0..255) |
+| required | uint8_t[MAG_CAL_CELL_COUNT / 8] | 1 bit per cell (LSB first): cell must be covered. Single-axis marks only its own region |
+| cells | uint8_t[MAG_CAL_CELL_COUNT / 2] | 4-bit saturating sample count per cell. Even cell index = low nibble |
 
 
 #### DID_MANUFACTURING_INFO
@@ -2278,6 +2309,8 @@ System status and configuration is made available through various enumeration an
 | SYS_CMD_MANF_ENABLE_ROM_BOOTLOADER | 1357924683 | Manufacturing: enable ROM bootloader. SYS_CMD_MANF_UNLOCK must be sent prior to this command.  A device power cycle may be necessary to complete this command. (uint32 inv: 2937042612) |
 | SYS_CMD_MANF_LED_ON | 1357924684 | Enable testbed LED on IMX (sysStatus) and GPX (hdwStatus). (uint32 inv: 2937042611) |
 | SYS_CMD_MANF_LED_OFF | 1357924685 | Disable testbed LED on IMX (sysStatus) and GPX (hdwStatus). (uint32 inv: 2937042610) |
+| SYS_CMD_MANF_LED_GREEN | 1357924686 | GPX testbed LED: green on, red off. (uint32 inv: 2937042609) |
+| SYS_CMD_MANF_LED_RED | 1357924687 | GPX testbed LED: red on, green off. (uint32 inv: 2937042608) |
 | SYS_CMD_FAULT_TEST_TRIG_MALLOC | 57005 | Fault injection test: trigger a malloc-related fault |
 | SYS_CMD_FAULT_TEST_TRIG_HARD_FAULT | 57006 | Fault injection test: trigger a hard fault |
 | SYS_CMD_FAULT_TEST_TRIG_WATCHDOG | 57007 | Fault injection test: trigger a watchdog timeout |
@@ -2524,9 +2557,13 @@ System status and configuration is made available through various enumeration an
 | Field | Value | Description |
 |-------|-------|-------------|
 | MAG_CAL_STATE_DO_NOTHING |  (int)0 | No command / idle, no calibration in progress |
-| MAG_CAL_STATE_MULTI_AXIS |  (int)1 | COMMAND: Recalibrate magnetometers using multiple axis |
+| MAG_CAL_STATE_MULTI_AXIS |  (int)1 | COMMAND: Recalibrate magnetometers using multiple axis. Completes when the algorithm's own criteria are met AND the sphere fit (see magCalSphereFitPct) reaches MAG_CAL_HOLD_BASIC_PCT: the same hold as MAG_CAL_STATE_MULTI_AXIS_EXTENDED with a lower target. MAG_CAL_STATE_FINISH releases it and MAG_CAL_STATE_ABORT cancels it |
 | MAG_CAL_STATE_SINGLE_AXIS |  (int)2 | COMMAND: Recalibrate magnetometers using only one axis |
+| MAG_CAL_STATE_MULTI_AXIS_EXTENDED |  (int)3 | COMMAND: Multi-axis recalibration that does NOT complete when the algorithm's own criteria are met: it keeps collecting until the sphere fit (see magCalSphereFitPct) reaches MAG_CAL_HOLD_TARGET_PCT, or until MAG_CAL_STATE_FINISH. MAG_CAL_STATE_ABORT cancels it |
+| MAG_CAL_STATE_MULTI_AXIS_MANUAL |  (int)4 | COMMAND: Multi-axis recalibration ("complete") that keeps collecting until every cell of the coverage map is populated (then it completes by itself), or until MAG_CAL_STATE_FINISH (accept what there is) or MAG_CAL_STATE_ABORT (cancel) |
+| MAG_CAL_STATE_MULTI_AXIS_CLASSIC |  (int)5 | COMMAND: Multi-axis recalibration as documented on docs.inertialsense.com: completes when the algorithm's own criteria are met (data across at least two axes, one of them yaw, over a sufficient angular span), with NO sphere-fit hold. Generally a lower-quality calibration than MAG_CAL_STATE_MULTI_AXIS. MAG_CAL_STATE_ABORT cancels it |
 | MAG_CAL_STATE_ABORT |  (int)101 | COMMAND: Stop mag recalibration and do not save results |
+| MAG_CAL_STATE_FINISH |  (int)102 | COMMAND: Accept whatever has been collected, even nothing: it is fitted without the acceptance checks (the full fit if the samples determine one, else hard iron only, else the samples' centre and spread, else no correction), applied, saved to flash and the state goes to MAG_CAL_STATE_RECAL_COMPLETE. A host should confirm with the user first when coverage is low |
 | MAG_CAL_STATE_RECAL_RUNNING |  (int)200 | STATUS: Mag recalibration is in progress |
 | MAG_CAL_STATE_RECAL_COMPLETE |  (int)201 | STATUS: Mag recalibration has completed |
 | MAG_CAL_STATE_RECAL_MODE_NOT_SUPPORTED |  (int)202 | STATUS: Mag recalibration mode not supported |
