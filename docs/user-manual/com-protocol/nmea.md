@@ -101,6 +101,7 @@ $ASCE,0,PINS1,0*0D\r\n
 | $ASCE,0,4,1*0D\r\n  | PINS1   |
 | $ASCE,0,5,1*0C\r\n  | PINS2   |
 | $ASCE,0,6,1*0F\r\n  | PGPSP (deprecated, use PGNSSP) |
+| $ASCE,0,20,1*3B\r\n | PGNSSP  |
 | $ASCE,0,7,1*0E\r\n  | GGA     |
 | $ASCE,0,8,1*01\r\n  | GLL     |
 | $ASCE,0,9,1*00\r\n  | GSA     |
@@ -111,7 +112,6 @@ $ASCE,0,PINS1,0*0D\r\n
 | $ASCE,0,14,1*3C\r\n | INFO    |
 | $ASCE,0,15,1*3D\r\n | GSV     |
 | $ASCE,0,16,1*3E\r\n | VTG     |
-| $ASCE,0,20,1*3B\r\n | PGNSSP  |
 
 <sup>**</sup> These rates assume the default settings for [data source rates](isb.md#data-source-update-rates).
 
