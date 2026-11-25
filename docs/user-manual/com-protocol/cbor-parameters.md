@@ -276,7 +276,7 @@ Key `0x0109` (265). Served by IMX-5, IMX-6, GPX-1; read, write; stored in flash.
 | `3` | `externalAiding` | map | | | External aiding observations the device outputs. |
 | `3.0` | `externalAiding.fixedLatency` | bool | `false` | GPX-1 | Timestamp external aiding position and velocity with a fixed latency instead of GNSS time of week, for a consumer that has no GNSS time. |
 | `4` | `Receivers` | map | | | Settings common to every receiver. A receiver's own value, in Receiver, overrides them. |
-| `4.5` | `Receivers.signals` | uint16 | `5119` | IMX-5, IMX-6, GPX-1 | Satellite constellations and signals used in the solution (eGnssSatSigConst bits). |
+| `4.5` | `Receivers.satSignals` | uint16 | `5119` | IMX-5, IMX-6, GPX-1 | Satellite constellations and signals used in the solution (eGnssSatSigConst bits). |
 | `4.6` | `Receivers.minElevation` | float32 | `0.17453292` | IMX-5, IMX-6, GPX-1 | (rad) Minimum elevation above the horizon of a satellite used in the solution. |
 | `4.7` | `Receivers.cn0Min` | uint8 | `30` | IMX-5, IMX-6, GPX-1 | (dBHz) Absolute minimum carrier-to-noise density of a signal used in the RTK solution. |
 | `4.8` | `Receivers.cn0DynOffset` | uint8 | `20` | IMX-5, IMX-6, GPX-1 | (dBHz) A signal more than this far below the strongest signal's carrier-to-noise density is not used in the RTK solution. 0 disables the dynamic threshold. |
