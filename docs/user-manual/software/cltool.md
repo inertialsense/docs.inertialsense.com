@@ -29,8 +29,8 @@ EXAMPLES
     cltool -c /dev/ttyS2 -nmea=ASCE,0,GxGGA,1                                         # Send NMEA message, display rx NMEA
     cltool -c tcp://192.168.1.100:7777 -nmea=ASCE                                     # Send NMEA query over TCP
     cltool -c COM2,COM4 -nmea                                                         # Listen for NMEA on two ports
-    cltool -c /dev/ttyS2 -cbor-get "{FLASH_CFG: {ser0BaudRate, insRotation}}"         # Read fields over CBOR
-    cltool -c /dev/ttyS2 -cbor-set "{FLASH_CFG: {gnss1AntOffset[1]: 0.8}}"            # Set one value over CBOR
+    cltool -c /dev/ttyS2 -cbor-get "{CONFIG_INS: {dynamicModel, rotation}}"           # Read fields over CBOR
+    cltool -c /dev/ttyS2 -cbor-set "{CONFIG_INS: {rotation[1]: 0.8}}"                 # Set one value over CBOR
 
 EXAMPLES (Firmware Update)
     cltool -c /dev/ttyS2 -ufpkg fw/IS-firmware.fpkg
@@ -109,11 +109,11 @@ OPTIONS (Messages)
                                              Examples: -set "{DID_FLASH_CONFIG: {gnss1AntOffset: [0.8, 0.0, 1.2]}}"
                                                        -set "{DID_FLASH_CONFIG: {gnss1AntOffset[2]: 1.2}}"
                                                        -set "{12: {ioConfig: 0x1a2b012c, ser2BaudRate: 921600}}"
-    -cbor-get "{<DID>: {<FIELD1>,<FIELD2>,...}}" As -get, over CBOR (DID_CBOR). DID: registry name (FLASH_CFG), DID_ name or number.
-                                             Examples: -cbor-get FLASH_CFG
-                                                       -cbor-get "{GPX_FLASH_CFG: {ser2BaudRate}}" -cbor-dst=GPX
-    -cbor-set "{<DID>: {<FIELD1>: <VALUE>, ...}}" As -set, over CBOR. Numeric keys (incl. MSG_* keys) are sent as given.
-                                             Examples: -cbor-set "{FLASH_CFG: {gnss1AntOffset[2]: 1.2}}"
+    -cbor-get "{<DOMAIN>: {<FIELD1>,<FIELD2>,...}}" As -get, over CBOR (DID_CBOR). Root keys are domains: registry name (CONFIG_SYSTEM) or number.
+                                             Examples: -cbor-get CONFIG_SYSTEM
+                                                       -cbor-get "{CONFIG_PORTS: {Port}}" -cbor-dst=GPX
+    -cbor-set "{<DOMAIN>: {<FIELD1>: <VALUE>, ...}}" As -set, over CBOR. Numeric keys (incl. MSG_* keys) are sent as given.
+                                             Examples: -cbor-set "{CONFIG_INS: {rotation[2]: 1.2}}"
                                                        -cbor-set "{RMC_STORED: {0: {RMC_PRESET: INS}}}"
     -cbor-dst=<FILTER>    Device(s) a -cbor-get/-cbor-set addresses: TYPE[-MAJOR[.MINOR]][::SN], parts left out match any
                           (GPX, GPX-1.0, IMX-5.0::SN62797), or all.
@@ -290,41 +290,46 @@ Note: The firmware can only be updated at the following baud rates: 3000000, 921
 
 ## CBOR Messaging
 
-On firmware that supports CBOR messaging (`DID_CBOR`), `-cbor-get` and `-cbor-set` read and write configuration in the same YAML form as `-get` and `-set`. DIDs and fields use the CBOR registry names (`FLASH_CFG`, `GPX_FLASH_CFG`, `CAN_CONFIG`, `RMC_STORED`); the legacy `DID_` names and numbers are also accepted. Replies are printed as YAML.
+On firmware that supports CBOR messaging (`DID_CBOR`), `-cbor-get` and `-cbor-set` read and write configuration in the same YAML form as `-get` and `-set`. The root keys are domains, such as `CONFIG_SYSTEM`, `CONFIG_INS`, `CONFIG_GNSS` or `RMC_STORED`, by name or number; a binary DID's settings are found in the domains they belong to. Fields use the CBOR registry names. Replies are printed as YAML.
 
-The DIDs and fields available are listed in [CBOR Parameters](../com-protocol/cbor-parameters.md), and the messages themselves are described in [CBOR Messaging](../com-protocol/cbor.md).
+The domains and fields available are listed in [CBOR Parameters](../com-protocol/cbor-parameters.md), and the messages themselves are described in [CBOR Messaging](../com-protocol/cbor.md).
 
 ```bash
-$ cltool -c /dev/ttyACM0 -cbor-get "{FLASH_CFG: {ser0BaudRate, insRotation, gnssMinimumElevation}}"
-FLASH_CFG:
-  ser0BaudRate: 921600
-  insRotation:
+$ cltool -c /dev/ttyACM0 -cbor-get "{CONFIG_INS: {dynamicModel, rotation, lastPositionUpdateDistanceM}}"
+CONFIG_INS:
+  rotation:
     - 0
     - 0
     - 0
-  gnssMinimumElevation: 0.17453292
+  dynamicModel: 8
+  lastPositionUpdateDistanceM: 1000
 ```
 
-A GPX connected through an IMX is read by addressing it with `-cbor-dst`. Any part of the filter left out matches every value, so `GPX`, `GPX-1.0` and `GPX-1.0::SN928401213` all reach the same single GPX. A filter that can match more than one device collects a reply from each:
+A GPX connected through an IMX is read by addressing it with `-cbor-dst`. Any part of the filter left out matches every value, so `GPX`, `GPX-1.0` and `GPX-1.0::SN3001291994` all reach the same single GPX. A filter that can match more than one device collects a reply from each:
 
 ```bash
-$ cltool -c /dev/ttyACM0 -cbor-get "{GPX_FLASH_CFG: {ser2BaudRate, startupGnssDtMs}}" -cbor-dst=GPX
-GPX-1.0::928401213:
-  GPX_FLASH_CFG:
-    ser2BaudRate: 921600
-    startupGnssDtMs: 200
+$ cltool -c /dev/ttyACM0 -cbor-get "{CONFIG_PORTS: {Port: {SER2: {baudRate}}}, CONFIG_GNSS: {periodMs}}" -cbor-dst=GPX
+GPX-1.0::3001291994:
+  CONFIG_PORTS:
+    Port:
+      SER2:
+        baudRate: 921600
+  CONFIG_GNSS:
+    periodMs: 200
 
-$ cltool -c /dev/ttyACM0 -cbor-get "{CAN_CONFIG: {can_setting}}" -cbor-dst=all
-IMX-5.0::62797:
-  CAN_CONFIG:
-    can_setting: 100
-GPX-1.0::928401213: OK
+$ cltool -c /dev/ttyACM0 -cbor-get "{CONFIG_SYSTEM: {brownOutLevel}}" -cbor-dst=all
+IMX-6.0::942741560:
+  CONFIG_SYSTEM:
+    brownOutLevel: 0
+GPX-1.0::3001291994:
+  CONFIG_SYSTEM:
+    brownOutLevel: 0
 ```
 
 A write prints `OK`, or the values the device adjusted. With `-cbor-ack=detailed` it prints every value as the device kept it. A write the device refuses prints its status and exits with a non-zero code:
 
 ```bash
-$ cltool -c /dev/ttyACM0 -cbor-set "{FLASH_CFG: {gnss2AntOffset[2]: 0.5}}"
+$ cltool -c /dev/ttyACM0 -cbor-set "{CONFIG_INS: {offset[2]: 0.5}}"
 OK
 
 $ cltool -c /dev/ttyACM0 -cbor-set "{ROUTE_FILTER: {0: {ACTION: ALLOW}}}"
@@ -332,45 +337,28 @@ ROUTE_FILTER:
   MSG_STATUS: READ_ONLY
 ```
 
-For a GPX behind an IMX, write `GPX_FLASH_CFG` to the IMX: leave out `-cbor-dst`, or use `-gpxFlashCfg`. The IMX applies the write to its copy of the GPX's configuration and sends it on (see below). A `GPX_FLASH_CFG` write addressed to the GPX with `-cbor-dst=GPX` is not passed on to the GPX, and the IMX answers it with `FORWARD_DENIED`:
+The IMX owns the configuration of a GPX behind it. A write of a GPX domain addressed to the GPX with `-cbor-dst=GPX` is applied by the IMX on the GPX's behalf and answered under the GPX's name. The IMX keeps its own values for the settings its configuration sets, and prints them as adjusted:
 
 ```bash
-$ cltool -c /dev/ttyACM0 -cbor-set "{GPX_FLASH_CFG: {ser1BaudRate: 460800}}" -cbor-dst=GPX
-IMX-5.0::62797:
-  GPX_FLASH_CFG:
-    MSG_STATUS: FORWARD_DENIED
+$ cltool -c /dev/ttyACM0 -cbor-set "{CONFIG_GNSS: {periodMs: 1000}}" -cbor-dst=GPX
+GPX-1.0::3001291994:
+  CONFIG_GNSS:
+    periodMs: 200
 ```
 
 `-cbor-out` prints every CBOR message sent and received, in CBOR diagnostic notation with registry names (`-cbor-out=raw` for plain diagnostic notation):
 
 ```bash
-$ cltool -c /dev/ttyACM0 -cbor-out -cbor-get "{FLASH_CFG: {ser0BaudRate}}"
-CBOR tx: {MSG_TYPE(0xC000): GET, MSG_REQ_ID(0xC003): 1, FLASH_CFG(12): [2]}
-CBOR rx: {MSG_TYPE(0xC000): REPLY|GET, MSG_SRC_DEV_ID(0xC001): IMX-5.0::62797, MSG_REQ_ID(0xC003): 1, MSG_TIME_GPS_NS(0xC006): week 2441 tow 507663.403376, FLASH_CFG(12): {ser0BaudRate(2): 921600}}
-FLASH_CFG:
-  ser0BaudRate: 921600
+$ cltool -c /dev/ttyACM0 -cbor-out -cbor-get "{CONFIG_SYSTEM: {navPeriodMs}}"
+CBOR tx: {MSG_TYPE(0xC000): GET, MSG_REQ_ID(0xC003): 1, CONFIG_SYSTEM(258): [0]}
+CBOR rx: {MSG_TYPE(0xC000): REPLY|GET, MSG_SRC_DEV_ID(0xC001): IMX-6.0::942741560, MSG_REQ_ID(0xC003): 1, MSG_TIME_GPS_NS(0xC006): week 2446 tow 336174.470418, CONFIG_SYSTEM(258): {navPeriodMs(0): 5}}
+CONFIG_SYSTEM:
+  navPeriodMs: 5
 ```
 
-`-imxFlashCfg` and `-gpxFlashCfg` use CBOR when the device supports it, and the binary DIDs otherwise; their usage is unchanged. `-gpxFlashCfg` still changes the configuration of a GPX connected through an IMX, but the change is proxied by the IMX rather than forwarded: the IMX applies it to its own copy of the GPX's configuration and then sends it on to the GPX.
+`-imxFlashCfg` and `-gpxFlashCfg` read and write the binary DIDs, `DID_FLASH_CONFIG` and `DID_GPX_FLASH_CFG`; their usage is unchanged. `-gpxFlashCfg` changes the configuration of a GPX connected through an IMX through the IMX, which applies it to its own copy of the GPX's configuration and then sends it on to the GPX.
 
-Some GPX settings are set by the IMX's own flash configuration: `startupGnssDtMs`, `gnss1AntOffset`, `gnss2AntOffset`, `refLla`, `gnssSatSigConst`, `dynamicModel`, `gnssTimeSyncPeriodMs`, `gnssTimeUserDelay`, `gnssMinimumElevation`, `RTKCfgBits`, `gnssCn0Minimum` and `gnssCn0DynMinOffset`. For a GPX behind an IMX, change these with `-imxFlashCfg` on the IMX. A `-gpxFlashCfg` write keeps the IMX's values for them, applies the other fields, and lists the values the IMX kept. After a write, `-gpxFlashCfg` reads the written fields back from the GPX and prints them:
-
-```bash
-$ cltool -c /dev/ttyACM0 "-gpxFlashCfg=gnss1AntOffset[0]=0.7|ser2BaudRate=460800"
-The IMX kept the values its flash config sets:
-GPX_FLASH_CFG:
-  gnss1AntOffset:
-    - 0.2
-    - 0
-    - 0
-DID_GPX_FLASH_CFG (121)
-gnss1AntOffset[0] = 0.2
-gnss1AntOffset[1] = 0
-gnss1AntOffset[2] = 0
-ser2BaudRate = 460800
-```
-
-A write the device refuses, or one the GPX does not apply within 3 seconds, prints the reason or the values the GPX kept, and exits with -2. A successful `-imxFlashCfg` write prints nothing unless the IMX adjusted a value. A `-gpxFlashCfg` or `-imxFlashCfg` write that changes no value sends nothing, prints nothing and exits with 0.
+Some GPX settings are set by the IMX's own flash configuration: `startupGnssDtMs`, `gnss1AntOffset`, `gnss2AntOffset`, `refLla`, `gnssSatSigConst`, `dynamicModel`, `gnssTimeSyncPeriodMs`, `gnssTimeUserDelay`, `gnssMinimumElevation`, `RTKCfgBits`, `gnssCn0Minimum` and `gnssCn0DynMinOffset`. For a GPX behind an IMX, change these on the IMX, with `-imxFlashCfg` or its domains. A write of the GPX's configuration, through `-gpxFlashCfg` or a GPX domain, keeps the IMX's values for them and applies the other fields.
 
 ## Logging with CLTool
 
