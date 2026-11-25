@@ -100,8 +100,8 @@ $ASCE,0,PINS1,0*0D\r\n
 | $ASCE,0,3,1*0A\r\n  | PRIMU   |
 | $ASCE,0,4,1*0D\r\n  | PINS1   |
 | $ASCE,0,5,1*0C\r\n  | PINS2   |
-| $ASCE,0,6,1*0F\r\n  | PGPSP (deprecated, use PGNSSP) |
 | $ASCE,0,20,1*3B\r\n | PGNSSP  |
+| $ASCE,0,6,1*0F\r\n  | PGPSP (deprecated, use PGNSSP) |
 | $ASCE,0,7,1*0E\r\n  | GGA     |
 | $ASCE,0,8,1*01\r\n  | GLL     |
 | $ASCE,0,9,1*00\r\n  | GSA     |
@@ -231,6 +231,7 @@ The following NMEA messages can be sent by the IMX. The message ID (`eNmeaMsgId`
 | [PRIMU](#primu) | 3    | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
 | [PINS1](#pins1) | 4    | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
 | [PINS2](#pins2) | 5    | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
+| [PGNSSP](#pgnssp) | 20 | GNSS position and velocity data, including satellites used and jamming/spoofing status. Replaces PGPSP. |
 | [PGPSP](#pgpsp) | 6    | **Deprecated**, use PGNSSP. GPS position data.               |
 | [GGA](#gga)     | 7    | Standard NMEA GGA GPS 3D location, fix, and accuracy.        |
 | [GLL](#gll)     | 8    | Standard NMEA GLL GPS 2D location and time.                  |
@@ -242,7 +243,6 @@ The following NMEA messages can be sent by the IMX. The message ID (`eNmeaMsgId`
 | [INFO](#info)   | 14   | Device information.                                          |
 | [GSV](#gsv)     | 15   | Standard NMEA GSV satellite info (all active constellations sent with corresponding talker IDs). |
 | [VTG](#vtg)     | 16   | Standard NMEA VTG track made good and speed over ground.     |
-| [PGNSSP](#pgnssp) | 20 | GNSS position and velocity data, including satellites used and jamming/spoofing status. Replaces PGPSP. |
 
 The field codes used in the message descriptions are: lf = double, f = float, d = int.
 
