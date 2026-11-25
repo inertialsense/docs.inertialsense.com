@@ -235,7 +235,7 @@ Key `0x010B` (267). Served by IMX-5, IMX-6; read, write; stored in flash. Its ke
 | `0.2` | `lastPosition.week` | uint32 | `0` | IMX-5, IMX-6 | GPS week of the position. |
 | `1` | `Mag[mag_id]` | map | | | Magnetometer calibration state, keyed by mag_id. |
 | `1.*.0` | `Mag[mag_id].coverage` | map | | | Which directions the magnetometer calibration has sampled: a count per cell of an equal-area grid over the sphere of field directions. |
-| `1.*.0.1` | `Mag[mag_id].coverage.counts` | uint8[64] | `0` | IMX-5, IMX-6 | A 4-bit saturating sample count per cell, two cells per byte, the even-numbered cell in the low nibble. All zero means no map. |
+| `1.*.0.1` | `Mag[mag_id].coverage.counts` | bytes | `0` | IMX-5, IMX-6 | A 4-bit saturating sample count per cell, two cells per byte, the even-numbered cell in the low nibble. All zero means no map. |
 | `1.*.0.2` | `Mag[mag_id].coverage.sampleCount` | uint32 | `0` | IMX-5, IMX-6 | The number of samples in the calibration's least-squares accumulator when the map was saved. The map belongs to the calibration with this count. |
 | `1.*.1` | `Mag[mag_id].solver` | map | | | The magnetometer calibration solver's state, kept so a calibration in progress survives a reset. |
 | `1.*.1.0` | `Mag[mag_id].solver.dtd` | float32[100] | `0` | IMX-5, IMX-6 | The least-squares accumulator (DtD) of the in-field magnetometer calibration. |
@@ -308,7 +308,6 @@ Keys for NMEA sentences inside [`RMC_STORED`](#rmc_stored) port entries: `0x3F00
 
 | Domain | Key |
 |---|---|
-| `MAG_CAL_MAP` | `0x0101` (257) |
 | `RMC` | `0x7FFE` (32766) |
 
 ## Message keys
