@@ -272,6 +272,6 @@ request. Each configuration domain fits one reply on every device; `RMC_STORED` 
 - **SDK:** `ISDevice::cborRequest()` sends a request built with `CborRequest` and returns each device's `CborReply`;
   `cborRequestAsync()` does the same without blocking. `ISDevice::cborGetStruct()` reads a whole domain into its view
   struct, asking again for any part marked `RESP_TOO_LARGE`. The headers in `src/cbor/domain/` define each domain's and
-  field's key (`CBOR_DID_CONFIG_SYSTEM`, `CBOR_CONFIG_SYSTEM__NAVPERIODMS`) and view struct (`cbor_config_system_t`),
+  field's key (`CBOR_DOMAIN_CONFIG_SYSTEM`, `CBOR_CONFIG_SYSTEM__NAVPERIODMS`) and view struct (`cbor_config_system_t`),
   and `cbor_registry_did_key()` / `cbor_registry_field_key()` translate names to keys. The headers in `src/cbor/did/`
   convert between a binary DID's struct and the domains it maps to, for example `cbor_flash_config_to_config_system()`.
