@@ -100,7 +100,8 @@ $ASCE,0,PINS1,0*0D\r\n
 | $ASCE,0,3,1*0A\r\n  | PRIMU   |
 | $ASCE,0,4,1*0D\r\n  | PINS1   |
 | $ASCE,0,5,1*0C\r\n  | PINS2   |
-| $ASCE,0,6,1*0F\r\n  | PGPSP   |
+| $ASCE,0,20,1*3B\r\n | PGNSSP  |
+| $ASCE,0,6,1*0F\r\n  | PGPSP (deprecated, use PGNSSP) |
 | $ASCE,0,7,1*0E\r\n  | GGA     |
 | $ASCE,0,8,1*01\r\n  | GLL     |
 | $ASCE,0,9,1*00\r\n  | GSA     |
@@ -230,7 +231,8 @@ The following NMEA messages can be sent by the IMX. The message ID (`eNmeaMsgId`
 | [PRIMU](#primu) | 3    | Raw IMU data (3-axis gyros and accelerometers) in the body frame. |
 | [PINS1](#pins1) | 4    | INS output: euler rotation w/ respect to NED, NED position from reference LLA. |
 | [PINS2](#pins2) | 5    | INS output: quaternion rotation w/ respect to NED, ellipsoid altitude. |
-| [PGPSP](#pgpsp) | 6    | GPS position data.                                           |
+| [PGNSSP](#pgnssp) | 20 | GNSS position and velocity data, including satellites used and jamming/spoofing status. Replaces PGPSP. |
+| [PGPSP](#pgpsp) | 6    | **Deprecated**, use PGNSSP. Same fields as PGNSSP (3 fields added this release). |
 | [GGA](#gga)     | 7    | Standard NMEA GGA GPS 3D location, fix, and accuracy.        |
 | [GLL](#gll)     | 8    | Standard NMEA GLL GPS 2D location and time.                  |
 | [GSA](#gsa)     | 9    | Standard NMEA GSA GPS DOP and active satellites.             |
@@ -360,36 +362,62 @@ $PINS2,lf,d,d,d,f,f,f,f,f,f,f,lf,lf,lf*xx\r\n
 | 13    | Longitude    | deg   | WGS84 Longitude                                              |
 | 14    | HAE altitude | m     | Height above ellipsoid (vertical elevation)                  |
 
-### PGPSP
+### PGNSSP
 
-GPS navigation data.
+GNSS position and velocity data. Carries every field of the DID_GNSS1_POS / DID_GNSS2_POS position (except ECEF position, which can be computed from latitude, longitude and altitude) plus the GNSS velocity. Fields 1-17 are identical to [PGPSP](#pgpsp), so a PGPSP parser needs only the new talker name and fields 18-20.
 
 ```
-$PGPSP,d,d,d,lf,lf,lf,f,f,f,f,f,f,f,f,f,f*xx\r\n
-       1 2 3  4  5  6 7 8 9 0 1 2 3 4 5 6
+$PGNSSP,d,d,d,lf,lf,lf,f,f,f,f,f,f,f,f,f,lf,d,d,d,d*xx\r\n
+        1 2 3  4  5  6 7 8 9 0 1 2 3 4 5  6 7 8 9 0
 
-$PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,0.37,0.55,-0.02,0.02,-0.03,0.17,39.5,337182.4521*4d\r\n
+$PGNSSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,0.37,0.55,-0.02,0.02,-0.03,0.17,39.5,337182.4521,18,24,12,0*3c\r\n
 ```
 
 | Index | Field        | Units | Description                                                  |
 | ----- | ------------ | ----- | ------------------------------------------------------------ |
 | 1     | timeOfWeekMs | ms    | GPS time of week in milliseconds since Sunday morning in GMT |
 | 2     | GPS week     | weeks | GPS number of weeks since January 1st of 1980 in GMT         |
-| 3     | status       |       | (see [eGnssStatus](DID-descriptions.md#gps-status)) GPS status: [0x000000xx] number of satellites used, [0x0000xx00] fix type, [0x00xx0000] status flags |
+| 3     | status       |       | (see [eGnssStatus](DID-descriptions.md#gps-status)) GPS status: [0x000000xx] number of satellites used (deprecated, use satsUsed), [0x0000xx00] fix type, [0x00xx0000] status flags |
 | 4     | Latitude     | deg   | WGS84 Latitude                                               |
 | 5     | Longitude    | deg   | WGS84 Longitude                                              |
 | 6     | HAE altitude | m     | Height above WGS84 ellipsoid                                 |
 | 7     | MSL altitude | m     | Elevation above mean sea level                               |
-| 8     | pDOP         | m     | Position dilution of precision                               |
+| 8     | pDOP         |       | Position dilution of precision                               |
 | 9     | hAcc         | m     | Horizontal accuracy                                          |
 | 10    | vAcc         | m     | Vertical accuracy                                            |
-| 11    | Velocity X   | m/s   | ECEF X velocity                                              |
-| 12    | Velocity Y   | m/s   | ECEF Y velocity                                              |
-| 13    | Velocity Z   | m/s   | ECEF Z velocity                                              |
+| 11    | Velocity X   | m/s   | ECEF X velocity, or North velocity if status bit 0x00008000 (GNSS data from NMEA input) is set |
+| 12    | Velocity Y   | m/s   | ECEF Y velocity, or East velocity if status bit 0x00008000 is set |
+| 13    | Velocity Z   | m/s   | ECEF Z velocity, or 0 if status bit 0x00008000 is set        |
 | 14    | sAcc         | m/s   | Speed accuracy                                               |
 | 15    | cnoMean      | dBHz  | Average of all satellite carrier-to-noise ratios (signal strengths) that are non-zero |
 | 16    | towOffset    | s     | Time sync offset between local time since boot up to GPS time of week in seconds. Add this to IMU and sensor time to get GPS time of week in seconds. |
 | 17    | leapS        | s     | GPS leap second (GPS-UTC) offset. Receiver's best knowledge of the leap seconds offset from UTC to GPS time. Subtract from GPS time of week to get UTC time of week. |
+| 18    | satsUsed     |       | Number of satellites used in the position solution           |
+| 19    | cnoMeanSigma | dBHz x10 | Standard deviation of cnoMean over the past 5 seconds     |
+| 20    | status2      |       | (see eGnssStatus2) Jamming/spoofing status bit flags, sent in decimal: 0x01 = possible jamming, 0x02 = jamming confirmed, 0x04 = possible spoofing, 0x08 = spoofing confirmed. Bits 0xF0 are unused. |
+
+### PGPSP
+
+!!! warning "Deprecated"
+    PGPSP is deprecated as of this release and will be removed in a future release. Use [PGNSSP](#pgnssp). The IMX and GPX still output PGPSP when it is enabled.
+
+!!! note "Format change (minimal breaking change)"
+    As of this release PGPSP has the same fields as PGNSSP and differs only in its message ID. Three fields are added after field 17: satsUsed (18), cnoMeanSigma (19) and status2 (20). Fields 1-17 are unchanged.
+
+    A parser that reads fields by position, including the SDK's from earlier releases, works unchanged and ignores the new fields. Only a parser that requires exactly 17 fields needs updating. Firmware before this release sends fields 1-17 only; the SDK's `nmea_parse_pgpsp()` and `nmea_parse_pgnssp()` read both forms.
+
+GPS navigation data.
+
+```
+$PGPSP,d,d,d,lf,lf,lf,f,f,f,f,f,f,f,f,f,lf,d,d,d,d*xx\r\n
+       1 2 3  4  5  6 7 8 9 0 1 2 3 4 5  6 7 8 9 0
+
+$PGPSP,337272200,2031,1075643160,40.33057800,-111.72581630,1406.39,1425.18,0.95,0.37,0.55,-0.02,0.02,-0.03,0.17,39.5,337182.4521,18,24,12,0*71\r\n
+```
+
+| Index | Field        | Units | Description                                                  |
+| ----- | ------------ | ----- | ------------------------------------------------------------ |
+| 1-20  |              |       | Same as fields 1-20 of [PGNSSP](#pgnssp). Firmware before PGNSSP sent fields 1-17 only. |
 
 ### GGA
 NMEA GPS fix, 3D location and accuracy data.
